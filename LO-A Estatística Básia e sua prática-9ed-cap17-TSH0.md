@@ -2,33 +2,33 @@
 
 
 
-# **Testes de Significância: o Básico**
+# **Testes de SignificÃ¢ncia: o BÃ¡sico**
 
 
 
-Intervalos de confiança são um dos dois tipos mais comuns de inferência estatística.
+Intervalos de confianÃ§a sÃ£o um dos dois tipos mais comuns de inferÃªncia estatÃ­stica.
 
-Neste capítulo, discutimos testes de significância, o
+Neste capÃ­tulo, discutimos testes de significÃ¢ncia, o
 
-segundo tipo de inferência estatística.
+segundo tipo de inferÃªncia estatÃ­stica.
 
-A matemática da probabilidade - em particular, as distribuições amostrais discutidas no Capítulo 15 -
+A matemÃ¡tica da probabilidade - em particular, as distribuiÃ§Ãµes amostrais discutidas no CapÃ­tulo 15 -
 
-fornece a base formal para um teste de significância.
+fornece a base formal para um teste de significÃ¢ncia.
 
-Aqui aplicaremos o raciocínio de testes de significância para a média de uma população que
+Aqui aplicaremos o raciocÃ­nio de testes de significÃ¢ncia para a mÃ©dia de uma populaÃ§Ã£o que
 
-tem distribuição Normal, em um contexto simples e artificial (em que supomos conhecer o desvio-padrão populacional $\\sigma$).
+tem distribuiÃ§Ã£o Normal, em um contexto simples e artificial (em que supomos conhecer o desvio-padrÃ£o populacional $\\sigma$).
 
-Usaremos a mesma lógica em capítulos futuros para a construção e testes de significância para parâmetros populacionais em contextos mais realistas.
+Usaremos a mesma lÃ³gica em capÃ­tulos futuros para a construÃ§Ã£o e testes de significÃ¢ncia para parÃ¢metros populacionais em contextos mais realistas.
 
 
 
-Use um intervalo de confiança quando seu objetivo for estimar um parâmetro da população.
+Use um intervalo de confianÃ§a quando seu objetivo for estimar um parÃ¢metro da populaÃ§Ã£o.
 
-Os testes de significância têm um objetivo diferente: avaliar a evidência fornecida pelos dados sobre alguma afirmativa anterior relativa a um parâmetro da população.
+Os testes de significÃ¢ncia tÃªm um objetivo diferente: avaliar a evidÃªncia fornecida pelos dados sobre alguma afirmativa anterior relativa a um parÃ¢metro da populaÃ§Ã£o.
 
-A seguir, apresentamos sucintamente a lógica de testes estatísticos.
+A seguir, apresentamos sucintamente a lÃ³gica de testes estatÃ­sticos.
 
 
 
@@ -38,91 +38,91 @@ A seguir, apresentamos sucintamente a lógica de testes estatísticos.
 
 Eu afirmo que acerto 80% de meus lances livres no jogo de basquete.
 
-Para testar minha afirmativa, você me pede para fazer 20 lances
+Para testar minha afirmativa, vocÃª me pede para fazer 20 lances
 
-livres. Eu acerto apenas oito dos 20. "Ah!", você diz. "Alguém que
+livres. Eu acerto apenas oito dos 20. "Ah!", vocÃª diz. "AlguÃ©m que
 
 acerta 80% de seus lances livres quase nunca acertaria apenas oito
 
-entre 20. Logo, não acredito em sua afirmativa."
+entre 20. Logo, nÃ£o acredito em sua afirmativa."
 
 
 
-Seu raciocínio se baseia no questionamento do que ocorreria se
+Seu raciocÃ­nio se baseia no questionamento do que ocorreria se
 
-minha afirmativa fosse verdadeira e repetíssemos a amostra de 20
+minha afirmativa fosse verdadeira e repetÃ­ssemos a amostra de 20
 
-lançamentos muitas vezes: eu quase nunca acertaria oito ou menos.
+lanÃ§amentos muitas vezes: eu quase nunca acertaria oito ou menos.
 
-Esse resultado de oito em 20 é tão improvável, que fornece uma forte (*rectius*, BOA)
+Esse resultado de oito em 20 Ã© tÃ£o improvÃ¡vel, que fornece uma forte (*rectius*, BOA)
 
-evidência de que minha afirmativa não seja verdadeira.
+evidÃªncia de que minha afirmativa nÃ£o seja verdadeira.
 
 
 
-Você pode dizer quão forte (*rectius*, BOA) é a evidência contra minha afirmativa, fornecendo a probabilidade de eu acertar oito ou
+VocÃª pode dizer quÃ£o forteÂ (*rectius*, BOA) Ã© a evidÃªncia contra minha afirmativa, fornecendo a probabilidade de eu acertar oito ou
 
 menos entre 20 lances livres, se eu realmente acertasse 80% no longo prazo.
 
-Essa probabilidade é 0,0001; como descrito no Capítulo 14, esse cálculo é feito com o uso da distribuição binomial.
+Essa probabilidade Ã© 0,0001; como descrito no CapÃ­tulo 14, esse cÃ¡lculo Ã© feito com o uso da distribuiÃ§Ã£o binomial.
 
 Assim, eu acertaria oito ou menos em 20 lances em apenas uma vez em 10 mil tentativas no longo prazo - onde
 
-cada "tentativa" são 20 lances livres jogados - se minha afirmativa
+cada "tentativa" sÃ£o 20 lances livres jogados - se minha afirmativa
 
 de acertar 80% fosse verdadeira.
 
-O pequeno valor da probabilidade o convence de que minha afirmativa é falsa.
+O pequeno valor da probabilidade o convence de que minha afirmativa Ã© falsa.
 
 
 
-O *applet Reasoning of a Statistical Test* (conteúdo
+O *applet Reasoning of a Statistical Test* (conteÃºdo
 
-em inglês) faz uma animação do Exemplo 17.1.
+em inglÃªs) faz uma animaÃ§Ã£o do Exemplo 17.1.
 
-Você pode pedir a um jogador que faça lances
+VocÃª pode pedir a um jogador que faÃ§a lances
 
-livres até que os dados lhe convençam, ou não, de que ele faz
+livres atÃ© que os dados lhe convenÃ§am, ou nÃ£o, de que ele faz
 
 menos do que 80%.
 
-Testes de significância usam um vocabulário
+Testes de significÃ¢ncia usam um vocabulÃ¡rio
 
-elaborado, mas a ideia básica é simples: um resultado
+elaborado, mas a ideia bÃ¡sica Ã© simples: um resultado
 
-que raramente ocorreria se uma afirmativa fosse verdadeira é boa
+que raramente ocorreria se uma afirmativa fosse verdadeira Ã© boa
 
-evidência de que a afirmativa não seja verdadeira.
+evidÃªncia de que a afirmativa nÃ£o seja verdadeira.
 
 
 
-## 17.1 A lógica dos testes de significância
+## 17.1 A lÃ³gica dos testes de significÃ¢ncia
 
 . ... . .. .. . . . . . . . .. . . . . . . . . . . . . . . . .
 
 
 
-A lógica dos testes estatísticos, assim como a dos intervalos
+A lÃ³gica dos testes estatÃ­sticos, assim como a dos intervalos
 
-de confiança, se baseia no questionamento do que ocorreria
+de confianÃ§a, se baseia no questionamento do que ocorreria
 
-se repetíssemos a amostra ou experimento muitas vezes.
+se repetÃ­ssemos a amostra ou experimento muitas vezes.
 
-Agiremos novamente como se as "condições simples" listadas
+Agiremos novamente como se as "condiÃ§Ãµes simples" listadas
 
-em "Condições simples para inferência sobre uma média",
+em "CondiÃ§Ãµes simples para inferÃªncia sobre uma mÃ©dia",
 
-no Capítulo 16, fossem verdadeiras: temos uma AAS perfeita
+no CapÃ­tulo 16, fossem verdadeiras: temos uma AAS perfeita
 
-de uma população exatamente Normal com desvio-padrão $\\sigma$
+de uma populaÃ§Ã£o exatamente Normal com desvio-padrÃ£o $\\sigma$
 
-conhecido por nós. Eis um exemplo que analisaremos.
-
-
+conhecido por nÃ³s. Eis um exemplo que analisaremos.
 
 
 
-##### **EXEMPLO 17.2** Adoçantes de refrigerantes
+
+
+##### **EXEMPLO 17.2** AdoÃ§antes de refrigerantes
 
 
 
@@ -130,53 +130,53 @@ conhecido por nós. Eis um exemplo que analisaremos.
 
 
 
-Refrigerantes dietéticos usam adoçantes artificiais para
+Refrigerantes dietÃ©ticos usam adoÃ§antes artificiais para
 
-evitar o uso de açúcar. Esses adoçantes gradualmente
+evitar o uso de aÃ§Ãºcar. Esses adoÃ§antes gradualmente
 
-perdem sua doçura ao longo do tempo. Os fabricantes,
+perdem sua doÃ§ura ao longo do tempo. Os fabricantes,
 
-portanto, testam a perda de doçura dos refrigerantes novos
+portanto, testam a perda de doÃ§ura dos refrigerantes novos
 
-antes de colocá-los no mercado. Provadores treinados bebem
+antes de colocÃ¡-los no mercado. Provadores treinados bebem
 
 um pequeno gole de refrigerante, juntamente com bebidas de
 
-doçura padrão, e atribuem ao refrigerante um "escore de doçura"
+doÃ§ura padrÃ£o, e atribuem ao refrigerante um "escore de doÃ§ura"
 
 de 1 a 10, com maiores escores correspondendo a maior
 
-doçura. O refrigerante é, então, armazenado por um mês em
+doÃ§ura. O refrigerante Ã©, entÃ£o, armazenado por um mÃªs em
 
 alta temperatura para imitar o efeito do armazenamento por 4
 
 meses em temperatura ambiente. Cada provador atribui um
 
-escore ao refrigerante novamente após o armazenamento. Esse
+escore ao refrigerante novamente apÃ³s o armazenamento. Esse
 
-é um experimento de dados emparelhados. Nossos dados são as
+Ã© um experimento de dados emparelhados. Nossos dados sÃ£o as
 
-diferenças (escore antes do armazenamento menos escore após
+diferenÃ§as (escore antes do armazenamento menos escore apÃ³s
 
 o armazenamento) dos escores dos provadores. Quanto maior a
 
-diferença (diferença> O), maior será a perda de doçura.
+diferenÃ§a (diferenÃ§a> O), maior serÃ¡ a perda de doÃ§ura.
 
 Suponha sabermos que, para qualquer refrigerante,
 
-os escores de perda de doçura variem de provador para
+os escores de perda de doÃ§ura variem de provador para
 
-provador de acordo com uma distribuição Normal, com
+provador de acordo com uma distribuiÃ§Ã£o Normal, com
 
-desvio-padrão $\\sigma$ = l. A média $\\mu$ de todos os provadores
+desvio-padrÃ£o $\\sigma$ = l. A mÃ©dia $\\mu$ de todos os provadores
 
-mede a perda de doçura e é diferente para diferentes
+mede a perda de doÃ§ura e Ã© diferente para diferentes
 
 refrigerantes.
 
 
 
-A seguir, estão as perdas de doçura de um novo refrigerante,
+A seguir, estÃ£o as perdas de doÃ§ura de um novo refrigerante,
 
 medidas por 10 provadores treinados:
 
@@ -186,65 +186,65 @@ medidas por 10 provadores treinados:
 
 
 
-A perda média de doçura é dada pela média amostral $\\bar{x}$= 0,3, de modo que, em média, os 10 provadores encontraram
+A perda mÃ©dia de doÃ§ura Ã© dada pela mÃ©dia amostral $\\bar{x}$= 0,3, de modo que, em mÃ©dia, os 10 provadores encontraram
 
-uma pequena perda de doçura. Também, mais da
+uma pequena perda de doÃ§ura. TambÃ©m, mais da
 
 metade, (seis) dos provadores encontraram uma perda de
 
-doçura. Esses dados são uma boa evidência de que o refrigerante
+doÃ§ura. Esses dados sÃ£o uma boa evidÃªncia de que o refrigerante
 
-perdeu doçura com o armazenamento?
+perdeu doÃ§ura com o armazenamento?
 
 
 
-O raciocínio é o mesmo do Exemplo 17.1. Fazemos uma
+O raciocÃ­nio Ã© o mesmo do Exemplo 17.1. Fazemos uma
 
-afirmativa e perguntamos se os dados fornecem evidência
+afirmativa e perguntamos se os dados fornecem evidÃªncia
 
-contrária a ela. Procuramos evidência de que haja uma perda de
+contrÃ¡ria a ela. Procuramos evidÃªncia de que haja uma perda de
 
-doçura; logo, a afirmativa que testamos é que não há perda.
+doÃ§ura; logo, a afirmativa que testamos Ã© que nÃ£o hÃ¡ perda.
 
-Nesse caso, a perda média para a população de todos os provadores
+Nesse caso, a perda mÃ©dia para a populaÃ§Ã£o de todos os provadores
 
 treinados seria $\\mu$ = O.
 
 
 
-* Se a afirmativa de que $\\mu$ = O é verdadeira, a distribuição
+* Se a afirmativa de que $\\mu$ = O Ã© verdadeira, a distribuiÃ§Ã£o
 
-amostral de $\\bar{x}$ dos 10 provadores é Normal com média µ= O
+amostral de $\\bar{x}$ dos 10 provadores Ã© Normal com mÃ©dia Âµ= O
 
-e desvio-padrão
+e desvio-padrÃ£o
 
 $$\\frac{\\sigma}{\\sqrt{n}} = \\frac{1}{\\sqrt{10}}=0.316$$
 
 
 
-Esses são exatamente os cálculos que fizemos no Capítulo 15
+Esses sÃ£o exatamente os cÃ¡lculos que fizemos no CapÃ­tulo 15
 
-(ver Exemplo 15.5) e no Capítulo 16 (ver Exemplo 16.1). A
+(ver Exemplo 15.5) e no CapÃ­tulo 16 (ver Exemplo 16.1). A
 
-Figura 17.1 mostra essa distribuição amostral. Podemos julgar
+Figura 17.1 mostra essa distribuiÃ§Ã£o amostral. Podemos julgar
 
-se qualquer $\\bar{x}$ observado é surpreendente, localizando-o
+se qualquer $\\bar{x}$ observado Ã© surpreendente, localizando-o
 
-nessa distribuição.
+nessa distribuiÃ§Ã£o.
 
 
 
-• Para esse refrigerante, 10 provadores acusaram perda média $\\bar{x}$ = 0,3.
+â€¢ Para esse refrigerante, 10 provadores acusaram perda mÃ©dia $\\bar{x}$ = 0,3.
 
-É claro, a partir da Figura 17.1, que um $\\bar{x}$ desse
+Ã‰ claro, a partir da Figura 17.1, que um $\\bar{x}$ desse
 
-tamanho não é particularmente surpreendente. Ele poderia
+tamanho nÃ£o Ã© particularmente surpreendente. Ele poderia
 
-facilmente ocorrer apenas devido ao acaso, quando a média
+facilmente ocorrer apenas devido ao acaso, quando a mÃ©dia
 
-da população é $\\mu$ = O. O fato de obter $\\bar{x}$ = 0,3 para 10 provadores
+da populaÃ§Ã£o Ã© $\\mu$ = O. O fato de obter $\\bar{x}$ = 0,3 para 10 provadores
 
-não é forte evidência de que esse refrigerante perca doçura.
+nÃ£o Ã© forte evidÃªncia de que esse refrigerante perca doÃ§ura.
 
 
 
@@ -252,25 +252,25 @@ não é forte evidência de que esse refrigerante perca doçura.
 
 
 
-Distribuição amostral de $\\bar{x}$ quando $\\mu = 0$
+DistribuiÃ§Ã£o amostral de $\\bar{x}$ quando $\\mu = 0$
 
 
 
-Se o refrigerante não perde doçura no armazenamento,
+Se o refrigerante nÃ£o perde doÃ§ura no armazenamento,
 
-o escore médio $\\bar{x}$ para os 1O provadores terá esta
+o escore mÃ©dio $\\bar{x}$ para os 1O provadores terÃ¡ esta
 
-distribuição amostral.
+distribuiÃ§Ã£o amostral.
 
 O resultado real para uma AAS para o refrigerante foi $\\bar{x}$ = 0,3.
 
 Isso poderia acontecer facilmente por acaso.
 
-Uma amostra de perdas de doçura para outro refrigerante teve $\\bar{x}$ = 1,02.
+Uma amostra de perdas de doÃ§ura para outro refrigerante teve $\\bar{x}$ = 1,02.
 
-Isso está tão distante na curva Normal que é **boa evidência** de que
+Isso estÃ¡ tÃ£o distante na curva Normal que Ã© **boa evidÃªncia** de que
 
-esse refrigerante realmente perdeu doçura.
+esse refrigerante realmente perdeu doÃ§ura.
 
 
 
@@ -278,13 +278,13 @@ $\\bar{x}$ = 0,3 $\\bar{x}$ = l,02
 
 
 
-##### EXEMPLO 17.3 Adoçantes de refrigerantes, novamente
+##### EXEMPLO 17.3 AdoÃ§antes de refrigerantes, novamente
 
 ................. REFCOlA2
 
 
 
-A seguir, estão as perdas de doçura de um novo
+A seguir, estÃ£o as perdas de doÃ§ura de um novo
 
 refrigerante, conforme medidas por 10 provadores
 
@@ -296,17 +296,17 @@ treinados:
 
 
 
-A perda média de doçura é dada pela média amostral $\\bar{x}$ = 1,02.
+A perda mÃ©dia de doÃ§ura Ã© dada pela mÃ©dia amostral $\\bar{x}$ = 1,02.
 
-A maioria dos escores é positiva.
+A maioria dos escores Ã© positiva.
 
-Isto é, a maioria dos provadores encontrou uma perda de doçura.
+Isto Ã©, a maioria dos provadores encontrou uma perda de doÃ§ura.
 
-Mas as perdas são pequenas, e dois provadores (os escores negativos)
+Mas as perdas sÃ£o pequenas, e dois provadores (os escores negativos)
 
-acharam que o refrigerante ganhou doçura.
+acharam que o refrigerante ganhou doÃ§ura.
 
-Esses dados constituem **boa evidência** de que o refrigerante perdeu doçura
+Esses dados constituem **boa evidÃªncia** de que o refrigerante perdeu doÃ§ura
 
 no armazenamento?
 
@@ -314,13 +314,13 @@ no armazenamento?
 
 O teste de sabor para o novo refrigerante produziu $\\bar{x}$ = 1,02.
 
-Isso está bem longe, na cauda da curva Normal na Figura 17.1
+Isso estÃ¡ bem longe, na cauda da curva Normal na Figura 17.1
 
-\- tão longe que ***um valor observado desse tamanho raramente ocorreria por acaso se o verdadeiro $\\mu$ fosse O***.
+\- tÃ£o longe que ***um valor observado desse tamanho raramente ocorreria por acaso se o verdadeiro $\\mu$ fosse O***.
 
-Esse valor observado é boa evidência de que o verdadeiro $\\mu$ é, de
+Esse valor observado Ã© boa evidÃªncia de que o verdadeiro $\\mu$ Ã©, de
 
-fato, maior do que O - isto é, o refrigerante perdeu doçura.
+fato, maior do que O - isto Ã©, o refrigerante perdeu doÃ§ura.
 
 O fabricante deve reformular o novo refrigerante e tentar novamente.
 
@@ -334,79 +334,79 @@ O fabricante deve reformular o novo refrigerante e tentar novamente.
 
 O *Graduate ManAgementAdmission Test* (GMAT)
 
-é feito por indivíduos interessados em seguir a educação
+Ã© feito por indivÃ­duos interessados em seguir a educaÃ§Ã£o
 
-na graduação em administração. Os escores do GMAT
+na graduaÃ§Ã£o em administraÃ§Ã£o. Os escores do GMAT
 
-são utilizados como parte do processo de admissão para
+sÃ£o utilizados como parte do processo de admissÃ£o para
 
-mais de 6 mil programas de graduação em administração
+mais de 6 mil programas de graduaÃ§Ã£o em administraÃ§Ã£o
 
-em todo o mundo. O escore médio para todos os
+em todo o mundo. O escore mÃ©dio para todos os
 
-que fazem o teste é 563, com um desvio-padrão $\\sigma$ de 118.1
+que fazem o teste Ã© 563, com um desvio-padrÃ£o $\\sigma$ de 118.1
 
-Uma pesquisadora nas Filipinas está preocupada com o
+Uma pesquisadora nas Filipinas estÃ¡ preocupada com o
 
-desempenho no GMAT de não graduados nas Filipinas.
+desempenho no GMAT de nÃ£o graduados nas Filipinas.
 
-Ela acredita que, na época, o escore médio para os alunos
+Ela acredita que, na Ã©poca, o escore mÃ©dio para os alunos
 
-de último ano de faculdades nas Filipinas, que estão
+de Ãºltimo ano de faculdades nas Filipinas, que estÃ£o
 
-interessados em seguir a educação na graduação em administração,
+interessados em seguir a educaÃ§Ã£o na graduaÃ§Ã£o em administraÃ§Ã£o,
 
-será menor do que 563. Ela tem urna amostra
+serÃ¡ menor do que 563. Ela tem urna amostra
 
-aleatória de 250 alunos de último ano de faculdades nas
+aleatÃ³ria de 250 alunos de Ãºltimo ano de faculdades nas
 
-Filipinas interessados em seguir a educação na graduação
+Filipinas interessados em seguir a educaÃ§Ã£o na graduaÃ§Ã£o
 
-em administração que vão fazer o GMAT. Suponha que
+em administraÃ§Ã£o que vÃ£o fazer o GMAT. Suponha que
 
-saibamos que os escores GMAT são distribuídos Normalmente,
+saibamos que os escores GMAT sÃ£o distribuÃ­dos Normalmente,
 
-com desvio-padrão $\\sigma$ = 118.
+com desvio-padrÃ£o $\\sigma$ = 118.
 
-(a) Procuramos evidência contra a afirmativa de que
+(a) Procuramos evidÃªncia contra a afirmativa de que
 
-µ = 563. Qual é a distribuição amostral do escore
+Âµ = 563. Qual Ã© a distribuiÃ§Ã£o amostral do escore
 
-médio $\\bar{x}$ de uma amostra de 250 estudantes, se a
+mÃ©dio $\\bar{x}$ de uma amostra de 250 estudantes, se a
 
-afirmativa é verdadeira? Esboce a curva de densidade
+afirmativa Ã© verdadeira? Esboce a curva de densidade
 
-dessa distribuição. (Esboce uma curva Normal e,
+dessa distribuiÃ§Ã£o. (Esboce uma curva Normal e,
 
-então, marque no eixo os valores da média e 1, 2 e 3
+entÃ£o, marque no eixo os valores da mÃ©dia e 1, 2 e 3
 
-desvios-padrão da distribuição amostral de cada lado
+desvios-padrÃ£o da distribuiÃ§Ã£o amostral de cada lado
 
-da média.)
+da mÃ©dia.)
 
 
 
 (b) Suponha que os dados amostrais resultem em $\\bar{x}$ = 555.
 
-Marque esse ponto no eixo de seu esboço.
+Marque esse ponto no eixo de seu esboÃ§o.
 
 
 
 (c) Suponha que os dados amostrais resultem em $\\bar{x}$ = 540.
 
-Marque esse ponto em seu esboço. Usando
+Marque esse ponto em seu esboÃ§o. Usando
 
-seu esboço, explique, em linguagem simples, por que
+seu esboÃ§o, explique, em linguagem simples, por que
 
-um resultado é boa evidência de que o escore médio
+um resultado Ã© boa evidÃªncia de que o escore mÃ©dio
 
-de todos os estudantes de último ano de faculdades
+de todos os estudantes de Ãºltimo ano de faculdades
 
-nas Filipinas, interessados em fazer a graduação em
+nas Filipinas, interessados em fazer a graduaÃ§Ã£o em
 
-administração e que planejam fazer o GMAT, seria
+administraÃ§Ã£o e que planejam fazer o GMAT, seria
 
-menor do que 563, e o outro resultado não é.
+menor do que 563, e o outro resultado nÃ£o Ã©.
 
 
 
@@ -416,143 +416,143 @@ O *National lnstitute of Standards and Technology* (NIST)
 
 publica procedimentos para
 
-inspeção de conteúdos líquidos declarados em pacotes
+inspeÃ§Ã£o de conteÃºdos lÃ­quidos declarados em pacotes
 
-de produtos.2 A discussão desses procedimentos inclui
+de produtos.2 A discussÃ£o desses procedimentos inclui
 
-um exemplo de inspeção de peso de uma amostra de
+um exemplo de inspeÃ§Ã£o de peso de uma amostra de
 
-caixas de cookies finos de hortelã de uma companhia em
+caixas de cookies finos de hortelÃ£ de uma companhia em
 
-particular, que são rotuladas com o conteúdo de 1 lb
+particular, que sÃ£o rotuladas com o conteÃºdo de 1 lb
 
-de cookies. Uma MS de 12 caixas é pesada de acordo
+de cookies. Uma MS de 12 caixas Ã© pesada de acordo
 
-com os procedimentos do NIST, e os pesos líquidos
+com os procedimentos do NIST, e os pesos lÃ­quidos
 
-são registrados. Suponha que os pesos líquidos para a
+sÃ£o registrados. Suponha que os pesos lÃ­quidos para a
 
-população de todas as caixas de cookies finos de hortelã
+populaÃ§Ã£o de todas as caixas de cookies finos de hortelÃ£
 
-dessa companhia sejam provenientes de uma população
+dessa companhia sejam provenientes de uma populaÃ§Ã£o
 
-Normal, com peso líquido médio $\\mu$ e desvio-padrão $\\sigma$ = 0,01 lb.
+Normal, com peso lÃ­quido mÃ©dio $\\mu$ e desvio-padrÃ£o $\\sigma$ = 0,01 lb.
 
 
 
-(a) Procuramos evidência contra a afirmativa de que
+(a) Procuramos evidÃªncia contra a afirmativa de que
 
-µ = 1,000. Qual é a distribuição amostral da média $\\bar{x}$
+Âµ = 1,000. Qual Ã© a distribuiÃ§Ã£o amostral da mÃ©dia $\\bar{x}$
 
 em muitas amostras de lf caixas, se a afirmativa for
 
-verdadeira? Faça um esboço da curva Normal para a
+verdadeira? FaÃ§a um esboÃ§o da curva Normal para a
 
-distribuição. (Desenhe uma curva Normal e, então,
+distribuiÃ§Ã£o. (Desenhe uma curva Normal e, entÃ£o,
 
-marque no eixo os valores da média e 1, 2 e 3 desviospadrão
+marque no eixo os valores da mÃ©dia e 1, 2 e 3 desviospadrÃ£o
 
-de cada lado da média.)
+de cada lado da mÃ©dia.)
 
 
 
-(b) Suponha que a média amostral seja $\\bar{x}$ = 0,998.
+(b) Suponha que a mÃ©dia amostral seja $\\bar{x}$ = 0,998.
 
-Marque esse valor no eixo de seu esboço. Outra
+Marque esse valor no eixo de seu esboÃ§o. Outra
 
 amostra de 12 caixas temi= 1,010 para 12 medidas.
 
-Marque esse valor no eixo, também. Explique, em
+Marque esse valor no eixo, tambÃ©m. Explique, em
 
 linguagem simples, por que um resultado fornece
 
-boa evidência de que a média populacional de pesos
+boa evidÃªncia de que a mÃ©dia populacional de pesos
 
-líquidos de caixas de cookies difere de 1,000 e por que
+lÃ­quidos de caixas de cookies difere de 1,000 e por que
 
-o outro resultado não dá qualquer razão de dúvida de
+o outro resultado nÃ£o dÃ¡ qualquer razÃ£o de dÃºvida de
 
 que 1,000 seja correto.
 
 
 
-## 17.2 Estabelecimento de hipóteses
+## 17.2 Estabelecimento de hipÃ³teses
 
 .. . ... ... .. ..... .. ...... ... ... ...
 
 
 
-Um teste estatístico de significância começa com um enunciado
+Um teste estatÃ­stico de significÃ¢ncia comeÃ§a com um enunciado
 
 cuidadoso das afirmativas que queremos comparar. No
 
-Exemplo 17.3, vimos que os dados de teste de sabor não são
+Exemplo 17.3, vimos que os dados de teste de sabor nÃ£o sÃ£o
 
-plausíveis se, de fato, o novo refrigerante não perde doçura.
+plausÃ­veis se, de fato, o novo refrigerante nÃ£o perde doÃ§ura.
 
-Como a lógica dos testes procura por evidência contrária à afirmativa,
+Como a lÃ³gica dos testes procura por evidÃªncia contrÃ¡ria Ã  afirmativa,
 
-começamos com a afirmativa contra a qual buscamos
+comeÃ§amos com a afirmativa contra a qual buscamos
 
-evidência, tal qual "nenhuma perda de doçura".
-
-
-
-##### Hipóteses nula e alternativa
+evidÃªncia, tal qual "nenhuma perda de doÃ§ura".
 
 
 
-A afirmativa testada por um teste estatístico de significância é
-
-chamada de hipótese nula. O teste é planejado para avaliar a
-
-força da evidência contra a hipótese nula.
-
-Usualmente, a hipótese nula é uma afirmativa de "nenhum efeito" ou "nenhuma
-
-diferença".
+##### HipÃ³teses nula e alternativa
 
 
 
-A afirmativa sobre a população para a qual estamos tentando
+A afirmativa testada por um teste estatÃ­stico de significÃ¢ncia Ã©
 
-encontrar evidência a favor é a hipótese alternativa.
+chamada de hipÃ³tese nula. O teste Ã© planejado para avaliar a
 
-A hipótese alternativa é unilateral se afirmar que um parâmetro é
+forÃ§a da evidÃªncia contra a hipÃ³tese nula.
 
-maior do que ou menor do que o valor da hipótese nula.
+Usualmente, a hipÃ³tese nula Ã© uma afirmativa de "nenhum efeito" ou "nenhuma
 
-Ela é bilateral se afirmar que o parâmetro é diferente do valor nulo.
+diferenÃ§a".
+
+
+
+A afirmativa sobre a populaÃ§Ã£o para a qual estamos tentando
+
+encontrar evidÃªncia a favor Ã© a hipÃ³tese alternativa.
+
+A hipÃ³tese alternativa Ã© unilateral se afirmar que um parÃ¢metro Ã©
+
+maior do que ou menor do que o valor da hipÃ³tese nula.
+
+Ela Ã© bilateral se afirmar que o parÃ¢metro Ã© diferente do valor nulo.
 
 (Pode ser menor ou maior.)
 
 
 
-Abrevia-se a hipótese nula como H0 e a hipótese alternativa
+Abrevia-se a hipÃ³tese nula como H0 e a hipÃ³tese alternativa
 
-como Ha. ***As hipóteses sempre se referem a um parâmetro populacional,***
+como Ha. ***As hipÃ³teses sempre se referem a um parÃ¢metro populacional,***
 
-***não a um resultado amostral particular***. Certifique-se
+***nÃ£o a um resultado amostral particular***. Certifique-se
 
-de ***estabelecer H0 e Ha em termos de parâmetros da população***.
+de ***estabelecer H0 e Ha em termos de parÃ¢metros da populaÃ§Ã£o***.
 
-Como Ha expressa o efeito a favor do qual esperamos encontrar evidência, é
+Como Ha expressa o efeito a favor do qual esperamos encontrar evidÃªncia, Ã©
 
-frequentemente mais fácil começar pelo enunciado de Ha e, então,
+frequentemente mais fÃ¡cil comeÃ§ar pelo enunciado de Ha e, entÃ£o,
 
-enunciar H0 como uma afirmativa de que o efeito esperado não
+enunciar H0 como uma afirmativa de que o efeito esperado nÃ£o
 
 esteja presente. H0, em geral, inclui "igual".
 
 
 
-Nos Exemplos 17.2 e 17.3, estamos buscando evidência
+Nos Exemplos 17.2 e 17.3, estamos buscando evidÃªncia
 
-a favor de perda na doçura. A hipótese nula diz "nenhuma
+a favor de perda na doÃ§ura. A hipÃ³tese nula diz "nenhuma
 
-perda" em média em uma grande população de provadores. A
+perda" em mÃ©dia em uma grande populaÃ§Ã£o de provadores. A
 
-hipótese alternativa diz "há uma perda". Logo, as hipóteses são
+hipÃ³tese alternativa diz "hÃ¡ uma perda". Logo, as hipÃ³teses sÃ£o
 
 
 
@@ -560,49 +560,49 @@ $$H\_0: \\mu=0 \\\\ H\_a: \\um > 0$$
 
 
 
-A ***hipótese alternativa*** é ***unilateral*** porque estamos interessados
+A ***hipÃ³tese alternativa*** Ã© ***unilateral*** porque estamos interessados
 
-apenas em saber se o refrigerante perdeu doçura.3
+apenas em saber se o refrigerante perdeu doÃ§ura.3
 
 
 
-##### EXEMPLO 17.4 Estudo da satisfação no emprego
+##### EXEMPLO 17.4 Estudo da satisfaÃ§Ã£o no emprego
 
 ........................
 
 
 
-A satisfação no emprego de operários de montadoras difere
+A satisfaÃ§Ã£o no emprego de operÃ¡rios de montadoras difere
 
-quando seu trabalho é ritmado pelas máquinas em vez de
+quando seu trabalho Ã© ritmado pelas mÃ¡quinas em vez de
 
 autorritmado? Aloque trabalhadores a uma linha de montagem
 
-que se move em um ritmo fixo ou a uma condição
+que se move em um ritmo fixo ou a uma condiÃ§Ã£o
 
 autorritmada. Todos os sujeitos trabalham em ambas as
 
-condições, em ordem aleatória. Esse é um planejamento
+condiÃ§Ãµes, em ordem aleatÃ³ria. Esse Ã© um planejamento
 
-de dados emparelhados. Após 2 semanas em cada condição
+de dados emparelhados. ApÃ³s 2 semanas em cada condiÃ§Ã£o
 
-de trabalho, os trabalhadores são submetidos a um teste de
+de trabalho, os trabalhadores sÃ£o submetidos a um teste de
 
-satisfação com o emprego. A variável de resposta é a diferença
+satisfaÃ§Ã£o com o emprego. A variÃ¡vel de resposta Ã© a diferenÃ§a
 
-entre os escores de satisfação, autorritmado menos
+entre os escores de satisfaÃ§Ã£o, autorritmado menos
 
-ritmado pela máquina.
+ritmado pela mÃ¡quina.
 
 
 
-O parâmetro de interesse é a médiaµ das diferenças dos
+O parÃ¢metro de interesse Ã© a mÃ©diaÂµ das diferenÃ§as dos
 
-escores na população de todos os operários da montadora.
+escores na populaÃ§Ã£o de todos os operÃ¡rios da montadora.
 
-A hipótese nula diz que não há diferença entre trabalho
+A hipÃ³tese nula diz que nÃ£o hÃ¡ diferenÃ§a entre trabalho
 
-autorritmado e ritmado pela máquina -ou seja,
+autorritmado e ritmado pela mÃ¡quina -ou seja,
 
 
 
@@ -610,13 +610,13 @@ Ho: $\\mu$ = O
 
 
 
-Os autores do estudo queriam saber se as duas condições
+Os autores do estudo queriam saber se as duas condiÃ§Ãµes
 
-de trabalho geravam níveis diferentes de satisfação no
+de trabalho geravam nÃ­veis diferentes de satisfaÃ§Ã£o no
 
-emprego. Eles não especificaram a direção da diferença.
+emprego. Eles nÃ£o especificaram a direÃ§Ã£o da diferenÃ§a.
 
-A hipótese alternativa é, portanto, bilateral:
+A hipÃ³tese alternativa Ã©, portanto, bilateral:
 
 
 
@@ -626,37 +626,37 @@ Ha: $\\mu$ <> O
 
 
 
-###### ESTATÍSTICA NO MUNDO REAL
+###### ESTATÃSTICA NO MUNDO REAL
 
-Hipóteses honestas?
+HipÃ³teses honestas?
 
 
 
-Pessoas chinesas e japonesas, para as quais o número 4 é de má sorte,
+Pessoas chinesas e japonesas, para as quais o nÃºmero 4 Ã© de mÃ¡ sorte,
 
-morrem mais frequentemente no quarto dia do mês do que em outros dias.
+morrem mais frequentemente no quarto dia do mÃªs do que em outros dias.
 
-Os autores de um estudo fizeram um teste estatístico da afirmativa de que
+Os autores de um estudo fizeram um teste estatÃ­stico da afirmativa de que
 
 o quarto dia tem mais mortes do que os outros dias, e encontraram boa
 
-evidência a favor dessa afirmativa. Você acredita nisso? Não, se os autores
+evidÃªncia a favor dessa afirmativa. VocÃª acredita nisso? NÃ£o, se os autores
 
-examinaram todos os dias, tomaram o que tinha mais mortes e, então,
+examinaram todos os dias, tomaram o que tinha mais mortes e, entÃ£o,
 
-fizeram a afirmativa aser testada "esse dia é diferente". Um crítico levantou
+fizeram a afirmativa aser testada "esse dia Ã© diferente". Um crÃ­tico levantou
 
-esse problema, e os autores replicaram, "Não, nós tínhamos o dia 4 em
+esse problema, e os autores replicaram, "NÃ£o, nÃ³s tÃ­nhamos o dia 4 em
 
-mente antes, de modo que nosso teste é legítimo".
+mente antes, de modo que nosso teste Ã© legÃ­timo".
 
 
 
-As hipóteses devem expressar as expectativas ou suspeitas
+As hipÃ³teses devem expressar as expectativas ou suspeitas
 
 que temos antes de vermos os dados.
 
-É **trapaça** olhar primeiro os dados e então estabelecer hipóteses
+Ã‰ **trapaÃ§a** olhar primeiro os dados e entÃ£o estabelecer hipÃ³teses
 
 que se ajustem ao que os dados mostram. Por exemplo, os
 
@@ -664,11 +664,11 @@ dados para o estudo no Exemplo 17.4 mostraram que os trabalhadores
 
 estavam mais satisfeitos com o trabalho autorritmado,
 
-mas isto não deveria influenciar sua escolha de Ha.
+mas isto nÃ£o deveria influenciar sua escolha de Ha.
 
-Se você não tem em mente uma direção específica firmemente
+Se vocÃª nÃ£o tem em mente uma direÃ§Ã£o especÃ­fica firmemente
 
-estabelecida de antemão, use uma alternativa bilateral.
+estabelecida de antemÃ£o, use uma alternativa bilateral.
 
 
 
@@ -676,221 +676,221 @@ estabelecida de antemão, use uma alternativa bilateral.
 
 
 
-###### 17.3 GMAT (continuação).
+###### 17.3 GMAT (continuaÃ§Ã£o).
 
-Estabeleça as hipóteses nula e alternativa para o estudo do desempenho no GMAT de
+EstabeleÃ§a as hipÃ³teses nula e alternativa para o estudo do desempenho no GMAT de
 
-alunos do último ano de faculdades nas Filipinas no Exercício 17.1.
+alunos do Ãºltimo ano de faculdades nas Filipinas no ExercÃ­cio 17.1.
 
-A hipótese alternativa é unilateral ou bilateral?
+A hipÃ³tese alternativa Ã© unilateral ou bilateral?
 
 
 
-###### 17.4 Inspecionando pesos em caixas de cookies (continuação).
+###### 17.4 Inspecionando pesos em caixas de cookies (continuaÃ§Ã£o).
 
-Estabeleça as hipóteses nula e alternativa
+EstabeleÃ§a as hipÃ³teses nula e alternativa
 
-para o estudo da inspeção de pesos líquidos de caixas
+para o estudo da inspeÃ§Ã£o de pesos lÃ­quidos de caixas
 
-de cookies descrita no Exercício 17.2. A hipótese alternativa
+de cookies descrita no ExercÃ­cio 17.2. A hipÃ³tese alternativa
 
-é unilateral ou bilateral?
+Ã© unilateral ou bilateral?
 
 
 
 ###### 17.5 Muito cedo.
 
-Os exames em uma grande turma de estatística
+Os exames em uma grande turma de estatÃ­stica
 
-de múltiplas seções são ajustados depois da pontuação,
+de mÃºltiplas seÃ§Ãµes sÃ£o ajustados depois da pontuaÃ§Ã£o,
 
-de modo que o escore médio é 70. O professor acha
+de modo que o escore mÃ©dio Ã© 70. O professor acha
 
-que os estudantes da seção de oito horas da manhã têm
+que os estudantes da seÃ§Ã£o de oito horas da manhÃ£ tÃªm
 
-problemas para prestarem atenção porque estão sonolentos
+problemas para prestarem atenÃ§Ã£o porque estÃ£o sonolentos
 
-e suspeita que esses alunos têm um escore médio mais baixo do que a
+e suspeita que esses alunos tÃªm um escore mÃ©dio mais baixo do que a
 
-turma como um todo. Os alunos da seção de oito horas da manhã
+turma como um todo. Os alunos da seÃ§Ã£o de oito horas da manhÃ£
 
-desse semestre podem ser considerados como uma amostra da população
+desse semestre podem ser considerados como uma amostra da populaÃ§Ã£o
 
 de todos os estudantes do curso,
 
-de modo que o professor compara o escore médio deles
+de modo que o professor compara o escore mÃ©dio deles
 
-com 70. Estabeleça as hipóteses H0 e Ha.
+com 70. EstabeleÃ§a as hipÃ³teses H0 e Ha.
 
 
 
 ###### 17.6 Rendas de mulheres.
 
-A renda média de mulheres
+A renda mÃ©dia de mulheres
 
-americanas que trabalham em tempo integral e têm apenas
+americanas que trabalham em tempo integral e tÃªm apenas
 
-educação de nível médio é de 37.616 dólares. Você
+educaÃ§Ã£o de nÃ­vel mÃ©dio Ã© de 37.616 dÃ³lares. VocÃª
 
-especula se a renda média de mulheres formadas pela escola
+especula se a renda mÃ©dia de mulheres formadas pela escola
 
-de Ensino Médio local e que trabalham em tempo
+de Ensino MÃ©dio local e que trabalham em tempo
 
-integral, mas têm apenas o certificado do Ensino Médio,
+integral, mas tÃªm apenas o certificado do Ensino MÃ©dio,
 
-é diferente da média nacional. Você obtém informação
+Ã© diferente da mÃ©dia nacional. VocÃª obtÃ©m informaÃ§Ã£o
 
 sobre renda a partir de uma MS de 62 mulheres formadas
 
-em sua escola, com apenas Ensino Médio completo e
+em sua escola, com apenas Ensino MÃ©dio completo e
 
 que trabalham em tempo integral, e encontra $\\bar{x}$ = 36.453
 
-dólares. Quais são suas hipóteses nula e alternativa?
+dÃ³lares. Quais sÃ£o suas hipÃ³teses nula e alternativa?
 
 
 
-###### 17.7 Estabelecendo hipóteses.
+###### 17.7 Estabelecendo hipÃ³teses.
 
 No planejamento de um
 
-estudo sobre o número de dias, nos últimos 30 dias, em
+estudo sobre o nÃºmero de dias, nos Ãºltimos 30 dias, em
 
-que os estudantes do Ensino Médio digitaram enquanto
+que os estudantes do Ensino MÃ©dio digitaram enquanto
 
 dirigiam alguma vez durante o dia, um professor estabelece
 
-as hipóteses como
+as hipÃ³teses como
 
 H0: $\\bar{x}$ = 15 dias
 
 Ha: $\\bar{x}$ > 15 dias
 
-O que há de errado nelas?
+O que hÃ¡ de errado nelas?
 
 
 
-## 17.3 Valor P e significância estatística
+## 17.3 Valor P e significÃ¢ncia estatÃ­stica
 
 ..................................
 
 
 
-A ideia do estabelecimento de uma hipótese nula, contra a
+A ideia do estabelecimento de uma hipÃ³tese nula, contra a
 
-qual desejamos encontrar evidência, parece estranha no início.
+qual desejamos encontrar evidÃªncia, parece estranha no inÃ­cio.
 
-Pode ser útil pensar em um julgamento criminal. O acusado é
+Pode ser Ãºtil pensar em um julgamento criminal. O acusado Ã©
 
-"inocente até que se prove o contrário". Isto é, a hipótese nula
+"inocente atÃ© que se prove o contrÃ¡rio". Isto Ã©, a hipÃ³tese nula
 
-é inocente e a acusação deve providenciar provas convincentes
+Ã© inocente e a acusaÃ§Ã£o deve providenciar provas convincentes
 
-contra essa hipótese. É exatamente assim que funcionam
+contra essa hipÃ³tese. Ã‰ exatamente assim que funcionam
 
-os testes estatísticos de significância, embora, em estatística,
+os testes estatÃ­sticos de significÃ¢ncia, embora, em estatÃ­stica,
 
-lidemos com evidência fornecida por dados e usemos a probabilidade
+lidemos com evidÃªncia fornecida por dados e usemos a probabilidade
 
-para dizer quão forte é a evidência.
-
-
-
-A probabilidade que mede a força \[rectius, ***significância***] da evidência contra
-
-a hipótese nula é chamada de valor P.
-
-Testes estatísticos, em geral, funcionam assim:
+para dizer quÃ£o forte Ã© a evidÃªncia.
 
 
 
-##### Estatística de teste e valor P
+A probabilidade que mede a forÃ§a \[rectius, ***significÃ¢ncia***] da evidÃªncia contra
+
+a hipÃ³tese nula Ã© chamada de valor P.
+
+Testes estatÃ­sticos, em geral, funcionam assim:
 
 
 
-Uma ***estatística de teste*** calculada a partir de dados amostrais
+##### EstatÃ­stica de teste e valor P
 
-***mede quanto os dados divergem do que esperaríamos***, ***se a hipótese***
+
+
+Uma ***estatÃ­stica de teste*** calculada a partir de dados amostrais
+
+***mede quanto os dados divergem do que esperarÃ­amos***, ***se a hipÃ³tese***
 
 ***nula H0 fosse verdadeira***.
 
-Valores não usualmente grandes da estatística mostram que os dados ***não*** \[***sim***] são consistentes com H0.
+Valores nÃ£o usualmente grandes da estatÃ­stica mostram que os dados ***nÃ£o*** \[***sim***] sÃ£o consistentes com H0.
 
 
 
 A probabilidade, calculada supondo H0 verdadeira, de que a
 
-estatística de teste assuma um valor tão ou mais extremo do
+estatÃ­stica de teste assuma um valor tÃ£o ou mais extremo do
 
-que o valor realmente observado é chamada de valor P do teste.
-
-
-
-Quanto menor o valor P, mais forte \[rectius, ***significante***] é a evidência contra H0 fornecida pelos dados.
+que o valor realmente observado Ã© chamada de valor P do teste.
 
 
 
-**Valores P pequenos são evidência contra H0**, pois ***afirmam***
+Quanto menor o valor P, mais forte \[rectius, ***significante***] Ã© a evidÃªncia contra H0 fornecida pelos dados.
 
-***que o resultado observado tem ocorrência improvável se Ho for***
+
+
+**Valores P pequenos sÃ£o evidÃªncia contra H0**, pois ***afirmam***
+
+***que o resultado observado tem ocorrÃªncia improvÃ¡vel se Ho for***
 
 ***verdadeira***.
 
 
 
-**Valores P grandes não fornecem evidência contra H0**.
+**Valores P grandes nÃ£o fornecem evidÃªncia contra H0**.
 
-Isso se aplica à hipótese nula em geral, incluindo aquelas
+Isso se aplica Ã  hipÃ³tese nula em geral, incluindo aquelas
 
-que envolvem proporções ou aquelas que envolvem a comparação
+que envolvem proporÃ§Ãµes ou aquelas que envolvem a comparaÃ§Ã£o
 
-de médias de duas populações (ver, por exemplo, Exercícios
+de mÃ©dias de duas populaÃ§Ãµes (ver, por exemplo, ExercÃ­cios
 
 17.10, 17.32, 17.33, 17.36 e 17.37).
 
 
 
-Quão pequeno deve ser o valor P para ser evidência convincente
+QuÃ£o pequeno deve ser o valor P para ser evidÃªncia convincente
 
-contra Ho? Discutiremos isso em detalhe na Seção
+contra Ho? Discutiremos isso em detalhe na SeÃ§Ã£o
 
-18.3, e muitos usuários de estatística consideram valores menores
+18.3, e muitos usuÃ¡rios de estatÃ­stica consideram valores menores
 
 do que 0,05 ou 0,01 como convincentes.
 
 
 
-Um exemplo desse processo de cálculo de uma estatística
+Um exemplo desse processo de cÃ¡lculo de uma estatÃ­stica
 
-de teste e do correspondente valor P será dado na Seção 17.4.
+de teste e do correspondente valor P serÃ¡ dado na SeÃ§Ã£o 17.4.
 
-Na prática, usa-se um programa estatístico para a realização
+Na prÃ¡tica, usa-se um programa estatÃ­stico para a realizaÃ§Ã£o
 
-dos testes estatísticos. Programas estatísticos fornecem o valor
+dos testes estatÃ­sticos. Programas estatÃ­sticos fornecem o valor
 
-P de um teste quando se introduzem as hipóteses nula e alternativa
+P de um teste quando se introduzem as hipÃ³teses nula e alternativa
 
-e os dados. Assim, o mais importante é o entendimento
+e os dados. Assim, o mais importante Ã© o entendimento
 
 sobre o que diz um valor P.
 
 
 
-##### EXEMPLO 17.5 Adoçante de refrigerantes: valor P unilateral
+##### EXEMPLO 17.5 AdoÃ§ante de refrigerantes: valor P unilateral
 
 ...................
 
-O estudo da perda de doçura nos Exemplos 17.2 e 17.3 testa
+O estudo da perda de doÃ§ura nos Exemplos 17.2 e 17.3 testa
 
-as seguintes hipóteses:
+as seguintes hipÃ³teses:
 
-Como a hipótese alternativa diz que $\\mu$ > O, valores de $\\bar{x}$
+Como a hipÃ³tese alternativa diz que $\\mu$ > O, valores de $\\bar{x}$
 
-maiores do que O favorecem Ha em detrimento de H0. A estatística
+maiores do que O favorecem Ha em detrimento de H0. A estatÃ­stica
 
-de teste compara o $\\bar{x}$: observado com o valor da hipótese
+de teste compara o $\\bar{x}$: observado com o valor da hipÃ³tese
 
-µ = O. Por enquanto, vamos nos concentrar no valor P.
+Âµ = O. Por enquanto, vamos nos concentrar no valor P.
 
 
 
@@ -898,33 +898,33 @@ O experimento apresentado nos Exemplos 17.2 e 17.3
 
 realmente comparava dois refrigerantes. Para o primeiro
 
-refrigerante, os 10 provadores encontraram uma perda média
+refrigerante, os 10 provadores encontraram uma perda mÃ©dia
 
-de doçura de $\\bar{x}$ = 0,3. Para o segundo, os dados forneceram $\\bar{x}$ = 1,02.
+de doÃ§ura de $\\bar{x}$ = 0,3. Para o segundo, os dados forneceram $\\bar{x}$ = 1,02.
 
-O valor P para cada teste é a probabilidade de obter um $\\bar{x}$
+O valor P para cada teste Ã© a probabilidade de obter um $\\bar{x}$
 
-desse tamanho quando a perda média de doçura é realmente $\\mu$ = O.
-
-
-
-A área sombreada na Figura 17.2 mostra o valor P quando
-
-$\\bar{x}$ = 0,3. A curva Normal é a distribuição amostral de $\\bar{x}$
-
-quando a hipótese nula H0: $\\mu$ = O é verdadeira, usando o
-
-desvio-padrão populacional $\\sigma$ = 1.
-
-Um cálculo de probabilidade Normal (Exercício 17.8) mostra que o valor P é P($\\bar{x}$ = 0,3) = 0,1714.
+desse tamanho quando a perda mÃ©dia de doÃ§ura Ã© realmente $\\mu$ = O.
 
 
 
-Um valor tão grande quanto $\\bar{x}$ = 0,3 apareceria por
+A Ã¡rea sombreada na Figura 17.2 mostra o valor P quando
+
+$\\bar{x}$ = 0,3. A curva Normal Ã© a distribuiÃ§Ã£o amostral de $\\bar{x}$
+
+quando a hipÃ³tese nula H0: $\\mu$ = O Ã© verdadeira, usando o
+
+desvio-padrÃ£o populacional $\\sigma$ = 1.
+
+Um cÃ¡lculo de probabilidade Normal (ExercÃ­cio 17.8) mostra que o valor P Ã© P($\\bar{x}$ = 0,3) = 0,1714.
+
+
+
+Um valor tÃ£o grande quanto $\\bar{x}$ = 0,3 apareceria por
 
 acaso em 17% de todas as amostras, quando H0: $\\mu$ = O fosse verdadeira.
 
-Assim, a observação de $\\bar{x}$ = 0,3 **não é evidência**
+Assim, a observaÃ§Ã£o de $\\bar{x}$ = 0,3 **nÃ£o Ã© evidÃªncia**
 
 forte \[*rectius*, **significativa**] contra H0.
 
@@ -932,11 +932,11 @@ Por outro lado, pode-se verificar que a probabilidade
 
 de que $\\bar{x}$ seja 1,02 ou maior, quando de fato $\\mu$ = O,
 
-é de apenas 0,0006. Ou seja, raramente observaríamos uma
+Ã© de apenas 0,0006. Ou seja, raramente observarÃ­amos uma
 
-perda média de doçura de 1,02 ou maior se H0 fosse verdadeira.
+perda mÃ©dia de doÃ§ura de 1,02 ou maior se H0 fosse verdadeira.
 
-Esse **valor P pequeno** fornece forte \[*rectius*, **significativa**] **evidência contra**
+Esse **valor P pequeno** fornece forteÂ \[*rectius*, **significativa**] **evidÃªncia contra**
 
 **H0 e a favor da alternativa Ha: $\\mu$ > O**.
 
@@ -950,23 +950,23 @@ Esse **valor P pequeno** fornece forte \[*rectius*, **significativa**] **evidênc
 
 O valor P unilateral para o
 
-refrigerante com perda média de
+refrigerante com perda mÃ©dia de
 
-doçura $\\bar{x}$ = 0,3, para o Exemplo 17.5.
+doÃ§ura $\\bar{x}$ = 0,3, para o Exemplo 17.5.
 
 A figura mostra tanto a
 
-entrada quanto a saída para
+entrada quanto a saÃ­da para
 
 o *applet P-Value of a Test of*
 
-*Significance* (conteúdo em inglês).
+*Significance* (conteÃºdo em inglÃªs).
 
-Note que o valor P é a área
+Note que o valor P Ã© a Ã¡rea
 
-sombreada sob a curva, não a
+sombreada sob a curva, nÃ£o a
 
-área sem sombreamento.
+Ã¡rea sem sombreamento.
 
 
 
@@ -1008,89 +1008,89 @@ P-value = 0.1714
 
 
 
-A Figura 17.2 é, na verdade, a saída
+A Figura 17.2 Ã©, na verdade, a saÃ­da
 
-do *applet P-Value of a Test of Significance* (conteúdo em
+do *applet P-Value of a Test of Significance* (conteÃºdo em
 
-inglês), junto com a informação introduzida no
+inglÃªs), junto com a informaÃ§Ã£o introduzida no
 
 programa.
 
-Esse *applet* automatiza o trabalho da determinação
+Esse *applet* automatiza o trabalho da determinaÃ§Ã£o
 
 de valores P para amostras de tamanho 50 ou menor, sob as
 
-"condições simples" para inferência sobre uma média.
+"condiÃ§Ãµes simples" para inferÃªncia sobre uma mÃ©dia.
 
 
 
-A hipótese alternativa estabelece a direção que conta como
+A hipÃ³tese alternativa estabelece a direÃ§Ã£o que conta como
 
-evidência contra H0. No Exemplo 17.5, apenas valores grandes,
+evidÃªncia contra H0. No Exemplo 17.5, apenas valores grandes,
 
-positivos, contam, porque a alternativa é unilateral do lado mais
+positivos, contam, porque a alternativa Ã© unilateral do lado mais
 
-alto. Se a alternativa for bilateral, ambas as direções contam.
-
-
-
-##### EXEMPLO 17.6 Satisfação no emprego: valor P bilateral
+alto. Se a alternativa for bilateral, ambas as direÃ§Ãµes contam.
 
 
 
-O estudo sobre satisfação no emprego no Exemplo 17.4 requer que testemos
+##### EXEMPLO 17.6 SatisfaÃ§Ã£o no emprego: valor P bilateral
 
- 
+
+
+O estudo sobre satisfaÃ§Ã£o no emprego no Exemplo 17.4 requer que testemos
+
+Â 
 
 Ho: $\\mu$ = 0
 
 Ha: $\\mu$ <> 0
 
- 
+Â 
 
-Suponha que saibamos que as diferenças nos escores de
+Suponha que saibamos que as diferenÃ§as nos escores de
 
-satisfação (autorritmado menos ritmado pela máquina) na
+satisfaÃ§Ã£o (autorritmado menos ritmado pela mÃ¡quina) na
 
-população de todos os trabalhadores sigam uma distribuição
+populaÃ§Ã£o de todos os trabalhadores sigam uma distribuiÃ§Ã£o
 
-Normal, com desvio-padrão $\\sigma$ = 60.
+Normal, com desvio-padrÃ£o $\\sigma$ = 60.
 
 
 
 Dados de 18 trabalhadores fornecem $\\bar{x}$ = 17.
 
-Isto é, esses trabalhadores preferem, na média, o ambiente autorritmado.
+Isto Ã©, esses trabalhadores preferem, na mÃ©dia, o ambiente autorritmado.
 
-Como a **alternativa é bilateral**, o valor P é a probabilidade
+Como a **alternativa Ã© bilateral**, o valor P Ã© a probabilidade
 
-de obter $\\bar{x}$ pelo menos tão distante de $\\mu$ = O, em ambas as
+de obter $\\bar{x}$ pelo menos tÃ£o distante de $\\mu$ = O, em ambas as
 
-direções, quanto o valor observado $\\bar{x}$ = 17.
+direÃ§Ãµes, quanto o valor observado $\\bar{x}$ = 17.
 
 
 
-Introduza a informação para esse exemplo no
+Introduza a informaÃ§Ã£o para esse exemplo no
 
 *applet P-Value of a Test of Significance* e clique
 
 em "Show P" (mostrar P). A Figura 17.3 mostra a
 
-saída do *applet*, bem como a informação introduzida. O valor P
+saÃ­da do *applet*, bem como a informaÃ§Ã£o introduzida. O valor P
 
-é a soma das duas áreas sombreadas sob a curva Normal.
+Ã© a soma das duas Ã¡reas sombreadas sob a curva Normal.
 
 
 
-Ele é P = 0,2293. Valores tão distantes de O quanto $\\bar{x}$ = 17
+Ele Ã© P = 0,2293. Valores tÃ£o distantes de O quanto $\\bar{x}$ = 17
 
-(em qualquer direção) aconteceriam 23% das vezes, quando
+(em qualquer direÃ§Ã£o) aconteceriam 23% das vezes, quando
 
-a verdadeira média populacional é µ= O.
+a verdadeira mÃ©dia populacional Ã© Âµ= O.
 
-Um resultado que ocorreria tão frequentemente quando H0 é verdadeira **não é**
+Um resultado que ocorreria tÃ£o frequentemente quando H0 Ã© verdadeira **nÃ£o Ã©**
 
-**boa evidência contra H0**.
+**boa evidÃªncia contra H0**.
 
 
 
@@ -1098,9 +1098,9 @@ Ho: $\\mu$ = 0
 
 Ha: O $\\mu$ > 0
 
- ou O $\\mu$ < 0
+Â ou O $\\mu$ < 0
 
- ou 0 $\\mu$ <> 0
+Â ou 0 $\\mu$ <> 0
 
 
 
@@ -1124,15 +1124,15 @@ O valor P bilateral, para o
 
 Exemplo 17.6. A figura mostra
 
-tanto a entrada quanto a saída
+tanto a entrada quanto a saÃ­da
 
 para o *applet P-Value of a Test of*
 
 *Significance*.
 
-Note que o valor P é a área sombreada sob a curva,
+Note que o valor P Ã© a Ã¡rea sombreada sob a curva,
 
-não a área sem sombreamento.
+nÃ£o a Ã¡rea sem sombreamento.
 
 
 
@@ -1142,219 +1142,219 @@ RESET
 
 
 
-**A conclusão do Exemplo 17.6 não é que H0 seja verdadeira.**
+**A conclusÃ£o do Exemplo 17.6 nÃ£o Ã© que H0 seja verdadeira.**
 
 
 
-O estudo procurou evidência contrária a H0: $\\mu$ = O e não
+O estudo procurou evidÃªncia contrÃ¡ria a H0: $\\mu$ = O e nÃ£o
 
-conseguiu encontrar uma forte evidência. É tudo o que
+conseguiu encontrar uma forte evidÃªncia. Ã‰ tudo o que
 
-podemos dizer. Sem dúvida, a média $\\mu$ para a população
+podemos dizer. Sem dÃºvida, a mÃ©dia $\\mu$ para a populaÃ§Ã£o
 
-de todos os trabalhadores da montadora não é exatamente
+de todos os trabalhadores da montadora nÃ£o Ã© exatamente
 
 igual a O. Uma amostra suficientemente grande forneceria
 
-evidência da diferença, mesmo que fosse muito pequena.
+evidÃªncia da diferenÃ§a, mesmo que fosse muito pequena.
 
-Testes de significância avaliam a evidência contra H0.
+Testes de significÃ¢ncia avaliam a evidÃªncia contra H0.
 
- 
+Â 
 
-**Se** a **evidência** é forte \[rectius, **significativa**], **podemos confiantemente rejeitar H0 em**
+**Se** a **evidÃªncia** Ã© forte \[rectius, **significativa**], **podemos confiantemente rejeitar H0 em**
 
 **favor da alternativa**.
 
 
 
-O fato de não conseguir encontrar evidência contra H0 significa apenas que os ***dados não são***
+O fato de nÃ£o conseguir encontrar evidÃªncia contra H0 significa apenas que os ***dados nÃ£o sÃ£o***
 
-***inconsistentes com H0***, e ***não que tenhamos uma evidência clara de que H0 seja verdadeira***.
+***inconsistentes com H0***, e ***nÃ£o que tenhamos uma evidÃªncia clara de que H0 seja verdadeira***.
 
- 
+Â 
 
-**Apenas dados que são inconsistentes com H0 nos permitem fazer uma afirmativa positiva** de que
+**Apenas dados que sÃ£o inconsistentes com H0 nos permitem fazer uma afirmativa positiva** de que
 
-temos forte \[rectius, **significativa**] **evidência contra H0**.
+temos forte \[rectius, **significativa**] **evidÃªncia contra H0**.
 
- 
+Â 
 
 Nos Exemplos 17.5 e 17.6, decidimos que o valor P, **P = 0,0006**,
 
-era **evidência** forte \[rectius, **significativa**] ***contra a hipótese nula*** e que os
+era **evidÃªncia** forte \[rectius, **significativa**] ***contra a hipÃ³tese nula*** e que os
 
-**valores P = 0,1714 e P= 0,2293 não eram evidência convincente**.
+**valores P = 0,1714 e P= 0,2293 nÃ£o eram evidÃªncia convincente**.
 
- 
+Â 
 
-Não há uma regra sobre quão pequeno um valor P deva ser para
+NÃ£o hÃ¡ uma regra sobre quÃ£o pequeno um valor P deva ser para
 
-que rejeitemos H0; é ***uma questão de julgamento*** e depende das
+que rejeitemos H0; Ã© ***uma questÃ£o de julgamento*** e depende das
 
-circunstâncias específicas.
+circunstÃ¢ncias especÃ­ficas.
 
- 
+Â 
 
 No entanto, podemos comparar um valor P com alguns valores
 
-fixos que comumente são utilizados como **padrões para evidência**
+fixos que comumente sÃ£o utilizados como **padrÃµes para evidÃªncia**
 
 contra H0.
 
- 
+Â 
 
-Os valores fixos mais comuns são 0,05 e 0,01. Se P = 0,05,
+Os valores fixos mais comuns sÃ£o 0,05 e 0,01. Se P = 0,05,
 
-não há mais do que uma chance em 20 de que uma amostra
+nÃ£o hÃ¡ mais do que uma chance em 20 de que uma amostra
 
-dê evidência tão forte apenas por acaso, quando H0 é realmente
+dÃª evidÃªncia tÃ£o forte apenas por acaso, quando H0 Ã© realmente
 
 verdadeira.
 
- 
+Â 
 
 Se P = 0,01, temos um resultado que, no longo prazo,
 
-aconteceria não mais do que uma vez em 100 amostras, se Ho
+aconteceria nÃ£o mais do que uma vez em 100 amostras, se Ho
 
 fosse verdadeira.
 
- 
+Â 
 
-Esses **padrões fixos para valores P são chamados**
+Esses **padrÃµes fixos para valores P sÃ£o chamados**
 
-**de níveis de significância**.
+**de nÃ­veis de significÃ¢ncia**.
 
- 
+Â 
 
 Usamos $\\alpha$ a letra grega alfa, para denotar
 
-um nível de significância.
+um nÃ­vel de significÃ¢ncia.
 
- 
+Â 
 
-Na Seção 18.5, veremos que o nível de
+Na SeÃ§Ã£o 18.5, veremos que o nÃ­vel de
 
-significância $\\alpha$ é a **probabilidade de cometer um tipo de erro**.
+significÃ¢ncia $\\alpha$ Ã© a **probabilidade de cometer um tipo de erro**.
 
- 
+Â 
 
-Em particular, $\\alpha$ é a **probabilidade de decidir (incorretamente) que**
+Em particular, $\\alpha$ Ã© a **probabilidade de decidir (incorretamente) que**
 
-**temos evidência contra H0 e declarar H0 falsa**, quando, **de fato, Ho**
+**temos evidÃªncia contra H0 e declarar H0 falsa**, quando, **de fato, Ho**
 
-**é verdadeira**.
+**Ã© verdadeira**.
 
- 
+Â 
 
-Manter pequeno o nível de significância garante que
+Manter pequeno o nÃ­vel de significÃ¢ncia garante que
 
 a chance de cometer tal erro seja pequena.
 
 
 
-##### Significância estatística
+##### SignificÃ¢ncia estatÃ­stica
 
 
 
-Se o valor P é tão pequeno quanto $\\alpha$, ou menor do que $\\alpha$,
+Se o valor P Ã© tÃ£o pequeno quanto $\\alpha$, ou menor do que $\\alpha$,
 
-dizemos que os dados são estatisticamente significantes no
+dizemos que os dados sÃ£o estatisticamente significantes no
 
-nível $\\alpha$. A quantidade $\\alpha$ é chamada de **nível de significância**.
+nÃ­vel $\\alpha$. A quantidade $\\alpha$ Ã© chamada de **nÃ­vel de significÃ¢ncia**.
 
 
 
-"Significante", em linguagem estatística, não tem o sentido de
+"Significante", em linguagem estatÃ­stica, nÃ£o tem o sentido de
 
 "importante".
 
- 
+Â 
 
-**Significa** simplesmente **"improvável de acontecer apenas por acaso"**.
-
-
-
-O **nível de significância $\\alpha$ torna "improvável" mais exato**.
+**Significa** simplesmente **"improvÃ¡vel de acontecer apenas por acaso"**.
 
 
 
-Significância no nível 0,01 é frequentemente
+O **nÃ­vel de significÃ¢ncia $\\alpha$ torna "improvÃ¡vel" mais exato**.
+
+
+
+SignificÃ¢ncia no nÃ­vel 0,01 Ã© frequentemente
 
 enunciada pela afirmativa "Os resultados foram significantes
 
 (P <= 0,01)".
 
-Aqui, P representa o valor P. O valor P verdadeiro é
+Aqui, P representa o valor P. O valor P verdadeiro Ã©
 
-mais informativo do que uma afirmação de significância,
+mais informativo do que uma afirmaÃ§Ã£o de significÃ¢ncia,
 
-porque nos permite avaliar a significância em qualquer nível
+porque nos permite avaliar a significÃ¢ncia em qualquer nÃ­vel
 
 que escolhermos.
 
- 
+Â 
 
-Por exemplo, um resultado com P = 0,03 é significante no nível $\\alpha$ = 0,05, mas não é significante no nível
+Por exemplo, um resultado com P = 0,03 Ã© significante no nÃ­vel $\\alpha$ = 0,05, mas nÃ£o Ã© significante no nÃ­vel
 
 $\\alpha$ = 0,01.
 
- 
+Â 
 
-Para evitar confusão, usaremos **"estatisticamente significante"**
+Para evitar confusÃ£o, usaremos **"estatisticamente significante"**
 
-em vez de "significante" neste capítulo. No entanto, em
+em vez de "significante" neste capÃ­tulo. No entanto, em
 
-artigos de pesquisa e publicações da mídia, você geralmente
+artigos de pesquisa e publicaÃ§Ãµes da mÃ­dia, vocÃª geralmente
 
-verá a palavra "significante" em vez da expressão "estatisticamente
+verÃ¡ a palavra "significante" em vez da expressÃ£o "estatisticamente
 
-significante". Em capítulos posteriores, usaremos ambas.
-
-
-
-É **boa prática interpretar as descobertas de significância**
-
-**estatística no contexto do problema** para o qual os dados foram
-
-coletados. Por exemplo, no Exemplo 17.5, significância estatística
-
-implica algo sobre a perda de doçura em refrigerantes dietéticos.
-
-Uma média amostral de $\\bar{x}$ = 0,3 não é estatisticamente
-
-significante no nível $\\alpha$ = 0,05. **Interpretaríamos isso como**
-
-**significando que nossos dados não fornecem evidência** forte \[*rectius*, **significante**] de
-
-que **o refrigerante dietético, na média, perca doçura depois de**
-
-**ser armazenado durante 1 mês em alta temperatura**.
+significante". Em capÃ­tulos posteriores, usaremos ambas.
 
 
 
-###### ESTATÍSTICA NO MUNDO REAL
+Ã‰ **boa prÃ¡tica interpretar as descobertas de significÃ¢ncia**
+
+**estatÃ­stica no contexto do problema** para o qual os dados foram
+
+coletados. Por exemplo, no Exemplo 17.5, significÃ¢ncia estatÃ­stica
+
+implica algo sobre a perda de doÃ§ura em refrigerantes dietÃ©ticos.
+
+Uma mÃ©dia amostral de $\\bar{x}$ = 0,3 nÃ£o Ã© estatisticamente
+
+significante no nÃ­vel $\\alpha$ = 0,05. **InterpretarÃ­amos isso como**
+
+**significando que nossos dados nÃ£o fornecem evidÃªncia** forte \[*rectius*, **significante**] de
+
+que **o refrigerante dietÃ©tico, na mÃ©dia, perca doÃ§ura depois de**
+
+**ser armazenado durante 1 mÃªs em alta temperatura**.
 
 
 
-**Significância derruba um novo medicamento**
+###### ESTATÃSTICA NO MUNDO REAL
 
 
 
-A companhia farmacêutica Pfizer gastou US$ 1bilhão no desenvolvimento de
+**SignificÃ¢ncia derruba um novo medicamento**
 
-uma nova droga contra o colesterol. A **verificação final** de sua **eficácia** foi um
 
-teste clínico com 15 mil sujeitos. Para reforçar o estudo duplo-cego, apenas
 
-um grupo independente de especialistas viu os dados durante o teste. Após
+A companhia farmacÃªutica Pfizer gastou US$ 1bilhÃ£o no desenvolvimento de
 
-3 anos de testes, os **monitores declararam que houve um número excessivo,**
+uma nova droga contra o colesterol. A **verificaÃ§Ã£o final** de sua **eficÃ¡cia** foi um
 
-**estatisticamente significante, de mortes e de problemas cardíacos no grupo**
+teste clÃ­nico com 15 mil sujeitos. Para reforÃ§ar o estudo duplo-cego, apenas
 
-**alocado à nova droga**. A Pfizer encerrou o teste.
+um grupo independente de especialistas viu os dados durante o teste. ApÃ³s
+
+3 anos de testes, os **monitores declararam que houve um nÃºmero excessivo,**
+
+**estatisticamente significante, de mortes e de problemas cardÃ­acos no grupo**
+
+**alocado Ã  nova droga**. A Pfizer encerrou o teste.
 
 
 
@@ -1362,21 +1362,21 @@ um grupo independente de especialistas viu os dados durante o teste. Após
 
 
 
-##### 17.8 Adoçante de refrigerantes: encontre o valor P.
+##### 17.8 AdoÃ§ante de refrigerantes: encontre o valor P.
 
-O valor P para o primeiro refrigerante no Exemplo 17.5 é
+O valor P para o primeiro refrigerante no Exemplo 17.5 Ã©
 
-a probabilidade (considerando a hipótese nula
+a probabilidade (considerando a hipÃ³tese nula
 
 $\\mu$ = O como verdadeira) de que $\\bar{x}$ assuma um valor, no
 
-mínimo, tão grande quanto 0,3.
+mÃ­nimo, tÃ£o grande quanto 0,3.
 
-(a) Qual é a distribuição amostral de $\\bar{x}$ quando $\\mu$ = O?
+(a) Qual Ã© a distribuiÃ§Ã£o amostral de $\\bar{x}$ quando $\\mu$ = O?
 
-Essa distribuição aparece na Figura 17.2.
+Essa distribuiÃ§Ã£o aparece na Figura 17.2.
 
-(b) Faça um cálculo de probabilidade Normal para
+(b) FaÃ§a um cÃ¡lculo de probabilidade Normal para
 
 encontrar o valor P. Seu resultado deve concordar
 
@@ -1384,29 +1384,29 @@ com o Exemplo 17.5, a menos de erros de arredondamento.
 
 
 
-##### 17.9 Satisfação no emprego: encontre o valor P.
+##### 17.9 SatisfaÃ§Ã£o no emprego: encontre o valor P.
 
 
 
-O valor P no Exemplo 17.6 é a probabilidade (considerando
+O valor P no Exemplo 17.6 Ã© a probabilidade (considerando
 
-a hipótese nula $\\mu$ = O como verdadeira) de
+a hipÃ³tese nula $\\mu$ = O como verdadeira) de
 
-que $\\bar{x}$ assuma um valor, pelo menos tão distante de O
+que $\\bar{x}$ assuma um valor, pelo menos tÃ£o distante de O
 
 como 17.
 
 
 
-(a) Qual é a distribuição amostral de $\\bar{x}$ quando $\\mu$ = O?
+(a) Qual Ã© a distribuiÃ§Ã£o amostral de $\\bar{x}$ quando $\\mu$ = O?
 
-Essa distribuição aparece na Figura 17.3.
+Essa distribuiÃ§Ã£o aparece na Figura 17.3.
 
-(b) Faça um cálculo de probabilidade Normal para
+(b) FaÃ§a um cÃ¡lculo de probabilidade Normal para
 
-encontrar o valor P. (Lembre-se de que a hipótese
+encontrar o valor P. (Lembre-se de que a hipÃ³tese
 
-alternativa é bilateral.) Seu resultado deve concordar
+alternativa Ã© bilateral.) Seu resultado deve concordar
 
 com o Exemplo 1 7 .6, a menos de erros de
 
@@ -1424,187 +1424,187 @@ da droga lorcaserina e o de um placebo na perda
 
 de peso em adultos em sobrepeso. Todos os sujeitos se
 
-submeteram, também, a um aconselhamento de dieta e
+submeteram, tambÃ©m, a um aconselhamento de dieta e
 
-exercício. O estudo relatou que, depois de um ano, os
+exercÃ­cio. O estudo relatou que, depois de um ano, os
 
 pacientes do grupo da droga lorcaserina tiveram uma
 
-perda média de peso de 5,8 kg, enquanto os pacientes
+perda mÃ©dia de peso de 5,8 kg, enquanto os pacientes
 
-do grupo do placebo tiveram uma perda média de
+do grupo do placebo tiveram uma perda mÃ©dia de
 
-peso de 2,2 kg (P <0,001).4 Explique, a alguém que não
+peso de 2,2 kg (P <0,001).4 Explique, a alguÃ©m que nÃ£o
 
-conheça estatística, por que esses resultados significam
+conheÃ§a estatÃ­stica, por que esses resultados significam
 
-que há boa razão para pensar que a droga lorcaserina
+que hÃ¡ boa razÃ£o para pensar que a droga lorcaserina
 
-funciona. Inclua uma explicacão do que significa P < O,001.
+funciona. Inclua uma explicacÃ£o do que significa P < O,001.
 
 
 
-##### 17.11 GMAT (continuação).
+##### 17.11 GMAT (continuaÃ§Ã£o).
 
-O Exercício 17.1 descreve
+O ExercÃ­cio 17.1 descreve
 
 um estudo do desempenho no GMAT de alunos
 
-de último ano de faculdades nas Filipinas. Você estabeleceu
+de Ãºltimo ano de faculdades nas Filipinas. VocÃª estabeleceu
 
-as hipóteses nula e alternativa no Exercício
+as hipÃ³teses nula e alternativa no ExercÃ­cio
 
 17.3.
 
-(a) Uma amostra de 250 estudantes teve escore médio no
+(a) Uma amostra de 250 estudantes teve escore mÃ©dio no
 
 GMA T de $\\bar{x}$ = 555. Introduza esse i, juntamente com
 
-as outras informações pedidas, no *applet P-Value of a*
+as outras informaÃ§Ãµes pedidas, no *applet P-Value of a*
 
-*Test of Significance*. Qual é o valor P? Esse resultado
+*Test of Significance*. Qual Ã© o valor P? Esse resultado
 
-é estatisticamente significante no nível $\\alpha$ = 0,05? No
+Ã© estatisticamente significante no nÃ­vel $\\alpha$ = 0,05? No
 
-nível $\\alpha$ = 0,01?
+nÃ­vel $\\alpha$ = 0,01?
 
 (b) Outra amostra de 250 estudantes resultou em $\\bar{x}$ =
 
 540\. Use o *applet* para encontrar o valor P para esse
 
-resultado. Ele é estatisticamente significante no nível
+resultado. Ele Ã© estatisticamente significante no nÃ­vel
 
-$\\alpha$ = 0,05? No nível $\\alpha$ = 0,01?
+$\\alpha$ = 0,05? No nÃ­vel $\\alpha$ = 0,01?
 
 (c) Explique brevemente por que esses valores P nos
 
-dizem que um desses resultados é **evidência** forte \[*rectius*, **significante**] contra
+dizem que um desses resultados Ã© **evidÃªncia** forte \[*rectius*, **significante**] contra
 
-a hipótese nula e o outro resultado não é.
+a hipÃ³tese nula e o outro resultado nÃ£o Ã©.
 
 
 
-##### 17.12 Inspecionando pesos de caixas de cookies (continuação).
+##### 17.12 Inspecionando pesos de caixas de cookies (continuaÃ§Ã£o).
 
-O Exercício 17.2 descreve medições
+O ExercÃ­cio 17.2 descreve mediÃ§Ãµes
 
-de pesos líquidos de uma amostra de 12 caixas de
+de pesos lÃ­quidos de uma amostra de 12 caixas de
 
-cookies. Você estabeleceu as hipóteses nula e alternativa
+cookies. VocÃª estabeleceu as hipÃ³teses nula e alternativa
 
-no Exercício 17.4.
+no ExercÃ­cio 17.4.
 
 (a) Um conjunto de medidas resultou em $\\bar{x}$ = 0,998.
 
-Introduza esse $\\bar{x}$, juntamente com as outras informações
+Introduza esse $\\bar{x}$, juntamente com as outras informaÃ§Ãµes
 
 pedidas, no *applet P-Value of a Test of*
 
-*Significance*. Qual é o valor P? Esse resultado é
+*Significance*. Qual Ã© o valor P? Esse resultado Ã©
 
-estatisticamente significante no nível $\\alpha$ = 0,05? No
+estatisticamente significante no nÃ­vel $\\alpha$ = 0,05? No
 
-nível $\\alpha$ = 0,01?
+nÃ­vel $\\alpha$ = 0,01?
 
 (b) Outro conjunto de medidas tem $\\bar{x}$ = 1,010. Use o
 
 *applet* para encontrar o valor P para esse resultado.
 
-Ele é estatisticamente significante no nível $\\alpha$ =
+Ele Ã© estatisticamente significante no nÃ­vel $\\alpha$ =
 
-0,05? No nível $\\alpha$ = 0,01?
+0,05? No nÃ­vel $\\alpha$ = 0,01?
 
 (c) Explique brevemente por que esses valores P nos
 
-dizem que um dos resultados é **evidência** forte \[*rectius*, **significante**]
+dizem que um dos resultados Ã© **evidÃªncia** forte \[*rectius*, **significante**]
 
-contra a hipótese nula e o outro resultado não é.
+contra a hipÃ³tese nula e o outro resultado nÃ£o Ã©.
 
 
 
-## 17.4 Testes para uma média populacional
+## 17.4 Testes para uma mÃ©dia populacional
 
 . . .... . . . . . . ... .. . . . .. . ... ... . .. ..
 
 
 
-Usamos testes para hipóteses sobre a média $\\mu$ de uma população,
+Usamos testes para hipÃ³teses sobre a mÃ©dia $\\mu$ de uma populaÃ§Ã£o,
 
-sob as "condições simples", para introduzir os testes de
+sob as "condiÃ§Ãµes simples", para introduzir os testes de
 
-significância.
+significÃ¢ncia.
 
-  O importante é a lógica de um teste: dados amostrais
+Â  O importante Ã© a lÃ³gica de um teste: dados amostrais
 
-que ocorreriam raramente se a hipótese nula H0 fosse verdadeira
+que ocorreriam raramente se a hipÃ³tese nula H0 fosse verdadeira
 
-fornecem evidência de que H0 não é verdadeira.
+fornecem evidÃªncia de que H0 nÃ£o Ã© verdadeira.
 
- 
+Â 
 
-O valor P nos dá uma probabilidade para medir "ocorreriam raramente".
+O valor P nos dÃ¡ uma probabilidade para medir "ocorreriam raramente".
 
- 
+Â 
 
-Na prática, os passos para a realização de um teste de significância
+Na prÃ¡tica, os passos para a realizaÃ§Ã£o de um teste de significÃ¢ncia
 
-refletem o processo geral de **quatro passos** para a **organização**
+refletem o processo geral de **quatro passos** para a **organizaÃ§Ã£o**
 
-**de problemas estatísticos realistas**.
+**de problemas estatÃ­sticos realistas**.
 
- 
+Â 
 
-##### Testes de significância: o processo de quatro passos
+##### Testes de significÃ¢ncia: o processo de quatro passos
 
 
 
-**ESTABELEÇA**: qual é a questão prática que requer um teste
+**ESTABELEÃ‡A**: qual Ã© a questÃ£o prÃ¡tica que requer um teste
 
-estatístico?
+estatÃ­stico?
 
-**PLANEJE**: identifique o parâmetro, estabeleça as hipóteses
+**PLANEJE**: identifique o parÃ¢metro, estabeleÃ§a as hipÃ³teses
 
 nula e alternativa e escolha o tipo de teste que seja adequado
 
-à sua situação.
+Ã  sua situaÃ§Ã£o.
 
-**RESOLVA**: realize o **teste** em **três fases**:
+**RESOLVA**: realize o **teste** em **trÃªs fases**:
 
-1\. ***Verifique as condições*** para o teste que você planeja usar.
+1\. ***Verifique as condiÃ§Ãµes*** para o teste que vocÃª planeja usar.
 
-2\. Calcule a ***estatística de teste***.
+2\. Calcule a ***estatÃ­stica de teste***.
 
 3\. Encontre o ***valor P***.
 
-**CONCLUA**: volte à questão prática para ***descrever seus resultados***
+**CONCLUA**: volte Ã  questÃ£o prÃ¡tica para ***descrever seus resultados***
 
 ***nesse contexto***.
 
 
 
-Após estabelecer o problema, enunciar as hipóteses e
+ApÃ³s estabelecer o problema, enunciar as hipÃ³teses e
 
-verificar as condições para seu teste, você ou um programa de
+verificar as condiÃ§Ãµes para seu teste, vocÃª ou um programa de
 
-computador podem encontrar a estatística de teste e o valor P
+computador podem encontrar a estatÃ­stica de teste e o valor P
 
-seguindo um roteiro. Esse é o roteiro para o teste que usamos
+seguindo um roteiro. Esse Ã© o roteiro para o teste que usamos
 
 em nossos exemplos.
 
 
 
-Conforme prometido, a estatística de teste z mede quanto
+Conforme prometido, a estatÃ­stica de teste z mede quanto
 
-a média amostral observada $\\bar{x}$ se afasta do valor populacional
+a mÃ©dia amostral observada $\\bar{x}$ se afasta do valor populacional
 
-hipotético $\\mu\_0$. A medida é na escala padrão familiar, obtida
+hipotÃ©tico $\\mu\_0$. A medida Ã© na escala padrÃ£o familiar, obtida
 
-da divisão pelo desvio-padrão de $\\bar{x}$. Assim, temos uma escala
+da divisÃ£o pelo desvio-padrÃ£o de $\\bar{x}$. Assim, temos uma escala
 
 comum para todos os testes z, e a regra 68-95-99,7 nos ajuda a
 
-ver imediatamente se $\\bar{x}$ está longe de $\\mu\_0$. As figuras que ilustram
+ver imediatamente se $\\bar{x}$ estÃ¡ longe de $\\mu\_0$. As figuras que ilustram
 
 o valor P se parecem com as curvas nas Figuras 17.2 e 17.3,
 
@@ -1614,21 +1614,21 @@ exceto por estarem na escala padronizada.
 
 
 
-##### Teste z de uma amostra para uma média populacional
+##### Teste z de uma amostra para uma mÃ©dia populacional
 
 
 
-Extraia uma AAS de tamanho n de uma população Normal
+Extraia uma AAS de tamanho n de uma populaÃ§Ã£o Normal
 
-que tenha média $\\mu\_0$ desconhecida e desvio-padrão $\\sigma$ conhecido.
+que tenha mÃ©dia $\\mu\_0$ desconhecida e desvio-padrÃ£o $\\sigma$ conhecido.
 
-Para testar a hipótese nula de que $\\mu$ tenha um valor
+Para testar a hipÃ³tese nula de que $\\mu$ tenha um valor
 
 especificado,
 
 $$H0: \\mu = \\mu\_0 $$
 
-calcule a **estatística de teste z de uma amostra**
+calcule a **estatÃ­stica de teste z de uma amostra**
 
 
 
@@ -1636,21 +1636,21 @@ $$z = \\frac{\\bar{x} - \\mu\_0}{\\sigma / \\sqrt{n}} $$
 
 
 
-**Em termos de uma variável Z com distribuição Normal padrão**,
+**Em termos de uma variÃ¡vel Z com distribuiÃ§Ã£o Normal padrÃ£o**,
 
 **o valor P para um teste de H0 contra:**
 
 
 
-* $$Ha: \\mu > \\mu\_0 \\text{ é } P(Z \\geq z)$$
-* $$Ha: \\mu < \\mu\_0 \\text{ é } P(Z \\leq z)$$
-* $$Ha: \\mu \\neq \\mu\_0 \\text{ é } P(Z \\leq -|z|) + P(Z \\geq |z|)$$
+* $$Ha: \\mu > \\mu\_0 \\text{ Ã© } P(Z \\geq z)$$
+* $$Ha: \\mu < \\mu\_0 \\text{ Ã© } P(Z \\leq z)$$
+* $$Ha: \\mu \\neq \\mu\_0 \\text{ Ã© } P(Z \\leq -|z|) + P(Z \\geq |z|)$$
 
 
 
-Nos gráficos mostrados acima, **supomos que z seja positivo**
+Nos grÃ¡ficos mostrados acima, **supomos que z seja positivo**
 
-para $Ha: \\mu > \\mu\_0$, porque **z negativo seria evidência fraca para**
+para $Ha: \\mu > \\mu\_0$, porque **z negativo seria evidÃªncia fraca para**
 
 $\\mu > \\mu\_0$ e, *analogamente*, para $Ha: \\mu < \\mu\_0$. 
 
@@ -1662,31 +1662,31 @@ Para **um teste bilateral**, **z poderia ser positivo ou negativo**.
 
 
 
-**ESTABELEÇA**: o *National Center for Health Statistics*
+**ESTABELEÃ‡A**: o *National Center for Health Statistics*
 
-relata que o colesterol LDL para adultos tem média 130 e
+relata que o colesterol LDL para adultos tem mÃ©dia 130 e
 
-desvio-padrão $\\sigma$ 40. O diretor médico de uma grande companhia
+desvio-padrÃ£o $\\sigma$ 40. O diretor mÃ©dico de uma grande companhia
 
-farmacêutica observa os registros médicos de 72 executivos
+farmacÃªutica observa os registros mÃ©dicos de 72 executivos
 
-e vê que o LDL médio nessa amostra é $\\bar{x}$ = 124,86. ***Isso***
+e vÃª que o LDL mÃ©dio nessa amostra Ã© $\\bar{x}$ = 124,86. ***Isso***
 
-***é evidência*** de que os executivos da companhia tenham um
+***Ã© evidÃªncia*** de que os executivos da companhia tenham um
 
-***LDL médio diferente*** do da ***população*** geral?
+***LDL mÃ©dio diferente*** do da ***populaÃ§Ã£o*** geral?
 
 
 
-**PLANEJE**: a hipótese nula é "nenhuma diferença" da
+**PLANEJE**: a hipÃ³tese nula Ã© "nenhuma diferenÃ§a" da
 
-média nacional $\\mu\_0$ = 130. A **alternativa é bilateral**, porque o
+mÃ©dia nacional $\\mu\_0$ = 130. A **alternativa Ã© bilateral**, porque o
 
-diretor médico não tinha em mente uma direção particular
+diretor mÃ©dico nÃ£o tinha em mente uma direÃ§Ã£o particular
 
-antes de examinar os dados. Assim, as hipóteses acerca da
+antes de examinar os dados. Assim, as hipÃ³teses acerca da
 
-média desconhecida $\\mu$ da população de executivos são
+mÃ©dia desconhecida $\\mu$ da populaÃ§Ã£o de executivos sÃ£o
 
 
 
@@ -1696,23 +1696,23 @@ Ha: $\\mu$ <> 130
 
 
 
-Sabemos que o teste z de uma amostra é apropriado para
+Sabemos que o teste z de uma amostra Ã© apropriado para
 
-essas hipóteses sob as "condições simples".
+essas hipÃ³teses sob as "condiÃ§Ãµes simples".
 
 
 
-**RESOLVA**: como parte das "condições simples", suponha
+**RESOLVA**: como parte das "condiÃ§Ãµes simples", suponha
 
 que estejamos desejosos em assumir que o LDL de
 
-executivos siga uma distribuição Normal, com desvio-padrão
+executivos siga uma distribuiÃ§Ã£o Normal, com desvio-padrÃ£o
 
 $\\sigma$ = 40. Um programa pode, agora, calcular z e P
 
-para você. Seguindo com os cálculos a mão, a estatística
+para vocÃª. Seguindo com os cÃ¡lculos a mÃ£o, a estatÃ­stica
 
-de teste é
+de teste Ã©
 
 
 
@@ -1722,15 +1722,15 @@ $$z=\\frac{\\bar{x}-\\mu\_0}{\\sigma/\\sqrt{n}}=\\frac{124.86-130}{40/\\sqrt{72}
 
 Para ajudar a determinar o **valor P**, **esboce** a **curva Normal**
 
-**padrão** e marque nela o **valor observado** de **z**.
+**padrÃ£o** e marque nela o **valor observado** de **z**.
 
-A Figura 17.4 mostra que o **valor P é a probabilidade** de que **uma variável**
+A Figura 17.4 mostra que o **valor P Ã© a probabilidade** de que **uma variÃ¡vel**
 
-**Normal padrão Z assuma um valor distante de zero** em, **pelo**
+**Normal padrÃ£o Z assuma um valor distante de zero** em, **pelo**
 
 **menos, 1,09**.
 
-Pela Tabela A, ou um programa, encontramos que essa probabilidade é
+Pela Tabela A, ou um programa, encontramos que essa probabilidade Ã©
 
 
 
@@ -1740,11 +1740,11 @@ $$P = 2P(Z > 1.09) = (2)(0.1379) = 0.2758$$
 
 **CONCLUA**: mais de 27% das vezes, uma AAS de tamanho
 
-72 da população adulta em geral teria um LDL médio pelo
+72 da populaÃ§Ã£o adulta em geral teria um LDL mÃ©dio pelo
 
-menos tão longe de 130 quanto o da amostra de executivos.
+menos tÃ£o longe de 130 quanto o da amostra de executivos.
 
-**O $\\bar{x}$ = 124,86 observado não é**, portanto, **boa evidência** de
+**O $\\bar{x}$ = 124,86 observado nÃ£o Ã©**, portanto, **boa evidÃªncia** de
 
 **que os executivos sejam diferentes dos outros adultos**.
 
@@ -1754,19 +1754,19 @@ menos tão longe de 130 quanto o da amostra de executivos.
 
 O valor P bilateral para
 
-z = -1,09 é a área afastada de
+z = -1,09 Ã© a Ã¡rea afastada de
 
 0 pelo menos em 1,09, em
 
-ambas as direções, P= 0,2758.
+ambas as direÃ§Ãµes, P= 0,2758.
 
 
 
-Curva Normal padrão
+Curva Normal padrÃ£o
 
-Área sob a curva à esquerda de -1,09 = 0,1379
+Ãrea sob a curva Ã  esquerda de -1,09 = 0,1379
 
-Área sob a curva à direita de +1,09 = 0,1379
+ÃreaÂ sob a curva Ã  direita de +1,09 = 0,1379
 
 
 
@@ -1774,55 +1774,55 @@ Curva Normal padrão
 
 O valor P para o teste bilateral no Exemplo 17.7.
 
-O valor observado da estatística de teste é z = -1,09.
+O valor observado da estatÃ­stica de teste Ã© z = -1,09.
 
 
 
-Neste capítulo, estamos agindo como se as "condições simples"
+Neste capÃ­tulo, estamos agindo como se as "condiÃ§Ãµes simples"
 
-estabelecidas em "Condições simples para inferência sobre
+estabelecidas em "CondiÃ§Ãµes simples para inferÃªncia sobre
 
-uma média", no Capítulo 16, fossem verdadeiras. 
+uma mÃ©dia", no CapÃ­tulo 16, fossem verdadeiras. 
 
-Na **prática**, **você deve verificar essas condições**.
-
-
-
-1\. **AAS**: a condição mais importante é que os 72 executivos na
-
-**amostra** sejam **uma AAS** da **população de todos os executivos**
-
-**na empresa**. Devemos conferir essa exigência questionando
-
-como os dados foram produzidos. **Se os registros médicos**
-
-**estão disponíveis apenas para executivos com problemas**
-
-**recentes de saúde**, por exemplo, os **dados são de pouco valor**
-
-para os **nossos propósitos**, em virtude de **um viés óbvio**
-
-**de saúde**.  
-
-No entanto, o **fato é que todos os executivos se**
-
-**submetem a um exame médico anual**, sem ônus, do qual o
-
-**diretor médico selecionou 72 resultados ao acaso**.
+Na **prÃ¡tica**, **vocÃª deve verificar essas condiÃ§Ãµes**.
 
 
 
-2\. **Distribuição Normal**: devemos examinar, também, a **distribuição**
+1\. **AAS**: a condiÃ§Ã£o mais importante Ã© que os 72 executivos na
 
-**das 72 observações** à **procura** de **sinais** de que a
+**amostra** sejam **uma AAS** da **populaÃ§Ã£o de todos os executivos**
 
-**distribuição populacional não seja Normal**.
+**na empresa**. Devemos conferir essa exigÃªncia questionando
+
+como os dados foram produzidos. **Se os registros mÃ©dicos**
+
+**estÃ£o disponÃ­veis apenas para executivos com problemas**
+
+**recentes de saÃºde**, por exemplo, os **dados sÃ£o de pouco valor**
+
+para os **nossos propÃ³sitos**, em virtude de **um viÃ©s Ã³bvio**
+
+**de saÃºde**.  
+
+No entanto, o **fato Ã© que todos os executivos se**
+
+**submetem a um exame mÃ©dico anual**, sem Ã´nus, do qual o
+
+**diretor mÃ©dico selecionou 72 resultados ao acaso**.
+
+
+
+2\. **DistribuiÃ§Ã£o Normal**: devemos examinar, tambÃ©m, a **distribuiÃ§Ã£o**
+
+**das 72 observaÃ§Ãµes** Ã  **procura** de **sinais** de que a
+
+**distribuiÃ§Ã£o populacional nÃ£o seja Normal**.
 
 &nbsp; 
 
-3\. **$\\sigma$ conhecido**: é, de fato, **não realista** supor que saibamos
+3\. **$\\sigma$ conhecido**: Ã©, de fato, **nÃ£o realista** supor que saibamos
 
-que $\\sigma = 15$. Veremos, no Capítulo 20, que é **fácil** nos **livrarmos**
+que $\\sigma = 15$. Veremos, no CapÃ­tulo 20, que Ã© **fÃ¡cil** nos **livrarmos**
 
 da **necessidade** de **conhecer** $\\sigma$.
 
@@ -1834,21 +1834,21 @@ da **necessidade** de **conhecer** $\\sigma$.
 
 
 
-##### 17.13 A estatística z. 
+##### 17.13 A estatÃ­stica z. 
 
-Relatórios publicados de trabalhos
+RelatÃ³rios publicados de trabalhos
 
-de pesquisa são sucintos. Em geral, relatam apenas
+de pesquisa sÃ£o sucintos. Em geral, relatam apenas
 
-uma estatística de teste e um valor P. Por exemplo, a
+uma estatÃ­stica de teste e um valor P. Por exemplo, a
 
-conclusão do Exemplo 17.7 poderia ser relatada como
+conclusÃ£o do Exemplo 17.7 poderia ser relatada como
 
-"(z = -1,09; P = 0,2758)". Encontre os valores da estatística
+"(z = -1,09; P = 0,2758)". Encontre os valores da estatÃ­stica
 
-z de uma amostra necessários para completar as
+z de uma amostra necessÃ¡rios para completar as
 
-seguintes conclusões:
+seguintes conclusÃµes:
 
 (a) Para o primeiro refrigerante no Exemplo 17.5,
 
@@ -1862,11 +1862,11 @@ z = ?; P = 0,0006.
 
 
 
-##### 17.14 Inspecionando pesos de caixas de cookies (continuação).
+##### 17.14 Inspecionando pesos de caixas de cookies (continuaÃ§Ã£o).
 
-A seguir, estão medições
+A seguir, estÃ£o mediÃ§Ãµes
 
-(em libras) dos pesos líquidos de 12 caixas de cookies:
+(em libras) dos pesos lÃ­quidos de 12 caixas de cookies:
 
 
 
@@ -1882,27 +1882,27 @@ PESOS
 
 
 
-Suponha que o peso médio da população de todas as
+Suponha que o peso mÃ©dio da populaÃ§Ã£o de todas as
 
-caixas de cookies seja 1,000 lb. As **medições fornecem**
+caixas de cookies seja 1,000 lb. As **mediÃ§Ãµes fornecem**
 
-**boa evidência** de que o **peso médio populacional não**
+**boa evidÃªncia** de que o **peso mÃ©dio populacional nÃ£o**
 
 **seja 1,000?**
 
 
 
-As 12 caixas medidas são uma AAS da população de
+As 12 caixas medidas sÃ£o uma AAS da populaÃ§Ã£o de
 
-todas as caixas dessa marca de cookies. Essa população
+todas as caixas dessa marca de cookies. Essa populaÃ§Ã£o
 
-tem uma distribuição Normal, com média igual ao
+tem uma distribuiÃ§Ã£o Normal, com mÃ©dia igual ao
 
-verdadeiro peso médio da população e desvio-padrão $\\sigma$
+verdadeiro peso mÃ©dio da populaÃ§Ã£o e desvio-padrÃ£o $\\sigma$
 
-0,01. Use essa informação para **realizar um teste de**
+0,01. Use essa informaÃ§Ã£o para **realizar um teste de**
 
-**significância**, seguindo o processo dos quatro passos
+**significÃ¢ncia**, seguindo o processo dos quatro passos
 
 ilustrado no Exemplo 17.7
 
@@ -1920,15 +1920,15 @@ ilustrado no Exemplo 17.7
 
 As pessoas tendem a ser mais generosas depois de receberem
 
-boas notícias. Elas são menos generosas depois de
+boas notÃ­cias. Elas sÃ£o menos generosas depois de
 
-receberem más notícias? A gorjeta média deixada por
+receberem mÃ¡s notÃ­cias? A gorjeta mÃ©dia deixada por
 
-adultos norte-americanos é de 20%. Dê a 20 clientes
+adultos norte-americanos Ã© de 20%. DÃª a 20 clientes
 
 de um restaurante uma mensagem junto com a conta,
 
-advertindo-os de que o tempo, no dia seguinte, será
+advertindo-os de que o tempo, no dia seguinte, serÃ¡
 
 ruim, e registre as gorjetas percentuais que eles deixam.
 
@@ -1948,9 +1948,9 @@ GORJETAS
 
 Suponha que as gorjetas percentuais sejam Normais,
 
-com $\\sigma$ = 2. **Há boa evidência de que a gorjeta percentual**
+com $\\sigma$ = 2. **HÃ¡ boa evidÃªncia de que a gorjeta percentual**
 
-**média deixada pelos clientes que receberam uma previsão**
+**mÃ©dia deixada pelos clientes que receberam uma previsÃ£o**
 
 **de tempo ruim seja menor do que 20%?** Siga o processo
 
@@ -1958,71 +1958,71 @@ dos quatro passos, conforme ilustrado no Exemplo 17.7.
 
 
 
-## 17.5 Significância a partir de uma tabela\*
+## 17.5 SignificÃ¢ncia a partir de uma tabela\*
 
 . . . .. .. . .. . . .. ... . ... .. . . . .. . .. . . .
 
-\*Este material pode ser omitido, se você usar computador para o cálculo de valores P.
+\*Este material pode ser omitido, se vocÃª usar computador para o cÃ¡lculo de valores P.
 
 
 
-Na prática, a estatística usa tecnologia (calculadoras gráficas e
+Na prÃ¡tica, a estatÃ­stica usa tecnologia (calculadoras grÃ¡ficas e
 
-programas de computador) para obter valores P rápida e precisamente.
+programas de computador) para obter valores P rÃ¡pida e precisamente.
 
-Na falta de tecnologia adequada, você pode obter
+Na falta de tecnologia adequada, vocÃª pode obter
 
-rapidamente valores P aproximados pela comparação do valor
+rapidamente valores P aproximados pela comparaÃ§Ã£o do valor
 
-de sua estatística de teste com valores críticos de uma tabela.
+de sua estatÃ­stica de teste com valores crÃ­ticos de uma tabela.
 
-Para a estatística z, a tabela é a Tabela C, a mesma usada para
+Para a estatÃ­stica z, a tabela Ã© a Tabela C, a mesma usada para
 
-intervalos de confiança.
-
-
-
-Olhe a última linha de valores críticos na Tabela C, rotulada
-
-por z\*. No alto da tabela, você vê o nível de confiança C
-
-para cada z\*. No pé da tabela, você vê os valores P unilaterais
+intervalos de confianÃ§a.
 
 
 
-e bilaterais para cada valor de z\*. Valores de uma estatística de
+Olhe a Ãºltima linha de valores crÃ­ticos na Tabela C, rotulada
 
-teste z que estão mais afastados do que z\* (na direção dada pela
+por z\*. No alto da tabela, vocÃª vÃª o nÃ­vel de confianÃ§a C
 
-hipótese alternativa) são estatisticamente significantes no nível
+para cada z\*. No pÃ© da tabela, vocÃª vÃª os valores P unilaterais
+
+
+
+e bilaterais para cada valor de z\*. Valores de uma estatÃ­stica de
+
+teste z que estÃ£o mais afastados do que z\* (na direÃ§Ã£o dada pela
+
+hipÃ³tese alternativa) sÃ£o estatisticamente significantes no nÃ­vel
 
 que combina com z\*.
 
 
 
-##### Significância a partir de uma tabela de valores críticos
+##### SignificÃ¢ncia a partir de uma tabela de valores crÃ­ticos
 
 
 
-Para encontrar o valor P aproximado para qualquer estatística
+Para encontrar o valor P aproximado para qualquer estatÃ­stica
 
-z, compare z (ignorando seu sinal) com os valores críticos z\*
+z, compare z (ignorando seu sinal) com os valores crÃ­ticos z\*
 
-no pé da Tabela C. Se z estiver entre dois valores de z\*, o valor
+no pÃ© da Tabela C. Se z estiver entre dois valores de z\*, o valor
 
-P estará entre os dois valores correspondentes de P na linha "P
+P estarÃ¡ entre os dois valores correspondentes de P na linha "P
 
 unilateral" ou na linha "P bilateral" na Tabela C.
 
 
 
-##### EXEMPLO 17.8 É estatisticamente significante?
+##### EXEMPLO 17.8 Ã‰ estatisticamente significante?
 
 
 
-A estatística z para um teste unilateral é z = 2,13. Quão
+A estatÃ­stica z para um teste unilateral Ã© z = 2,13. QuÃ£o
 
-estatisticamente significante é esse resultado? Compare
+estatisticamente significante Ã© esse resultado? Compare
 
 z = 2,13 com a linha z\* na Tabela C.
 
@@ -2042,33 +2042,33 @@ P unilateral
 
 
 
-Ele está entre z\* = 2,054 e z\* = 2,326. Assim, o valor P estará
+Ele estÃ¡ entre z\* = 2,054 e z\* = 2,326. Assim, o valor P estarÃ¡
 
 entre as entradas correspondentes na linha "P unilateral",
 
-que são o nível de significância $\\alpha$ = 0,02 e o nível de significância
+que sÃ£o o nÃ­vel de significÃ¢ncia $\\alpha$ = 0,02 e o nÃ­vel de significÃ¢ncia
 
-$\\alpha$ = 0,01. Esse z é estatisticamente significante no nível $\\alpha$ = 0,02 
+$\\alpha$ = 0,01. Esse z Ã© estatisticamente significante no nÃ­vel $\\alpha$ = 0,02 
 
-e não é estatisticamente significante no nível $\\alpha$ = 0,01.
-
-
-
-Na Figura 17.5 está ilustrada a situação. A área sombreada
-
-sob a curva Normal à direita de z = 2,13 é o valor P. 
+e nÃ£o Ã© estatisticamente significante no nÃ­vel $\\alpha$ = 0,01.
 
 
 
-Você pode ver que P está entre as áreas à direita dos dois valores
+Na Figura 17.5 estÃ¡ ilustrada a situaÃ§Ã£o. A Ã¡rea sombreada
 
-críticos, para P = 0,02 e P = 0,01.
+sob a curva Normal Ã  direita de z = 2,13 Ã© o valor P. 
 
 
 
-A estatística z no Exemplo 17.7 é z = -1,09. 
+VocÃª pode ver que P estÃ¡ entre as Ã¡reas Ã  direita dos dois valores
 
-A hipótese alternativa é bilateral. 
+crÃ­ticos, para P = 0,02 e P = 0,01.
+
+
+
+A estatÃ­stica z no Exemplo 17.7 Ã© z = -1,09. 
+
+A hipÃ³tese alternativa Ã© bilateral. 
 
 Compare z = -1,09 (ignorando o
 
@@ -2088,15 +2088,15 @@ P bilateral
 
 
 
-Ele está entre z\* = 1,036 e z\* = 1,282. 
+Ele estÃ¡ entre z\* = 1,036 e z\* = 1,282. 
 
-Assim, o valor P estará entre as entradas correspondentes na linha "P bilateral",
+Assim, o valor P estarÃ¡ entre as entradas correspondentes na linha "P bilateral",
 
 P = 0,30 e P = 0,20. 
 
-Isso é suficiente para concluir
+Isso Ã© suficiente para concluir
 
-que os dados não fornecem boa evidência contra a hipótese nula.
+que os dados nÃ£o fornecem boa evidÃªncia contra a hipÃ³tese nula.
 
 
 
@@ -2104,31 +2104,31 @@ que os dados não fornecem boa evidência contra a hipótese nula.
 
 ###### FIGURA 17.5
 
-É significante? O valor da estatística
+Ã‰ significante? O valor da estatÃ­stica
 
-de teste z = 2,13 está entre os valores
+de teste z = 2,13 estÃ¡ entre os valores
 
-críticos exigidos para significância
+crÃ­ticos exigidos para significÃ¢ncia
 
-nos níveis $\\alpha$ = 0,02 e $\\alpha$ = 0,01. 
+nos nÃ­veis $\\alpha$ = 0,02 e $\\alpha$ = 0,01. 
 
-Assim, o teste é significante no nível $\\alpha$ = 0,02
+Assim, o teste Ã© significante no nÃ­vel $\\alpha$ = 0,02
 
-e não é significante no nível $\\alpha$ = 0,01.
+e nÃ£o Ã© significante no nÃ­vel $\\alpha$ = 0,01.
 
 
 
 Curva Normal
 
-padrão
+padrÃ£o
 
-Valores de z à
+Valores de z Ã 
 
 direita deste ponto
 
-são significantes
+sÃ£o significantes
 
-no nível $\\alpha$ = 0,02.
+no nÃ­vel $\\alpha$ = 0,02.
 
 z = 2,13
 
@@ -2136,15 +2136,15 @@ z = 2,13
 
 Curva Normal
 
-padrão
+padrÃ£o
 
-Valores de z à
+Valores de z Ã 
 
 direita deste ponto
 
-são significantes
+sÃ£o significantes
 
-no nível $\\alpha$ = 0,02.
+no nÃ­vel $\\alpha$ = 0,02.
 
 z = 2,13
 
@@ -2154,43 +2154,43 @@ z = 2,13
 
 
 
-###### 17.16 Significância a partir de uma tabela.
+###### 17.16 SignificÃ¢ncia a partir de uma tabela.
 
-Um teste de H0: $\\mu$ = 0 contra Ha: $\\mu$ > 0 tem estatística de teste
+Um teste de H0: $\\mu$ = 0 contra Ha: $\\mu$ > 0 tem estatÃ­stica de teste
 
-z = 1,65. Esse teste é estatisticamente significante no
+z = 1,65. Esse teste Ã© estatisticamente significante no
 
-nível 5% ($\\alpha$ = 0,05)? É estatisticamente significante
+nÃ­vel 5% ($\\alpha$ = 0,05)? Ã‰ estatisticamente significante
 
-no nível 1 % ($\\alpha$ = 0,01)?
-
-
-
-###### 17.17 Significância a partir de uma tabela.
-
-Um teste de H0: $\\mu$ = 0 contra Ha: $\\um \\neq$ <> 0 tem estatística de teste
-
-z = 1,65. Esse teste é significante no nível 5%
-
-($\\alpha$ = 0,05)? É significante no nível 1 % ($\\alpha$ = 0,01)?
+no nÃ­vel 1 % ($\\alpha$ = 0,01)?
 
 
 
-###### 17.18 Teste de um gerador de números aleatórios.
+###### 17.17 SignificÃ¢ncia a partir de uma tabela.
 
-Suponha que um gerador de números aleatórios
+Um teste de H0: $\\mu$ = 0 contra Ha: $\\um \\neq$ <> 0 tem estatÃ­stica de teste
 
-produza números aleatórios que são uniformemente
+z = 1,65. Esse teste Ã© significante no nÃ­vel 5%
 
-distribuídos no intervalo de O a 1. Se isso for verdade,
+($\\alpha$ = 0,05)? Ã‰ significante no nÃ­vel 1 % ($\\alpha$ = 0,01)?
 
-os números gerados provêm de uma população com
+
+
+###### 17.18 Teste de um gerador de nÃºmeros aleatÃ³rios.
+
+Suponha que um gerador de nÃºmeros aleatÃ³rios
+
+produza nÃºmeros aleatÃ³rios que sÃ£o uniformemente
+
+distribuÃ­dos no intervalo de O a 1. Se isso for verdade,
+
+os nÃºmeros gerados provÃªm de uma populaÃ§Ã£o com
 
 $\\mu$ = 0,5 e $\\sigma$ = 0,2887. Um comando para gerar 100
 
-números aleatórios produz resultados com média
+nÃºmeros aleatÃ³rios produz resultados com mÃ©dia
 
-$\\bar{x}$ = 0,5635. **Suponha que o $\\sigma$ da população permaneça**
+$\\bar{x}$ = 0,5635. **Suponha que o $\\sigma$ da populaÃ§Ã£o permaneÃ§a**
 
 **fixo**. Desejamos testar
 
@@ -2202,23 +2202,23 @@ Ha: $\\mu \\neq$ 0,5
 
 
 
-(a) Calcule o valor da estatística de teste z.
+(a) Calcule o valor da estatÃ­stica de teste z.
 
-(b) Use a Tabela C: z é estatisticamente significante no
+(b) Use a Tabela C: z Ã© estatisticamente significante no
 
-nível 5% ($\\alpha$ = 0,05)?
+nÃ­vel 5% ($\\alpha$ = 0,05)?
 
-(c) Use a Tabela C: z é estatisticamente significante no
+(c) Use a Tabela C: z Ã© estatisticamente significante no
 
-nível 1 % ($\\alpha$ = 0,01)?
+nÃ­vel 1 % ($\\alpha$ = 0,01)?
 
-(d) Entre quais dois valores críticos Normais z\*, na
+(d) Entre quais dois valores crÃ­ticos Normais z\*, na
 
-linha do pé da Tabela C, z está? Entre quais dois
+linha do pÃ© da Tabela C, z estÃ¡? Entre quais dois
 
-números o valor P está? O **teste fornece boa evidência**
+nÃºmeros o valor P estÃ¡? O **teste fornece boa evidÃªncia**
 
-**contra a hipótese nula?**
+**contra a hipÃ³tese nula?**
 
 
 
@@ -2226,79 +2226,79 @@ números o valor P está? O **teste fornece boa evidência**
 
 
 
-•••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••
+â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢
 
 
 
-• **Um teste de significância avalia a evidência fornecida pelos**
+â€¢ **Um teste de significÃ¢ncia avalia a evidÃªncia fornecida pelos**
 
-**dados contra uma hipótese nula H0 em favor de uma hipótese**
+**dados contra uma hipÃ³tese nula H0 em favor de uma hipÃ³tese**
 
 **alternativa Ha**.
 
 
 
-• As **hipóteses são sempre enunciadas em termos de parâmetros**
+â€¢ As **hipÃ³teses sÃ£o sempre enunciadas em termos de parÃ¢metros**
 
-**populacionais**. Em geral, **H0 é uma afirmativa de que**
+**populacionais**. Em geral, **H0 Ã© uma afirmativa de que**
 
-**não há qualquer efeito presente**, e **Ha afirma que um parâmetro**
+**nÃ£o hÃ¡ qualquer efeito presente**, e **Ha afirma que um parÃ¢metro**
 
-**diverge de seu valor nulo em uma direção específica**
+**diverge de seu valor nulo em uma direÃ§Ã£o especÃ­fica**
 
-(alternativa **unilateral**) **ou em qualquer direção** (alternativa
+(alternativa **unilateral**) **ou em qualquer direÃ§Ã£o** (alternativa
 
 **bilateral**).
 
-• O **fundamento essencial** de um teste de significância é como
+â€¢ O **fundamento essencial** de um teste de significÃ¢ncia Ã© como
 
-segue. **Suponha**, para raciocinar, que a **hipótese nula seja**
+segue. **Suponha**, para raciocinar, que a **hipÃ³tese nula seja**
 
-**verdadeira**. **Se repetíssemos nossa produção de dados muitas**
+**verdadeira**. **Se repetÃ­ssemos nossa produÃ§Ã£o de dados muitas**
 
-**vezes, obteríamos frequentemente dados tão inconsistentes**
+**vezes, obterÃ­amos frequentemente dados tÃ£o inconsistentes**
 
 **com H0 como os dados que realmente temos?** 
 
-**Dados** que **raramente ocorreriam se H0 fosse verdadeira fornecem evidência**
+**Dados** que **raramente ocorreriam se H0 fosse verdadeira fornecem evidÃªncia**
 
 **contra H0**.
 
 
 
-• Um teste se baseia em **uma estatística de teste**, que **mede quão**
+â€¢ Um teste se baseia em **uma estatÃ­stica de teste**, que **mede quÃ£o**
 
-**distante o resultado amostral está do valor estabelecido por H0**.
-
-
-
-• O **valor P** de um teste é a **probabilidade**, calculada **supondo**
-
-**H0 verdadeira**, de **que a estatística de teste assuma um valor**
-
-**pelo menos tão extremo quanto o de fato observado**. 
-
-Valores **P pequenos** são uma forte \[*rectius*, **significativa**] **evidência contra H0**. 
-
-Para calcular um **valor P**, **é necessário o conhecimento da distribuição**
-
-**amostral da estatística de teste quando H0 é verdadeira**.
+**distante o resultado amostral estÃ¡ do valor estabelecido por H0**.
 
 
 
-• **Se** o **valor P** for **tão pequeno quanto, ou menor que um**
+â€¢ O **valor P** de um teste Ã© a **probabilidade**, calculada **supondo**
 
-**valor especificado** $\\alpha$, **os dados são estatisticamente significantes**
+**H0 verdadeira**, de **que a estatÃ­stica de teste assuma um valor**
 
-**no nível de significância** $\\alpha$.
+**pelo menos tÃ£o extremo quanto o de fato observado**. 
+
+Valores **P pequenos** sÃ£o uma forte \[*rectius*, **significativa**] **evidÃªncia contra H0**. 
+
+Para calcular um **valor P**, **Ã© necessÃ¡rio o conhecimento da distribuiÃ§Ã£o**
+
+**amostral da estatÃ­stica de teste quando H0 Ã© verdadeira**.
 
 
 
-• Testes de significância para a hipótese nula H0: $\\mu$ = $\\um\_0$ relativos
+â€¢ **Se** o **valor P** for **tÃ£o pequeno quanto, ou menor que um**
 
-à média desconhecida $\\mu$ de uma população se baseiam
+**valor especificado** $\\alpha$, **os dados sÃ£o estatisticamente significantes**
 
-**na estatística de teste z de uma amostra**
+**no nÃ­vel de significÃ¢ncia** $\\alpha$.
+
+
+
+â€¢ Testes de significÃ¢ncia para a hipÃ³tese nula H0: $\\mu$ = $\\um\_0$ relativos
+
+Ã  mÃ©dia desconhecida $\\mu$ de uma populaÃ§Ã£o se baseiam
+
+**na estatÃ­stica de teste z de uma amostra**
 
 
 
@@ -2306,27 +2306,27 @@ $$z=\\frac{\\bar{x} - \\mu\_0}{\\sigma / \\sqrt{n}}$$
 
 
 
-O teste z **pressupõe** uma **AAS** de tamanho **n** de uma
+O teste z **pressupÃµe** uma **AAS** de tamanho **n** de uma
 
-**população Normal** com desvio-padrão populacional $\\sigma$
+**populaÃ§Ã£o Normal** com desvio-padrÃ£o populacional $\\sigma$
 
 conhecido. 
 
-**Valores P** podem ser **obtidos** por meio de cálculos
+**Valores P** podem ser **obtidos** por meio de cÃ¡lculos
 
-da **distribuição Normal padrão** *ou* com o **uso da tecnologia**
+da **distribuiÃ§Ã£o Normal padrÃ£o** *ou* com o **uso da tecnologia**
 
 (*applet* ou programas).
 
 
 
-Para **testar a hipótese nula** de que $\\mu$ tenha um valor
+Para **testar a hipÃ³tese nula** de que $\\mu$ tenha um valor
 
 especificado,
 
 $$H0: \\mu = \\mu\_0 $$
 
-calcule a **estatística de teste z de uma amostra**
+calcule a **estatÃ­stica de teste z de uma amostra**
 
 
 
@@ -2334,16 +2334,16 @@ $$z = \\frac{\\bar{x} - \\mu\_0}{\\sigma / \\sqrt{n}} $$
 
 
 
-**Em termos de uma variável Z com distribuição Normal padrão**,
+**Em termos de uma variÃ¡vel Z com distribuiÃ§Ã£o Normal padrÃ£o**,
 
 **o valor P para um teste de H0 contra:**
 
 
 
-* $$Ha: \\mu > \\mu\_0 \\text{ é } P(Z \\geq z)$$
-* $$Ha: \\mu < \\mu\_0 \\text{ é } P(Z \\leq z)$$
+* $$Ha: \\mu > \\mu\_0 \\text{ Ã© } P(Z \\geq z)$$
+* $$Ha: \\mu < \\mu\_0 \\text{ Ã© } P(Z \\leq z)$$
 
-$$Ha: \\mu \\neq \\mu\_0 \\text{ é } P(Z \\leq -|z|) + P(Z \\geq |z|) = 2P(Z \\geq |z|)$$
+$$Ha: \\mu \\neq \\mu\_0 \\text{ Ã© } P(Z \\leq -|z|) + P(Z \\geq |z|) = 2P(Z \\geq |z|)$$
 
 
 
@@ -2355,41 +2355,41 @@ $$Ha: \\mu \\neq \\mu\_0 \\text{ é } P(Z \\leq -|z|) + P(Z \\geq |z|) = 2P(Z \\g
 
 ###### 17.19 
 
-Você usa um programa para realizar um teste de significância.
+VocÃª usa um programa para realizar um teste de significÃ¢ncia.
 
-O programa lhe diz que o valor P é P = 0,052. Você
+O programa lhe diz que o valor P Ã© P = 0,052. VocÃª
 
-conclui que a probabilidade, calculada supondo que H0, é
+conclui que a probabilidade, calculada supondo que H0, Ã©
 
-(a) verdadeira, de a estatística de teste assumir um valor
+(a) verdadeira, de a estatÃ­stica de teste assumir um valor
 
-tão ou mais extremo do que o realmente observado é
+tÃ£o ou mais extremo do que o realmente observado Ã©
 
 0,052.
 
-(b) verdadeira, de a estatística de teste assumir um valor tão ou
+(b) verdadeira, de a estatÃ­stica de teste assumir um valor tÃ£o ou
 
-menos extremo do que o realmente observado é 0,052.
+menos extremo do que o realmente observado Ã© 0,052.
 
-(c) falsa, de a estatística assumir um valor tão ou mais extremo
+(c) falsa, de a estatÃ­stica assumir um valor tÃ£o ou mais extremo
 
-do que o realmente observado é 0,052.
+do que o realmente observado Ã© 0,052.
 
 
 
 ###### 17.20 
 
-Você usa um programa para realizar um teste de significância.
+VocÃª usa um programa para realizar um teste de significÃ¢ncia.
 
-O programa lhe diz que o valor P é P = 0,052. Esse
+O programa lhe diz que o valor P Ã© P = 0,052. Esse
 
-resultado é
+resultado Ã©
 
-(a) não estatisticamente significante tanto no nível
+(a) nÃ£o estatisticamente significante tanto no nÃ­vel
 
-$\\alpha$ = 0,05 quanto no nível $\\alpha$ = 0,01.
+$\\alpha$ = 0,05 quanto no nÃ­vel $\\alpha$ = 0,01.
 
-(b) estatisticamente significante em $\\alpha$ = 0,05, mas não em
+(b) estatisticamente significante em $\\alpha$ = 0,05, mas nÃ£o em
 
 $\\alpha$ = 0,01.
 
@@ -2401,15 +2401,15 @@ $\\alpha$ = 0,01.
 
 ###### 17.21 
 
-A estatística de teste z para um teste unilateral é z = 1,62.
+A estatÃ­stica de teste z para um teste unilateral Ã© z = 1,62.
 
-Esse \_teste é
+Esse \_teste Ã©
 
-(a) não estatisticamente significante tanto no nível $\\alpha$ =
+(a) nÃ£o estatisticamente significante tanto no nÃ­vel $\\alpha$ =
 
-0,05 quanto no nível $\\alpha$ = 0,01.
+0,05 quanto no nÃ­vel $\\alpha$ = 0,01.
 
-(b) estatisticamente significante em $\\alpha$ = 0,05, mas não em
+(b) estatisticamente significante em $\\alpha$ = 0,05, mas nÃ£o em
 
 $\\alpha$ = 0,01.
 
@@ -2421,23 +2421,23 @@ $\\alpha$ = 0,01.
 
 Sabe-se que a milhagem de gasolina (consumo) para um modelo
 
-particular de caminhonete tem um desvio-padrão $\\sigma$ de $\\mu$
+particular de caminhonete tem um desvio-padrÃ£o $\\sigma$ de $\\mu$
 
-= 1,0 milha por galão em testes repetidos em um ambiente
+= 1,0 milha por galÃ£o em testes repetidos em um ambiente
 
-controlado de laboratório, a uma velocidade fixa de 65 milhas
+controlado de laboratÃ³rio, a uma velocidade fixa de 65 milhas
 
 por hora. Para uma velocidade fixa de 65 milhas por
 
-hora, os consumos em testes repetidos são Normalmente
+hora, os consumos em testes repetidos sÃ£o Normalmente
 
-distribuídos. Testes em quatro caminhonetes desse modelo,
+distribuÃ­dos. Testes em quatro caminhonetes desse modelo,
 
-a 65 milhas por hora, dão os consumos de 19,7; 20,l; 19,9, e
+a 65 milhas por hora, dÃ£o os consumos de 19,7; 20,l; 19,9, e
 
-19,5 milhas por galão. A estatística z para o teste de H0: $\\mu$ =
+19,5 milhas por galÃ£o. A estatÃ­stica z para o teste de H0: $\\mu$ =
 
-20 milhas por galão com base nessas quatro medições é
+20 milhas por galÃ£o com base nessas quatro mediÃ§Ãµes Ã©
 
 (a) z = -0,800.
 
@@ -2455,17 +2455,17 @@ vezes medem quanto tempo leva para que camundongos encontrem
 
 o caminho em um labirinto. 
 
-O tempo médio é de 18 segundos para um labirinto particular. 
+O tempo mÃ©dio Ã© de 18 segundos para um labirinto particular. 
 
-Uma pesquisadora acredita que um barulho alto fará com que os camundongos
+Uma pesquisadora acredita que um barulho alto farÃ¡ com que os camundongos
 
 completem o labirinto mais depressa. 
 
-Ela mede quanto tempo cada um de 10 camundongos gasta com o estímulo de um
+Ela mede quanto tempo cada um de 10 camundongos gasta com o estÃ­mulo de um
 
-barulho. A média amostral é $\\bar{x}$ = 16,5 segundos. A hipótese
+barulho. A mÃ©dia amostral Ã© $\\bar{x}$ = 16,5 segundos. A hipÃ³tese
 
-nula para o teste de significância é
+nula para o teste de significÃ¢ncia Ã©
 
 
 
@@ -2475,7 +2475,7 @@ nula para o teste de significância é
 
 ###### 17.24 
 
-A hipótese alternativa para o teste no Exercício 17.23 é
+A hipÃ³tese alternativa para o teste no ExercÃ­cio 17.23 Ã©
 
 (a) Ha: $\\mu$ -=/= 18.
 
@@ -2487,15 +2487,15 @@ A hipótese alternativa para o teste no Exercício 17.23 é
 
 ###### 17.25 
 
-Pesquisadores investigaram a eficácia de zinco oral, comparado
+Pesquisadores investigaram a eficÃ¡cia de zinco oral, comparado
 
-a um placebo, na redução da duração do resfriado comum,
+a um placebo, na reduÃ§Ã£o da duraÃ§Ã£o do resfriado comum,
 
 quando tomado 24 horas a partir do aparecimento
 
 dos sintomas. Os pesquisadores descobriram que aqueles
 
-que tomaram o zinco oral tiveram uma duração estatisticamente
+que tomaram o zinco oral tiveram uma duraÃ§Ã£o estatisticamente
 
 significante mais curta (P < 0,05) do que aqueles que
 
@@ -2503,27 +2503,27 @@ tomaram um placebo.6
 
 Isso significa que
 
-(a) a probabilidade de que a hipótese nula seja verdadeira
+(a) a probabilidade de que a hipÃ³tese nula seja verdadeira
 
-é menor do que 0,05.
+Ã© menor do que 0,05.
 
-(b) o valor da estatística de teste, a redução média na duração
+(b) o valor da estatÃ­stica de teste, a reduÃ§Ã£o mÃ©dia na duraÃ§Ã£o
 
-do resfriado, é grande.
+do resfriado, Ã© grande.
 
-(c) nenhuma das opções acima é verdadeira.
+(c) nenhuma das opÃ§Ãµes acima Ã© verdadeira.
 
 
 
 ###### 17.26 
 
-Você está testando H0: $\\mu$ = 0 contra Ha: $\\um \\neq$ 0, com base
+VocÃª estÃ¡ testando H0: $\\mu$ = 0 contra Ha: $\\um \\neq$ 0, com base
 
-em uma AAS de 20 observações de uma população Normal.
+em uma AAS de 20 observaÃ§Ãµes de uma populaÃ§Ã£o Normal.
 
-Quais valores da estatística de teste z são estatisticamente
+Quais valores da estatÃ­stica de teste z sÃ£o estatisticamente
 
-significantes no nível $\\alpha$ = 0,001?
+significantes no nÃ­vel $\\alpha$ = 0,001?
 
 (a) Todos os valores para os quais |z| > 3,291.
 
@@ -2535,145 +2535,145 @@ significantes no nível $\\alpha$ = 0,001?
 
 ###### 17.27 
 
-Você está testando H0: $\\mu$ = 0 contra Ha: $\\mu$ > 0, com base em
+VocÃª estÃ¡ testando H0: $\\mu$ = 0 contra Ha: $\\mu$ > 0, com base em
 
-uma AAS de 20 observações de uma população Normal.
+uma AAS de 20 observaÃ§Ãµes de uma populaÃ§Ã£o Normal.
 
-Quais valores da estatística de teste z são estatisticamente
+Quais valores da estatÃ­stica de teste z sÃ£o estatisticamente
 
-significantes no nível $\\alpha$ = 0,001?
+significantes no nÃ­vel $\\alpha$ = 0,001?
 
 
 
-##### EXERCÍCIOS
+##### EXERCÃCIOS
 
 ......................................
 
 
 
-Em todos os exercícios que pedem valores P, dê o valor real, se você estiver
+Em todos os exercÃ­cios que pedem valores P, dÃª o valor real, se vocÃª estiver
 
-usando um programa ou o *applet P-Value*. Caso contrário, use a Tabela C
+usando um programa ou o *applet P-Value*. Caso contrÃ¡rio, use a Tabela C
 
 para dar valores entre os quais P deve estar.
 
 
 
-17.28 Tempos de estudo de estudantes. O Exercício 16.19 descreve
+17.28 Tempos de estudo de estudantes. O ExercÃ­cio 16.19 descreve
 
 uma pesquisa em sala de aula na qual os estudantes
 
-afirmaram estudar uma média de $\\bar{x}$ = 13,7 horas em uma
+afirmaram estudar uma mÃ©dia de $\\bar{x}$ = 13,7 horas em uma
 
-semana típica. Considere esses estudantes como uma MS
+semana tÃ­pica. Considere esses estudantes como uma MS
 
-da população de todos os estudantes de graduação dessa
+da populaÃ§Ã£o de todos os estudantes de graduaÃ§Ã£o dessa
 
-universidade. A pesquisa fornece boa evidência da afirmativa
+universidade. A pesquisa fornece boa evidÃªncia da afirmativa
 
 dos estudantes de que estudam mais de 13 horas por
 
-semana, em média?
+semana, em mÃ©dia?
 
-(a) Estabeleça as hipóteses nula e alternativa em termos do
+(a) EstabeleÃ§a as hipÃ³teses nula e alternativa em termos do
 
-tempo médio de estudo, em horas, para a população.
+tempo mÃ©dio de estudo, em horas, para a populaÃ§Ã£o.
 
-(b) Qual é o valor da estatística de teste z?
+(b) Qual Ã© o valor da estatÃ­stica de teste z?
 
-(c) Qual é o valor P do teste? Você pode concluir que os
+(c) Qual Ã© o valor P do teste? VocÃª pode concluir que os
 
 estudantes realmente estudem mais de 13 horas por semana,
 
-em média?
+em mÃ©dia?
 
 
 
-17.29 Eu quero mais músculos. Se os rapazes achassem que seu
+17.29 Eu quero mais mÃºsculos. Se os rapazes achassem que seu
 
-próprio nível de músculos era o que as mulheres preferem,
+prÃ³prio nÃ­vel de mÃºsculos era o que as mulheres preferem,
 
-a "lacuna muscular" média descrita no Exercício 16.20 seria
+a "lacuna muscular" mÃ©dia descrita no ExercÃ­cio 16.20 seria
 
 O. Suspeitamos (antes de ver os dados) que os jovens
 
 (maioria) acham que as mulheres preferem maior quantidade
 
-de músculos à que eles têm.
+de mÃºsculos Ã  que eles tÃªm.
 
-(a) Estabeleça as hipóteses nula e alternativa para o teste
+(a) EstabeleÃ§a as hipÃ³teses nula e alternativa para o teste
 
 dessa suspeita.
 
-(b) Qual é o valor da estatística de teste z?
+(b) Qual Ã© o valor da estatÃ­stica de teste z?
 
-(c) Você pode dizer, apenas pelo valor de z, que a evidência
+(c) VocÃª pode dizer, apenas pelo valor de z, que a evidÃªncia
 
-em favor da hipótese alternativa é muito fotte (isto é,
+em favor da hipÃ³tese alternativa Ã© muito fotte (isto Ã©,
 
-o valor P é muito pequeno). Explique por que isso é
+o valor P Ã© muito pequeno). Explique por que isso Ã©
 
 verdade.
 
 
 
-17.30 Personalidades de gerentes de hotéis. Gerentes bemsucedidos
+17.30 Personalidades de gerentes de hotÃ©is. Gerentes bemsucedidos
 
-de hotéis devem ter características de personalidade
+de hotÃ©is devem ter caracterÃ­sticas de personalidade
 
 estereotipadas como femininas (como "compassivo"),
 
 bem como outras consideradas masculinas (como
 
-"enérgico"). O Bem Sex-Role Inventory (BSRI) é um teste
+"enÃ©rgico"). O Bem Sex-Role Inventory (BSRI) Ã© um teste
 
-de personalidade que dá escores separados para estereótipos
+de personalidade que dÃ¡ escores separados para estereÃ³tipos
 
 de "mulheres" e "homens", ambos em uma escala
 
 de 1 a 7. Embora o BSRI tenha sido desenvolvido em
 
-uma época em que esses estereótipos eram mais pronunciados,
+uma Ã©poca em que esses estereÃ³tipos eram mais pronunciados,
 
-ainda é largamente usado para avaliar tipos de
+ainda Ã© largamente usado para avaliar tipos de
 
-personalidade. Infelizmente, as classificações são quase
+personalidade. Infelizmente, as classificaÃ§Ãµes sÃ£o quase
 
 sempre referidas como escores de feminilidade e masculinidade.
 
-Uma amostra de 148 homens, gerentes gerais de hotéis de
+Uma amostra de 148 homens, gerentes gerais de hotÃ©is de
 
-três e quatro estrelas, teve escore médio de feminilidade
+trÃªs e quatro estrelas, teve escore mÃ©dio de feminilidade
 
-BSRI $\\bar{x}$ = 5,29.7 O escore médio para a população masculina
+BSRI $\\bar{x}$ = 5,29.7 O escore mÃ©dio para a populaÃ§Ã£o masculina
 
-geral é $\\mu$ = 5,19. Os gerentes de hotéis, na média, diferem
+geral Ã© $\\mu$ = 5,19. Os gerentes de hotÃ©is, na mÃ©dia, diferem
 
 de maneira estatisticamente significante dos homens
 
-em geral no escore de feminilidade? Suponha que o desvio-padrão
+em geral no escore de feminilidade? Suponha que o desvio-padrÃ£o
 
-dos escores na população de todos os homens gerentes de hotéis 
+dos escores na populaÃ§Ã£o de todos os homens gerentes de hotÃ©is 
 
-seja o mesmo, $\\sigma$ = 0,78 para a população
+seja o mesmo, $\\sigma$ = 0,78 para a populaÃ§Ã£o
 
 de homens adultos.
 
-(a) Estabeleça as hipóteses nula e alternativa em termos do
+(a) EstabeleÃ§a as hipÃ³teses nula e alternativa em termos do
 
-escore de feminilidade médio $\\mu$ para homens gerentes
+escore de feminilidade mÃ©dio $\\mu$ para homens gerentes
 
-de hotéis.
+de hotÃ©is.
 
-(b) Encontre a estatística de teste z.
+(b) Encontre a estatÃ­stica de teste z.
 
-(c) Qual é o valor P para o seu z? O que você conclui sobre
+(c) Qual Ã© o valor P para o seu z? O que vocÃª conclui sobre
 
-os homens gerentes de hotéis?
+os homens gerentes de hotÃ©is?
 
 
 
-17.31 É isto o que P significa? Um experimento comparativo
+17.31 Ã‰ isto o que P significa? Um experimento comparativo
 
 aleatorizado examinou o efeito do fato de um professor
 
@@ -2681,177 +2681,177 @@ ser atraente sobre o desempenho dos estudantes em um
 
 teste dado por ele. Os pesquisadores encontraram uma
 
-diferença estatisticamente significante nos escores do teste
+diferenÃ§a estatisticamente significante nos escores do teste
 
 entre os estudantes em uma classe com um professor classificado
 
 como atraente e os estudantes em uma turma com
 
-um professor classificado como não atraente (P = 0,005).8
+um professor classificado como nÃ£o atraente (P = 0,005).8
 
 Solicitado a explicar o significado de "P = 0,005", um estudante
 
-diz: "isso significa que há apenas uma probabilidade
+diz: "isso significa que hÃ¡ apenas uma probabilidade
 
-de 0,005 de que a hipótese nula seja verdadeira". Explique
+de 0,005 de que a hipÃ³tese nula seja verdadeira". Explique
 
 o que P = 0,005 realmente significa, de maneira que fique
 
-claro que a explicação do estudante está errada.
+claro que a explicaÃ§Ã£o do estudante estÃ¡ errada.
 
 
 
-17.32 Como mostrar que você é rico. Toda sociedade tem suas
+17.32 Como mostrar que vocÃª Ã© rico. Toda sociedade tem suas
 
-próprias marcas de riqueza e prestígio. Na China antiga, parece
+prÃ³prias marcas de riqueza e prestÃ­gio. Na China antiga, parece
 
-que possuir porcos era uma dessas marcas. A evidência
+que possuir porcos era uma dessas marcas. A evidÃªncia
 
-vem do exame de cemitérios. Os crânios de porcos sacrificados
+vem do exame de cemitÃ©rios. Os crÃ¢nios de porcos sacrificados
 
 tendem a aparecer junto com ornamentos caros, que
 
 sugerem que os porcos, como os ornamentos, sinalizavam
 
-a riqueza e o prestígio da pessoa enterrada. Um estudo de
+a riqueza e o prestÃ­gio da pessoa enterrada. Um estudo de
 
-enterros de cerca de 3.500 a.C. concluiu que "há diferenças
+enterros de cerca de 3.500 a.C. concluiu que "hÃ¡ diferenÃ§as
 
-gritantes nos bens das sepulturas com crânios de porcos e
+gritantes nos bens das sepulturas com crÃ¢nios de porcos e
 
 nos das sepulturas sem eles ... Um teste indica que as duas
 
-amostras do total de artefatos são diferentes de modo estatisticamente
+amostras do total de artefatos sÃ£o diferentes de modo estatisticamente
 
-significante no nível de 0,01" .9 Explique claramente
+significante no nÃ­vel de 0,01" .9 Explique claramente
 
 por que "diferentes de modo estatisticamente significante
 
-no nível de 0,01" fornece boa razão para pensar que,
+no nÃ­vel de 0,01" fornece boa razÃ£o para pensar que,
 
-realmente, há uma diferença sistemática entre os enterros
+realmente, hÃ¡ uma diferenÃ§a sistemÃ¡tica entre os enterros
 
-que contêm crânios de porcos e os que não os contêm.
+que contÃªm crÃ¢nios de porcos e os que nÃ£o os contÃªm.
 
 
 
 17.33 Aliviando a ansiedade de um teste. Pesquisa sugere que a
 
-pressão para se sair bem pode reduzir o desempenho em
+pressÃ£o para se sair bem pode reduzir o desempenho em
 
-exames. Há estratégias eficazes para lidar com a pressão?
+exames. HÃ¡ estratÃ©gias eficazes para lidar com a pressÃ£o?
 
 Em um experimento, os pesquisadores aplicaram aos estudantes
 
-um teste de habilidades matemáticas. Os mesmos
+um teste de habilidades matemÃ¡ticas. Os mesmos
 
-estudantes foram, então, solicitados a fazer um segundo
+estudantes foram, entÃ£o, solicitados a fazer um segundo
 
 teste abordando as mesmas habilidades. No entanto, para
 
-o segundo teste, os pesquisadores acrescentaram condições
+o segundo teste, os pesquisadores acrescentaram condiÃ§Ãµes
 
-com a intenção de aumentar a pressão de se sair bem. Agora,
+com a intenÃ§Ã£o de aumentar a pressÃ£o de se sair bem. Agora,
 
 cada estudante foi emparelhado com um parceiro e, apenas
 
 se ambos melhorassem seus escores, receberiam uma
 
-recompensa monetária por participarem do experimento.
+recompensa monetÃ¡ria por participarem do experimento.
 
-Também lhes foi dito que seu desempenho seria gravado e
+TambÃ©m lhes foi dito que seu desempenho seria gravado e
 
 observado por professores e estudantes.
 
-Os estudantes foram, então, divididos em dois grupos.
+Os estudantes foram, entÃ£o, divididos em dois grupos.
 
-Um grupo serviu de controle. Para ajudá-los a lidar com
+Um grupo serviu de controle. Para ajudÃ¡-los a lidar com
 
-a pressão, 10 minutos antes do segundo teste pediu-se aos
+a pressÃ£o, 10 minutos antes do segundo teste pediu-se aos
 
 estudantes do segundo grupo que escrevessem, da maneira
 
 mais franca, sobre seus pensamentos e sentimentos em
 
-relação ao teste. A diferença nos escores do teste (pós-teste
+relaÃ§Ã£o ao teste. A diferenÃ§a nos escores do teste (pÃ³s-teste
 
-e pré-teste) foi calculada. "Os estudantes que expressaram
+e prÃ©-teste) foi calculada. "Os estudantes que expressaram
 
-seus pensamentos antes do segundo teste de alta pressão
+seus pensamentos antes do segundo teste de alta pressÃ£o
 
 mostraram uma melhora estatisticamente significante na
 
-precisão matemática de 5%, do pré-teste ao pós-teste" (P <
+precisÃ£o matemÃ¡tica de 5%, do prÃ©-teste ao pÃ³s-teste" (P <
 
-0,03).10 Um colega que não sabe estatística diz que um aumento
+0,03).10 Um colega que nÃ£o sabe estatÃ­stica diz que um aumento
 
-de 5% não é muito - e talvez seja apenas um acidente
+de 5% nÃ£o Ã© muito - e talvez seja apenas um acidente
 
-devido à variação natural entre os estudantes. Explique,
+devido Ã  variaÃ§Ã£o natural entre os estudantes. Explique,
 
 em linguagem simples, como "P < 0,03" responde a essa
 
-objeção.
+objeÃ§Ã£o.
 
 
 
-17.34 Gênero do professor. No estudo descrito no Exercício 17.33, 
+17.34 GÃªnero do professor. No estudo descrito no ExercÃ­cio 17.33, 
 
-os pesquisadores examinaram também o efeito do
+os pesquisadores examinaram tambÃ©m o efeito do
 
-gênero de um professor (suposto ser homem ou mulher)
+gÃªnero de um professor (suposto ser homem ou mulher)
 
 sobre o desempenho de estudantes em um teste. Os pesquisadores
 
-não encontraram qualquer evidência de diferença
+nÃ£o encontraram qualquer evidÃªncia de diferenÃ§a
 
-nos escores (P =0,24). O valor P se refere à hipótese nula de
+nos escores (P =0,24). O valor P se refere Ã  hipÃ³tese nula de
 
-"nenhuma diferença" nos escores de teste em classes cujos
+"nenhuma diferenÃ§a" nos escores de teste em classes cujos
 
 professores eram homens ou mulheres. Explique claramente
 
-por que esse valor não fornece evidência de qualquer
+por que esse valor nÃ£o fornece evidÃªncia de qualquer
 
-diferença.
-
-
-
-17.35 5% versus 1%. Esboce uma curva Normal padrão para a
-
-estatística de teste ze marque as áreas sob a curva para mostrar
-
-por que um valor de z, que é estatisticamente significante
-
-no nível 1 % em um teste unilateral, é sempre estatisticamente
-
-significante no nível 5%. Se z é estatisticamente
-
-significante no nível 5%, o que você pode dizer sobre sua
-
-significância no nível 1 %?
+diferenÃ§a.
 
 
 
-17.36 A alternativa errada. Pesquisadores estão interessados no
+17.35 5% versus 1%. Esboce uma curva Normal padrÃ£o para a
+
+estatÃ­stica de teste ze marque as Ã¡reas sob a curva para mostrar
+
+por que um valor de z, que Ã© estatisticamente significante
+
+no nÃ­vel 1 % em um teste unilateral, Ã© sempre estatisticamente
+
+significante no nÃ­vel 5%. Se z Ã© estatisticamente
+
+significante no nÃ­vel 5%, o que vocÃª pode dizer sobre sua
+
+significÃ¢ncia no nÃ­vel 1 %?
+
+
+
+17.36 A alternativa errada. Pesquisadores estÃ£o interessados no
 
 efeito de correr 30 minutos por dia sobre o desempenho de
 
-alunos de graduação no teste ORE verbal. Eles começam
+alunos de graduaÃ§Ã£o no teste ORE verbal. Eles comeÃ§am
 
 sem qualquer expectativa sobre se os estudantes que correm
 
-30 minutos por dia terão melhor desempenho do que
+30 minutos por dia terÃ£o melhor desempenho do que
 
 os estudantes do grupo de controle, que seguem seu regime
 
-usual de exercícios. Depois de notarem que os estudantes
+usual de exercÃ­cios. Depois de notarem que os estudantes
 
 que corriam 30 minutos por dia tendiam a ter escores mais
 
 altos no ORE, os pesquisadores decidiram testar uma alternativa
 
-unilateral sobre os escores médios de teste ORE
+unilateral sobre os escores mÃ©dios de teste ORE
 
 verbal,
 
@@ -2871,27 +2871,27 @@ P = 0,0436.
 
 (a) Explique por que os pesquisadores deveriam ter usado
 
-a hipótese alternativa bilateral.
+a hipÃ³tese alternativa bilateral.
 
-(b) Qual é o valor P correto para z = 1,71?
+(b) Qual Ã© o valor P correto para z = 1,71?
 
 
 
-17.37 O P errado. O relatório de um estudo sobre o uso do
+17.37 O P errado. O relatÃ³rio de um estudo sobre o uso do
 
-cinto de segurança pelos motoristas diz que "Motoristas
+cinto de seguranÃ§a pelos motoristas diz que "Motoristas
 
-hispânicos não foram estatisticamente significantemente
+hispÃ¢nicos nÃ£o foram estatisticamente significantemente
 
-mais propensos do que os motoristas brancos/não
+mais propensos do que os motoristas brancos/nÃ£o
 
-hispânicos a relatar a mais o uso do cinto de segurança
+hispÃ¢nicos a relatar a mais o uso do cinto de seguranÃ§a
 
 (27 ,4% vs. 21,1%, respectivamente; z = 1,33, P > 1,0)".11
 
-Como você sabe que o valor P fornecido está incorreto?
+Como vocÃª sabe que o valor P fornecido estÃ¡ incorreto?
 
-Qual é o valor P unilateral correto para a estatística de
+Qual Ã© o valor P unilateral correto para a estatÃ­stica de
 
 teste z = 1,33?
 
@@ -2899,31 +2899,31 @@ teste z = 1,33?
 
 
 
-Os Exercícios 17.38 a 17.41 pedem que você responda a questões com
+Os ExercÃ­cios 17.38 a 17.41 pedem que vocÃª responda a questÃµes com
 
-base em dados. Suponha que as "condições simples" se verifiquem em cada
+base em dados. Suponha que as "condiÃ§Ãµes simples" se verifiquem em cada
 
-caso. Os enunciados dos exercícios lhe dão o passo **Estabeleça** do Processo
+caso. Os enunciados dos exercÃ­cios lhe dÃ£o o passo **EstabeleÃ§a** do Processo
 
 de quatro passos. Em seu trabalho, siga os passos **Planeje**, **Resolva** e
 
-**Conclua**, ilustrados no Exemplo 16.3 para um intervalo de confiança, e
+**Conclua**, ilustrados no Exemplo 16.3 para um intervalo de confianÃ§a, e
 
-no Exemplo 17.7 para um teste de significância.
+no Exemplo 17.7 para um teste de significÃ¢ncia.
 
 
 
 4PASSOS
 
-17.38 Ruptura da madeira. Qual a carga necessária (libras)
+17.38 Ruptura da madeira. Qual a carga necessÃ¡ria (libras)
 
-para romper pedaços de pinheiro Douglas de 4 polegadas
+para romper pedaÃ§os de pinheiro Douglas de 4 polegadas
 
 (10,16 cm) de comprimento e 1,5 polegada quadrada
 
-(9,6774 cm2)? A seguir, estão os dados de alunos executando 
+(9,6774 cm2)? A seguir, estÃ£o os dados de alunos executando 
 
-um exercício de laboratório:
+um exercÃ­cio de laboratÃ³rio:
 
 
 
@@ -2939,47 +2939,47 @@ MADEIRA
 
 
 
-Desejamos considerar as peças de madeira preparadas para
+Desejamos considerar as peÃ§as de madeira preparadas para
 
-a sessão de laboratório como uma AAS de todas as peças
+a sessÃ£o de laboratÃ³rio como uma AAS de todas as peÃ§as
 
-similares de pinheiro Douglas. Engenheiros assumem, também, 
+similares de pinheiro Douglas. Engenheiros assumem, tambÃ©m, 
 
-que características de materiais variem Normalmente. 
+que caracterÃ­sticas de materiais variem Normalmente. 
 
-Suponha que as forças de peças de madeira como essas sigam 
+Suponha que as forÃ§as de peÃ§as de madeira como essas sigam 
 
-uma distribuição Normal, com desvio-padrão $\\sigma$ de 3 mil libras
+uma distribuiÃ§Ã£o Normal, com desvio-padrÃ£o $\\sigma$ de 3 mil libras
 
 
 
-(a) Há evidência estatisticamente significante no nível $\\alpha$ = 
+(a) HÃ¡ evidÃªncia estatisticamente significante no nÃ­vel $\\alpha$ = 
 
-0,10 contra a hipótese de que a média seja 32.500 libras
+0,10 contra a hipÃ³tese de que a mÃ©dia seja 32.500 libras
 
 para uma alternativa bilateral?
 
-(b) Há evidência estatisticamente significante no nível $\\alpha$ =
+(b) HÃ¡ evidÃªncia estatisticamente significante no nÃ­vel $\\alpha$ =
 
-O,10 contra a hipótese de que a média seja 31.500 libras para
+O,10 contra a hipÃ³tese de que a mÃ©dia seja 31.500 libras para
 
 uma alternativa bilateral?
 
 
 
-17.39 Perda óssea por mães que amamentam. Conforme disct
+**17.39 Perda Ã³ssea por mÃ£es que amamentam**. Conforme disct
 
-4P~ do no Exercício 16.26, mães que amamentam secret~
+4P~ do no ExercÃ­cio 16.26, mÃ£es que amamentam secret~
 
-¦11 cálcio em seu leite. Parte do cálcio pode provir de se
+Â¦11 cÃ¡lcio em seu leite. Parte do cÃ¡lcio pode provir de se
 
-ossos e, desse modo, as mães podem sofrer perda miJ
+ossos e, desse modo, as mÃ£es podem sofrer perda miJ
 
-ral óssea. Pesquisadores mediram o percentual de variaç
+ral Ã³ssea. Pesquisadores mediram o percentual de variaÃ§
 
-do conteúdo mineral da espinha dorsal de 47 mães e
+do conteÃºdo mineral da espinha dorsal de 47 mÃ£es e
 
-rante 3 meses de amamentação.12 A seguir estão os dad<
+rante 3 meses de amamentaÃ§Ã£o.12 A seguir estÃ£o os dad<
 
 
 
@@ -3005,43 +3005,43 @@ PEROSSEA
 
 Os pesquisadores desejam considerar essas 47 mulher,
 
-como uma MS da população de todas as mães que am
+como uma MS da populaÃ§Ã£o de todas as mÃ£es que am
 
-mentam. Suponha que a variação percentual nessa popul
+mentam. Suponha que a variaÃ§Ã£o percentual nessa popul
 
-ção tenha distribuição Normal, com desvio-padrão $\\sigma$ de (J
+Ã§Ã£o tenha distribuiÃ§Ã£o Normal, com desvio-padrÃ£o $\\sigma$ de (J
 
-2,5%. Esses dados fornecem boa evidência de que, na m
+2,5%. Esses dados fornecem boa evidÃªncia de que, na m
 
-dia, as mães que amamentam perdem minerais dos ossos'.
+dia, as mÃ£es que amamentam perdem minerais dos ossos'.
 
 
 
 17 .40 Este vinho cheira mal. Compostos de enxofre causai
 
-4PASS¦
+4PASSÂ¦
 
 "odores estranhos" no vinho, de modo que os fabricai
 
 OS
 
-¦¦• tes de vinho querem saber o limiar de odor -a menc
+Â¦Â¦â€¢ tes de vinho querem saber o limiar de odor -a menc
 
 
 
-concentração de um composto que o olfato de um st
+concentraÃ§Ã£o de um composto que o olfato de um st
 
 humano pode detectar. O limiar de odor de dimetilsulfet
 
-(DMS) em provadores de vinho treinados é de aproximad:
+(DMS) em provadores de vinho treinados Ã© de aproximad:
 
-mente 25 microgramas por litro de vinho (µg/L). Contudc
+mente 25 microgramas por litro de vinho (Âµg/L). Contudc
 
-o olfato de consumidores não treinados pode ser menc
+o olfato de consumidores nÃ£o treinados pode ser menc
 
-sensível. A seguir, apresentamos os limiares de odor d
+sensÃ­vel. A seguir, apresentamos os limiares de odor d
 
-DMS de 10 estudantes não treinados: 1,111 VINHO
+DMS de 10 estudantes nÃ£o treinados: 1,111 VINHO
 
 
 
@@ -3053,25 +3053,25 @@ DMS de 10 estudantes não treinados: 1,111 VINHO
 
 
 
-Suponha que o limiar de odor para pessoas não treinadas
+Suponha que o limiar de odor para pessoas nÃ£o treinadas
 
 
 
-seja Normalmente distribuído, com a = 7 µg/L. Há evidên
+seja Normalmente distribuÃ­do, com a = 7 Âµg/L. HÃ¡ evidÃªn
 
 
 
 
 
-cia de que o limiar médio de provadores não treinados seja
+cia de que o limiar mÃ©dio de provadores nÃ£o treinados seja
 
 
 
-maior do que 25 µg/L?
+maior do que 25 Âµg/L?
 
 
 
-17.41 Graxa para os olhos. Atletas que praticam esporte à luz in-
+17.41 Graxa para os olhos. Atletas que praticam esporte Ã  luz in-
 
 4PA.5SOS, tensa do Sol, em geral, passam graxa preta sob os olhos
 
@@ -3079,17 +3079,17 @@ maior do que 25 µg/L?
 
 
 
-¦ estudo, 16 sujeitos estudantes fizeram um teste de sensibilidade
+Â¦ estudo, 16 sujeitos estudantes fizeram um teste de sensibilidade
 
-ao contraste claro e escuro depois de três horas
+ao contraste claro e escuro depois de trÃªs horas
 
-olhando o Sol brilhante, com e sem a graxa. Esse é um
+olhando o Sol brilhante, com e sem a graxa. Esse Ã© um
 
 planejamento de dados emparelhados. Se a graxa para os
 
-olhos é eficaz, os sujeitos serão mais sensíveis ao contraste
+olhos Ã© eficaz, os sujeitos serÃ£o mais sensÃ­veis ao contraste
 
-quando usam graxa para os olhos. Eis as diferenças na sensibilidade,
+quando usam graxa para os olhos. Eis as diferenÃ§as na sensibilidade,
 
 com graxa para os olhos menos sem graxa para
 
@@ -3103,179 +3103,179 @@ os olhos:13 11111 PROTOCULAR
 
 
 
-Desejamos saber se, na média, a graxa aumenta a sensibilidade.
+Desejamos saber se, na mÃ©dia, a graxa aumenta a sensibilidade.
 
 
 
 
 
-(a) Quais são as hipóteses nula e alternativa? Diga, em palavras,
+(a) Quais sÃ£o as hipÃ³teses nula e alternativa? Diga, em palavras,
 
-a qual média $\\mu$ suas hipóteses se referem.
+a qual mÃ©dia $\\mu$ suas hipÃ³teses se referem.
 
 (b) Suponha que os sujeitos sejam uma MS de todas as
 
-pessoas jovens com visão normal, que as diferenças de
+pessoas jovens com visÃ£o normal, que as diferenÃ§as de
 
-contraste sigam uma distribuição Normal nessa população,
+contraste sigam uma distribuiÃ§Ã£o Normal nessa populaÃ§Ã£o,
 
-e que o desvio-padrão $\\sigma$ das diferenças seja a = 0,22.
+e que o desvio-padrÃ£o $\\sigma$ das diferenÃ§as seja a = 0,22.
 
-Realize um teste de significância.
+Realize um teste de significÃ¢ncia.
 
-17.42 Testes a partir de intervalos de confiança. Um intervalo de
+17.42 Testes a partir de intervalos de confianÃ§a. Um intervalo de
 
-confiança para a média populacional $\\mu$ nos diz quais valores
+confianÃ§a para a mÃ©dia populacional $\\mu$ nos diz quais valores
 
-de $\\mu$ são plausíveis (aqueles no interior do intervalo) e quais
+de $\\mu$ sÃ£o plausÃ­veis (aqueles no interior do intervalo) e quais
 
-valores não são plausíveis (aqueles fora do intervalo) no nível
+valores nÃ£o sÃ£o plausÃ­veis (aqueles fora do intervalo) no nÃ­vel
 
-de confiança escolhido. Você pode usar essa ideia para realizar
+de confianÃ§a escolhido. VocÃª pode usar essa ideia para realizar
 
-um teste de qualquer hipótese nula H0: $\\mu$ = $\\mu\_0$, começando
+um teste de qualquer hipÃ³tese nula H0: $\\mu$ = $\\mu\_0$, comeÃ§ando
 
-com um intervalo de confiança: rejeite H0 se $\\mu\_0$ estiver fora
+com um intervalo de confianÃ§a: rejeite H0 se $\\mu\_0$ estiver fora
 
 do intervalo e deixe de rejeitar se $\\mu\_0$ estiver dentro do intervalo.
 
-A hipótese alternativa é sempre bilateral, Ha: $\\mu$ -=/:-$\\mu\_0$, porque
+A hipÃ³tese alternativa Ã© sempre bilateral, Ha: $\\mu$ -=/:-$\\mu\_0$, porque
 
-o intervalo de confiança se estende em ambas as direções
+o intervalo de confianÃ§a se estende em ambas as direÃ§Ãµes
 
-a partir de $\\bar{x}$  Um intervalo de confiança de 95% leva a um
+a partir de $\\bar{x}$  Um intervalo de confianÃ§a de 95% leva a um
 
-teste no nível de significância de 5%, porque esse intervalo
+teste no nÃ­vel de significÃ¢ncia de 5%, porque esse intervalo
 
-está errado 5% das vezes. De modo geral, o nível de confiança
+estÃ¡ errado 5% das vezes. De modo geral, o nÃ­vel de confianÃ§a
 
-C leva a um teste no nível de significância a = 1 -C.
+C leva a um teste no nÃ­vel de significÃ¢ncia a = 1 -C.
 
 
 
-(a) No Exemplo 17.7, um diretor médico encontrou a média
+(a) No Exemplo 17.7, um diretor mÃ©dico encontrou a mÃ©dia
 
 de LDL $\\bar{x}$ = 124,86 para uma amostra de 72 executivos.
 
-O desvio-padrão $\\sigma$ do LDL de todos os adultos é a= 40.
+O desvio-padrÃ£o $\\sigma$ do LDL de todos os adultos Ã© a= 40.
 
-CAPÍTULO 17
-
-
-
-Dê um intervalo de confiança de 90% para o LD L médio
-
-µ de todos os executivos nessa companhia, supondo
-
-que o desvio-padrão $\\sigma$ seja o mesmo de todos os adultos.
+CAPÃTULO 17
 
 
 
-(b) O valor hipotético $\\mu\_0$ = 130 está dentro do intervalo de
+DÃª um intervalo de confianÃ§a de 90% para o LD L mÃ©dio
 
-confiança. Realize o teste z para H0: $\\mu$ = 130 contra a
+Âµ de todos os executivos nessa companhia, supondo
 
-alternativa bilateral. Mostre que o teste não é estatisticamente
+que o desvio-padrÃ£o $\\sigma$ seja o mesmo de todos os adultos.
 
-significante no nível de 10%.
 
-(c) O valor hipotético $\\mu$ = 134 está fora desse intervalo de
 
-confiança. Realize o teste z para H0: $\\mu$ = 134 contra a
+(b) O valor hipotÃ©tico $\\mu\_0$ = 130 estÃ¡ dentro do intervalo de
 
-alternativa bilateral. Mostre que o teste é estatisticamente
+confianÃ§a. Realize o teste z para H0: $\\mu$ = 130 contra a
 
-significante no nível de 10%.
+alternativa bilateral. Mostre que o teste nÃ£o Ã© estatisticamente
 
-17.43 Testes a partir de intervalos de confiança. Famílias cuidadoras
+significante no nÃ­vel de 10%.
 
-de pacientes com doenças crônicas podem experimentar
+(c) O valor hipotÃ©tico $\\mu$ = 134 estÃ¡ fora desse intervalo de
+
+confianÃ§a. Realize o teste z para H0: $\\mu$ = 134 contra a
+
+alternativa bilateral. Mostre que o teste Ã© estatisticamente
+
+significante no nÃ­vel de 10%.
+
+17.43 Testes a partir de intervalos de confianÃ§a. FamÃ­lias cuidadoras
+
+de pacientes com doenÃ§as crÃ´nicas podem experimentar
 
 ansiedade. Encontros regulares de grupos de apoio
 
-afetam esses sentimentos de ansiedade? É possível que eles
+afetam esses sentimentos de ansiedade? Ã‰ possÃ­vel que eles
 
 reduzam a ansiedade, talvez pelo compartilhamento de
 
-experiências com outras famílias cuidadoras em situações
+experiÃªncias com outras famÃ­lias cuidadoras em situaÃ§Ãµes
 
-semelhantes, ou aumentem a ansiedade, talvez pelo reforço
+semelhantes, ou aumentem a ansiedade, talvez pelo reforÃ§o
 
-das experiências dolorosas ao recontá-las a outros. Para
+das experiÃªncias dolorosas ao recontÃ¡-las a outros. Para
 
-explorar o efeito de encontros de grupos de apoio, várias
+explorar o efeito de encontros de grupos de apoio, vÃ¡rias
 
-famílias cuidadoras foram inscritas em um grupo de apoio.
+famÃ­lias cuidadoras foram inscritas em um grupo de apoio.
 
 Depois de 3 meses, os pesquisadores administraram um teste
 
 para medir a ansiedade, com escores maiores indicando
 
-maior ansiedade. Suponha que essas famílias cuidadoras
+maior ansiedade. Suponha que essas famÃ­lias cuidadoras
 
-sejam uma amostra aleatória da população de todas as famílias
+sejam uma amostra aleatÃ³ria da populaÃ§Ã£o de todas as famÃ­lias
 
-cuidadoras. Um intervalo de confiança de 99% para
+cuidadoras. Um intervalo de confianÃ§a de 99% para
 
-o escore de ansiedade média populacional µ, depois de participar
+o escore de ansiedade mÃ©dia populacional Âµ, depois de participar
 
-do grupo de apoio, é 7,2 ± 0,9.14
+do grupo de apoio, Ã© 7,2 Â± 0,9.14
 
-Use o método descrito no exercício anterior para responder
+Use o mÃ©todo descrito no exercÃ­cio anterior para responder
 
-a essas questões.
+a essas questÃµes.
 
 
 
-(a) Suponha sabermos que o escore médio de ansiedade
+(a) Suponha sabermos que o escore mÃ©dio de ansiedade
 
-para a população de todas as famílias cuidadoras seja
+para a populaÃ§Ã£o de todas as famÃ­lias cuidadoras seja
 
-6,2. Com uma alternativa bilateral, você pode rejeitar
+6,2. Com uma alternativa bilateral, vocÃª pode rejeitar
 
-a hipótese nula de $\\mu$ = 6,2 no nível de significância de
+a hipÃ³tese nula de $\\mu$ = 6,2 no nÃ­vel de significÃ¢ncia de
 
-1% (a = 0,01)? Por quê?
+1% (a = 0,01)? Por quÃª?
 
-(b) Suponha que saibamos que o escore médio de ansiedade
+(b) Suponha que saibamos que o escore mÃ©dio de ansiedade
 
-para a população de todas as famílias cuidadoras
+para a populaÃ§Ã£o de todas as famÃ­lias cuidadoras
 
-seja 6,4. Com uma alternativa bilateral, você pode rejeitar
+seja 6,4. Com uma alternativa bilateral, vocÃª pode rejeitar
 
-a hipótese nulaµ = 6,4 no nível de significância
+a hipÃ³tese nulaÂµ = 6,4 no nÃ­vel de significÃ¢ncia
 
-de 1 % (a = 0,01)? Por quê?
+de 1 % (a = 0,01)? Por quÃª?
 
-17.44 Testes a partir de intervalos de confiança. O Exemplo 16.3
+17.44 Testes a partir de intervalos de confianÃ§a. O Exemplo 16.3
 
-calcula um intervalo de confiança de 95% para a gorjeta
+calcula um intervalo de confianÃ§a de 95% para a gorjeta
 
-percentual média $\\mu$ de todos os clientes de um restaurante
+percentual mÃ©dia $\\mu$ de todos os clientes de um restaurante
 
 quando recebem uma mensagem em suas contas indicando
 
-que o tempo será bom no dia seguinte. Use esse intervalo
+que o tempo serÃ¡ bom no dia seguinte. Use esse intervalo
 
-de confiança para testar H0: $\\mu$ = 20 contra a alternativa bilateral,
+de confianÃ§a para testar H0: $\\mu$ = 20 contra a alternativa bilateral,
 
-no nível de significância de 5%.
+no nÃ­vel de significÃ¢ncia de 5%.
 
-17.45 Testes a partir de intervalos de confiança. O Exercício
+17.45 Testes a partir de intervalos de confianÃ§a. O ExercÃ­cio
 
-4PAS\\i 16.6 pede que você calcule um intervalo de confiança
+4PAS\\i 16.6 pede que vocÃª calcule um intervalo de confianÃ§a
 
-de 90% para o verdadeiro ponto de fusão $\\mu$ de uma
-
-
-
-¦11
+de 90% para o verdadeiro ponto de fusÃ£o $\\mu$ de uma
 
 
 
-amostra de cobre comprada do NIST. Eis as seis medições
+Â¦11
 
-da mesma amostra de cobre dadas no Exercício 16.6:
+
+
+amostra de cobre comprada do NIST. Eis as seis mediÃ§Ãµes
+
+da mesma amostra de cobre dadas no ExercÃ­cio 16.6:
 
 
 
@@ -3283,13 +3283,13 @@ da mesma amostra de cobre dadas no Exercício 16.6:
 
 
 
-Você lê online que o ponto de fusão do cobre é l.084,62°C.
+VocÃª lÃª online que o ponto de fusÃ£o do cobre Ã© l.084,62Â°C.
 
-Se você ainda não tiver feito isto, calcule o intervalo de
+Se vocÃª ainda nÃ£o tiver feito isto, calcule o intervalo de
 
-confiança e use-o para testar H0: $\\mu$ = l.084,62ºC contra a
+confianÃ§a e use-o para testar H0: $\\mu$ = l.084,62ÂºC contra a
 
-alternativa bilateral, no nível d~ significância de 10%. Use
+alternativa bilateral, no nÃ­vel d~ significÃ¢ncia de 10%. Use
 
 
 

@@ -1,0 +1,399 @@
+---
+title: "Testes de Significância: o Básico"
+subtitle: "Capítulo 17 - A Estatística Básica e sua prática (9ª ed.)"
+author: "Baseado em Moore, Notz & Fligner"
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: true
+    embed-resources: true
+  pdf:
+    documentclass: article
+    geometry: margin=1in
+    fontsize: 11pt
+lang: pt
+bibliography: references.bib
+---
+
+# Testes de Significância: o Básico
+
+Intervalos de confiança são um dos dois tipos mais comuns de inferência estatística. Neste capítulo, discutimos testes de significância, o segundo tipo de inferência estatística.
+
+A matemática da probabilidade - em particular, as distribuições amostrais discutidas no Capítulo 15 - fornece a base formal para um teste de significância.
+
+Aqui aplicaremos o raciocínio de testes de significância para a média de uma população que tem distribuição Normal, em um contexto simples e artificial (em que supomos conhecer o desvio-padrão populacional $\sigma$). Usaremos a mesma lógica em capítulos futuros para a construção e testes de significância para parâmetros populacionais em contextos mais realistas.
+
+Use um intervalo de confiança quando seu objetivo for estimar um parâmetro da população. Os testes de significância têm um objetivo diferente: avaliar a evidência fornecida pelos dados sobre alguma afirmativa anterior relativa a um parâmetro da população.
+
+A seguir, apresentamos sucintamente a lógica de testes estatísticos.
+
+::: callout-note
+## Exemplo 17.1 - Eu sou um grande atirador de lances livres
+
+Eu afirmo que acerto 80% de meus lances livres no jogo de basquete. Para testar minha afirmativa, você me pede para fazer 20 lances livres. Eu acerto apenas oito dos 20. "Ah!", você diz. "Alguém que acerta 80% de seus lances livres quase nunca acertaria apenas oito entre 20. Logo, não acredito em sua afirmativa."
+
+Seu raciocínio se baseia no questionamento do que ocorreria se minha afirmativa fosse verdadeira e repetíssemos a amostra de 20 lançamentos muitas vezes: eu quase nunca acertaria oito ou menos. Esse resultado de oito em 20 é tão improvável, que fornece uma forte evidência de que minha afirmativa não seja verdadeira.
+
+Você pode dizer quão forte é a evidência contra minha afirmativa, fornecendo a probabilidade de eu acertar oito ou menos entre 20 lances livres, se eu realmente acertasse 80% no longo prazo. Essa probabilidade é 0,0001; como descrito no Capítulo 14, esse cálculo é feito com o uso da distribuição binomial.
+
+Assim, eu acertaria oito ou menos em 20 lances em apenas uma vez em 10 mil tentativas no longo prazo - onde cada "tentativa" são 20 lances livres jogados - se minha afirmativa de acertar 80% fosse verdadeira. O pequeno valor da probabilidade o convence de que minha afirmativa é falsa.
+
+O *applet Reasoning of a Statistical Test* (conteúdo em inglês) faz uma animação do Exemplo 17.1. Você pode pedir a um jogador que faça lances livres até que os dados lhe convençam, ou não, de que ele faz menos do que 80%.
+
+Testes de significância usam um vocabulário elaborado, mas a ideia básica é simples: um resultado que raramente ocorreria se uma afirmativa fosse verdadeira é boa evidência de que a afirmativa não seja verdadeira.
+:::
+
+## A lógica dos testes de significância {#sec-logica}
+
+A lógica dos testes estatísticos, assim como a dos intervalos de confiança, se baseia no questionamento do que ocorreria se repetíssemos a amostra ou experimento muitas vezes. Agiremos novamente como se as "condições simples" listadas em "Condições simples para inferência sobre uma média", no Capítulo 16, fossem verdadeiras: temos uma AAS perfeita de uma população exatamente Normal com desvio-padrão $\sigma$ conhecido por nós. Eis um exemplo que analisaremos.
+
+::: callout-note
+## Exemplo 17.2 - Adoçantes de refrigerantes
+
+Refrigerantes dietéticos usam adoçantes artificiais para evitar o uso de açúcar. Esses adoçantes gradualmente perdem sua doçura ao longo do tempo. Os fabricantes, portanto, testam a perda de doçura dos refrigerantes novos antes de colocá-los no mercado.
+
+Provadores treinados bebem um pequeno gole de refrigerante, juntamente com bebidas de doçura padrão, e atribuem ao refrigerante um "escore de doçura" de 1 a 10, com maiores escores correspondendo a maior doçura. O refrigerante é, então, armazenado por um mês em alta temperatura para imitar o efeito do armazenamento por 4 meses em temperatura ambiente.
+
+Cada provador atribui um escore ao refrigerante novamente após o armazenamento. Esse é um experimento de dados emparelhados. Nossos dados são as diferenças (escore antes do armazenamento menos escore após o armazenamento) dos escores dos provadores. Quanto maior a diferença (diferença \> 0), maior será a perda de doçura.
+
+Suponha sabermos que, para qualquer refrigerante, os escores de perda de doçura variem de provador para provador de acordo com uma distribuição Normal, com desvio-padrão $\sigma = 1$. A média $\mu$ de todos os provadores mede a perda de doçura e é diferente para diferentes refrigerantes.
+
+A seguir, estão as perdas de doçura de um novo refrigerante, medidas por 10 provadores treinados:
+
+**1,6 0,4 0,5 -2,0 1,5 -1,1 1,3 -0,1 -0,3 1,2**
+
+A perda média de doçura é dada pela média amostral $\bar{x} = 0,3$, de modo que, em média, os 10 provadores encontraram uma pequena perda de doçura. Também, mais da metade, (seis) dos provadores encontraram uma perda de doçura. Esses dados são uma boa evidência de que o refrigerante perdeu doçura com o armazenamento?
+
+O raciocínio é o mesmo do Exemplo 17.1. Fazemos uma afirmativa e perguntamos se os dados fornecem evidência contrária a ela. Procuramos evidência de que haja uma perda de doçura; logo, a afirmativa que testamos é que não há perda. Nesse caso, a perda média para a população de todos os provadores treinados seria $\mu = 0$.
+
+-   Se a afirmativa de que $\mu = 0$ é verdadeira, a distribuição amostral de $\bar{x}$ dos 10 provadores é Normal com média $\mu = 0$ e desvio-padrão:
+
+$$\frac{\sigma}{\sqrt{n}} = \frac{1}{\sqrt{10}} = 0.316$$
+
+Para esse refrigerante, 10 provadores acusaram perda média $\bar{x} = 0,3$. É claro que um $\bar{x}$ desse tamanho não é particularmente surpreendente. Ele poderia facilmente ocorrer apenas devido ao acaso, quando a média da população é $\mu = 0$. O fato de obter $\bar{x} = 0,3$ para 10 provadores não é forte evidência de que esse refrigerante perca doçura.
+:::
+
+::: callout-note
+## Exemplo 17.3 - Adoçantes de refrigerantes, novamente
+
+A seguir, estão as perdas de doçura de um novo refrigerante, conforme medidas por 10 provadores treinados:
+
+**2,0 0,4 0,7 2,0 -0,4 2,2 -1,3 1,2 1,1 2,3**
+
+A perda média de doçura é dada pela média amostral $\bar{x} = 1,02$. A maioria dos escores é positiva. Isto é, a maioria dos provadores encontrou uma perda de doçura. Mas as perdas são pequenas, e dois provadores (os escores negativos) acharam que o refrigerante ganhou doçura. Esses dados constituem **boa evidência** de que o refrigerante perdeu doçura no armazenamento?
+
+O teste de sabor para o novo refrigerante produziu $\bar{x} = 1,02$. Isso está bem longe, na cauda da curva Normal - tão longe que ***um valor observado desse tamanho raramente ocorreria por acaso se o verdadeiro*** $\mu$ fosse 0. Esse valor observado é boa evidência de que o verdadeiro $\mu$ é, de fato, maior do que 0 - isto é, o refrigerante perdeu doçura. O fabricante deve reformular o novo refrigerante e tentar novamente.
+:::
+
+### Aplique seu conhecimento
+
+::: callout-tip
+## Exercício 17.1 - GMAT
+
+O *Graduate Management Admission Test* (GMAT) é feito por indivíduos interessados em seguir a educação na graduação em administração. Os escores do GMAT são utilizados como parte do processo de admissão para mais de 6 mil programas de graduação em administração em todo o mundo. O escore médio para todos os que fazem o teste é 563, com um desvio-padrão $\sigma$ de 118.
+
+Uma pesquisadora nas Filipinas está preocupada com o desempenho no GMAT de não graduados nas Filipinas. Ela acredita que, na época, o escore médio para os alunos de último ano de faculdades nas Filipinas, que estão interessados em seguir a educação na graduação em administração, será menor do que 563. Ela tem uma amostra aleatória de 250 alunos de último ano de faculdades nas Filipinas interessados em seguir a educação na graduação em administração que vão fazer o GMAT. Suponha que saibamos que os escores GMAT são distribuídos Normalmente, com desvio-padrão $\sigma = 118$.
+
+(a) Procuramos evidência contra a afirmativa de que $\mu = 563$. Qual é a distribuição amostral do escore médio $\bar{x}$ de uma amostra de 250 estudantes, se a afirmativa é verdadeira? Esboce a curva de densidade dessa distribuição.
+
+(b) Suponha que os dados amostrais resultem em $\bar{x} = 555$. Marque esse ponto no eixo de seu esboço.
+
+(c) Suponha que os dados amostrais resultem em $\bar{x} = 540$. Marque esse ponto em seu esboço. Usando seu esboço, explique, em linguagem simples, por que um resultado é boa evidência de que o escore médio de todos os estudantes de último ano de faculdades nas Filipinas, interessados em fazer a graduação em administração e que planejam fazer o GMAT, seria menor do que 563, e o outro resultado não é.
+:::
+
+## Estabelecimento de hipóteses {#sec-hipoteses}
+
+Um teste estatístico de significância começa com um enunciado cuidadoso das afirmativas que queremos comparar. No Exemplo 17.3, vimos que os dados de teste de sabor não são plausíveis se, de fato, o novo refrigerante não perde doçura. Como a lógica dos testes procura por evidência contrária à afirmativa, começamos com a afirmativa contra a qual buscamos evidência, tal qual "nenhuma perda de doçura".
+
+### Hipóteses nula e alternativa
+
+::: callout-important
+## Definições importantes
+
+A afirmativa testada por um teste estatístico de significância é chamada de **hipótese nula**. O teste é planejado para avaliar a força da evidência contra a hipótese nula. Usualmente, a hipótese nula é uma afirmativa de "nenhum efeito" ou "nenhuma diferença".
+
+A afirmativa sobre a população para a qual estamos tentando encontrar evidência a favor é a **hipótese alternativa**. A hipótese alternativa é **unilateral** se afirmar que um parâmetro é maior do que ou menor do que o valor da hipótese nula. Ela é **bilateral** se afirmar que o parâmetro é diferente do valor nulo.
+
+Abrevia-se a hipótese nula como $H_0$ e a hipótese alternativa como $H_a$. ***As hipóteses sempre se referem a um parâmetro populacional***, ***não a um resultado amostral particular***. Certifique-se de ***estabelecer*** $H_0$ e $H_a$ em termos de parâmetros da população.
+:::
+
+Como $H_a$ expressa o efeito a favor do qual esperamos encontrar evidência, é frequentemente mais fácil começar pelo enunciado de $H_a$ e, então, enunciar $H_0$ como uma afirmativa de que o efeito esperado não esteja presente. $H_0$, em geral, inclui "igual".
+
+Nos Exemplos 17.2 e 17.3, estamos buscando evidência a favor de perda na doçura. A hipótese nula diz "nenhuma perda" em média em uma grande população de provadores. A hipótese alternativa diz "há uma perda". Logo, as hipóteses são:
+
+$$H_0: \mu = 0$$ $$H_a: \mu > 0$$
+
+A ***hipótese alternativa*** é ***unilateral*** porque estamos interessados apenas em saber se o refrigerante perdeu doçura.
+
+::: callout-note
+## Exemplo 17.4 - Estudo da satisfação no emprego
+
+A satisfação no emprego de operários de montadoras difere quando seu trabalho é ritmado pelas máquinas em vez de autorritmado? Aloque trabalhadores a uma linha de montagem que se move em um ritmo fixo ou a uma condição autorritmada. Todos os sujeitos trabalham em ambas as condições, em ordem aleatória. Esse é um planejamento de dados emparelhados.
+
+Após 2 semanas em cada condição de trabalho, os trabalhadores são submetidos a um teste de satisfação com o emprego. A variável de resposta é a diferença entre os escores de satisfação, autorritmado menos ritmado pela máquina.
+
+O parâmetro de interesse é a média $\mu$ das diferenças dos escores na população de todos os operários da montadora. A hipótese nula diz que não há diferença entre trabalho autorritmado e ritmado pela máquina:
+
+$$H_0: \mu = 0$$
+
+Os autores do estudo queriam saber se as duas condições de trabalho geravam níveis diferentes de satisfação no emprego. Eles não especificaram a direção da diferença. A hipótese alternativa é, portanto, bilateral:
+
+$$H_a: \mu \neq 0$$
+:::
+
+::: callout-warning
+## Estatística no mundo real - Hipóteses honestas?
+
+Pessoas chinesas e japonesas, para as quais o número 4 é de má sorte, morrem mais frequentemente no quarto dia do mês do que em outros dias. Os autores de um estudo fizeram um teste estatístico da afirmativa de que o quarto dia tem mais mortes do que os outros dias, e encontraram boa evidência a favor dessa afirmativa.
+
+Você acredita nisso? Não, se os autores examinaram todos os dias, tomaram o que tinha mais mortes e, então, fizeram a afirmativa a ser testada "esse dia é diferente". Um crítico levantou esse problema, e os autores replicaram, "Não, nós tínhamos o dia 4 em mente antes, de modo que nosso teste é legítimo".
+
+**As hipóteses devem expressar as expectativas ou suspeitas que temos antes de vermos os dados.** É **trapaça** olhar primeiro os dados e então estabelecer hipóteses que se ajustem ao que os dados mostram.
+:::
+
+## Valor P e significância estatística {#sec-valor-p}
+
+A ideia do estabelecimento de uma hipótese nula, contra a qual desejamos encontrar evidência, parece estranha no início. Pode ser útil pensar em um julgamento criminal. O acusado é "inocente até que se prove o contrário". É exatamente assim que funcionam os testes estatísticos de significância, embora, em estatística, lidemos com evidência fornecida por dados e usemos a probabilidade para dizer quão forte é a evidência.
+
+A probabilidade que mede a força da evidência contra a hipótese nula é chamada de **valor P**.
+
+::: callout-important
+## Estatística de teste e valor P
+
+Uma ***estatística de teste*** calculada a partir de dados amostrais ***mede quanto os dados divergem do que esperaríamos***, ***se a hipótese*** ***nula*** $H_0$ fosse verdadeira.
+
+Valores não usualmente grandes da estatística mostram que os dados não são consistentes com $H_0$.
+
+A probabilidade, calculada supondo $H_0$ verdadeira, de que a estatística de teste assuma um valor tão ou mais extremo do que o valor realmente observado é chamada de **valor P** do teste.
+
+**Quanto menor o valor P, mais forte é a evidência contra** $H_0$ fornecida pelos dados.
+
+**Valores P pequenos são evidência contra** $H_0$, pois ***afirmam*** ***que o resultado observado tem ocorrência improvável se*** $H_0$ for ***verdadeira***.
+
+**Valores P grandes não fornecem evidência contra** $H_0$.
+:::
+
+Quão pequeno deve ser o valor P para ser evidência convincente contra $H_0$? Muitos usuários de estatística consideram valores menores do que 0,05 ou 0,01 como convincentes.
+
+::: callout-note
+## Exemplo 17.5 - Adoçante de refrigerantes: valor P unilateral
+
+O estudo da perda de doçura nos Exemplos 17.2 e 17.3 testa as seguintes hipóteses:
+
+$$H_0: \mu = 0$$ $$H_a: \mu > 0$$
+
+Como a hipótese alternativa diz que $\mu > 0$, valores de $\bar{x}$ maiores do que 0 favorecem $H_a$ em detrimento de $H_0$. A estatística de teste compara o $\bar{x}$ observado com o valor da hipótese $\mu = 0$. Por enquanto, vamos nos concentrar no valor P.
+
+O experimento apresentado nos Exemplos 17.2 e 17.3 realmente comparava dois refrigerantes. Para o primeiro refrigerante, os 10 provadores encontraram uma perda média de doçura de $\bar{x} = 0,3$. Para o segundo, os dados forneceram $\bar{x} = 1,02$.
+
+O valor P para cada teste é a probabilidade de obter um $\bar{x}$ desse tamanho quando a perda média de doçura é realmente $\mu = 0$.
+
+A curva Normal é a distribuição amostral de $\bar{x}$ quando a hipótese nula $H_0: \mu = 0$ é verdadeira, usando o desvio-padrão populacional $\sigma = 1$.
+
+Um cálculo de probabilidade Normal mostra que o valor P é $P(\bar{x} \geq 0,3) = 0,1714$.
+
+Um valor tão grande quanto $\bar{x} = 0,3$ apareceria por acaso em 17% de todas as amostras, quando $H_0: \mu = 0$ fosse verdadeira. Assim, a observação de $\bar{x} = 0,3$ **não é evidência** forte contra $H_0$.
+
+Por outro lado, pode-se verificar que a probabilidade de que $\bar{x}$ seja 1,02 ou maior, quando de fato $\mu = 0$, é de apenas 0,0006. Ou seja, raramente observaríamos uma perda média de doçura de 1,02 ou maior se $H_0$ fosse verdadeira. Esse **valor P pequeno** fornece forte **evidência contra** $H_0$ e a favor da alternativa $H_a: \mu > 0$.
+:::
+
+A hipótese alternativa estabelece a direção que conta como evidência contra $H_0$. No Exemplo 17.5, apenas valores grandes, positivos, contam, porque a alternativa é unilateral do lado mais alto. Se a alternativa for bilateral, ambas as direções contam.
+
+::: callout-note
+## Exemplo 17.6 - Satisfação no emprego: valor P bilateral
+
+O estudo sobre satisfação no emprego no Exemplo 17.4 requer que testemos:
+
+$$H_0: \mu = 0$$ $$H_a: \mu \neq 0$$
+
+Suponha que saibamos que as diferenças nos escores de satisfação (autorritmado menos ritmado pela máquina) na população de todos os trabalhadores sigam uma distribuição Normal, com desvio-padrão $\sigma = 60$.
+
+Dados de 18 trabalhadores fornecem $\bar{x} = 17$. Isto é, esses trabalhadores preferem, na média, o ambiente autorritmado. Como a **alternativa é bilateral**, o valor P é a probabilidade de obter $\bar{x}$ pelo menos tão distante de $\mu = 0$, em ambas as direções, quanto o valor observado $\bar{x} = 17$.
+
+O valor P é $P = 0,2293$. Valores tão distantes de 0 quanto $\bar{x} = 17$ (em qualquer direção) aconteceriam 23% das vezes, quando a verdadeira média populacional é $\mu = 0$.
+
+Um resultado que ocorreria tão frequentemente quando $H_0$ é verdadeira **não é** **boa evidência contra** $H_0$.
+:::
+
+::: callout-warning
+## Importante sobre interpretação
+
+**A conclusão do Exemplo 17.6 não é que** $H_0$ seja verdadeira.
+
+O estudo procurou evidência contrária a $H_0: \mu = 0$ e não conseguiu encontrar uma forte evidência. É tudo o que podemos dizer. Sem dúvida, a média $\mu$ para a população de todos os trabalhadores da montadora não é exatamente igual a 0. Uma amostra suficientemente grande forneceria evidência da diferença, mesmo que fosse muito pequena.
+
+Testes de significância avaliam a evidência contra $H_0$. **Se** a **evidência** é forte, **podemos confiantemente rejeitar** $H_0$ em **favor da alternativa**.
+
+O fato de não conseguir encontrar evidência contra $H_0$ significa apenas que os ***dados não são*** ***inconsistentes com*** $H_0$, e ***não que tenhamos uma evidência clara de que*** $H_0$ seja verdadeira.
+
+**Apenas dados que são inconsistentes com** $H_0$ nos permitem fazer uma afirmativa positiva de que temos forte **evidência contra** $H_0$.
+:::
+
+### Significância estatística
+
+Nos Exemplos 17.5 e 17.6, decidimos que o valor P **P = 0,0006** era **evidência** forte contra a hipótese nula e que os **valores P = 0,1714 e P = 0,2293 não eram evidência convincente**.
+
+Não há uma regra sobre quão pequeno um valor P deva ser para que rejeitemos $H_0$; é ***uma questão de julgamento*** e depende das circunstâncias específicas.
+
+No entanto, podemos comparar um valor P com alguns valores fixos que comumente são utilizados como **padrões para evidência** contra $H_0$.
+
+::: callout-important
+## Significância estatística
+
+Se o valor P é tão pequeno quanto $\alpha$, ou menor do que $\alpha$, dizemos que os dados são **estatisticamente significantes** no nível $\alpha$. A quantidade $\alpha$ é chamada de **nível de significância**.
+
+"Significante", em linguagem estatística, não tem o sentido de "importante". **Significa** simplesmente **"improvável de acontecer apenas por acaso"**. O **nível de significância** $\alpha$ torna "improvável" mais exato.
+:::
+
+Os valores fixos mais comuns são 0,05 e 0,01. Se P = 0,05, não há mais do que uma chance em 20 de que uma amostra dê evidência tão forte apenas por acaso, quando $H_0$ é realmente verdadeira. Se P = 0,01, temos um resultado que, no longo prazo, aconteceria não mais do que uma vez em 100 amostras, se $H_0$ fosse verdadeira.
+
+Para evitar confusão, usaremos **"estatisticamente significante"** em vez de "significante" neste capítulo. No entanto, em artigos de pesquisa e publicações da mídia, você geralmente verá a palavra "significante" em vez da expressão "estatisticamente significante".
+
+É **boa prática interpretar as descobertas de significância** **estatística no contexto do problema** para o qual os dados foram coletados.
+
+::: callout-warning
+## Estatística no mundo real - Significância derruba um novo medicamento
+
+A companhia farmacêutica Pfizer gastou US\$ 1 bilhão no desenvolvimento de uma nova droga contra o colesterol. A **verificação final** de sua **eficácia** foi um teste clínico com 15 mil sujeitos. Para reforçar o estudo duplo-cego, apenas um grupo independente de especialistas viu os dados durante o teste. Após 3 anos de testes, os **monitores declararam que houve um número excessivo,** **estatisticamente significante, de mortes e de problemas cardíacos no grupo** **alocado à nova droga**. A Pfizer encerrou o teste.
+:::
+
+## Testes para uma média populacional {#sec-testes-media}
+
+Usamos testes para hipóteses sobre a média $\mu$ de uma população, sob as "condições simples", para introduzir os testes de significância. O importante é a lógica de um teste: dados amostrais que ocorreriam raramente se a hipótese nula $H_0$ fosse verdadeira fornecem evidência de que $H_0$ não é verdadeira.
+
+O valor P nos dá uma probabilidade para medir "ocorreriam raramente".
+
+Na prática, os passos para a realização de um teste de significância refletem o processo geral de **quatro passos** para a **organização** **de problemas estatísticos realistas**.
+
+::: callout-important
+## Testes de significância: o processo de quatro passos
+
+**ESTABELEÇA**: qual é a questão prática que requer um teste estatístico?
+
+**PLANEJE**: identifique o parâmetro, estabeleça as hipóteses nula e alternativa e escolha o tipo de teste que seja adequado à sua situação.
+
+**RESOLVA**: realize o **teste** em **três fases**: 1. ***Verifique as condições*** para o teste que você planeja usar. 2. Calcule a ***estatística de teste***. 3. Encontre o ***valor P***.
+
+**CONCLUA**: volte à questão prática para ***descrever seus resultados*** ***nesse contexto***.
+:::
+
+Após estabelecer o problema, enunciar as hipóteses e verificar as condições para seu teste, você ou um programa de computador podem encontrar a estatística de teste e o valor P seguindo um roteiro. Esse é o roteiro para o teste que usamos em nossos exemplos.
+
+::: callout-important
+## Teste z de uma amostra para uma média populacional
+
+Extraia uma AAS de tamanho n de uma população Normal que tenha média $\mu$ desconhecida e desvio-padrão $\sigma$ conhecido. Para testar a hipótese nula de que $\mu$ tenha um valor especificado:
+
+$$H_0: \mu = \mu_0$$
+
+calcule a **estatística de teste z de uma amostra**:
+
+$$z = \frac{\bar{x} - \mu_0}{\sigma / \sqrt{n}}$$
+
+**Em termos de uma variável Z com distribuição Normal padrão**, **o valor P para um teste de** $H_0$ contra:
+
+-   $H_a: \mu > \mu_0$ é $P(Z \geq z)$
+-   $H_a: \mu < \mu_0$ é $P(Z \leq z)$\
+-   $H_a: \mu \neq \mu_0$ é $2P(Z \geq |z|)$
+:::
+
+::: callout-note
+## Exemplo 17.7 - Colesterol de executivos
+
+**ESTABELEÇA**: o *National Center for Health Statistics* relata que o colesterol LDL para adultos tem média 130 e desvio-padrão $\sigma = 40$. O diretor médico de uma grande companhia farmacêutica observa os registros médicos de 72 executivos e vê que o LDL médio nessa amostra é $\bar{x} = 124,86$. ***Isso*** ***é evidência*** de que os executivos da companhia tenham um ***LDL médio diferente*** do da ***população*** geral?
+
+**PLANEJE**: a hipótese nula é "nenhuma diferença" da média nacional $\mu_0 = 130$. A **alternativa é bilateral**, porque o diretor médico não tinha em mente uma direção particular antes de examinar os dados. Assim, as hipóteses acerca da média desconhecida $\mu$ da população de executivos são:
+
+$$H_0: \mu = 130$$ $$H_a: \mu \neq 130$$
+
+Sabemos que o teste z de uma amostra é apropriado para essas hipóteses sob as "condições simples".
+
+**RESOLVA**: como parte das "condições simples", suponha que estejamos desejosos em assumir que o LDL de executivos siga uma distribuição Normal, com desvio-padrão $\sigma = 40$. A estatística de teste é:
+
+$$z = \frac{\bar{x} - \mu_0}{\sigma/\sqrt{n}} = \frac{124.86 - 130}{40/\sqrt{72}} = -1.09$$
+
+Para ajudar a determinar o **valor P**, **esboce** a **curva Normal** **padrão** e marque nela o **valor observado** de **z**.
+
+O **valor P é a probabilidade** de que **uma variável** **Normal padrão Z assuma um valor distante de zero** em, **pelo** **menos, 1,09**.
+
+$$P = 2P(Z > 1.09) = 2(0.1379) = 0.2758$$
+
+**CONCLUA**: mais de 27% das vezes, uma AAS de tamanho 72 da população adulta em geral teria um LDL médio pelo menos tão longe de 130 quanto o da amostra de executivos. **O** $\bar{x} = 124,86$ observado não é, portanto, **boa evidência** de **que os executivos sejam diferentes dos outros adultos**.
+:::
+
+Neste capítulo, estamos agindo como se as "condições simples" estabelecidas em "Condições simples para inferência sobre uma média", no Capítulo 16, fossem verdadeiras. Na **prática**, **você deve verificar essas condições**.
+
+1.  **AAS**: a condição mais importante é que os 72 executivos na **amostra** sejam **uma AAS** da **população de todos os executivos** **na empresa**. Devemos conferir essa exigência questionando como os dados foram produzidos.
+
+2.  **Distribuição Normal**: devemos examinar, também, a **distribuição** **das 72 observações** à **procura** de **sinais** de que a **distribuição populacional não seja Normal**.
+
+3.  $\sigma$ conhecido: é, de fato, **não realista** supor que saibamos que $\sigma = 40$. Veremos, no Capítulo 20, que é **fácil** nos **livrarmos** da **necessidade** de **conhecer** $\sigma$.
+
+## Resumo {#sec-resumo}
+
+-   **Um teste de significância avalia a evidência fornecida pelos dados contra uma hipótese nula** $H_0$ em favor de uma hipótese alternativa $H_a$.
+
+-   As **hipóteses são sempre enunciadas em termos de parâmetros populacionais**. Em geral, $H_0$ é uma afirmativa de que não há qualquer efeito presente, e $H_a$ afirma que um parâmetro diverge de seu valor nulo em uma direção específica (alternativa **unilateral**) **ou em qualquer direção** (alternativa **bilateral**).
+
+-   O **fundamento essencial** de um teste de significância é como segue. **Suponha**, para raciocinar, que a **hipótese nula seja** **verdadeira**. **Se repetíssemos nossa produção de dados muitas** **vezes, obteríamos frequentemente dados tão inconsistentes** **com** $H_0$ como os dados que realmente temos?
+
+-   Um teste se baseia em **uma estatística de teste**, que **mede quão** **distante o resultado amostral está do valor estabelecido por** $H_0$.
+
+-   O **valor P** de um teste é a **probabilidade**, calculada **supondo** $H_0$ verdadeira, de **que a estatística de teste assuma um valor** **pelo menos tão extremo quanto o de fato observado**.
+
+-   **Se** o **valor P** for **tão pequeno quanto, ou menor que um** **valor especificado** $\alpha$, **os dados são estatisticamente significantes** **no nível de significância** $\alpha$.
+
+-   Testes de significância para a hipótese nula $H_0: \mu = \mu_0$ relativos à média desconhecida $\mu$ de uma população se baseiam **na estatística de teste z de uma amostra**:
+
+$$z = \frac{\bar{x} - \mu_0}{\sigma / \sqrt{n}}$$
+
+O teste z **pressupõe** uma **AAS** de tamanho **n** de uma **população Normal** com desvio-padrão populacional $\sigma$ conhecido.
+
+## Exercícios selecionados {#sec-exercicios}
+
+```{r}
+#| echo: false
+#| eval: false
+
+# Exemplo de código R para cálculos estatísticos
+# Teste z para uma amostra
+
+# Dados do exemplo 17.7 (Colesterol de executivos)
+x_bar <- 124.86
+mu_0 <- 130
+sigma <- 40
+n <- 72
+
+# Cálculo da estatística z
+z <- (x_bar - mu_0) / (sigma / sqrt(n))
+cat("Estatística z:", z)
+
+# Cálculo do valor P (bilateral)
+p_value <- 2 * pnorm(abs(z), lower.tail = FALSE)
+cat("Valor P:", p_value)
+
+# Verificação de significância
+alpha <- 0.05
+if (p_value < alpha) {
+  cat("Resultado estatisticamente significante no nível", alpha)
+} else {
+  cat("Resultado NÃO estatisticamente significante no nível", alpha)
+}
+```
+
+::: callout-tip
+## Para praticar
+
+1.  **GMAT**: Complete os exercícios sobre o estudo de desempenho no GMAT.
+
+2.  **Inspeção de pesos**: Trabalhe os exercícios sobre pesos de caixas de cookies.
+
+3.  **Teste de significância completo**: Realize o processo de quatro passos para exercícios sobre gorjetas em restaurantes.
+:::
+
+------------------------------------------------------------------------
+
+**Referências**: Este material é baseado em Moore, D. S., Notz, W. I., & Fligner, M. A. *A Estatística Básica e sua prática* (9ª ed.). Tradução e adaptação para formato Quarto.
