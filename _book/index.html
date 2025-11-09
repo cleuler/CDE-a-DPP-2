@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR" xml:lang="pt-BR"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Cleuler Barbosa das Neves">
+<title>Ciência de Dados e Estatística Aplicadas ao Direito e Políticas Públicas</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 1em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./intro.html" rel="next">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-364982630eef5352dd1537128a8ed5cb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+</head>
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Pretexto</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./"><strong>Ciência de Dados e Estatística Aplicadas ao Direito e Políticas Públicas</strong></a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Alternar modo de leitor">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Procurar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Pretexto</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AEID-cap18-Reproduzivel.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">AEID - Análise Exploratória e Inferencial de Dados</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap3-DistNorm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">AED - cap 3 - As Distribuições Normais</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap5-pldr-modelos-dados.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">AED - cap 5 pldr - Ajustando Modelos aos Dados</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap13-pldr-model-rel-contin.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">AID - cap 13 - Modelagem de Relações Contínuas</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap16-pldr-EstMultiv.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">AID - cap 16 - Estatística Multivariada</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap6-moore-tab-dupla-entrada.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">AED - cap 6 moore - Tabelas de Dupla Entrada</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./replicar-suco-uva-tab-graf.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">AED - suco uva - Tabelas e Gráficos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap16-moore-IC-o-basico.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">AEI - cap 16 moore - IC: o Básico</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap17-moore-TSHN-o-basico.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">AEI - cap 17 moore - TSH0</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./conclusao.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Conclusão</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./apendiceA.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Apêndice A - EMENTA</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./apendiceB-quadroVar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Apêndice B - Quadro Var</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./referencias.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Referências</span></a>
+  </div>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Sumário</h2>
+   
+  <ul>
+<li>
+<a href="#sec-pretexto" id="toc-sec-pretexto" class="nav-link active" data-scroll-target="#sec-pretexto">Pretexto</a>
+  <ul>
+<li><a href="#sec-load-packages" id="toc-sec-load-packages" class="nav-link" data-scroll-target="#sec-load-packages">Load packages</a></li>
+  <li><a href="#sec-linguagem-r---pacote-quarto" id="toc-sec-linguagem-r---pacote-quarto" class="nav-link" data-scroll-target="#sec-linguagem-r---pacote-quarto">Linguagem R - pacote Quarto</a></li>
+  <li><a href="#sec-sobre-Autor" id="toc-sec-sobre-Autor" class="nav-link" data-scroll-target="#sec-sobre-Autor">Sobre o autor</a></li>
+  <li><a href="#sec-resumo" id="toc-sec-resumo" class="nav-link" data-scroll-target="#sec-resumo">RESUMO</a></li>
+  <li><a href="#sec-abstract" id="toc-sec-abstract" class="nav-link" data-scroll-target="#sec-abstract"><em>ABSTRACT</em></a></li>
+  <li><a href="#sec-Epigrafe" id="toc-sec-Epigrafe" class="nav-link" data-scroll-target="#sec-Epigrafe">Epígrafe</a></li>
+  <li><a href="#sec-dedicatoria" id="toc-sec-dedicatoria" class="nav-link" data-scroll-target="#sec-dedicatoria">Dedicatória</a></li>
+  <li><a href="#agradecimentos" id="toc-agradecimentos" class="nav-link" data-scroll-target="#agradecimentos">Agradecimentos</a></li>
+  </ul>
+</li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title"><strong>Ciência de Dados e Estatística Aplicadas ao Direito e Políticas Públicas</strong></h1>
+<p class="subtitle lead"></p>
+<p><a href="https://www.youtube.com/watch?v=4VASegKKzpY"><img src="logoUfg.png" class="img-fluid" style="width:5.7in"></a><br><strong>Ciência de Dados e Estatística com <a href="https://www.r-project.org/"><img src="R-logo.png" class="img-fluid" style="width:0.35in"></a><br>
+Aplicada ao Di<a href="https://posit.co/download/rstudio-desktop/"><img src="Rstudio.jpg" class="img-fluid" style="width:0.27in"></a>eito e Políticas Públicas.<br>
+74: 3 Axiomas, 16 Teoremas e 55 Conceitos essenciais<br>
+para 1 Estatística prática e CD aplicada ao Direito e Políticas Públicas</strong><br><br><strong>RELATÓRIO DE PRODUTO TÉCNICO</strong><br>
+Desenvolvimento de softwares em Linguagem R na disciplina CDEaDPP, 2. sem. 2025<br>
+Ciência de Dados e Estatística com R Aplicada ao Direito e Políticas Públicas<br>
+(Disciplina DPP0053 junto ao PPGDP da UFG)<br></p>
+</div>
+
+
+<div class="quarto-title-meta-author">
+  <div class="quarto-title-meta-heading">Autor</div>
+  <div class="quarto-title-meta-heading">Afiliação</div>
+  
+    <div class="quarto-title-meta-contents">
+    <p class="author">Prof.&nbsp;Dr.&nbsp;Cleuler Barbosa das Neves <a href="mailto:cleuler@ufg.br" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> <a href="https://orcid.org/0000-0001-8319-0257" class="quarto-title-author-orcid"> <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg=="></a></p>
+  </div>
+  <div class="quarto-title-meta-contents">
+        <p class="affiliation">
+            <a href="https://ppgdp.direito.ufg.br/p/19422-docentes">
+            Faculdade de Direito da UFG/PPGDP
+            </a>
+          </p>
+      </div>
+  </div>
+
+<div class="quarto-title-meta">
+
+      
+    <div>
+    <div class="quarto-title-meta-heading">Data de Publicação</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">6 de nov. de 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+<div>
+  <div class="abstract">
+    <div class="block-title">Resumo</div>
+    <div class="card border-primary mb-3" style="max-width: 28rem;">
+    <div class="card-header">
+    Ficha catalográfica
+    </div>
+    <div class="card-header">
+    __________________________________________
+    </div>
+    <div class="card-body">
+    <pre><code>Neves, Cleuler Barbosa das
+   Relatório de Produto Técnico consistente na escrita e
+desenvolvimento de softwares em Linguagem R de apoio à
+resolução de problemas na disciplina concebida para o
+doutorado do PPGDP - Programa de Pós-Graduação em Direito
+e Políticas Públicas que funciona junto à Faculdade de
+Direito da UFG - Universidade Federal de Goiás, ministrada
+no 2. sem. 2025 e intitulada Ciência de Dados e Estatística
+Aplicadas ao Direito e Políticas Públicas - DPP0053
+(ago. 2025/dez. 2025). Goiânia: FD/UFG, 2025. Geração de um
+e-book com esse conjunto de scripts em R hospedado em pasta
+do PPGDP a fim de apoiar os estudantes de mestrado/doutorado,
+pós-graduação estrito senso, na compreensão do conteúdo
+transmitido e também no auxílio à resolução de exercícios
+em sala de aula e também dos problemas de pesquisa desses
+mestrandos e doutorandos. Geração de simulações computacionais
+de problemas de pesquisa em Direito e Políticas Públicas.
+Modelo para aqueles que optarem por apresentar seus relatórios
+de pesquisa em formato de e-book.
+200 p. : il., col., gráf., tab.
+Inclui bibliografia
+ISBN 978-85-328-0207-7
+1. Direito. 2. Políticas Públicas. 3. Estatística Descritiva
+e Inferencial. 4. Linguagem R 5. Ciência de Dados
+6. Simulações
+I. Título
+CDD: 519.207.                                  CDU: 519.2:7</code></pre>
+    </div>
+    <div class="card-header">
+    __________________________________________
+    </div>
+    </div>
+  </div>
+</div>
+
+
+</header>
+<section id="sec-pretexto" class="level1 unnumbered"><h1 class="unnumbered">Pretexto</h1><p><embed src="cover.pdf" title="__Ciência de Dados e Estatística Aplicadas ao Direito e Políticas Públicas__" class="quarto-cover-image nolightbox img-fluid"></p>
+<p>Estado Moderno e o problema do poder de controle público, sob a pele privada, de seus cidadãos: competências criminal e cível discricionárias em ponderação com o princípio do <em>devido processo legal procedural e substantivo</em>.</p>
+<p>Num tal Moderno Estado Democrático de Direito tornam-se importantes as Análises de Processo e de Resultados do (des)controle do processo penal acusatório e da administração da execução penal.</p>
+<p>Bem como do processo cível, notadamente das ações coletivas.</p>
+<p>Na interface do Direito e Políticas Públicas busca-se compreender o fenômeno da <strong><em>baixa efetividade</em></strong> de inúmeras normas constitucionais, notadamente aquelas insertas na CF/1988 na condição de direitos fundamentais.</p>
+<p>Esta disciplina, CDE-a-DPP: <em>Ciência de Dados e</em> <em>Estatística (Básica e Inferecnial, com R) aplicada ao Direito e Políticas Públicas</em>, foi concebida absolutamente apoiada no <em>dogma</em> de que os fenômenos jurídicos e, mais ainda, sua conjunção com as Políticas Públicas (pródiga no uso de <em>indicadores</em> e de rakeamentos em suas abordagens para análise de processos e de resultados; ex.: AIR - Análise de Impacto Regulatório), <strong><em>apresentam uma componente estocástica</em></strong> [<span class="citation" data-cites="Becker2015">BECKER (<a href="referencias.html#ref-Becker2015" role="doc-biblioref">2015</a>)</span>]<span class="citation" data-cites="DietzKalof2015">(<a href="referencias.html#ref-DietzKalof2015" role="doc-biblioref">DIETZ; KALOF, Linda, 2015</a>)</span> e podem ser <strong><em>objeto de contagem ou de medição</em></strong>, dado que a <strong><em>mente humana é um instrumento de medição</em></strong> <span class="citation" data-cites="Kahneman2021">(<a href="referencias.html#ref-Kahneman2021" role="doc-biblioref">KAHNEMAN, Daniel; SIBONY, Oliver; SUNSTEIN, Cass R., 2021</a>)</span> <em>quando opera julgamentos sob incerteza</em> <span class="citation" data-cites="Kahneman1982">(<a href="referencias.html#ref-Kahneman1982" role="doc-biblioref">KAHNEMAN, Daniel; SLOVIC, Paul; TVERSKY, Amos, 1982</a>)</span>.</p>
+<section id="sec-load-packages" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="sec-load-packages">Load packages</h2>
+<div class="cell">
+<details class="code-fold"><summary>Código</summary><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: init</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># load packages</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># carregar os pacotes</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># necessários para rodar os scripts em R</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(downlit)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reticulate)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quarto)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(qreport)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># library(kableExtra)</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gt)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(latex2exp)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mixtools)</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(descr)</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section><section id="sec-linguagem-r---pacote-quarto" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="sec-linguagem-r---pacote-quarto">Linguagem R - pacote Quarto</h2>
+<p><strong><em>Desenvolvimento de softwares em linguagem R elaborados como apoio para resolução de problemas de pesquisa e para simulações</em></strong> na disciplina de doutorado/mestrado do PPGDP - Programa de Pós-Graduaçãoem Direito e Políticas Públicas sediado na Faculdade de Direito da UFG - Universidade Federal de Goiás, ministrada no 2. sem. 2024 e intitulada <strong>Ciência de Dados e Estatística aplicada ao Direito e Políticas Públicas – CDEaDPP</strong> - código DPP0053 (ago. 2024/dez. 2024). Goiânia: FD/UFG, 2024.</p>
+<p>Pretende-se gerar um <em>e-book</em> com os diversos <em>scripts</em> desses <strong><em>softwares em linguagem R</em></strong> a fim apoiar os estudantes na compreensão do conteúdo transmitido e também no auxílio à resolução de problemas de pesquisa e de geração de simulações, de modo a aplicar as <strong><em>técnicas</em></strong> <strong>de <em>pesquisa empírica predominantemente quantitativas</em></strong> que podem ser consideradas <strong>adequadas</strong> e que ainda <u><strong><em>não</em></strong></u> foram <strong><em>aplicadas</em></strong> ou foram <strong><em>incompletamente aplicadas</em></strong> em <em>pesquisas anteriores do PPGDP</em>, a fim de <strong><em>avançar</em></strong> na <strong><em>fronteira</em></strong> <strong>do <em>conhecimento</em></strong> do <strong><em>estado da arte</em></strong> e da <strong><em>pesquisa empírica</em></strong> (levantar dados 1<sup><u>os</u></sup> e 2<sup><u>os</u></sup>) até aqui <strong><em>empreendida neste programa</em></strong>, como, por exemplo: <strong><em>testes de Hipótese</em></strong> em geral e da <strong><em>qualidade do ajuste de Modelos</em></strong> (seleção), modelo de regressão logística, modelos lineares generalizados (glm), análise de sobrevivência, análise de fatores de risco, análise de relações (DAG’s e inferência bayesiana), análise estatística da decisão por meio de árvore de decisão, aprendizado de máquina (supervisionado e não supervisionado), modelos de reologia e escoamento para análise de fluxos processuais no sistema de justiça criminal e cível etc.</p>
+<p>Também servirá de modelo para aqueles que optarem por apresentar seus Relatórios de Pesquisa ou mesmo dissertações, relatórios de produção técnica, tese etc. em formato de <em>e-book</em>, que pode ser hospedado em um domínio da web.</p>
+<p>Produzido em <code>Quarto</code>.<br>
+Para saber mais sobre <code>Quarto</code> cf.: <a href="https://quarto.org" class="uri">https://quarto.org</a>.</p>
+<p>Esta é uma obra científica produzida no <code>R Quarto</code>, numa proposta de <em>pesquisa empírica com produção técnica relevante</em> junto ao PPGDP/UFG, Progama de Pós-Graduação Profissional assim caracterizado:</p>
+<ul>
+<li><div id="AreaConc">
+<p>Área de concentração: <em>Direito da Administração e Políticas Públicas</em>;</p>
+</div></li>
+<li><div id="LinhasPesq">
+<p>Linhas de pesquisa:</p>
+<ol type="I">
+<li>
+<em>Regulação</em>, <em>Efetividade</em> e <em>Controle</em> <em>Constitucional</em> das Políticas Públicas;</li>
+<li>Políticas Públicas <em>de Segurança</em> e <em>de Enfrentamento à Desigualdade Estrutural</em>, e</li>
+<li>
+<em>Novas Tecnologias</em> e <em>Novas Práticas</em> em <em>Políticas Públicas</em>: Soluções Jurídicas</li>
+</ol>
+</div></li>
+<li><p>Conduzida por: Cleuler Barbosa das NEVES. (<a href="#0" title="Currículo">Lattes</a>)</p></li>
+<li><p>e: Gaspar Alexandre Machado de SOUSA. (<a href="http://lattes.cnpq.br/6135605692550160">Lattes</a>)</p></li>
+</ul>
+<p><em>Recommended Citation</em>:</p>
+<p>NEVES, Cleuler Barbosa das. <strong>Ciência de Dados e Estatística aplicadas ao Direito e Políticas Públicas – CDEaDPP</strong>: desenvolvimento de softwares em linguagem R elaborados como apoio para resolução de problemas de pesquisa e para simulações de modo a aplicar as <strong><em>técnicas</em></strong> <strong>de <em>pesquisa empírica predominantemente quantitativas</em></strong> que podem ser consideradas <strong>adequadas</strong> e que ainda <u><strong><em>não</em></strong></u> foram <strong><em>aplicadas</em></strong> ou foram <strong><em>incompletamente aplicadas</em></strong> em <em>pesquisas anteriores do PPGDP</em>, a fim de <strong><em>avançar</em></strong> na <strong><em>fronteira</em></strong> <strong>do <em>conhecimento</em></strong> do <strong><em>estado da arte</em></strong> e da <strong><em>pesquisa empírica</em></strong> (levantar dados 1<sup><u>os</u></sup> e 2<sup><u>os</u></sup>) até aqui <strong><em>empreendida neste programa</em></strong>. Disciplina ministrada pela primeira vez no 2. sem. 2024 - código DPP0053 (ago. 2024/dez. 2024). Goiânia: FD/UFG, 2024.</p>
+</section><section id="sec-sobre-Autor" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="sec-sobre-Autor">Sobre o autor</h2>
+<p>Cleuler Barbosa DAS NEVES (<a href="http://lattes.cnpq.br/3567330317986829" title="Currículo">Lattes</a>) tem graduação em Direito pela Universidade Federal de Goiás (1997), especialização e mestrado em Direito Agrário pela Universidade Federal de Goiás (2001) e doutorado em Ciências Ambientais pela Universidade Federal de Goiás (2006). Atualmente é <a href="https://www.youtube.com/watch?v=K6PwUG283DU" title="Another Brick in the Wall Pt. 2 (The Wall, Pink Floyd)">professor</a> <em>titular</em> integrante do quadro permanente do Programa de Mestrado Profissional em Direito e Políticas Públicas (PPGDP) da UFG e também junto à graduação em Direito da UFG. Procurador do Estado de Goiás (5/2/1999). Tem experiência na área de Direito, com ênfase em Direito Público, tendo atuado em Direito Agrário e Direito Ambiental, com foco de pesquisas em Áreas de Preservação Permanente - APP’s, em recursos hídricos e em Processo Civil e Administrativo. Atualmente atuando em Direito Administrativo, com foco de pesquisas em: i) <span class="smallcaps">Conflituosidade</span>, <span class="smallcaps">Consensualidade e Políticas Públicas</span>: <span class="smallcaps">Mediação, Conciliação e Arbitragem e outros mecanismos consensuais na Administração Pública</span> (Linha 3 do PPGDP) e em ii) Defesa Social e Segurança Pública: desafios para a implantação de políticas públicas de segurança no Brasil (Linha 2 do PPGDP).</p>
+<p>Também é graduado em Engenharia Elétrica pela Universidade Federal de Goiás (1986), com especialização em Engenharia de <a href="https://www.youtube.com/watch?v=i9L6ypmosdE" title="Feira de Mangaio - Petrobras Sinfônica e Lucy Alves">Petróleo</a> pela Universidade Federal da Bahia em convênio com Centro de Treinamento do Nordeste da Petrobrás (1990).</p>
+<p>Ministra disciplinas relacionadas à Metodologia da Pesquisa Científica e à Epistemologia na graduação e na pós-graduação estrito senso da Faculdade de Direito da UFG (PPGDA e PPGDP) há mais de quinze anos.</p>
+<p>Tem dedicado-se ao estudo da Teoria da Probabilidade e Estatística aplicadas à pesquisa empírica, especialmente à <em>quali</em>-<em>quantitativa</em>, no campo do Direito em sua interface com as Políticas Públicas há mais de sete anos. Cursa atualmente a especialização <em>lato senso</em> em: <em>Data Science</em> e Estatística Aplicada, oferecida pela FEN - Faculdade de Enfermagem e pelo IME - Instituto de Matemática e Estatística da UFG.</p>
+<p>Num breviário de sua trajetória acadêmica, enumera suas seguintes produções (acadêmicas e técnicas) que, de um modo ou de outro, conduziram-lhe até a concepação das presentes notas de aula:</p>
+<ol type="1">
+<li><p>Dissertação (2001) <span class="citation" data-cites="dissert2001">(<a href="referencias.html#ref-dissert2001" role="doc-biblioref">DAS NEVES, 2001</a>)</span>: suas primeiras reflexões sobre a <em>questão do método</em> (cap. 2, p.&nbsp;28-79), ainda sob influxos preponderantemente racionalista. Depois (2011) publicada como livro <span class="citation" data-cites="livro2011">(<a href="referencias.html#ref-livro2011" role="doc-biblioref">DAS NEVES, 2011</a>)</span>.</p></li>
+<li><p>Tese (2006) <span class="citation" data-cites="tese2006">(<a href="referencias.html#ref-tese2006" role="doc-biblioref">DAS NEVES, 2006</a>)</span>: trata dos <em>fenômenos</em> da <em>nomogênese</em>, da <em>nomoconcreção</em> e da <em>nomointernalização</em>/<em>nomosocialização</em> (itens 1.3, 1.4 e 1.5, cap. 1, f.&nbsp;45-73) abordados à luz da <em>Teoria Tridimensional</em> de Reale <span class="citation" data-cites="Reale1994-uz">(<a href="referencias.html#ref-Reale1994-uz" role="doc-biblioref">REALE, 2017</a>)</span>, situando-a <em>entre razões e sentimentos</em>, conforme as <em>Lições sobre Ética</em>, de Ernst Tugendhat <span class="citation" data-cites="Tugendhat1997-le">(<a href="referencias.html#ref-Tugendhat1997-le" role="doc-biblioref">TUGENDHAT, 2003</a>)</span>, sob a orientação do Prof.&nbsp;Dr.&nbsp;Nivado dos Santos. Disponível em: <a href="https://files.cercomp.ufg.br/weby/up/104/o/Cleuler_Neves.pdf" class="uri">https://files.cercomp.ufg.br/weby/up/104/o/Cleuler_Neves.pdf</a>;</p></li>
+<li><p>artigo (2011): <em>Delimitação de Áreas de Preservação Permanente determinadas pelo relevo</em>: aplicação da legislação ambiental em duas Microbacias Hidrográficas no Estado de Goiás <span class="citation" data-cites="Borges2011-delimAPPrelevo">(<a href="referencias.html#ref-Borges2011-delimAPPrelevo" role="doc-biblioref">BORGES; NEVES; CASTRO, 2011</a>)</span>, dado que o <em>principal produto</em> de sua tese de doutoramento foi estabeler <em>critérios para delimitação de APPs pelo Relevo</em>. Disponível em: <a href="https://rbgeomorfologia.org.br/rbg/article/view/263" class="uri">https://rbgeomorfologia.org.br/rbg/article/view/263</a>;</p></li>
+<li><p>Livro (2018): <em>Trabalhos Científicos em Direito</em>: da elaboração à defesa, no campo acadêmico e profissional. Rio de Janeiro: Lumen Juris, há mais de sete anos no prelo <span class="citation" data-cites="livroMTC2018">(<a href="referencias.html#ref-livroMTC2018" role="doc-biblioref">DAS NEVES, "ainda no prelo"</a>)</span>;</p></li>
+<li><p>artigo (2018): Dever de consensualidade na atuação administrativa. <em>Revista de Informação Legislativa</em>: RIL <span class="citation" data-cites="neves2018deverConsensuAdm">(<a href="referencias.html#ref-neves2018deverConsensuAdm" role="doc-biblioref">DAS NEVES; FERREIRA FILHO, 2018a</a>)</span>, v. 55, n.&nbsp;218, p.&nbsp;63-84, abr./jun. 2018. (qualis A2). Disponível em: <a href="https://www12.senado.leg.br/ril/edicoes/55/218/ril_v55_n218_p63.pdf" class="uri">https://www12.senado.leg.br/ril/edicoes/55/218/ril_v55_n218_p63.pdf</a></p></li>
+<li><p>artigo (2018): Escolha do árbitro na terminação de conflitos administrativos: limites e possibilidades da atuação de um advogado público. <em>A&amp;C – Revista de Direito Administrativo &amp; Constitucional</em> <span class="citation" data-cites="neves2018escolhaArbitro">(<a href="referencias.html#ref-neves2018escolhaArbitro" role="doc-biblioref">DAS NEVES; FERREIRA FILHO, 2018b</a>)</span>, Belo Horizonte, ano 18, n.&nbsp;71, p.&nbsp;167-195, jan./mar. 2018. qualis A2. DOI: 10.21056/aec.v18i71.587. Disponível em: <a href="http://www.revistaaec.com/index.php/revistaaec/article/view/587" class="uri">http://www.revistaaec.com/index.php/revistaaec/article/view/587</a></p></li>
+<li><p>artigo (2019): Previsão orçamentária de custo para alimentação em sessões de conciliação do Tribunal de Justiça de Goiás, com fundamento em pesquisa empírica. Artigo publicado na <em>Revista Fórum Administrativo</em>: Direito Público <span class="citation" data-cites="neves2019custoSucoUva">(<a href="referencias.html#ref-neves2019custoSucoUva" role="doc-biblioref">DAS NEVES; TOMÁS, 2019</a>)</span>, ano 19, n.&nbsp;19, p.&nbsp;18-25, maio 2019 (qualis A4);</p></li>
+<li><p>artigo (2019): Controle concomitante de editais de licitação de obras como política pública de prevenção à corrupção. <em>Revista Fórum Administrativo</em>: Direito Público <span class="citation" data-cites="neves2019controleLicObras">(<a href="referencias.html#ref-neves2019controleLicObras" role="doc-biblioref">DAS NEVES; NAVES, 2019</a>)</span>. Belo Horizonte, v. 19, n.&nbsp;220, p.&nbsp;20-32, jun. 2019. Disponível em: <a href="https://d1wqtxts1xzle7.cloudfront.net/60647461/Controle_concomitante_de_editais_de_licitacao_de_obras_como_politica_publica_de_prevencao_a_corrupcao20190919-80536-1cz6fg6-libre.pdf?1568923862=&amp;response-content-disposition=attachment%3B+filename%3DControle_concomitante_de_editais_de_lici.pdf&amp;Expires=1697602962&amp;Signature=NdqS1iqtzLdSPNNB6-0g1qtabglXj8O5D4VBEI3zrMfoKB41LRPTucEP2LWCGualq~D8jmk4fNP4gXcowbsbPk3wYCeHuSCTolKftuJzSGeEAT1so70whKXqz69iV8lIp~91XbwfHAIxvVej1DKkbb4O3a~IdK8j5phOuRFaUZlS9V7r-5wy2U06EZG9v3R-EKzD4ActlA2z7O6SuvL-F1m8eE9BetdoFxfUYPF7que9Jytcc8pWEZJWDXUeiKxWBWXHuGj0VACeUQ8fvuMjFpNfKbkLhpeoy1WeK9UDXztZfVY6L41Jiz1CaR1a3UAdHVWz3GyIaUsHnssLnCPKVA__&amp;Key-Pair-Id=APKAJLOHF5GGSLRBV4ZA" title="pdf">clique aqui</a>.</p></li>
+<li><p>artigo (2020): Avaliação de Políticas Públicas: uma abordagem DPP aplicada ao programa de incentivo fiscal “PRODUZIR” no Estado de Goiás (2000-2017). <em>Revista do Direito</em> (Santa Cruz do Sul <em>on line</em>), v. 3, p.&nbsp;104-123, 2020. <span class="citation" data-cites="silva2020Fomentar-DPP">(<a href="referencias.html#ref-silva2020Fomentar-DPP" role="doc-biblioref">DAS NEVES; SILVA, 2020</a>)</span>. DOI: 10.17058/rdunisc.v3i50.14648. Disponível em: <a href="https://online.unisc.br/seer/index.php/direito/article/download/14648/8938" title="DOI: 10.17058/rdunisc.v3i50.14648">clique aqui</a></p></li>
+<li><p>artigo (2020): A Glicobiologia e a Psicologia Comportamental como Elementos Exógenos Estimuladores da Conciliação Judicial. Artigo publicado na <em>Revista Fórum Administrativo</em>: Direito Público <span class="citation" data-cites="neves2020glicobiologia">(<a href="referencias.html#ref-neves2020glicobiologia" role="doc-biblioref">DAS NEVES; BEZERRA, 2020</a>)</span>, ano 20, n.&nbsp;229, p.&nbsp;26-34, mar. 2020 (qualis A4);</p></li>
+<li><p>artigo (2021): Avaliação de Políticas Públicas: análises de quebras estruturais em séries temporais de indicadores para aferir os resultados do programa de incentivo fiscal “Produzir” no Estado de Goiás (2000 - 2017). <em>Revista de Estudos Empíricos em Direito</em> [<em>Brazilian Journal of Empirical Legal Studies</em>], v. 8, p.&nbsp;1-51, 2021, <a href="https://doi.org/10.19092/reed.v8i.506" class="uri">https://doi.org/10.19092/reed.v8i.506</a> (qualis B1). <span class="citation" data-cites="silva2021tsFomentar">(<a href="referencias.html#ref-silva2021tsFomentar" role="doc-biblioref">SILVA; DAS NEVES, 2021</a>)</span>;</p></li>
+<li><p>artigo (2021): <em>Uma hermenêutica para antinomias de princípios</em>: limites para seu controle constitucional e políticas públicas <span class="citation" data-cites="Neves2021-colPrincPP">(<a href="referencias.html#ref-Neves2021-colPrincPP" role="doc-biblioref">DAS NEVES; Rocha Lima, 2021</a>)</span>, que aborda o fenômeno da nomoconcreção pela ponderação de princípios à luz de uma Teoria racional dos Direitos Fundamentais <span class="citation" data-cites="Alexy2008-TDF">(<a href="referencias.html#ref-Alexy2008-TDF" role="doc-biblioref">ALEXY, 2008</a>)</span>, tentando afastar seus resíduos metafísicos por meio de uma Teoria Retórica do Direito, como preconizada por João Maurício Adeodato <span class="citation" data-cites="Adeodato2014-UTRNJDO">(<a href="referencias.html#ref-Adeodato2014-UTRNJDO" role="doc-biblioref">ADEODATO, 2014</a>)</span> e sob o ponto de vista da Ciência do Direito como <em>Teoria da Decisão</em> <span class="citation" data-cites="FerrazJr1980CiDir">(<a href="referencias.html#ref-FerrazJr1980CiDir" role="doc-biblioref">FERRAZ JÚNIOR, 1980</a>)</span>. Qualis A2. Disponível em: <a href="https://doi.org/10.21056/aec.v21i84.1210" class="uri">https://doi.org/10.21056/aec.v21i84.1210</a>;</p></li>
+<li><p>artigo (2021): Lei Anticrime e Colaboração Premiada: os limites da sanção premial. <em>Humanidades &amp; Inovação</em>: Novas teses jurídicas <span class="citation" data-cites="neves2021colabPremiada">(<a href="referencias.html#ref-neves2021colabPremiada" role="doc-biblioref">DAS NEVES; FIRMINO, 2021</a>)</span>. v. 8, n.&nbsp;51, p.&nbsp;147-160, jul. 2021. Qualis B1. Disponível em: <a href="https://revista.unitins.br/index.php/humanidadeseinovacao/article/download/5115/3204" class="uri">https://revista.unitins.br/index.php/humanidadeseinovacao/article/download/5115/3204</a></p></li>
+<li><p>artigo (2022): <em>Variância da cor da morte violenta no seio da República Federativa do Brasil</em>: um estudo da variabilidade do perfil da morte violenta por sexo e por cor nas 27 Unidades Federativas (1997-2019) <span class="citation" data-cites="Neves2022-varCorMorte">(<a href="referencias.html#ref-Neves2022-varCorMorte" role="doc-biblioref">DAS NEVES; MATOS, 2022a</a>)</span>, que faz uma análise das <em>séries históricas</em> da taxa de homicídios/100.000hab./ano do país e de seus 26 Estados mais o DF nos últimos 40 anos por sexo e por cor (ainda não publicado, aguardando resposta da revista <a href="https://online.unisc.br/seer/index.php/barbaroi">Barbarói</a> da Unisc - B1);</p></li>
+<li><p>artigo (2022): <em>Avaliação do Sistema Único de Segurança Pública — SUSP (PNSPDS 2018-2028)</em>: um modelo para capturar os níveis, a tendência e a variabilidade da taxa de homicídios em cada um dos 26 Estados e no DF (Ipea/IBGE 1998-2019 e MJSP jan. 2018-abr. 2021) <span class="citation" data-cites="Neves2022-avSUSP">(<a href="referencias.html#ref-Neves2022-avSUSP" role="doc-biblioref">DAS NEVES; MATOS, 2022b</a>)</span>, que faz uma análise do SUSP - Sistema Único de Segurança Pública e do 1º PNSPDS - Plano Nacional de Segurança Pública e Defesa Social com base nas <em>séries históricas</em> da taxa de homicídios/100.000hab./ano do país e de seus 26 Estados mais o DF nos últimos 40 anos (ainda não publicado, aguardando resposta do Dossiê 3º milênio - B1);</p></li>
+<li><p>artigo (2022): <em>Abordagem Policial — PMGO (2016-2018)</em>: Sexo, Idade e Luz do Dia num Baculejo à Cor da Pele. Apresentado no XI ENCONTRO DE PESQUISA EMPÍRICA EM DIREITO, GT n.&nbsp;11 - Aspectos Teóricos e Metodológicos e Proposições Normativas baseadas em Evidências Empíricas, Curitiba, 22-26 Ago. 2022. Que se vale de <em>DAGs</em> (<em>Direct Acyclic Graphs</em>) &amp; Redes Bayesianas numa ousada e frustrada tentativa de <em>modelagem causal</em> no campo das Ciências Sociais aplicadas (ainda não publicado, <em>não submetido</em>) <span class="citation" data-cites="DasNeves2022">(<a href="referencias.html#ref-DasNeves2022" role="doc-biblioref">DAS NEVES, 2022a</a>)</span>;</p></li>
+<li><p>Livro em co-autoria (2022): <em>Inteligência Artificial e Jurisprudência</em> - delimitação jurisprudencial nas decisões do TCU do conceito aberto de cláusula restritiva ao caráter competitivo em editais de licitação <span class="citation" data-cites="Silva2022">(<a href="referencias.html#ref-Silva2022" role="doc-biblioref">SILVA; DAS NEVES, 2022</a>)</span>.</p></li>
+<li><p>Livro em co-autoria (2022): <em>Política pública de fomento às micro e pequenas empresas pelo poder das compras públicas no estado de Goiás</em> - controle externo pelo TCE/GO (2006-2019) <span class="citation" data-cites="Barzellay2022-ppfmpe">(<a href="referencias.html#ref-Barzellay2022-ppfmpe" role="doc-biblioref">BARZELLAY; DAS NEVES, 2022</a>)</span>.</p></li>
+<li><p>artigo (2022): <em>Para uma Teoria Geral do Processo Penal Byroniana – TGPP-By</em>. Artigo escrito para coletânea em homenagem ao Professor Byron Seabra Guimarães,† aposentado na cadeira de Direito Processual Penal da Faculdade de Direito da UFG. Promoção da EJUG, edital n.&nbsp;05/2021, projeto “Coleção Bico de Pena”. <span class="citation" data-cites="Neves2022-TGPP-By">(<a href="referencias.html#ref-Neves2022-TGPP-By" role="doc-biblioref">DAS NEVES, 2022b</a>)</span> (aguardando publicação).</p></li>
+<li><p>artigo (2023): <em>E-commerce dos dados pessoais e a LGPD</em>: abordagem de uma lacuna à luz da Teoria do Ordenamento Jurídico de Bobbio <span class="citation" data-cites="Neves2022-ecommDP-LGPD">(<a href="referencias.html#ref-Neves2022-ecommDP-LGPD" role="doc-biblioref">DAS NEVES; MATOS, 2022c</a>)</span>; que considera a possibilidade da <em>ponderação de princípios aplicada a um caso de integração de lacuna</em> na LGPD como um ensaio de expansão analógica da tensão entre a <em>norma geral exclusiva</em> e a <em>norma geral inclusiva</em>, como abordadas na <em>Teoria do Ordenamento Jurídico</em> de Norberto Bobbio <span class="citation" data-cites="Bobbio1995-TOJ">(<a href="referencias.html#ref-Bobbio1995-TOJ" role="doc-biblioref">BOBBIO, 1999</a>)</span>. Publicado na <em>Revista Constituição, Economia e Desenvolvimento</em>: Revista Eletrônica da Academia Brasileira de Direito Constitucional (ABDConst). Curitiba, v. 15, n.&nbsp;28, p.&nbsp;201-262, jan.-jun. 2023. ISSN 2177-8256. Disponível em: <a href="https://www.abdconstojs.com.br/index.php/revista/article/view/461/311"><u>https://www.abdconstojs.com.br/index.php/revista/article/view/461/311</u></a>;</p></li>
+<li><p>Tese (2023): NEVES, Cleuler Barbosa das. <strong>Ruído num Espaço de Probabilidades Democrático de Direito</strong>: análise do Furto Simples na perspectiva Estatística aplicada ao Direito. Tese/cátedra inédita para fins de avaliação de progressão para Professor Titular junto à Faculdade de Direito da UFG. 1. out. 2023, Goiânia-GO. Disponível em: <a href="https://cleuler.com/" title="cleuler.com">cleuler.com</a>.</p></li>
+<li><p>artigo (2024): NEVES, Cleuler Barbosa das. MATOS, Gisele Gomes. A cor nas abordagens policiais no estado de Goiás: 2016-2018. <em>Contribuciones a Las Ciencias Sociales</em>, São José dos Pinhais, v. 17, n.&nbsp;2, p.&nbsp;01-41, e4146, fev. 2024.ISSN 1988-7833. DOI: <a href="https://doi.org/10.55905/revconv.17n.2-045"><u>https://doi.org/10.55905/revconv.17n.2-045</u></a> . Disponível em: <a href="https://ojs.revistacontribuciones.com/ojs/index.php/clcs/article/view/4146"><u>https://ojs.revistacontribuciones.com/ojs/index.php/clcs/article/view/4146</u></a></p></li>
+<li><p>artigo (2024): NEVES, Cleuler Barbosa das; MATOS, Gisele Gomes. Avaliação do Sistema Único de Segurança Pública – SUSP (PNSPDS 2018-2028): um modelo para capturar os Níveis, a Tendência e a Variabilidade da Taxa de Homicídios em cada um dos 26 Estados e no DF (Ipea/IBGE 1998-2019 e MJSP jan. 2018-Abr. 2021), <em>Revista Observatorio de la Economia Latino Americana</em>, Curitiba, v. 22, n.&nbsp;4, p.&nbsp;01-55, e4204, abr. 2024. ISSN 1696-8352. DOI: <a href="https://doi.org/10.55905/oelv22n4-110" class="uri">https://doi.org/10.55905/oelv22n4-110</a> . <a href="https://ojs.observatoriolatinoamericano.com/ojs/index.php/olel/article/view/4204"><u>https://ojs.observatoriolatinoamericano.com/ojs/index.php/olel/article/view/4204</u></a></p></li>
+<li><p>Artigo: MATOS, Gisele Gomes; NEVES, Cleuler Barbosa das. Da formação do mito da democracia racial à era do constitucionalismo contemporâneo: a premente necessidade de superação da mera igualdade formal da CF/88, <em>Revista Goyazes / Trbunal de Justiça do Estado de Goiás</em>, Goiânia, v. 2, n.&nbsp;1, p.&nbsp;11-32, 2. sem. 2024. ISSN 2965-8039. DOI: 10.5281/zenodo.13919778. Disponível em: <a href="https://revistagoyazes.tjgo.jus.br/goyazes/article/view/20/79." class="uri">https://revistagoyazes.tjgo.jus.br/goyazes/article/view/20/79.</a></p></li>
+<li><p>Artigo A2 (2025): NEVES, Cleuler Barbosa das; SANTOS, Maysa Teixeira. Política pública judiciária: análise do conceito de nudge na atuação do poder judiciário pela efetividade incremental das reurb-s de 56 municípios goianos (2023-2024), <em>Revista Aracê – Direitos Humanos em Revista</em>, v. 7, n.&nbsp;2, 2025, p.&nbsp;4863-4882. ISSN 2358-2472. DOI: <a href="10.56238/arev7n2-021" title="doi">10.56238/arev7n2-021</a>. Disponível em: <a href="https://periodicos.newsciencepubl.com/arace/article/view/3126." class="uri">https://periodicos.newsciencepubl.com/arace/article/view/3126.</a> Acesso em: 14 fev. 2025.</p></li>
+<li><p>Artigo A2 (2025): NEVES, Cleuler Barbosa das; MATOS, Gisele Gomes. Microssistema legal brasileiro da “proteção” dos Dados Pessoais: uma suposta efetiva garantia da Titularidade Privada dos Próprios Dados Pessoais. <em>Revista Aracê – Direitos Humanos em Revista</em>, [S. l.], v. 7, n.&nbsp;3, p.&nbsp;10805-10867, 2025. ISSN: 2358-2472. DOI: <a href="10.56238/arev7n3-045" title="doi">10.56238/arev7n3-045</a>. Disponível em: <a href="https://periodicos.newsciencepubl.com/arace/article/view/3690." class="uri">https://periodicos.newsciencepubl.com/arace/article/view/3690.</a> Acesso em: 9 mar. 2025. Bolsita de produtividade PPGDP/UFG. Brazilian Legal Microsystem for the ‘Protection’ of Personal Data: a Supposed Effective Guarantee of Private Ownership of One’s Own Personal Data.</p></li>
+<li><p>Artigo A2 (2025): NEVES, Cleuler Barbosa das; MATOS, Gisele Gomes. Variância da cor da morte violenta no seio da República Federativa do Brasil: um estudo da variabilidade do perfil da morte violenta por sexo e por cor nas 27 Unidades Federativas (1997-2019). Revista Caderno Pedagógico (Lajeado.online), v. 22, n.&nbsp;5, e14703, p.&nbsp;1- 56, 2025. ISSN:1983-0882. DOI: <a href="10.56238/arev7n2-021" title="doi">10.56238/arev7n2-021</a>. Disponível em: <a href="https://doi.org/10.54033/cadpedv22n5-072." class="uri">https://doi.org/10.54033/cadpedv22n5-072.</a> Acesso em: 12 mar. 2025. Bolsista de produtividade do Programa de Pós-Graduação em Direito e Políticas Públicas da Universidade Federal de Goiás (PPGDP/UFG).</p></li>
+<li><p>Artigo A2 (2025): NEVES, Cleuler Barbosa das; TOZETTO, Nathália Suzana Costa Silva. Diagnóstico do arranjo institucional e orçamentário de Goiânia (2011/21): existe uma política pública de meio ambiente? <em>Revista Caderno Pedagógico</em> (Lajeado.online), v. 22, n.&nbsp;7, e16498, p.&nbsp;1-35, 2025. ISSN:1983-0882. DOI: <a href="10.54033/cadpedv22n7-219" title="doi">10.54033/cadpedv22n7-219</a>. Disponível em: <a href="https://ojs.studiespublicacoes.com.br/ojs/index.php/cadped/article/view/16498." class="uri">https://ojs.studiespublicacoes.com.br/ojs/index.php/cadped/article/view/16498.</a> Acesso em: 03 ago. 2025. [sem a observação de bolsista produtividade do PPGDP]</p></li>
+<li><p>Artigo A2: NEVES, Cleuler Barbosa das; TOZETTO, Nathália Suzana Costa Silva. Inadequação das astreintes contra o Estado: da coerção genérica ao controle estruturado das políticas públicas. <em>Revista de Geopolítica – ReGeo</em>, v. 16, n.&nbsp;4, e710, p.&nbsp;1-18, 2025. ISSN:2177-3246. DOI: <a href="https://mail.revistageo.com.br/revista/article/view/710">10.56238/revgeov16n4-065</a>. Disponível em: <a href="https://mail.revistageo.com.br/revista/article/view/710/524" class="uri">https://mail.revistageo.com.br/revista/article/view/710/524</a>. Acesso em: 24 set. 2025.</p></li>
+<li><p>Artigo A2: NEVES, Cleuler Barbosa das; GUIMARÃES; Tarsila Costa. Validade da colaboração premiada de advogado integrante de organização criminosa no ordenamento jurídico brasileiro. Aceito pela <em>Revista Aracê</em>, [S. l.]. ISSN: 2358-2472.</p></li>
+</ol>
+<div style="page-break-after: always;"></div>
+</section><section id="sec-resumo" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="sec-resumo">RESUMO</h2>
+<p>Disciplina DPP0053 -Ciência de Dados e Estatística aplicada ao Direito e Políticas Públicas – CDEaDPP do Programa de Pós-Graduação em Direito e Políticas Públicas – PPGDP da Faculdade de Direito da Universidade Federal de Goiás – UFG, sob a responsabilidade do Prof.&nbsp;Dr.&nbsp;Cleuler Barbosa das Neves e do Prof.&nbsp;Dr.&nbsp;Gaspar Alexandre Machado de Sousa, ministrada no 2. sem. de 2025, 9ª turma Mestrado e 1ª Doutorado selecionadas, na Sala de Aula do PPGDP, com carga horária de 64 h-a (16 encontros de 4 h-a) e mais 32 h-a de atendimento para customizar o <em>desenho da pesquisa empírica</em>, lecionada no seguinte horário: quintas-feiras das 14:00 às 18:00 h, com intervalo: 15:50 às 16:10 h.</p>
+<p><strong>Palavras-chave</strong>: 1. Direito. 2. Políticas Públicas. 3. Estatística Básica. 4. Axiomas, Teoremas e Conceitos essenciais. 5. Pesquisa empírica. 6. Análises de processo e de impacto.</p>
+<div style="page-break-after: always;"></div>
+</section><section id="sec-abstract" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="sec-abstract"><em>ABSTRACT</em></h2>
+<p><em>Discipline DPP0053 - Data Science and Statistics applied to Law and Public Policy - CDEaDPP of the Postgraduate Program in Law and Public Policy - PPGDP of the Faculty of Law of the Federal University of Goiás - UFG, under the responsibility of Prof.&nbsp;Dr.&nbsp;Cleuler Barbosa das Neves and Prof.&nbsp;Dr.&nbsp;Gaspar Alexandre Machado de Sousa, taught in the 2nd semester of 2025, 9th Master’s and 1st Doctorate class selected, in the PPGDP Classroom, with a workload of 64 hours (16 meetings of 4 hours) and another 32 hours of assistance to customize the design of the empirical research, taught at the following times: Thursdays from 2:00 pm to 6:00 pm, with a break: 3:50 pm to 4:10 pm.</em></p>
+<p><em><strong>Keywords</strong>: 1. Law. 2. Public Policies. 3. Basic Statistical. 4. Essential Axioms, Theorems and Concepts. 5. Empirical research 6. Process and Impact’s analysis.</em></p>
+<div style="page-break-after: always;"></div>
+</section><section id="sec-Epigrafe" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="sec-Epigrafe">Epígrafe</h2>
+<blockquote class="blockquote">
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<blockquote class="blockquote">
+<h2 id="procura-da-pesquisa" class="anchored">Procura da Pesquisa</h2>
+<p><strong>Entre Letras e Números: empoderando dados</strong></p>
+<p>Penetra surdamente no reino das <em>letras e números</em>.</p>
+<p>Lá estão os <span class="math inline">\(\mu\)</span><em>odelos</em> que esperam ser <em>representados</em>.</p>
+<p>Estão paralisados, mas não há desespero,</p>
+<p>há calma e frescura na superfície intata.</p>
+<p>Ei-los sós e mudos, em estado de <em>símbolos</em>.</p>
+<p>Convive com teus <span class="math inline">\(\mu\)</span><em>odelos</em>, antes de <em>descrevê</em>-los.</p>
+<p>Tem paciência se obscuros. Calma, se te provocam.</p>
+<p>Espera que cada um se realize e consume</p>
+<p>com seu poder <em>simbólico</em></p>
+<p>e seu poder de silêncio.</p>
+<p>Não forces o <span class="math inline">\(\mu\)</span><em>odelo</em> a desprender-se do limbo.</p>
+<p>Não colhas no chão o <span class="math inline">\(\mu\)</span><em>odelo</em> que se perdeu.</p>
+<p>Não <em>envieses</em> o <span class="math inline">\(\mu\)</span><em>odelo</em>. Aceita-o</p>
+<p>como ele aceitará sua forma definitiva e concentrada</p>
+<p>no <em>tempo</em>-espaço.</p>
+<p>Chega mais perto e contempla <em>os symbols</em>.</p>
+<p>Cada <em>um</em></p>
+<p>tem mil faces secretas sob a face neutra</p>
+<p>e te pergunta, sem interesse pela resposta,</p>
+<p>pobre ou terrível, que lhe deres:</p>
+<p>Trouxeste <em>la chiave</em> [<span class="math inline">\(\Theta \varepsilon \omega \rho \iota \alpha\)</span>]?</p>
+<p>(parafraseando <a href="https://www.letras.mus.br/carlos-drummond-de-andrade/460651/" title="Procura da Poesia">Carlos Drummond de Andrade</a>)</p>
+</blockquote>
+</div>
+</div>
+</div>
+</blockquote>
+<div style="page-break-after: always;"></div>
+</section><section id="sec-dedicatoria" class="level2 unnumbered" style="color:gray"><h2 class="unnumbered anchored" style="color:gray" data-anchor-id="sec-dedicatoria">Dedicatória</h2>
+<div class="callout callout-style-simple callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tributos
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>À <a href="https://www.youtube.com/watch?v=_x9mNq-eB6w" title="Oração a mãe menininha ( Dorival Caymmi )">minha mãe</a> Abigair de Souza Neves.</p>
+<p>A <a href="#0" title="Espelho - João Nogueira">meu pai</a>: João Barbosa das Neves.<a href="https://www.goianatv.com/2014/07/ariano-suassuna-1927-2014-cultura-esta.html" title="Cumpriu sua sentença...">†</a></p>
+<p>A ambos, por tudo: e pelos sacrifícios que não tive que fazer.</p>
+<p>Aos meus irmãos Tuller, Euler<a href="https://www.goianatv.com/2014/07/ariano-suassuna-1927-2014-cultura-esta.html" title="...Aquele fato sem explicação...">†</a> e Miler. Meu grupo manos, para o que der e vier.</p>
+<p>À <a href="https://www.youtube.com/watch?v=UsXa9v-UXgM" title="Dona - Roupa Nova">Gisele</a>, <a href="https://www.youtube.com/watch?v=1tO_6H0fVcs" title="Porto solidão">rima de ventos e vela</a> que me leva e me trás sob o faro do amor, em rajadas que me tragam e que trago. Eu já não me pergunto incansavelmente por que isso se deu: não sei! <a href="https://twitter.com/em_com/status/492057436183089154/photo/1" title="Ariano Suassuna 1927-2014">Só sei que foi assim</a>.</p>
+<p>Aos filhos, Ana Clara, Carlos André, Ana Luísa e Isadora, oro em <a href="https://www.youtube.com/watch?app=desktop&amp;v=Hk3GCxivgZE" title="Quem foi temperar o choro e acabou salgando o pranto - Ariano Suassuna">Deus</a> que lhes ponha saúde e virtude.</p>
+</div>
+</div>
+</section><section id="agradecimentos" class="level2 unnumbered"><h2 class="unnumbered anchored" data-anchor-id="agradecimentos">Agradecimentos</h2>
+<p>À Universidade Federal de Goiás de Goiás, que há mais de 40 anos abriga-me, entre o Samabaia e a Praça <em>Universitates</em>; <em>locus</em> em que apreendi um <em>corpus</em> de letras e números e em que multipliquei <em>tempus</em> do que dividi.</p>
+<p>Aos Professores que me ensinaram aprender a aprender: a todos eles.</p>
+<p>Muito obrigado a todos os que me impulsionaram por nossos caminhos cruzados.</p>
+
+
+<div id="refs" class="references csl-bib-body" data-entry-spacing="1" role="list" style="display: none">
+<div id="ref-Adeodato2014-UTRNJDO" class="csl-entry" role="listitem">
+ADEODATO, João Mauricio. <strong>Uma Teoria Ret<span>ó</span>rica da Norma Jurídica e do Direito Subjetivo</strong>. 2. ed. São Paulo: Noeses, 2014.
+</div>
+<div id="ref-Alexy2008-TDF" class="csl-entry" role="listitem">
+ALEXY, Robert. <strong>Teoria dos Direitos Fundamentais</strong>. Tradução: Virgílio Afonso da Silva. 1. ed. São Paulo: Malheiros, 2008.
+</div>
+<div id="ref-Barzellay2022-ppfmpe" class="csl-entry" role="listitem">
+BARZELLAY, Larissa Sampaio; DAS NEVES, Cleuler Barbosa. <strong>Pol<span>ı́</span>tica p<span>ú</span>blica de fomento <span>à</span>s micro e pequenas empresas pelo poder das compras p<span>ú</span>blicas no estado de Goi<span>á</span>s: controle externo pelo <span>TCE/GO</span> (2006-2019)</strong>. São Paulo: Editora Dial<span>é</span>tica, 2022.
+</div>
+<div id="ref-Becker2015" class="csl-entry" role="listitem">
+BECKER, João Luiz. <strong>Estatística Básica: transformando dados em informação</strong>. Porto Alegre: Bookman, 2015.
+</div>
+<div id="ref-Bobbio1995-TOJ" class="csl-entry" role="listitem">
+BOBBIO, Norberto. <strong>Teoria do ordenamento jur<span>ı́</span>dico</strong>. Tradução: Maria Celeste Cordeiro Leite dos Santos. 10. ed. Brasília: Ed. UnB, 1999.
+</div>
+<div id="ref-Borges2011-delimAPPrelevo" class="csl-entry" role="listitem">
+BORGES, Raphael de Oliveira; NEVES, Cleuler Barbosa das; CASTRO, Selma Simões de. <a href="https://doi.org/10.20502/rbg.v12i0.263"><span>Delimitação de Áreas de Preservação Permanente determinadas pelo relevo: aplicação da legislação ambiental em duas Microbacias Hidrográficas no Estado de Goiás</span></a>. <strong>Revista Brasileira de Geomorfologia</strong>, v. 12, n. 3, p. 109–114, 2011.
+</div>
+<div id="ref-livroMTC2018" class="csl-entry" role="listitem">
+DAS NEVES, Cleuler Barbosa. <strong>Trabalhos Científicos em Direito: da elaboração à defesa, no campo acadêmico e profissional</strong>. Rio de Janeiro: Lumen Juris, "ainda no prelo".
+</div>
+<div id="ref-dissert2001" class="csl-entry" role="listitem">
+DAS NEVES, Cleuler Barbosa. <strong>Apropriação das àguas Doces no Brasil: a Concessão Onerosa de Direito Real Resolúvel de Uso da Derivação de Corpo de Água</strong>. Dissertação de Mestrado em Direito Agrário, PPGDA-UFG—Goiânia: Universidade Federal de Goiás, 2001.
+</div>
+<div id="ref-tese2006" class="csl-entry" role="listitem">
+DAS NEVES, Cleuler Barbosa. <strong>O ato administrativo na tutela ambiental do solo rural: uma análise da erosão laminar e do uso do solo na Bacia do Ribeirão João Leite</strong>. Tese de Doutorado em Ciências Ambientais, Ciamb-UFG—Goiânia: Universidade Federal de Goiás, 2006.
+</div>
+<div id="ref-livro2011" class="csl-entry" role="listitem">
+DAS NEVES, Cleuler Barbosa. <strong>Águas Doces no Brasil</strong>. Rio de Janeiro: Deescubra, 2011. p. 392
+</div>
+<div id="ref-DasNeves2022" class="csl-entry" role="listitem">
+DAS NEVES, Cleuler Barbosa. Abordagem Policial – PMGO (2016-2018): sexo, idade e luz do dia num baculejo à cor da pele. <em>In</em>: REED - Rede de Estudos Empíricos em Direito; UP - Universidade Positiva, a2022.
+</div>
+<div id="ref-Neves2022-TGPP-By" class="csl-entry" role="listitem">
+DAS NEVES, Cleuler Barbosa. Para uma Teoria Geral do Processo Penal Byroniana – TGPP-By. <strong>ainda não publicado, aguardando EJUG, edital n. 05/2021, projeto Coleção Bico de Pena</strong>, b2022.
+</div>
+<div id="ref-neves2020glicobiologia" class="csl-entry" role="listitem">
+DAS NEVES, Cleuler Barbosa; BEZERRA, Leonardo Naciff. <a href="https://divulgacao.editoraforum.com.br/revista-fa#rd-text-jsc2coku">A Glicobiologia e a Psicologia Comportamental como Elementos Exógenos Estimuladores da Conciliação Judicial</a>. <strong>Revista Fórum Administrativo</strong>, v. 20, n. 229, p. 26–34, 2020.
+</div>
+<div id="ref-neves2018deverConsensuAdm" class="csl-entry" role="listitem">
+DAS NEVES, Cleuler Barbosa; FERREIRA FILHO, Marcílio da Silva. <a href="https://www12.senado.leg.br/ril/edicoes/55/218/ril_v55_n218_p63">Dever de consensualidade na atuação administrativa</a>. <strong>Revista de Informação Legislativa: RIL</strong>, v. 55, n. 218, p. 63–84, a2018.
+</div>
+<div id="ref-neves2018escolhaArbitro" class="csl-entry" role="listitem">
+DAS NEVES, Cleuler Barbosa; FERREIRA FILHO, Marcílio da Silva. <a href="https://doi.org/10.21056/aec.v18i71.587">Escolha do árbitro na terminação de conflitos administrativos: limites e possibilidades da atuação de um advogado público</a>. <strong>A&amp;C – Revista de Direito Administrativo &amp; Constitucional</strong>, v. 18, n. 71, p. 167–195, b2018.
+</div>
+<div id="ref-neves2021colabPremiada" class="csl-entry" role="listitem">
+DAS NEVES, Cleuler Barbosa; FIRMINO, Adriano Godoy. <a href="https://revista.unitins.br/index.php/humanidadeseinovacao/article/download/5115/3204">Lei Anticrime e Colaboração Premiada: os limites da sanção premial</a>. <strong>Humanidades &amp; Inovação: Novas teses jurídicas</strong>, v. 8, n. 51, p. 147–160, 2021.
+</div>
+<div id="ref-Neves2022-ecommDP-LGPD" class="csl-entry" role="listitem">
+DAS NEVES, Cleuler Barbosa; MATOS, Gisele Gomes. E-commerce dos dados pessoais e a LGPD: abordagem de uma lacuna à luz da Teoria do Ordenamento Jurídico de Bobbio. <strong>ainda não publicado, aguardando ABDConst-A3</strong>, c2022.
+</div>
+<div id="ref-Neves2022-varCorMorte" class="csl-entry" role="listitem">
+DAS NEVES, Cleuler Barbosa; MATOS, Gisele Gomes. Variância da cor da morte violenta no seio da República Federativa do Brasil: um estudo da variabilidade do perfil da morte violenta por sexo e por cor nas 27 Unidades Federativas (1997-2019). <strong>ainda não publicado, aguardando Dossiê 3º milênio - B1</strong>, a2022.
+</div>
+<div id="ref-Neves2022-avSUSP" class="csl-entry" role="listitem">
+DAS NEVES, Cleuler Barbosa; MATOS, Gisele Gomes. Avaliação do Sistema Único de Segurança Pública – SUSP (PNSPDS 2018-2028): um modelo para capturar os níveis, a tendência e a variabilidade da taxa de homicídios em cada um dos 26 Estados e no DF (Ipea/IBGE 1998-2019 e MJSP jan. 2018-abr. 2021). <strong>ainda não publicado, aguardando Dossiê 3º milênio - B1</strong>, b2022.
+</div>
+<div id="ref-neves2019controleLicObras" class="csl-entry" role="listitem">
+DAS NEVES, Cleuler Barbosa; NAVES, Fernanda de Moura Ribeiro. <a href="https://divulgacao.editoraforum.com.br/revista-fa#rd-text-jsc2coku">Controle concomitante de editais de licitação de obras como política pública de prevenção à corrupção</a>. <strong>Forum Administrativo</strong>, v. 19, n. 220, p. 20–32, 2019.
+</div>
+<div id="ref-Neves2021-colPrincPP" class="csl-entry" role="listitem">
+DAS NEVES, Cleuler Barbosa; ROCHA LIMA, Rafael Carvalho da. <a href="https://doi.org/10.21056/aec.v21i84.1210">Uma hermen<span>ê</span>utica para antinomias de princ<span>ı́</span>pios: limites para seu controle constitucional e pol<span>ı́</span>ticas p<span>ú</span>blicas</a>. <strong>A&amp;C - Rev. Direito Adm. Const.</strong>, v. 21, n. 84, p. 227–252, jun. 2021.
+</div>
+<div id="ref-silva2020Fomentar-DPP" class="csl-entry" role="listitem">
+DAS NEVES, Cleuler Barbosa; SILVA, Sérvio Túlio Teixeira. <a href="https://doi.org/10.17058/rdunisc.v3i50.14648">Avaliação de Políticas Públicas: uma abordagem DPP aplicada ao programa de incentivo fiscal PRODUZIR no Estado de Goiás (2000-2017)</a>. <strong>Revista do Direito (Santa Cruz do Sul on line)</strong>, v. 3, p. 104–123, 2020.
+</div>
+<div id="ref-neves2019custoSucoUva" class="csl-entry" role="listitem">
+DAS NEVES, Cleuler Barbosa; TOMÁS, Aline Vieira. <a href="https://divulgacao.editoraforum.com.br/revista-fa#rd-text-jsc2coku">Previsão orçamentária de custo para alimentação em sessões de conciliação do Tribunal de Justiça de Goiás, com fundamento em pesquisa empírica</a>. <strong>Forum Administrativo</strong>, v. 19, n. 219, p. 18–25, 2019.
+</div>
+<div id="ref-DietzKalof2015" class="csl-entry" role="listitem">
+DIETZ, Thomaz; KALOF, LINDA. <strong>Introdução à Estatística Social</strong>. Tradução: Ana Maria Lima de Farias;Tradução: Vera Regina Lima de Faria e Flores. Rio de Janeiro: LTC, 2015.
+</div>
+<div id="ref-FerrazJr1980CiDir" class="csl-entry" role="listitem">
+FERRAZ JÚNIOR, Tercio Sampaio Ferraz. <strong>A Ci<span>ê</span>ncia do Direito</strong>. 2. ed. São Paulo: Atlas, 1980.
+</div>
+<div id="ref-Kahneman2021" class="csl-entry" role="listitem">
+KAHNEMAN, DANIEL; SIBONY, OLIVER; SUNSTEIN, CASS R. <strong>Ruído: uma falha no julgamento humano</strong>. Tradução: Cassio de Arantes Leite. 1. ed. Rio de Janeiro: Objetiva, 2021.
+</div>
+<div id="ref-Kahneman1982" class="csl-entry" role="listitem">
+KAHNEMAN, DANIEL; SLOVIC, PAUL; TVERSKY, AMOS. <strong>Judgment under incertaint: heuristics and biases</strong>. Cambridge, England: Cambridge University Press, 1982.
+</div>
+<div id="ref-Reale1994-uz" class="csl-entry" role="listitem">
+REALE, Miguel. <strong>Teoria Tridimensional do Direito</strong>. 5. ed. <em>[S.l.]</em>: Saraiva, 2017.
+</div>
+<div id="ref-Silva2022" class="csl-entry" role="listitem">
+SILVA, Sérvio Túlio Teixeira e.; DAS NEVES, Cleuler Barbosa. <strong>Inteligência artificial e Jurisprudência: delimitação jurisprudencial nas decisões do TCU do conceito aberto de cláusula restritiva ao caráter competitivo em Editais de Licitação</strong>. 1. ed. São Paulo: Dialética, 2022.
+</div>
+<div id="ref-silva2021tsFomentar" class="csl-entry" role="listitem">
+SILVA, Sérvio Túlio Teixeira; DAS NEVES, Cleuler Barbosa. <a href="https://doi.org/10.19092/reed.v8i.506">Avaliação de Políticas Públicas: análises de quebras estruturais em séries temporais de indicadores para aferir os resultados do programa de incentivo fiscal Produzir no estado de Goiás (2000 - 2017)</a>. <strong>Revista De Estudos Empíricos Em Direito</strong>, v. 8, p. 1–51, 2021.
+</div>
+<div id="ref-Tugendhat1997-le" class="csl-entry" role="listitem">
+TUGENDHAT, Ernst. <strong>Li<span>ç</span><span>õ</span>es sobre <span>é</span>tica</strong>. Tradução: Róbson Ramos Reis <em>et al.</em> 5. ed. Petrópolis, RJ: Vozes, 2003.
+</div>
+</div>
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./intro.html" class="pagination-link" aria-label="Introdução">
+        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Relatório escrito em <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+
+
+</body></html>

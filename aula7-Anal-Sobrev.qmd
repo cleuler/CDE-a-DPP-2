@@ -1,0 +1,261 @@
+# Aula 7 - Análise de Sobrevivência {#sec-aula-7-anal-sobrev}
+
+## Estatísctica e Ciência de Dados
+
+Para este estudo dirigido o conjunto de dados que será analisado foi estraído de [@morettin2022estatCienD , cap. 7, p. 201-216]. Os conjuntos de dados assocoados a esse capítulo 7 foram importados para a pasta `dat/sobr`.
+
+De acordo com esses autores, um modelo para ***organizar dados censurados*** pode ser representado conforme a tabela da figura abaixo:
+
+![Modelo para organização de dados censurados: fonte (Morettin; Singer, 2023, p. 202, tab. 7.1)](fig/dados-censurados-tab-modelo.JPG){fig-align="center"}
+
+A variável resposta é caracterizada pela seguinte fórmula da ***função de sobrevivência*** $S(t)$:
+
+$$
+S(t) = P(T>t) = 1 - P(T \le t) = 1 - F(t)
+$$
+
+onde:
+
+-   $T$ é a variável aleatória tempo, medida em unidades de tempo (horas, dias, semanas, meses, anos etc.), que será uma partição de intervalos disjuntos justapostos, fechados à esquerda e abertos à direita, formados pelos $n$ ***instantes de falhas ordenados*** no tempo: $M_i \mid i=1,2,...,n$;
+-   $P(T>t)$ é a ***probabilidade de sobrevivência*** por ***mais que*** o ***instante*** $t$;
+-   $F(t)=P(T \le t)$ é a ***Função de Distribuição Acumulada*** (FDA) da variável $T$.
+
+Além da tabela, pode-se também utilizar diagrama esquemático, como o ilustrado abaixo, que só apresenta 2 (duas) ***censuras à direita*** no intante t~c~ = 17 unidades de tempo ( ex. semanas, dias etc.). A coleta de dados censurados iniciou-se no intante t~0~ = 0.
+
+![Esquema para representação de dados censurados: fonte (Morettin; Singer, 2023, p. 202, fig. 7.1)](fig/dados-censurados-esquema-pirulito.JPG){fig-align="center"}
+
+A ***função de risco*** (*hazard function*) ou ***função de taxa de falhas*** (algumas vezes denotada por $\gamma$), é assim definida:
+
+$$
+h(t)= \lim_{dt \rightarrow 0} \frac{P(t \le T<t+dt)}{dt} \approx \frac{P(T=t)}{P(T>t)}
+$$
+
+Essa *hazard function* representa a taxa instantânea condicional de falha (M). E sua função acumulada H(t), ***função de risco acumulada*** (*cumulative* *hazard function*) ou ***função de taxa de falhas acumuladas***, é definida como:
+
+$$
+H(t)=\int_{0}^{t} h(s)ds
+$$
+
+Logo, as funções de ***Sobrevivência*** e de ***Risco*** e encontram-se assim relacionadas;
+
+$$
+h(t) = - \frac{S'(t)}{S(t)} \text{  de modo que  } S(t)= e^{-H(t)}
+$$
+
+O ***estimador de Kaplen-Meier*** para a função de Sobrevivência $S(t)$ com ***dados censurados*** é o ***estimador do limite produto***, dado por:
+
+$$
+S[t_j] = \prod_{i = 1}^{j} P[T>t_i \mid P(T>t_{i-1}], j=1,2,...,D
+$$
+
+Ou seja, a sobrevivência em um ***instante ordenado de falha qualquer*** $j$, tal que $j \in \{1, 2, ..., D\}$, é o ***produtório*** de ***todas as parcelas antecedentes***, inclusive até a própria parcela $j$, da ***probabilidade condicional de sobrevivência*** no ***instante ordenado de falha*** $i$, [***dado que***]{.underline} ***sobreviveu-se ao instante ordenado de falha anterior*** $i-1$, segundo a sequência $i = 1, 2, ...j$.
+
+Sejam os ***instantes ordenados de falha*** designados por: $t_0, t_1, t_2, ..., t_D$, de modo que $t_0 = 0$ represente o ***instante inicial*** do estudo, isto é, da coleta de dados em um delineameento de pesquisa do tipo ***análise de sobrevivência***. De modo que $D$ representa o ***número de instantes distintos*** $t_i$ em que ocorreram os eventos de interesse $M_i$.
+
+Define-se $R[t_i]$ como sendo o número de unidades em risco no ***instante ordenado de falha*** $t_i$, obtido pela ***soma*** das ***unidades sobreviventes no mesmo intante*** $t_i$ (para as quais o evento de interesse $M_i$ *não ocorreu*) ***mais*** todas as ***censuras observadas a partir do instante subsequente*** $t_{i+1}$, ou seja, aquelas que *não foram censuradas até o instante considerado* $t_i$.
+
+Considerando $M_i$ como o número de falhas (ex.: evento Morte de um adolescente em conflito com a lei com passagem pela DePai, arquivamento de um inquérito, finalização de um PEF, passagem de um condenado do regime fehcado para o aberto etc.) ocorridas ***exatamente no instante ordenado de falha*** $t_i$.
+
+Desse modo, na prática, pode-se encontrar o ***estimador de Kaplen-Meier*** para a função de Sobrevivência com a seguinte expressão:
+
+$$
+\hat{S}(t) = \prod_{t_i < t} \frac{ \{ R[t_i] - M_i  \} }{R[t_i]} = \prod_{t_i < t} \Big( 1 - \frac{ M_i  }{R[t_i]} \Big)
+$$ {#eq-estimadorkm}
+
+Registre-se que: $\hat{S}(t) = 1 \; \forall \; t \in [0, t_1)$
+
+Ou seja, a probabilidade de sobreviência antes do instante $t_1$, em que ocorre a 1ª falha, é igual a 100% = 1, pois todas as unidades observadas, por definição, sobreviveram desde o início do estudo até esse primeiro instante ordenado em que tenham ocorrido $M_1$ falhas.
+
+É mais fácil vislumbrar seu cálculo diretamete em uma tabela de organização de dados censurados, como a do seguinte exemplo [@morettin2022estatCienD , p. 206-207].
+
+> "Exemplo 7.1: Consideremos ***um conjunto*** de ***n = 21 unidades*** para as quais os *tempos de falhas* ou *censuras* (representadas por +) são: 6, 6, 6, 7, 10, 13, 16, 22, 23, 6+, 9+, 10+, 11+, 17+, 19+, 20+, 25+, 32+, 32+, 34+, 35+. Para efeito do cálculo do estimador de Kaplan-Meier, convêm dispor os dados com o formato das quatro primeiras colunas da Tabela 7.2."
+
+A tabela a seguir ilustra a representação dessa ***coleta de dados censurados*** do delineamento de pesquisa para análise de sobreviência:
+
+```{r}
+
+df_7.2 <- data.frame(
+  id     = c(1:21),
+  tempo  = c( 6,  6,  6,  6,  7,  9, 10, 10, 11, 13, 16,
+             17, 19, 20, 22, 23, 25, 32, 32, 34, 35),
+  evento = c( 1,  1,  1,  0,  1,  0,  1,  0,  0,  1,  1,
+              0,  0,  0,  1,  1,  0,  0,  0,  0,  0)
+)
+
+n <- nrow(df_7.2)
+n
+
+library(gt)
+gt(
+  df_7.2,
+  caption = "Formato usual apresentar dados de sobrevivência: censura = 0"
+  )
+```
+
+Para o cálculo do estimador de Kaplan-Meier a tabela da figura a seguir ilustra o passo a passo de sua obtenção [@morettin2022estatCienD , p. 206].
+
+![Formato apropriado para cálculo do estimador de Kaplan-Meier (exemplo 7.1): fonte (Morettin; Singer, 2023, p. 206, tab. 7.3)](fig/dados-censurados-tab-ex-7.1.JPG){fig-align="center"}
+
+Que é reproduzida no script a seguir.
+
+```{r}
+
+est_km <- data.frame(
+  j             = 0:7,
+  t_j           = c(0, 6, 7, 10, 13, 16, 22, 23),
+  falhas_t_j    = c(0, 3, 1,  1,  1,  1,  1,  1),
+  censura_t_ant = c(0, 0, 1,  1,  2,  0,  3,  0),
+  em_risco_t_j  = c(n, rep(NA, 7)              ),
+  sobrev_t_j    = c(1, rep(NA, 7)              )
+)
+
+est_km
+```
+
+Calcular o **número de unidades em risco** $R[t_j]$ de acordo como definido acima: número de unidades em risco no ***instante ordenado de falha*** $t_i$, obtido pela ***soma*** das ***unidades sobreviventes no mesmo intante*** $t_i$ (para as quais o evento de interesse $M_i$ *não ocorreu*) ***mais*** todas as ***censuras observadas a partir do instante subsequente*** $t_{i+1}$, ou seja, aquelas que *não foram censuradas até o instante considerado* $t_i$.
+
+Será feito recursivamente, obtendo-se $R[t_1]$ a partir de $R[t_0] = n = 21$, pois no início das observações todas as unidades sobreviveram até a ocorrência do primeiro evento de interesse $M_1$, que ocorreu no instante ordenado de falha $t_1 = 6$.
+
+De modo que: $R[t_1] = R[t_0] - (Falhas_{t_0} + Censuras_{t_1}) = 21 - (0 + 0) = 21$
+
+Sucessivamente: $R[t_2] = R[t_1] - (Falhas_{t_1} + Censuras_{t_2}) = 21 - (3 + 1) = 17$
+
+E recursivamente: $R[t_3] = R[t_2] - (Falhas_{t_2} + Censuras_{t_3}) = 17 - (1 + 1) = 15$
+
+No R:
+
+```{r}
+
+for (j in 2:8) {
+  est_km$em_risco_t_j[j] <-
+    est_km$em_risco_t_j[j-1] - (est_km$falhas_t_j[j-1] + est_km$censura_t_ant[j])
+}
+
+est_km
+```
+
+Calcular: em risco menos falhas para o tempo ondenado de falha j.
+
+```{r}
+
+library(dplyr)
+
+est_km <- est_km |> 
+  mutate(
+    risco_falha_t_j = em_risco_t_j - falhas_t_j, .after = em_risco_t_j
+  )
+
+est_km
+```
+
+Calcular $\hat{S}[t_j]$ de acordo com o produtório da fórmula acima.
+
+```{r}
+
+for (j in 2:8) {
+  est_km$sobrev_t_j[j] <-
+    est_km$sobrev_t_j[j-1] * est_km$risco_falha_t_j[j] / est_km$em_risco_t_j[j]
+}
+
+est_km
+```
+
+Uma adequada tabela de sobrevivência.
+
+```{r}
+#| label: tbl-kaplan-meier
+#| tbl-cap: "Formato apropriado para cálculo do estimador de Kaplan-Meier (Exemplo 7.1)"
+#| warning: false
+
+spanners_and_header_kaplan_meier <- function(gt_tbl) {
+  gt_tbl |> 
+    cols_label(
+    j               = "j",
+    t_j             = "t(j)",
+    falhas_t_j      = "em t(j)",
+    censura_t_ant   = "[t(j-1), t(j))",
+    em_risco_t_j    = "Risco R[t(j)]",
+    risco_falha_t_j = "R[t(j)] - F[t(j)]",
+    sobrev_t_j      = "S[t(j)]"
+    ) |> 
+    tab_spanner(
+      label   = md("ord."),
+      columns = 1
+    ) |>
+    tab_spanner(
+      label   = md("**Tempo**"),
+      columns = c(2)
+    ) |> 
+    tab_spanner(
+      label   = md("**Falhas**"),
+      columns = c(3)
+    ) |>
+    tab_spanner(
+      label   = md("**Censuras em**"),
+      columns = c(4)
+    ) |>
+    tab_spanner(
+      label   = md("**Unidades em**"),
+      columns = c(5)
+    ) |>
+    tab_spanner(
+      label   = md("**Risco-Falhas**"),
+      columns = c(6)
+    ) |>
+    tab_spanner(
+      label   = md("**Sobreviv.**"),
+      columns = c(7)
+    ) |>
+    tab_footnote(
+      footnote  = "Fonte: (Morettin; Singer, 2023, p. 206, tab. 7.3)",
+      locations = cells_column_labels(columns = sobrev_t_j)
+    )
+}
+
+est_km |> 
+  gt() |> 
+  spanners_and_header_kaplan_meier() |> 
+  # sub_missing(missing_text = '-') |> 
+  tab_header(
+      title = "Formato apropriado para cálculo do estimador de Kaplan-Meier (Exemplo 7.1)"
+    )
+```
+
+Um gráfico da função de sobrevivência estimada pelo método de Kaplan-Meier.
+
+```{r}
+
+library(survival)
+library(survminer)
+
+surv_object <- Surv(
+  time  = df_7.2$tempo,
+  event = df_7.2$evento
+)
+
+mod1 <- survfit(surv_object ~ 1,
+                data = df_7.2)
+
+print(mod1)
+
+km <- ggsurvplot(mod1,
+                 data   = df_7.2,
+                 title  = "Curva de Sobrevivência estimada (Morettin; Singer, 2023, p. 207, fig. 7.5)",
+                 xlab   = "Tempo",
+                 ylab   = "Probab. Sobrevivência",
+                 legend = "none",
+                 conf.int = TRUE,
+                 palette  = "black",
+                 ggtheme  = theme_bw() + theme(aspect.ratio = 0.5),
+                 font.x   = c(16),
+                 font.y   = c(16),
+                 font.tickslab = c(14)
+                 )
+```
+
+Exibir o gráfico da função de Sobrevivência.
+
+```{r}
+
+km
+```

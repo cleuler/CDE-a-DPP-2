@@ -1,0 +1,1730 @@
+# Aula 5 - Testes Hipóteses: fluxos {#sec-aula-5-testeH-fluxos-est-dirig}
+
+## Estudo Dirigido - Exercícios para casa
+
+(i) *Antes de responder* aos itens, é preciso ***organizar/tratar*** o conjunto de dados;
+
+(ii) A ***exclusão*** dos `NA`’s deve ser realizada considerando ***apenas dados faltantes nas variáveis de interesse***; ou seja, deve-se realizar essas exclusões presenvando o *data set*, se modo que apenas a tabela ou gráfico gerado a partir do conjunto de dados reflita essas exclusões, mas sem deletar os `NA`'s do *data set* original.
+
+## Conjunto de dados - Base de dados do Sistema de Informações sobre Nascidos Vivos (SINASC) 2023
+
+Para este estudo dirigido o conjunto de dados que será analisado é a base de dados do Sistema de Informações sobre Nascidos Vivos (SINASC) para o Município de São Paulo, referente ao ano de 2023. Os dados foram obtidos no site Secretaria Municipal da Saúde da cidade de São Paulo: <https://www.prefeitura.sp.gov.br/cidade/secretarias/saude/epidemiologia_e_informacao/nascidos_vivos/index.php?p=306422> (acesso e download em 23/09/2024). O conjunto de dados e seu respectivo dicionário foram importados para a pasta `dat`.
+
+## Tratar o conjunto de dados
+
+Preparar o ambiente de processamento da IDE RStudio.
+
+```{r}
+
+# Deletar os objetos da Global Environment
+rm(list=ls())
+
+# Padrão de saídas Rmarkdown
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
+# getOption("encoding")       # [1] "native.enc"
+# options(encoding = 'UTF-8') # [1] "UTF-8"
+
+# Para prevenir impressão de números em notação científica
+# p-valor serão impressos com suas casas decimais
+options(scipen=999)
+
+# carregar bibliotecas necessárias
+library(readxl) # para importar arquivos .xls
+library(gt)
+library(dplyr)
+library(ggplot2)
+```
+
+### Importar
+
+Importar o *data set* fornecido na pasta `dat` desta disciplina: `Nascidos_vivos_no_município_de_São_Paulo.xls`
+
+Que foi baixado e armazenado na pasta `dat` do projeto `CDE-a-DPP`, por mim criado para todas as atividades práticas deste curso.
+
+O uso de um *`project`* elimina o problema dos caminhos absolutos para importar *data sets*.
+
+Assim, basta fornecer o ***caminho relativo*** para importar o *data set* fornecido, o que foi feito a seguir.
+
+```{r}
+
+nasc_vivo_M.SP <- read_excel(
+  path = "dat/Nascidos_vivos_no_município_de_São_Paulo.xls"
+  )
+
+str(nasc_vivo_M.SP) # tibble [65,535 × 37] (S3: tbl_df/tbl/data.frame)
+                    # Todas as 37 variáveis são do tipo: <char>
+                    # com exceção de: NATURALMAE: num [1:65535]
+
+cat("\n")
+cat("Caminho absoluto do atual diretório de trabalho:\n")
+getwd()
+# "E:/DADOS/Documents/AmbienteDeTrabalho/Projetos/EspDS-StatApp"
+
+# ordinais:
+# ESCMAE    : chr [1:65535] "4" "5" "5" "5" ...
+# ESCMAE2010: chr [1:65535] "3" "5" "5" "5" ...
+# SERIESCMAE: chr [1:65535] "1" NA NA NA ...
+# APGAR1    : chr [1:65535] NA "09" "07" "09" ...
+# APGAR5    : chr [1:65535] NA "10" "09" "10" ...
+
+# QTDFILVIVO: chr [1:65535] "02" "01" "00" "01" ...
+# PESO      : chr [1:65535] "3600" "3465" "2450" "2956" ...
+# QTDGESTANT: chr [1:65535] "02" "01" "00" "01" ...
+```
+
+São **n =** **65535** observações coletadas (número de linhas).
+
+E **m = 37** variáveis levantas (número de colunas) em cada observação.
+
+Dessas, há 36 variáveis que foram lidas como do tipo: \<`char`\>.
+
+E somente uma lida como do tipo \<`num`\>: NATURALMAE: num \[1:65535\].
+
+Todavia há variáveis que denotam também ser do tipo numérica \<`num`\>, o que demandará algumas transformações; como, por exemplo:
+
+-   IDADEMAE : chr \[1:65535\] "25" "25" "31" "34" ... \[fornecida em anos completos\]
+-   QTDFILVIVO: chr \[1:65535\] "02" "01" "00" "01" ... \[números inteiros\]
+-   QTDFILMORT: chr \[1:65535\] "00" "00" "00" "00" ... \[números inteiros\]
+-   PESO : chr \[1:65535\] "3600" "3465" "2450" "2956" ... \[Peso ao nascer em gramas\]
+-   QTDGESTANT: chr \[1:65535\] "02" "01" "00" "01" ... \[Número de gestações anteriores\]
+-   QTDPARTNOR: chr \[1:65535\] "02" "01" "00" "00" \[Número de partos vaginais\]
+-   QTDPARTCES: chr \[1:65535\] "00" "00" "00" "01" \[Número de partos cesáreos\]
+-   IDADEPAI : chr \[1:65535\] NA NA NA "34" \[Idade do pai\]
+-   SEMAGESTAC: chr \[1:65535\] "39" "40" "36" "39" ... \[Número de semanas de gestação.\]
+-   etc.
+
+As dos tipo \<`char`\> são variáveis categóricas binárias ou multinomiais.
+
+Numa análise perfunctória visual, divisou-se algumas com escala ordinal:
+
+-   ESCMAE : chr \[1:65535\] "4" "5" "5" "5" ...
+-   ESCMAE2010: chr \[1:65535\] "3" "5" "5" "5" ...
+-   SERIESCMAE: chr \[1:65535\] "1" NA NA NA ...
+-   APGAR1 : chr \[1:65535\] NA "09" "07" "09" ... \[Apgar no 1º minuto\]
+-   APGAR5 : chr \[1:65535\] NA "10" "09" "10" ... \[Apgar no 5º minuto\]
+
+Não se vê impropriedades nos nomes das variáveis, a não ser nomes que são muito extensos.
+
+Há várias ocorrências de `NA`'s.
+
+A descrição completa desse conjunto de dados pode ser obtida no ***dicionário*** no seguinte *site*:
+
+<https://capital.sp.gov.br/web/saude/w/epidemiologia_e_informacao/nascidos_vivos/306422>
+
+da **Base de dados SINASC** de São Paulo - SP.
+
+Trata-se do *data set* do Sistema de Informações sobre Nascidos Vivos (SINASC) para o Município de São Paulo, referente ao ano de 2023.
+
+Esse Dicionário de Dados será utilizado para a especificação das classes de cada uma das variáveis categóricas (os `levels` dos `factors`) do *data set*; bem como para a especificação do tipo das variáveis quantitativas, neste caso todas do tipo: `integer`, com exceção das datas, como, por exemplo: `DTNASC` - Data de nascimento, no formato `dd mm aaaa`.
+
+É preciso seguir as observações traçadas para esta atividade, que foram interpretadas conforme esclarecimento prestado na última aula pela Profa. Dra. Tatiane Ferreira no sentido de que, em algumas situações, é necessário **excluir `NA`'s**. O que será feito de modo a **preservar o *data set***; **idem** quando **excluir "Ignorados"** de alguma das variáveis categóricas para fins de análise. Em suma:
+
+i.  *Antes de responder* aos itens, é preciso ***manipular*** o conjunto de dados;
+ii. A ***exclusão*** dos `NA`’s deve ser realizada considerando ***apenas dados faltantes nas variáveis de interesse***; ou seja, deve-se realizar essas exclusões presenvando o *data set*, de modo que apenas a tabela ou gráfico gerado ou os testes de hipóteses realizados a partir do conjunto de dados reflita essas exclusões, mas sem deletar os `NA`'s ou os campos "Ignorados" do *data set* original.
+
+### Organizar, tratar e transformar
+
+É preciso atentar para os tipos e categorias das **50** variáveis descritas no Dicionário de Dados, a seguir listadas.
+
+```{r}
+
+disc_dados <- read.csv(file   = "dat/Dicionario_de_Dados_SINASC.csv",
+                       header = TRUE)
+
+disc_dados <- disc_dados |> 
+  mutate( n = 1:nrow(disc_dados), .before =  nome_var )
+  
+
+disc_dados |> 
+  gt()
+```
+
+As transformações das variáveis lidas serão realizadas estritamente dentro da necessidade de cada questão.
+
+\newpage
+
+## Questão 1 - Apgar1 *versus* Apgar5
+
+**Questão 1:** A pontuação Apgar é uma avaliação rápida da condição do recém-nascido, realizada nos primeiro e quinto minuto de vida. As variáveis analisadas serão APGAR1 e APGAR5, que representam, respectivamente, as pontuações de Apgar nesses momentos. *Verifique se houve uma mudança significativa na condição dos recém-nascidos entre o 1º e o 5º minuto após o nascimento*. Em outras palavras, *teste as hipóteses*:
+
+\begin{itemize} \item{$H_0:$ Não há diferença significativa entre as pontuações de Apgar no 1º e no 5º minuto, ou seja:  \vspace{0.2cm}  $H_0: \mu_1 = \mu_2$,  \vspace{0.2cm} onde  \begin{itemize}   \item{$\mu_1$ é a média das pontuações de Apgar no 1º minuto após o nascimento;}   \item{$\mu_2$ é a média das pontuações de Apgar no 5º minuto após o nascimento.} \end{itemize} } \vspace{0.2cm} \item{$H_1:$ Há uma diferença significativa entre as pontuações de Apgar no 1º e no 5º minuto, ou seja,  \vspace{0.2cm}  $H_1: \mu_1 \neq \mu_2$. } \end{itemize}
+
+Como estamos comparando as condições de ***um mesmo recém-nascido em dois momentos***, os ***dados*** são considerados ***pareados***.
+
+\vspace{0.2cm}
+
+Se for observada uma diferença significativa entre as pontuações APGAR1 e APGAR5, realize um teste t unilateral adequado para verificar se a pontuação de Apgar no 1º minuto é significativamente menor (ou maior) do que no 5º minuto. Interprete todos os resultados com ***um nível de significância de*** $\alpha = 1\%$.
+
+\vspace{1.2cm}
+
+Inicia-se com uma breve referência ao significado da escala Apgar, para melhor compreensão dessa medida, obtida junto ao site da [Faculdade de Medicina da UFG](https://www.medicina.ufmg.br/observaped/escala-de-apgar/ "Escala de Apgar"):
+
+> "A escala de Apgar foi proposta em 1953 pela médica Virgínia Apgar, inicialmente sendo uma rápida análise clínica do recém-nascido. Após mudanças, a escala tornou-se um padrão de avaliação do bebê, sendo a ***soma de cinco sinais***, determinados nos ***primeiros um e cinco minutos de vida da criança***. É uma avaliação feita na sala de parto e a pontuação é anotada na [**Caderneta da Criança**](https://www.medicina.ufmg.br/observaped/caderneta-da-crianca/).
+>
+> Os sinais são avaliados e, para cada um, é ***aplicada uma nota que varia de zero, nota que indica a ausência do sinal, e dois, nota que indica a plena existência desse sinal***. Os sinais avaliados são: ***força muscular***, ***frequência de batimentos do coração***, ***reflexo***, ***respiração*** e ***cor***. A ***somatória desses sinais gera uma nota que varia de 0 a 10***.
+>
+> O Apgar *é afetado* pela *idade gestacional*, pelo *uso de medicações pela gestante*, por *condições neurológicas do recém-nascido* e por *possíveis manobras de intervenção cardiorrespiratória que ele demande*." (destacou-se)
+
+A figura a seguir, colhida no mesmo site, ilustra a interpretação dada às faixas de escore dos seus resultados:
+
+![Avaliação do Nível de adaptação do bebê à vida fora do útero, fonte: \[Faculdade de Medicina da UFG\](https://www.medicina.ufmg.br/observaped/escala-de-apgar/ "Escala de Apgar"), 2024.](fig/Escala-de-Apgar.jpg){fig-align="center" width="611"}
+
+Trata-se, assim, de uma *escala ordinal* [@Becker2015 , p. 10-11], pois não se poderia dizer que uma diferença intervalar entre o seu nível 3 e seu nível 4 teria a mesma dimensão de uma diferença intervalar entre o seu nível 4 e seu nível 7.
+
+Todavia o enunciado, ao cogitar de um teste de diferença entre duas médias, tratou essa variável como uma variável numérica com *escala intervalar*, como se "\[...\] (1) o zero da escala é arbitrário e (2) ***a intervalos iguais na escala correspondem diferenças iguais no fenômeno mensurado***." [@Becker2015 , p. 11-15].
+
+### Inspecionar e Transformar
+
+Variável `APGAR1` - Apgar no 1º minuto.
+
+```{r}
+
+table(nasc_vivo_M.SP$APGAR1,
+      useNA = "always")
+
+table(nasc_vivo_M.SP$APGAR1)
+
+# Substituir código "99" - Ignorado, por NA.
+# Muito embora isso misture esses 66 cód. Ignorado com 149 NA's.
+# Resultado: 215 NA's
+nasc_vivo_M.SP$APGAR1[nasc_vivo_M.SP$APGAR1 == "99"] <- NA
+
+
+# Transformar em numeric
+nasc_vivo_M.SP$APGAR1 <- as.numeric(nasc_vivo_M.SP$APGAR1)
+
+# Deixou-se de transformar para categórica ordinal
+# Pois isso inviabilizaria a solução da questão
+# mas preservou-se aqui seu código comentado:
+# nasc_vivo_M.SP$APGAR1 <- factor(nasc_vivo_M.SP$APGAR1,
+#                                 levels = c("00",
+#                                            "01",
+#                                            "02",
+#                                            "03",
+#                                            "04",
+#                                            "05",
+#                                            "06",
+#                                            "07",
+#                                            "08",
+#                                            "09",
+#                                            "10",
+#                                            "99"  # cod. para ignorado
+#                                            ),
+#                                 labels = c("00",
+#                                            "01",
+#                                            "02",
+#                                            "03",
+#                                            "04",
+#                                            "05",
+#                                            "06",
+#                                            "07",
+#                                            "08",
+#                                            "09",
+#                                            "10",
+#                                            "Ign"  # é o ignorado
+#                                            ),
+#                                 ordered = TRUE)
+
+# Tabela de frequência absoluta com NA's dessa variável factor:
+table(nasc_vivo_M.SP$APGAR1,
+      useNA = "always")
+
+# Tamanho n1 dessa primeira subpopulação:
+n1 <- length(nasc_vivo_M.SP$APGAR1)
+n1
+
+n1_semNA <- length(nasc_vivo_M.SP$APGAR1[!is.na(nasc_vivo_M.SP$APGAR1)])
+n1_semNA
+
+# número de NA's
+n1 - n1_semNA
+```
+
+Variável `APGAR5` - Apgar no 5º minuto.
+
+```{r}
+
+table(nasc_vivo_M.SP$APGAR5,
+      useNA = "always")
+
+# Substituir código "99" - Ignorado, por NA.
+# Muito embora isso misture esses 64 cód. Ignorado com 145 NA's.
+# resultando em 209 NA's
+nasc_vivo_M.SP$APGAR5[nasc_vivo_M.SP$APGAR5 == "99"] <- NA
+
+
+# Transformar em numeric
+nasc_vivo_M.SP$APGAR5 <- as.numeric(nasc_vivo_M.SP$APGAR5)
+
+
+# Não transformar em factor:
+# deixar seu código comentado
+# nasc_vivo_M.SP$APGAR5 <- factor(nasc_vivo_M.SP$APGAR5,
+#                                 levels = c("00",
+#                                            "01",
+#                                            "02",
+#                                            "03",
+#                                            "04",
+#                                            "05",
+#                                            "06",
+#                                            "07",
+#                                            "08",
+#                                            "09",
+#                                            "10",
+#                                            "99"  # cod. para ignorado
+#                                            ),
+#                                 labels = c("00",
+#                                            "01",
+#                                            "02",
+#                                            "03",
+#                                            "04",
+#                                            "05",
+#                                            "06",
+#                                            "07",
+#                                            "08",
+#                                            "09",
+#                                            "10",
+#                                            "Ign"  # é o ignorado
+#                                            ),
+#                                 ordered = TRUE)
+
+# Tabela de frequência absoluta com NA's dessa variável factor:
+table(nasc_vivo_M.SP$APGAR5,
+      useNA = "always")
+
+# Tamanho n2 dessa segunda subpopulação:
+n5 <- length(nasc_vivo_M.SP$APGAR5)
+n5
+
+n5_semNA <- length(nasc_vivo_M.SP$APGAR5[!is.na(nasc_vivo_M.SP$APGAR5)])
+n5_semNA
+
+# número de NA's
+n5 - n5_semNA
+```
+
+### Teste t pareado para diferença entre duas médias
+
+Implementar um ***teste t*** para verificar a ***diferença*** entre ***duas médias de dados pareados***, pois o escore de Apgar é coletado no 1º minuto e no 5º minuto de vida do mesmo bebê.
+
+Considerando o número de observações em cada subconjunto, já descontados os `NA`'s existentes em cada uma delas:
+
+-   `APGAR1`: $n_ 1 = 65320$
+-   `APGAR5`: $n_5 = 65326$
+
+Logo, as duas subpopulações podem ser consideradas grandes: $n >> 30$.
+
+De modo que aplica-se o ***TCL – Teorema Central do Limite*** e não é necessário testar se essas duas subpopulações seriam Normais, pois a distribuição amostral das suas médias amostrais convergirá para uma forma Normal.
+
+É preciso cuidado para aliminar do teste todas as situações de ocorrência de `NA`, ou seja, tanto quando ocorra apenas na primeira unidade amostral (Apgar1); como quando ocorra apenas na segunda unidade amostral (Apgar5); ou, ainda, quando ocorra tanto na primeira (Apgar1) quanto, simultaneamente na segunda unidade amostral (Apgar5).
+
+O que será feito a seguir.
+
+Após o que, poder-se-á aplicar o teste-t pareado acima descrito.
+
+Seus presupostos são:
+
+1.  ***Independência entre*** as observações pareadas; conquanto exista ***dependência*** **dentro** das duas observações de um mesmo par, ou seja, *dentro do par*;
+2.  A distribuição de frequências das diferenças observadas (`d`) de cada par aproxima-se de uma distribuição Normal, o que é garantido, neste caso, pelos tamanhos das duas amostras, os dois muito acima de 30: teste-t é robusto a desvios da normalidade devido ao TCL.
+
+A segunda maneira de realizar um teste $t$ pareado de Student é usar uma função já existente no R.
+
+Inicialmente, realizar um teste bilateral, ou seja, $$H_0: \mu_1 = \mu_5 \Rightarrow \mu_1 - \mu_5 = 0 \ \ \text{ contra } \ \ H_1: \mu_1 \neq \mu_5 \Rightarrow \mu_1 - \mu_5 \neq 0$$
+
+No R, com uma única linha de comando apenas, usar uma função do *R base*.
+
+Já testada e otimizada pelo CRAN ou pela comunidade R.
+
+```{r, message=FALSE, warning=FALSE}
+
+t.test(nasc_vivo_M.SP$APGAR1,
+       nasc_vivo_M.SP$APGAR5,
+       paired = TRUE,
+       conf.level = 0.99) # Nível de Significâncai alpha = 1% = 0.01
+# t = -346.05
+# df = 65319 = n1 - 1
+# p-valor < 0.00000000000000022 => rejeita Ho; Apoia H1
+# d = -1.048025, é a estimativa da diferença entre as duas médias
+# IC_99% = [-1.055826, -1.040224 ] não contém o valor zero
+# Caso replicar essa amostra pareada 100 vezes;
+# É esperado que, em 99 delas, esse IC_99% contenha
+# o verdadeiro e desconhecido parâmetro populacional D
+# onde: D = diferença entre as duas médias populacionais
+#       D = mu_1 - mu_5
+```
+
+Ao realizar o teste bilateral, rejeitamos a hipótese nula, de que as médias são iguais, pois p-valor = 0.00000000000000022, ou seja, muito menor que: $\alpha = 1\%= 0.01$.
+
+Agora verificar se, ao retirar antes os `NA`'s nas duas amostras, isso alteraria o resulatado do teste-t para amostras pareadas.
+
+```{r}
+
+# Remover os dados faltantes, por exemplo, APGAR1 == 99 (Ignorado),
+# A esse código 99 de ignorado foi atribuído o valor NA
+# Remover os NA's de um data frame c/2 colunas: APGAR1, APGAR5
+# para que todas as linhas com pelo menos um NA sejam excluídas
+dados_filtrados <- na.omit(data.frame(nasc_vivo_M.SP$APGAR1,
+                                      nasc_vivo_M.SP$APGAR5)
+                           )
+
+# Melhor que essa substituição seria fazer uma imputação de valores.
+# Uma Interpolações de Dados: a ser futuramente estudada.
+
+# Visualizar os primeiros dados filtrados
+head(dados_filtrados)
+nrow(dados_filtrados) # 65320 = n1, neste caso.
+```
+
+Repetir o teste-t pareado com esses dados filtrados (sem `NA`'s).
+
+```{r, message=FALSE, warning=FALSE}
+
+t.test(dados_filtrados$nasc_vivo_M.SP.APGAR1,
+       dados_filtrados$nasc_vivo_M.SP.APGAR5,
+       paired = TRUE,
+       conf.level = 0.99) # Nível de Significâncai alpha = 1% = 0.01
+#######
+# Chegou-se exatamente aos mesmos resulados do teste-t pareado anterior
+# Ou seja, a função t.test() já promove essas exclusões de NA's
+# t = -346.05 => resultou exatamente a mesma estatística de teste acima
+# df = 65319 = n1 - 1
+# p-valor < 0.00000000000000022 => rejeita Ho; Apoia H1
+# d = -1.048025, é a estimativa da diferença populacional entre as duas médias
+# IC_99% = [-1.055826, -1.040224 ] não contém o valor zero
+# Caso replicar essa amostra pareada 100 vezes;
+# É esperado que, em 99 delas, seus IC_99% contenham
+# o verdadeiro e desconhecido parâmetro populacional D
+# onde: D = diferença entre as duas médias populacionais
+# melhor estimatida: D = d, será o valor amostral dessa 1 amostra analisada
+```
+
+Então, como, nos dois testes equivalentes acima, o **valor da estatística de teste** resultou negativa ($t_{obs} = -346.05$), realizaremos um ***teste unilateral à esquerda***, ou seja, $H_0: \mu_1 \geq \mu_2$ contra $H_1: \mu_1 < \mu_2$.
+
+Logo,
+
+```{r, message=FALSE, warning=FALSE}
+
+# sim rejeita Ho: mu1 >= mu2.
+# Logo, apoia H1: mu1 < mu2
+t.test(nasc_vivo_M.SP$APGAR1,
+       nasc_vivo_M.SP$APGAR5,
+       alternative = "less",
+       paired = TRUE,
+       conf.level = 0.99) # Nível de Significâncai alpha = 1% = 0.01
+#######
+# teste-t pareado unilateral à esquerda
+# t = -346.05
+# df = 65319 = n1 - 1
+# p-value < 0.00000000000000022 [logo p-value << alpha = 1%]
+# ========> Rejeita Ho; Apoia H1
+# alternative hypothesis: true mean difference is less than 0
+# H_1: \mu_1 < \mu_2
+#      \mu_1 = nasc_vivo_M.SP$APGAR1
+#      \mu_2 = nasc_vivo_M.SP$APGAR5
+#
+# d = -1.048025, é a estimativa da diferença entre as duas médias populacionais
+# IC_99% = [-Inf, -1.043043] não contém o valor zero
+# Caso replicar essa amostra pareada 100 vezes;
+# É esperado que, em 99 delas, seus IC_99%'s contenham
+# o verdadeiro e desconhecido parâmetro populacional D
+# onde: D = diferença entre as duas médias populacionais
+# melhor estimatida: D = d, será o valor amostral dessa 1 amostra analisada
+```
+
+Neste caso, ***também rejeitamos a hipótese nula***.
+
+E há ***forte evidência*** (valor-p \<\< alpha = 1%) para ***apoiar*** a ***Hipótese alternativa*** de que:
+
+$$ H_1: \mu_1 < \mu_2 $$
+
+Onde:
+
+-   $\mu_1 = \overline{APGAR1}$
+-   $\mu_2 = \overline{APGAR5}$
+
+### Interpretação
+
+Concluimos, ao **nível de significância de 1%** — é o Erro Tipo I, de rejeitar a hipótese nula, quando ela é verdadeira — , que: o *número médio do escore Apgar observado no 1º minuto após o nascimento dos bebês no Município de São Paulo, no ano de 2023*, ou seja, *para toda a população amostrada*, foi ***menor do que*** o *número médio do escore Apgar observado no 5º minuto após o nascimento na população amostrada dos mesmos bebês*.
+
+Resultado alcançado a partir de dados obtidos na fonte: Sistema de Informações sobre Nascidos Vivos (SINASC) para o Município de São Paulo.
+
+Pode-se, ainda, ressaltar que, segundo o ***teste-t pareado unilateral à esquerda***:
+
+-   A estatística de teste t = -346.05 apresentou alto valor negativo, indicativo de rejeição da hipótese nula;
+-   df = 65319 = n1 - 1 = 65320 -1, ou seja, os graus de liberdade foram obtidos a partir da amostra de menor tamanho, neste caso, a de `APGAR1`;
+-   p-value \< 0.00000000000000022 \[logo p-value \<\< alpha = 1%\], ou seja: $\hat{\alpha} << \alpha_{NS99\%}$
+-   ***Regra de decisão***: Rejeitar H~o~; **Apoiar H~1~**;
+-   Hipótese alternativa - H~1~: verdadeiro valor do parâmetro populacinal desconhecido D é menor que zero;
+-   ***Hipótese alternativa - H~1~*** em símbolos: $H_1: \mu_1 < \mu_2$
+-   onde:
+    -   $\mu_1 = \overline{APGAR1}$
+    -   $\mu_2 = \overline{APGAR5}$
+-   O valor calculado: `d = -1.048025`, é a ***melhor estimativa*** da diferença entre as duas médias populacionais, ou seja: $D \approx -1.048025$
+-   **Intervalo de Confiança** (IC) para $\alpha = 1\% = 0.01$ nesta amostra: **IC_99%(`D`)** = \[-Inf, -1.043043\]
+-   Esse IC_99%(`D`) ***não contém o valor zero***; o que corrobora este ***teste-t pareado*** de hipótese de que *há uma diferença estatisticamente significativa*, para um nível de significância de 1%, entre as duas médias pareadas observadas de: `APGAR1` e `APGAR2`;
+-   ***Interpretação*** do **IC_99%(`D`)**: caso essa amostra pareada fosse replicada por 100 vezes junto à população de partos de nascidos vivos do Município de São Paulo ... então é ***esperado***, ou podemos ficar ***confiantes*** que, ***em 99 delas***, esses IC_99%(`D`)'s **contenham o verdadeiro e desconhecido parâmetro populacional `D`**, onde: `D` = Diferença entre as duas médias populacionais.
+-   De modo que, em 01 (uma) delas, esse mesmo IC_99%(`D`) [***não***]{.underline} **conteria o verdadeiro e desconhecido parâmetro populacional `D`**.
+
+Como a ***decisão tomada*** neste teste de hipótese ***não é capaz de distinguir em qual***, dentre as possíveis amostras replicáveis, encontrar-se-ia a presente amostra que foi testada, dada a ***incerteza inerente*** observada nas duas variáveis aleatórias coletadas, não sabemos se esta poderia, ou não, ser uma daquelas em que o IC_99%(`D`) [***não***]{.underline} **conteria o verdadeiro e desconhecido parâmetro populacional `D`**, muito embora o `valor-p` aqui obtido seja praticamente igual a zero (\<0.00000000000000022) — mas que nunca é absolutamente igual a zero (neste caso aproximadamente 1 chance em 1 quatrilhão) — seja uma ***evidência*** de que ***este não seria o caso***.
+
+Essa *diferença estatisticamente significativa* ($\alpha = 1\%$) de um ponto a menos na escala Apgar da média da variável APGAR1 em relação à média da variável APGAR5 não parece fazer sentido do *ponto de vista de uma escala intervalar*, pois, como mencionado acima, não se poderia dizer que uma diferença intervalar entre o seu nível 3 e seu nível 4 teria a mesma dimensão de uma diferença intervalar entre o seu nível 4 e seu nível 7.
+
+## Questão 2 - peso ao nascer e sexo
+
+**Questão 2:** Verifique se há uma diferença significativa no peso médio ao nascer entre recém-nascidos do sexo masculino e feminino. Os dados disponíveis incluem informações sobre o peso ao nascer (em gramas) e o sexo dos recém-nascidos. As variáveis consideradas para a análise são:
+
+\begin{itemize} \item{PESO: peso ao nascer (em gramas).} \item{SEXO: sexo dos recém-nascidos (masculino ou feminino)} \end{itemize}
+
+\vspace{0.2cm}
+
+O objetivo é testar a hipótese de que não há diferença no peso médio ao nascer entre os dois grupos.
+
+\vspace{0.2cm}
+
+Hipóteses de interesse:
+
+\begin{itemize} \item{$H_0$: Não há diferença significativa entre os pesos médios ao nascer de recém-nascidos do sexo masculino e feminino, ou seja, as médias são iguais.} \item{$H_1$: Existe uma diferença significativa entre os pesos médios ao nascer de recém-nascidos do sexo masculino e feminino.} \end{itemize}
+
+Ou seja, $$H_0: \mu_{M} = \mu_{F} \ \ \mbox{contra} \ \ H_1: \mu_{M} \neq \mu_{F},$$ onde $\mu_{M}$ é o peso médio dos recém-nascidos do sexo masculino e $\mu_{F}$ é o peso médio dos recém-nascidos do sexo feminino.
+
+\vspace{0.2cm}
+
+Caso seja observada uma diferença significativa entre os pesos médios, realize um teste $t$ unilateral adequado para verificar se o peso médio entre meninos é significativamente maior ou menor do que entre as meninas. Todos os resultados deverão ser interpretados ao nível de significância de $\alpha = 1\%$.
+
+\vspace{1.2cm}
+
+Trata-se, assim, de uma variável numérica: peso ao nascer – `PESO`, medido em gramas (g); em uma *escala intervalar*, pois "\[...\] (1) o zero da escala é arbitrário e (2) ***a intervalos iguais na escala correspondem diferenças iguais no fenômeno mensurado***." [@Becker2015 , p. 11-15].
+
+Ou seja, uma diferença de 1 g entre um bebê de 1300 g e outro de 1301 g ***é exatamente igual à mesma diferença*** entre um de 3700 g e outro de 3701 g. Raciocínio que pode ser estendido para quaisquer ranges e diferenças ao longo dessa *escala intervalar de medição*.
+
+A ser comparada nas duas primeiras categorias, a seguir listadas, da variável multinomial `SEXO`:
+
+1.  `M` – Masculino;
+2.  `F` – Feminino;
+3.  `I` – ignorado.
+
+O enunciado cogita um ***teste-t***, de Student, da ***diferença entre duas médias de uma variável quantitativa***, desta vez para ***dados não pareados***.
+
+### Inspecionar e Transformar
+
+Variável numérica `PESO` dos bebês ao nascer - medido em gramas, do tipo `int` – *integer*, pois não apresentam casas decimais.
+
+Muito embora armazeanda como tipo `char` – *character*.
+
+```{r}
+
+# Verificar se há códigos 99
+nasc_vivo_M.SP$PESO[nasc_vivo_M.SP$PESO == "99"]
+# não há códigos 99
+
+# Verificar se há NA's
+is.na(nasc_vivo_M.SP$PESO) |> sum() # Há 3 NA's
+
+# Transformar em numeric
+nasc_vivo_M.SP$PESO <- as.numeric(nasc_vivo_M.SP$PESO)
+
+# Uma inspeção visual
+# Histograma dessa variável PESO:
+hist(nasc_vivo_M.SP$PESO)
+mean(nasc_vivo_M.SP$PESO, na.rm = TRUE) # media = 3127.685  g
+  sd(nasc_vivo_M.SP$PESO, na.rm = TRUE) # dp    =  561.4587 g
+
+# Tamanho n1 dessa primeira subpopulação:
+n1 <- length(nasc_vivo_M.SP$PESO)
+n1
+
+n1_semNA <- length(nasc_vivo_M.SP$PESO[!is.na(nasc_vivo_M.SP$PESO)])
+n1_semNA # 65532
+
+# número de NA's
+n1 - n1_semNA # 3 (são os NA's acima identificados)
+```
+
+Ao olhar para o histograma da variável PESO vê-se que ela apresenta uma distribuição que se aproxima da Normal, com média de 3127.7 g e desvio padrão de 561.5 g; com leve assimetria à esquerda.
+
+E o tamanho dessa amostra da variável aleatória `PESO` é: n = 65532, com a presença de ***apenas 3*** `NA`'s.
+
+Variável categórica `SEXO` é multinomial não ordinal.
+
+Sua categoria I - Ignorado, será transformada em `NA`.
+
+```{r}
+
+# Sexo: M – Masculino; F – Feminino; I – ignorado
+
+table(nasc_vivo_M.SP$SEXO,
+      useNA = "always")
+#     F     I     M  <NA> 
+# 32206     9 33320     0
+
+table(nasc_vivo_M.SP$SEXO)
+
+# Verificar se há código "99" - Ignorado.
+# Resultado: Não há esse código "99" na variável SEXO
+nasc_vivo_M.SP$SEXO[nasc_vivo_M.SP$SEXO == "99"] # character(0)
+
+# Substituir os 9 campos com I - Ignorado, pelo valor NA:
+nasc_vivo_M.SP$SEXO[nasc_vivo_M.SP$SEXO == "I"] <- NA
+
+# Transformar SEXO <char> para categórica não ordinal <fctr>:
+nasc_vivo_M.SP$SEXO <- factor(nasc_vivo_M.SP$SEXO,
+                                levels = c("F",
+                                           "M"
+                                           ),
+                                labels = c("f", # abreviaturas minúsculas
+                                           "m"  # para futuros gráficos
+                                           ),
+                                ordered = FALSE)
+
+# Tabela de frequência absoluta com NA's dessa variável factor:
+table(nasc_vivo_M.SP$SEXO,
+      useNA = "always") # Como esperado, há 9 NA's (os Ignorados)
+
+# Tamanho n2 da amostra dessa segunda variável aleatória:
+n2 <- length(nasc_vivo_M.SP$SEXO)
+n2
+
+n2_semNA <- length(nasc_vivo_M.SP$SEXO[!is.na(nasc_vivo_M.SP$SEXO)])
+n2_semNA # 65526
+
+# número de NA's = 9, pois Ignorados foram tratados como NA's
+n2 - n2_semNA
+
+# proporção (%) de masculino que supera feminino ao nascer
+# no Município de São Paulo em 2023
+p_mf <- ( table(nasc_vivo_M.SP$SEXO)[2] - table(nasc_vivo_M.SP$SEXO)[1] ) /
+          table(nasc_vivo_M.SP$SEXO)[1] * 100
+p_mf <- round(p_mf, 1)
+p_mf # classe masculina = +3.5% maior que a feminina
+```
+
+### Teste t não-pareado para diferença entre duas médias
+
+Implementar um ***teste t*** para verificar a ***diferença*** entre ***duas médias de dados não pareados***, para verificar a diferença da variável aleatória `PESO` nas duas categorias da variável aleatória `SEXO`: `f` - Feminino e `m` - Masculino, com 9 `NA`'s.
+
+Considerando o número de observações em cada subconjunto, já descontados os `NA`'s existentes em cada uma delas:
+
+-   `PESO`: $n_ 1 = 65532$
+-   `SEXO`: $n_2 = 65526$, sendo que os tamanhos amostrais nas duas classes são
+    -   feminino: $n_{2_f} = 32206$
+    -   masculino: $n_{2_m} = 33320$ (um leve predomínio sobre o feminino: +3,5%)
+
+Logo, todas as 3 subpopulações podem ser consideradas grandes: $n >> 30$.
+
+De modo que aplica-se o ***TCL – Teorema Central do Limite*** e *não* é necessário testar se essas duas subpopulações, feminina e masculina, seriam Normais, pois a distribuição amostral das suas médias amostrais convergirá para uma forma Normal.
+
+É preciso cuidado para eliminar do teste todas as situações de ocorrência de `NA`, ou seja, tanto quando ocorra apenas na primeira unidade amostral (`PESO`, com apenas 3 `NA`s); como quando ocorra apenas na segunda unidade amostral (`SEXO`, com apenas 9 `NA`s); ou, ainda, quando ocorra tanto na primeira (`PESO`) quanto, simultaneamente, na segunda unidade amostral (`SEXO`).
+
+O que será feito a seguir.
+
+Após o que, poder-se-á aplicar o teste-t não pareado acima descrito.
+
+Seus presupostos são:
+
+1.  ***Independência entre*** os dois grupos de observações (dados *não pareados*);
+2.  A ***distribuição de frequências das diferenças observadas*** em cada uma das duas categorias ***aproxima-se de uma distribuição Normal***; o que é garantido, neste caso, pelos tamanhos das duas amostras na classe `f` e na classe `m`, ambas muito acima de 30: teste-t é robusto a desvios da normalidade devido ao TCL.
+
+A segunda maneira de realizar um teste $t$ não pareado de Student é usar uma função já existente no R.
+
+Inicialmente, realizar um teste bilateral, ou seja, $$H_0: \mu_f = \mu_m \Rightarrow \mu_f - \mu_m = 0 \ \ \text { contra } \ \ H_1: \mu_f \neq \mu_m \Rightarrow \mu_f - \mu_m \neq 0$$
+
+No R, com uma única linha de comando apenas, usar uma função do *R base*.
+
+Já testada e otimizada pelo CRAN ou pela comunidade R.
+
+```{r, message=FALSE, warning=FALSE}
+
+t.test(nasc_vivo_M.SP$PESO[nasc_vivo_M.SP$SEXO == "f"],
+       nasc_vivo_M.SP$PESO[nasc_vivo_M.SP$SEXO == "m"],
+       paired      = FALSE,
+       conf.level  = 0.99) # Nível de Significância: alpha = 1%
+#######
+# Foi aplicado um Welch Two Sample t-test
+# significa que os dados podem ser considerados provenientes de
+# duas amostras retiradas de duas populações aproximadamente normal
+# Todavia, elas apresentam variâncias não homogêneas
+# Ou seja, são do tipo heterocedásticas
+# O que recomenda aplicação de uma ANOVA Welch para duas categorias
+# t  = -24.165
+# df = 65518 (teste Welch encontra um grau de liberdade equivalente)
+# p-value < 0.00000000000000022 [logo p-value << alpha = 1%]
+# ========> Rejeita Ho; Apoia H1
+# alternative hypothesis: true difference in means is not equal to 0
+# Ho: mu_f =  mu_m => mu_f - mu_m =  0
+# H1: mu_f <> mu_m => mu_f - mu_m <> 0
+# 
+# d = 3074.170 - 3179.607 = -105.437 g
+# d = -105.437 g, é a diferença entre as duas médias amostrais
+# IC_99% = [-113.98917,  -96.88529] não contém o valor zero
+# Caso replicar essas duas amostras independentes 100 vezes;
+# É esperado que, em 99 delas, esses IC_99%'s contenham
+# o verdadeiro e desconhecido parâmetro populacional D
+# onde: D = diferença entre as duas médias populacionais
+#       D = mu_f - mu_m
+# Melhor estimativa para esse parâmetro populacional é:
+#       D = -105.437 g
+```
+
+Ao realizar o teste bilateral, **rejeitamos** a **hipótese nula**, de que as médias são iguais, pois p-valor \< 0.00000000000000022, ou seja, muito menor que: $\alpha = 1\%= 0.01$.
+
+Então, como o valor da estatística de teste resultou negativa ($t = -24.165$), realizaremos um ***teste unilateral à esquerda***, ou seja, $H_0: \mu_1 \geq \mu_2$ contra $H_1: \mu_1 < \mu_2$.
+
+Logo,
+
+```{r, message=FALSE, warning=FALSE}
+
+# teste-t não pareado para duas amostras independentes:
+t.test(nasc_vivo_M.SP$PESO[nasc_vivo_M.SP$SEXO == "f"],
+       nasc_vivo_M.SP$PESO[nasc_vivo_M.SP$SEXO == "m"],
+       alternative = "less", # teste unilateral à esquerda 
+       paired      = FALSE,  # teste-t não pareado (IND)
+       conf.level  = 0.99)   # Nível de Significância: alpha = 1%
+#######
+# Foi aplicado um Welch Two Sample t-test
+# Significa que os dados podem ser considerados provenientes de
+# duas amostras retiradas de duas populações aproximadamente normal
+# Todavia, elas apresentam variâncias não homogêneas
+# Ou seja, são do tipo heterocedásticas
+# O que recomenda aplicação de uma ANOVA Welch para duas categorias
+# t  = -24.165
+# df = 65518  (teste Welch encontra um grau de liberdade equivalente)
+# p-value < 0.00000000000000022 [logo p-value << alpha = 1%]
+# ========> Rejeita Ho; Apoia H1
+# Ho: mu_f >=  mu_m => mu_f - mu_m >=  0
+# alternative hypothesis: true mean difference is less than 0
+# H1: mu_f < mu_m => mu_f - mu_m < 0
+# onde:
+#      \mu_f = nasc_vivo_M.SP$PESO na classe SEXO = f
+#      \mu_m = nasc_vivo_M.SP$PESO na classe SEXO = m
+#
+# d = 3074.170 - 3179.607 = -105.437 g
+# d = -105.437 g, é a diferença entre as duas médias amostrais
+# IC_99% = [-Inf, -95.28658] não contém o valor zero
+# Caso replicar essas duas amostras independentes 100 vezes;
+# É esperado que, em 99 delas, esses IC_99%'s contenham
+# o verdadeiro e desconhecido parâmetro populacional D
+# onde: D = diferença entre as duas médias populacionais
+#       D = mu_f - mu_m
+# Melhor estimativa para esse parâmetro populacional é:
+#       D = -105.437 g
+
+(-105.437) / 3074.170 * 100  # = -3.429771%
+round((-105.437) / 3074.170 * 100, 1) # = -3.4%
+
+# \overline{PESO} \mid SEXO = f
+```
+
+Neste caso, **também rejeitamos a hipótese nula**.
+
+E há ***forte evidência*** (valor-p \<\< alpha = 1%) para apoiar a Hipótese alternativa de que:
+
+$$ H_1: \mu_f < \mu_m $$
+
+Onde:
+
+-   $\mu_f = \overline{PESO} \text{ médio na classe SEXO = f}$
+-   $\mu_m = \overline{PESO} \text{ médio na classe SEXO = m}$
+
+### Interpretação
+
+Concluimos, ao **nível de significância de 1%** — é o Erro Tipo I, de rejeitar a hipótese nula, quando ela é verdadeira —, que: a *média do PESO observado na categoria SEXO f = feminina logo após o nascimento dos bebês no Município de São Paulo, no ano de 2023*, ou seja, para toda a população amostrada, foi ***menor do que*** a *média do PESO observado na categoria SEXO m = masculino logo após o nascimento dos bebês no Município de São Paulo, no ano de 2023*.
+
+Todavia é importante registrar que, embora tenhamos encontrado uma diferença estatísticamente significativa, ela não se mostra *praticamente significativa*, pois essa diferença média foi de apenas -105.4 g, ou seja, as meninas pesaram em média apenas cerca de 105 g a menos que os meninos recem nascidos no Município de São Paulo, no ano de 2023; o que representa apenas -3.4% do peso das meninas, que apresenta a menor média entre os dois grupos, apontando para uma diferença menor que 4%, ou seja, de pouca relevância prática.
+
+Resultado alcançado a partir de ***dados independentes para as duas classes observadas*** obtidos na fonte: Sistema de Informações sobre Nascidos Vivos (SINASC) para o Município de São Paulo.
+
+Pode-se, ainda, ressaltar que, segundo o ***teste-t unilateral à esquerda para duas amostras independentes (não pareadas)***:
+
+-   A estatística de teste t = -24.165 apresentou alto valor negativo, indicativo da rejeição da hipótese nula;
+-   df = 65518, ou seja, os graus de liberdade foram obtidos a partir do *teste Welch*, que encontra um grau de liberdade equivalente para a média da diferença de `PESO` nas duas classes de `SEXO` (`f`, `m`);
+-   p-value \< 0.00000000000000022 \[logo p-value \<\< alpha = 1%\], ou seja: $\hat{\alpha} << \alpha_{NS99\%}$
+-   ***Regra de decisão***: Rejeitar H~o~; **Apoiar H~1~**;
+-   Hipótese alternativa - H~1~: verdadeiro valor do parâmetro populacinal desconhecido D é menor que zero;
+-   ***Hipótese alternativa - H~1~*** em símbolos: $H_1: \mu_f < \mu_m$
+-   onde:
+    -   $\mu_f = \overline{PESO} \mid SEXO = f$
+    -   $\mu_m = \overline{PESO} \mid SEXO = m$
+-   O valor calculado: d = -105.437 g, é a ***melhor estimativa*** da diferença entre as duas médias populacionais, ou seja: $D \approx -105.437 \text{ g}$
+-   **Intervalo de Confiança** (IC) para $\alpha = 1\% = 0.01$ nesta amostra: **IC_99%(`D`)** = \[-Inf, -95.28658 g\]
+-   Esse IC_99%(`D`) ***não contém o valor zero***; o que corrobora este ***teste-t*** de hipótese para ***duas amostras independentes*** de que *há uma diferença estatisticamente significativa*, para um nível de significância de 1%, entre as duas médias observadas: `mu_f` e `mu_m`;
+-   ***Interpretação*** do **IC_99%(`D`)**: caso essas ***duas amostras independentes*** fossem **replicadas** por 100 vezes junto à população de partos de nascidos vivos do Município de São Paulo ... então é ***esperado***, ou podemos ficar ***confiantes*** que, ***em 99 delas***, esses IC_99%(`D`)'s **contenham o verdadeiro e desconhecido parâmetro populacional `D`**, onde: `D` = Diferença entre as duas médias populacionais: `mu_f` - `mu_m`;
+-   De modo que, em 01 (uma) delas, esse mesmo IC_99%(`D`) [***não***]{.underline} **conteria o verdadeiro e desconhecido parâmetro populacional `D`**.
+
+Como a ***decisão tomada*** neste teste de hipótese ***não é capaz de distinguir em qual***, dentre as possíveis amostras replicáveis, encontrar-se-ia a presente amostra que foi testada, dada a ***incerteza inerente*** observada nas duas variáveis aleatórias coletadas, não sabemos se esta poderia, ou não, ser uma daquelas em que o IC_99%(`D`) [***não***]{.underline} **conteria o verdadeiro e desconhecido parâmetro populacional `D`**, muito embora o `valor-p` aqui obtido seja praticamente igual a zero (\<0.00000000000000022) — mas que nunca é absolutamente igual a zero (neste caso aproximadamente 1 chance em 1 quatrilhão) — seja uma ***evidência*** de que ***este não seria o caso***.
+
+Essa *diferença estatisticamente significativa* ($\alpha = 1\%$) de 105.4 g a menos no valor da média da variável $\overline{PESO} \mid SEXO = f$ (peso médio dos bebês do sexo feminino) em relação à média da variável $\overline{PESO} \mid SEXO = m$ (peso médio dos bebês do sexo masculino) *faz sentido* do *ponto de vista de uma escala intervalar*, pois, como mencionado acima, pode-se dizer que uma diferença intervalar de 105 g tem a mesma dimensão qualquer que seja o range dessa escala em que ela for apurada. E ela era até mesmo esperada, em razão do tamanho muito grande das duas amostras compradas; muito embora seja plausível considerar que essa não seja uma diferença praticamente significativa, pois representa apenas -3.4% do peso das meninas.
+
+## Questão 3 - gestação (sem.) e tipo gravidez
+
+**Questão 3:** Usando os dados do SINASC, deseja-se verificar se existe uma associação entre a duração da gestação (GESTACAO) e o tipo de gravidez (GRAVIDEZ). A variável GESTACAO indica o período gestacional em semanas, enquanto GRAVIDEZ refere-se ao tipo de gravidez, como única, dupla, ou tripla. Para isso, será realizado um teste de independência entre essas duas variáveis categóricas. Para simplificar a análise, algumas categorias das variáveis deverão ser agrupadas: na variável GRAVIDEZ, as categorias "dupla" e "tripla ou mais" serão unidas e formarão a nova categoria "dupla ou mais"; na variável GESTACAO, as categorias "menos de 22 semanas" e "de 22 a 27 semanas" serão agrupadas e formarão uma nova categoria chamada "menos de 27 semanas".
+
+\vspace{0.2cm}
+
+O objetivo é testar se a duração da gestação está associada ao tipo de gravidez.
+
+\vspace{0.2cm}
+
+Hipóteses de interesse:
+
+\begin{itemize} \item{$H_0$: As variáveis GESTACAO (semanas de gestação) e GRAVIDEZ (tipo de gravidez) são independentes, ou seja, não há associação entre o período gestacional e o tipo de gravidez.} \item{$H_1$: As variáveis GESTACAO e GRAVIDEZ não são independentes, ou seja, há uma associação entre o período gestacional e o tipo de gravidez.} \end{itemize}
+
+\vspace{0.2cm}
+
+Interprete detalhadamente todos os resultados obtidos. Considere um nível de significância de $\alpha = 1\%$.
+
+\vspace{1.2cm}
+
+### Teoria
+
+As opções para testar associações entre ***duas variáveis aleatórias categóricas*** são bem resumidas por [@Arango2021-bioStat , p. 253] na sua figura abaixo.
+
+![Testes para verificar se o fator discriminante (X) exerce alguma influência (associação) sobre o fator discriminado (Y). Fonte: Arango (, 2021, p. 240, 253)](fig/Fluxo-Var-categorica-tipo-teste.jpeg){fig-align="center" width="554"}
+
+No presente caso como se tratam de ***amostras independentes***, pois a duração da gestação (`GESTACAO`) e o tipo de gravidez (`GRAVIDEZ`), pelo modo como os dados foram coletados, ao menos *a priori* (isso demandaria uma revisão na literatura especializada que foge ao escopo da questão), é razoável supor que a coleta da primeira não sofreu interferência da coleta da segunda; o que afasta a possibilidade de aplicação do *teste de McNemar*, que é utilizado para testar amostras pareadas em tabelas de contingência 2x2 [@Arango2021-bioStat , p. 245-247].
+
+Não se divisa, ao menos a priori, a existência de variável de interferência [@Arango2021-bioStat , p. 247-252], também denominada de confundimento, em razão da forma como a questão foi enunciada, o que afasta a possibilidade de aplicação do *teste de Mantel-Haenszel*.
+
+E também porque as *duas amostras independentes* apresentam *tamanho suficientemente grande* para serem consideradas ***grandes amostras***: $n_{\text{GESTACAO}} > 40 \text{  e  } n_{\text{GRAVIDEZ}} > 40$ .
+
+Por essa razões que se vislumbra, seguindo o fluxo teórico acima, a possibilidade de aplicação do ***teste do qui-quadrado clássico***.
+
+Outro pressuposto teórico desse teste escolhido é que todos os valores Esperados sejam **maior que 5**, para garantir uma boa aproximação do modelo teórico aos dados, ou seja:
+
+$$ E_{ij} > 5, \forall \; i = 1,2...r, j = 1,2...c $$
+
+Caso a condição acima não seja verificada, a literatura recomenda a agregação de categorias com frequências observadas menores ($O_{ij}$) em categorias, adjacentes ou que essa agregação faça sentido, que sejam de tamanhos maiores, a fim de que todas as caselas de Frequências Esperadas atendam à condição teórica.
+
+Todavia, a literatura admite ***uma margem***, de ***até 20%*** do ***total de caselas*** ($20\% \cdot r \cdot c$, onde `r` e `c` são os números de linhas e de colunas, respectivamente, da tabela de contigência); em que não se verifique a condição $E_{ij} > 5$ e, ainda, assim, *pode-se confiar no teste do qui-quadrado clássico* em razão de uma boa aproximação do seu modelo teórico aos dados [@Becker2015 , p. 458], que traz a seguinte observação [@Becker2015 , p. 359]:
+
+> "O teste precisa ser usado com certo cuidado, pois a *distribuição da estatística de teste não é exata*, é *aproximada pela distribuição Qui-quadrado*, a aproximação sendo *mais precisa para grandes amostras*. Lewis e Burke (1949), assim como Cochran (1952), mencionam ser ***costumeira a recomendação de que a menor frequência esperada em cada categoria*** considerada ***deve ser*** no ***mínimo 10*** (*alguns autores* mencionam **5**). ***Se a condição não for satisfeita pela classificação original, é recomendável trocar o esquema de categorização***, talvez ***combinando categorias semelhantes ou próximas entre si*** (na classificação originalmente utilizada) ***até que a condição seja satisfeita***. Mas, concede (*sic*) Cochran, os *números mencionados são arbitrários*, *não havendo qualquer suporte teórico para a reco- mendação*." (destacou-se).
+
+[@vieira2022introBioStat , p. 192] elenca as seguintes restrições ao uso desse teste:
+
+> "12.1.1 Restrições ao uso do teste χ^2^
+>
+> É importante saber que o teste χ^2^ apresenta muitas restrições de uso. A saber:
+>
+> -   Os dados devem estar apresentados em tabelas de contingência
+> -   As variáveis em estudo são, obrigatoriamente, qualitativas
+> -   A amostra deve ter sido obtida por processo aleatório
+> -   A ***população*** deve ter, no ***mínimo***, ***10 vezes o tamanho da amostra***." (destacou-se)
+
+A última restrição, em uma análise preliminar, é de difícil verificação, pois demandaria conhecer o tamanho da população alvo de todos os nascidos vivos no Município de São Paulo, no ano de 2023; mas parece que não se encontraria atendida, uma vez que é esperada uma cobertura cadastral do dataSUS de quase todos os partos realizados nessa Cidade. Ou seja, é razoável supor que tanto essa população alvo como as duas amostras aqui analisadas sejam de tamanhos aproximados, mas não seria razoável esperar que aquela fosse 10 vezes maior que o tamanho de cada uma dessas duas amostras (n~1~ = n~2~ = 65535), pois: 10 x 65535 = 655.350 bebês nascidos vivos no Município de São Paulo em 2023, o que não se mostra razoável diante do tamanho populacional da cidade no mesmo ano.
+
+De acordo com o [Censo Demográfico de 2022](https://www.google.com/search?q=tamanho+da+popula%C3%A7%C3%A3o+do+Munic%C3%ADpio+de+S%C3%A3o+Paulo+em+2023&rlz=1C1GCEU_pt-BRBR1040BR1041&oq=tamanho+da+popula%C3%A7%C3%A3o+do+Munic%C3%ADpio+de+S%C3%A3o+Paulo+em+2023&gs_lcrp=EgZjaHJvbWUyBggAEEUYOTIICAEQABgWGB4yCggCEAAYgAQYogQyCggDEAAYgAQYogQyCggEEAAYogQYiQUyCggFEAAYgAQYogTSAQoxMzg1OGowajE1qAIIsAIB&sourceid=chrome&ie=UTF-8), divulgado pelo IBGE, a população do município de São Paulo é de 11.451.245 habitantes. E a [taxa de natalidade](https://www.google.com/search?q=taxa+de+natalidade+da+popula%C3%A7%C3%A3o+do+munic%C3%ADpio+de+s%C3%A3o+paulo+em+2023&rlz=1C1GCEU_pt-BRBR1040BR1041&oq=&gs_lcrp=EgZjaHJvbWUqCQgAECMYJxjqAjIJCAAQIxgnGOoCMgkIARAjGCcY6gIyCQgCECMYJxjqAjIJCAMQIxgnGOoCMgkIBBAjGCcY6gIyCQgFECMYJxjqAjIJCAYQIxgnGOoCMgkIBxAjGCcY6gLSAQkyNDUyajBqMTWoAgiwAgE&sourceid=chrome&ie=UTF-8) da cidade de São Paulo seria de 15,6 por mil habitantes. Logo seria esperada uma população de nascidos vivos em 2022 de 15,6 x 11451245/1000 = 178.640, número que dividido por 65535 resulta em: 2,7 (bem inferior a 10).
+
+### Inspecionar e Transformar
+
+Variável categórica GESTACAO que fornece o intervalo de classes em que se encontra o número de semanas de gestação dos bebês - contagem (número inteiro) distribuídas em 7 classes iniciais, que, segundo o Dicionário de Dados seriam:
+
+-   1 – Menos de 22 semanas;
+-   2 – 22 a 27 semanas;
+-   3 – 28 a 31 semanas;
+-   4 – 32 a 36 semanas;
+-   5 – 37 a 41 semanas;
+-   6 – 42 semanas e mais;
+-   9 – Ignorado.
+
+Muito embora armazeanda como tipo `char` – *character*, será transformada em tipo \<`fctr`\>.
+
+```{r}
+
+# GESTACAO
+
+table(nasc_vivo_M.SP$GESTACAO,
+      useNA = "always")
+#   1     2     3     4     5     6  <NA> 
+#  20   401   725  6409 57646   306    28
+# Ou seja, apresentou 9 calsses,
+# mas não apresentou o campo 9 - Ignorado
+# e apresentou 28 NA's
+
+length(nasc_vivo_M.SP$GESTACAO) # 65535
+
+# Verificar se há código "9" - Ignorado.
+# Resultado: Não há esse código "9" na variável GESTACAO
+nasc_vivo_M.SP$GESTACAO[nasc_vivo_M.SP$GESTACAO == "9"]
+length(nasc_vivo_M.SP$GESTACAO[nasc_vivo_M.SP$GESTACAO == "9"])
+# Retornou vetor com 28 NA's
+```
+
+O tamanho dessa amostra da variável aleatória `GESTACAO` é: n = 65535, com a presença de ***28*** `NA`'s.
+
+Variável ***categórica*** `GESTACAO` é multinomial, que pode ser considerada como ***ordinal***.
+
+Sua categoria I - Ignorado, não apresentou ocorrência e, por isso, não foi preciso trasnformá-la em `NA`.
+
+Transfomar de *char* para: *ordered factor*.
+
+```{r}
+
+# Transformar GESTACAO de <char> para categórica ordinal <fctr>:
+nasc_vivo_M.SP$GESTACAO <- factor(nasc_vivo_M.SP$GESTACAO,
+                                  levels = c("1",
+                                             "2",
+                                             "3",
+                                             "4",
+                                             "5",
+                                             "6"
+                                             ),
+                                  labels = c("<22",    # abreviaturas menores
+                                             "22a27", # para futuros gráficos
+                                             "28a31",
+                                             "32a36",
+                                             "37a41",
+                                             "42e>"
+                                             ),
+                                  ordered = TRUE)
+
+# Tabela de frequência absoluta com NA's dessa variável factor:
+table( as.character(nasc_vivo_M.SP$GESTACAO),
+       useNA = "always") # Como esperado, há 28 NA's (não há Ignorado)
+
+n_37a41 <- table( as.character(nasc_vivo_M.SP$GESTACAO),
+       useNA = "always")[5]
+n_tot_GESTACAO <- sum( table( as.character(nasc_vivo_M.SP$GESTACAO),
+       useNA = "always"),
+                       na.rm = TRUE)
+
+# Tamanho n1 da amostra dessa primeira variável aleatória:
+n1 <- length(nasc_vivo_M.SP$GESTACAO)
+n1 # 65535
+
+n1_semNA <- length(nasc_vivo_M.SP$GESTACAO[!is.na(nasc_vivo_M.SP$GESTACAO)])
+n1_semNA # 65507
+
+# número de NA's = 28 (não ocorreu Ignorados)
+n1 - n1_semNA # 28
+```
+
+Um gráfico de barras horizontais de `GESTACAO` fornece um bom resumo descritivo da sua situação.
+
+```{r}
+
+nasc_vivo_M.SP |> 
+  select(
+    GESTACAO
+    ) |> 
+  ggplot( aes(y = rev(GESTACAO) ) ) + # barras no eixo y (default é o eixo x)
+  geom_bar() + # é exibida na ordem inversa daquela imposta às etiquetas
+  geom_point( x    = n_37a41 / n_tot_GESTACAO,
+              y    = 5,
+              size = 5,
+              color = "blue") +
+  # scale_x_continuous(breaks = seq(0, 60000, 20000) ) +
+  # scale_y_continuous(breaks = NULL ) +
+  labs(title    = "Gráfico de Barras: classes de número de semanas de gestação (k = 6)\nMunicípio de São Paulo (nascidos vivos)",
+       subtitle = "SINASC, ano 2023 (n = 65535 obs.)",
+       x        = "Frequência absoluta de bebês nascidos vivos",
+       y        = "Semanas de gestação",
+       caption  = "1. Fonte: dados secundários coletados do Sistema de Informações sobre Nascidos Vivos (SINASC).\n2. Moda = 37a41 semanas (ponto de cor azul), com 87.96% das ocorrências, é o de maior frequência.\n3. Obs. ignoradas (28 NA's) não foram consideradas no cálculo acima, pois são pouco representativas.\n4. Classe <22 semanas (20 obs.) também é pouco representativa e poderia ser agrupada em 22a27 sem."
+       )
+```
+
+A segunda Variável categórica `GRAVIDEZ` fornece contagens (número inteiro) em k = ***4 classes iniciais*** do ***tipo de gestação*** dos bebês, que, segundo o Dicionário de Dados, quanto à quantidade de fetos em uma mesma gestação, seriam:
+
+-   1 – Única;
+-   2 – Dupla;
+-   3 – Tripla ou mais;
+-   9 – Ignorado.
+
+Muito embora armazeanda como tipo `char` – *character*, será transformada em tipo \<`fctr`\>.
+
+Como traduz ideia de ordem, deverá ser do tipo *`ordered`*.
+
+```{r}
+
+# GRAVIDEZ
+
+table(nasc_vivo_M.SP$GRAVIDEZ,
+      useNA = "always")
+#     1     2     3     9  <NA> 
+# 63697  1815    19     2     2
+# Ou seja, apresentou 4 classes,
+# Apresentou o campo 9 - Ignorado: 2 obs.
+# E apresentou 2 NA's
+# Logo, como o número de NA's e Ignorados é baixo
+# É possível reuní-los em 4 NA's
+
+length(nasc_vivo_M.SP$GRAVIDEZ) # 65535
+
+# Verificar se há código "9" - Ignorado.
+# Resultado: Não há esse código "9" na variável GRAVIDEZ
+nasc_vivo_M.SP$GRAVIDEZ[nasc_vivo_M.SP$GRAVIDEZ == "9"]
+length(nasc_vivo_M.SP$GRAVIDEZ[nasc_vivo_M.SP$GRAVIDEZ == "9"])
+# Retornou vetor com 2 "9" e com 2 NA's (serão considerados como 4 NA's)
+```
+
+O tamanho dessa amostra da variável aleatória `GRAVIDEZ` é: n = 65535 (o mesmo de `GESTACAO`), com a presença de apenas ***2*** `NA`'s e ***2*** `I - Ignorado`.
+
+Variável ***categórica*** `GRAVIDEZ` também é multinomial, que pode ser considerada como ***ordinal***.
+
+Sua categoria `I` - `Ignorado`, apresentou 2 ocorrências e, por isso, será precisor transformá-la em `NA`'s.
+
+Transfomar de *char* para: *ordered factor*.
+
+```{r}
+
+# Substituir código "9" - Ignorado, por NA.
+# Muito embora isso misture esses 2 cód. Ignorado com 2 NA's.
+# Resultado: 4 NA's
+nasc_vivo_M.SP$GRAVIDEZ[nasc_vivo_M.SP$GRAVIDEZ == "9"] <- NA
+
+table(nasc_vivo_M.SP$GRAVIDEZ,
+      useNA = "always")
+# Como esperado, retornou:
+#     1     2     3  <NA> 
+# 63697  1815    19     4
+
+# Transformar GRAVIDEZ de <char> para categórica ordinal <fctr>:
+nasc_vivo_M.SP$GRAVIDEZ <- factor(nasc_vivo_M.SP$GRAVIDEZ,
+                                  levels = c("1",
+                                             "2",
+                                             "3"
+                                             ),
+                                  labels = c("única",  # abreviaturas menores
+                                             "dupla",  # para futuros gráficos
+                                             "tripla+" # tripla ou mais
+                                             ),
+                                  ordered = TRUE)
+
+# Tabela de frequência absoluta com NA's dessa variável factor:
+table( as.character(nasc_vivo_M.SP$GRAVIDEZ),
+       useNA = "always") # Como esperado, há 4 NA's (agregou 2 Ignorado)
+# retornou: tripla ou + é pouco representativa
+# dupla trip+ única  <NA> 
+#  1815    19 63697     4
+
+n_unic <- table( as.character(nasc_vivo_M.SP$GRAVIDEZ),
+       useNA = "always")[3] # 63697
+n_tot_GRAVIDEZ <- sum( table( as.character(nasc_vivo_M.SP$GRAVIDEZ),
+       useNA = "always"),
+                       na.rm = TRUE) # 65535
+
+# Tamanho n2 da amostra dessa segunda variável aleatória:
+n2 <- length(nasc_vivo_M.SP$GRAVIDEZ)
+n2 # 65535
+
+n2_semNA <- length(nasc_vivo_M.SP$GRAVIDEZ[!is.na(nasc_vivo_M.SP$GRAVIDEZ)])
+n2_semNA # 65531
+
+# número de NA's = 4 (2 Ignorados agregados)
+n2 - n2_semNA # 4
+```
+
+Um gráfico de barras horizontais de `GRAVIDEZ` fornece um bom resumo descritivo da sua situação.
+
+```{r}
+
+nasc_vivo_M.SP |> 
+  select(
+    GRAVIDEZ
+    ) |> 
+  ggplot( aes(y = rev(GRAVIDEZ) ) ) + # barras no eixo y (default é o eixo x)
+  geom_bar() + # é exibida na ordem inversa daquela imposta às etiquetas
+  geom_point( x    = n_unic / n_tot_GRAVIDEZ,
+              y    = 1,
+              size = 5,
+              color = "blue") +
+  # scale_x_continuous(breaks = seq(0, 60000, 20000) ) +
+  # scale_y_continuous(breaks = NULL ) +
+  labs(title    = "Gráfico de Barras: classes de tipos de gravidez (k = 3)\nMunicípio de São Paulo (nascidos vivos)",
+       subtitle = "SINASC, ano 2023 (n = 65535 obs.)",
+       x        = "Frequência absoluta de bebês nascidos vivos",
+       y        = "Tipo de gravidez",
+       caption  = "1. Fonte: dados secundários coletados do Sistema de Informações sobre Nascidos Vivos (SINASC).\n2. Moda = única (ponto de cor azul), com 97.19% das ocorrências, é o de maior frequência.\n3. Obs. ignoradas (4 NA's) não foram consideradas no cálculo acima, pois são pouco representativas.\n4. Classe tripla ou + (19 obs.) também é pouco representativa e poderia ser agrupada em dupla ou +"
+       )
+```
+
+### Análise de Associação: Teste Qui-quadrado (IND)
+
+Queremos saber **se a distribuição de frequências da variável categórica GESTACAO (6 classes para número de semanas de gestação) é [*independente*]{.underline} daquela da variável categórica GRAVIDEZ (3 classes para o tipo, conforme número de fetos)**.
+
+Essas hipóteses de pesquisa podem ser assim adequadamente formuladas:
+
+H~o~ : `GESTACAO` e `GRAVIDEZ` são **independentes**; ou seja, elas [***não***]{.underline} ***são associadas***.
+
+H~1~ : `GESTACAO` e `GRAVIDEZ` [***não***]{.underline} são **independentes**; ou seja, elas ***são associadas***.
+
+Preparar os dados para o teste.
+
+```{r}
+
+# Dados referentes Gestacao e Gravidez
+# por números de semanas de gestação e
+# por tipo de Graviez
+
+# Criar a tabela de contingência com os dados observados
+# Já desconsiderados os NA's das duas variáveis: por defeult de table()
+dados_gest_grav <- table(nasc_vivo_M.SP$GESTACAO, nasc_vivo_M.SP$GRAVIDEZ)
+
+names(dimnames(dados_gest_grav)) <- c("Gestação", "Gravidez")
+
+# Exibir a tabela de contingência 6 x 3
+print(dados_gest_grav)
+# Há várias células com frequência observada igual a zero ou menor que 5
+```
+
+Realizar o teste de independência: usar o teste Chi-Quadrado aplicado na tabela acima.
+
+```{r}
+
+# Realizar o teste de independência: aplicar o teste Chi-Quadrado
+chisq.test(dados_gest_grav)
+
+# Aproximação do qui-quadrado pode estar incorreta
+
+# X-squared = 6016.1,
+# df = 10,
+# p-value < 0.00000000000000022
+```
+
+Analisando apenas o teste acima, poder-se-ia, tomar a seguinte decisão.
+
+**Rejeitar a hipótese nula** de que `GESTACAO` e `GRAVIDEZ` são **independentes**.
+
+Isso **sugereriria que há uma associação significativa entre** `GESTACAO` e `GRAVIDEZ`.
+
+Ou seja, a distribuição de frequências pelas 6 classes de semanas de `GESTACAO` varia conforme varia as 3 classes do tipo de `GRAVIDEZ`.
+
+Todavia o teste também retornou um aviso (*Warning*): "***Aproximação*** do qui-quadrado ***pode estar incorreta***".
+
+Isso certamente devido a valores esperados menores que 5, deivod a baixas frequências de valores observados.
+
+**Agrupar** algumas categorias das duas variáveis para contornar esse aviso, conforme as notas de rodapé dos dois gráficos de barras gerados acima (estatística descritiva).
+
+```{r}
+
+# Variáveis
+gestacao = nasc_vivo_M.SP$GESTACAO |> as.character()
+
+table(gestacao,
+      useNA = "always")
+# Agrupar os dados
+gestacao_agrupada <- ifelse(gestacao == "<22", "<27", 
+                     ifelse(gestacao == "22a27", "<27", gestacao) )
+# será que há algum NA??? sim, 28 NA's
+# serão removidos ao criar a tabela de contigência de dados agrupados
+table(gestacao_agrupada,
+      useNA = "always")
+
+gravidez = nasc_vivo_M.SP$GRAVIDEZ |> as.character()
+
+table(gravidez,
+      useNA = "always")
+# Agrupar os dados
+gravidez_agrupada <- ifelse(gravidez == "dupla"  , "dupla+", 
+                     ifelse(gravidez == "tripla+", "dupla+", gravidez) )
+# será que há algum NA??? sim, 4 NA's
+# serão removidos ao criar a tabela de contigência de dados agrupados
+table(gravidez_agrupada,
+      useNA = "always")
+
+# criar tabela de contigência agrupada com as novas variáveis:
+# gestacao_agrupada
+# gravidez_agrupada
+# Já desconsiderados os NA's das duas variáveis: por defeult de table()
+dados_gest_grav_agrup <- table(gestacao_agrupada,
+                               gravidez_agrupada)
+
+names(dimnames(dados_gest_grav_agrup)) <- c("Gestação_agr", "Gravidez_agr")
+
+# Exibir a nova tabela de contingência agrupada: 5 x 2 = 10 caselas
+print(dados_gest_grav_agrup)
+# Restou apenas uma célula: (42e>, dupla+) com frequência observada igual a 2
+# ou seja, menor que 5
+# mas isso encontra-se dentro do limite prudencial recomendado pela
+# Literatura de até 20% das celulas fora do critério >= 5
+# Pois 20% x 10 = 2 celúlas; e só 1 não atendeu ao critério
+```
+
+**Reaplicar** o teste de independência: usar o teste Chi-Quadrado, dessa vez aplicado na nova tabela acima com os dados reagrupados.
+
+```{r}
+
+# Realizar o teste de independência: aplicar o teste Chi-Quadrado
+# agora na tabela de frequências de dados agrupados: 5 x 2
+chisq.test(dados_gest_grav_agrup)
+
+# Desapareceu o Warning:
+# Aproximação do qui-quadrado pode estar incorreta
+# como era esperado
+
+# X-squared = 5903.1,
+# df = 4 = (nlin - 1)x(ncol - 1) = (5-1)(2-1) = 4
+# p-value < 0.00000000000000022
+
+row.names(dados_gest_grav_agrup)
+# "<27"   "28a31" "32a36" "37a41" "42e>"
+
+str(dados_gest_grav_agrup) # "dupla+" "única"
+```
+
+O teste acima não deve apresentar qualquer diferença se constuir um data frame com as duas novas e, em seguida, aplicar `na.omit()` para exclusão de todos os seus `NA`'s.
+
+Pois a função `table()`, já providencia isso, por *default* do seu parâmetro: `useNA` = "no".
+
+```{r}
+
+# Remover os dados faltantes: df [6 × 2]
+dados_filtrados <- na.omit(data.frame(gestacao_agrupada,
+                                      gravidez_agrupada)
+                           )
+
+# Visualizar os primeiros dados filtrados
+head(dados_filtrados)
+
+# Criar a tabela de contingência reagrupada com exclusão dos NA's
+# Função table(), por default elimina os NA's
+# dessa vez não porque já o foram
+tabela_contingencia <- table(dados_filtrados$gestacao_agrupada,
+                             dados_filtrados$gravidez_agrupada)
+
+
+
+# Visualizar a tabela de contingência
+cat("\n")
+cat("Tabela com os valores observados: O_ij\n")
+print(tabela_contingencia)
+cat("\n")
+# tabela idêntica à que foi gerada acima apenas table()
+
+
+# Teste Qui-Quadrado de Independência
+chisq.test(tabela_contingencia)
+# tudo maior que 5, exceto uma única célula = 2
+
+# Desapareceu o Warning:
+# Aproximação do qui-quadrado pode estar incorreta
+# como era esperado
+
+# X-squared = 5903.1, mesmo valor encontrado no teste acima
+# df = 4 = (nlin - 1)x(ncol - 1) = (5-1)(2-1) = 4
+# p-value < 0.00000000000000022
+
+cat("\n")
+cat("Tabela com os valores esperados: E_ij\n")
+chisq.test(tabela_contingencia)$expected
+cat("Nenhum deles é menor ou igual que 5.\n")
+cat("Só há uma casela menor ou igual  que 10.\n")
+```
+
+**Conclusão** do teste qui-quadrado.
+
+**Rejeitar a hipótese nula** de que `GESTACAO` e `GRAVIDEZ` são **independentes**.
+
+Isso **sugere que há uma associação significativa entre** `GESTACAO` e `GRAVIDEZ`.
+
+### **Interpretação**
+
+Então, ao nível de significância de $\alpha = 1\%$, **há indicação de associação entre os números de semanas de** `GESTACAO`, reagregada em 5 classes ("`<27`", "`28a31`", "`32a36`", "`37a41`" e "`42e>`") e o **tipo de** `GRAVIDEZ`, reagregada em 2 classes ("`única`" e "`dupla+`").
+
+Registra-se que, dentre todas as restrições para esta aplicação do teste do qui-quadrado clássico (duas *amostras independentes*, *sem variável de interferência* e *tamanho das duas amostras* n \>\> 40), a de ***valores esperados \> 5*** foi atendida após a reagreação de duas classes em uma próxima ou similar nas duas variáveis categóricas testadas, pois em ***apenas uma casela*** resultou **um valor \< 10**.
+
+Todavia, a restrição de que a *população alvo* fosse no mímino ***10 vezes maior que*** o *tamanho das amostras* (n~1~ = n~2~ = 65535), cf. [@vieira2022introBioStat , p. 192], *não* parece ter sido atendida para a população de todos os nascidos vivos no Município de São Paulo no ano de 2023.
+
+De todo modo mostra-se razoável que o ***número de semanas de gestação*** para uma gravidez única apresente mesmo alguma ***associação*** com ***tipo de gravidez***, pois no caso de gravidez `única` seria esperado que fisiologicamente o corpo da mãe seja menos solicitado que em uma gravidez `dupla+` (dupla, tripla ou mais).
+
+Só não se sabe a direção dessa associação, mas seria de supor-se que quanto maior o número de fetos em gestação mais o corpo da mãe seria solicitado e, talvez, uma possível resposta seria a diminuição do número de semanas de gestação.
+
+Uma primeira inspeção visual na tabela de valores Obervados, abaixo repetida, mostra que a moda para gravidez `única` caiu na classe de `37a41` semanas.
+
+Enquanto que a moda para gravidez `dupla+` caiu na classe de `32a36` semanas.
+
+O que parece tornar pelo plausível a cogitação ventilada.
+
+```{r}
+
+# Visualizar a tabela de contingência
+cat("\n")
+cat("Tabela com os valores observados: O_ij\n")
+print(tabela_contingencia)
+cat("\n")
+```
+
+Para uma tal cogitação outro teste de hipóteses teria de ser aplicado, mas isso foge ao escopo da questão.
+
+## Questão 4 - peso ao nascer x raça mães
+
+**Questão 4:** Verifique se há uma diferença estatisticamente significativa entre os pesos médios ao nascer (em gramas) dos recém-nascidos, de acordo com a raça/cor das mães. As variáveis utilizadas são: `PESO`, representando o peso ao nascer, e `RACACORMAE`, cujos níveis são: 1 – Branca, 2 – Preta, 3 – Amarela, 4 – Parda e 5 – Indígena.
+
+\vspace{0.2cm}
+
+Para essa análise, aplique a Análise de Variância (ANOVA) de um fator (adequada), verificando se o peso médio dos recém-nascidos difere significativamente entre os grupos de raça/cor das mães.
+
+\vspace{0.2cm}
+
+Caso a ANOVA aponte uma diferença significativa entre os grupos, realize um teste de comparações múltiplas adequado. Utilize o teste de Tukey se as variâncias forem homogêneas, ou o teste de Games-Howell caso as variâncias não sejam homogêneas, para identificar quais grupos raciais apresentam diferenças significativas entre os pesos médios dos recém-nascidos.
+
+\vspace{0.2cm}
+
+Interprete detalhadamente todos os resultados obtidos. Considere um nível de significância de $\alpha = 1\%$.
+
+### Teoria
+
+As opções para testar ***diferenças de médias*** de uma variável aleatórica numérica entre ***as k (k\>2) categorias de uma variável aleatória categórica*** são bem resumidas por [@Becker2015 , p. 458] no seu quadro abaixo.
+
+![Testes recomendados para testar a significância da relação entre duas variáveis e respectivos níveis de mensuração, principais suposições teóricas e procedimento alternativos](fig/Becker-testes-recomendados-quadro.jpeg){fig-align="center" width="561"}
+
+Considerando que `PESO`, representando o *peso ao nascer em gramas*, é uma ***variável quantitativa contínua***, `V2` no quadro acima.
+
+E `RACACORMAE` é uma ***variável categórica*** que apresenta k = 5 categorias (1 – `Branca`, 2 – `Preta`, 3 – `Amarela`, 4 – `Parda` e 5 – `Indígena`), `V1` no mesmo quadro de Becker.
+
+Então, seguindo o fluxo teórico do quadro de Becker, nota-se que a eleição de um teste de **ANOVA tradicional** fica subordinada a ***dois pressupostos***:
+
+> 1.  "`𝑉2` tem ***distribuição Normal nas categorias*** de `𝑉1` (atenuante: grandes amostras); \[normalidade deve ser verificada com teste de Shapiro-Wilk para n \< 30; no caso de grandes amostras, n \> 30, verificar variâncias pelo *teste de Levine* e, caso haja *heterocedasticidade*, aplicar Anova de Welch\]
+> 2.  `𝑉2` tem ***variâncias iguais*** nas categorias de `𝑉1`. \[*homocedasticidade* deve ser verificada com teste de Bartlett e, caso haja *heterocedasticidade*, aplicar Anova de Welch\]" [@Becker2015 , p. 458, quadro 12]
+
+Os acréscimos acima entre colchetes foram retirados de anotações em sala de aula síncrona (que é virtual) com a Profa. Dra. Tatiana.
+
+A figura a seguir, embora não faça referência à Anova de Welch, aplicável quando se verificar heterocedasticidade, mostrou-se também um bom resumo ou guia teórico:
+
+![Como descrever meus dados e quais testes estatísticos devo usar? (Gaspar, 2023)](fig/fluxo-Quais-testes-Hip-usar.JPG){fig-align="center"}
+
+Outra ilustração que se mostrou um bom resumo de fluxo para escolha de qual teste de hipótese aplicar foi encontra-se a seguir. Observa-se que também nela não se viu referência à Anova de Welch, aplicável quando se verificar heterocedasticidade.
+
+![Qual teste estatístico devo usar? (Mello, 2019; adptado de Jutta Schmid)](fig/TesteH-qul-fazer.jpeg){fig-align="center" width="466"}
+
+Após alguma pesquisa na web encontrou-se a seguinte *figura resumo para árvores de decisão* na forma de *fluxograma* que faz ***referência à expressa*** Anova de Welch, aplicável quando se verificar heterocedasticidade. Que também mostrou boa utilidade e confiabilidade.
+
+![Fluxograma para Testes de Hipótese para K amostras (K \> 2): parte extraída de Métodos Quantitativos em Medicina Veterinária (USP, 2017).](fig/testesH-k-Amostras.JPG){fig-align="center"}
+
+### Inspecionar e Transformar
+
+E `RACACORMAE` é uma ***variável categórica*** que apresenta k = 5 categorias (1 – `Branca`, 2 – `Preta`, 3 – `Amarela`, 4 – `Parda` e 5 – `Indígena`), `V1` no mesmo quadro de Becker.
+
+Variável categórica `RACACORMAE`, apresenta k = 5 categorias, que segundo o Dicionário de Dados representariam o "Tipo de raça e cor da mãe":
+
+-   1 – `Branca`,
+-   2 – `Preta`,
+-   3 – `Amarela`,
+-   4 – `Parda` e
+-   5 – `Indígena`.
+-   \[9 – `Ignorado`\] foi encontrado a despeito de não previsto no dicionário.
+
+Muito embora armazeanda como tipo `char` – *character*, será transformada em tipo \<`fctr`\>, não ordinal.
+
+```{r}
+
+# RACACORMAE
+
+table(nasc_vivo_M.SP$RACACORMAE,
+      useNA = "always")
+#       1     2     3     4     5     9  <NA> 
+#   31454  6700   584 26694    80     6    17
+# Ou seja, apresentou 6 classes,
+# Apresentou o campo 9 - Ignorado, com 6 obs.
+# e apresentou 17 NA's
+
+# Tamanho da amostra:
+length(nasc_vivo_M.SP$RACACORMAE) # 65535
+
+# Verificar se há código "9" - Ignorado.
+# Resultado: há esse código "9" na variável RACACORMAE em 6 obs.
+nasc_vivo_M.SP$RACACORMAE[nasc_vivo_M.SP$RACACORMAE == "9"]
+length(nasc_vivo_M.SP$RACACORMAE[nasc_vivo_M.SP$RACACORMAE == "9"])
+# Retornou vetor com 23: 6 Ignorados e 17 NA's
+```
+
+Ou seja, apresentou 6 classes, ao invés de 5, pois apresentou o campo `9 - Ignorado`, com 6 observações.
+
+Além disso apresentou 17 `NA`'s.
+
+São, assim, 6 Ignorados e 17 `NA`'s, que serão reunidos como 23 `NA`'s; deverão ser desconsiderados da amostra antes de aplicar o teste.
+
+Muito embora armazeanda como tipo `char` – *character*, será transformada em tipo \<`fctr`\>, não ordinal.
+
+```{r}
+
+# Substituir código "9" - Ignorado, por NA.
+# Muito embora isso misture esses 6 cód. Ignorado com 17 NA's.
+# Resultado: 23 NA's
+nasc_vivo_M.SP$RACACORMAE[nasc_vivo_M.SP$RACACORMAE == "9"] <- NA
+
+# Transformar RACACORMAE de <char> para categórica não ordinal <fctr>:
+# k = 5 categorias (1 – Branca, 2 – Preta, 3 – Amarela, 4 – Parda e 5 – Indígena)
+nasc_vivo_M.SP$RACACORMAE <- factor(nasc_vivo_M.SP$RACACORMAE,
+                                    levels = c("1",
+                                               "2",
+                                               "3",
+                                               "4",
+                                               "5"
+                                               ),
+                                    labels = c("branca",
+                                               "preta",
+                                               "amarela",
+                                               "parda",
+                                               "indígena"
+                                               ),
+                                    ordered = FALSE)
+
+# Tabela de frequência absoluta com NA's dessa variável factor:
+table( as.character(nasc_vivo_M.SP$RACACORMAE),
+       useNA = "always") # Como esperado, há 23 NA's
+
+n_branca <- table( as.character(nasc_vivo_M.SP$RACACORMAE),
+       useNA = "always")["branca"]
+n_tot_RACACORMAE <- sum( table( as.character(nasc_vivo_M.SP$RACACORMAE),
+                                useNA = "always"),
+                         na.rm = TRUE)
+
+# Tamanho n1 da amostra dessa primeira variável categórica:
+n1 <- length(nasc_vivo_M.SP$RACACORMAE)
+n1 # 65535
+
+n1_semNA <- length(nasc_vivo_M.SP$RACACORMAE[!is.na(nasc_vivo_M.SP$RACACORMAE)])
+n1_semNA # 65512
+
+# número de NA's = 23 (eram 6 Ignorados e 17 NA's)
+n1 - n1_semNA # 23
+
+n_branca / n_tot_RACACORMAE
+```
+
+Um gráfico de barras horizontais de `RACACORMAE` fornece um bom resumo descritivo da sua situação.
+
+```{r}
+
+nasc_vivo_M.SP |> 
+  select(
+    RACACORMAE
+    ) |> 
+  ggplot( aes(y = (RACACORMAE) ) ) + # barras no eixo y (default é o eixo x)
+  geom_bar() + # é exibida na mesma ordem das etiquetas de y
+  geom_point( x    = n_branca / n_tot_RACACORMAE,
+              y    = 1,
+              size = 5,
+              color = "blue") +
+  # scale_x_continuous(breaks = seq(0, 60000, 20000) ) +
+  # scale_y_continuous(breaks = NULL ) +
+  labs(title    = "Gráfico de Barras: classes de raça/cor da mãe (k = 6)\nMunicípio de São Paulo (nascidos vivos)",
+       subtitle = "SINASC, ano 2023 (n = 65535 obs.)",
+       x        = "Frequência absoluta de bebês nascidos vivos",
+       y        = "",
+       caption  = "1. Fonte: dados secundários coletados do Sistema de Informações sobre Nascidos Vivos (SINASC).\n2. Moda = categoria branca (ponto de cor azul), com 48.0% das ocorrências, é o de maior frequência.\n3. Obs. ignoradas (23 NA's) não foram consideradas no cálculo acima, pois são pouco representativas.\n4. Categoria indígena (80 obs.) também é pouco representativa e poderia ser agrupada em amarela.\n5. Outro agrupamento ususal poderia ser agregar parda e preta como negra, para comparar com branca."
+       )
+```
+
+O mesmo gráfico acima, mas em ***ordem decrescente*** das ***frequências absolutas*** de ***cada categoria*** da ***variável categórica*** `RACACORMAE` (fctr): cf. [RPubs](https://www.rpubs.com/rubengura/factor_ordered_frequency "How to order a factor variable by frequency").
+
+```{r}
+
+# criar tabela de frequEncias das categorias
+tab_freq <- nasc_vivo_M.SP %>% group_by(RACACORMAE) %>% summarise(freq = n())
+as.data.frame(tab_freq)
+
+# ordenar os níveis de RACACORMAE pelas frequencias de cada nível
+nasc_vivo_M.SP$RACACORMAE_ord <- 
+  factor(nasc_vivo_M.SP$RACACORMAE,
+         levels = tab_freq$RACACORMAE[order(tab_freq$freq, decreasing = T)])
+str(nasc_vivo_M.SP$RACACORMAE_ord)
+
+nasc_vivo_M.SP |> 
+  select(
+    RACACORMAE_ord
+    ) |> 
+  ggplot( aes(y = (RACACORMAE_ord) ) ) + # barras no eixo y (default é o eixo x)
+  geom_bar() + # é exibida na ordem inversa das frequências absolutas de y
+  geom_point( x    = n_branca / n_tot_RACACORMAE,
+              y    = 1,
+              size = 5,
+              color = "blue") +
+  # scale_x_continuous(breaks = seq(0, 60000, 20000) ) +
+  # scale_y_continuous(breaks = NULL ) +
+  labs(title    = "Gráfico de Barras ordenadas: classes de raça/cor da mãe (k = 6)\nMunicípio de São Paulo (nascidos vivos)",
+       subtitle = "SINASC, ano 2023 (n = 65535 obs.)",
+       x        = "Frequência absoluta de bebês nascidos vivos",
+       y        = "",
+       caption  = "1. Fonte: dados secundários coletados do Sistema de Informações sobre Nascidos Vivos (SINASC).\n2. Moda = categoria branca (ponto de cor azul), com 48.0% das ocorrências, é o de maior frequência.\n3. Obs. ignoradas (23 NA's) não foram consideradas no cálculo acima, pois são pouco representativas.\n4. Categoria indígena (80 obs.) também é pouco representativa e poderia ser agrupada em amarela.\n5. Outro agrupamento ususal poderia ser agregar parda e preta como negra, para comparar com branca."
+       )
+```
+
+### Teste Anova de um fator
+
+Após essas transformações na variável categórica `RACACORMAE` seguir-se-á o seguinte ***fluxo (n \> 30)*** para uma adequada aplicação de um teste Anova da variável numérica `PESO` nas `k = 6` categorias daquela.
+
+![Fluxograma para um teste de Anova: fonte anotações em aula (Tatiane, 2024)](fig/Anova%20testes.jpg){fig-align="center" width="636"}
+
+Antes de aplicar um teste de ANOVA, preé ciso **verificar** se os **pressupostos** para sua utilização estão sendo **violados**.
+
+Primeiramente, realizar **um teste de normalidade para cada grupo da variável categórica**, ou seja,
+
+H~0~: os dados vieram de uma distribuição normal.
+
+*ad versus*
+
+H~1~: os dados *não* viram de uma distribuição normal.
+
+Considerando que o tamanho da amostra da variável `PESO` na categoria `indígena`, com 80 observações (menor dessas frequências), é ***maior que 30***, então *não será necessário realizar um teste para verificar a normalidade dessa variável quantitativa*, pois o Teorema Central do Limite — TCL garante a convergência da distribuição amostral das suas médias amostrais em todas as classes de `RACACORMAE`.
+
+Uma verificação visual através dos histogramas das distribuições de `PESO` em cada uma das 5 classes informativas de `RACACORMAE`, ou seja, com exclusão dos `NA`'s.
+
+```{r}
+
+## Histograma comparativo: Peso x RACACORMAE
+
+#install.packages("lattice")    # Remover o # para instalar, caso necessário
+library(lattice)                # Habilita o pacote
+
+# Excluir os NA's
+# 
+nasc_vivo_M.SP |> 
+  select(
+    PESO,
+    RACACORMAE_ord
+  ) |> 
+  filter(
+    !is.na(RACACORMAE_ord)
+  ) -> dataframe_semNA
+
+# transformar: peso de g para Kg
+######## ~var_quantit | var_qualit     , dataframe filtrado
+histogram(~ PESO/1000 | RACACORMAE_ord , dataframe_semNA,
+          type = "density",      # para histograma com densidade de frequências
+          breaks = seq(0, 7, 1), # intervalos de classes
+          right = FALSE,         # para intervalos de classes fechados à esquerda
+          xlim  = c(0, 7),       # limites eixo x: 0 a 7 Kg
+          main = 'Histograma comparativo: Peso x Raça/cor da Mãe', # Título
+          ylab = 'Densidade',                           # rótulo eixo y
+          xlab = 'Peso (kg)',                           # rótulo eixo x
+          between = list(x = 1, y = 1),   # cria espaços entre os gráficos
+         # index.cond = list(c(2, 1)),    # se precisar reordenar gráficos: M x F
+          layout = c(5, 1),               # disposição dos gráficos
+          scales = list(alternating = FALSE, # alternating = F faz aparecer eixo
+#                                              em todos os gráficos
+                        x = list( at = seq(0, 7, 1))) # controla os ticks do eixo x
+         )
+```
+
+De todo modo decidiu-se aplicar um ***teste Shapiro-Wilk*** (até 5000 obs.) ou um *teste K-S* de **Kolmogorov-Smirnov** (n \> 5000 obs.), não paramétricos, para verificar a *normalidade* da variável `PESO` em todas as classes de `RACACORMAE`, em especial na `índígena`, só para verificar se seria ou não normal.
+
+> "Há uma versão do teste KS, chamada teste de Lilliefors, que testa a normalidade da distribuição comparando os dados com uma distribuição normal ajustada, como anteriormente, mas com uma correção para dar uma aproximação mais precisa da distribuição do teste estatístico." (cf. [UEL](https://www.uel.br/projetos/experimental/pages/arquivos/Kolmogorov-Smirnov.html#:~:text=%C3%A9%20usada%20para%20testar%20a,)%E2%89%A0S(x). "Teste de Kolmogorov-Smirnov")).
+
+Abaixo os testes em todas as classes de `RACACORMAE` (exceto `NA`).
+
+```{r}
+
+# Teste de normalidade
+# Classe: indígena
+shapiro.test(nasc_vivo_M.SP$PESO[nasc_vivo_M.SP$RACACORMAE == "indígena"])
+# p-value = 0.03616
+
+# Classe: amarela
+shapiro.test(nasc_vivo_M.SP$PESO[nasc_vivo_M.SP$RACACORMAE == "amarela"])
+# p-value = 0.0000000002107
+
+# Classe: preta
+# shapiro.test(nasc_vivo_M.SP$PESO[nasc_vivo_M.SP$RACACORMAE == "preta"])
+# retornou erro: sample size must be between 3 and 5000
+# teste de Kolmogorov-Smirnov (ou versão Lilieforts): para n > 5000
+ks.test(nasc_vivo_M.SP$PESO[nasc_vivo_M.SP$RACACORMAE == "preta"],
+        "pnorm",
+        mean(nasc_vivo_M.SP$PESO[nasc_vivo_M.SP$RACACORMAE == "preta"],
+             na.rm = TRUE),
+        sd  (nasc_vivo_M.SP$PESO[nasc_vivo_M.SP$RACACORMAE == "preta"],
+             na.rm = TRUE)
+        )
+# p-value < 0.00000000000000022
+# Warning in ks.test.default(nasc_vivo_M.SP$PESO[nasc_vivo_M.SP$RACACORMAE ==  :
+#   ties should not be present for the Kolmogorov-Smirnov test
+
+
+# Classe: parda
+# shapiro.test(nasc_vivo_M.SP$PESO[nasc_vivo_M.SP$RACACORMAE == "parda"])
+# retornou erro: sample size must be between 3 and 5000
+# teste de Kolmogorov-Smirnov (ou versão Lilieforts): para n > 5000
+ks.test(nasc_vivo_M.SP$PESO[nasc_vivo_M.SP$RACACORMAE == "parda"],
+        "pnorm",
+        mean(nasc_vivo_M.SP$PESO[nasc_vivo_M.SP$RACACORMAE == "parda"],
+             na.rm = TRUE),
+        sd  (nasc_vivo_M.SP$PESO[nasc_vivo_M.SP$RACACORMAE == "parda"],
+             na.rm = TRUE)
+        )
+# p-value < 0.00000000000000022
+# Warning in ks.test.default(nasc_vivo_M.SP$PESO[nasc_vivo_M.SP$RACACORMAE ==  :
+#   ties should not be present for the Kolmogorov-Smirnov test
+
+# Classe: branca
+# shapiro.test(nasc_vivo_M.SP$PESO[nasc_vivo_M.SP$RACACORMAE == "branca"])
+# retornou erro: sample size must be between 3 and 5000
+# teste de Kolmogorov-Smirnov (ou versão Lilieforts): para n > 5000
+ks.test(nasc_vivo_M.SP$PESO[nasc_vivo_M.SP$RACACORMAE == "branca"],
+        "pnorm",
+        mean(nasc_vivo_M.SP$PESO[nasc_vivo_M.SP$RACACORMAE == "branca"],
+             na.rm = TRUE),
+        sd  (nasc_vivo_M.SP$PESO[nasc_vivo_M.SP$RACACORMAE == "branca"],
+             na.rm = TRUE)
+        )
+# p-value < 0.00000000000000022
+```
+
+Pelo 1º teste Shapiro-Wilk acima, p-value = 0.03616 \> 1%, ***não*** se rejeita a hipótese nula de normalidade na menor classe `indígena`. Tanto melhor.
+
+Pelo 2º teste Shapiro-Wilk, p-value = 0.0000000002107, e pelos demais 3 testes de Kolmogorov-Smirnov, p-value \< 0.00000000000000022, todos \< 1%, ***rejeita-se*** a ***hipótese nula de normalidade***. O que não é problemático em razão de serem todas essas demais categorias grandes amostras (n\>\>30).
+
+Passo seguinte é a verificação de ***homocedasticidade*** da variável `PESO` em todas as classes de `RACACORMAE`, o que será feito pela aplicação de um ***teste de Levene***.
+
+Um gráfico de *boxplots*, lado a lado, ajudará na interpretação desse teste e dos subsequentes testes de Anova e o adequado teste *pos hoc*.
+
+```{r}
+
+nasc_vivo_M.SP |> 
+  select(
+    RACACORMAE_ord,
+    PESO
+    ) |> 
+  ggplot( aes(y = RACACORMAE_ord, x = PESO ) ) +
+  geom_boxplot() + #  é exibida na ordem inversa das frequências absolutas de y
+  geom_point( x    = n_branca / n_tot_RACACORMAE,
+              y    = 1,
+              size = 5,
+              color = "blue") +
+  # scale_x_continuous(breaks = seq(0, 60000, 20000) ) +
+  # scale_y_continuous(breaks = NULL ) +
+  labs(title    = "Gráfico de Barras ordenadas: classes de raça/cor da mãe (k = 6)\nMunicípio de São Paulo (nascidos vivos)",
+       subtitle = "SINASC, ano 2023 (n = 65535 obs.)",
+       x        = "Frequência absoluta de bebês nascidos vivos",
+       y        = "",
+       caption  = "1. Fonte: dados secundários coletados do Sistema de Informações sobre Nascidos Vivos (SINASC).\n2. Moda = categoria branca (ponto de cor azul), com 48.0% das ocorrências, é o de maior frequência.\n3. Obs. ignoradas (23 NA's) não foram consideradas no cálculo acima, pois são pouco representativas.\n4. Categoria indígena (80 obs.) também é pouco representativa e poderia ser agrupada em amarela.\n5. Outro agrupamento ususal poderia ser agregar parda e preta como negra, para comparar com branca."
+       )
+```
+
+Quanto maior a frêquencia observada em cada classe, ela se encontra *mais dispersa* nas extremidades inferior (maior Amplitude do 1º Quartil nas classes maiores, localizadas na parte inferior do gráfico acima) ou superior (maior Amplitude do 4º Quartil nas classes maiores, localizadas na parte inferior do gráfico acima) das respectivas distribuições de frequência. Ou seja, observa-se um *aumento dessa dispersão dos dados* *nas duas caudas*, isto é, no 1º quartil (cauda à esquerda) e no 4º quartil (cauda à direita), à medida em que as distribuições de frequência localizem-se cada vez mais na parte inferior do gráfico: plotado em ***ordem decrescente*** da ***frequência absoluta das classes*** indicadas no eixo y.
+
+Uma observação mais focada na amplitude do 2º Quartil e na amplite do 3º Quartil, bem como na AIQ = Q3 - Q2, exibe caixas que, com exceção do grupo dos `NA`'s, são aproximadamente do mesmo tamanho: apenas o grupo `indígena`, com a menor frequencia absoluta observada (80 obs.), aresentou leve assimetria à esquerda.
+
+Assim, ao menos visualmente, haveria uma expectativa de significativa *heterogeneidade* de variâncias, em razão da ocorrência de *outliers* em todas as classes (exceto `NA`'s) e da amplitude crescente do 1º e do 4º Quartil à medida em que a classe aumenta sua frequência absoluta (seu tamanho), ou seja, as ***variâncias aumentam*** em razão do *desbalanceamento* das classes; de modo que seria esperado que pelo menos a classe `indígena` mostre *variância significativamete desigual* à variância da classe `branca`.
+
+Mas somente um teste estatístico é o meio apto e adequado para apoio à uma tomada de decisão como essa.
+
+Aplicar ***teste de Levene*** — adequado para distribuições de dados não normais— para **verificar a homogeneidade das variâncias dos grupos**. Neste caso, temos que a hipótese nula é:
+
+$H_0$: As variabilidades no PESO dos nascidos vivos *são iguais* entre as diferentes classes de raça/cor das mães.
+
+$H_1$: As variabilidades no PESO dos nascidos vivos ***não*** *são iguais* entre as diferentes classes de raça/cor das mães.
+
+Fixar, ***antes***, o nível de significância: $\alpha = 1\%$ (conforme enunciado da questão).
+
+```{r}
+
+# Pacote necessário
+library(car)
+
+# Teste de Levene
+leveneTest(PESO ~ RACACORMAE, data = nasc_vivo_M.SP)
+#
+# Levene's Test for Homogeneity of Variance (center = median)
+#          Df F value     Pr(>F)    
+# group     4  5.9864 0.00008206 ***
+#       65506                       
+# ---
+# Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+#
+# n = 65535 obs - 23 NA's = 65512 obs consideradas no teste
+# são     4 graus de liberdade para os grupos: gl = k - 1 = 5 - 1 = 4
+# são 65506 graus de liberdade para as observações: n = 65512 - k - 1 = 65506
+```
+
+Ao **nível de 1%** (até mesmo 0.1%)**, rejeitamos a hipótese nula de homogeneidade das variâncias** nos diferentes grupos.
+
+Ou seja, [**apoiamos**]{.underline} a **hipótese alterantiva de heterogeneidade das variâncias** nos diferentes grupos, ou seja, o caso é ***heterocedasticidade***.
+
+Portanto, ***não*** se pode seguir a análise e realizar a **ANOVA Tradicional**.
+
+Então será preciso aplicar uma **ANOVA de Welch**.
+
+`{r}  # ANOVA de Welch oneway.test(PESO ~ RACACORMAE,             data = nasc_vivo_M.SP,             var.equal = FALSE)  # as variâncias não são iguais  # resumo dos resultados #    One-way analysis of means (not assuming equal variances) # # data:  PESO and RACACORMAE # F = 6.7232, num df = 4.00, denom df = 553.91, p-value = 0.00002743}`
+
+A **ANOVA de Welch**, com , p-value = 0.00002743 \< 1%, indica a **rejeição da hipótese nula**, ao **nível de significância de** $\alpha = 1\%$.
+
+Logo, chegamos à conclusão de que **há indícios de que ao menos uma das médias dos** `PESOS` **dos nascidos vivos no Município de São Paulo em 2023 é diferente entre os k = 5 grupos de** `RACACORMAE`.
+
+Resta saber quais desses grupos apresentam e quais não apresentam diferentes médias.
+
+Para isso o teste adequado, pois é caso de heterocedasticidade nesses 5 grupos, é o **teste de Games-Howell**.
+
+Ou seja, usar **um teste de comparação múltipla** chamado **teste *post-hoc* de Games-Howell** (GAMES & HOWELL, 1974).
+
+Este teste é **uma alternativa ao teste de Tukey, quando os grupos têm variâncias desiguais**, ou seja, **quando o pressuposto de homogeneidade das variâncias (homocedasticidade) é violado**.
+
+Fixar, ***antes***, o nível de significância: $\alpha = 1\%$ (conforme enunciado da questão).
+
+No R, o ***teste de Games-Howell***, pode ser realizado da seguinte forma:
+
+```{r}
+
+# Pacote necessário
+library(PMCMRplus)
+
+# Teste de Games-Howell
+summary(gamesHowellTest(PESO ~ RACACORMAE,
+                        data = nasc_vivo_M.SP,
+                        conf.level = 0.99, # nível de significância = 1%
+                        detailed   = FALSE)
+        )
+
+# Resultados significativos do teste:
+# q value   Pr(>|q|)
+#   <dbl>   <chr>
+# preta - branca == 0	-6.916	0.000010138	***
+# parda - preta == 0	5.683	0.00056434	***
+```
+
+### Interpretação
+
+Olhando para a tabela do resultado do teste acima, vê-se que ***apenas duas categorias apresentaram médias significativamente diferentes para um nível de significância de 1%***:
+
+-   classes q value Pr(\>\|q\|)
+-   preta - branca == 0 -6.916 0.000010138 \*\*\* (nível de significância \<= 0,1%)
+-   parda - preta == 0 5.683 0.00056434 \*\*\* (nível de significância \<= 0,1%)
+
+Pois em ambos **rejeitou-se** a **Hipótese nula** de **diferença de PESO = 0** (igual a zero) entre as classes: `preta-branca` e `parda-preta`.
+
+Ou seja, ***há evidências*** para, em ***um nível de significância de 1%***, [**apoiar**]{.underline} a **Hipótese alterantiva** de **diferença das médias da variável** $PESO_{preta} \ne PESO_{branca} \text{  e  } PESO_{preta} \ne PESO_{parda}$ somente entre as seguintes classesda variável categórica `RACACORMAE`: `preta-branca` e `parda-preta`.
+
+O valor negativo de `q-value` é indicativo de que **variável** $PESO_{preta} < PESO_{branca}$.
+
+O valor positivo de `q-value` é indicativo de que **variável** $PESO_{parda} > PESO_{preta}$, o que é equivalente a dizer que **variável** $PESO_{preta} < PESO_{parda}$.
+
+Logo, a categoria `preta` é a que apresenta distinção, para menor, do seu peso médio de nascidos vivos em relação à duas outras categorias: a `branca` e a `parda`, sendo que estas, todavia, não se distinguem.
+
+Observe-se que [***não foi rejeitada***]{.underline}, por exemplo, a **Hipótese nula** de [**igualdade**]{.underline} **das médias da variável** $PESO_{parda} = PESO_{branca}$; o mesmo ocorrendo em todas as demais combinações de raça/cor da mãe, que sejam distintas das duas situações enumeradas acima.
+
+Cientes desses resultados, vamos aplicar um teste de Tukey ***apenas para conhecer o valor das diferenças*** entre essas médias de pesos para os dois casos listados acima.
+
+```{r}
+
+# ANOVA tradicional
+resultado_anova <- aov(PESO ~ RACACORMAE,
+                       data = nasc_vivo_M.SP,
+                       conf.level = 0.99)
+
+# Teste de Tukey para comparações múltiplas
+tukey <- TukeyHSD(resultado_anova,
+                  conf.level = 0.99)
+
+# Visualizar os resultados
+tukey
+
+# Resultado do teste aplicado a PESO nas 5 classes de:
+# $RACACORMAE
+#                        diff        lwr        upr     p adj
+# preta-branca     -37.568020  -62.15392 -12.982116 0.0000065
+# parda-preta       31.499452    6.53149  56.467415 0.0003874
+```
+
+**Chegamos às mesmas conclusões no teste de Tukey** — que aquelas entre os grupos [***adequadamento analisados***]{.underline} pelo ***teste de Games-Howell*** (mais acima) —, de modo que **apenas os seguintes grupos apresentaram uma diferença significativa no** `PESO` **de nascidos vivos**, ***para um nível de significância de 1%***:
+
+-   classes diff lwr upr p adj
+-   preta-branca -37.568020 -62.15392 -12.982116 0.0000065 \*\*\* (NS \<= 0,1%)
+-   parda-preta 31.499452 6.53149 56.467415 0.0003874 \*\*\* (NS \<= 0,1%)
+
+Vamos usar o teste acima ***apenas*** para olhar para a diferença entre as médias dos `PESOS` dos nascidos vivos em gramas (g) para completar com a seguinte interpetação:
+
+-   Diferença média de `PESO`\_{preta-branca}: -37,5 g, significa que o *peso médio* dos nascidos vivos das mães da `RACACORMAE` da classe `preta` que deram à luz é **37,5 g menor** que o *peso médio* dos nascidos vivos das mães da `RACACORMAE` da classe `branca` deram à luz no Município de São Paulo, no ano de 2023.
+
+-   Diferença média de `PESO`\_{parda-preta}: +31,5 g, significa que o *peso médio* dos nascidos vivos das mães da `RACACORMAE` da classe `preta` que deram à luz é **31,5 g menor** que o *peso médio* dos nascidos vivos das mães da `RACACORMAE` da classe `parda` deram à luz no Município de São Paulo, no ano de 2023.
+
+**Conclui-se**, assim, que, para um nível de significância ou Erro Tipo I de $\alpha = \%$, apenas o `PESO` médio da classe `preta` é ***menor que*** o `PESO` médio das classes `branca` (37,5 g a mais) e `parda` (31,5 g a mais); não se distinguindo aquele, nem estes, do peso médio de todas as demais categorias, pois todas as outras comparações apresentaram valores-$p$ maiores que 1% no ***teste de Games-Howell***, mais acima aplicado e analisado.
+
+Com o que finaliza-se este estudo dirigido.

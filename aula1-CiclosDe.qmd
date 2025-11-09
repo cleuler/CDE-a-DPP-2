@@ -1,0 +1,413 @@
+# Aula 1 - Ciclos de *Data Science* e de Estatística {#sec-Ativ-Avaliativa-Resol}
+
+**Atividades**: ***importar*** (leitura), ***armazenar*** (salvar; enclausurar), ***transformar*** (criar novas variáveis numéricas e categóricas), ***visualizar*** (descrever, plotar, capturar eventuais padrões), ***modelar*** (propor modelos explicativos) e ***testar*** (realizar testes de Hipótese) em relação aos dados primários levantados no corpus n. 3 desta pesquisa, que contém as ocorrências da DPAI Goiânia associadas aos jovens que vieram a obito: arquivo `obitjcsv.csv` , que se encontra na pasta `out` de nosso projeto `R`. Ou seja, estamos seguindo o ***conceito*** de **Ciclo da Ciência de Dados** [@Wickham2017R]:
+
+![Ciclo da Ciência de Dados, suas 3 fases: 1 - *Wrangle* (importar, organizar e transformar), 2 - *Understand* (Transformar, Visualizar e Modelar; buscar melhor ajuste) e 3 - *Communicate* (relatar) and *Replicate* (automatizar; app)](fig/2-data-science-wrangle-01.png){fig-align="center"}
+
+A fase ***Wrangle*** consome cerca de **80%** do tempo de uma pesquisa empírica [@Wickham2017R, p. ix, xi, 117]. Essa tarefa é uma verdadeira luta, que não costuma nos agradar.
+
+O mesmo ***conceito*** de **Ciclo da Ciência de Dados** (cf. [Curso-R](https://livro.curso-r.com/livro-curso-r)), agora associado aos principais `pacotes` do `R` que auxiliam cada fase ou etapa dentro de cada fase: notamanete o pacote `tidyverse`.
+
+[![O tidyverse é um pacote guarda-chuva que consolida uma série de ferramentas que fazem parte do ciclo da ciência de dados. Fazem parte do {tidyverse} os pacotes {ggplot2}, {dplyr}, {tidyr}, {purrr}, {readr}, entre muitos outros, como é possível observar na figura.](fig/Conceito-Pacotes-R-ciclo-ciencia-de-dados.png){fig-alt="Conceito de Ciclo da Ciência de Dados" fig-align="center"}](https://livro.curso-r.com/4-2-tidyverse.html)
+
+Conferir uma ***cheat sheet*** com pacotes em **R** bem mais completa em: <https://www.business-science.io/r-cheatsheet.html>.
+
+As habilidades que, assim, espera-se de um ***cientista de dados*** são assim resumidas [@grolemund2014hands]:
+
+![Three Core Skill sets of Data Science (GROLEMUND, 2017, p. 185)](fig/hopr_fig-10-04-3Core-SkillSets-OfDataScience_CP-DC-SR-p185-grolemund-2014.png){fig-align="center"}
+
+Já a Estatística, melhor é referir-se à Probabilidade e Estatística, é conceituada como: ramo da Matemática aplicada que reune ***um conjunto de métodos*** para:
+
+-   **planejar** estudos observacionais e experimentos aleatorizados em qualquer área do conhecimento científico, notadamente para pesquisas empíricas;
+-   **coletar** dados **válidos** e **fidedignos**;
+-   **organizar**,
+-   **resumir**,
+-   **apresentar** (listas, tabelas, diagramas, fórmulas, gráficos, grafos etc),
+-   **analisar**,
+-   **formular** e **testar** ***hipóteses*** e
+-   **interpretar** conjuntos de **dados** e **informações**;
+-   **elaborar** conclusões baseadas em **evidências** \[dados e informações válidos e fidedignos\] para
+-   **apoiar** tomadas de **decisão** e para
+-   **gerir** ou **controlar** um conjunto de **ações** em curso: qualidade, escala, cobertura, custos financeiros, eficiência, eficácia, efetividade etc. por meio de indicadores e de índices cuja aplicabilidade, comparabilidade, consistência e difusão possam ser testadas e validadas por uma comunidade de experts..
+
+O Professor João Luiz Becker [@Becker2015] promove uma clara conceituação e distinção entre dados e informações e ilustra o ciclo em que a coleta e extração delas insere-se num processo mais amplo de obtenção de conhecimento, que prossegue e passa pela decisão e pela ação.
+
+![](fig/Dados-Informacao-Decisao-Acao-Becker-fig11-p37-01.JPG){fig-align="center"}
+
+A seguir a ideia de ciclo da Estaística inferencial, que, após uma boa análise de Estatística Descritiva e Exploratória, busca chegar a conclusões para toda a população amostrada a partir de ***uma amostra probabilística*** válida dela coletada.
+
+![Ciclo da Inferência ou indução Estatística.](fig/inferencia.png){fig-align="center"}
+
+Agora uma ilustração que faz uma triangulação entre Automação (Processamento de Dados), Estatística (Validade) e o **Domínio** em que aquelas serão aplicadas (Direito & Políticas Públicas no nosso caso).
+
+![Automação (Programação), Validade (Probabilidade e Estatística) e Conhecimento no domínio (Dir.&PP's) dessas duas aplicações.](fig/Automation_Validity_Intuition_DataScience.png){fig-align="center"}
+
+Tudo isso casa com um mais amplo de **Conceito Ciclo da Ciência**, cujo formato costuma ser designado como ***Diamond Shape*** [@Donovan2019-ug , p. 274-275]:
+
+![Conceito de Ciclo da Ciência na forma de um Diamond Shape (DONOVAN; MICKEY, 2019, p. 274-275))](fig/DiamondShape-Donovan.jpg){fig-alt="Ciclo da Ciência" fig-align="center" width="628"}
+
+Uma das modalidades de conceituar e aplicar a Estatística é pela denominada Estatística bayesiana, ou seja, aquela apoiada no **conceito** de probabilidade condicional e no teorema de Bayes, ilustrado na figura a seguir:
+
+![Teorema de Bayes para testar um par de Hipóteses (Ho: \~A e Ha: A) com suas probabilidades *a priori* mediadas e atualizadas por uma coleta de dados B que permite inferir suas respectivas probabilidades *a posteriori*. Que pode ser reiterado com novas coletas de dados C, D, ...](fig/fig5.4_BayesTheorem.JPG){fig-align="center"}
+
+É importante fixar os principais conceitos que serão trabalhados nesta disciplina **DSE-a-DPP**, o que reclama incursionar em conceitos simples de Estatística Básica, como: média, desvio padrão, mediana, Amplitude Interquartil, correlação, regressão etc.
+
+A ferramenta ***statkey*** é um bom aplicativo *free on line* para exercitar esses conceitos. Experimente ela com nosso ***data set*** já organizado `obitjcsv.csv`, que se encontra na pasta `out` de nosso Projeto `CDE-a-DPP.Rproj`; clique aqui: <https://www.lock5stat.com/StatKey/index.html> para acessá-la. No plano de ensino a diversas outras.
+
+Mãos à obra pessoal, salientando que as próximas 2 fases de **AED** (Análise Exploratória Descritiva) e de **AEI** (Análise Exploratória Inferencial), que demandarão os **20%** restante do tempo de uma pesquisa, costumam ser-nos bem *mais prazerosas*.
+
+Nessa nova fase, bem mais atraente, o objetivo é explorar os dados em busca do reconhecimento de padrões perceptíveis (cuidado com a possibilidade do *erro percepcional*).
+
+*Resumos dos dados* são muito úteis: média e desvio padrão; mediana e AIQ (Amplitude Interquartil); resumo dos 5 números, coeficiente de variação, assimetria, curtose etc.
+
+Gerar vários gráficos (histogramas, *boxplot*, pizza, barras, colunas, dispersão, diagrama de ramo e folha etc.) que permitam essa ***visualização*** e ***captura de padrões*** para cada variável observada, a depender do tipo de cada qual.
+
+Bem como para investigar possibilidade de ***associação*** entre elas: a depender da combinação de tipos de cada uma delas, por meio de ***testes estatísticos*** formais.
+
+Gerando tabelas de dupla entrada ou de contigência, quando ambas forem categóricas, do tipo **factor** \<`fctr`\>.
+
+Todavia, todas essas possibilidades de recorrer à *Data Science* e à Probabilidade e Estatística, no nosso caso, tomarão por domínio a interface do Direito e das Políticas Públicas.
+
+De modo que, para guardar um elemento comum com os dessas duas Ciências matemáticas aplicadas, buscou-se evidenciar também uma ideia de **ciclo do Direito e das Políticas Públicas**, ilustrados nas figuras a seguir.
+
+Primeiro uma possibilidade de Ciclo do Direito [@Neves2021-colPrincPP] segundo uma *perspectiva retórica* e considerando a distinção entre significantes do passado e significados do futuro quanto aos diversos símbolos linguísticos que compõem os dispositivos normativos, que não se confudem com um conceito de norma, que só se alcança com sua decisão e aplicação presente a um caso concreto somente depois que alcançar a definitividade de coisa julgada [@Adeodato2014-UTRNJDO].
+
+![Um Ciclo do Direito](fig/Dois%20Mistérios.png){fig-align="center"}
+
+Já o conceito de Ciclo de Políticas Públicas é bem difundido e pode ser resumido nas duas figuras a seguir, não se podendo contentar com sua idealização, mas também considerar as vicissitudes que perpassam suas práticas (Jannuzzi, 2024):
+
+![Ciclo clássico de Políticas e Programas](fig/ciclo-PP-Januzi.png){fig-align="center"}
+
+Que pode e deve ser contraposto
+
+![Espiral da implementação das Políticas e programas](fig/Espiral-Ciclo-PPs-jannuzzi.jpg){fig-align="center"}
+
+Mas a vida do cilco de uma Política Pública como ela é pode afastar-se dessas concepções.
+
+![A realidade da implementação de programas](fig/gyn-ciclo-implem-p10-como-ele-e.jpg){fig-align="center" width="680"}
+
+## Um rápido exemplo
+
+Procurar fazer uso dos pacotes do R acima mencionados.
+
+### Preparar
+
+Limpar e *setup* do ambiente a ser utilizado: limpar e preparar a *Environment*.
+
+```{r setup, include=TRUE}
+
+# Deletar os objetos da Global Environment
+rm(list=ls())
+
+# Padrão de saídas Rmarkdown
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
+
+# Instalar tidyverse caso não esteja já instalado
+if (!require('tidyverse')) install.packages('tidyverse')
+# Instalar pacote magrittr caso não esteja já instalado
+if (!require("magrittr")) install.packages("magrittr")
+# Instalar pacote mlr caso não esteja já instalado
+if (!require("mlr")) install.packages("mlr")
+
+# Carregar o pacote DBI na Global Environment: disponível para uso direto
+library('tidyverse')
+# Warning: package ‘tidyverse’ was built under R version 4.2.3
+# Warning: package ‘ggplot2’ was built under R version 4.2.3
+# Warning: package ‘tibble’ was built under R version 4.2.3
+# Warning: package ‘tidyr’ was built under R version 4.2.3
+# Warning: package ‘readr’ was built under R version 4.2.3
+# Warning: package ‘purrr’ was built under R version 4.2.3
+# Warning: package ‘dplyr’ was built under R version 4.2.3
+# Warning: package ‘stringr’ was built under R version 4.2.3
+# Warning: package ‘forcats’ was built under R version 4.2.3
+# Warning: package ‘lubridate’ was built under R version 4.2.3
+# ── Attaching core tidyverse packages # ──────────────────────────────────────────── tidyverse 2.0.0 ──
+# ✔ dplyr     1.1.2     ✔ readr     2.1.5
+# ✔ forcats   1.0.0     ✔ stringr   1.5.1
+# ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+# ✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+# ✔ purrr     1.0.2     
+# ── Conflicts ────────────────────────────────────────────────────────────── # tidyverse_conflicts() ──
+# ✖ dplyr::filter() masks stats::filter()
+# ✖ dplyr::lag()    masks stats::lag()
+# ℹ Use the conflicted package to force all conflicts to become errors
+
+# Carregar o pacote magrittr na Global Environment: disponível para uso direto
+library("magrittr")
+# Attaching package: ‘magrittr’
+# 
+# The following object is masked from ‘package:purrr’:
+# 
+# set_names
+# 
+# The following object is masked from ‘package:tidyr’:
+# 
+#     extract
+
+# Carregar o pacote mlr na Global Environment: disponível para uso direto
+library("mlr")
+
+# Carregar o pacote rmarkdown na Global Environment: disponível para uso direto
+# library("rmarkdown")
+```
+
+### Importar
+
+**1**. **Importar** o *data set*, o arquivo `obitjcsv.csv`, que se encontra na pasta `out` de nosso Projeto `CDE-a-DPP.Rproj`. Recomenda-se baixar a atualizar a última versão desse nosso projeto que se encontra compartilhado no google drive: <https://drive.google.com/drive/u/1/folders/1wm9jUo5XlBHqbQDRf9XevFbXcqkWogqt>
+
+```{r}
+
+# Importar como tibble o arquivo de dentro da pasta chamada out.
+obitj_csv <- readr::read_csv(file   = "out/obitjcsv.csv",
+                             # delim  = ",",
+                             quote  = "\"",
+                             locale = locale(
+                               decimal_mark = ".",
+                               encoding     = "UTF-8"
+                               )
+                             )
+
+# cat - Concatenate And Print
+cat("\n") # imprime no console (saída) uma linha em branco
+cat("Estrutura do objeto R denominado obitj_csv:\n")
+str(obitj_csv)
+
+cat("\n")
+cat("Nomes das 24 colunas do objeto obitj_csv:\n")
+names(obitj_csv)
+
+obitj_csv # tibble:447 × 24
+```
+
+### Transformar
+
+**2**. **Transformar** esse *data set* para que criar as seguintes variáveis categóricas:
+
+***Transformar***, antes, as variáveis tipo `char` que enquadram-se como factor: `fctr`.
+
+```{r}
+
+# para explicitar a ordem das categorias nas variáveis
+# que medem níveis de escolaridades: esc1 e esc2
+# variável categórica ordinal com 12 levels
+series <- c(
+  "1 ano",
+  "2 ano",
+  "4 ano",
+  "5 ano",
+  "6 ano",
+  "7 ano",
+  "8 ano",
+  "9 ano",
+  "1 série EM",
+  "2 série EM",
+  "3 série EM"
+  )
+
+# para explicitar a ordem das categorias nas variáveis
+# que medem apenas 2 níveis (levels): s - sim / n - não
+# nessas ordem (e não na ordem alfabética)
+sim_n <- c(
+  "s",
+  "n"
+  )
+
+# Declaração de Variáveis tipo char já existentes como categóricas
+obitj_csv <- obitj_csv %>% 
+  mutate(sexo =                   # nova variável tipo <fctr>
+           sexo %>%               # a partir da variável original sexo
+           factor() %>%           # converte para o tipo factor
+           forcats::fct_recode(   # forcats função para recodificar labels
+             "F" = "f",      # novo à esquerda, antigo à direita
+             "M" = "m"),     # F = Feminino, M = Masculino
+         
+         # mesma coisa com código mais condensado:
+         cor = factor(cor), # mantidos os levels originais: branco, pardo, preto
+         
+         # variável corag = cor agragada em apenas 2 categorias
+         corag = factor(corag), # mantidos os levels originais: branco, negro
+         
+         # variável esc1 = escolaridade 1, com 11 categorias
+         esc1 =                  # nova variável tipo <fctr>
+           esc1 |>               # a partir da variável original esc2
+           factor( series ) |>   # converte para o tipo factor: 11/12 categorias
+           forcats::fct_recode(  # forcats função para recodificar labels
+             "1ano" = "1 ano",   # novo à esquerda, antigo à direita
+             "2ano" = "2 ano",
+             "3ano" = "3 ano",   # embora esta categoria ñ ocorra
+             "4ano" = "4 ano",
+             "5ano" = "5 ano",
+             "6ano" = "6 ano",
+             "7ano" = "7 ano",
+             "8ano" = "8 ano",
+             "9ano" = "9 ano",
+             "1serieEM" = "1 série EM",
+             "2serieEM" = "2 série EM",
+             "3serieEM" = "3 série EM"
+           ), # mantido nenhum label original
+         
+         # variável esc2 = escolaridade 2, com 10 categorias
+         esc2 =                  # nova variável tipo <fctr>
+           esc2 |>               # a partir da variável original esc2
+           factor( series ) |>   # converte para o tipo factor: 12 categorias
+           forcats::fct_recode(  # forcats função para recodificar labels
+             "1ano" = "1 ano",   # embora esta categoria ñ ocorra
+             "2ano" = "2 ano",   # novo à esquerda, antigo à direita
+             "3ano" = "3 ano",   # categoria que ñ ocorre
+             "4ano" = "4 ano",
+             "5ano" = "5 ano",
+             "6ano" = "6 ano",
+             "7ano" = "7 ano",
+             "8ano" = "8 ano",
+             "9ano" = "9 ano",
+             "1serieEM" = "1 série EM",
+             "2serieEM" = "2 série EM",
+             "3serieEM" = "3 série EM"
+           ), # mantido nenhum label original
+         
+         # variável compfam = composição familiar, com 6 categorias
+         compfam =               # nova variável tipo <fctr>
+           compfam |>            # a partir da variável original compfam
+           factor() |>           # converte para o tipo factor: 6 categorias
+           forcats::fct_recode(  # forcats função para recodificar labels
+             "mae"      = "mãe",      # novo à esquerda, antigo à direita
+             "mae_padr" = "mãe + padrasto",
+             "pai_mae"  = "pai + mãe",
+             "pai_madr" = "pai + madrasta",
+           ), # mantidos só 2 labels originais: pai, parentes
+         
+         # variável relpai = relação com pai, com 3 categorias
+         relpai =                # nova variável tipo <fctr>
+           relpai |>             # a partir da variável original relpai
+           factor() |>           # converte para o tipo factor: 3 categorias
+           forcats::fct_recode(  # forcats função para recodificar labels
+             "auxilio"     = "auxílio", # novo à esquerda, antigo à direita
+             "mesma_resid" = "mesma residência",
+             "ausente"     = "ausente"
+           ), # mantidos só um label original: ausente
+
+         # variável usudrog = usuário de droga, com 2 categorias: s / n
+         usudrog =                 # nova variável tipo <fctr>
+           usudrog |>              # a partir da variável original usudrog
+           factor( sim_n ),        # converte para o tipo factor: 2 categorias
+           
+        # variável subst = Substância entorpecente, com 4 categorias
+         subst =                 # nova variável tipo <fctr>
+           subst %>%             # a partir da variável original subst
+           factor() %>%          # converte para o tipo factor: 4 categorias
+           forcats::fct_recode(  # forcats função para recodificar labels
+             "coca_crack"  = "cocaína / crack", # novo à esquerda, antigo à direita
+             "lsd_ecstasy" = "lsd, ecstasy",
+             "licita"      = "lícitas"
+           ), # mantidos só um level original: maconha
+         
+         # variável orgcrim = organização criminosa, com 2 categorias: s / n
+         orgcrim =                 # nova variável tipo <fctr>
+           orgcrim |>              # a partir da variável original orgcrim
+           factor( sim_n ),        # converte para o tipo factor: 2 categorias
+         
+         # variável morte = tipo de morte, com 2 categorias: nat / viol
+         morte = factor(morte),    # mantida ordem dos 2 levels originais
+         
+         # variável paf = morte por perfuração de arma de fogo, com 2 cat: s / n
+         paf =                     # nova variável tipo <fctr>
+           paf |>                  # a partir da variável original paf
+           factor( sim_n ),        # converte para o tipo factor: 2 categorias
+         
+         # variável circobt = circunstância do óbito, com 5 categorias
+         circobt =                # nova variável tipo <fctr>
+           circobt %>%            # a partir da variável original circobt
+           factor() %>%           # converte para o tipo factor: 5 categorias
+           forcats::fct_recode(   # forcats função para recodificar labels
+             "MDIP" = "intervenção policial", # novo à esquerda, antigo à direita
+             # MDIP = Morte Decorrente Intervenção Policial
+             "MDCC" = "conflitos entre criminalidade",
+             # MDIP = Morte Decorrente Conflitos entre Criminalidade
+             "transito"      = "trânsito", 
+             "outros"        = "Outros",
+             "conf_fam_afet" = "conflito familiar / afetivo"
+             )
+         )
+
+obitj_csv |> 
+  head(25)
+```
+
+### Inspecionar
+
+Uma rápida inspeção em `esc1` e `esc2`.
+
+Por meio de uma contagem das categorias presentes em `esc1`: resumidas em uma **tabela**.
+
+```{r}
+
+obitj_csv |> 
+  count(esc1)
+```
+
+Constata-se que a categoria `3ano` não ocorreu nos dados coletados para `esc1`.
+
+A mesma tabela em um formato mais adequado para impressão em `.pdf`.
+
+```{r}
+
+library(gt)
+
+tab.esc1 <- obitj_csv |> 
+  count(esc1) |> 
+  mutate(p = n / sum(n) * 100) |> 
+  mutate(p = round(p, 1) )
+
+actual_colnames <- colnames(tab.esc1) # [-1]
+# actual_colnames
+## [1] "esc1" "n"    "p"
+
+spanners_and_header <- function(gt_tbl) {
+  gt_tbl |> 
+    cols_label(
+    esc1 = "Escolaridade na data 1ª passagem",
+    n    = "Frequência Absoluta",
+    p    = "Em relação ao total"
+    ) |> 
+    tab_spanner(
+      label   = md("**2016-2023**"),
+      columns = 1
+    ) |>
+    tab_spanner(
+      label   = md("**Contagem por séries**"),
+      columns = c(2)
+    ) |> 
+    tab_spanner(
+      label   = md("**Proporção percentual (%)**"),
+      columns = c(3)
+    ) |> 
+    tab_header(
+      title = "Goiânia (DePAI): Escolaridade de jovens em conflito com a lei",
+      subtitle = "Na data da 1ª passagem pela Delagacia de Apuração de Atos Infracionais"
+    ) 
+}
+
+tab.esc1 |> 
+  gt() |> 
+  # cols_label(.list = desired_colnames) |> 
+  spanners_and_header()
+```
+
+E por meio de um **gráfico** de colunas em `esc2`.
+
+```{r}
+
+obitj_csv |> 
+  ggplot( aes(esc2) ) +
+  geom_bar()
+```
+
+Constata-se que as categorias `1ano` e `3ano` não ocorreram nos dados coletados para `esc2`.
+
+Com isso podemos considerar alcançados os objetivos da 1ª, 2ª e 3ª aulas desta disciplina **CDE-a-DPP**.
+
+### Até breve
+
+Dúvidas serão debeladas a cada aula!
+
+![Até nosso pRRRóximo RRRencontro!](fig/ValeuGalera.png){fig-align="center"}

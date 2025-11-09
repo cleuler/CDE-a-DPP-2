@@ -1,0 +1,1113 @@
+# Aula 2 - Objetos e funções {#sec-aula2-obj-func}
+
+Iniciar com ideias da Linguagem R.
+
+Toda tarefa no R é executada por uma ***função***.
+
+Uma função é um conjunto de linhas de comando executadas em sequência tal que, a partir de argumentos ou parâmetros de Entrada (`E`) retorna, na maioria das vezes, um determinado resultado de interesse na Saída (`S`).
+
+A figura a seguir ilustra esse conceito simples [@Donovan2019-ug , p. 109]:
+
+![Conceito de função (Donovan: Mickey, 2019, p. 109)](fig/Donovan-function.JPG){fig-align="center"}
+
+Um exemplo de como criar um *script* e rodar algumas funções disponibilizadas no pacote básico do r (R base, cf. na aba packages do R Studio):
+
+-   ***conferir*** \[verbo no infinitivo\] **operadores matemáticos** do *`R base`* em: [curso-r](https://livro.curso-r.com/ "Ciência de Dados em R").
+
+Todo operador é uma função do tipo: *`infix`*.
+
+```{r operadores}
+
+a = 1
+b <- 2
+a + b # operador + é uma função do tipo infix
+`+`(a, b)
+
+a * b # operador * executa uma multiplicação
+`*`(a, b)
+help(`*`)
+
+a.b <- a * b
+a.b
+
+a2  <- 4
+b2  <- a2 * 2
+A   <- b ^ 3
+B   <- sqrt(a)
+B_2 <- sqrt(A) # R usa ponto decimal em vez de vírgula decimal
+
+# operador infix dois pontos tem uma função específica
+1:10 # gerar uma sequencia de inteiros no range from:to
+i <- 11:20 # cria um vetor i com 10 elementos inteiros
+j <-  1:10 # cria um vetor j com 10 elementos inteiros
+
+# operador infix %% e %/%
+7 %% 2  # retorna o resto     da divisão inteira de 7 por 2
+7 %/% 2 # retorna o quociente da divisão inteira de 7 por 2
+```
+
+Há **regras** para nominar objetos e funções [@damiani2022cursoR]:
+
+> "Existem algumas regras para dar nomes aos objetos.
+>
+> A mais importante é: o nome deve começar com uma letra \[ou um ponto\].
+>
+> O nome pode conter números, mas não pode começar com números.
+>
+> Você pode usar pontos `.` e underlines `_` para separar palavras." (cf. [Tutoriais em Português](https://curso-r.com/material/ ">%curso-r"))
+
+É proibido criar objetos cujos nomes sejam **palavras reservadas** em `R`.
+
+Observar que o **`R`** é: ***case sensitive***.
+
+```{r}
+
+true <- 5
+# TRUE <- 5 3 # Error in TRUE <- 5 : lado esquerdo da atribuição inválida (do_set)
+
+# NULL <- 3 * 5 Error in NULL <- 3 * 5 : lado esquerdo da atribuição inválida (do_set)
+
+```
+
+Há também constantes pré-defenidas no `R`.
+
+Não se recomenda alterá-las.
+
+```{r}
+
+# Há também constantes pré-defenidas no R
+# Não se recomenda alterá-las
+
+# A razão entre o cumprimento de qualquer circunferência
+# e seu diâmetro é:
+# usar a função: cat(), de concatenet and print
+cat("A razão entre o cumprimento de qualquer circunferência e seu diãmetro é: ")
+pi
+
+# Uma saída (exibição) um pouco mais limpa:
+cat("A razão entre o cumprimento de qualquer circunferência e seu diãmetro é: ", pi, "\n")
+cat("\n") # comando new line, que move o cursos para o início da próxima linha
+
+# criando uma variável denominada pi
+pi <- "piu"
+cat("O filhote da Galinha PIntadinha fez:", pi, "!\n")
+cat(paste0("O filhote da Galinha PIntadinha fez:", pi, "!\n"))
+
+letters         # é um vetor atômico: elementos são do mesmo tipo <char>
+length(letters) # de comprimento igual a 26
+
+LETTERS         # é um vetor atômico do tipo character: <char>
+typeof(LETTERS) # do tipo char, de mesmo comprimento
+
+# lidar com datas: meses do ano
+# criar um vetor com a função base: c(), de concatenet
+meses <- c(12, 3, 6, 2, 3, 7, 12) # número dos meses
+cat("\n")
+cat("Estrutura do vetor atômico meses:\n")
+str(meses)
+cat("\n")
+cat("Dimensões do vetor atômico meses:\n")
+dim(meses)
+cat("\n")
+
+cat("Vetor atômico com meses do ano abreviados:\n")
+month.abb
+cat("\n")
+cat("Indexar um vetor por meio de colchetes: [", paste(meses, ","),"]\n")
+cat("Nada impede repetir um índice, pois haverá repetição desse valor na saída:\n")
+month.abb[meses] # indexar um vetor por meio de colchetes
+cat("\n")
+
+cat("Verificar se 6 pertence ao vetor meses:\n")
+6 %in% meses # operador infix que verifica o pertencimento
+cat("\n")
+
+cat("Verificar se 8 pertence ao vetor meses:\n")
+8 %in% meses
+cat("\n")
+
+cat("Verificar se 6 e 8 pertencem ao vetor meses:\n")
+c(6, 8) %in% meses # é uma função vetorizada: aceita um vetor como atributo
+                   # ou seja, repete sua aplicação em cada elemento do 1º argumento
+cat("\n")
+
+cat("Verificar quais meses do ano pertencem ao vetor meses:\n")
+1:12 %in% meses
+cat("\n")
+
+cat("Nomes completos dos meses do ano:\n")
+month.name
+cat("\n")
+
+cat("Atribuir valor nulo ou vazio a uma variável não a apaga da RAM:\n")
+pi <- NULL
+pi
+cat("\n")
+
+
+# Remover a variável pi
+rm(pi)
+
+cat("Depois de remover a variável pi da RAM, seu valor como constante é restabelecido:\n")
+pi # para que essa constante volte a conter seu valor correto
+   # o que vai evitar erros no seu uso,
+   # caso se esqueça que havia utilizado-a como um nome de variável.
+```
+
+Uma **regra prática** importante: Evite criar objetos cujos nomes sejam idênticos aos de funções pré-existente no R base ou mesmo em algum outro pacote para evitar confusões.
+
+```{r}
+
+# Um exemplo de mau uso de um nome de uma variável
+c # é uma função do R Base
+
+22 -> c # usou-se o operador infix atribuição para a direita
+c
+
+# Agora existem dois objetos no ambiente R
+# a função concatenate, que cria vetores
+c(1, 2, 3, 4, 5, 6, 7)
+
+# E o objeto armazenado na Global Environmente (memória R.A.M) também denominado c
+c
+```
+
+É melhor evitar a possibilidade de confusão acima, pois há dois objetos distintos com o mesmo nome: homônimos geram ambiguidades.
+
+```{r}
+
+rm(c) # essa remoção da variável c evita essa ambiguidade.
+```
+
+O R disponibiliza em sua base os seguintes operadores, também chamados de *infix*:
+
+[![Operadores R: Aritméticos, Relacionais, Lógicos, de Atribuição e Outros](fig/r-operators.png){fig-align="center"}](https://www.tutorialkart.com/r-tutorial/r-operators/#gsc.tab=0)
+
+Um pequeno exercício: **calcular** o resultado da seguinte expressão matemática (escrita em `Latex`)
+
+$$
+\frac{1 + \sqrt{5}}{2}
+$$ {#eq-exemplo}
+
+Uma dica: cuidado com as **prioridades** dos operadores!
+
+Outra dica: raiz quadrada é o mesmo que elevar um número a 0.5 ou 1/2; mas também há uma função específica no R base para essa tarefa `sqrt()`.
+
+```{r}
+
+1 + 5^1/2 / 2
+
+1 + 5^0.5 / 2
+
+```
+
+**Interferir** na ordem de prioridade os operadores.
+
+Para obter o valor correto da expressão matemática indicada no exemplo acima.
+
+```{r}
+
+(1 + 5^0.5) / 2
+
+(1 + sqrt(5)) / 2
+```
+
+**Conferir** alguns **operadores lógicos**: do *`R base`* em: [curso-r](https://livro.curso-r.com/3-7-testes-l%C3%B3gicos.html "Ciência de Dados em R").
+
+```{r}
+
+# constantes lógicas
+TRUE
+FALSE
+
+# Operador lógico AND: &
+# sua tabela de verdade
+cat("\n")
+cat("Tabela de verdade do operador and:\n")
+TRUE  & TRUE
+FALSE & TRUE
+TRUE  & FALSE
+FALSE & FALSE
+
+and <- data.frame(
+  v1  = c(TRUE, FALSE, TRUE , FALSE),
+  v2  = c(TRUE, TRUE , FALSE, FALSE)
+)
+
+# Indexar um dataframe por meio do operador $
+# se o nome de coluna (variável) já existe ele retorna seus valores
+# se usado do lado esquerdo de uma atribuição e o nome de coluna não exite ele cria nova variável
+and$AND <- and$v1 & and$v2
+
+and
+
+# Tabela de Verdade do operador NOT: !
+not <- data.frame(
+  v1  = c(TRUE , FALSE),
+  NOT = c(!TRUE, !FALSE)
+)
+
+not
+
+# Exercício
+# Gerar e Imprimir uma Tabela de Verdade do operador OR: |
+```
+
+Fica como **exercício**: Gerar e imprimir uma tabela de verdade para o operador OR
+
+Algumas **operações** com matriz.
+
+**Matriz** é uma estrutura de dados bidimensional com todas as colunas apresentando um mesmo tipo de dado (char, int, dbl, logic).
+
+```{r}
+M <- matrix(data = c(1, 2, 3, 4),
+            nrow = 2,
+            ncol = 2,
+            byrow = TRUE)
+
+cat("Estrutura da Matriz quadrada M:\n")
+str(M)
+cat("\n")
+
+cat("Matriz quadrada M:\n")
+M    # matriz M
+cat("\n")
+
+cat("Transposta de M:\n")
+t(M) # sua matriz transposta
+cat("\n")
+
+cat("Multiplicação matricial de M por sua transposta:\n")
+# Multiplar uma Matriz quadrada por sua trasposta
+print ( M %*% t(M) ) # Álgebra: multiplicação de 2 matrizes
+cat("\n")
+
+cat("Soma matricial de M com sua transposta:\n")
+# Somar uma Matriz quadrada com sua trasposta
+print ( M + t(M) ) # Álgebra: soma de 2 matrizes
+cat("\n")
+
+cat("Subatração matricial de M por sua transposta:\n")
+# Subtrair uma Matriz quadrada de sua trasposta
+print ( M - t(M) ) # Álgebra: subtração de 2 matrizes
+```
+
+Muitas vezes é preciso limpar a memória RAM do processador; para começar outro conjunto de tarefas distinto, como, por exemplo: carregar os dados, tratar os dados (transformar, criar, limpar), salvar e, depois, carregar os dados tratados para uma análise estatística descritiva e exploratória.
+
+-   ***limpar*** \[verbo no infinitivo\] a *Global Enviroment*
+
+Conferir mais exemplos em: [**Introdução ao R**](https://vanderleidebastiani.github.io/tutoriais/Introducao_ao_R.html#no%C3%A7%C3%B5es_b%C3%A1sicas "Mostrar e remover objetos")
+
+Todo comentário começa com cerquilha ou *hashtag*: `#`
+
+```{r}
+
+# Todo comentário começa com cerquilha ou hashtag
+# a seguinte combinação ou composição de funções:
+# limpar a Global Enviroment
+rm(list = ls())
+
+# verificar o resultado dessa ação ou tarefa que foi executada
+ls() # retorna um vetor vazio, confirmando a execução da composição anterior
+     # de comprimento igual a zero
+     # e do tipo <char>: character(0)
+```
+
+Verificar o que cada uma dessas duas funções faz isoladamente.
+
+Diferenciar parâmetro de argumento de uma função.
+
+```{r}
+
+ls() # Listar todos os objetos temporários da área de trabalho (GE - Global Environment)
+     # mesmo que nenhum parâmetro lhe seja repassado; por default retorna todos objetos da GE.
+
+rm() # não retorna nem executa coisa alguma, pois nenhum parâmetro lhe foi repassado
+```
+
+Nesse ponto executar (`Run`) novamente o primeiro `chunck`, acima.
+
+Passar pelo menos um parâmetro para algum dos argumentos da função **rm**, abreviatura de *remove*.
+
+```{r}
+
+rm(a)
+
+rm("A", "b")
+
+ls() # ainda restam os seguintes objetos (variáveis): [1] "a.b" "a2"  "B"   "B_2" "b2"
+
+# rm(ls()) # Error in rm(ls()) : ... deve conter nomes ou cadeia de caracteres
+```
+
+**Compor** funções com uso de parênteses: g(f(x))
+
+```{r}
+
+rm(list = ls()) # essa é uma típica composição de funções
+
+ls()
+```
+
+**Compor** funções com comando ***Pipe*** do **R base**: `|>`
+
+Melhora muito a ***legibilidade*** do código.
+
+```{r}
+
+# um exemplo de composição de funções
+# Há objetos no R base: data sets para servir de exemplo, como mtcars
+mtcars |> 
+  str() # Compactly display the internal structure of an R object (F1 - Help)
+        # 1st argument is object: any R object about which you want to have some information.
+
+mtcars |> 
+  names() |> 
+  str() # chr [1:11] "mpg" "cyl" "disp" "hp" "drat" "wt" "qsec" "vs" "am" "gear" "carb"
+
+mtcars |> 
+  summary() # retorna um resumo de 5 números mais a média de objetos tipo numeric
+
+
+# mtcars |> 
+#   select # Erro: The pipe operator requires a function call as RHS
+```
+
+Um gráfico desse conjunto de dados (*data set*): `mtcars`.
+
+```{r graf-dispersao}
+ 
+plot(mtcars$mpg, mtcars$hp)
+lines(x   = c(  0, 32),
+      y   = c(300, 50),
+      col = "blue",
+      lwd = 2
+      )
+
+plot(mtcars$mpg, mtcars$hp,
+     main = "Milhas por galão x potência (HP)",
+     sub  = "Curva lowess - local polynomial regression")
+lines(stats::lowess(mtcars$mpg, mtcars$hp)) # operador 2 dois pontos package::funtion()
+                                            # stats é um pacote do R Base
+```
+
+No segundo gráfico de dispersão acima: **LOWESS –** ***locally weighted scatterplot smoothing***.
+
+A figura a seguir recorda o conceito de Ciclo de Data Science:
+
+![O tidyverse é um pacote guarda-chuva que consolida uma série de ferramentas que fazem parte do ciclo da ciência de dados. Fazem parte do {tidyverse} os pacotes {ggplot2}, {dplyr}, {tidyr}, {purrr}, {readr}, entre muitos outros, como é possível observar na figura.](fig/Conceito-Pacotes-R-ciclo-ciencia-de-dados.png){fig-alt="Conceito de Ciclo da Ciência de Dados" fig-align="center"}
+
+Conferir uma ***cheat sheet*** com pacotes em **R** bem mais completa em: <https://www.business-science.io/r-cheatsheet.html>.
+
+**Carregar** um pacote que **não** se encontra no `R Base` (*System Library*), caso seja necessário usar uma função que lhe pertença.
+
+**Instalar** tal pacote (consultar a aba `Packages`) antes, se ainda não tiver sido baixado na sua coleção de pacotes.
+
+Por exemplo, vamos fazer uso das funções `select()`, para selecinar colunas (variáveis) e `filter()`, para filtrar linhas (observações).
+
+Obervar que ambas pertencem ao pacote `dplyr`.
+
+```{r}
+
+# Instalar pacote, caso seja necessário seu download (ainda não instalado)
+# Não é o caso pois encontra-se disponível na pasta renv, que foi criada com este EBR-a-DPP.RProj
+# Cuidado ao instalar uma nova versão sobre a atual: dplyr version 1.1.4
+# Há riscos de quebrar seu código quando for gerar .pdf ou .html via pacote quarto.
+# installed.packages("dplyr") # usar esse comando em nosso curso apenas para pacotes ainda não baixados
+vignette("package-install")
+
+# por isso
+# Cautela ao usar a função install.packages()
+# usar composição de funções pelo emprego de parenteses
+# primeiro a função if(), para fazer um teste
+# conjugada com o operador lógico NOT: ! (facilita a legibilidade do código)
+# ou seja: somente se não instalado o pacote "dplyr";
+# então  : executar a função install.packages("dplyr")
+if (!require("dplyr")) {install.packages("dplyr")}
+
+library(dplyr)
+# função library() carrega o pacote na Global Environment
+
+# require(dplyr) é equivalente à função library()
+```
+
+Um **primeiro ciclo** simplificado de DS.
+
+**Selecionar** variáveis.
+
+**Filtrar** observações.
+
+**Visualizar** gráfico com reta de regressão.
+
+```{r}
+
+library(tibble)  # para gerar data frames do tipo tyde (organizados)
+                 # cada coluna uma variável; cada linha uma observação
+library(ggplot2) # para gerar gráficos mais elaborados
+
+mtcars |> 
+  select(mpg, hp) |>         # selecionar apenas 2 variáveis de interesse: mpg e hp
+  rownames_to_column() |>    # transformar nomes de linhas em uma coluna (variável)
+  rename(carro = rowname) |> # renomear    nome dessa variável
+  filter(hp <= 150) |>       # filtrar observações de interesse
+  # visualizar um gráfico: mpg (consumo) -x- hp (potência)
+  ggplot(aes(x = mpg, y = hp, label = carro)) +
+  geom_point(aes()) +            # gráfico de dispersão: scatterplot
+  geom_text(hjust = 0, vjust = 0, position = "jitter", size = 2) +
+  # geom_label(label.size = 0.10) +
+  geom_point(aes(x = mean(mpg) , y = mean(hp)), color = "blue", size = 3) +
+  geom_smooth(method = "lm") +   # acrescer uma reta de regressão (método mínimos quadrados)
+                                 # lm - linear model: Modelo Linear
+  labs(title    = "Gráfico de dispersão: mpg -x- hp\nCom reta de regressão (método mínimos quadrados)",
+       subtitle = "Conjunto de Dados: mtcars (m = 3 variáveis selecionadas, n = 19 obs. filtradas)",
+       x        = "Consumo: milhas por galão (filtro: mpg <= 150)",
+       y        = "Potência (HP)",
+       caption  = "1. Fonte: dados secundários disponíveis no R Base.\n2. Médias indicadas no ponto azul (maior).\n3. Não há observações faltantes (NA's)."
+       )
+```
+
+A **Estatística**, sendo melhor referir-se à Probabilidade e Estatística, pode ser **conceituada** como: ramo da Matemática aplicada que reune ***um conjunto de métodos*** para:
+
+-   **planejar *pesquisas empíricas*** na modalidade **estudos observacionais** ou **experimentos aleatorizados** em qualquer área do conhecimento científico;
+-   **coletar** dados **válidos** e **fidedignos**;
+-   **organizar**,
+-   **resumir**,
+-   **apresentar**: listas, **tabelas**, diagramas, fórmulas, **gráficos**, grafos etc,
+-   **analisar**,
+-   **formular** e **testar** ***hipóteses*** \[realizar **inferência** de 1 amostra para População\] e
+-   **interpretar** conjuntos de **dados** e **informações**;
+-   **elaborar** conclusões baseadas em **evidências** \[dados e informações válidos e fidedignos\] para
+-   **apoiar** tomadas de **decisão** e para
+-   **gerir** ou **controlar** um conjunto de **ações** em curso: qualidade, escala, cobertura, custos financeiros, eficiência, eficácia, efetividade etc. por meio de ***indicadores*** e de ***índices*** cuja aplicabilidade, comparabilidade, consistência e difusão possam ser testadas e validadas por uma comunidade de experts.
+
+O **propósito** da **Estatística Inferencial**, após uma boa análise de **Estatística Descritiva** e Exploratória, é, por **indução**, chegar a conclusões para **toda** a **População** amostrada a partir de uma **parte** dela: ***uma única*** **(1) *amostra probabilística*** *válida e fidedigna* dela coletada.
+
+![Ciclo da Inferência ou Indução Estatística.](fig/inferencia.png){fig-align="center"}
+
+É importante, sem perder de vista essa importante ideia de **ciclos**, fixar os principais **conceitos**, *necessários* e *suficientes*, que serão trabalhados nesta disciplina **EBR-a-DPP**, o que reclama incursionar em conceitos simples de **Estatística Básica**, como: média, desvio padrão, mediana, Amplitude Interquartil, correlação, regressão, População, amostragem, Amostra, Unidade amostral etc.
+
+As ferramentas ***Statistical Applets*** e ***statkey*** são bons aplicativos *free on line* para exercitar esses conceitos. Experimente ela com nosso ***data set*** já organizado `obitjcsv.csv`, que se encontra na pasta `out` de nosso Projeto `EBR-a-DPP.Rproj`; clique aqui para acessá-los:
+
+-   [[Statkey]{.underline}](https://www.lock5stat.com/StatKey/index.html) – Lock et. al. [@Lock2017-EstRevPoderDados]
+-   [Statistical Applets](https://digitalfirst.bfwpub.com/stats_applet/asset/applet_index.html)
+
+Mãos à obra pessoal, salientando que as próximas 2 fases da **AED** (Análise Exploratória Descritiva) e da **AEI** (Análise Exploratória Inferencial), que demandarão os **20%** restante do tempo de uma pesquisa (80% são gasot na fase *Wrangle*: importar, organizar, tratar, transformar e limpar os dados brutos), costumam ser-nos bem *mais prazerosas*.
+
+Nessa nova fase, bem mais atraente, o objetivo é **explorar** os dados em busca do **reconhecimento de padrões perceptíveis** (cuidado com a possibilidade do *erro percepcional*): cf. [cleuler.com](https://cleuler.com/operconcaleajacta#sec-jogo-dos-7-erros-uma-classificacao-de-tipos-de-erros-em-modelos "5.9 Jogo dos 7 Erros: uma Classificação de Tipos de Erros em Modelos"), senha: 5ci3)d\|oBkiKb\|Uy
+
+***Resumos** dos dados* são muito úteis: média e desvio padrão; mediana e AIQ (Amplitude Interquartil); resumo dos 5 números, coeficiente de variação, assimetria, curtose etc.
+
+Gerar vários **gráficos** (histogramas, *boxplot*, pizza, barras, colunas, dispersão, diagrama de ramo e folha etc.) que permitam essa ***visualização*** e ***captura de padrões*** para cada variável observada, a depender do tipo de cada qual.
+
+Bem como para investigar possibilidade de ***associação*** entre elas: a depender da combinação de tipos de cada uma delas, por meio de ***testes estatísticos*** formais.
+
+Gerando **tabelas** de dupla entrada ou de contigência, quando ambas forem categóricas, do tipo **factor** \<`fctr`\>.
+
+Todavia, todas essas possibilidades de recorrer à *Data Science* e à Probabilidade e Estatística, no nosso caso, tomarão por **domínio** a interface do *Direito* com as *Políticas Públicas*.
+
+De modo que, para guardar um elemento comum com os dessas duas Ciências matemáticas aplicadas, buscou-se evidenciar também uma ideia de **ciclo do Direito e cilco das Políticas Públicas**, ilustrados nas figuras a seguir.
+
+Primeiro uma possibilidade de Ciclo do Direito [@Neves2021-colPrincPP] segundo uma *perspectiva retórica* e considerando a distinção entre significantes do passado e significados do futuro quanto aos diversos símbolos linguísticos que compõem os dispositivos normativos, que não se confudem com um conceito de norma, que só se alcança com sua decisão e aplicação presente a um caso concreto somente depois que alcançar a definitividade de ***coisa julgada*** [@Adeodato2014-UTRNJDO].
+
+![Um Ciclo do Direito](fig/Dois%20Mistérios.png){fig-align="center"}
+
+Já o conceito de Ciclo de Políticas Públicas é bem difundido e pode ser resumido nas duas figuras a seguir, não se podendo contentar com sua idealização, mas também considerar as vicissitudes e falhas que perpassam suas práticas (Jannuzzi, 2024):
+
+![Ciclo clássico de Políticas e Programas](fig/ciclo-PP-Januzi.png){fig-align="center"}
+
+Que pode e deve ser contraposto ao chamado ciclo clássico:
+
+![Espiral da implementação das Políticas e programas](fig/Espiral-Ciclo-PPs-jannuzzi.jpg){fig-align="center"}
+
+Mas a vida do ciclo de uma Política Pública ***como ela é*** pode afastar-se dessas pré-concepções.
+
+[![A realidade da implementação de programas: um conjunto de ações orçamentárias para implantar uma política pública que fosse capaz de interferir nas prováveis causas de um problema social relevante.](fig/gyn-ciclo-implem-p10-como-ele-e.jpg){fig-alt="Orçamento Público: conceitos básicos (ENAP)" fig-align="center" width="680"}](https://repositorio.enap.gov.br/bitstream/1/2287/1/Or%C3%A7amento%20P%C3%BAblico%20Conceitos%20B%C3%A1sicos%20-%20M%C3%B3dulo%20%20%282%29.pdf)
+
+## Um rápido exemplo
+
+Procurar fazer uso dos pacotes do **R** necessários para alcançar um ciclo básico de Ciência de Dados.
+
+### Preparar
+
+Limpar e *setup* do ambiente a ser utilizado: limpar e preparar a *Environment*.
+
+```{r setup, include=TRUE}
+
+# Deletar os objetos da Global Environment
+rm(list=ls())
+
+# Padrão de saídas Rmarkdown
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
+
+# Instalar tidyverse caso não esteja já instalado
+# if (!require('tidyverse')) install.packages('tidyverse')
+# Instalar pacote magrittr caso não esteja já instalado
+# if (!require("magrittr")) install.packages("magrittr")
+
+
+# Carregar o pacote DBI na Global Environment: disponível para uso direto
+# library('tidyverse')
+# Warning: package ‘tidyverse’ was built under R version 4.2.3
+# Warning: package ‘ggplot2’ was built under R version 4.2.3
+# Warning: package ‘tibble’ was built under R version 4.2.3
+# Warning: package ‘tidyr’ was built under R version 4.2.3
+# Warning: package ‘readr’ was built under R version 4.2.3
+# Warning: package ‘purrr’ was built under R version 4.2.3
+# Warning: package ‘dplyr’ was built under R version 4.2.3
+# Warning: package ‘stringr’ was built under R version 4.2.3
+# Warning: package ‘forcats’ was built under R version 4.2.3
+# Warning: package ‘lubridate’ was built under R version 4.2.3
+# ── Attaching core tidyverse packages # ──────────────────────────────────────────── tidyverse 2.0.0 ──
+# ✔ dplyr     1.1.2     ✔ readr     2.1.5
+# ✔ forcats   1.0.0     ✔ stringr   1.5.1
+# ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+# ✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+# ✔ purrr     1.0.2     
+# ── Conflicts ────────────────────────────────────────────────────────────── # tidyverse_conflicts() ──
+# ✖ dplyr::filter() masks stats::filter()
+# ✖ dplyr::lag()    masks stats::lag()
+# ℹ Use the conflicted package to force all conflicts to become errors
+
+# Carregar o pacote magrittr na Global Environment: disponível para uso direto
+# library("magrittr")
+# Attaching package: ‘magrittr’
+# 
+# The following object is masked from ‘package:purrr’:
+# 
+# set_names
+# 
+# The following object is masked from ‘package:tidyr’:
+# 
+#     extract
+
+# Carregar o pacote rmarkdown na Global Environment: disponível para uso direto
+# library("rmarkdown")
+```
+
+### Importar
+
+**1**. **Importar** o *data set*, o arquivo `obitjcsv.csv`, que se encontra na pasta `out` de nosso Projeto `CDE-a-DPP.Rproj`. Recomenda-se baixar a atualizar a última versão desse nosso projeto que se encontra compartilhado no google drive: <https://drive.google.com/drive/u/1/folders/1wm9jUo5XlBHqbQDRf9XevFbXcqkWogqt>
+
+```{r}
+
+library(readr)
+
+# Importar como tibble o arquivo de dentro da pasta chamada out.
+obitj_csv <- readr::read_csv(file   = "out/obitjcsv.csv",
+                             # delim  = ",",
+                             quote  = "\"",
+                             locale = locale(
+                               decimal_mark = ".",
+                               encoding     = "UTF-8"
+                               )
+                             )
+
+# cat - Concatenate And Print
+cat("\n") # imprime no console (saída) uma linha em branco
+cat("Estrutura do objeto R denominado obitj_csv:\n")
+str(obitj_csv)
+
+cat("\n")
+cat("Nomes das 24 colunas do objeto obitj_csv:\n")
+names(obitj_csv)
+
+obitj_csv # tibble:447 × 24
+```
+
+### Transformar
+
+**2**. **Transformar** esse *data set* para criar as seguintes **variáveis categóricas**.
+
+***Transformar***, antes, as variáveis tipo `char` que enquadram-se como *factor*: `fctr`.
+
+*MIP* - *Modify in Place*.
+
+```{r}
+
+library(dplyr)
+
+# para explicitar a ordem das categorias nas variáveis
+# que medem níveis de escolaridades: esc1 e esc2
+# variável categórica ordinal com 12 levels
+series <- c(
+  "1 ano",
+  "2 ano",
+  "4 ano",
+  "5 ano",
+  "6 ano",
+  "7 ano",
+  "8 ano",
+  "9 ano",
+  "1 série EM",
+  "2 série EM",
+  "3 série EM"
+  )
+
+# para explicitar a ordem das categorias nas variáveis
+# que medem apenas 2 níveis (levels): s - sim / n - não
+# nessa ordem (e não na ordem alfabética)
+sim_n <- c(
+  "s",
+  "n"
+  )
+
+# Declaração de Variáveis tipo char já existentes como categóricas
+obitj <- obitj_csv |> 
+  mutate(sexo =                   # nova variável tipo <fctr>
+           sexo |>                # a partir da variável original sexo
+           factor() |>            # converte para o tipo factor
+           forcats::fct_recode(   # forcats função para recodificar labels
+             "F" = "f",      # novo à esquerda, antigo à direita
+             "M" = "m"),     # F = Feminino, M = Masculino
+         
+         # mesma coisa com código mais condensado:
+         cor = factor(cor), # mantidos os levels originais: branco, pardo, preto
+         
+         # variável corag = cor agragada em apenas 2 categorias
+         corag = factor(corag), # mantidos os levels originais: branco, negro
+         
+         # variável esc1 = escolaridade 1, com 11 categorias
+         esc1 =                  # nova variável tipo <fctr>
+           esc1 |>               # a partir da variável original esc2
+           factor( series ) |>   # converte para o tipo factor: 11/12 categorias
+           forcats::fct_recode(  # forcats função para recodificar labels
+             "1ano" = "1 ano",   # novo à esquerda, antigo à direita
+             "2ano" = "2 ano",
+             "3ano" = "3 ano",   # embora esta categoria ñ ocorra
+             "4ano" = "4 ano",
+             "5ano" = "5 ano",
+             "6ano" = "6 ano",
+             "7ano" = "7 ano",
+             "8ano" = "8 ano",
+             "9ano" = "9 ano",
+             "1serieEM" = "1 série EM",
+             "2serieEM" = "2 série EM",
+             "3serieEM" = "3 série EM"
+           ), # mantido nenhum label original
+         
+         # variável esc2 = escolaridade 2, com 10 categorias
+         esc2 =                  # nova variável tipo <fctr>
+           esc2 |>               # a partir da variável original esc2
+           factor( series ) |>   # converte para o tipo factor: 12 categorias
+           forcats::fct_recode(  # forcats função para recodificar labels
+             "1ano" = "1 ano",   # embora esta categoria ñ ocorra
+             "2ano" = "2 ano",   # novo à esquerda, antigo à direita
+             "3ano" = "3 ano",   # categoria que ñ ocorre
+             "4ano" = "4 ano",
+             "5ano" = "5 ano",
+             "6ano" = "6 ano",
+             "7ano" = "7 ano",
+             "8ano" = "8 ano",
+             "9ano" = "9 ano",
+             "1serieEM" = "1 série EM",
+             "2serieEM" = "2 série EM",
+             "3serieEM" = "3 série EM"
+           ), # mantido nenhum label original
+         
+         # variável compfam = composição familiar, com 6 categorias
+         compfam =               # nova variável tipo <fctr>
+           compfam |>            # a partir da variável original compfam
+           factor() |>           # converte para o tipo factor: 6 categorias
+           forcats::fct_recode(  # forcats função para recodificar labels
+             "mae"      = "mãe",      # novo à esquerda, antigo à direita
+             "mae_padr" = "mãe + padrasto",
+             "pai_mae"  = "pai + mãe",
+             "pai_madr" = "pai + madrasta",
+           ), # mantidos só 2 labels originais: pai, parentes
+         
+         # variável relpai = relação com pai, com 3 categorias
+         relpai =                # nova variável tipo <fctr>
+           relpai |>             # a partir da variável original relpai
+           factor() |>           # converte para o tipo factor: 3 categorias
+           forcats::fct_recode(  # forcats função para recodificar labels
+             "auxilio"     = "auxílio", # novo à esquerda, antigo à direita
+             "mesma_resid" = "mesma residência",
+             "ausente"     = "ausente"
+           ), # mantidos só um label original: ausente
+
+         # variável usudrog = usuário de droga, com 2 categorias: s / n
+         usudrog =                 # nova variável tipo <fctr>
+           usudrog |>              # a partir da variável original usudrog
+           factor( sim_n ),        # converte para o tipo factor: 2 categorias
+           
+        # variável subst = Substância entorpecente, com 4 categorias
+         subst =                 # nova variável tipo <fctr>
+           subst |>              # a partir da variável original subst
+           factor() |>           # converte para o tipo factor: 4 categorias
+           forcats::fct_recode(  # forcats função para recodificar labels
+             "coca_crack"  = "cocaína / crack", # novo à esquerda, antigo à direita
+             "lsd_ecstasy" = "lsd, ecstasy",
+             "licita"      = "lícitas"
+           ), # mantidos só um level original: maconha
+         
+         # variável orgcrim = organização criminosa, com 2 categorias: s / n
+         orgcrim =                 # nova variável tipo <fctr>
+           orgcrim |>              # a partir da variável original orgcrim
+           factor( sim_n ),        # converte para o tipo factor: 2 categorias
+         
+         # variável morte = tipo de morte, com 2 categorias: nat / viol
+         morte = factor(morte),    # mantida ordem dos 2 levels originais
+         
+         # variável paf = morte por perfuração de arma de fogo, com 2 cat: s / n
+         paf =                     # nova variável tipo <fctr>
+           paf |>                  # a partir da variável original paf
+           factor( sim_n ),        # converte para o tipo factor: 2 categorias
+         
+         # variável circobt = circunstância do óbito, com 5 categorias
+         circobt =                # nova variável tipo <fctr>
+           circobt |>             # a partir da variável original circobt
+           factor() |>            # converte para o tipo factor: 5 categorias
+           forcats::fct_recode(   # forcats função para recodificar labels
+             "MDIP" = "intervenção policial", # novo à esquerda, antigo à direita
+             # MDIP = Morte Decorrente Intervenção Policial
+             "MDCC" = "conflitos entre criminalidade",
+             # MDIP = Morte Decorrente Conflitos entre Criminalidade
+             "transito"      = "trânsito", 
+             "outros"        = "Outros",
+             "conf_fam_afet" = "conflito familiar / afetivo"
+             )
+         )
+
+obitj |> 
+  head(25)
+```
+
+Tranformar esc1 e esc2 em variáveis categóricas ordinais.
+
+```{r}
+
+table(obitj$esc1)
+
+table(obitj$esc2)
+
+obitj <- obitj |> 
+  mutate(
+    esc1.ord = as.character(esc1), .after = esc1
+  ) |> 
+  mutate(
+    esc2.ord = as.character(esc2), .after = esc2
+  ) |> 
+  mutate(
+    esc1.ord = factor(esc1.ord,
+                      levels = c("1ano",
+                                 "2ano",
+                                 "4ano",
+                                 "5ano",
+                                 "6ano",
+                                 "7ano",
+                                 "8ano",
+                                 "9ano",
+                                 "1serieEM",
+                                 "2serieEM",
+                                 "3serieEM"
+                                 ),
+                      labels = c("1ano",
+                                 "2ano",
+                                 "4ano",
+                                 "5ano",
+                                 "6ano",
+                                 "7ano",
+                                 "8ano",
+                                 "9ano",
+                                 "1serieEM",
+                                 "2serieEM",
+                                 "3serieEM"
+                                 ),
+                      ordered = TRUE),
+    esc2.ord = factor(esc2.ord,
+                      levels = c("1ano",
+                                 "2ano",
+                                 "4ano",
+                                 "5ano",
+                                 "6ano",
+                                 "7ano",
+                                 "8ano",
+                                 "9ano",
+                                 "1serieEM",
+                                 "2serieEM",
+                                 "3serieEM"
+                                 ),
+                      labels = c("1ano",
+                                 "2ano",
+                                 "4ano",
+                                 "5ano",
+                                 "6ano",
+                                 "7ano",
+                                 "8ano",
+                                 "9ano",
+                                 "1serieEM",
+                                 "2serieEM",
+                                 "3serieEM"
+                                 ),
+                      ordered = TRUE)
+  )
+
+obitj |> 
+  head(25)
+```
+
+### Inspecionar
+
+Uma rápida inspeção em: `esc1`, `esc2`, `esc1.ord` e `esc2.ord`.
+
+Por meio de uma contagem das categorias presentes em `esc1`: resumidas em uma **tabela**.
+
+```{r}
+
+obitj |> 
+  count(esc1)
+```
+
+Constata-se que a categoria `3ano` não ocorreu nos dados coletados para `esc1.ord`.
+
+A mesma tabela em um formato mais adequado para impressão em `.pdf`.
+
+```{r}
+
+library(gt) # gt - get table, é mais compatível com a geração de .pdf que kalble.extra
+
+tab.esc1 <- obitj |> 
+  count(esc1) |> 
+  mutate(p = n / sum(n) * 100) |> 
+  mutate(p = round(p, 1) )
+
+actual_colnames <- colnames(tab.esc1) # [-1]
+# actual_colnames
+## [1] "esc1" "n"    "p"
+
+spanners_and_header <- function(gt_tbl) {
+  gt_tbl |> 
+    cols_label(
+    esc1 = "Escolaridade na data 1ª passagem",
+    n    = "Frequência Absoluta",
+    p    = "Em relação ao total"
+    ) |> 
+    tab_spanner(
+      label   = md("**2016-2023**"),
+      columns = 1
+    ) |>
+    tab_spanner(
+      label   = md("**Contagem por séries**"),
+      columns = c(2)
+    ) |> 
+    tab_spanner(
+      label   = md("**Proporção percentual (%)**"),
+      columns = c(3)
+    ) |> 
+    tab_header(
+      title = "Goiânia (DePAI): Escolaridade de jovens em conflito com a lei",
+      subtitle = "Na data da 1ª passagem pela Delagacia de Apuração de Atos Infracionais"
+    ) 
+}
+
+tab.esc1 |> 
+  gt() |> 
+  # cols_label(.list = desired_colnames) |> 
+  spanners_and_header()
+```
+
+Agora uma contagem das categorias presentes em `esc1.ord`: também resumidas em uma **tabela** 12 x 2.
+
+```{r}
+
+obitj |> 
+  count(esc1.ord)
+```
+
+Constata-se que as categorias ***não*** sairam da ordem na variável `esc1.ord`, que é uma `variável categórica ordinal`.
+
+Ou seja, diferente de `esc1`, que é uma variável categórica ***não*** ordinal.
+
+A mesma tabela em um formato mais adequado para impressão de `esc1.ord` em `.pdf`.
+
+```{r}
+
+library(gt) # gt - get table, é mais compatível com a geração de .pdf que kalble.extra
+
+tab.esc1 <- obitj |> 
+  count(esc1.ord) |> 
+  mutate(p = n / sum(n) * 100) |> 
+  mutate(p = round(p, 1) )
+
+actual_colnames <- colnames(tab.esc1) # [-1]
+# actual_colnames
+## [1] "esc1" "n"    "p"
+
+spanners_and_header <- function(gt_tbl) {
+  gt_tbl |> 
+    cols_label(
+    esc1.ord = "Escolaridade na data 1ª passagem",
+    n        = "Frequência Absoluta",
+    p        = "Em relação ao total"
+    ) |> 
+    tab_spanner(
+      label   = md("**2016-2023**"),
+      columns = 1
+    ) |>
+    tab_spanner(
+      label   = md("**Contagem por séries**"),
+      columns = c(2)
+    ) |> 
+    tab_spanner(
+      label   = md("**Proporção percentual (%)**"),
+      columns = c(3)
+    ) |> 
+    tab_header(
+      title = "Goiânia (DePAI): Escolaridade de jovens em conflito com a lei",
+      subtitle = "Na data da 1ª passagem pela Delagacia de Apuração de Atos Infracionais"
+    ) 
+}
+
+tab.esc1 |> 
+  gt() |> 
+  # cols_label(.list = desired_colnames) |> 
+  spanners_and_header()
+```
+
+Um exemplo de uso dessa variável ordinal pode ser ilustrado com um filtro usando um operador lógico, a seguir.
+
+```{r}
+
+obitj |> 
+  filter(esc1.ord >= "1serieEM") |> 
+  count(esc1.ord) |> 
+  mutate(p = n / sum(n) * 100) |> 
+  mutate(p = round(p, 1) )
+```
+
+Inspecionar `esc2` por meio de um **gráfico** de colunas.
+
+```{r}
+
+obitj |> 
+  ggplot( aes(esc2) ) +
+  geom_bar()
+```
+
+Constata-se que as categorias `1ano` e `3ano` não ocorreram nos dados coletados para `esc2`.
+
+E **inspecionar** `esc2.ord` por meio de um **gráfico** de colunas, para comparar com o gráfico anterior.
+
+```{r}
+
+obitj |> 
+  ggplot( aes(esc2.ord) ) +
+  geom_bar()
+```
+
+Constata-se que os dois gráficos de colunas acima para `esc2` e `esc2.ord` resultaram iguais.
+
+Agora um gráfico de barras horizontais para `esc2`, com alterações em seus lables para um gráfico mais informativomas, ***sem Modify In pLace*** no *data set* já tratado.
+
+```{r}
+
+obitj |> 
+  mutate(
+    esc2 = factor(esc2,
+                      levels = c(# não há ocorrência de 1 ano,
+                                 "2ano",
+                                 # não há ocorrência de 3 ano,
+                                 "4ano",
+                                 "5ano",
+                                 "6ano",
+                                 "7ano",
+                                 "8ano",
+                                 "9ano",
+                                 "1serieEM",
+                                 "2serieEM",
+                                 "3serieEM"
+                                 ),
+                      labels = c(# não haverá etiqueta de "1ano",
+                                 "2ano",
+                                 # não haverá etiqueta de "3ano",
+                                 "4ano",
+                                 "5ano",
+                                 "6ano",
+                                 "7ano",
+                                 "8ano",
+                                 "9ano",
+                                 "1EM", # alterar etiquetas Ensino Medio
+                                 "2EM",
+                                 "3EM"
+                                 ),
+                      ordered = TRUE) # variável categórica ordinal
+  ) |> 
+  ggplot( aes(y = forcats::fct_rev(esc2) ) ) + # barras no eixo y (default é o eixo x)
+  geom_bar() + # é exibida na ordem inversa daquela imposta às etiquetas
+  labs(title    = "Gráfico de Barras ordenadas: escolaridade na data do óbito\nJovens em conflito com a lei c/passagem na DePai - Goiânia ",
+       subtitle = "Período: 2016 a 2023 (n = 8 anos)",
+       x        = "Frequência Absoluta (num. passagens)",
+       y        = "",
+       caption  = "1. Fonte: dados primários coletados por Queops (PPGDP).\n2. É significativa a ocorrência de 40 NA's (8,9%).\n3. Provável viés de não respota na variável esc2.\n4. A moda ocorre no 1º ano do Ensino Médio (103 óbitos; 23,0%)."
+       )
+```
+
+A tabela a seguir completa essa inspeção com uma outra forma de resumo dos mesmos dados do gráfico acima. Exibida em um formato adequado para impressão de `esc2.ord` em `.pdf`, também executada ***sem Modify In pLace*** no *data set* já tratado.
+
+```{r}
+
+spanners_and_header <- function(gt_tbl) {
+  gt_tbl |> 
+    cols_label(
+    esc2.ord = "Escolaridade na data do óbito",
+    n        = "Frequência Absoluta",
+    p        = "Em relação ao total"
+    ) |> 
+    tab_spanner(
+      label   = md("**2016-2023**"),
+      columns = 1
+    ) |>
+    tab_spanner(
+      label   = md("**Contagem por séries**"),
+      columns = c(2)
+    ) |> 
+    tab_spanner(
+      label   = md("**Proporção percentual (%)**"),
+      columns = c(3)
+    ) |> 
+    tab_header(
+      title = "Goiânia (DePAI): Escolaridade de jovens em conflito com a lei na data do óbito",
+      subtitle = "Jovens com passagem pela Delagacia de Apuração de Atos Infracionais - Depai Goiânia"
+    ) 
+}
+
+tab.esc2 <- obitj |> 
+  count(esc2.ord) |> 
+  mutate(p = n / sum(n) * 100) |> 
+  mutate(p = round(p, 1) )
+
+tab.esc2 |> 
+  gt() |> 
+  spanners_and_header()
+```
+
+### Exportar
+
+Os dados tratados no data frame `obitj` no formato .csv na pasta `out`.
+
+```{r}
+
+# Salvar uma planilha de dados toda tratada e transformada:
+write.csv(obitj, file = "out/obit.csv",
+          na = "", # salvar campos NA como espaço vazio <blank>
+          row.names = FALSE) # não salvar coluna com números das linhas
+```
+
+Os mesmos dados tratados no formato .rds, que é mais rápido para recarregar e que ocupa menos espaço em memória (hrad disk).
+
+```{r}
+
+# Salvar esse dataframe no formato binário do R na pasta out
+# Sua próxima importação ela virá com todos os tratamentos até aqui realizados:
+# tipos de colunas preservados: <char>, <date>, <time>, <fctr>, <int>, <dbl>
+# 'data.frame':	779927 obs. of  31 variables:
+write_rds(obitj, file = "out/obitj.rds")
+```
+
+Com isso podemos considerar alcançados os objetivos da 1ª e 2ª aulas desta disciplina **CDE-a-DPP**.
+
+### Até breve
+
+Dúvidas serão debeladas a cada aula!!!!
+
+![Até nosso pRRRRóximo RRRRencontro!](fig/ValeuGalera.png){fig-align="center"}

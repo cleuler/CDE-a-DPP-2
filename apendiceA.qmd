@@ -1,0 +1,37 @@
+# Apêndice A - EMENTA {#Apend-A .unnumbered}
+
+**1.** Ciência de Dados, Estatística e Direito: noções introdutórias e contexto atual \[*conceito de Ciclo* da Ciência e de ...\].
+
+**2.** Estatística Básica e Direito: potencial do uso correto \[adequado\] dos *números* para subsidiar análises *multidimensionais* \[ℝ^n^→ℝ^m^\] de questões jurídicas complexas \[*alea* e sua modelagem\].
+
+**3.** **Diálogo** entre \[DS~\^~\] Estatística,\[::\] Políticas Públicas e \[&\] Direito \[*conceito de Ciclo* *de* Políticas Públicas e *de* Direito\].
+
+**4.** *Incerteza* e sua *mensuração*: modelagem informacional \[fenômenos determinísticos e estocásticos\].
+
+**5.** Formulação de hipóteses, partição de um espaço amostral e *confiança estatística* em análises de Políticas Públicas \[formulação de problemas e de ℋipóteses de pesquisa como um conjunto de *proposições teóricas ortogonais* (independentes) empiricamente *testáveis*, *falseáveis*, mutuamente *exclusivas*, *exaustivas* e *concorrentes*: uma ***partição*** de um espaço amostral (*Ω*)\].
+
+**6.** Tipos de *erros* e *vieses* numa pesquisa empírica e o auxílio da Estatística \[desenho da pesquisa, coleta ***válida*** e ***fidedigna*** de *dados*, organização, transformação, criação, apresentação de tabelas e gráficos, resumos, exploração e captura de padrões, ***Μ*****odelagem** \[**f**:D→CD\], testes de adequação e de associação, *simulações*, ***predições*** e medidas de acurácia\].
+
+**7.** Tamanho amostral em amostra aleatória simples \[AAS, AAE c/TPP e outros tipos de amostras probabilísticas\].
+
+**8.** *Probabilidade*: definição clássica, *frequentista* e axiomática. *Conceitos*: População, indivíduos, amostra representativa \[*rectius*, probabilística\], *inferência*, experimento, ***espaço amostral***, evento, *independência*, estudo observacional, experimento aleatorizado, ***variável aleatória***, observação, ***medidas***, *contagem*.
+
+**9.** ***Medidas resumos***, média, média ponderada, média aparada, mediana, moda.
+
+**10.** ***Variabilidade***, variância, desvio, desvio padrão, amplitude interquartis \[AIQ\], *outliers*,
+
+**11.** *Frequência* absoluta e *relativa*, ***probabilidade condicional***, ***verossimilhança***, probabilidade *a priori*, fator de normalização, probabilidade *a posteriori* \[Teoria Bayesiana\]*.*
+
+**12.** Densidade de probabilidade, densidade acumulada, ***padronização*** (escore-Z).
+
+**13.** ***Modelos*** determinísticos e probabilísticos (estocásticos) e ***testes estatísticos*** \[erros de decisão\].
+
+**14.** Ciência de Dados e conceito de ***simulação*** \[*conceito de Ciclo* da Ciência de Dados\].
+
+**15.** Ciência de Dados, Direito e Políticas Públicas: dados *transversais* (quadro de dados), *longitudinais* (séries temporais), em *painel* e outras *estruturas* (grafos, *DAG*’s).
+
+**16.** *Jurimetria* e suas interfaces com as Políticas Públicas \[operacionalização de conceitos, ***indicadores***, ***índices*** e interfaces com outros ramos da Ciência; Ciência Forense, Epidemiologia, estudos *clínicos,* análise de sobrevivência, regressão logística, modelagem por séries temporais, análise de fatores de risco etc.\].
+
+**17.** Análises quantitativas no Direito e Políticas Públicas \[*estudo dirigido* de 9 a 15 casos com dados primários e secundários *coletados* por pesquisas junto ao PPGDP\].
+
+(cf. Ementa na Plataforma Sucupira da Capes – APCN n. 61/2023, p. 90; art. 43, III, § 3º, ‘d’, novo Reg. PPGDP – RPPGDP, aprovado pela Resol. CEPEC n. 1941, de 31 de março de 2025).

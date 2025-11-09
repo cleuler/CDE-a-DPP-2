@@ -1,0 +1,202 @@
+project:
+  type: book
+book:
+  title: __Ciência de Dados e Estatística Aplicadas ao Direito e Políticas Públicas__
+  subtitle: |
+    [![](logoUfg.png){width=5.7in}](https://www.youtube.com/watch?v=4VASegKKzpY)  \
+    __Ciência de Dados e Estatística com [![](R-logo.png){width="0.35in"}](https://www.r-project.org/)  \
+    Aplicada ao Di[![](Rstudio.jpg){width=0.27in}](https://posit.co/download/rstudio-desktop/)eito e Políticas Públicas.  \
+    74: 3 Axiomas, 16 Teoremas e 55 Conceitos essenciais  \
+    para 1 Estatística prática e CD aplicada ao Direito e Políticas Públicas__  \
+      \
+    __RELATÓRIO DE PRODUTO TÉCNICO__  \
+    Desenvolvimento de softwares em Linguagem R na disciplina CDEaDPP, 2. sem. 2025  \
+    Ciência de Dados e Estatística com R Aplicada ao Direito e Políticas Públicas  \
+    (Disciplina DPP0053 junto ao PPGDP da UFG)  \
+  abstract: |
+    <div class="card border-primary mb-3" style="max-width: 28rem;">
+      <div class="card-header">Ficha catalográfica</div>
+      <div class="card-header">__________________________________________</div>
+      <div class="card-body">
+        Neves, Cleuler Barbosa das
+           Relatório de Produto Técnico consistente na escrita e
+        desenvolvimento de softwares em Linguagem R de apoio à
+        resolução de problemas na disciplina concebida para o
+        doutorado do PPGDP - Programa de Pós-Graduação em Direito
+        e Políticas Públicas que funciona junto à Faculdade de
+        Direito da UFG - Universidade Federal de Goiás, ministrada
+        no 2. sem. 2025 e intitulada Ciência de Dados e Estatística
+        Aplicadas ao Direito e Políticas Públicas - DPP0053
+        (ago. 2025/dez. 2025). Goiânia: FD/UFG, 2025. Geração de um
+        e-book com esse conjunto de scripts em R hospedado em pasta
+        do PPGDP a fim de apoiar os estudantes de mestrado/doutorado,
+        pós-graduação estrito senso, na compreensão do conteúdo
+        transmitido e também no auxílio à resolução de exercícios
+        em sala de aula e também dos problemas de pesquisa desses
+        mestrandos e doutorandos. Geração de simulações computacionais
+        de problemas de pesquisa em Direito e Políticas Públicas.
+        Modelo para aqueles que optarem por apresentar seus relatórios
+        de pesquisa em formato de e-book.
+        200 p. : il., col., gráf., tab.
+        Inclui bibliografia
+        ISBN 978-85-328-0207-7
+        1. Direito. 2. Políticas Públicas. 3. Estatística Descritiva
+        e Inferencial. 4. Linguagem R 5. Ciência de Dados
+        6. Simulações
+        I. Título
+        CDD: 519.207.                                  CDU: 519.2:7
+      </div>
+      <div class="card-header">__________________________________________</div>
+    </div>
+  number : "zzz"
+  version : "Version 2.0.1"
+  author:
+    - name: Prof. Dr. Cleuler Barbosa das Neves
+      id: cbn
+      orcid: 0000-0001-8319-0257
+      email: cleuler@ufg.br
+      affiliation:
+        - name: Faculdade de Direito da UFG/PPGDP
+          city: Goiânia
+          state: GO
+          url: https://ppgdp.direito.ufg.br/p/19422-docentes
+  date: today
+  date-format: medium
+  reader-mode: true
+  page-footer:
+    right: |
+      Relatório escrito em <a href="https://quarto.org/">Quarto</a>.
+  cover-image: |
+    cover.pdf
+#  favicon: cover.png
+  chapters:
+    - index.qmd
+    - intro.qmd
+    - AEID-cap18-Reproduzivel.qmd
+    - cap3-DistNorm.qmd
+    - cap5-pldr-modelos-dados.qmd
+    - cap13-pldr-model-rel-contin.qmd
+    - cap16-pldr-EstMultiv.qmd
+    - cap6-moore-tab-dupla-entrada.qmd
+    - replicar-suco-uva-tab-graf.qmd
+    - cap16-moore-IC-o-basico.qmd
+    - cap17-moore-TSHN-o-basico.qmd
+#    - aula1-CiclosDe.qmd
+#    - aula2-obj-func.qmd
+#    - aula3-est-dir-estDescr.qmd
+#    - aula4-est-dir-testeH-Kalunga.qmd
+#    - aula5-est-dir-testeH-Fluxos.qmd
+#    - aula6-TesteH-Andre-Eliane-Comparacao-Frequencias-X2.qmd
+#    - aula7-Anal-Sobrev.qmd
+#    - aula8-Regr-logit.qmd
+#    - aula3-DeMere-n1.qmd
+#    - aula4-Bolsa9Moedas.qmd
+#    - aula5-WranglingData-1st.qmd
+#    - aula6-WranglingData-2nd.qmd
+#    - aula7-WranglingData-3rd.qmd
+#    - aula8-WranglingData-4th.qmd
+#    - aula9-WranglingData-5th.qmd
+#    - aula10-AtividadeAvaliativa-1.qmd
+#    - aula11-AtividadeAvaliativa-Res.qmd
+#    - aula8.qmd
+    - conclusao.qmd
+    - apendiceA.qmd
+    - apendiceB-quadroVar.qmd
+    - referencias.qmd
+bibliography: references.bib
+csl: abnt-github.csl # This is crucial for ABNT formatting
+#         Citation Style Language (CSL) repository on GitHub
+biblio-title: "Referências"
+toc-title: "Sumário"
+lof-title: "Lista de Figuras"
+lot-title: "Lista de Tabelas"
+lol-title: "Lista de Definições"
+cap-location: bottom
+tbl-cap-location: top
+number-sections: true
+prefer-html: true
+crossref:
+  chapters: true
+  lof-title: "Lista de Figuras"
+  lot-title: "Lista de Tabelas"
+  lol-title: "Lista de Definições"
+#  chap-prefix: cap.      # (default is "Chapters", cf. @sec-prefix: sec.)
+  fig-title: Fig.       # (default is "Figure")
+  fig-prefix: fig.
+  tbl-title: Tab.       # (default is "Table")
+  tbl-prefix: tab.
+  thm-title: Teorema    # (default is "Theorem")
+  thm-prefix: teor.
+  def-title: Definição  # (default is "Definition")
+  def-prefix: def.
+  cnj-title: Conjectura # (default is "Conjecture")
+  cnj-prefix: Hip.
+  eq-title: Eq.         # (default is "Equation")
+  eq-prefix: eq.
+  exm-title: Exemplo    # (default is "Example"")
+  exm-prefix: ex.
+  sec-prefix: sec.
+  title-delim: ""    # (default is ":")
+format:
+  html:
+    theme: cosmo
+    code-link: true
+    code-fold: true
+    toc-title: "Sumário"
+    toc-depth: 4  # upto three depths of headings (specified by #, ##, ### and ####)
+    number-sections: true # if you want number sections at each table header
+    number-depth: 4
+    author-meta: "Cleuler Barbosa das Neves"
+    callout-appearance: simple
+  pdf:
+    documentclass: scrreprt
+    papersize: A4
+    toc: true
+    lof: true
+    lot: true
+    lol: true
+#    latex-makeindex: "Índice remissivo"
+    number-sections: true
+    colorlinks: true
+    code-line-numbers: true
+    code-block-bg: true
+    code-fold: true
+    geometry:
+      - top=30mm
+      - left=30mm
+      - bottom=20mm
+      - right=20mm
+      - heightrounded
+    fontsize: 12pt
+    keep-tex: true
+    header-includes: |
+      \titlehead{\includegraphics[width=6.25in]{cover.pdf}}
+    include-in-header:
+      text: |
+        \usepackage{fvextra}
+        \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+        \DefineVerbatimEnvironment{OutputCode}{Verbatim}{breaklines,commandchars=\\\{\}}
+        \usepackage{fancyhdr}
+        \pagestyle{fancy}
+        \fancyhf{}
+        \fancyhead[LE]{\nouppercase{\rightmark\hfill\leftmark}}
+        \fancyhead[RO]{\nouppercase{\leftmark\hfill\rightmark}}
+        \fancyfoot[LE,RO]{\hfill\thepage\hfill}
+#        \usepackage{makeidx}
+#        \makeindex
+#    include-after-body:
+#      text: |
+#        \printindex
+  docx: default
+execute:
+  echo: fenced
+  warning: false
+latex-auto-mk: true
+keep-tex: true
+context: context
+output:
+  pdf_document:
+    extra_dependencies:
+      - "subfig"
+editor: visual
+lang: pt-BR

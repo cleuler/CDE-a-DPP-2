@@ -1,0 +1,47 @@
+---
+header-includes:
+  - \usepackage{pdfpages}
+  - \usepackage{amsmath}
+  - \usepackage{mathtools}
+  - \usepackage{fvextra}
+  - \usepackage{centernot}
+title: |
+  \
+  \
+  \
+  \
+  [![](logoUfg.png){width=5.7in}](https://www.youtube.com/watch?v=4VASegKKzpY)  \
+  Ciência de Dados e Estatística com [![](R-logo.png){width="0.35in"}](https://www.r-project.org/)  \
+  Aplicadas ao Di[![](Rstudio.jpg){width=0.27in}](https://posit.co/download/rstudio-desktop/)eito e Políticas Públicas.  \
+  74: 3 Axiomas, 16 Teoremas e 55 Conceitos essenciais  \
+  para 1 Estatística prática para Ciência de Dados \
+  aplicadas ao Direito e Políticas Públicas  \
+    \
+subtitle : |
+  __RELATÓRIO DE PRODUTO TÉCNICO__  \
+  Desenvolvimento de softwares em Linguagem R na disciplina CDEaDPP, 2. sem. 2025  \
+  Ciência de Dados e Estatística com R Aplicadas ao Direito e Políticas Públicas  \
+  (Disciplina DPP0053 junto ao PPGDP da UFG)  \
+  
+description: | 
+  74: 3 Axiomas, 16 Teoremas e 55 Conceitos essenciais para uma para uma Estatística prática e CD aplicadas ao Direito e Políticas Públicas   \
+  
+author:
+    - name: Prof. Dr. Cleuler Barbosa das Neves
+      id: cbn
+      orcid: 0000-0001-8319-0257
+      email: cleuler@ufg.br
+      affiliation:
+        - name: Faculdade de Direito da UFG/PPGDP
+          city: Goiânia
+          state: GO
+          url: https://ppgdp.direito.ufg.br/p/19422-docentes
+date: today
+date-format: medium
+geometry:
+      - top=00mm
+      - left=00mm
+      - bottom=00mm
+      - right=00mm
+lang: pt-BR
+---

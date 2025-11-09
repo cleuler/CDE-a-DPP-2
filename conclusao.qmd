@@ -1,0 +1,15 @@
+# Conclusão {#sec-conclusao}
+
+::: callout-tip
+## O poder dos dados
+
+Iniciar AED com a análise de uma variável de cada vez.
+
+Capturar padrões por meio de gráficos adequados para cada tipo de variável.
+
+Resumir os dados por meio de um único número; que pode ser uma medida de tendência central (média, mediana ou moda) ou uma medida da variabilidade presente no conjunto de dados daquela variável (Amplitude, desvio, variância, desvio padrão; quartis e AIQ - Amplitude Interquartil).
+
+Somente depois dessa análise univariada que se deve proceder uma análise bivariada. Novamente por meio de gráficos e resumos numéricos adequados.
+
+E somente depois de uma AED - Análise Exploratória de Dados, primeiro descritiva (AED) e depois inferencial (AEI), que se busca modelar os dados, ou seja, propor, testar e escolher modelos que melhor se ajustem aos dados empíricos colhidos.
+:::

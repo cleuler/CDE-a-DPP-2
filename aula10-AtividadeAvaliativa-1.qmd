@@ -1,0 +1,191 @@
+# Aula 10 - Atividade Avaliativa {#sec-Ativ-Avaliativa-1}
+
+**Aluno**: Nome Do Aluno ...
+
+Inciar a fase de **AED** (Análise Exploratória Descritiva) e de **AEI** (Análise Exploratória Inferencial).
+
+## **Instruções**
+
+-   O desenvolvimento desta atividade deve ser realizada de forma individual ou em grupo de 2 alunos.
+
+-   Deve-se responder e completar este arquivo `Quarto Markdown` (`NomeAluno.qmd`) desta atividade.
+
+-   É necessário enviar via WhatsApp o arquivo resposta renderizado em: `.qmd`, em `.pdf` e `.html`.
+
+-   Valor da atividade: 10 pontos.
+
+**Data disponível: 13/06/2024**
+
+**Data máxima para entrega e *breve apresentação 1* em: 27/06/2024 (prazo de 2 semanas)**
+
+**Data máxima para entrega e *breve apresentação 2* em: 11/07/2024 (prazo de + 2 semanas)**
+
+**Atividades**: ***importar*** (leitura), ***armazenar*** (salvar; enclausurar), ***transformar*** (criar novas variáveis numéricas e categóricas), ***visualizar*** (descrever, plotar, capturar eventuais padrões), ***modelar*** (propor modelos explicativos) e ***testar*** (realizar testes de Hipótese) em relação aos dados primários levantados no corpus n. 3 desta pesquisa, que contém as ocorrências da DPAI Goiânia associadas aos jovens que vieram a obito: arquivo `obitjcsv.csv` , que se encontra na pasta `out` de nosso projeto `R`. Ou seja, estamos seguindo o ***conceito*** de **Ciclo da Ciência de Dados**:
+
+[![Ciclo da Ciência de Dados, suas 3 fases: 1 - Wrangle (importar, organizar e transformar), 2 - Understand (Transformar, Visualizar e Modelar; buscar melhor ajuste) e 3 - Communicate (relatar) and Replicate (automatizar; app)](fig/2-data-science-wrangle-01.png){fig-alt="Conceito de Ciclo da Ciência de Dados" fig-align="center"}](https://r4ds.had.co.nz/wrangle-intro.html)
+
+A fase ***Wrangle*** consome cerca de **80%** do tempo de uma pesquisa empírica [@Wickham2017R, p. ix, xi, 117]. O que foi realizado até o momento em nosso curso, uma tarefa, uma verdadeira luta, que não costuma nos agradar.
+
+O mesmo ***conceito*** de **Ciclo da Ciência de Dados**, agora associado aos principais `pacotes` do `R` que auxiliam cada fase ou etapa dentro de cada fase: notamanete o pacote `tidyverse`.
+
+[![O tidyverse é um pacote guarda-chuva que consolida uma série de ferramentas que fazem parte do ciclo da ciência de dados. Fazem parte do {tidyverse} os pacotes {ggplot2}, {dplyr}, {tidyr}, {purrr}, {readr}, entre muitos outros, como é possível observar na figura](fig/Conceito-Pacotes-R-ciclo-ciencia-de-dados.png){fig-alt="Conceito de Ciclo da Ciência de Dados" fig-align="center"}](https://livro.curso-r.com/4-2-tidyverse.html)
+
+Tudo isso casa com um mais amplo de **Conceito Ciclo da Ciência**, cujo formato costuma ser designado como ***Diamond Shape*** [@Donovan2019-ug , p. 274-275]:
+
+![Conceito de Ciclo da Ciência na forma de um Diamond Shape (DONOVAN; MICKEY, 2019, p. 274-275))](fig/DiamondShape-Donovan.jpg){fig-alt="Ciclo da Ciência" fig-align="center"}
+
+Nesta atividade avaliativa resolveremos alguns exercícios que fixarão os principais conceitos até aqui trabalhados nesta disciplina **EBRADPP**. O que não nos impede incursionar em conceitos simples de Estatística, como: média, desvio padrão, mediana, Amplitude Interquartil, correlação, regressão etc.
+
+A ferramenta ***statkey*** é um bom aplicativo *free on line* para exercitar esses conceitos, experimente ela com nosso ***data set*** já organizado `obitjcsv.csv`, que se encontra na pasta `out` de nosso Projeto `EBRA-DPP.Rproj`; clique aqui: <https://www.lock5stat.com/StatKey/index.html>.
+
+Mãos à obra pessoal, salientando que as próximas 2 fases de **AED** (Análise Exploratória Descritiva) e de **AEI** (Análise Exploratória Inferencial), que demandarão os **20%** restante do tempo de uma pesquisa, costumam ser-nos bem *mais prazerosas*.
+
+Nessa nova fase, bem mais atraente, o objetivo é explorar os dados em busca do reconhecimento de padrões perceptíveis (cuidado com a possibilidade do *erro percepcional*).
+
+*Resumos dos dados* são muito úteis: média e desvio padrão; mediana e AIQ (Amplitude Interquartil); resumo dos 5 números, coeficiente de variação, assimetria, curtose etc.
+
+Gerar vários gráficos (histogramas, *boxplot*, pizza, barras, colunas, dispersão, diagrama de ramo e folha etc.) que permitam essa ***visualização*** e ***captura de padrões*** para cada variável observada, a depender do tipo de cada qual.
+
+Bem como para investigar possibilidade de ***associação*** entre elas: a depender da combinação de tipos de cada uma delas, por meio de ***testes estatísticos*** formais.
+
+Gerando tabelas de dupla entrada ou de contigência, quando ambas forem categóricas, do tipo **factor** \<`fctr`\>.
+
+## Lista de Exercícios
+
+Procure fazer uso dos pacotes do R acima mencionados.
+
+### Item 1
+
+**1**. **Importar** o *data set*, o arquivo `obitjcsv.csv`, que se encontra na pasta `out` de nosso Projeto `EBRA-DPP.Rproj`. Recomenda-se baixar a atualizar a última versão de nosso projeto que se encontra compartilhado no google drive: <https://drive.google.com/drive/u/1/folders/1wm9jUo5XlBHqbQDRf9XevFbXcqkWogqt>
+
+```{r}
+
+```
+
+### Item 2
+
+**2**. **Transformar** esse *data set* para que criar as seguintes variáveis categóricas:
+
+a.  variável tipo `fctr` denominada `esc3` com o seguinte escopo (`s` / `n`): jovem com menos que ensino fundamental completo (variável categórica `esc2`).
+
+    ```{r}
+
+    ```
+
+b.  variável tipo `fctr` denominada `esc4` com o seguinte escopo (`s` / `n`): variável numérica `idadeobta` menor que sua média (18.7 anos) ***e*** jovem com menos que ensino fundamental completo (variável categórica `esc3`).
+
+    ```{r}
+
+    ```
+
+### Item 3
+
+**3**. **Transformar** esse *data set* para que criar a seguinte variável numérica:
+
+Tempo afastado da escola na data do seu óbito, denominada `temposesc`, medida em anos: igual a `dataobt` menos a `dataesc1`.
+
+Armazenar esse data frame em outra variável (`obitj_tbl`) do tipo `tibble` (mais amigável ao uso do pacote `dplyr`).
+
+```{r}
+
+```
+
+### Item 4
+
+**4**. **Visualizar** no R uma *tabela de dupla entrada* (tabela de contigência) entre as variáveis categóricas: `morte` (nat/viol) e `usudrog` (s/n).
+
+```{r}
+
+```
+
+### Item 5
+
+**5**. **Visualizar** os seguintes gráficos:
+
+a.  Gráfico de barras ou de setores (piza) para as variáveis categóricas: `sexo` e `cor`.
+
+    ```{r}
+
+    ```
+
+b.  Histograma para as variáveis quantitativas: `idadeobta`, `npassag` e `temposesc`.
+
+    ```{r}
+
+    ```
+
+c.  *Boxplot* para as variáveis quantitativas: `idadeobta`, `npassag` e `temposesc`.
+
+    ```{r}
+
+    ```
+
+d.  Gráfico de barras lado a lado ou de barras empilhadas para verificar uma possível relação entre as variáveis categóricas: `morte` (nat/viol) e `usudrog` (s/n).
+
+    ```{r}
+
+    ```
+
+e.  *Boxplot*, lado a lado, para as variáveis quantitativas: `idadeobta` e `npassag`, agrupadas segundo a variável categórica `corag` (cor agregada).
+
+    ```{r}
+
+    ```
+
+f.  Diagrama de *dispersão* para duas variáveis quantitativas: `idadeobta` e `npassag`, acrescido com sua reta de regressão (método dos mínimos quadrados).
+
+    ```{r}
+
+    ```
+
+g.  Diagrama de *dispersão* para duas variáveis quantitativas: `idadeobta` e `temposesc`, acrescido com sua reta de regressão (método dos mínimos quadrados).
+
+    ```{r}
+
+    ```
+
+### Item 6
+
+**6**. **Modelar** no R uma *regressão linear simples* entre as seguintes variáveis quantitativas, dependente e independente:
+
+a.  `idadeobta` e `npassag`.
+
+```{{r}}
+
+```
+
+b.  `idadeobta` e `temposesc`.
+
+```{{r}}
+
+```
+
+### Item 7
+
+**7**. No R, realizar uma ***análise dos resíduos*** dos dois modelos do item 6 e decidir qual dos dois tem maior capacidade de explicar a variabilidade observada na variável dependente.
+
+```{r}
+
+```
+
+### Item 8 (opcional)
+
+**8**. No R, realizar uma ***regressão linear múltipla*** e sua respectiva ***análise dos resíduos*** de alguns modelos a partir do *data set* obitido como produto dos itens n. 2 e 3 e decidir qual deles teria maior capacidade de explicar a variabilidade observada na variável dependente.
+
+Apoiar essa decisão em testes de Hipótese, como, por exemplo, os ilustrados no quadro a seguir [@Becker2015 , p. 458]:
+
+![Testes recomendados para testar a significância da relação entre duas variáveis e respectivos níveis de mensuração, principais suposições teóricas e procedimentos alternativos](fig/Testes-Recomendados-JLBecker-2015-p-458.JPG){fig-align="center"}
+
+Insira sua resposta o chunk a seguir.
+
+```{r}
+
+```
+
+Com isso podemos considerar alcançado o ousado objetivo da 1ª turma desta disciplina de Núcleo Livre **EBRADPP**.
+
+### Até breve
+
+Dúvidas serão debeladas a cada aula!
+
+![Até nosso pRRRóximo RRRencontro!](fig/ValeuGalera.png){fig-align="center"}

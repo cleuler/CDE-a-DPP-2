@@ -1,0 +1,755 @@
+# Aula 6 - Testes de Hipotese *X*^2^ {#sec-aula-6-testeH-X2-est-dirig}
+
+## Não paramétrico: Qui-quadrado (2 var. alea. categóricas)
+
+### Qualidade do ajuste de um Modelo aos dados amostrais
+
+André e Eliane
+
+#### Definição
+
+Sabemos que as frequências amostrais comumente se desviam um pouco dos valores teoricamente esperados.
+
+O teste de aderência ou teste de qualidade do ajuste (*goodness-of-fit*) é um teste não-paramétrico em que a hipótese testada se refere à forma da distribuição da população em que, por hipótese, adimitimos que distribuição da variável de interesse na população seja descrita por determinado modelo de distribuição de probabilidade e testamos esse modelo, verificando a boa ou má aderência dos dados da amostra ao modelo (COSTA NETO, 2002).
+
+Por “qualidade do ajuste” queremos dizer que os dados amostrais que consistem em contagens de frequências observadas, arranjadas em uma única linha ou coluna (chamada tabela de frequência de um fator) concordam com alguma distribuição particular em consideração [@Triola2015intStat].
+
+O teste vai comparar as frequências observadas em uma amostra com as frequências que seriam observadas se os dados seguissem a distribuição teórica e apresentar uma medida de discrepância entre os valores amostrais observados e os teoricamente esperados.
+
+Supondo que exista uma boa aderência e a amostra seja razoavelmente grande, podemos admitir que o modelo fornece uma boa idealização da distribuição populacional. De maneira inversa, a rejeição da hipótese nula H~0~ em um dado nível de significância indica que o modelo testado é inadequado para representar a distribuição da população.
+
+Costa Neto (2002) indica três maneiras de realizar um teste de aderência, pelo qui-quadrado($\chi^2$), pelo método de Kolmogorov-Smirnov ou graficamente. Neste exercício, realizaremos o teste usando o método do qui-quadrado.
+
+#### Dados utilizados no exercício
+
+Para a realização do exercício proposto foram disponibilizadas algumas bases de dados que incluiam colunas com variáveis categóricas. Optou-se por demonstrar os conceitos na base de dados que registra as quantidades de abordagens realizadas pela PMGO nos anos de 2016, 2017 e 2018, separadas por cor da pele, existindo registros para as cores branca, parda, negra e outras.
+
+```{r}
+
+# Deletar os objetos da Global Environment
+rm(list=ls())
+
+# Padrão de saídas Rmarkdown
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
+# getOption("encoding")       # [1] "native.enc"
+# options(encoding = 'UTF-8') # [1] "UTF-8"
+
+# Para prevenir impressão de números em notação científica
+# p-valor serão impressos com suas casas decimais
+options(scipen=999)
+```
+
+Para demonstrar os cálculos será utilizado o R. Os dados fornecidos no exercício foram gravados em um arquivo CSV.
+
+```{r}
+
+df_pm <- read.csv("dat/abordagens_pm_go.csv",
+                  header = TRUE,
+                  sep    = ";")
+
+library(dplyr)
+library(gt)
+
+df_pm |>
+  select(Cor, X2016, X2017, X2018) |> 
+  head(5) |> 
+  gt()
+# knitr::kable(df_pm)
+```
+
+Como o nome das colunas no arquivo CSV são números relativos aos anos, o R insere um X antes para tratá-las como uma string.
+
+São criadas três listas, separando os dados por ano.
+
+```{r}
+observado_2016 <- df_pm$X2016[1:4] |> as.numeric()
+observado_2017 <- df_pm$X2017[1:4] |> as.numeric()
+observado_2018 <- df_pm$X2018[1:4] |> as.numeric()
+print(observado_2018)
+```
+
+Para demonstração didática dos cálculos realizados neste exercício, usaremos os dados do ano 2018, pois o teste tem como objetivo avaliar os dados de uma linha ou coluna da tabela.
+
+#### Teste de aderência pelo $\chi^2$
+
+Karl Pearson desenvolveu uma forma de se testar essa aderência baseando-se em uma estatística de teste, que tem $\nu$ graus de liberdade. Essa estatística de teste é referenciada como $\chi^2_\nu$.
+
+Ao demonstrar as fórmulas a seguinte notação será utilizada:
+
+-   **O**: frequência **observada** de um resultado, encontrada a partir dos dados amostrais. Precisam ser números inteiros, pois são contagens reais.
+
+-   **E**: frequência **esperada** de um resultado, supondo-se que a distribuição seja a que se está comparando. Não precisam ser números inteiros, pois são calculados.
+
+-   **k**: número de categorias diferentes ou número de células da tabela de contingência.
+
+-   **n**: número total de valores amostrais observados.
+
+Se o modelo testado for verdadeiro e se todas frequências esperadas forem maiores ou iguais a 5 $(E_i \geq 5)$ a quantidade definida por sua fórmula terá aproximadamente distribuição $\chi^2_\nu$ com $\nu = k - 1 - m$, sendo $k$ o número de parcelas somadas e $m$ o número de parâmetros do modelo estimados independentemente a partir da amostra. Caso existam classes em que as frequências esperadas sejam menores que 5, elas devem ser unidas às classes adjacentes na análise.
+
+O cálculo das frequências esperadas vai ser feito através da expressão $E_i = n \times p_i$, onde $p_i$ é a probabilidade, segundo o modelo de se obter um valor da variável na classe considerada e $n$ é o número de elementos da amostra.
+
+O teste a ser realizado é unilateral, devendo a hipótese H~0~ ser rejeitada se o valor encontrado for maior que o valor definido como crítico.
+
+#### Passos
+
+Para testar a aderência do modelo aos dados amostrais, seguiremos os passos a seguir:
+
+1.  Formulação das Hipóteses
+
+2.  Apresentação dos dados em uma Tabela de Contingência com as frequências **observadas** (O~ij~).
+
+3.  Cálculo das frequências **esperadas** em cada categoria (E~ij~). Esse mesmo passo poderia ser utilizado para valores agrupados em intervalos, no caso de variáveis não categóricas.
+
+4.  Cálculo do $\chi^2$, que vai se basear nas diferenças entre os valores observados e os valores esperados.
+
+5.  Determinação do grau de liberdade para os dados utilizados.
+
+6.  Comparação dos dados obtidos com uma tabela de valores críticos da distribuição e valores P.
+
+##### Formulação das Hipóteses
+
+Para o teste do exercício vamos verificar se os dados amostrais estão de acordo com uma distribuição normal (ou gaussiana), que é usada com frequência para modelar fenômenos naturais. Porém a distribuição normal não é diretamente aplicável a variáveis categóricas, de forma que a análise é adaptada para verificar a aderência das frequências observadas a uma distribuição proporcional à distribuição normal.
+
+Desta forma, as hipóteses formuladas para o problema são:
+
+-   H~0~: As proporções observadas seguem uma distribuição normal.
+
+-   H~1~: As proporções observadas não seguem uma distribuição normal.
+
+##### Apresentação dos dados em uma Tabela de Contingência
+
+|         |    Ano    |   2018    |
+|:-------:|:---------:|:---------:|
+|         |  Branca   |   1.020   |
+|         |   Parda   |   1.603   |
+| **Cor** |   Negra   |    261    |
+|         |  Outras   |    43     |
+|         | **Total** | **2.927** |
+
+: Tabela de Contingência dos dados de 2018
+
+##### Cálculo das frequências esperadas
+
+Para se obter as frequências esperadas para este ano, primeiro devem ser calculadas a média e o desvio padrão das frequências observadas, considerando o total marginal.
+
+Média do ano 2018 ($\mu$):
+
+$$
+\mu = \frac{\sum x_i}{n} = \frac{1.020 + 1.603 + 261 + 43}{4} = 731,75
+$$
+
+Desvio padrão do ano 2018 ($\sigma$):
+
+$$
+\sigma = \sqrt{\frac{\sum (x_1 - \mu)^2}{n - 1}} = \sqrt{\frac{(1.020 - 731,75)^2 + (1.603 - 731,75)^2 + (261 - 731,75)^2 + (43 - 731,75)^2}{3}} = $$
+
+$$
+\sqrt{\frac{83.088,0625 + 759.076,5625 + 221.605,5625 + 474.376,5625}{3}} \thickapprox 716,0416
+$$
+
+Em R:
+
+```{r}
+
+media <- mean(observado_2018)
+desvio_padrao <- sd(observado_2018)
+print(paste("Média:", media))
+print(paste("Desvio padrão:", desvio_padrao))
+```
+
+Para calcular as frequências esperadas com base em uma distribuição normal, precisamos associar cada categoria a um intervalo de valor.
+
+|         |    Ano    |   2018    |       Intervalo z       |
+|:-------:|:---------:|:---------:|:-----------------------:|
+|         |  Branca   |   1.020   | $1.020 \leq z < 1.603$  |
+|         |   Parda   |   1.603   | $1.603 \leq z < \infty$ |
+| **Cor** |   Negra   |    261    |  $261 \leq z < 1.020$   |
+|         |  Outras   |    43     | $-\infty \leq z < 261$  |
+|         | **Total** | **2.927** |                         |
+
+: Intervalos associados
+
+A partir da média e do desvio padrão podemos utilizar a função de densidade cumulativa$f(x) = \frac{1}{\sigma\sqrt{2\pi^e}}e^{-\frac{(x - \mu)^2}{2\sigma^2}}$ para calcular a proporção das frequências esperadas.
+
+|         |    Ano    |   2018    |       Intervalo z       | Proporções |
+|:-------:|:---------:|:---------:|:-----------------------:|:----------:|
+|         |  Branca   |   1.020   | $1.020 \leq z < 1.603$  | 0,2554510  |
+|         |   Parda   |   1.603   | $1.603 \leq z < \infty$ | 0,4009132  |
+| **Cor** |   Negra   |    261    |  $261 \leq z < 1.020$   | 0,23178782 |
+|         |  Outras   |    43     | $-\infty \leq z < 261$  | 0,1118480  |
+|         | **Total** | **2.927** |                         |            |
+
+: Propoções esperadas
+
+Em R:
+
+```{r}
+
+# intevalos das classes
+ordenado <- sort(observado_2018)
+intervalos <- c(-Inf, (append(ordenado[-1], Inf)))
+
+# probabilidades esperadas para cada intervalo usando a CDF da normal
+print("Intervalos definidos:")
+print(intervalos)
+cat("\n")
+
+probs_esperadas <- pnorm(intervalos, mean=media, sd=desvio_padrao)
+print("Probabilidade esperadas - acumuladas:")
+print(probs_esperadas)
+cat("\n")
+
+# usar as diff para encontrar as probabilidades em cada intervalo
+probs_esperadas <- diff(probs_esperadas)
+print("Probabilidades esperadas - diferenciadas => proporções")
+print(probs_esperadas)
+cat("\n")
+
+# multiplicar pelo número total de observações do ano
+esperado_2018 <- probs_esperadas * sum(observado_2018)
+print("Probabilidades esperadas:")
+print(esperado_2018)
+cat("\n")
+
+total_esperado_2018 <- sum(esperado_2018)
+print(paste("Total de observações esperadas", total_esperado_2018))
+```
+
+As frequências esperadas podem então ser obtida multiplicando-se a probabilidade associada a cada valor da tabela pelo total marginal do ano, conforme a Tabela 5.
+
+|         |    Ano    |    2018    |
+|:-------:|:---------:|:----------:|
+|         |  Branca   |  747,7051  |
+|         |   Parda   | 1.173,4729 |
+| **Cor** |   Negra   |  678,4430  |
+|         |  Outras   |  327,3790  |
+|         | **Total** | **2.927**  |
+
+: Frequências esperadas
+
+Observa-se que todas as frequências esperadas atendem ao requisito de serem maiores que 5, então não será necessário realizar nenhum ajuste nas categorias.
+
+##### Cálculo do $\chi^2$
+
+Para facilitar o acompanhamento dos cálculos a Tabela 6 apresenta uma comparação entre as frequências observadas e as frequências estimadas para o ano de 2018.
+
+|         |           | Observadas | Estimadas  |
+|:-------:|:---------:|:----------:|:----------:|
+|         |  Branca   |   1.020    |  747,7051  |
+|         |   Parda   |   1.603    | 1.173,4729 |
+| **Cor** |   Negra   |    261     |  678,4430  |
+|         |  Outras   |     43     |  327,3790  |
+|         | **Total** | **2.927**  | **2.927**  |
+
+: Comparação dos valores observados e valores estimados
+
+O $\chi^2$ pode ser obtido através da fórmula $\chi^2 = \sum\frac{(O_{ij} - E_{ij})^2}{E_{ij}}$. Considerando-se o total de 2.927 para o ano:
+
+$$
+\chi^2 = (\frac{(1.020 - 747,7051)^2}{747,7051} + \frac{(1.603 - 1.173,4729)^2}{1.173,4729} + \frac{(261 - 678,4430)^2}{678,4430} + \frac{(43 - 327,3790)^2}{327,3790}) = 
+$$\
+$$
+ 99,16277 + 157,2201025 + 256,8508 + 247,0269 \thickapprox 760,2606
+$$
+
+Em R:
+
+```{r}
+qui_quadrado = chisq.test(x = observado_2018,
+                          p = esperado_2018 / total_esperado_2018)
+print(qui_quadrado)
+```
+
+##### Determinação do grau de liberdade
+
+Para determinação do $\chi^2_\nu$ crítico, precisamos calcular o grau de liberdade. Podemos utilizar o número de linhas e colunas que estão sendo comparadas.
+
+$$
+gl = (n_{linhas} - 1) \times (n_{colunas} - 1) = (4 - 1) \times (2-1) = 3 \times 1 = 3
+$$
+
+O grau de liberdade já foi obtido na função anterior em R como df.
+
+##### Comparação com tabelas de valores críticos da distribuição e valores P.
+
+Consultando-se uma tabela de distribuição de Qui-quadrado, o valor crítico para $\alpha$ = 0,05 e 3 graus de liberdade é $\chi^2_{crítico} = 7,814725$.
+
+![Valores da Distribuição de Qui-Quadrado: (g.l; alpha)](fig/tab-qui-quadrado.JPG){fig-align="center"}
+
+Como o valor calculado 760,26 é maior que o valor crítico, **rejeitamos** a hipótese nula. Isso significa que **há evidências que as amostras observadas não seguem uma distribuição normal**.
+
+Também podemos usar o valor P, que representa a probabilidade de se observar o valor do qui-quadrado calculado, assumindo que a hipótese nula é verdadeira.
+
+O valor P já foi calculado em R, obtendo como resultado um valor menor que $2,2 \times e^{-16}$. O valor P baixo (geralmente \< 0,05 ou \< 0,01) indica que **há evidência significativa contra a hipótese nula**, sugerindo que a distribuição observada não se ajusta bem à distribuição esperada.
+
+[@Triola2015intStat] demonstra, de forma mais didática.
+
+![Relações entre a Estatística de Teste X^2^, Valor P e Qualidade do Ajuste](fig/Triola-fluxo-teste-X2.JPG){fig-align="center"}
+
+#### Comparação com dados do IBGE
+
+De forma semelhante, podemos também comparar as frequências das abordagens com a proporção da população de Goiás distribuída por raça/cor, conforme observada pelo IBGE, também fornecida nos dados disponíveis para o exercício.
+
+Os dados fornecidos no exercício foram gravados em um arquivo CSV.
+
+```{r}
+
+df_ibge <- read.csv("dat/populacao_go_ibge.csv",
+                    header = TRUE,
+                    sep    = ";",
+                    dec    = ",")
+
+
+df_ibge |>
+  select(Cor, X2016, X2017, X2018) |> 
+  head(5) |> 
+  gt()
+# knitr::kable(df_ibge)
+```
+
+De forma semelhante, são criadas três listas, separando os dados por ano.
+
+```{r}
+
+ibge_2016 <- df_ibge$X2016
+ibge_2017 <- df_ibge$X2017
+ibge_2018 <- df_ibge$X2018
+
+print(ibge_2018)
+```
+
+##### Formulação das Hipóteses
+
+Neste novo teste vamos verificar se os dados amostrais já apresentados estão de acordo com a distribuição de frequências esperada para a população de Goiás. Desta forma, as hipóteses formuladas para o problema são:
+
+-   H~0~: As proporções das abordagens observadas seguem a distribuição da população do Estado de Goiás.
+
+-   H~1~: As proporções observadas não seguem a distribuição da população do Estado de Goiás.
+
+##### Apresentação dos dados em uma Tabela de Contingência
+
+A Tabela de Contingência é a mesma apresentada no teste anterior.
+
+|         |    Ano    |   2018    |
+|:-------:|:---------:|:---------:|
+|         |  Branca   |   1.020   |
+|         |   Parda   |   1.603   |
+| **Cor** |   Negra   |    261    |
+|         |  Outras   |    43     |
+|         | **Total** | **2.927** |
+
+: Tabela de Contingência dos dados de 2018
+
+##### Cálculo das frequências esperadas
+
+Para se obter as frequências esperadas para cada ano multiplicamos as proporções apresentadas na tabela do IBGE para cada ano pelos totais marginais correspondentes ao mesmo ano.
+
+```{r}
+
+esperado_2016 <- ibge_2016 * sum(observado_2016)
+print(esperado_2016)
+
+esperado_2017 <- ibge_2017 * sum(observado_2017)
+print(esperado_2017)
+
+esperado_2018 <- ibge_2018 * sum(observado_2018)
+print(esperado_2018)
+```
+
+##### Cálculo do $\chi^2$
+
+Para facilitar o acompanhamento dos cálculos a Tabela 9 apresenta uma comparação entre as frequências observadas e as frequências estimadas para o ano de 2018.
+
+|         |           | Observadas | Estimadas |
+|:-------:|:---------:|:----------:|:---------:|
+|         |  Branca   |   1.020    | 1.047,866 |
+|         |   Parda   |   1.603    | 1.580,580 |
+| **Cor** |   Negra   |    261     |  269,284  |
+|         |  Outras   |     43     |  29,270   |
+|         | **Total** | **2.927**  | **2.927** |
+
+: Comparação dos valores observados e valores estimados
+
+O $\chi^2$ pode ser obtido através da mesma fórmula $\chi^2 = \sum\frac{(O_{ij} - E_{ij})^2}{E_{ij}}$. Considerando-se o total de 2.927 para o ano:
+
+$$ \chi^2 = (\frac{(1.020 - 1.047,866)^2}{1.047,866} + \frac{(1.603 - 1.580,580)^2}{1.580,580} + \frac{(261 - 269,284)^2}{269,284} + \frac{(43 - 29,270)^2}{29,270}) = \\ 0,741043 + 0,31802 + 0,254841 + 6,440482 \thickapprox 7,754386$$
+
+Em R:
+
+```{r}
+
+qui_quadrado = chisq.test(x = observado_2018,
+                          p = esperado_2018 / sum(observado_2018))
+
+print(qui_quadrado)
+```
+
+##### Determinação do grau de liberdade
+
+O grau de liberdade mantém-se o mesmo calculado no teste anterior. Da mesma forma, foi obtido no cálculo do $\chi^2$ como df.
+
+##### Comparação com tabelas de valores críticos da distribuição e valores P.
+
+Da mesma forma, mantém-se o valor crítico obtido na tabela de distribuição do Qui-quadrado: $\chi^2_{crítico} = 7,814725$.
+
+Como o valor calculado 7,7544 é menor que o valor crítico, **não** **rejeitamos** a hipótese nula. Isso significa que **não** **há evidências que as amostras observadas não seguem a proporção observada para a população no ano**. Apesar da hipótese formalmente não ser rejeitada, observa-se uma proximidade nos valores que deve ser levada em consideração na utilização desta conclusão.
+
+Também podemos usar o valor P, que representa a probabilidade de se observar o valor do qui-quadrado calculado, assumindo que a hipótese nula é verdadeira.
+
+O valor P já foi calculado em R, obtendo como resultado um valor de 0,05137. O valor P continua baixo, mas apresentou-se levemente superior ao nível de significância $\alpha = 0,005$ escolhido para o teste, indicando que **devemos deixar de rejeitar H~0~**.
+
+Podemos criar um gráfico que demonstre os resultados obtidos. Para isso criamos uma função para plotar o teste, que recebe como parâmetros os dados observados, os dados esperados, o título do gráfico a ser gerado e o tamanho máximo do eixo x deste gráfico.
+
+```{r}
+
+library(ggplot2)
+plota_qui_quadrado <- function(observado, esperado, titulo, x_max) {
+  alpha <- 0.05 # nível de significância
+  gl <- length(observado) - 1
+  valor_critico <- qchisq(1 - alpha, df = gl)
+  
+  teste_qui_quadrado <- chisq.test(x = observado,
+                                   p = esperado / sum(esperado))
+  estatistica_teste <- teste_qui_quadrado$statistic
+  p_value <- teste_qui_quadrado$p.value
+
+  # Gerar uma sequência de valores para a distribuição qui-quadrado
+  if (estatistica_teste > x_max) {
+    maximo_grafico <- estatistica_teste
+  } else {
+    maximo_grafico <- x_max
+  }
+  x <- seq(0, maximo_grafico, by = 0.1)
+  y <- dchisq(x, df = gl)
+
+  # Criar um dataframe para o gráfico
+  df_grafico <- data.frame(x, y)
+
+  # Criar o gráfico
+  ggplot(df_grafico, aes(x = x, y = y)) +
+    geom_line(color = "darkgray", size = 1.2) +
+    geom_area(data = subset(df_grafico, x > valor_critico), aes(y = y), fill = "darkgray", alpha = 0.7) +
+    annotate("segment",
+             x = valor_critico,
+             xend = valor_critico,
+             y = 0,
+             yend = max(y)*0.8,
+             linetype = "dashed",
+             color = "red", size = 1) +
+    annotate("text", x = valor_critico, y = max(y)*0.9,
+             label = paste("Valor Crítico:\nX² =", format(round(valor_critico, 3),
+                                                  big.mark=".",
+                                                  decimal.mark=",")),
+             color = "red", size = 4) +
+    annotate("segment",
+             x = estatistica_teste,
+             xend = estatistica_teste,
+             y = 0,
+             yend = max(y)*0.8,
+             linetype = "dashed",
+             color = "blue", size = 1) +
+    annotate("text", x = estatistica_teste, y = -max(y)/10,
+             label = paste("Teste:\nX² =", format(round(estatistica_teste, 3),
+                                                  big.mark=".",
+                                                  decimal.mark=",")),
+             color = "blue", size = 4) +
+    annotate("text",
+             x = maximo_grafico * 0.8,
+             y = -max(y)/10,
+             label = paste("valor P =",
+                           format(round(p_value, 5),
+                                  big.mark=".",
+                                  decimal.mark=",")),
+             color = "blue", size = 4) +
+    labs(title = paste("Gráfico da Distribuição Qui-Quadrado - ", {{titulo}}), x = "X²", y = "Densidade") +
+    theme_minimal() +
+    coord_cartesian(clip = "off")
+}
+```
+
+Podemos então utilizar essa função para plotar o gráfico do teste.
+
+```{r}
+
+plota_qui_quadrado(observado_2018, esperado_2018, "Abordagens PM - 2018", 25)
+```
+
+De forma semelhante podemos realizar as comparações para os outros dois anos.
+
+```{r}
+qui_quadrado = chisq.test(x = observado_2017,
+                          p = esperado_2017 / sum(observado_2017))
+print(qui_quadrado)
+```
+
+```{r}
+
+plota_qui_quadrado(observado_2017, esperado_2017, "Abordagens PM - 2017", 25)
+```
+
+```{r}
+
+qui_quadrado = chisq.test(x = observado_2016,
+                          p = esperado_2016 / sum(observado_2016))
+print(qui_quadrado)
+```
+
+```{r}
+
+plota_qui_quadrado(observado_2016, esperado_2016, "Abordagens PM - 2016", 25)
+```
+
+Nos dois casos observamos que os valores obtidos pelo teste são maiores que o valor crítico e o valor P = 0, ambos indicando a rejeição da hipótese nula para os dois anos.
+
+### Exemplos usando R
+
+#### Cálculos para a mesma amostra.
+
+Foi criada uma função que cria a frequência esperada a partir dos dados observados e o tipo da distribuição que se quer comparar, que pode ser normal, uniforme, exponencial, poisson ou geométrica.
+
+```{r}
+
+calcula_frequencia_esperada <- function(frequencia_observada, tipo_distribuicao) {
+  frequencia_esperada = 0
+  # Calcular as frequências esperadas de acordo com a distribuição escolhida
+  if (tipo_distribuicao == "normal") {
+    # Calcular média e desvio padrão
+    media <- mean(frequencia_observada)
+    desvio_padrao <- sd(frequencia_observada)
+
+    # intevalos das classes
+    ordenado <- sort(frequencia_observada)
+    intervalos <- c(-Inf, (append(ordenado[-1], Inf)))
+    # probabilidades esperadas para cada intervalo usando a CDF da normal
+    probs_esperadas <- pnorm(intervalos, mean=media, sd=desvio_padrao)
+    # usar as diff para encontrar as probabilidades em cada intervalo
+    probs_esperadas <- diff(probs_esperadas)
+    # multiplicar pelo número total de observações do ano
+    frequencia_esperada <- probs_esperadas * sum(frequencia_observada)
+
+    # Calcular frequências esperadas usando a função pnorm
+    #frequencia_esperada <- pnorm(frequencia_observada, mean = media, sd = desvio_padrao)
+    #frequencia_esperada <- frequencia_esperada / sum(frequencia_esperada)
+
+  } else if (tipo_distribuicao == "uniforme") {
+    n <- length(frequencia_observada)
+    frequencia_esperada <- rep(mean(frequencia_observada), n)
+  } else if (tipo_distribuicao == "exponencial") {
+    # Calcular a média como o parâmetro da distribuição exponencial
+    media <- mean(frequencia_observada)
+    # Calcular frequências esperadas usando a função de densidade exponencial
+    frequencia_esperada <- dexp(frequencia_observada, rate = 1 / media)
+    frequencia_esperada <- frequencia_esperada / sum(frequencia_esperada)
+  } else if (tipo_distribuicao == "poisson") {
+    lambda <- mean(frequencia_observada)  # Usar média como lambda
+    # Calcular frequências esperadas usando a função de densidade Poisson
+    frequencia_esperada <- dpois(frequencia_observada, lambda)
+  } else if (tipo_distribuicao == "geométrica") {
+    # p é probabilidade de sucesso, estimada a partir das médias das frequências observadas
+    p <- 1 / mean(frequencia_observada)
+    frequencia_esperada <- dgeom(frequencia_observada, prob = p)
+  } else {
+    stop("Tipo de distribuição inválido. Escolha 'normal', 'uniforme', 'exponencial', 'poisson' ou 'geométrica'.")
+  }
+
+  return(frequencia_esperada)
+}
+```
+
+Foi também criada uma função que recebe como parâmetros os valores observados, o título do gráfico que será criado e o tamanho máximo do eixo x deste gráfico. Essa função é responsável por chamar a função anterior, para todos os tipos de distribuição que vão ser comparados.
+
+```{r}
+plota_qui_quadrado_distribuicoes <- function(observado, titulo, x_max) {
+  alpha <- 0.05 # nível de significância
+  gl <- length(observado) - 1
+  valor_critico <- qchisq(1 - alpha, df = gl)
+
+  # gera valores dos testes em todos os tipos de distribuição
+  esperado_normal <- calcula_frequencia_esperada(observado, "normal")
+  teste_qui_quadrado_normal <- chisq.test(x = observado,
+                                          p = esperado_normal/sum(esperado_normal))
+  estatistica_teste_normal <- teste_qui_quadrado_normal$statistic
+  p_value_normal <- teste_qui_quadrado_normal$p.value
+
+  esperado_uniforme <- calcula_frequencia_esperada(observado, "uniforme")
+  teste_qui_quadrado_uniforme <- chisq.test(x = observado,
+                                            p = esperado_uniforme/sum(esperado_uniforme))
+  estatistica_teste_uniforme <- teste_qui_quadrado_uniforme$statistic
+  p_value_uniforme <- teste_qui_quadrado_uniforme$p.value
+
+  esperado_exponencial <- calcula_frequencia_esperada(observado, "exponencial")
+  teste_qui_quadrado_exponencial <- chisq.test(x = observado,
+                                               p = esperado_exponencial/sum(esperado_exponencial))
+  estatistica_teste_exponencial <- teste_qui_quadrado_exponencial$statistic
+  p_value_exponencial <- teste_qui_quadrado_exponencial$p.value
+
+  esperado_poisson <- calcula_frequencia_esperada(observado, "poisson")
+  teste_qui_quadrado_poisson <- chisq.test(x = observado,
+                                           p = esperado_poisson/sum(esperado_poisson))
+  estatistica_teste_poisson <- teste_qui_quadrado_poisson$statistic
+  p_value_poisson <- teste_qui_quadrado_poisson$p.value
+
+  esperado_geometrica <- calcula_frequencia_esperada(observado, "geométrica")
+  teste_qui_quadrado_geometrica <- chisq.test(x = observado,
+                                              p = esperado_geometrica/sum(esperado_geometrica))
+  estatistica_teste_geometrica <- teste_qui_quadrado_geometrica$statistic
+  p_value_geometrica <- teste_qui_quadrado_geometrica$p.value
+
+  # Gerar uma sequência de valores para a distribuição qui-quadrado
+  x <- seq(0, x_max, by = 0.1)
+  y <- dchisq(x, df = gl)
+
+  # Criar um dataframe para o gráfico
+  df_grafico <- data.frame(x, y)
+
+  # Criar o gráfico
+  ggplot(df_grafico, aes(x = x, y = y)) +
+    geom_line(color = "darkgray", size = 1.2) +
+    geom_area(data = subset(df_grafico, x > valor_critico), aes(y = y), fill = "darkgray", alpha = 0.7) +
+    annotate("segment",
+             x = valor_critico,
+             xend = valor_critico,
+             y = 0,
+             yend = max(y),
+             linetype = "dashed",
+             color = "red", size = 1) +
+    annotate("text", x = valor_critico, y = -max(y)/10,
+             label = paste("Valor Crítico:\nX² =", round(valor_critico, 3)),
+             color = "red", size = 4) +
+    annotate("segment",
+             x = x_max * 0.6,
+             y = max(y)*0.9,
+             xend = x_max,
+             yend = max(y)*0.9,
+             arrow = arrow(type = "closed", length = unit(0.02, "npc")),
+             color = "blue", size = 1) +
+    annotate("text",
+             x = x_max * 0.8,
+             y = max(y)*0.9,
+             label = paste("Distribuição Normal:\nX² =",
+                           format(round(estatistica_teste_normal, 3),
+                                  big.mark=".",
+                                  decimal.mark=","),
+                           "- valor P:",
+                           p_value_normal),
+             color = "blue", size = 4) +
+    annotate("segment",
+             x = x_max * 0.6,
+             y = max(y)*0.7,
+             xend = x_max,
+             yend = max(y)*0.7,
+             arrow = arrow(type = "closed", length = unit(0.02, "npc")),
+             color = "blue", size = 1) +
+    annotate("text",
+             x = x_max * 0.8,
+             y = max(y)*0.7,
+             label = paste("Distribuição Uniforme:\nX² =",
+                           format(round(estatistica_teste_uniforme, 3),
+                                  big.mark=".",
+                                  decimal.mark=","),
+                           "- valor P:",
+                           p_value_uniforme),
+             color = "blue", size = 4) +
+    annotate("segment",
+             x = x_max * 0.6,
+             y = max(y)*0.5,
+             xend = x_max,
+             yend = max(y)*0.5,
+             arrow = arrow(type = "closed", length = unit(0.02, "npc")),
+             color = "blue", size = 1) +
+    annotate("text",
+             x = x_max * 0.8,
+             y = max(y)*0.5,
+             label = paste("Distribuição Exponencial:\nX² =",
+                           format(round(estatistica_teste_exponencial, 3),
+                                  big.mark=".",
+                                  decimal.mark=","),
+                           "- valor P:",
+                           p_value_exponencial),
+             color = "blue", size = 4) +
+    annotate("segment",
+             x = x_max * 0.6,
+             y = max(y)*0.3,
+             xend = x_max,
+             yend = max(y)*0.3,
+             arrow = arrow(type = "closed", length = unit(0.02, "npc")),
+             color = "blue", size = 1) +
+    annotate("text",
+             x = x_max * 0.8,
+             y = max(y)*0.3,
+             label = paste("Distribuição Poisson:\nX² =",
+                           format(round(estatistica_teste_poisson, 3),
+                                  big.mark=".",
+                                  decimal.mark=","),
+                           "- valor P:",
+                           p_value_poisson),
+             color = "blue", size = 4) +
+    annotate("segment",
+             x = x_max * 0.6,
+             y = max(y)*0.1,
+             xend = x_max,
+             yend = max(y)*0.1,
+             arrow = arrow(type = "closed", length = unit(0.02, "npc")),
+             color = "blue", size = 1) +
+    annotate("text",
+             x = x_max * 0.8,
+             y = max(y)*0.1,
+             label = paste("Distribuição Geométrica:\nX² =",
+                           format(round(estatistica_teste_geometrica, 3),
+                                  big.mark=".",
+                                  decimal.mark=","),
+                           "- valor P:",
+                           p_value_geometrica),
+             color = "blue", size = 4) +
+    labs(title = paste("Gráfico da Distribuição Qui-Quadrado - ", {{titulo}}), x = "X²", y = "Densidade") +
+    theme_minimal() +
+    coord_cartesian(clip = "off")
+}
+```
+
+Então, pode ser gerado o gráfico plotando a distribuição Qui-quadrado para os tipos de distribuição presentes na função.
+
+```{r}
+plota_qui_quadrado_distribuicoes(observado_2018, "Abordagens PM - 2018", 25)
+```
+
+O mesmo procedimento pode ser repetido para os outros anos.
+
+```{r}
+plota_qui_quadrado_distribuicoes(observado_2016, "Abordagens PM - 2016", 25)
+```
+
+```{r}
+plota_qui_quadrado_distribuicoes(observado_2017, "Abordagens PM - 2017", 25)
+```
+
+As funções também podem ser usadas para outros dataframes. Por exemplo, pode ser usado para fazer as comparações com uma tabela com as frequências de furtos simples por estado da federação, também obtida no material da aula e gravado em um arquivo CSV.
+
+```{r}
+
+df_furto <- read.csv("dat/furto_simples.csv",
+                     header = TRUE,
+                     sep    = ";")
+
+gt(df_furto)
+# knitr::kable(df_furto)
+```
+
+De forma semelhante, separamos as colunas em listas de valores observados.
+
+```{r}
+
+observado_masculino <- df_furto$Masculino
+observado_feminino  <- df_furto$Feminino
+```
+
+E os gráficos podem ser plotados.
+
+```{r}
+
+plota_qui_quadrado_distribuicoes(observado_masculino, "Masculino", 100)
+```
+
+```{r}
+plota_qui_quadrado_distribuicoes(observado_feminino, "Feminino", 100)
+```

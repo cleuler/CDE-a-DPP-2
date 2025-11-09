@@ -1,0 +1,22 @@
+# Referências {.unnumbered}
+
+::: callout-tip
+## Oh! Bendito...
+
+**... *o que semeia***
+
+Livros à mão cheia
+
+E manda o povo pensar!
+
+O livro, caindo n'alma
+
+É germe --- que faz a palma,
+
+É chuva --- que faz o mar!
+
+(Castro Alves, [*Espumas Flutuantes*](https://www.pensador.com/frase/MzcxODgw/), 1870)
+:::
+
+::: {#refs}
+:::

@@ -1,0 +1,172 @@
+# Apêndice B - Quadro Var {#Apend-B .unnumbered}
+
+```{r}
+#| warning: false
+#| echo: false
+
+# library(tidyverse)
+# library(downlit)
+# library(reticulate)
+# library(quarto)
+# library(qreport)
+# library(kableExtra)
+# library(gt)
+# library(latex2exp)
+# library(ggplot2)
+# library(dplyr)
+# library(tibble)
+# library(lubridate)
+# library(mixtools)
+# library(descr)
+# library(formatdown)
+# library(pwr)
+```
+
+## Quadro de Variáveis
+
+O script a seguir armezena uma tabela do [***Quadro de Variáveis***]{.underline} da pesquisa sobre adolescentes em conflito com a lei em Goiânia (2016-2022), num *data frame* na memória RAM do computador, a fim de permitir uma sua vizualição mais adequada.
+
+```{r}
+
+# Armazanar tab. do Quadro de Variáveis na memória RAM
+
+# carregar o Quadro de Variáveis <quadrovar.csv>
+# Espaço: Comarca [ou Município?] de Goiânia
+# Tempo: 2016-2022
+# Pessoal : jovens investigados (crianças e adolescentes)
+# Material: que, posteriormente, vieram a obito (por causas diversas)
+# Planilha com todas as variáveis observadas
+# Exemplo: sexo, dom <domicílio> e usudrog <S, N>;
+# A variável que foi excluída: renda <7 categorias>, teve sua descrição mantida
+# As variáveis receberam nomes abreviados, cuja explicação encontra-se na 2ª linha, ex.:
+# subst <substância>  [esta já existia, nome foi alterado de usudrog para subst]
+# sitdiv <situações diversas, ex: TDAH, pai preso etc.; novo nome>
+# obsobt <observações óbito, ex.: passou mal na cela, fogo colchão morreu asfixiado; novo nome>
+# etc.
+quadrovar <- read.csv(file  = "dat/csv/quadrovar.csv",
+                  header = TRUE,
+                  sep    = ",",
+                  quote  = "\"",
+                  dec    = ".",
+                  stringsAsFactors = FALSE, # para ler todas as colunas como <char>
+                  fill   = TRUE
+                 )
+cat("Abreviaturas dos nomes, descrição, tipo e categorias de todas as 25 variáveis coletadas:\n")
+names(quadrovar)
+```
+
+Com o conjunto das ***variáveis levantadas*** nas ***n = 449 observações*** colhidas pelo pesquisador (Queops).
+
+**Organizar** o Quadro de Variáveis num *dataframe* mais adequado.
+
+```{r}
+
+#---Função extrair tipo da variável do quadro de variáveis-------------------
+tipo <- function(x) {
+  # filtro para descartar campos vazios <blanck> do argumento x
+  x <- x[x != ""]
+  l <- length(x) # retorna o comprimento de uma coluna x
+  # Conforme o padrão observado nos metadados de quadrovar,
+  # conforme seu comprimento:
+  # 1: tipo caracter <char> ou string
+  # 2: tipo data no formato aaaa-mm-dd
+  # 3 ou mais: tipo categórica binomial ou multinomial (pode ser ordinal)
+  if (l == 1) return("caracter")   # retorna tipo caracter (string)
+  if (l == 2) return("data")       # retorna tipo data formato <aaaa-mm-dd>
+  if (l >= 3) return("categórica") # retorna tipo categórica
+} #--------------------------------------------------------------------------
+
+#---Função para extrair as categorias/formatos de todas variáveis
+#   Será aplicada sobre todas as colunas do data set quadrovar para:
+#   extrair da 1ª linha que se trata de variável armazenada como <char>,
+#   extrair da 2ª linha que se trata de variável tipo data <aaaa-mm-dd>,
+#   extrair da 3ª linha em diante de cada coluna, todas as categorias <char>
+#   fazer um paste0 desse vetor para reunir todas elas, sepradas por ", " e
+#   retornar esse resultado.
+categ <- function(x) {
+  # filtro para descartar campos vazios <blanck> do argumento x
+  x <- x[x != ""]
+  l <- length(x) # retorna o comprimento de uma coluna x
+  # retorna o formato ou o conjunto de categorias de cada coluna (variável).
+  ifelse(l == 1, x[1], paste0(x[2:l], collapse = ", "))
+} #--------------------------------------------------------------------------
+
+# Criar um Dicionário de Dados do Quadro de Variáveis da Pesquisa
+# que ainda encontra-se incompleto e precisa ser aprimorado.
+# Aplicar as duas funções anteriores em todas as colunas de quadrovar
+# para extrair o Tipo e as Categorias (metadados) das Variáveis observadas.
+quadrovar.df <- data.frame( # extrair os metadados de quadrovar
+  n           = 1:length(quadrovar), # número de variáveis: 25
+  Abreviatura = names(quadrovar),    # retorna nomes das variáveis
+  # retorna a 1ª linha de quadrovar: contém a descrição de cada Var.
+  "Descrição" = quadrovar[1, ] |> unlist(), # nome de variável não usual
+  # aplicar a função tipo() a cada coluna de quadrovar:
+  # para retorna o tipo (metadado) de cada uma das suas 25 variáveis
+  Tipo        = apply(X = quadrovar, MARGIN = 2, FUN = tipo ),
+  # aplicar a função categ() a  cada coluna de quadrovar:
+  # para retornar as categorias (metadado) das variáveis categóricas
+  # ou se ela é do tipo caracter (string) ou seu formato se ela é tipo data
+  Categorias  = apply(X = quadrovar, MARGIN = 2, FUN = categ)
+)
+
+# Apagar os indevidos nomes das linhas do dataframe recem criado
+# que armazenou os 25 nomes de colunas de quadrovar
+# atribuir o vakor NULL ao seu atributo: rownames (nomes das linhas)
+attributes(quadrovar.df)
+rownames(quadrovar.df) <- NULL
+```
+
+### Exibição dos Metadados dos Dados brutos
+
+**Exibir** uma tabela com um primeiro **Dicionário de Dados** do **Quadro de Variáveis** inicial da Pesquisa:
+
+```{r}
+
+# Carregar e anexar o pacote complementar denominado: gt - get table
+# na Global Environment:
+library(gt)
+
+quadrovar.df |> # utilizar o comando pipe do R base
+  gt(
+    caption = "Dicionário de Dados do Quadro de Variáveis inicial da Pesquisa: Jovens em conflito com a lei com passagem pela DePAI - Goiânia: 2016-2023"
+  )
+```
+
+Então, somente após superadas essas fases de ***pré-processamento, checagem e organização*** dos ***metadados*** dos ***dados primários*** levantados pelo autor da pesquisa, salva-se no disco rígido esses metadados como ***dados tratados*** para formar um **Dicionário de Dados** inicial do **Quadro de variáveis** na pasta `out`.
+
+Que poderá ser lido de qualquer ponto de um *script* qualquer deste `EBR-a-DPP.Rproj` e encontra-se pronto para ser objeto de análises descritivas e exploratória de dados.
+
+```{r}
+
+# salvar os metadados dos dados brutos primários: lido, tratado, checado (eventuais testes de consistência), modificados, explorados e exibidos
+saveRDS(object = quadrovar.df,
+        file   = "out/quadrovar.df.rds")
+
+dic.dados <- readRDS(file = "out/quadrovar.df.rds")
+
+dic.dados |> 
+  gt(
+    caption = "Dicionário de Dados do Quadro de Variáveis inicial da Pesquisa: Jovens em conflito com a lei com passagem pela DePAI - Goiânia: 2016-2023"
+  )
+```
+
+**Exibir** as categorias da variável: `medidase` por meio de uma **tabela** ou de um **gráfico de barras**.
+
+```{r}
+
+library(dplyr)
+library(ggplot2)
+
+# Por meio de uma tabela
+quadrovar |> 
+  count(medidase) # Há 13 linhas em branco
+
+# Por meio de um gráfico de barras
+# filtrar para não incluir as linhas em branco,
+# mas sem alterar o dataset original.
+quadrovar |> 
+  select(medidase) |>
+  filter(medidase != "") |> 
+  ggplot( aes(y = medidase) ) +
+  geom_bar()
+```

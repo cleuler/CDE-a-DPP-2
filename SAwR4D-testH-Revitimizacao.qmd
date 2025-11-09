@@ -1,0 +1,2120 @@
+---
+inheader:
+  \usepackage{tkz-euclide}
+  \usetkzobj{all}
+
+title: "XII EPED - JuRimetria com R: Teste de Hipóteses - variabilidade na Revitimização de Mulheres vítima de estupro"
+
+description: | 
+  Por que a Revitimização de Mulheres vítima de estupro varia nas inquirições junto à 1ª Vara Criminal de Aparecida de Goiânia, 2011-2021 (exceto 2017) [THUANY, Gabriela, 2022; SAwR4D-testH in SCHUMULLER, 2019]
+knitr:
+  opts_chunk:
+    comment: "#>"
+    collapse: true
+author: "Prof. Dr. Cleuler B. das Neves"
+date: "`r format(Sys.time(), '%d %m %Y')`"
+number-sections: true
+crossref:
+  chapters: true
+  lof-title: "Lista de Figuras"
+  lot-title: "Lista de Tabelas"
+  lol-title: "Lista de Definições"
+# chap-title: sec.      # (default is "Chapters")
+  fig-title: Fig.       # (default is "Figure")
+  fig-prefix: fig.
+  tbl-title: Tab.       # (default is "Table")
+  tbl-prefix: tab.
+  thm-title: Teorema    # (default is "Theorem")
+  thm-prefix: teor.
+  def-title: Definição  # (default is "Definition")
+  def-prefix: def.
+  cnj-title: Conjectura # (default is "Conjecture")
+  cnj-prefix: Hip.
+  exm-title: Exemplo    # (default is Example)
+  exm-prefix: ex.
+  sec-prefix: sec.
+  title-delim: " - "    # (default is ":")
+bibliography: references.bib
+prefer-html: true
+format:
+  html:
+    self-contained: true
+    code-fold: show
+    code-tools: true
+    code-link: true
+    toc: true
+    toc-title: Contents
+    toc-location: left
+    toc-depth: 3
+    toc-float: true
+    html-math-method: katex
+    css: styles.css
+    theme: default
+    collapsed: false
+    smooth-scroll: true
+    number-sections: true
+    code-folding: true
+  pdf:
+    toc: true
+    number-sections: true
+    colorlinks: true
+    code-line-numbers: true
+    geometry: 
+      - top=30mm
+      - left=30mm
+  docx: default
+execute: 
+  warning: false
+  include: true
+#  echo: true
+  echo: fenced
+# bibliography: library.bib
+# csl: frontiers-in-ecology-and-the-environment.csl
+---
+
+```{r}
+#| label: setup
+#| include: false
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
+```
+
+```{r init, include = FALSE, cache = FALSE}
+library(lattice)
+library(gridExtra)
+library(gRain) # Graphical model inference
+library(Rgraphviz)
+library(bnlearn)
+library(tidyverse)
+library(dplyr)
+library(tibble)
+library(forcats)
+library(scales)
+library(kableExtra)
+library(ggplot2)
+library(patchwork)
+library("cowplot")
+library(stringr)
+library("formattable")
+library(epitools)
+library(lubridate)
+library(plyr)
+```
+
+# Estatística & Probabilidade
+
+## Probabilidade
+
+"A **probabilidade** é a base dos **testes de hipótese** e da estatística **inferencial**" [@schmuller2019statR4Leigos , p. 363]
+
+## População, amostragem, amostra, AED e inferência (AID)
+
+```{r}
+#| label: Pop-amostra-inferencia
+#| echo: FALSE
+#| fig-cap: "Fig. 1 - População, amostra e inferência: método indutivo."
+#| out-width: '70%'
+knitr::include_graphics("../fig/inferencia.png")
+```
+
+## Indução: Amostragem Aleatória, Amostra Representativa, Inferência amostral de Parâmetros Populacionais
+
+```{r amostragem-aleatoria-amostra-representativa, echo = FALSE, fig.cap = "Fig. 2 - População, Amostra Representativa e inferência amostral de parâmetros populacionais: método indutivo.", out.width = '70%'}
+knitr::include_graphics("../fig/Inferencias_Amostra_Populacao.png")
+```
+
+## Data Science - DS: DW, EDA, Model and ML (AI) & CP+SR+DC
+
+```{r data-science-core-skill-sets, echo = FALSE, fig.cap="Fig. 3 - The three core skill sets of data science: computer programming, data comprehension, and scientific reasoning."}
+knitr::include_graphics("../images/hopr_fig-10-04-3Core-SkillSets-OfDataScience_CP-DC-SR-p185-grolemund-2014.png")
+```
+
+Cf. Grolemund, [Hands-On Programming with R](https://rstudio-education.github.io/hopr/) [@grolemund2014hands , p. 185]
+
+## Workflow: Data Wrangle (50% to 80% of the time)
+
+```{r workflow-data-science-wrangle-understand-data-sets, echo = FALSE, out.width = '70%', fig.cap="Fig. 4 - A simple workflow for understand data (after wrangle the data set): transforming, visualizing, and modeling data in R."}
+knitr::include_graphics("../fig/2-data-science-wrangle.png")
+```
+
+Cf. Wickham & Grolemund, [R for Data Science](https://r4ds.had.co.nz/) [@Wickham2017R , part II, p. 117]
+
+Cf. [@boehmke2016wrangling , p. 3]
+
+## Diamond Shap: Science Helical of Encoding Knowledge
+
+```{r diamond-shaped-science-spiral, echo = FALSE, out.width = '80%', fig.cap="Fig. 5 - Diamnond-shaped of scientific process cpature; apud Rao, 1977, p. 123, wich start from Karl Popper ideas."}
+knitr::include_graphics("../fig/DiamondShape_fig1706_Donovam.JPG")
+```
+
+Cf. [Bayesian Statistics for beginners](https://freecomputerbooks.com/An-Introduction-to-Bayesian-Thinking.html) [@Donovan2019-ug , p. 274-75]
+
+## Probabilidade: Teoria dos Jogos ou Jogos da Teoria
+
+"Deus não joga dados" (Eistein, 1926) x Princípio da Incerteza (Heisenberg, 1926) [cf. UFSM](https://www.ufsm.br/cursos/graduacao/santa-maria/fisica/2020/02/27/principio-de-incerteza-de-heisenberg/)
+
+```{r teoria-jogos-dados, echo = FALSE, out.width = '60%', fig.cap="Fig. 6 - Teoria dos Jogos ou Jogos da Teoria."}
+knitr::include_graphics("../fig/jogos_dados.jpg")
+```
+
+### Roll n fair Dice Function
+
+```{r 1-roll-n-dice-k-faces-function}
+#
+#  rock in 1-Rool of n-dice of scar k-faces
+#
+#-------function--------------------------------------------------------
+# name      : rolln
+# objective : simulate one roll of n fair dice.
+# parameters: n   = 1, number of dice (default = 1); <atomic vector> <int>.
+#             die = 1:6 (default is one die of 6 faces). <vector> <int>;
+#                   should had at least two faces (a coin equivalent);
+# return    : sum of n fair dices' face rolled once together
+#
+rolln <- function(n = 1L, die = 1L:6L) {
+  stopifnot("n must be numeric"= is.numeric(n))
+  n     <- as.integer(n)
+  nface <- length(die) %>% as.integer()
+  die   <- seq(1L:nface)
+  ndice <- sample(die,
+                  size = n,
+                  replace = TRUE,
+                  prob = rep(1/nface, times = nface)) # fair dice
+  sum(ndice)
+}
+#-------end of function rolln--------------------------------------------
+```
+
+### Simulate 1 roll of 1 die (six faces)
+
+```{r simulate-one-die-roll}
+rolln()
+# return    : 1 fair die's face rolled once
+```
+
+### Simulate 1 roll of 2 fair dice (six faces)
+
+```{r simulate-two-die-roll}
+rolln(n = 2)
+# return    : sum of 2 fair dices' face rolled once together
+```
+
+### Simulate 1 roll of 3 fair dice (six faces)
+
+```{r simulate-three-die-roll}
+rolln(n = 3)
+# return    : sum of 3 fair dices' face rolled once together
+```
+
+### Simulate 1 roll of 1 fair coin (two faces == a coin)
+
+```{r simulate-one-fair-coin-roll}
+coin <- rolln(n = 1, die = 1:2)
+# return    : 1 fair coin' face rolled once (1 - Heads; 2 - Tails)
+
+cat("1 moeda lançada uma só vez:", ifelse(coin == 1, "1 - Cara", "2 - Coroa"))
+```
+
+### Simulate 1 roll of two coins (two faces == a coin)
+
+```{r simulate-two-fair-coin-roll}
+coin <- rolln(n = 2, die = 1:2)
+# return: sum of 2 fair coin' face rolled once
+# 2 - Head, Head;
+# 3 - Head, Tail;
+# 3 - Tail, Head;
+# 4 - Tail, Tail.
+
+# Como a ordem dos resultados dos lançamentos não interfere na soma, se sair cara e coroa ou cora e cara, o resultado dessa soma será igual a 3
+cat("1 moeda lançada duas vezes:", ifelse(coin == 2, "2 - Cara, Cara", ifelse(coin == 3, "3 - Cara, Coroa", "4 - Coroa, Coroa")))
+
+n <- coin - 2
+# return: sum of 2 fair coin' face rolled once
+# Another estipulations:
+# 0 - Head, Head;
+# 1 - Head, Tail;
+# 1 - Tail, Head;
+# 2 - Tail, Tail.
+cat("\n1 moeda lançada duas vezes:",
+     switch(n+1,
+            "0 - Cara, Cara",
+            "1 - Cara, Coroa ou Coroa, Cara",
+            "2 - Coroa, Coroa"))
+```
+
+### Simulate 1 roll of 3 coins (two faces == a coin)
+
+```{r simulate-3-fair-coin-roll}
+coin <- rolln(n = 3, die = 1:2)
+# return: sum of 2 fair coin' face rolled once
+# 3 - Heads, Heads, Heads;
+# 4 - Heads, Heads, Tails;
+# 5 - Heads, Tails, Tails;
+# 6 - Tails, Tails, Tails.
+
+n <- coin - 3
+# return: sum of 2 fair coin' face rolled once
+# 0 - Heads, Heads, Heads;
+# 1 - Heads, Heads, Tails;
+# 2 - Heads, Tails, Tails;
+# 3 - Tails, Tails, Tails.
+
+cat("\n1 moeda lançada 3 vezes:",
+    switch(n+1,
+           "3 - Cara , Cara , Cara",
+           "4 - Cara , Cara , Coroa ou...",
+           "5 - Cara , Coroa, Coroa ou...",
+           "6 - Coroa, Coroa, Coroa"))
+```
+
+### Simulate 1 roll of 4 coins (two faces == a coin)
+
+```{r simulate-4-fair-coin-roll}
+coin <- rolln(n = 4, die = 1:2)
+# return: sum of 4 fair coin' face rolled once
+# 4 - Heads, Heads, Heads, Heads;
+# 5 - Heads, Heads, Heads, Tails;
+# 6 - Heads, Heads, Tails, Tails;
+# 7 - Heads, Tails, Tails, Tails;
+# 8 - Heads, Tails, Tails, Tails.
+
+n <- coin - 4
+# return: sum of 4 fair coin' face rolled once
+# 0 - Heads, Heads, Heads, Heads;
+# 1 - Heads, Heads, Heads, Tails;
+# 2 - Heads, Heads, Tails, Tails;
+# 3 - Heads, Tails, Tails, Tails;
+# 4 - Heads, Tails, Tails, Tails.
+
+cat("\n1 moeda lançada 4 vezes:",
+    switch(n+1,
+           "4 - Cara , Cara , Cara , Cara",
+           "5 - Cara , Cara , Cara , Coroa",
+           "6 - Cara , Cara , Coroa, Coroa",
+           "7 - Cara , Coroa, Coroa, Coroa",
+           "8 - Coroa, Coroa, Coroa, Coroa",
+           ))
+```
+
+### Simulate 1 roll of 5 coins (two faces == a coin)
+
+```{r simulate-5-fair-coin-roll}
+coin <- rolln(n = 5, die = 1:2)
+# return    : sum of 2 fair coin' face rolled once:
+# 5 - Heads, Heads, Heads, Heads, Heads;
+# 6 - Heads, Heads, Heads, Heads, Tails;
+# 7 - Heads, Heads, Heads, Tails, Tails;
+# 8 - Heads, Heads, Tails, Tails, Tails;
+# 9 - Heads, Tails, Tails, Tails, Tails;
+#10 - Tails, Tails, Tails, Tails, Tails;
+
+n <- coin - 5
+cat("\n1 moeda lançada 5 vezes:",
+    switch(n+1,
+           "5 - Cara , Cara , Cara , Cara , Cara",
+           "6 - Cara , Cara , Cara , Cara , Coroa",
+           "7 - Cara , Cara , Cara , Coroa, Coroa",
+           "8 - Cara , Cara , Coroa, Coroa, Coroa",
+           "9 - Cara , Coroa, Coroa, Coroa, Coroa",
+           "10- Coroa, Coroa, Coroa, Coroa, Coroa"
+           ))
+```
+
+### Simulate 1 roll of 1 fair die (3 faces == polyhedral dice set)
+
+```{r simulate-one-3-faces-die-roll}
+rolln(n = 1, die = 1:3)
+# return    : 1 fair die's 3 faces rolled once
+```
+
+```{r polyhedral-dice-set, echo = FALSE, out.width = '100%', fig.cap="Fig. 07 - polyhedral dice set."}
+knitr::include_graphics("../fig/D60_polyhedral_dice_set.jpg")
+```
+
+### Simulate one roll of 4 fair dice (3 faces == polyhedral dice set)
+
+```{r simulate-four-3-face-die-roll}
+rolln(n = 4, die = 1:3)
+# return    : sum of 4 fair dices' 3 faces rolled once together
+```
+
+### Simulate one roll of 1 fair die (10 faces == polyhedral dice set)
+
+```{r simulate-one-10-face-die-roll}
+rolln(n = 1, die = 1:10)
+# return    : 1 fair die's 10 faces rolled once
+```
+
+### Simulate one roll of 5 fair dice (10 faces == polyhedral dice set)
+
+```{r simulate-five-10-face-die-roll}
+rolln(n = 5, die = 1:10)
+# return    : sum of 5 fair dices' 10 faces rolled once together
+```
+
+### Replicate 10 Rolls of n=1 fair Die
+
+```{r replicate-10-simulation-roll-1-die}
+# replicate N = 10 times the function: rolln (n = 1, die = 1:6)
+# simulate 10 times rolls of one fair die
+rolls <- replicate(10, rolln(n = 1, die = 1:6))
+rolls
+```
+
+```{r histogram-replicate-10-simulation-roll-1-die}
+# plot the histogram of this simulation 10 rolls
+
+# qplot(rolls, binwidth = 1)
+
+ggplot(data = NULL,
+       aes(x = rolls)) +
+  geom_histogram(binwidth = 1) +
+  scale_x_continuous(breaks = seq(1, 6, 1))
+```
+
+### Replicate 10.000 Rolls of n=1 fair Die
+
+```{r histogram-replicate-10000-simulation-roll-1-die}
+# plot the histogram of this simulation 10 rolls
+rolls <- replicate(10000, rolln(n = 1, die = 1:6))
+
+# qplot(rolls, binwidth = 1)
+
+ggplot(data = NULL,
+       aes(x = rolls)) +
+  geom_histogram(binwidth = 1) +
+  scale_x_continuous(breaks = seq(1, 6, 1))
+
+nb <- data.frame(nl = 1:10000,
+                 rolls = rolls)
+
+nb |> 
+  ggplot(aes(x = rolls)) +
+  geom_histogram(aes(y = after_stat(count / sum(count))),
+                 binwidth = 1,
+                 alpha = 0.7) +
+  stat_bin(
+    binwidth = 1, geom = "text", color = "gray10",
+    aes(y = after_stat(count / sum(count)), 
+        label = scales::percent(after_stat(round(count / sum(count), 4)))),
+    position = position_stack(vjust = 1.0)
+  ) +
+  scale_y_continuous(labels = scales::percent,
+                     breaks = c(seq(0, .15, .05), .1667)) +
+  scale_x_continuous(breaks = seq(1, 6, 1))  +
+  geom_hline(yintercept = 1/6,
+             color = "red",
+             linetype = "dashed") +
+  labs(title    = "Histograma: 10.000 lançamentos independ. de 1 dado honesto de 6 faces",
+       subtitle = "Proporção (%) dos resultados de cada lançamento plotada no eixo Y.",
+       y        = "Probabilidade (%)",
+       x        = "Faces do Dado",
+       caption  = "Fonte: dados simulados.")
+```
+
+### Replicate 100 Rolls of n=2 fair Dice
+
+```{r replicate-100-simulation-roll-two-dice}
+# replicate N = 100 times the function: rolln (n = 2, die = 1:6)
+# simulate the roll of two independent fair dice and sum them results
+rolls <- replicate(100, rolln(n = 2, die = 1:6))
+rolls
+```
+
+### Possibles Add up to SUM's Rolls of n=2 fair Dice
+
+```{r probs, echo = FALSE, out.width = '100%', fig.cap = "Fig. 08 - Each individual dice combination should occur with the same frequency. As a result, some sums will occur more often than others. With fair dice, each sum should appear in proportion to the number of combinations that make it."}
+knitr::include_graphics("../images/hopr_0203.png")
+```
+
+### Histogram Replicate 100 simulation of Rolls of n=2 fair Dice
+
+Cf. Grolemund [Hands-On Programming with R, 2014, p. 28](https://rstudio-education.github.io/hopr/)
+
+```{r histogram-replicate-100-simulation-roll-2-dice}
+# plot the histogram of this simulation 100 rolls of two fair dice
+
+# qplot(rolls, binwidth = 1)
+
+ggplot(data = NULL,
+       aes(x = rolls)) +
+  geom_histogram(binwidth = 1) +
+  scale_x_continuous(breaks = seq(2, 12, 1))
+```
+
+### Simulation of Replicate 1000 simulation of Rolls of n=2 fair Dice
+
+```{r replicate-1000-simulation-roll-2-dice}
+# replicate N = 1.000 times the function: rolln (n = 2, die = 1:6)
+# simulate the roll of two independent fair dice and sum them results
+rolls <- replicate(1000, rolln(n = 2, die = 1:6))
+rolls
+```
+
+### Histogram of Replicate 1000 simulation of Rolls of n=2 fair Dice
+
+```{r histogram-replicate-1000-simulation-roll-2-dice}
+# plot the histogram of this simulation 1000 rolls of two fair dice
+
+# qplot(rolls, binwidth = 1)
+
+ggplot(data = NULL,
+       aes(x = rolls)) +
+  geom_histogram(binwidth = 1) +
+  scale_x_continuous(breaks = seq(2, 12, 1))
+```
+
+### Histogram of Replicate 10.000 simulation of Rolls of n=2 fair Dice
+
+```{r histogram-replicate-10000-simulation-roll-2-dice}
+# plot the histogram of this simulation 10000 rolls of two fair dice
+rolls <- replicate(10000, rolln(n = 2, die = 1:6))
+
+# qplot(rolls, binwidth = 1)
+
+ggplot(data = NULL,
+       aes(x = rolls)) +
+  geom_histogram(binwidth = 1) +
+  scale_x_continuous(breaks = seq(2, 12, 1)) +
+  stat_bin(binwidth  = 1,
+           geom      = "text",
+           aes(label = ..count..),
+           vjust     = -0.3,
+           size      = 3.5) +
+  stat_bin(
+    binwidth = 1, geom = "text", color = "white",
+    aes(y = after_stat(count / sum(count)), 
+        label = scales::percent(round(after_stat(count / sum(count)), 4))),
+    position = position_stack(vjust = 5000.0)
+  ) +
+  labs(title    = "Histograma: 10.000 lançamentos independentes\nde 2 dados honestos de 6 faces cada um",
+       subtitle = "Contagem das somas de cada lançamento plotada no eixo Y.",
+       y        = "Frequencia Abosluta (n)",
+       x        = "Soma das Faces dos dois Dados",
+       caption  = "Fonte: dados simulados.")
+```
+
+### Histogram of Replicate 10.000 simulation of Rolls of n=4 fair Coins
+
+```{r histogram-replicate-10000-simulation-roll-4-fair-n-coins}
+# plot the histogram of this simulation 711000 rolls of 4 fair coins
+rolls <- replicate(10000, rolln(n = 4, die = 1:2))
+
+# qplot(rolls, binwidth = 1)
+
+ggplot(data = NULL,
+       aes(x = rolls)) +
+  geom_histogram(binwidth = 1) +
+  scale_x_continuous(breaks = seq(4, 8, 1)) +
+  scale_y_continuous(limits = c(0, 4500), breaks = seq(0, 4500, 500)) +
+  stat_bin(binwidth  = 1,
+           geom      = "text",
+           aes(label = ..count..),
+           vjust     = -0.3,
+           size      = 4) +
+  stat_bin(
+    binwidth = 1, geom = "text", color = "white",
+    aes(y = after_stat(count / sum(count)), 
+        label = scales::percent(round(after_stat(count / sum(count)), 3))),
+    position = position_stack(vjust = 5000.0)
+  ) +
+  theme(
+  plot.caption = element_text(hjust = 0,  # move caption to the left
+                              face  = "italic",
+                              size  = 8   # size of captions footnote
+                              )
+        ) +
+  labs(title    = "Histograma: 10.000 lançamentos independentes de 4 moedas honestas",
+       subtitle = "Contagem dos resultados (soma) de cada lançamento plotada no eixo Y.",
+       x        = "Possíveis somas de 1 lançamento independente de 4 moedas",
+       y        = "Frequência Absoluta",
+       caption  = "Fonte: dados simulados.
+       Possíveis somas de 1 lançamento simultâneo e independente de 4 moedas:
+       4 - Cara , Cara , Cara , Cara .
+       5 - Cara , Cara , Cara , Coroa.
+       6 - Cara , Cara , Coroa, Coroa.
+       7 - Cara , Coroa, Coroa, Coroa.
+       8 - Coroa, Coroa, Coroa, Coroa."
+       )
+```
+
+### Histogram of Replicate 10.000 simulation of Rolls of n=5 fair Coins
+
+```{r histogram-replicate-10000-simulation-roll-five-fair-coins}
+# plot the histogram of this simulation 10000 rolls of 4 fair coins
+rolls <- replicate(10000, rolln(n = 5, die = 1:2))
+
+# qplot(rolls, binwidth = 1)
+
+ggplot(data = NULL,
+       aes(x = rolls)) +
+  geom_histogram(binwidth = 1) +
+  scale_x_continuous(breaks = seq(5, 10, 1)) +
+  scale_y_continuous(limits = c(0, 3500), breaks = seq(0, 3500, 500)) +
+  stat_bin(binwidth  = 1,
+           geom      = "text",
+           aes(label = ..count..),
+           vjust     = -0.3,
+           size      = 4) +
+  stat_bin(
+    binwidth = 1, geom = "text", color = "white",
+    aes(y = after_stat(count / sum(count)), 
+        label = scales::percent(round(after_stat(count / sum(count)), 3))),
+    position = position_stack(vjust = 5000.0),
+    size      = 3.5
+  ) +
+  theme(
+  plot.caption = element_text(hjust = 0,  # move caption to the left
+                              face  = "italic",
+                              size  = 8   # size of captions footnote
+                              )
+        ) +
+  labs(title    = "Histograma: 10.000 lançamentos independentes de 5 moedas honestas",
+       subtitle = "Contagem dos resultados (soma) de cada lançamento plotada no eixo Y.",
+       x        = "Possíveis somas de 1 lançamento independente de 5 moedas",
+       y        = "Freq. Absoluta",
+       caption  = "Fonte: dados simulados.
+       Possíveis somas de 1 lançamento simultâneo e independente de 5 moedas:
+       5 - Cara , Cara , Cara , Cara , Cara
+       6 - Cara , Cara , Cara , Cara , Coroa
+       7 - Cara , Cara , Cara , Coroa, Coroa
+       8 - Cara , Cara , Coroa, Coroa, Coroa
+       9 - Cara , Coroa, Coroa, Coroa, Coroa
+       10- Coroa, Coroa, Coroa, Coroa, Coroa."
+       )
+```
+
+### Histogram of Replicate 10.000 simulation of Rolls of n=6 fair Coins
+
+```{r histogram-replicate-10000-simulation-roll-6-fair-coins}
+# plot the histogram of this simulation 10000 rolls of 4 fair coins
+rolls <- replicate(10000, rolln(n = 6, die = 1:2))
+
+# qplot(rolls, binwidth = 1)
+
+ggplot(data = NULL,
+       aes(x = rolls)) +
+  geom_histogram(binwidth = 1) +
+  scale_x_continuous(breaks = seq(6, 12, 1)) +
+  scale_y_continuous(limits = c(0, 3500), breaks = seq(0, 3500, 500)) +
+  stat_bin(binwidth  = 1,
+           geom      = "text",
+           aes(label = round(..count.., 1)),
+           vjust     = -0.3,
+           size      = 4) +
+  stat_bin(
+    binwidth = 1, geom = "text", color = "white",
+    aes(y = after_stat(count / sum(count)), 
+        label = scales::percent(round(after_stat(count / sum(count)), 3))),
+    position = position_stack(vjust = 5000.0),
+    size      = 3.5
+  ) +
+  theme(
+  plot.caption = element_text(hjust = 0,  # move caption to the left
+                              face  = "italic",
+                              size  = 7   # size of captions footnote
+                              )
+        ) +
+  labs(title    = "Histograma: 10.000 lançamentos independentes de 6 moedas honestas",
+       x        = "Possíveis somas de 1 lançamento independente de 6 moedas",
+       y        = "Freq. Absoluta",
+       caption  = "Fonte: dados simulados.
+       Possíveis somas de 1 lançamento simultâneo e independente de 6 moedas:
+       6 - Cara , Cara , Cara , Cara , Cara , Cara
+       7 - Cara , Cara , Cara , Cara , Cara , Coroa
+       8 - Cara , Cara , Cara , Cara , Coroa, Coroa
+       9 - Cara , Cara , Cara , Coroa, Coroa, Coroa
+       10- Cara , Cara , Coroa, Coroa, Coroa, Coroa
+       11- Cara , Coroa, Coroa, Coroa, Coroa, Coroa
+       12- Coroa, Coroa, Coroa, Coroa, Coroa, Coroa."
+       )
+```
+
+mmm
+
+mmm
+
+```{r density-hist-replicate-10000-simulation-roll-6-fair-coins}
+
+# plot the density curve and histogram of this
+# simulation 10000 rolls of 6 fair coins
+# rolls <- replicate(10000, rolln(n = 6, die = 1:2))
+
+# qplot(rolls, binwidth = 1)
+
+x  <- seq(5, 13, length.out = 200)
+df <- data.frame(x = x,
+                 y = dnorm(x, mean(rolls), sd(rolls)))
+
+y2 <- c(0, round(table(rolls) / 10000, 3), 0)
+
+criticalValues <- c(6.5, 11.5)
+
+shadeNormalTwoTailedLeft  <- rbind(
+                                  subset(df, x < criticalValues[1]),
+                                  c(criticalValues[1], 0)
+                                  )
+
+shadeNormalTwoTailedRight <- rbind(c(criticalValues[2],0),
+                                   subset(df, x > criticalValues[2]), c(13,0))
+
+ggplot(data = NULL,
+       aes(x = rolls)) +
+  geom_histogram(aes(y = ..density..),
+                 binwidth = 1,
+                 colour = 1,
+                 fill = "white") +
+  geom_line(data  = df,
+            aes(x = x,
+                y = y),
+            color = "blue",
+#            fill  = "blue",
+            alpha = 0.4) +
+    geom_polygon(data = shadeNormalTwoTailedLeft , aes(x=x, y=y, fill="red"), alpha = 0.4) +
+    geom_polygon(data = shadeNormalTwoTailedRight, aes(x=x, y=y, fill="red"), alpha = 0.4) +
+    guides(fill = "none") + # ecluiu a legenda do gráfico
+    geom_hline(yintercept = 0) +
+  # geom_area(data  = df,
+  #           mapping = aes(x = ifelse(x <= 6.5 | x >= 11.5, x, 0),
+  #                         y = ifelse(x <= 6.5 | x >= 11.5, y, 0.0000)),
+  #           fill  = "blue",
+  #           alpha = 0.5) +
+  scale_x_continuous(breaks = seq(6, 12, 1)) +
+  scale_y_continuous(limits = c(0, 0.35), breaks = seq(0, 0.35, 0.05)) +
+  stat_bin(y         = y2,
+           binwidth  = 1,
+           geom      = "text",
+           aes(label = round(..count.., 1)),
+           vjust     = -0.3,
+           size      = 4) +
+  stat_bin(
+    binwidth = 1, geom = "text", color = "gray50",
+    aes(y = after_stat(count / sum(count)), 
+        label = scales::percent(round(after_stat(count / sum(count)), 3))),
+    position = position_stack(vjust = 0.5),
+    size      = 2.5
+  ) +
+  theme(
+  plot.caption = element_text(hjust = 0,  # move caption to the left
+                              face  = "italic",
+                              size  = 7   # size of captions footnote
+                              )
+        ) +
+  labs(title    = "Histograma e PDF: 10.000 lançamentos independ. de 6 moedas honestas",
+       x        = "Possíveis somas de 1 lançamento independente de 6 moedas",
+       y        = "Densidade: p.d.f(X)",
+       caption  = "Fonte: dados simulados.
+       PDF - Probability Density Function: área em vermelho é a Região de Rejeição.
+       Possíveis somas de 1 lançamento simultâneo e independente de 6 moedas:
+       6 - Cara , Cara , Cara , Cara , Cara , Cara
+       7 - Cara , Cara , Cara , Cara , Cara , Coroa
+       8 - Cara , Cara , Cara , Cara , Coroa, Coroa
+       9 - Cara , Cara , Cara , Coroa, Coroa, Coroa
+       10- Cara , Cara , Coroa, Coroa, Coroa, Coroa
+       11- Cara , Coroa, Coroa, Coroa, Coroa, Coroa
+       12- Coroa, Coroa, Coroa, Coroa, Coroa, Coroa."
+       )
+```
+
+### Histogram of Replicate 10.000 simulation of Rolls of n=100 fair Coins
+
+```{r}
+#| label: fig-plot-100moedas
+#| fig-cap: "Histograma e PDF: 10.000 replicações da 100 lançamentos independentes de 1 moeda honesta"
+
+# plot the density curve and histogram of this
+# 10.000 simulations/replications of n = 100 rolls of 1 fair coin
+rolls <- replicate(10000, rolln(n = 100, die = 1:2))
+
+# qplot(rolls, binwidth = 1)
+
+x  <- seq(100, 200, length.out = 1000)
+df <- data.frame(x = x,
+                 y = dnorm(x, mean(rolls), sd(rolls)))
+
+# y2 <- c(0, round(table(rolls) / 10000, 3), 0)
+
+# binomial n = 100, p = 0.5: mean = 150 sd = 5
+criticalValues <- c(150 - 2*5, 150 + 2*5)
+
+shadeNormalTwoTailedLeft  <- rbind(
+                                  subset(df, x < criticalValues[1]),
+                                  c(criticalValues[1], 0)
+                                  )
+
+shadeNormalTwoTailedRight <- rbind(c(criticalValues[2],0),
+                                   subset(df, x > criticalValues[2]), c(200,0))
+
+
+ggplot(data = NULL,
+       aes(x = rolls)) +
+  geom_histogram(aes(y = ..density..),
+                 binwidth = 1,
+                 colour = 1,
+                 fill = "white") +
+  geom_line(data  = df,
+            aes(x = x,
+                y = y),
+            color = "blue",
+#            fill  = "blue",
+            alpha = 0.4) +
+    geom_polygon(data = shadeNormalTwoTailedLeft , aes(x=x, y=y, fill="red"), alpha = 0.4) +
+    geom_polygon(data = shadeNormalTwoTailedRight, aes(x=x, y=y, fill="red"), alpha = 0.4) +
+    guides(fill = "none") + # ecluiu a legenda do gráfico
+    # geom_hline(yintercept = 0) +
+  scale_x_continuous(breaks = seq(100, 200, 5)) +
+  scale_y_continuous(labels = scales::percent, breaks = seq(0, 0.08, 0.01)) +
+  # scale_y_continuous(limits = c(0, 0.08), breaks = seq(0, 0.08, 0.01)) +
+  # stat_bin(y         = y2,
+  #          binwidth  = 1,
+  #          geom      = "text",
+  #          aes(label = ..count..),
+  #          vjust     = -0.3,
+  #          size      = 1) +
+  # stat_bin(
+  #   binwidth = 1, geom = "text", color = "gray0",
+  #   aes(y = after_stat(count / sum(count)), 
+  #       label = scales::percent(round(after_stat(count / sum(count)), 3))),
+  #   position = position_stack(vjust = 0.95),
+  #   size      = 2.0
+  # ) +
+  theme(
+  plot.caption = element_text(hjust = 0,  # move caption to the left
+                              face  = "italic",
+                              size  = 7   # size of captions footnote
+                              )
+        ) +
+  labs(title    = "Histograma e PDF: 10.000 replicações de 100 lançamentos ind. de 1 moeda",
+       x        = "Possíveis somas de 100 lançamentos independentes de 1 moeda honesta",
+       y        = "Densidade: p.d.f(X)",
+       caption  = "Fonte: dados simulados.
+       PDF - Probability Density Function: área em vermelho é a Região de Rejeição."
+       # Possíveis somas de 100 lançamentos independentes de 1 moeda:
+       # 100 - Cara , Cara , Cara ,..., Cara, Cara
+       # 101 - Cara , Cara , Cara ,..., Cara, Coroa
+       # 102 - Cara , Cara , Cara ,..., Coroa, Coroa
+       # (...)
+       # 198 - Cara , Cara , Coroa,..., Coroa, Coroa
+       # 199 - Cara , Coroa, Coroa,..., Coroa, Coroa
+       # 200 - Coroa, Coroa, Coroa,..., Coroa, Coroa."
+       )
+
+```
+
+# Estupro: Revitimização de Mulheres vítimas
+
+## Up load dados levantados - 46 Inq Mulher Vit (N=196-10=186 procs)
+
+```{r}
+# Upload do levantamento de dados
+
+# Foi preciso acrescer a última linha de Rev2 em Rev1: nProc = 36172-28
+# Só assim o resultado final coincidiu com o de Thuany, 2022, p. 59
+Rev1 <- read.csv(
+  file = "../dat/Revitmizacao-Dados-adaptados-processamento-SEM ZERO.csv",
+  na.strings = c("", "NA") # replace all "NA" <char> by NA value
+)
+```
+
+mmm
+
+mmm
+
+```{r}
+#| label: check-uniq-Ids
+
+# identification of duplicated process
+n_occur <- data.frame(table(Rev1$nProc))
+
+# n_occur |> 
+#   filter(Freq > 1) # São 18 ocorrências com duplicidades, dos quais 8 são únicos
+
+# Logo há 10 duplicidades, mas que não precisam ser removidas do levantamento original, pois são casos em que houve mais de uma inquirição de vítima mulher no mesmo processo
+# Restando 196 - 10 = 186 procedimentos relativos a crimes contra a dignidade sexual (Thuany também encontrou 186 procedimentos)
+Rev1[Rev1$nProc %in% n_occur$Var1[n_occur$Freq > 1], ] |> 
+  kable("html", booktabs = T, longtable = T,
+        caption = "Tabela de identificação dos procedimentos relativos a crimes contra a dignidade sexual em duplicidade que evidenciam mais de uma mulher vítima que foi inquirida no mesmo processo.")  |> 
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = T)
+
+# inspecionando essa tabela, conclui-se que alinhas a serem removidas seriam:
+# n. 41 (cópia da 14),
+# n. 21 (cópia da 61 e 62)
+# n. 64 (cópia da 65)
+# n. 81 (cópia da 82)
+# n. 85 (cópia da 86 e 87)
+# n. 129(cópia da 130)
+# n. 133(cópia da 134)
+# n. 136(cópia da 191)
+#---------------------------------------------------------------------------------
+# contudo haviam, para procedimentos em duplicidade, valores discrepantes de tempo de inquirição => isso é um indicativo de mais de uma inquirição no mesmo processo; sendo que alguns deles (um número = 7) pode não constar MAV disponível!!!!!!!!!!
+#---------------------------------------------------------------------------------
+
+# drop off the 10 duplicated rowls:
+# -c(14, 61, 62, 65, 82, 86, 87, 130, 134, 191)
+# resultando num atabela com 185 linhas ou observações (registros).
+# Rev <- Rev[-c(14, 61, 62, 65, 82, 86, 87, 130, 134, 191), ] # gerou erro
+
+# Depois de uma análise comparativa entre esta tabela carregada
+# e a que Thuany utilizou, já sem as duplicidades, 
+# concluiu-se que o procedimento n. 36172-28 não constava no arquivo ora carregado.
+# Em contato direto com Thuany, ela informou que essa diferença de 1 procedimento
+# a mais, deve ter ocorrido em razão de um retardatário, por causa da demora do cartório com relação a um código de acesso que havia espirado.
+# Todavia, checando a última linha da planilha, observa-se que há muitos campos vazios, ou seja, muitos NA's. 
+
+# Na planilha de Thuany, sem repetições, há também duas variáveis a mais: "nVitInq1VCrim" e "ordInqVit" (que não constavam nesta que foi carregada).
+
+# Optou-se assim, em carregar a mesma planilha que ela utilizou após a finalização da coleta de dados, para evitar-se qualquer discrepância.
+```
+
+## Up load dados - procedim. na 1VCrim (N=186 proc.)
+
+```{r}
+#| label: upload-final-data
+
+# Upload do levantamento FINAL dos dados levantados por Thuany
+# Upload do levantamento FINAL dos mesmo dados: após correção...
+# 1) de datas com anos com 2 dígitos;
+# 2) 1 Escuta especializada em 24/082021, alterada para apenas essa data
+# 3) 2 vit n ouvida (embora marcadas na var vitPsicInqProc = s), alterada para "NA"
+# as três últimas na mesma variável datInqVit
+# 4) var semdeclVitJuizoFundMotivo foi renomeada para vitNOuvJFund;
+# 5) var SexDef renomeada para sexDef;
+# 6) var Sent renomeada para sent;
+# Todas essas alterações foram salvas no arquivo:
+# Dados-adaptados-SemRepet-NA-dif-NULL-Date-format-cor
+# que passou a ser lido em vez do original denominado:
+# Dados-adaptados-SemRepet-NA-dif-NULL
+# ambos mantidos na pasta: dat
+Rev2 <- read.csv(
+  file = "../dat/Dados-adaptados-SemRepet-NA-dif-NULL-Date-format-cor.csv",
+  na.strings = c("", "NA") # replace all "NA" <char> by NA value
+)
+
+# São 186 observações (linhas) coletadas para 54 variáveis (colunas).
+```
+
+### Padronização nomes variáveis
+
+```{r}
+#| label: wrangling1-data
+
+# Padronization of the random variables names
+# names(Rev1)
+# 
+# c(names(Rev1[1:4]), c("nVitInq", "ordInqVit"), names(Rev1[5:52]))
+
+names(Rev2) <- c(names(Rev1[1:4]), c("nVitInq", "ordInqVit"), names(Rev1[5:52]))
+
+# Optando por processar apenas Rev1 (e não Rev)
+# Há evidências de que se trata do arquivo com 8 processos com mais de uma vítima mulher que foi inquirida pelo juízo da 1 VCrim Ap Gyn
+Rev <- Rev1
+```
+
+mmm
+
+mmm
+
+```{r}
+#| label: wrangling2-data
+
+# NA as "NA" <char> in final data
+sum(Rev == "NA", na.rm = TRUE)
+# there were 28 + 2 = 30 "NA" <char>s already changed when uploaded the file
+```
+
+mmm
+
+mmm
+
+```{r}
+#| label: wrangling3-data
+
+# trasformation-1: all variables with dates in R date type
+# note that all variables names init with "dat"...
+
+# function to convert a vector in Date type
+fun <- function(x){
+    if(is.character(x)) {as.Date(x, format = "%d/%m/%Y")}
+    else {x}
+}
+# is.character(Rev$datFatNotC)
+# Havia um erro na especificação do format de as.Date acima: "%m/%d/%Y"
+# Ou seja, indevida inversão entre mês e dia!!! o que foi corrigido
+# as.Date(Rev$datFatNotC, format = "%d/%m/%Y")
+
+# nomes variáveis arquivo inicial (up load n. 1) Thuany
+namesDate1 <- c("datInicInq",
+                "datFinInq",
+                "datFatNotC",
+                "datOferDen",
+                "datRecDen",
+                "datInqVit",
+                "datSentCond")
+
+# nomes variáveis arquivo final (n. 2 up load) Thuany
+
+# namesDate2 <- c("datInicioInq",
+#                 "datFinInq",
+#                 "datFatNotCrim",
+#                 "datOferDen",
+#                 "datRecDen",
+#                 "datInqVit",
+#                 "datSentCond")
+
+# Já Padronizado os nomes das variáveis dos dois conjuntos de dados levantados
+
+d <- Rev[, namesDate1]
+
+#Use colwise from plyr package
+Rev[, namesDate1] <- colwise(fun)(d)
+
+# trasformation-2: all categorical variable from <char> as <factor>s type
+## The conversion
+Rev[sapply(Rev, is.character)] <- lapply(Rev[sapply(Rev, is.character)],
+                                         as.factor)
+```
+
+mmm
+
+mmm
+
+```{r}
+#| label: wrangling4-data
+
+# recalculation: all 3 variables with time interval in R double <dbl> type
+# must be recalculate from the date type variables to express in number of days
+# and so, convert number of days in number of years (approx 1 year = 365.25 days)
+# Calculate difference in years
+
+Rev$tempFatRecDen <- time_length(difftime(Rev$datRecDen,
+                                                 Rev$datFatNotC),
+                                        "years")
+Rev$tempRecDenInqVit     <- time_length(difftime(Rev$datInqVit,
+                                                 Rev$datRecDen),
+                                        "years")
+Rev$tempRecDenSentCond   <- time_length(difftime(Rev$datSentCond,
+                                                 Rev$datRecDen),
+                                        "years")
+
+# There are 3 negative difftimes.
+# Probabily some mistake is data record, that need check again these processes
+
+# Zerou a tabela a seguir em razão da correção do erro de formatação das datas
+# Tornou irrelevante a tabela a sequir codificada.............................
+# Rev |> 
+#   filter(tempFatRecDen < 0 |
+#          tempRecDenInqVit     < 0 |
+#          tempRecDenSentCond   < 0) |> 
+#   kable("html", booktabs = T, longtable = T, caption = "Tabela de Zero procedimentos com pelo menos uma diferença entre datas posterior e anterior negativa")  |> 
+#   kable_styling(bootstrap_options = c("striped", "hover"), full_width = T)
+
+# Com a correção do erro de formatação das datas, todo o código e comentários
+# abaixo tornaram-se irelevantes.............................................
+# As a correction intention, we get the abs() of this negative values
+# just to avoid inconsistence calculus
+# to recheck this 3 records still absolutely necessary
+# Rev$tempFatRecDen <- abs(Rev$tempFatRecDen)
+# Rev$tempRecDenInqVit     <- abs(Rev$tempRecDenInqVit)
+# Rev$tempRecDenSentCond   <- abs(Rev$tempRecDenSentCond)
+```
+
+mmm
+
+mmm
+
+```{r}
+#| label: tbl-wrangling5-data
+#| warning: false
+#| tbl-cap: "Tabela de identificação dos procedimentos relativos a crimes contra a dignidade sexual com mais de uma vítima mulher inquirida por processo com indicação se nele há MAV disponível (cf. THUANY, 2022, p. 60)"
+
+# Check for duplicates
+# identification of duplicated process as more than one inquirition in Rev1
+n_occur <- data.frame(table(Rev$nProc))
+names(n_occur) <- c("nProc", "nVitInqProc")
+
+# São 0 ocorrências com duplicidades para Rev2, como esperado.
+# Porém, não para Rev2 (escolhido para ser processado):
+n_occur |> 
+  filter(nVitInqProc > 1) # Há 8 processos com uma ou mais duplicidade em Rev1
+
+# Não há duplicidades que precisassem ser removidas do levantamento final Rev2.
+# Restando 186 procedimentos relativos a crimes contra a dignidade sexual
+# exatamente o mesmo quantitativo que Thuany encontrou.
+
+# Todavia há 8 processos em Rev1 em que ocorreram 18 inquirições
+# mais de uma inquirição de mulheres vítimas de estupro:
+#                   6 em que foram 2 vítimas inquiridas = 12
+#                   2 em que foram 3 vítimas inquiridas =  6
+# É preciso ainda verificar se nesse subconjunto há MAV disponível para todas
+# essas inquirições
+
+Rev |> 
+  select(nProc, nVit, audMAV) |> 
+  filter(nVit > 1) |> 
+  join(y = n_occur, by = "nProc", type = "left") |> 
+  base::unique(nmax = 3, MARGIN = 0) |> 
+  kable("html", booktabs = T, longtable = T,
+        caption = "Tabela de identificação dos procedimentos relativos a crimes contra a dignidade sexual com mais de uma vítima mulher inquirida por processo com indicação se nele há MAV disponível (cf. THUANY, 2022, p. 60)")  |> 
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = T)
+```
+
+mmm
+
+mmm
+
+```{r}
+#| label: fig-plot-piechart-FreqAbs-TiposEstupro
+#| fig-cap: "Gráfico de Pizza: (N = 186) Contagem dos Procedimentos investigatórios por tipo de Estupro que tramitaram\nna 1ª Vara Criminal de Aparecida de Goiânia\nPeríodo: 2011 a 2021, exceto 2017."
+
+# Basic piechart
+
+Rev |> 
+  select(nProc, tCrim) |> 
+  base::unique(nmax = 3, MARGIN = 0) |>
+  group_by(tCrim) |>
+  dplyr::summarize(n = dplyr::n()) |> 
+  arrange(desc(n)) |>
+  mutate(p    = round(n / sum(n) * 100, 1),
+         ypos = cumsum(p) - 0.5 * p + 0.6) |> 
+  ggplot(mapping = aes(x = "", y = p, fill = tCrim)) +
+  geom_bar(stat = "identity", width = 1, color="white") +
+  coord_polar("y", start = 0) +
+  theme_void() +
+  geom_text(aes(y = ypos,
+                label = paste0("   ", as.character(n))),
+            color = "white",
+            size = 5) +
+  scale_fill_brewer(palette = "Set1") +
+  guides(fill = guide_legend(title = "Tipos de Estupro")) +
+  labs(title    = "Gráfico de Pizza: (N = 186) Procedimentos investigatórios de Estupro que\ntramitaram na 1ª Vara Criminal de Aparecida de Goiânia\nPeríodo: 2011 a 2021, exceto 2017.",
+       subtitle = "Contagem por tipo de Estupro segundo carácteres das vítimas.",
+       x        = "",
+       y        = "",
+       caption  = "Fonte: 1. dados coletados por THUANY (2022).\n2. Aprovação pelo CEP da UFG Parecer n. 4.876.672/2021"
+       )
+```
+
+mmm
+
+mmm
+
+```{r}
+#| label: fig-plot-piechart-percent-TiposEstupro
+#| fig-cap: "Gráfico de Pizza: (N = 186) Percentual (%) de Procedimentos investigatórios por tipo de Estupro que tramitaram\nna 1ª Vara Criminal de Aparecida de Goiânia\nPeríodo: 2011 a 2021, exceto 2017."
+
+# Basic piechart
+
+Rev |> 
+  select(nProc, tCrim) |> 
+  base::unique(nmax = 3, MARGIN = 0) |>
+  group_by(tCrim) |>
+  dplyr::summarize(n = dplyr::n()) |> 
+  arrange(desc(n)) |>
+  mutate(p    = round(n / sum(n) * 100, 2),
+         ypos = cumsum(p) - 0.5 * p) |> 
+  ggplot(mapping = aes(x = "", y = p, fill = tCrim)) +
+  geom_bar(stat = "identity", width = 1, color="white") +
+  coord_polar("y", start = 0) +
+  theme_void() +
+  geom_text(aes(y = ypos,
+                label = paste0(" ", as.character(p))),
+            color = "white",
+            size = 5) +
+  scale_fill_brewer(palette = "Set1") +
+  guides(fill = guide_legend(title = "Tipos de Estupro")) +
+  labs(title    = "Gráfico de Pizza: (N = 186) Procedimentos investigatórios de Estupro que\ntramitaram na 1ª Vara Criminal de Aparecida de Goiânia\nPeríodo: 2011 a 2021, exceto 2017.",
+       subtitle = "Proporção (%) por tipo de Estupro segundo carácteres das vítimas.",
+       x        = "",
+       y        = "",
+       caption  = "Fonte: 1. dados coletados por THUANY (2022).\n2. Aprovação pelo CEP da UFG Parecer n. 4.876.672/2021"
+       )
+```
+
+mmm
+
+mmm
+
+```{r}
+#| label: fig-plot-doughnut-plot-TiposEstupro
+#| fig-cap: "Doughnut plot: (N = 186) Contagem e Proporção (%) dos Procedimentos investigatórios por tipo de Estupro que\ntramitaram na 1ª Vara Criminal de Aparecida de Goiânia\nPeríodo: 2011 a 2021, exceto 2017."
+
+p1 <- Rev |> 
+  select(nProc, tCrim) |> 
+  base::unique(nmax = 3, MARGIN = 0) |>
+  group_by(tCrim) |>
+  dplyr::summarize(n = dplyr::n()) |> 
+  arrange(desc(n)) |>
+  mutate(p    = round(n / sum(n) * 100, 1),
+         ypos = cumsum(p) - 0.5 * p) |>
+  # Compute the cumulative percentages (top of each rectangle)
+  mutate(ymax = cumsum(p)) |> 
+  # Compute the bottom of each rectangle
+  mutate(ymin = c(0, head(ymax, n=-1))
+         ) |> 
+  # Make the doughnut plot
+  ggplot(aes(ymax = ymax, ymin = ymin, xmax = 4, xmin = 3, fill = tCrim)) +
+     geom_rect(color = "black") +
+     geom_text(aes(x = 3.5,
+                   y = (ymax+ymin)/2,
+                   label = paste0(as.character(n), "(",
+                                  as.character(p), "%)")),
+               color = "white",
+               size = 3.7) +
+     scale_fill_brewer(palette = "Set1") +
+     coord_polar(theta = "y") + # Try to remove that to understand how the chart is built initially
+     xlim(c(2, 4)) + # Try to remove that to see how to make a pie chart
+     theme_void()
+
+p1 +
+  guides(fill = guide_legend(title = "Tipos de Estupro")) +
+  labs(title    = "Doughnut plot: (N = 186) Procedimentos investigatórios de Estupro que\ntramitaram na 1ª Vara Criminal de Aparecida de Goiânia\nPeríodo: 2011 a 2021, exceto 2017.",
+       subtitle = "Contagem e Proporção (%) por tipo de Estupro segundo carácteres das vítimas.",
+       x        = "",
+       y        = "",
+       caption  = "Fonte: 1. dados coletados por THUANY (2022).\n2. Aprovação pelo CEP da UFG Parecer n. 4.876.672/2021"
+       )
+```
+
+mmm
+
+mmm
+
+```{r}
+#| label: fig-plot-doughnut-plot-GeneroVitima
+#| fig-cap: "Doughnut plot: (N = 186) Contagem e Proporção (%) dos Procedimentos investigatórios de Estupro por gênero (sexo) que\ntramitaram na 1ª Vara Criminal de Aparecida de Goiânia\nPeríodo: 2011 a 2021, exceto 2017."
+
+p2 <- Rev |> 
+  select(nProc, sexVit) |> 
+  base::unique(nmax = 3, MARGIN = 0) |>
+  group_by(sexVit) |>
+  dplyr::summarize(n = dplyr::n()) |> 
+  arrange(desc(n)) |>
+  mutate(p    = round(n / sum(n) * 100, 1),
+         ypos = cumsum(p) - 0.5 * p) |>
+  # Compute the cumulative percentages (top of each rectangle)
+  mutate(ymax = cumsum(p)) |> 
+  # Compute the bottom of each rectangle
+  mutate(ymin = c(0, head(ymax, n = -1))
+         ) |> 
+  # Make the doughnut plot
+  ggplot(aes(ymax = ymax, ymin = ymin, xmax = 4, xmin = 3, fill = sexVit)) +
+     geom_rect(color = "black") +
+     geom_text(aes(x = 3.5,
+                   y = (ymax+ymin)/2,
+                   label = paste0(as.character(n),"(" ,
+                                  as.character(p), "%)")),
+               color = "white",
+               size = 4) +
+     scale_fill_brewer(palette = "Set1") +
+     coord_polar(theta = "y") + # Try to remove that to understand how the chart is built initially
+     xlim(c(2, 4)) + # Try to remove that to see how to make a pie chart
+     theme_void()
+
+p2 +
+  guides(fill = guide_legend(title = "Sexo da Vítima")) +
+  labs(title    = "Doughnut plot: (N = 186) Procedimentos investigatórios de Estupro que\ntramitaram na 1ª Vara Criminal de Aparecida de Goiânia\nPeríodo: 2011 a 2021, exceto 2017.",
+       subtitle = "Contagem e Proporção (%) por sexo das vítimas.",
+       x        = "",
+       y        = "",
+       caption  = "Fonte: 1. dados coletados por THUANY (2022).\n2. Aprovação pelo CEP da UFG Parecer n. 4.876.672/2021"
+       )
+  
+```
+
+mmm
+
+mmm
+
+```{r}
+#| label: fig-plot-doughnut-plot-GeneroFem-AcaoPenal
+#| fig-cap: "Doughnut plot: (160) Contagem e Proporçao (%) dos Procedimentos investigatórios de Estupro com Vítima do sexo feminino que geraram ou não ação penal e que\ntramitaram na 1ª Vara Criminal de Aparecida de Goiânia\nPeríodo: 2011 a 2021, exceto 2017."
+
+p3 <- Rev |> 
+  select(nProc, sexVit, acaoPen) |> 
+  base::unique(nmax = 3, MARGIN = 0) |>
+  group_by(acaoPen) |>
+  filter(sexVit == "Fem") |> 
+  dplyr::summarize(n = dplyr::n()) |> 
+  arrange(desc(n)) |>
+  mutate(p    = round(n / sum(n) * 100, 1),
+         ypos = cumsum(p) - 0.5 * p) |>
+  # Compute the cumulative percentages (top of each rectangle)
+  mutate(ymax = cumsum(p)) |> 
+  # Compute the bottom of each rectangle
+  mutate(ymin = c(0, head(ymax, n = -1))
+         ) |> 
+  # Make the doughnut plot
+  ggplot(aes(ymax = ymax, ymin = ymin, xmax = 4, xmin = 3, fill = acaoPen)) +
+     geom_rect(color = "black") +
+     geom_text(aes(x = 3.5,
+                   y = (ymax+ymin)/2,
+                   label = paste0(as.character(n),"(" ,
+                                  as.character(p), "%)")),
+               color = "white",
+               size = 3.7) +
+     scale_fill_brewer(palette = "Set1") +
+     coord_polar(theta = "y") + # Try to remove that to understand how the chart is built initially
+     xlim(c(2, 4)) + # Try to remove that to see how to make a pie chart
+     theme_void()
+
+p3 +
+  guides(fill = guide_legend(title = "Ação Penal promovida")) +
+  labs(title    = "Doughnut plot: (N = 186) Procedimentos investigatórios de Estupro que\ntramitaram na 1ª Vara Criminal de Aparecida de Goiânia\nPeríodo: 2011 a 2021, exceto 2017.",
+       subtitle = "Contagem e Proporção (%) de 160 procedimentos com vítimas do sexo Feminino\ncom ações penais em curso ou não",
+       x        = "",
+       y        = "",
+       caption  = "Fonte: 1. dados coletados por THUANY (2022).\n2. Aprovação pelo CEP da UFG Parecer n. 4.876.672/2021"
+       )
+```
+
+mmm
+
+mmm
+
+```{r}
+#| label: fig-plot-doughnut-plot-GeneroFem-AcaoPenal-comAIJ
+#| fig-cap: "Doughnut plot: (112) Contagem e Proporção (%) dos Procedimentos investigatórios de Estupro com Vítima do sexo Feminino, que geraram ação penal conforme Audiência de Instrução e Julgamento realizada ou não que\ntramitaram na 1ª Vara Criminal de Aparecida de Goiânia\nPeríodo: 2011 a 2021, exceto 2017."
+
+p4 <- Rev |> 
+  select(nProc, sexVit, acaoPen, audInst) |> 
+  base::unique(nmax = 3, MARGIN = 0) |>
+  group_by(audInst) |>
+  filter(sexVit == "Fem" & acaoPen == "s") |> 
+  dplyr::summarize(n = dplyr::n()) |> 
+  arrange(desc(n)) |>
+  mutate(p    = round(n / sum(n) * 100, 1),
+         ypos = cumsum(p) - 0.5 * p) |>
+  # Compute the cumulative percentages (top of each rectangle)
+  mutate(ymax = cumsum(p)) |> 
+  # Compute the bottom of each rectangle
+  mutate(ymin = c(0, head(ymax, n = -1))
+         ) |> 
+  # Make the doughnut plot
+  ggplot(aes(ymax = ymax, ymin = ymin, xmax = 4, xmin = 3, fill = audInst)) +
+     geom_rect(color = "black") +
+     geom_text(aes(x = 3.5,
+                   y = (ymax+ymin)/2,
+                   label = paste0(as.character(n),"(" ,
+                                  as.character(p), "%)")),
+               color = "gray0",
+               size = 3.0) +
+     scale_fill_brewer(palette = "Set1") +
+     coord_polar(theta = "y") + # Try to remove that to understand how the chart is built initially
+     xlim(c(2, 4)) + # Try to remove that to see how to make a pie chart
+     theme_void()
+
+p4 +
+  guides(fill = guide_legend(title = "Aud. Inst. Julg. já realizada")) +
+  labs(title    = "Doughnut plot: (N = 186) Procedimentos investigatórios de Estupro que\ntramitaram na 1ª Vara Criminal de Aparecida de Goiânia\nPeríodo: 2011 a 2021, exceto 2017.",
+       subtitle = "Contagem e Proporção (%) de 112 ações penais em curso com vítimas do sexo Fem.\nconforme Audiência de Instrução e Julgamento já realizada ou não ou não avaliável.",
+       x        = "",
+       y        = "",
+       caption  = "Fonte: 1. dados coletados por THUANY (2022).\n2. Aprovação pelo CEP da UFG Parecer n. 4.876.672/2021"
+       )
+```
+
+mmm
+
+mmm
+
+```{r}
+#| label: fig-plot-doughnuts-grid4plots-TipoCrim-GeneroFem-AcaoPenal-comAIJ
+#| fig-cap: "Doughnut plots: (N = 186) Contagem e Proporção (%) dos Procedimentos investigatórios por tipo de Estupro, por sexo da Vítima e com Vítima do sexo Feminino: que geraram ou não ação penal e destes conforme Audiência de Instrução e Julgamento realizada ou não que\ntramitaram na 1ª Vara Criminal de Aparecida de Goiânia\nPeríodo: 2011 a 2021, exceto 2017."
+
+library(patchwork)
+p1 + p2 + p3 + p4 + plot_layout(ncol = 2
+                                # guides = "collect"
+                                ) +
+  plot_annotation(
+  title   = "Doughnut plots: (N = 186) Procedimentos investigatórios de Estupro que\ntramitaram na 1ª Vara Criminal de Aparecida de Goiânia\nPeríodo: 2011 a 2021, exceto 2017.",
+  subtitle = "Contagem e Proporção (%) da Natureza do Crime, do Sexo da Vítima,\ndas ações penais em curso e destas com vítimas do sexo Fem.\nconforme Audiência de Instrução e Julgamento já realizada ou não ou não avaliável.",
+  caption = "Fonte: 1. dados coletados por THUANY (2022).\n2. Aprovação pelo CEP da UFG Parecer n. 4.876.672/2021"
+)
+
+# grid.arrange(p1, p2, p3, p4, 
+#              ncol = 2,
+#              nrow = 2)
+# 
+# library("cowplot")
+# plot_grid(p1, p2, p3, p4, labels = "AUTO")
+# 
+# ggdraw() +
+#   draw_plot(p1, x = 0 , y = .5, width = .5, height = .5) +
+#   draw_plot(p2, x = .5, y = .5, width = .5, height = .5) +
+#   draw_plot(p3, x = 0 , y = 0 , width = .5, height = 0.5) +
+#   draw_plot(p4, x = .5, y = 0 , width = .5, height = 0.5) +
+#   draw_plot_label(label = c("A", "B", "C", "D"),
+#                   size = 15,
+#                   x = c(0, 0.5, 0, 0.5),
+#                   y = c(1, 1, 0.5, 0.5))
+```
+
+mmm
+
+mmm
+
+```{r}
+#| label: fig-plot-doughnut-plot-GeneroFem-AcaoPenal-comAIJ-declVitJuizo
+#| fig-cap: "Doughnut plot: (58) Contagem e Proporção (%) dos Procedimentos investigatórios de Estupro com Vítima do sexo Feminino, que geraram ação penal conforme Audiência de Instrução e Julgamento já realizada, segundo seja ou não a vitima ouvida em juízo que\ntramitaram na 1ª Vara Criminal de Aparecida de Goiânia\nPeríodo: 2011 a 2021, exceto 2017."
+
+p5 <- Rev |> 
+  select(nProc, sexVit, acaoPen, audInst, declVitJuizo) |>
+  base::unique(nmax = 3, MARGIN = 0) |>
+  group_by(declVitJuizo) |>
+  filter(sexVit == "Fem" & acaoPen == "s" & audInst == "s") |> 
+  dplyr::summarize(n = dplyr::n()) |> 
+  arrange(desc(n)) |>
+  mutate(p    = round(n / sum(n) * 100, 1),
+         ypos = cumsum(p) - 0.5 * p) |>
+  # Compute the cumulative percentages (top of each rectangle)
+  mutate(ymax = cumsum(p)) |> 
+  # Compute the bottom of each rectangle
+  mutate(ymin = c(0, head(ymax, n = -1))
+         ) |> 
+  # Make the doughnut plot
+  ggplot(aes(ymax = ymax, ymin = ymin, xmax = 4, xmin = 3, fill = declVitJuizo)) +
+     geom_rect(color = "black") +
+     geom_text(aes(x = 3.5,
+                   y = (ymax+ymin)/2,
+                   label = paste0(as.character(n),"(" ,
+                                  as.character(p), "%)")),
+               color = "gray0",
+               size = 3.0) +
+     scale_fill_brewer(palette = "Set1") +
+     coord_polar(theta = "y") + # Try to remove that to understand how the chart is built initially
+     xlim(c(2, 4)) + # Try to remove that to see how to make a pie chart
+     theme_void()
+
+p5 +
+  guides(fill = guide_legend(title = "Declarações Vítimas em Juízo")) +
+  labs(title    = "Doughnut plot: (N = 186) Procedimentos investigatórios de Estupro que\ntramitaram na 1ª Vara Criminal de Aparecida de Goiânia\nPeríodo: 2011 a 2021, exceto 2017.",
+       subtitle = "Contagem e Proporção (%) de 58 ações penais em curso com vítimas do sexo Fem.\ncom Audiência de Instrução e Julgamento já realizada em que elas\nforam ou não ouvidas em juízo (46 procs. com 54 vítimas inquiridas de um total de 74).",
+       x        = "",
+       y        = "",
+       caption  = "Fonte: 1. dados coletados por THUANY (2022).\n2. Aprovação pelo CEP da UFG Parecer n. 4.876.672/2021"
+       )
+```
+
+mmm
+
+mmm
+
+```{r}
+#| label: fig-plot-doughnut-plot-GeneroFem-AcaoPenal-comAIJ-nVitInq
+#| fig-cap: "Doughnut plot: (46) Contagem e Proporção (%) dos Procedimentos investigatórios de Estupro com Vítima do sexo Feminino, que geraram ação penal com Audiência de Instrução e Julgamento já realizada, segundo sejam ou não as vitimas ouvidas em juízo que\ntramitaram na 1ª Vara Criminal de Aparecida de Goiânia\nPeríodo: 2011 a 2021, exceto 2017."
+
+p6 <- Rev |> 
+  select(nProc, nVit, sexVit, acaoPen, audInst, declVitJuizo) |>
+#  base::unique(nmax = 3, MARGIN = 0) |> # não se exclui da contagem os duplicados
+  group_by(declVitJuizo) |>
+  filter(sexVit == "Fem" & acaoPen == "s" & audInst == "s") |> 
+  dplyr::summarize(n = dplyr::n(),
+                   nVit = sum(nVit)) |> # núm. Vitimas nas duas classes decVitJuizo
+  arrange(desc(n)) |>
+  mutate(p    = round(n / sum(n) * 100, 1),
+         ypos = cumsum(p) - 0.5 * p) |>
+  # Compute the cumulative percentages (top of each rectangle)
+  mutate(ymax = cumsum(p)) |> 
+  # Compute the bottom of each rectangle
+  mutate(ymin = c(0, head(ymax, n = -1))
+         ) |> 
+  # Make the doughnut plot
+  ggplot(aes(ymax = ymax, ymin = ymin, xmax = 4, xmin = 3, fill = declVitJuizo)) +
+     geom_rect(color = "black") +
+     geom_text(aes(x = 3.5,
+                   y = (ymax+ymin)/2,
+                   label = paste0(as.character(n),"(" ,
+                                  as.character(p), "%)")),
+               color = "gray0",
+               size = 3.0) +
+     scale_fill_brewer(palette = "Set1") +
+     coord_polar(theta = "y") + # Try to remove that to understand how the chart is built initially
+     xlim(c(2, 4)) + # Try to remove that to see how to make a pie chart
+     theme_void()
+
+p6 +
+  guides(fill = guide_legend(title = "Declarações Vítimas em Juízo")) +
+  labs(title    = "Doughnut plot: (N = 186) Procedimentos investigatórios de Estupro que\ntramitaram na 1ª Vara Criminal de Aparecida de Goiânia\nPeríodo: 2011 a 2021, exceto 2017.",
+       subtitle = "Contagem e Proporção (%) de 46 ações penais em curso com vítimas do sexo Fem.\ncom Audiência de Instrução e Julgamento já realizada em que elas\nforam sim ouvidas em juízo (com 54 vítimas inquiridas de um total de 74).",
+       x        = "",
+       y        = "",
+       caption  = "Fonte: 1. dados coletados por THUANY (2022).\n2. Aprovação pelo CEP da UFG Parecer n. 4.876.672/2021"
+       )
+```
+
+mmm
+
+mmm
+
+```{r}
+#| label: fig-plot-doughnut-plot-GeneroFem-AcaoPenal-comAIJ-declVitJuizo-tempInqVit
+#| fig-cap: "Doughnut plot: (46) Contagem e Proporção (%) dos Procedimentos investigatórios de Estupro com Vítima do sexo Feminino, que geraram ação penal com Audiência de Instrução e Julgamento já realizada, com as vitimas que foram ouvidas em juízo com MAV disponível que\ntramitaram na 1ª Vara Criminal de Aparecida de Goiânia\nPeríodo: 2011 a 2021, exceto 2017."
+
+# Rev |> 
+#   select(nProc, sexVit, acaoPen, audInst, declVitJuizo, audMAV, tempInqVit) |>
+##  base::unique(nmax = 3, MARGIN = 0) |>
+#   group_by(declVitJuizo) |>
+#   filter(tempInqVit > 0) |> 
+#   select(tempInqVit) |> 
+#   base::unique(nmax = 3, MARGIN = 0)
+# São 46 Tempos de Inquirições, todos distintos
+# Há um só processo (nProc = 5592608-15) em que
+# temInqVit > 0 e audInst = n e audMAV = s
+# por coerência, já que há MAV disponível, foi corrigida audInst = s
+
+
+p7 <- Rev |> 
+  select(nProc, nVit, sexVit, acaoPen, audInst, declVitJuizo, audMAV, tempInqVit) |>
+#  base::unique(nmax = 3, MARGIN = 0) |> # não se exclui da contagem os duplicados
+  group_by(declVitJuizo) |>
+  filter(sexVit == "Fem" & acaoPen == "s" & audInst == "s" & tempInqVit > 0) |> 
+  dplyr::summarize(n = dplyr::n()) |> 
+  arrange(desc(n)) |>
+  mutate(p    = round(n / sum(n) * 100, 1),
+         ypos = cumsum(p) - 0.5 * p) |>
+  # Compute the cumulative percentages (top of each rectangle)
+  mutate(ymax = cumsum(p)) |> 
+  # Compute the bottom of each rectangle
+  mutate(ymin = c(0, head(ymax, n = -1))
+         ) |> 
+  # Make the doughnut plot
+  ggplot(aes(ymax = ymax, ymin = ymin, xmax = 4, xmin = 3, fill = declVitJuizo)) +
+     geom_rect(color = "black") +
+     geom_text(aes(x = 3.5,
+                   y = (ymax+ymin)/2,
+                   label = paste0(as.character(n),"(" ,
+                                  as.character(p), "%)")),
+               color = "gray0",
+               size = 3.0) +
+     scale_fill_brewer(palette = "Set1") +
+     coord_polar(theta = "y") + # Try to remove that to understand how the chart is built initially
+     xlim(c(2, 4)) + # Try to remove that to see how to make a pie chart
+     theme_void()
+
+p7 +
+  guides(fill = guide_legend(title = "Declarações Vítimas em Juízo")) +
+  labs(title    = "Doughnut plot: (N = 186) Procedimentos investigatórios de Estupro que\ntramitaram na 1ª Vara Criminal de Aparecida de Goiânia\nPeríodo: 2011 a 2021, exceto 2017.",
+       subtitle = "Contagem e Proporção (%) de 46 ações penais em curso com vítimas do sexo Fem.\ncom Audiência de Instrução e Julgamento já realizada em que elas\nforam ouvidas em juízo (38 proc. c/46 vítimas inquiridas com MAV=s e tempInq > 0).",
+       x        = "",
+       y        = "",
+       caption  = "Fonte: 1. dados coletados por THUANY (2022).\n2. Aprovação pelo CEP da UFG Parecer n. 4.876.672/2021"
+       )
+```
+
+mmm
+
+mmm
+
+```{r}
+#| label: fig-plot-doughnut-plot-GeneroFem-AcaoPenal-comAIJ-declVitJuizo-audMAV
+#| fig-cap: "Doughnut plot: Contagem e Proporção (%) dos Procedimentos investigatórios de Estupro com Vítima do sexo Feminino, que geraram ação penal com Audiência de Instrução e Julgamento já realizada, sendo 54 vítimas já ouvidas em juízo segundo haja ou não Mídia AudioVisual disponível no Projud que\ntramitaram na 1ª Vara Criminal de Aparecida de Goiânia\nPeríodo: 2011 a 2021, exceto 2017."
+
+p8 <- Rev |> 
+  select(nProc, sexVit, acaoPen, audInst, declVitJuizo, audMAV) |> 
+#  base::unique(nmax = 3, MARGIN = 0) |> # não se exclui da contagem os duplicados
+  group_by(audMAV) |>
+  filter(sexVit == "Fem" & acaoPen == "s" & audInst == "s" & declVitJuizo == "s") |> 
+  dplyr::summarize(n = dplyr::n()) |> 
+  arrange(desc(n)) |>
+  mutate(p    = round(n / sum(n) * 100, 1),
+         ypos = cumsum(p) - 0.5 * p) |>
+  # Compute the cumulative percentages (top of each rectangle)
+  mutate(ymax = cumsum(p)) |> 
+  # Compute the bottom of each rectangle
+  mutate(ymin = c(0, head(ymax, n = -1))
+         ) |> 
+  # Make the doughnut plot
+  ggplot(aes(ymax = ymax, ymin = ymin, xmax = 4, xmin = 3, fill = audMAV)) +
+     geom_rect(color = "black") +
+     geom_text(aes(x = 3.5,
+                   y = (ymax+ymin)/2,
+                   label = paste0(as.character(n),"(" ,
+                                  as.character(p), "%)")),
+               color = "gray0",
+               size = 3.0) +
+     scale_fill_brewer(palette = "Set1") +
+     coord_polar(theta = "y") + # Try to remove that to understand how the chart is built initially
+     xlim(c(2, 4)) + # Try to remove that to see how to make a pie chart
+     theme_void()
+
+p8 +
+  guides(fill = guide_legend(title = "Consta MAV")) +
+  labs(title    = "Doughnut plot: (N = 186) Procedimentos investigatórios de Estupro que\ntramitaram na 1ª Vara Criminal de Aparecida de Goiânia\nPeríodo: 2011 a 2021, exceto 2017.",
+       subtitle = "Contagem e Proporção (%) de 54 oitivas em ações penais em curso\nc/vítimas do sexo Fem.\ncom Audiência de Instrução e Julgamento já realizada\nsegundo haja ou não, em tese, Mídia Audio-Visual da oitiva disponível",
+       x        = "",
+       y        = "",
+       caption  = "Fonte: 1. dados coletados por THUANY (2022).\n2. Aprovação pelo CEP da UFG Parecer n. 4.876.672/2021"
+       )
+```
+
+mmm
+
+mmm
+
+```{r}
+#| label: lista-8processos-decVitJuizo-s-tempInqVit-NA
+
+Rev |> 
+  dplyr::select(nProc, nVit, sexVit, acaoPen, audInst, declVitJuizo, audMAV, tempInqVit) |>
+##  base::unique(nmax = 3, MARGIN = 0) |>
+  dplyr::filter(is.na(tempInqVit)) |> 
+  dplyr::filter(declVitJuizo == "s") |> 
+  kable("html", booktabs = T, longtable = T,
+        caption = "Tabela de identificação dos procedimentos relativos a crimes contra a dignidade sexual com pelo menos uma vítima mulher inquirida no processo com indicação se nele há MAV disponível (cf. THUANY, 2022, p. 60)")  |> 
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = T)
+  
+  
+# São 46 Tempos de Inquirições, todos distintos
+# Há um só processo (nProc = 5592608-15) em que
+# tempInqVit > 0 e audInst = n e audMAV = s
+# por coerência, já que há MAV disponível, foi corrigida audInst = s
+
+# nProc = 71944-23  apresentou audInst = "n" & tempInqVit == NA
+# nProc = 242686-91 apresentou audInst = "n" & tempInqVit == NA
+# Ambos foram corrigidos para: audInst = "s".
+
+# São 46 processos com audInst = "s" e declVitJuizo = "s";
+# mas 08 deles, embora em alguns constasse sudMAV = "s", apresentaram tempInqVit == NA.
+# Logo: 46 - 08 = 38 processos em que foram realizadas 46 inquirições, sendo que
+# em 6 deles foi ouvida mais de uma vítima (cf. tab-2.1, acima), a saber:
+# em 4 foram inquiridas 2 vítimas = 8 inquirições;
+# em 2 foram inquiridas 3 vítimas = 6 inquirições;
+# ------------------------------------------------
+# Total                            14 inquirições em 6 processos
+#
+# Logo: 38 processos - 6 + 14 = 46 inquirições no total.
+```
+
+mmm
+
+mmm
+
+```{r}
+#| label: contagem-prop-decVitDel-s-decVitJuizo-s
+
+Rev |> 
+  dplyr::select(nProc, nVit, sexVit, acaoPen, audInst, declVitDel, declVitJuizo, audMAV, tempInqVit) |>
+##  base::unique(nmax = 3, MARGIN = 0) |> # não exclui os duplicados da contagem
+  dplyr::filter(!is.na(tempInqVit)) |> 
+  dplyr::filter(declVitDel == "s" & declVitJuizo == "s") |> 
+  kable("html", booktabs = T, longtable = T,
+        caption = "Tabela de identificação dos procedimentos relativos a crimes contra a dignidade sexual com pelo menos uma vítima mulher inquirida no processo com indicação se ela foi inquirida duas vezes (cf. THUANY, 2022, p. 60)")  |> 
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = T)
+  
+  
+# São 36 Inquirições com MAV disponível em que as vítimas foram inquiridas duas vezes: na Delagacia e em Juízo.
+# Isso representa p = 36 / 46 * 100% = 78.26087%
+```
+
+mmm
+
+mmm
+
+```{r}
+#| label: contagem-prop-decVitDel-s-decVitJuizo-s-vitOuvPsic-s
+
+Rev |> 
+  dplyr::select(nProc, nVit, sexVit, acaoPen, audInst, declVitDel, declVitJuizo, audMAV, tempInqVit, vitOuvPsic) |>
+##  base::unique(nmax = 3, MARGIN = 0) |> # não exclui os duplicados da contagem
+  dplyr::filter(!is.na(tempInqVit)) |> 
+  dplyr::filter(declVitDel == "s" & declVitJuizo == "s" & vitOuvPsic == "s") |> 
+  kable("html", booktabs = T, longtable = T,
+        caption = "Tabela de identificação dos procedimentos relativos a crimes contra a dignidade sexual com pelo menos uma vítima mulher inquirida no processo com indicação se ela foi inquirida três vezes (cf. THUANY, 2022, p. 60)")  |> 
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = T)
+  
+  
+# São 16 Inquirições com MAV disponível em que as vítimas foram inquiridas três vezes: na Delagacia, pelo Juiz e por psicólogo(a).
+# Isso representa p = 16 / 46 * 100% = 34.78261%
+
+
+```
+
+mmm
+
+mmm
+
+```{r}
+#| label: fig-plot-grauVitS
+#| warning: false
+#| fig-cap: "Gráfico de Barras: Contagem e Proporção (%) do Grau de Revitimização Secundária nos Procedimentos investigatórios de Estupro com Vítimas do sexo Feminino que foram ouvidas uma, duas ou três vezes nos procedimentos que\ntramitaram na 1ª Vara Criminal de Aparecida de Goiânia\nPeríodo: 2011 a 2021, exceto 2017."
+
+# criando uma nova variável: grauVitS = n. vezes inquirição mulher vítima estupro
+Rev$grauVitS <- as.numeric(Rev$declVitDel   == "s") +
+                as.numeric(Rev$declVitJuizo == "s") +
+                as.numeric(Rev$vitOuvPsic   == "s")
+
+
+
+Rev |> 
+  ggplot(aes(x = grauVitS)) +
+  stat_count(na.rm = TRUE) +
+  stat_bin(binwidth  = 1,
+           geom      = "text",
+           aes(label = ..count..),
+           vjust     = -0.3,
+           size      = 3.5) +
+  stat_bin(
+    binwidth = 1, geom = "text", color = "white",
+    aes(y = after_stat(count / sum(count)), 
+        label = scales::percent(round(after_stat(count / sum(count)), 4))),
+    position = position_stack(vjust = 35)
+  ) +
+  labs(title    = "Gráfico de Barras: Grau de Revitimização Secundária",
+       subtitle = "Contagem e proporção (%) do número de inquirições da mulher vítima de Estupro (N = 61).",
+       y        = "Frequencia Absoluta (n)",
+       x        = "Número total de inquirições da vítima",
+       caption  = "Fonte: dados coletados por Thuany (2022).")
+```
+
+mmm
+
+mmm
+
+```{r}
+#| label: fig-plot-barras-faceta-grauVitS-EvidRevit
+#| warning: false
+#| fig-cap: "Gráfico de Barras duas facetas: Grau de Revitimização Secundária nos Procedimentos investigatórios de Estupro com Vítimas do sexo Feminino que foram ouvidas uma, duas ou três vezes sgundo Evidências de Revitimização (sim/não) nos procedimentos que\ntramitaram na 1ª Vara Criminal de Aparecida de Goiânia\nPeríodo: 2011 a 2021, exceto 2017."
+
+Rev |> 
+  select(evidRevit, grauVitS) |> 
+  filter(!is.na(evidRevit)) |> 
+  group_by(evidRevit) |> 
+  ggplot(aes(x = grauVitS),
+         fill = evidRevit) +
+  stat_count(na.rm = TRUE) +
+  stat_bin(binwidth  = 1,
+           geom      = "text",
+           aes(label = ..count..),
+           vjust     = -0.3,
+           size      = 3.5) +
+  stat_bin(binwidth = 1,
+           geom     = "text",
+           color    = "white",
+           size     = 3.5,
+    aes(y = after_stat(count / sum(count)), 
+        label = scales::percent(round(after_stat(count / sum(count)), 4))),
+    position = position_stack(vjust = 35)
+  ) +
+  facet_grid(cols = vars(evidRevit)) +
+  labs(title    = "Duas facetas de Gráficos de Barras: Grau de Revitimização Secundária",
+       subtitle = "Contagem e proporção (%) do número de inquirições da mulher vítima de Estupro (N = 46)\nsegundo Evidências de Revitimização (n = não / s= sim).",
+       y        = "Frequencia Absoluta",
+       x        = "Número total de inquirições da vítima",
+       caption  = "Fonte: dados coletados por Thuany (2022).")
+
+```
+
+mmm
+
+mmm
+
+```{r}
+#| label: fig-plot-barras-agrupadas-grauVitS-EvidRevit
+#| warning: false
+#| fig-cap: "Gráfico de Barras agrupadas: Grau de Revitimização Secundária nos Procedimentos investigatórios de Estupro com Vítimas do sexo Feminino que foram ouvidas uma, duas ou três vezes sgundo Evidências de Revitimização (sim/não) nos procedimentos que\ntramitaram na 1ª Vara Criminal de Aparecida de Goiânia\nPeríodo: 2011 a 2021, exceto 2017."
+
+Rev |> 
+  select(evidRevit, grauVitS) |> 
+  filter(!is.na(evidRevit)) |> 
+  group_by(evidRevit, grauVitS) |> 
+  dplyr::summarize(n = dplyr::n()) |> 
+  ggplot(aes(x = grauVitS, y = n,
+             fill = evidRevit, group = evidRevit)) +
+  scale_y_continuous(limits = c(0, 17.5), breaks = seq(0, 15, 5)) +
+  geom_bar(stat = "identity", binwidth = 1,
+           position = "dodge",
+           color = "black", 
+           na.rm = TRUE) +
+  scale_fill_grey(start = 0.7, end = 0.0) +
+  geom_text(aes(label = n), 
+            position = position_dodge(width = 0.9), vjust = -0.25) +
+  geom_text(aes(y = n - 0.5,
+                label = scales::percent(round(n/sum(n), 3))),
+            color = "white",
+            position = position_dodge(width = 0.9), vjust = +0.5,
+            size = 4) +
+  labs(title    = "Gráficos de Barras Agrupadas: Grau de Revitimização Secundária",
+       subtitle = "Contagem e proporção (%) do núm. de inquirições da mulher vítima de Estupro (N = 46)\nsegundo Evidências de Revitimização (n = não / s= sim).",
+       y        = "Frequencia Absoluta",
+       x        = "Número total de inquirições da vítima",
+       caption  = "Fonte: dados coletados por Thuany (2022).")
+
+```
+
+mmm
+
+mmm
+
+```{r}
+#| label: fig-plot-barras-agrupadas-scale1-grauVitS-EvidRevit
+#| warning: false
+#| fig-cap: "Gráfico de Barras agrupadas escalonadas: Grau de Revitimização Secundária nos Procedimentos investigatórios de Estupro com Vítimas do sexo Feminino que foram ouvidas uma, duas ou três vezes sgundo Evidências de Revitimização (sim/não) nos procedimentos que\ntramitaram na 1ª Vara Criminal de Aparecida de Goiânia\nPeríodo: 2011 a 2021, exceto 2017."
+
+DF <- Rev |> 
+  select(evidRevit, grauVitS) |> 
+  filter(!is.na(evidRevit)) |> 
+  group_by(evidRevit, grauVitS) |> 
+  dplyr::summarize(n = dplyr::n())
+
+DF$grauVitS <- as.factor(as.character(DF$grauVitS))
+
+tbl <- xtabs(n ~ grauVitS + evidRevit, DF)
+
+perc <- proportions(tbl, "grauVitS")
+
+tbl   <- as.data.frame.array(tbl)
+perc  <- as.data.frame.array(perc)
+vperc <- unlist(as.vector(perc))
+
+Rev |> 
+  select(evidRevit, grauVitS) |> 
+  filter(!is.na(evidRevit)) |> 
+  group_by(evidRevit, grauVitS) |> 
+  dplyr::summarize(n = dplyr::n()) |> 
+  # mutate_(pct = as.vector(perc)) |> 
+  ggplot(aes(x = grauVitS, y = n,
+             fill = evidRevit, group = evidRevit)) +
+  # scale_y_continuous(limits = c(0, 17.5), breaks = seq(0, 15, 5)) +
+  geom_bar(stat = "identity",
+           binwidth = 1,
+           position = "fill",
+           color = "black", 
+           na.rm = TRUE) +
+  scale_fill_grey(start = 0.7, end = 0.0) +
+  # geom_text(aes(label = y/sum(n)), 
+  #           position = position_stack(), vjust = -0.25) +
+  geom_text(aes(y = vperc,
+                label = scales::percent(vperc, accuracy = .1)),
+            color = "white",
+            position = position_stack(vjust = +0.5),
+            size = 4) +
+  labs(title    = "Gráfico de Barras Agrupadas Escalonadas: Grau de Revitimização Secundária",
+       subtitle = "Proporção (%) por núm. de inquirições da mulher vítima de Estupro (N = 46)\nsegundo Evidências de Revitimização (n = não / s= sim).",
+       y        = "Frequencia Relativa Escalonada",
+       x        = "Número total de inquirições da vítima",
+       caption  = "Fonte: dados coletados por Thuany (2022).")
+
+```
+
+Esse é um gráfico das distribuições de *probabilidades condicionais* dos três Grau de Vitimização Secundária (grauVitS), dado que houvem sim e que não houve Evidências de Revitimização: $P(grauVitS|evidRevit)$. Para cada classe do Grau de Vitimização Secundária, as duas probabilidades condicionais respectivam somam 1,000=100,0%.
+
+Segundo [@rumsey2019stat4Dumm , p. 336-338] esse é o modo adequado para comparar graficamente duas variáveis categóricas, como no @fig-plot-barras-agrupadas-scale1-grauVitS-EvidRevit.
+
+É preciso ter cautela com o fato do grau 1 estar subrepresentado, pois nessa categoria observou-de apenas 3 casos, o que é considerado pouco (o valor esperado em cada uma das duas subclasses, dentro de cada classe dos graus, ocorresse pelo menos 5 vezes).
+
+***Se*** a condição acima fosse verificada e as ***proporções (%)*** de Evidência de Revitimização (evidRevit = s) dentro de cada categoria de Grau de Vitimização Secundária ***fossem todas iguais*** nas três classes de grau (observe que elas não precisariam ser todas iguais a 50%, mas apenas iguais entre si), então isso seria uma ***forte evidência*** de ***independência*** entre essas duas variáveis aleatórias categóricas. [@rumsey2019stat4Dumm , p. 341-342]
+
+Mas ***não*** é isso que se vê no @fig-plot-barras-agrupadas-scale1-grauVitS-EvidRevit, pois à medida em que cresce o número de inquirições da vítima, aumenta a proporção condicional de vítimas revitimizadas. De modo que os *dados minerados* na pesquisa fornecem *evidências iniciais* de que essas duas variáveis são dependentes, ou seja, é de esperar-se uma *relação estatisticaments significativa* entre elas para um nível de significância ∝ = 5% (erro tipo I = 5%), que denota a probabilidade de ocorrer um *falso positivo* [@Lock2017-EstRevPoderDados , p. 191-192]: rejeitar a hipótese nula, quando ela é verdadeira.
+
+Uma relação ou dependência estatisticamente significativa entre elas diz que a segunda variável (grauVitS) *explica* uma expressiva parcela na variabilidade da primeira (evidRevit), consoante *predito* pela *teoria* de referência adotada, enquanto que uma teoria clássica do processo penal seuqer leva a vítima em consideração (cf. a revisão da literatura).
+
+Um teste do *chi-quadrado* ($\chi^2$), desde que atendidas todas as suas condições de aplicabilidade, é o recomendado para testar *se* duas variáveis aleatórias categóricas são *independentes* (é a Ho = Hipótese nula) ou não (é a Ha = Hipótese alternativa). [@Barbetta2019 , p. 230-232] [@Lock2017-EstRevPoderDados , p. 349-355] .
+
+```{r}
+
+# cálculo da estatística de teste do qui-quadrado para: grauVitS x evidRevit
+# O = valor Observado (contagem dos dados coletados)
+# E = valor Esperado  (contagem esperada de acordo com as probabilidades condicionais calculadas supondo que Ho é verdadeira, ou seja, valendo-se da probabilidade marginal de linha vezes o total marginal da respectiva coluna)
+# formula: Sum((O-E)^2/E) para medir a distância entre valores observados e
+#                         valores esperados supondo Ho verdadeira.
+
+#========================================================================
+# função calcular Valores Esperados
+# O - argumento de entrada: Valores Observados
+# retornar:
+# E  - Valores Esperados supondo Ho verdadeira
+# gl - número de graus de liberdade
+#------------------------------------------------------------------------
+fE <- function(O) {
+  nl <- nrow(O) # número de linhas  da tabela de contingência
+  nc <- ncol(O) # número de colunas da tabela de contingência
+  n  <- sum(O)  # número total de observações da tab. conting.
+  E  <- matrix(NA, # criar uma matrix com nl-linhas e nc-colunas
+               nrow = nl, # para armazenar os Valores Esperados
+               ncol = nc, # supondo a Ho verdadeira
+               dimnames = list(row.names(O), # mesmos nomes de linhas  de O
+                               colnames(O))) # mesmos nomes de colunas de O
+  # a partir das frequências absolutas Observadas (variável O), calcular as:
+  margL <- margin.table(O, margin = 1) # frequencias abs. marginais de linha
+  margC <- margin.table(O, margin = 2) # frequencias abs. marginais de coluna
+  for (i in 1:nl) { # i irá varrer todas as linhas  da tabela de Valores Esperados
+    for(j in 1:nc) {# j irá varrer todas as colunas da tabela de Valores Esperados
+      E[i, j] <- (margL[i] * margC[j]) / n # calcular Valor Esperado linha i, col j
+    } # Valor Esperado = freq. marg. linha i * freq. marg. col. j / num. total obs.
+  }
+  gl <- (nl - 1) * (nc - 1) # calcular número de graus de liberdade de
+                            # uma tabela de contingência
+  # retorna uma lista com:
+  return(list(E  = E,   # uma matriz dos Valores Esperados e
+              gl = gl)) # um  vetor com o núm. dos graus de liberdade.
+}
+#========================================================================
+
+
+#========================================================================
+# função calcular Qui-Quadrado
+# Argumentos de entrada:
+# O - tabela de contigência dos Valores Observados
+# alfa - nível de significância, em percentagem (%); default = 5.0
+# retornar:
+# X2     - matrix com valores parciais do qui-quadrado: (O-E)^2/E
+# gl     - graus de liberdade da distribuição qui-quadrado
+# x2calc - qui-quadrado calculado pelo valor total ou soma dos valores parciais
+# x2crit - valor crítico associado ao nível de significância alfa
+# valorP - Área sob a curva da distribuição qui-2 na sua cauda à direita do valor
+#          do valor calculado do qui-quadrado: x2calc
+# alfa   - nível de significância, em %.
+# msg    - mensagem sobre o resultado do teste de hipótese de independência
+#          ou não-associação entre duas variáveis categóricas multinível.
+#------------------------------------------------------------------------
+fX2 <- function(O, alfa = 5.0) {
+  E  <- fE(O) # calcular valores Esperados supondo H0 verdadeira e
+              # calcular gl = graus de liberdade.
+  X2 <- (O - E$E)^2 / E$E # calcular valores parciais do qui-quadrado
+  x2calc <- sum(X2) # calcular o valor total do qui-quadrado: soma dos parciais
+  x2crit <- qchisq(p  = alfa / 100, # valor do qui-quadrado crítico para
+                                    # um específico nível de significância
+                   df = E$gl, # para um específico num. de graus de liberdade
+                   lower.tail = FALSE)
+  valorP <- pchisq(q  = x2calc, # valor-P ou área sob a curva após o valor do
+                                # qui-quadrado calculado
+                   df = E$gl, # para um específico num. de graus de liberdade
+                   lower.tail = FALSE) # área na cauda à direita sob a curva
+  msg    <- ifelse(x2calc > x2crit, # mensagem com o resultado do teste estatístico
+                   "Rejeita-se a Ho: de independência das duas variáveis categóricas, ou seja, há uma associação entre elas.",
+                   "Não Rejeitar a Ho: de independência das duas variáveis categóricas, ou seja, NÃO se pode afirmar que há uma associação entre elas.")
+  # retorna uma lista com:
+  return(list(X2     = X2, # a matriz dos Valores parciais qui-quadrado
+              gl     = E$gl, # vetor com o num. dos graus de liberdade
+              x2calc = x2calc, # qui-quadrado calculado com dados amostrais
+              x2crit = x2crit, # qui-quadrado crítico associado a alfa e gl
+              valorP = valorP, # área sob a curva à direita do x2calc (amostra)
+              alfa   = paste0(alfa, "%"), # nível de significância em %
+              msg    = msg)) # mensagem com resultado do teste estatístico
+}
+#========================================================================
+
+
+O <- as.table(xtabs(n ~ grauVitS + evidRevit, DF))
+# str(O)
+
+chisq.test(O)
+
+# calculando passo a passo o qui-quadrado e seu valor-P
+E1 <- t(t(margin.table(O, margin = 1) / sum(O))) * (margin.table(O, margin = 2))[1]
+E2 <- t(t(margin.table(O, margin = 1) / sum(O))) * (margin.table(O, margin = 2))[2]
+E  <- cbind(E1, E2)
+colnames(E) <- c("n", "s")
+
+cat("Valores Esperados supondo independência das duas variáveis categóricas\n")
+E # Há dois valores Esperados menores que 5
+cat("Há dois valores Esperados menores que 5.\n")
+cat("Requisito do teste qui-quadrado não satisfeito.\n")
+
+fE(O) # calcular os Valores Esperados e num. de graus de liberdade
+fX2(O = O, alfa = 5) # calcular o X^2 parcial, total, X^2crit, valor-P e
+                    # Mensagem com resultado do teste qui^2
+
+# Cálculo do valor do qui-quadrado para os dados coletados
+X2 <- (O - E)^2 / E
+
+# Estatística de teste do qui-quadrado para os dados observados
+x2test <- sum(X2)
+cat("Estatística de teste do qui-quadrado para os dados observados") 
+x2test
+cat("\n")
+
+# seu P-value
+cat("Valor-P da Estatística de teste do qui-quadrado") 
+pchisq(x2test, df = (3-1)*(2-1), lower.tail = FALSE)
+cat("\n")
+
+# usando novamente a função chisq.test()
+x2 <- chisq.test(O, E)
+x2
+x2$expected
+
+# O alto valor-P = 19.96% > (alpha = 5,0%)
+# indica que não se pode rejeitar a Hipótese nula de independência.
+# ou seja, apesar da evidência gráfica inicial, não há relação estatisticamente significativa entre evidRevit e grauVitS para um Nível de Significância de 5%, muito embora dois dos valores esperados (no grau 1) são menores que 5.
+```
+
+### Salvar arquivo após checagem de consistência dos dados originais
+
+```{r}
+# write.csv(Rev,
+#           file = "../dat/Revitmizacao-Dados-adaptados-corrigidos-profCleuler.csv"
+# )
+```
+
+Agrupando os graus 1 e 2 para novo teste de associação entre:
+
+grauVitS (graus 1-2 e grau 3) e evidRevit
+
+```{r}
+
+# Tabela de contingência do grauVitS x evidRevit
+O <- as.table(xtabs(n ~ grauVitS + evidRevit, DF))
+
+# Agrupar os graus 1 e 2 numa só classe denominada 1-2
+O[2, ] <- O[2, ] + O[1, ]
+
+# Eliminar a linha do grau 1
+O <- O[-1, ]
+
+# Renomear o grau 2 para graus 1-2
+row.names(O)[1] <- "1-2"
+
+# Teste do qui-quadrado: aplicado com os graus 1 e 2 agrupados
+cat("Teste chi2 aplicado com os graus 1 e 2 agrupados\n")
+chisq.test(O)
+
+cat("Teste chi2, sem a correção de Yates, aplicado c/os graus 1 e 2 agrupados\n")
+x2 <- chisq.test(O, correct = FALSE) # não aplicar a correção de continuidade Yates
+x2
+cat("Ainda assim o teste não permite rejeitar a Ho de associação significativa,\n")
+cat("pois p-Value = 0.1431 > alpha = 5% = 0.05 (Erro tipo I = 5%; NC = 95%)\n")
+cat("\n")
+# ainda assim o teste não permite rejeitar a Ho de associação significativa
+# pois p-Value = 0.1431 > alpha = 5% = 0.05 (Erro tipo I = 5%; NC = 95%)
+cat("Dados Observados com os graus 1 e 2 agrupados\n")
+cat("Variável Resposta/explicada   (coluna): evidRevit\n")
+cat("Variável Entrada /explanatória (linha): grauVitS\n")
+x2$observed
+cat("\n")
+cat("Valores Esperados se Ho for verdadeira com os graus 1 e 2 agrupados\n")
+x2$expected
+
+cat("\n")
+cat("Há valores Esperados com dígito único (especialmente quando abaixo de 5.0).\n")
+cat("Nesses casos, a simulação com reamostra resulta em valores-P mais precisos (BRUCE & BRUCE, 2019, p. 118).\n")
+cat("Teste chi2 com simulação\n")
+chisq.test(O, simulate.p.value = TRUE)
+cat("O Resultado mostra que esse resultado poderia ter sido facilmente obtido pela simples aleatoriedade (variabilidade de amostra para amostra da distribuição amostral)\n")
+
+cat("\n")
+cat("O teste exato de Fisher é ainda mais adequado (BECKER, 2015, p. 377), pois de termina com exatidão o valor-P (a probabilidade de Erro Tipo I).\n")
+cat("Teste exato de Fisher aplicado com os graus 1 e 2 agrupados\n")
+fisher.test(O)
+```
+
+Ainda assim o teste $\chi^2$ ***não*** permite rejeitar a Ho de não associação ou independência entre essas duas variáveis categóricas.
+
+Pois **p-Value = 0.1945** = 19.45% **\>** 𝞪 **= 5%** = **0.05** (Erro Tipo I = 5%; NC = 95%).
+
+### Gráfico Barras agrupadas escalonadas: GenJ x EvidRevit
+
+```{r}
+#| label: fig-plot-barras-agrupadas-scale1-GenJ-EvidRevit
+#| warning: false
+#| fig-cap: "Gráfico de Barras agrupadas escalonadas: Gênero do Juiz (Fem/Masc) nos Procedimentos investigatórios de Estupro que inquiriram Vítimas do sexo Feminino segundo Evidências de Revitimização (sim/não) nos procedimentos que\ntramitaram na 1ª Vara Criminal de Aparecida de Goiânia\nPeríodo: 2011 a 2021, exceto 2017."
+
+DF <- Rev |> 
+  select(evidRevit, genJ) |> 
+  filter(!is.na(evidRevit)) |> 
+  group_by(evidRevit, genJ) |> 
+  dplyr::summarize(n = dplyr::n())
+
+tbl <- xtabs(n ~ genJ + evidRevit, DF)
+
+perc <- proportions(tbl, "genJ")
+
+tbl   <- as.data.frame.array(tbl)
+perc  <- as.data.frame.array(perc)
+vperc <- unlist(as.vector(perc))
+
+Rev |> 
+  select(evidRevit, genJ) |> 
+  filter(!is.na(evidRevit)) |> 
+  group_by(evidRevit, genJ) |> 
+  dplyr::summarize(n = dplyr::n()) |> 
+  # mutate_(pct = as.vector(perc)) |> 
+  ggplot(aes(x = genJ, y = n,
+             fill = evidRevit, group = evidRevit)) +
+  # scale_y_continuous(limits = c(0, 17.5), breaks = seq(0, 15, 5)) +
+  geom_bar(stat = "identity",
+           binwidth = 1,
+           position = "fill",
+           color = "black", 
+           na.rm = TRUE) +
+  scale_fill_grey(start = 0.7, end = 0.0) +
+  # geom_text(aes(label = y/sum(n)), 
+  #           position = position_stack(), vjust = -0.25) +
+  geom_text(aes(y = vperc,
+                label = scales::percent(vperc, accuracy = .1)),
+            color = "white",
+            position = position_stack(vjust = +0.5),
+            size = 4) +
+  labs(title    = "Gráfico de Barras Agrupadas Escalonadas: Gênero do Juiz",
+       subtitle = "Proporção (%) por Gênero do Juiz que inquiriu mulher vítima de Estupro (N = 46)\nsegundo Evidências de Revitimização (n = não / s= sim).",
+       y        = "Frequencia Relativa Escalonada",
+       x        = "Gênero do Juiz (Fem/Masc)",
+       caption  = "Fonte: dados coletados por Thuany (2022).")
+
+
+```
+
+A partir do gráfico de barras escalonadas da @fig-plot-barras-agrupadas-scale1-GenJ-EvidRevit, que é mais adequado para análise de distribuição de frequências condicionais, percebe-se um padrão na proporção de mulheres vítimas de estupro que foram revitimizadas na audiência de instrução em que ela foi inquirida, pois essa proporção varia entre 60.0% (evidRevit = s \| genJ = Fem) a 73.1% (evidRevit = s \| genJ = Masc), ou seja, bem superior à proporção das mulheves vítimas não revitimizadas, que ficou entre 40.0% (evidRevit = n \| genJ = Fem) a 26.9% (evidRevit = n \| genJ = Masc).
+
+Resta saber se a *diferença* observada entre as duas *proporções de revitimização*, dado que o gênero do Juiz seja Fem (60.0%), ou Masc (73.1%), seria estatisticamente significativa para um nível de confiança usual: $\alpha = 5.0% = 0.05$.
+
+Muito embora um *teste-t*, de student, para verificar uma *diferença entre duas proporções* também possa ser aplicado, optar-se-á por um *teste qui-quadrado*, que apresenta um rol menor de suposições quanto à distribuição das duas variáveis em jogo.
+
+O teste do qui-quadrado, concebido por Karl Pearson em 1900, é o mais antigo teste de hipótese concebido e o mais aplicado no âmbito das Ciências Sociais, dado que não exige que pelo menos uma variável seja quantitativa, não apresenta exigência quanto à normalidade da distribuição dela nas subpopulações amostradas e nem é afetado pela presença de *outliers*.
+
+Ocorre que o teste do $\chi^2$ não pressupõe que a distribuição de frequencias nas duas subpopulações (genJ = Fem e genJ = Masc) seja aproximadamente normal, ou seja, ele é um teste não paramétrico (não depende dos parâmetros dessas populações, com é o caso do teste-t).
+
+Muito embora a validade do teste do $\chi^2$ ainda dependa da suposição de que nenhuma dos Valores Esperados seja menor ou igual a 5.0, a fim de que a distribuição teórica qui-quadrado seja uma boa aproximação da distribuição amostral (aquela que pode ser estimada a partir dos dados observados). O ideal é que nenhum dos Valores Esperados seja de apenas um dígito não decimal.
+
+```{r}
+# cálculo da estatística de teste do qui-quadrado para: grauVitS x evidRevit
+# O = valor Observado (contagem dos dados coletados)
+# E = valor Esperado  (contagem esperada de acordo com as probabilidades condicionais calculadas supondo que Ho é verdadeira, ou seja, valendo-se da probabilidade marginal de linha vezes o total marginal da respectiva coluna)
+# formula: Sum((O-E)^2/E) para medir a distância entre valores observados e
+#                         valores esperados supondo Ho verdadeira.
+
+# Tabela de contingência do genJ x evidRevit
+O <- as.table(xtabs(n ~ genJ + evidRevit, DF))
+
+fE(O) # calcular os Valores Esperados e num. de graus de liberdade
+fX2(O = O, alfa = 5) # calcular o X^2 parcial, total, X^2crit, valor-P e
+                    # Mensagem com resultado do teste qui^2
+
+# usando novamente a função chisq.test()
+x2 <- chisq.test(O, E)
+x2
+x2$expected
+x2$stdres
+# análise dos resíduos
+# ....................
+
+# x2 |> as.data.frame.default() |> ggplot()
+
+cat("\n")
+cat("Teste chi2, sem a correção de Yates\n")
+x2 <- chisq.test(O, correct = FALSE) # não aplicar a correção de continuidade Yates
+x2
+cat("Ainda assim o teste não permite rejeitar a Ho de associação significativa,\n")
+cat("pois p-Value = 0.3483 = 34.83% > alpha = 5% = 0.05 (Erro tipo I = 5%; NC = 95%)\n")
+cat("\n")
+cat("Dados Observados\n")
+cat("Variável Resposta/explicada   (coluna): evidRevit\n")
+cat("Variável Entrada /explanatória (linha): genJ\n")
+x2$observed
+cat("\n")
+cat("Valores Esperados se Ho de não-associação for verdadeira\n")
+x2$expected
+
+cat("\n")
+cat("Há valores Esperados com dígito único (mas nenhum deles abaixo de 5.0).\n")
+cat("Nesses casos, a simulação com reamostra resulta em valores-P mais precisos (BRUCE & BRUCE, 2019, p. 118).\n")
+cat("Teste chi2 com simulação\n")
+chisq.test(O, simulate.p.value = TRUE)
+cat("O Resultado mostra que esse resultado poderia ter sido facilmente obtido pela simples aleatoriedade (variabilidade de amostra para amostra da distribuição amostral)\n")
+
+cat("\n")
+cat("O teste exato de Fisher é ainda mais adequado (BECKER, 2015, p. 377), pois de termina com exatidão o valor-P (a probabilidade do Erro Tipo I).\n")
+cat("Teste exato de Fisher aplicado\n")
+fisher.test(O)
+```
+
+Desse modo, pode-se inferir, a partir do resultado do teste exato de Fisher, que ***não*** é possível rejeitar a Ho de independência entre as duas variáveis categóricas aleatórias testadas para um erro Tipo I de 5%, de modo que ***não*** se pode concluir que exista uma assoiação entre elas.

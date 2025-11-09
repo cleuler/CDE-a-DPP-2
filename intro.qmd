@@ -1,0 +1,81 @@
+# Introdução {#sec-introducao}
+
+Segundo [@harari2018-21licoes , p. 107-111] , dentro do horizonte de tempo deste Século XXI, a conexão dos indivíduos à *web* será vital e "À medida que, através de sensores biométricos, cada vez mais dados fluírem de seu corpo e seu cérebro para máquinas inteligentes, será fácil para corporações e agências do governo *conhecer* você, *manipular* você e *tomar decisões* por você" (destacou-se).
+
+Não se pode imaginar risco maior para os modernos Estados Democráticos de Direito, pois nessa era digital em que já se vive revelou-se o poder daquelas instituições públicas ou privadas que detêm o poder dos dados (HARARI, 2020, p. 1) [@Lock2017-EstRevPoderDados].
+
+Na interface do Direito e Políticas Públicas busca-se compreender o fenômeno da ***baixa efetividade*** de inúmeras normas constitucionais, notadamente aquelas insertas na CF/1988 na condição de direitos fundamentais.
+
+Esta disciplina, CDE-a-DPP: *Ciência de Dados e* *Estatística Básica* \[*com R*\] *Aplicada ao Direito e Políticas Públicas*, foi concebida absolutamente apoiada no *dogma* de que os ***fenômenos jurídicos*** e, mais ainda, sua conjunção com as Políticas Públicas (prodiga no uso de *indicadores*, de *índices* e de *rakeamentos* em suas abordagens para análise de processos e de resultados; ex.: AIR - Análise de Impacto Regulatório), ***apresentam uma componente estocástica*** [@Becker2015][@DietzKalof2015] e podem ser ***objeto de medição***, dado que a ***mente humana é um instrumento de medição*** [@Kahneman2021] quando opera julgamentos sob incerteza [@Kahneman1982].
+
+Parte-se do *pressuposto* de que Direito é *uma Ciência Social Aplicada* e, assim como a Demografia, a Biometria, a Psicologia, a Economia, a Ciência Política, a Epidemiologia, a Ciência Forense etc., reclamam cada vez mais uma maior e melhor *compreensão* do seu *sujeito*-*objeto* por meio de *pesquisas empíricas*.
+
+O que impele seus atuais pesquisadores, quer em programas de pós-graduação acadêmicos ou profissionais, quer desde a graduação (iniciação científica, elaboração de TCCs e Núcleo Livre), a *levantar dados* (1º^s^ e 2º^s^), no curso de pesquisas *quali-quantis*, para deles extrair *informações* e *padrões* perceptíveis, momento em que a ***Estatística Descritiva***, com suas *consagradas técnicas* para *coletar*, *ordenar*, *resumir* e *apresentar* dados e informações torna-se imprescindível.
+
+A rigor, há de *4 a 7 momentos* de *síntese indutiva* em que um pesquisador empírico que colete dados na interface do Direito com as Políticas Públicas depara-se no curso de sua pesquisa:
+
+i.  na apropriação e *operacionalização de conceitos* e de indicadores necessários e suficientes para abordar sua *situção*-*problema* de pesquisa;
+
+ii. na escolha e coleta dos dados de campo, notadamente quando, ao invés de censo, optar-se por colher ***1 amostra*** (parte) de tamanho adequado da população alvo, ou melhor, da população disponível (todo) de tamanho finito; pois, não raro, pretende valer-se de algum *poder inferencial* para, *a partir de uma parte, extrair conclusões para o todo*;
+
+iii. na distribuição aleatorizada dos elementos entre um Grupo de Tratamento e um Grupo de Controle (que recebe um *placebo* sob *duplo cego*), nos experimentos controlados; para *extração inferencial de conclusões causais* a respeito dos efeitos esperados do tratamento (T) sobre toda uma *População disponível* pesquisada;
+
+iv. na construção de *contrafactuais* (*quasi-experimentos*), quando, no caso das Ciências Sociais Aplicadas, não se pode dispor, por razões éticas, de um Grupo de Controle para se pesquisar sobre *efeitos causais* de *um Tratamento social* sobre toda uma População disponível pesquisada;
+
+v.  na tomada de *decisões político-administrativas baseadas em evidências* (dados e informações);
+
+vi. na escolha das ações para implementação e monitoramento (diagnóstico, avaliação e correção/controle) de indicadores e de metas assim colocados;
+
+vii. na *prescrição* normativa de *novas intervenções* para melhoria na eficiência (orçamentária), na eficácia (jurídica) e na ***efetividade*** (social) dessas implementações metódicas, com foco na *melhoria da efetividade dos direitos fundamentais prescritos na CF/1988 no decorrer do tempo*.
+
+Nessa ótica, é necessário e preciso ***superar*** o *preconceito dos juristas* com as Ciências Exatas, em especial com a Probabilidade e Estatística. Além do dogma da onipotência dos juristas, que realizam a defesa de suas hipóteses como se fossem permeados de uma certeza determinística. É preciso reposicionar a Doutrina, que não é mais fonte do Direito desde a Modernidade e que repousa exclusivamente sobre argumento de autoridade e que não desvela os interesses subalternados de seus autores (ausência de *disclaimer*).
+
+A ***Estatística Indutiva*** ou ***Inferencial*** — com sua *Teoria da Amostragem*, desenvolvida a partir doe descobertas iniciadas no Séc. XVII:
+
+-   1654 com as famosas cartas trocadas por Pascal e Fermat, este um *jurista e matemático*, aquele um *filósofo e matemático*, em que se *resolve* o *problema da repartição do cacife de um jogo de pontos interrompido*;
+
+-   1713 publica-se, postumamente, a obra *Ars Conjecturandi*, de Jaques Bernoulli, um *jurista e matemático*) — que possibilita o emprego de *desenhos de pesquisa* (*D.o.E* - *Design of Experiment*) em que se pode *validamente* operar essas *inferências indutivas* por meio do estudo, da descrição e da comparação com os *padrões* encontrados nos *fenômenos aleatórios* (*alea* e Teoria das Medições, pelo estudo dos *viéses* e *ruídos*). É quem enuncia e prova pela primeira vez a Lei dos Grandes Números.
+
+É, pois, preciso dar-se ao trabalho de *refletir* sobre as possibilidades dos *desenhos de pesquisa empírica*, explicitando-os em nossos *projetos* e *protocolos de pesquisa empírica*, a fim de conferir ***replicabilidade***, ***validade*** e ***confiabilidade*** aos diversos ***instrumentos de medição*** aplicáveis na interface do Direito e das Políticas Públicas, com uma *DPP-metria* ainda por ser concebida, construída, testada e validada.
+
+Como *um resultado esperado* a partir dessa abordagem de pesquisa, aponta-se para *um provável aumento da confiança no moderno Estado Democrático de Direito*, pela busca — por meio de *diagnósticos* e *decisões* *basedos em evidências empíricas* — da *redução* de *viéses* e de *ruídos* observáveis na atuação das suas instituições [@Kahneman2021] no trato com seus concidadãos (ex. no Sistema de Justiça Criminal e Cível brasileiro).
+
+Ou seja, o grande desafio a ser enfrentado é construir uma Metodologia (*D.o.E.*) nos protocolos de pesquisa empírica do Direito e das Políticas como um caminho *ad-versus* ao da propalada *defesa de hipóteses*, tão encontradiço na doutrina jurídica nacional e, não raro, mesmo em variegados programas de pós-graduação meramente acadêmica do Direito.
+
+Trata-se da expectativa de qualificar a pesquisa acadêmica brasileira ao ponto de romper e superar a *dicotomia* entre *pesquisa pura* ou meramente acadêmica e *pesquisa aplicada* ou profissional no campo do Direito pela intrusão de uma "impureza" no seu susbtrato: o reconhecimento da importância da ***modelagem*** da *alea* em *pesquisas empíricas* com emprego de *modelos informacionais* (que apresentam uma parcela estocástica: sinal e ruído) ao tomar a *mente humana no seu processo decisório como um instrumento de medição que opera sob incertezas*.
+
+A proposta desta disciplina (CDE-a-DPP) é pretenciosa no sentido de dar um passo inicial junto à pós-graduação estrito senso exatamente nessa direção reflexiva, conjugando a compreensão e a sedimentação de uma Teoria Estatística Descritiva/Inferencial aprofundada combinada com Ciência de Dados voltadas para o emprego de *ferramentas tecnológicas disponíveis gratuitamente na web* (ex. [StatKey](https://www.lock5stat.com/StatKey/index.html), [statdisk](https://www.statdisk.com/) etc.), notadamente pelo domínio, desenvolvimento e aplicção do básico em [Linguagem R](https://www.r-project.org/), por meio da [IDE R-Studio](https://posit.co/download/rstudio-desktop/); com o que se almeja *uma ainda mais desafiadora pretensão* de iniciar *uma formação interdisciplinar* de *Cientistas de Dados* no seio de um curso de pós-graduação estrito senso em Direito e Políticas Públicas.
+
+## Objetivo Geral
+
+Propiciar aos pós-graduandos ingressos no PPGDP que já cursaram a disciplina DPP0009 - SEMINÁRIOS INTEGRADOS DE PESQUISA EM ARTICULAÇÃO À *PRAXIS* PROFISSIONAL – SIP-APP, um *letramento* em *Ciência de Dados*, *Estatística* e na abordagem *Direito* e *Políticas Públicas* (*Múltiplas Linguagens*) e o acesso a um ferramental *necessário* para a *produção científica* com emprego de técnicas *predominantemente* *quantitativas*, notadamente quanto ao conhecimento daquelas *necessárias* para a problematização (definição e delimitação da situação/problema com um adequado desenho do experimento e esquema/plano amostral a ser executado), a seleção de fontes, [***uma***]{.underline} ***coleta*** ***válida*** e ***fidedigna*** de ***dados***, uma revisão de literatura ***sistemática***, *análise* e *interpretação* de ***dados*** e ***informações***, uma *discussão cientificamente organizada dos **resultados*** e a *publicação* de um *trabalho científico*, com foco na revisão e aprimoramento de um projeto de pesquisa (com um *plano de trabalho*) através do ***delineamento*** de um ***protocolo de pesquisa*** (Desenho de Pesquisa com Plano/Esquema Amostral) que possam articular a teoria com a praxis profissional em investigações jurídicas aplicadas, em **pesquisa jurídica empírica** e em projetos de pesquisa-ação na interface do Direito com as Políticas Públicas.
+
+***Objetivo geral é focar*** nas ***técnicas*** **de *pesquisa empírica predominantemente quantitativas*** que podem ser consideradas **adequadas** e que ainda [***não***]{.underline} foram ***aplicadas*** ou foram ***incompletamente aplicadas*** em *pesquisas anteriores do PPGDP*, a fim de ***avançar*** na ***fronteira*** **do *conhecimento*** do ***estado da arte*** e da ***pesquisa empírica*** (levantar dados 1^[os]{.underline}^ e 2^[os]{.underline}^) até aqui ***empreendida neste programa***, como, por exemplo: ***testes de Hipótese*** em geral e da ***qualidade do ajuste de Modelos*** (seleção), modelo de regressão logística, modelos lineares generalizados (glm), análise de sobrevivência, análise de fatores de risco, análise de relações (DAG’s e inferência bayesiana), análise estatística da decisão por meio de árvore de decisão, aprendizado de máquina (supervisionado e não supervisionado), modelos de reologia e escoamento para análise de fluxos processuais no sistema de justiça criminal e cível etc.
+
+## Objetivos Específicos
+
+***Capacitar*** pós-graduandos (mestrado e doutorado) e egressos (laboratórios e observatórios) para o desenvolvimento das diversas fases de uma pesquisa científica – aprimorando a reelaboração de um projeto (NBR 15.287/2011), da sua redação monográfica (NBR 14.724/2011) e de relatórios técnicos (NBR 10.719/2015) sobre produtos alcançados na pesquisa empírica (pura ou aplicada) até sua *comunicação* (Relatório preliminar e definitivo de pesquisa), tendo em vista atender ao art. 42, RPPGDP.[^intro-1] Isso, com foco menos no aprendizado das regras de notação (o que se compreende como uma habilidade que já se deve dominar) e mais no *aprendizado* dos ***conceitos*** da ***Metodologia Científica*** e de *técnicas de **pesquisa*** **empírica** ***predominantemente quantitativas*** mais específicas, adequadas e ***inovadoras*** em relação a dados colhidos e informações extraídas na interface do Direito com as Políticas Públicas.
+
+[^intro-1]: “Art. 42. O produto final da pesquisa do estudante no Programa pode ter a forma de:
+
+    I- Dissertação;
+
+    II- Estudo de Caso;
+
+    III- Projeto Regulatório;
+
+    IV- Desenvolvimento de processos e técnicas.”
+
+***Articular*** a pesquisa *jurídica* empírica às atividades e vivências da *prática jurídica*, considerando que Direito é uma Ciência Social *aplicada*.
+
+***Preparar*** o discente para ***aprimorar*** a escolha, a problematização, a delimitação e a [***reelaboração***]{.underline} de um Projeto de Pesquisa (PP) jurídico-política, como guia de apoio metodológico, bem como para compreender o papel do **método** e a importância do referencial teórico na pesquisa aplicada e na pesquisa empírica, focos do PPGDP.
+
+***Promover*** um ***diálogo***, pelo ***domínio/letramento*** em diversas ***linguagens*** (Ciência, Ciência de Dados e Probabilidade e Estatística – com suas Linguagens *Formais*; Direito e Políticas Públicas – com suas Linguagens *Naturais diferenciadas*), entre os pesquisadores do PPGDP *sobre* os *projeto de pesquisa institucionais* a que são ***aderentes***, tomando como ***eixo condutor*** uma *ideia* ou ***conceito*** de [***ciclo de***]{.underline} ***...***, ou iteratividade (reiteratividade), nas 4 áreas de conhecimento cujos *pontos de vista/de partida* pretende-se valer esta disciplina *multidisciplinar*: CD \^ E::Dir&PP’s.
+
+***Fornecer*** orientações iniciais sobre as técnicas de pesquisa *predominantemente quantitativas* mais utilizadas no *campo jurídico* e na *abordagem profissional* que o PPGDP adota e vem aplicando; todavia com ***foco*** naqueloutras **técnicas adequadas** que ainda ***não*** foram ***aplicadas*** ou *incipientemente utilizadas*, a fim de avançar na [*fronteira do conhecimento*](https://docs.google.com/document/d/1xDVEnbLBXm4tfnX2dvRWpL5_pQdGxwkhoJHAieg0glQ/mobilebasic#heading=h.5n2rkdaavr5x) empírico até aqui adquirido (criação e rearranjo teóricos e inovação no domínio da técnica).
+
+***Estimular*** o estudante/pesquisador na prossecução de uma nova perspectiva metodológica e acadêmica para permitir o conhecimento e a prática do Direito mais voltados para *superação* dos problemas diagnosticados na experiência jurídica brasileira[^intro-2] com suporte a *decisões* tomadas com *base* em *evidências ciêntíficas*.
+
+[^intro-2]: A vida do Direito como ela é: pisar o chão de fábrica da arena jurídica. Não como deveria ser!
+
+***Auxiliar*** o pesquisador para que ele prepare *um relatório parcial de pesquisa* de seu produto de pesquisa empírica em um seminário de pesquisa (pré-qualificação).

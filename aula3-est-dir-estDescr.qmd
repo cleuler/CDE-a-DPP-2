@@ -1,0 +1,1153 @@
+# Aula 3 - Estatística Descritiva {#sec-aula-3-Est-Descr-est-dirig}
+
+## Estudo Dirigido - Exercícios para casa
+
+(i) *Antes de responder* aos itens, é preciso ***organizar/tratar*** o conjunto de dados;
+
+(ii) A ***exclusão*** dos `NA`’s deve ser realizada considerando ***apenas dados faltantes nas variáveis de interesse***; ou seja, deve-se realizar essas exclusões presenvando o *data set*, se modo que apenas a tabela ou gráfico gerado a partir do conjunto de dados reflita essas exclusões, mas sem deletar os `NA`'s do *data set* original.
+
+## Conjunto de dados - Notificações de Síndrome Gripal 2024
+
+O Ministério da Saúde implementou a ***Vigilância da Síndrome Gripal (SG) de casos leves e moderados suspeitos de Covid-19*** (doença causada pela infecção pelo vírus SARS-Cov-2).
+
+Para a atividade avaliativa o **conjunto de dados** que será analisado será o de ***notificações de síndrome gripal de casos leves e moderados suspeitos de Covid-19 do Estado de Goiás do ano de 2024***.
+
+Os dados foram obtidos no site do OpenDataSUS <https://opendatasus.saude.gov.br/dataset/notificacoes-de-sindrome-gripal-leve-2024> (acesso e download em 16/07/2024).
+
+A figura a seguir ilustra essa página da web.
+
+![openDataSUS: Notificações de Síndrome Gripal - 2024](fig/OpenDataSUS.JPG){fig-align="center"}
+
+O conjunto de dados e seu respectivo dicionário foram disponibilizados em nossa pasta `dat` compartilhada da disciplina EBR-a-DPP no Google drive, a saber:
+
+-   *data set*: `SG_DATASUS_16_07_24.csv`
+-   Dicionário de dados: `dicionario-de-dados_e-sus-notifica-opendatasus-1.pdf`
+
+## Tratamento de Dados
+
+Preparar o ambiente de processamento da IDE RStudio.
+
+```{r setup}
+
+# Deletar os objetos da Global Environment
+rm(list=ls())
+
+# Padrões de saídas Rmarkdown
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
+# getOption("encoding")       # [1] "native.enc"
+# options(encoding = 'UTF-8') # [1] "UTF-8"
+
+# Para prevenir impressão de números em notação científica, ex.: 1.43E-16
+# Por exemplo: p-valor serão impressos com suas casas decimais
+options(scipen=999)
+
+# Carregar pacotes necessários
+library(tidyr)      # para organizar data sets
+library(dplyr)      # para pesquisar, filtrar, alterar e resumir dados
+library(readr)      # para importar data sets
+library(magrittr)   # para utlizar o operador pipe %>% (base: |> )
+library(gt)         # para exibição de tabelas melhor formatadas
+library(ggplot2)    # para gerar e exibir gráficos
+library(forcats)    # para lidar com var. categóricas tipo factor
+```
+
+### Importar
+
+Importar o *data set* fornecido nesta disciplina: `SG_DATASUS_16_07_24.csv`
+
+Que foi baixado e armazenado na pasta `dat` do projeto `EBR-a-DPP`, criada pelo Professor para todas as atividades práticas deste curso.
+
+O uso de um projeto elimina o problema dos caminho absolutos para importar *data sets*.
+
+Assim, basta fornecer o ***caminho relativo*** para **importar** o *data set* `.csv` fornecido.
+
+Armazenar o data set na variável: `covid19`
+
+```{r}
+
+# covid19 <- ...
+covid19 <- read.csv2(file = "dat/SG_DATASUS_16_07_24.csv",
+                     header = TRUE)
+
+# estrutura do data set importado
+str(covid19) # 'data.frame':	255647 obs. of  64 variables
+             # todas as variáveis são do tipo: <char> ou <int>
+
+cat("\n")
+cat("Caminho absoluto do atual diretório de trabalho:\n")
+getwd()
+```
+
+Atente para as seguintes informações sobre **metadados**.
+
+::: callout-important
+## Importante
+
+Quais são os tipos das variáveis do *data set*: \<`char`\>, \<`logic`\>, \<`fctr`\>, \<`dbl`\> ou \<`int`\>?
+
+As dos tipo `char` ou são datas \<`date`\> ou são variáveis categóricas binárias ou multinomiais?
+
+Alguma das categóricas é do tipo ordinal?
+:::
+
+Não se vê impropriedades nos nomes das variáveis, a não ser nomes que são muito extensos.
+
+Há várias ocorrências de `NA`'s.
+
+Nota-se que o conjunto de dados (*data set*) contém **255647** observações e **64** variáveis.
+
+A descrição completa desse conjunto de dados pode ser obtida no ***dicionário*** no *site* do [OpenDataSUS](https://s3.sa-east-1.amazonaws.com/ckan.saude.gov.br/SGL/pdfs/dicionario-de-dados_e-sus-notifica-opendatasus-1.pdf "Dicionário do Sistema de Notificações sobre Síndrome Gripal – Sinotsg") (Sistema de Notificações de Síndrome Gripal 2024 – Sinotsg), que servirá para a ***especificação das classes*** de cada uma das ***variáveis categóricas*** (os `levels` dos `factors`) do *data set*; bem como para a especificação do tipo das variáveis quantitativas, neste caso todas do tipo: `integer`.
+
+### Organizar, tratar e transformar
+
+Além de observar os tipos e categorias das **64** variáveis descritas no Dicionário de Dados, acrescente, a seguir, uma função do R para **listar os nomes** de todas as variáveis (colunas) do *data set*.
+
+```{r}
+
+# 'data.frame':	255647 obs. of  64 variables
+names(covid19)
+```
+
+Não será preciso selecionar um subconjunto de variáveis do *data set*, de modo que todas permanecerão disponíveis para utilização no presente tratamento de dados, conforme a demanda de cada exercício.
+
+O *data set* contém as **255.647 observações** (linhas) e as **64 variáveis** (colunas), conforme a lista de nomes acima e que se encontram noemadas, definidas e codificadas no ***Dicionário de dados – e-SUS Notifica (via OpenDatasus)***.
+
+Entretanto, o *data set* vem com os códigos (números) dos níveis de algumas das variáveis categóricas e, para trabalhar corretamente com elas, é preciso primeiro ***tratar*** essas variáveis, pois não são variáveis numéricas, e sim categóricas; cujos fatores enconram-se representados por números.
+
+Além disso há algumas variáveis categóricas que, embora já preenchidas com os nomes das respectivas categorias, apresentam mais de um desses nomes numa mesma coluna (variável), separados por vírgula (ex.: variável `sintomas`). Apesar de ser necessária a sua separação em tantas colunas de variáveis *categóricas* quantas forem essas *categorias não exclusivas*, a fim de obter-se um *`dataset tyde`* (cada *coluna* com uma, e somente uma, *variável*; cada linha com uma, e somente uma, *observação*), mas isso só devrá ser feito na medida da necessidade para a solução dos probelmas propostos.
+
+#### Variável `sintomas`
+
+Campo Sintomas de preenchimento obrigatório.
+
+Listado no dicionário com as seguines categorias:
+
+i.  Assintomático
+ii. Dor de Cabeça
+iii. Febre
+iv. Distúrbios gustativos
+v.  Dor de Garganta
+vi. Distúrbios olfativos
+vii. Dispneia
+viii. Tosse
+ix. Coriza
+x.  Outros
+
+As categorias selecionadas estão separadas por vírgula.
+
+É possível selecionar mais de uma categoria dessa variável para a mesma observação.
+
+Ou seja, encontra-se mais de uma delas numa mesma coluna, o que rompe com o pressuposto de que cada coluna do *data set* corresponda a uma, e somete uma, variável.
+
+Seria preciso desmembrar em 10 variáveis *categóricas exclusivas*.
+
+Só será feito na sequência dos problemas, ***caso necessário***.
+
+A seguir, apenas o **tratamento necessário** no *data set* de origem com os ***dados secundários***, obtidos junto ao `dataSUS`, na medida em que se tornem ***indispensáveis para a solução dos problemas propostos***.
+
+#### Variável `profissionalSaude`
+
+Campo de preenchimento obrigatório.
+
+É profissional de saúde?
+
+Informar se o paciente é profissional de saúde.
+
+Categorias: `Sim`, `Não`
+
+Opte por simplificar os nomes das categorias a fim de economizar espaços em futuros gráficos, sem perda do sentido das informações contidas nos dados.
+
+Há `NA`'s na variável `profissionalSaude`?
+
+```{r}
+
+table(covid19$profissionalSaude)
+
+covid19$profissionalSaude <- factor(covid19$profissionalSaude,
+                     levels = c("Sim",
+                                "Não"),
+                     labels = c("s",
+                                "n"),
+                     ordered = FALSE)
+
+# Tabela de frequência absoluta com NA's:
+table(covid19$profissionalSaude,
+      useNA = "always")
+```
+
+Optou-se por simplificar o nomes das categorias a fim de economizar espaços em futuros gráficos, sem perda do sentido das informações contidas nos dados.
+
+Não há NA's na variável `profissionalSaude`.
+
+#### Variável `sexo`
+
+Campo de preenchimento obrigatório.
+
+Informar o sexo do paciente.
+
+Categorias: `Masculino`, `Feminino`
+
+Opte por simplificar os nomes das categorias a fim de economizar espaços em futuros gráficos, sem perda do sentido das informações contidas nos dados.
+
+Não Há NA's na variável `sexo`?
+
+```{r}
+
+table(covid19$sexo)
+
+covid19$sexo <- factor(covid19$sexo,
+                     levels = c("Masculino",
+                                "Feminino"),
+                     labels = c("m",
+                                "f"),
+                     ordered = FALSE)
+
+# Tabela de frequência absoluta com NA's:
+table(covid19$sexo,
+      useNA = "always")
+```
+
+Optou-se por simplificar o nomes das categorias a fim de economizar espaços em futuros gráficos, sem perda do sentido das informações contidas nos dados.
+
+Não há NA's na variável `sexo`.
+
+#### Variável `racaCor`
+
+Campo de preenchimento obrigatório.
+
+Informar a raça/cor declarada pelo paciente.
+
+Habilitar campo “Etnia” se preenchido com a categoria “Indígena”. Ou seja: se campo preenchido com a categoria “Indígena”, habilitar o campo “Etnia”.
+
+Categorias:
+
+-   `Branca`
+
+-   `Preta`
+
+-   `Parda`
+
+-   `Amarela`
+
+-   `Indígena`
+
+-   `Ignorado`
+
+Há `NA`'s na variável `racaCor`?
+
+```{r}
+
+table(covid19$racaCor)
+
+covid19$racaCor <- factor(covid19$racaCor,
+                     levels = c("Branca",
+                                "Preta",
+                                "Parda",
+                                "Amarela",
+                                "Indigena", # não está acentuado
+                                "Ignorado"
+                                ),
+                     labels = c("branca",
+                                "preta",
+                                "parda",
+                                "amarela",
+                                "indigena",
+                                "ignorado"
+                                ),
+                     ordered = FALSE)
+
+# Tabela de frequência absoluta com NA's:
+table(covid19$racaCor,
+      useNA = "always")
+
+22 / 255647 * 100
+```
+
+Há 22 NA's na variável `racaCor`. O que não é uma grande proporção (22 / 255647 \* 100 = 0,009%), pois o *data set* apresenta: 255647 obs. (linhas) of 64 variables (colunas).
+
+#### Variável `codigoRecebeuVacina`
+
+Recebeu vacina Covid-19?
+
+Preenchimento obrigatório se “Condições - Outros” for = “Sim”.
+
+Campo habilitado se campo “Condições – Outros” for preenchido com a categoria “Sim”.
+
+Código das categorias disponíveis no campo “Recebeu vacina Covid-19?”
+
+Categorias:
+
+-   `1. Sim`
+
+-   `2. Não`
+
+-   `3. Ignorado`
+
+Há `NA`'s na variável `codigoRecebeuVacina`?
+
+```{r}
+
+str(covid19$codigoRecebeuVacina) # int [1:255647] 1 1 NA 2 1 1 1 2 1 1 ...
+table(covid19$codigoRecebeuVacina,
+      useNA = "always") # 45438 NA's
+
+covid19$codigoRecebeuVacina <- factor(covid19$codigoRecebeuVacina,
+                                      levels = c(1, 2, 3),
+                                      labels = c("s",    # "Sim",
+                                                 "n",    # "Não",
+                                                 "ign"), # "Ignorado"),
+                                      ordered = FALSE)
+
+table(covid19$codigoRecebeuVacina,
+      useNA = "always") # 45438 NA's
+
+45438 / 255647 * 100
+```
+
+Há 45.438 NA's na variável `codigoRecebeuVacina`. O que é uma proporção de 45438 / 255647 \* 100 = 17,8% e já se mostra considerável; ou seja, para essa variável é preciso considerar a existência de um ***viés de não resposta***.
+
+#### Variável `classificacaoFinal`
+
+Apenas os ***perfis gestores*** podem preencher este campo, por meio da opção “Encerrar Notificação”.
+
+As categorias originais não vieram separadas por vírgulas no Dicionário de dados: Confirmado Laboratorial Confirmado Clínico-Epidemiológico Descartado Síndrome Gripal não Especificada Confirmado Clínico-Imagem Confirmado por Critério Clínico.
+
+A partir delas inferiu-se as seguintes **categorias**:
+
+-   `Confirmado  Laboratorial`
+
+-   `Confirmado Clínico-Epidemiológico`
+
+-   `Confirmado por Critério Clínico`
+
+-   `Confirmado Clínico-Imagem`
+
+-   `Síndrome Gripal Não Especificada` (no Dicionário `não` está c/inicial minúscula)
+
+-   `Descartado`
+
+Há `NA`'s na variável `classificacaoFinal`?
+
+```{r}
+
+table(covid19$classificacaoFinal)
+
+covid19$classificacaoFinal <- factor(covid19$classificacaoFinal,
+                     levels = c("Confirmado  Laboratorial",
+                                "Confirmado Clínico-Epidemiológico",
+                                "Confirmado por Critério Clínico",
+                                "Confirmado Clínico-Imagem",
+                                "Síndrome Gripal Não Especificada",
+                                "Descartado"
+                                ),
+                     labels = c("Conf. Laboratorial",
+                                "Conf. Clínico-Epidemiológico",
+                                "Conf. por Critério Clínico",
+                                "Conf. Clínico-Imagem",
+                                "Síndrome Gripal Ñ Especificada",
+                                "Descartado"
+                                ),
+                     ordered = FALSE)
+
+# Tabela de frequência absoluta com NA's:
+table(covid19$classificacaoFinal,
+      useNA = "always")    # 151877 NA's
+
+151877 / 255647 * 100
+```
+
+Há 151877 NA's na variável `classificacaoFinal`. O que é uma ***muito alta*** proporção de 151877 / 255647 \* 100 = 59,4%; ou seja, para essa variável é preciso considerar a existência de um ***viés de não resposta***.
+
+#### Variável `idade`
+
+Há `NA`'s na variável numérica tipo `integer`: `idade`?
+
+Há presença de *outliers* nessa variável?
+
+```{r}
+
+str(covid19$idade) # int [1:255647] NA 24 53 NA NA 33 28 31 30 33 ...
+
+sum ( is.na(covid19$idade) ) # 67050 NA's
+
+67050 / 255647 * 100
+```
+
+Há 67.050 NA's na variável numérica tipo `integer`: `idade`. O que é uma proporção de 67050 / 255647 \* 100 = 26,2% e mostra-se bem considerável (quase 1/3 da amostra); ou seja, para essa variável é preciso considerar a existência de um ***viés de não resposta***.
+
+### Armazenar
+
+**Exportar** esse dataframe no ***formato binário*** do R na pasta `out`.
+
+Pois, em sua próxima importação ela virá com todos os tratamentos até aqui realizados.
+
+Como, por exemplo, os tipos de colunas acima trasnformados: \<char`>, <date`\>, \<time`>, <fctr`\>, \<int\`\`\>.
+
+**Exportar** esse mesmo dataframe no ***formato*** `.csv` na pasta `out`: cuide para campos com `NA` sejam armazenados como espaço vazio, denomiado por *blank* ("") e para não salvar coluna com números das linhas.
+
+```{r}
+
+# Salvar esse dataframe no formato binário do R na pasta out
+# Sua próxima importação ela virá com todos os tratamentos até aqui realizados:
+# tipos de colunas preservados: <char>, <date>, <time>, <fctr>, <int>,
+# 'data.frame':	779927 obs. of  31 variables:
+# write_rds(covid19, file = "out/covid19.rds") # formato binário do R
+
+# Salvar 1ª planilha de dado toda tratada e transformada:
+# write.csv(covid19,
+#           file      = "out/covid19.csv",
+#           na        = "", # salvar campos NA como espaço vazio <blank>
+#           row.names = FALSE) # não salvar coluna com números das linhas
+```
+
+A Parte I deste Estudo Dirigido consiste nos itens a seguir.
+
+------------------------------------------------------------------------
+
+## Itens - Parte I e II
+
+Apresentar, Analisar e Interpretar
+
+Desenvolva e/ou responda os itens a abaixo.
+
+### Item 1
+
+#### Faça uma tabela de frequências e responda à seguinte pergunta: Qual a porcentagem dos profissionais da saúde com notificações de suspeita de Covid-19 no ano de 2024 no Estado de Goiás? Utilize duas casas decimais.
+
+Com funções do `R Base`.
+
+```{r}
+
+# Tabela de frequência relativa com arredondamento para 4 casas:
+round( prop.table( table(covid19$profissionalSaude) ) ,
+       digits = 4)
+```
+
+A mesma saída acima: Notificações Covid-19 (ano 2024, Goiás) - Tabela de frequência relativa (%) dos Profissionais da Saúde no total das notificações de suspeita de Covid-19; acima, mas agora utilizando o `pipe` do R e o pacote `gt`.
+
+```{r}
+
+#| label: tbl-item1
+#| warning: false
+#| tbl-cap: "Notificações Covid-19 (ano 2024, Goiás) - Tabela de frequência relativa (%) dos Profissionais da Saúde no total das notificações de suspeita de Covid-19"
+
+# resultado equivalente com pipe
+table(covid19$profissionalSaude) |> 
+  prop.table() |> 
+  multiply_by(100) |> 
+  round(digits = 2) |> 
+  as.data.frame() |> 
+  rename(
+    "Profissional da saúde" = Var1, # nome novo = nome antigo
+    "Porcentagem (%)"       = Freq
+    ) |> 
+  gt(
+    caption = "Notificações Covid-19 (ano 2024, Goiás) - Tabela de frequência relativa (%) dos Profissionais da Saúde no total das notificações de suspeita de Covid-19"
+  )
+```
+
+A porcentagem dos profissionais da saúde com notificações de suspeita de Covid-19 no ano de 2024 no Estado de Goiás foi igual a: 1,04%.
+
+### Item 2
+
+#### Faça uma tabela de frequências e responda à seguinte pergunta: Qual é o sexo que apresenta o maior número de notificações de suspeita de Covid-19 no ano de 2024 no Estado de Goiás?
+
+Com funções do `R Base`.
+
+```{r}
+
+# Tabela de frequência absoluta:
+table(covid19$sexo)
+```
+
+A mesma saída acima: Notificações Covid-19 (ano 2024, Goiás) - Tabela de frequência Absoluta do sexo no total das notificações de suspeita de Covid-19; acima, mas agora utilizando o `pipe` do R e o pacote `gt`.
+
+```{r}
+
+#| label: tbl-item2
+#| warning: false
+#| tbl-cap: "Notificações Covid-19 (ano 2024, Goiás) - Tabela de frequência Absoluta do sexo no total das notificações de suspeita de Covid-19"
+
+# resultado equivalente com pipe
+table(covid19$sexo) |> 
+  as.data.frame() |> 
+  rename(
+    "Sexo" = Var1, # nome novo = nome antigo
+    "Frequência Absoluta"       = Freq
+    ) |>
+  gt(
+    caption = "Notificações Covid-19 (ano 2024, Goiás) - Tabela de frequência Absoluta do sexo no total das notificações de suspeita de Covid-19"
+  )
+```
+
+O sexo ***feminino***, com 149.803 notificações, é o que apresenta o maior número de notificações de suspeita de Covid-19 no ano de 2024 no Estado de Goiás.
+
+### Item 3
+
+#### Faça uma tabela de frequências e responda à seguinte pergunta: Qual a raça que apresenta a maior proporção de notificações de suspeita de Covid-19 no ano de 2024 no Estado de Goiás? Utilize quatro casas decimais.
+
+Com funções do `R Base`.
+
+```{r}
+
+# Tabela de frequência relativa com arredondamento para 4 casas:
+round( prop.table( table(covid19$racaCor) ) ,
+       digits = 4)
+```
+
+A mesma saída acima: Notificações Covid-19 (ano 2024, Goiás) - Tabela de frequência relativa (%) pelos estratos de raça/cor no total das notificações de suspeita de Covid-19; acima, mas agora utilizando o `pipe` do R e o pacote `gt`.
+
+```{r}
+
+# resultado equivalente com pipe
+
+table(covid19$racaCor) |> 
+  prop.table() |> 
+  multiply_by(100) |> 
+  round(digits = 2) |> 
+  as.data.frame() |> 
+  rename(
+    "Raça/Cor"        = Var1, # nome novo = nome antigo
+    "Porcentagem (%)" = Freq
+    ) |>
+  gt(
+    caption = "Notificações Covid-19 (ano 2024, Goiás) - Tabela de frequência relativa (%) pelos estratos de raça/cor no total das notificações de suspeita de Covid-19"
+  )
+```
+
+A mesma saída acima, mas agora computar também os `NA`'s.
+
+```{r}
+
+# Agora computando também os NA's
+table(covid19$racaCor, useNA = "always") |> 
+  prop.table() |> 
+  multiply_by(100) |> 
+  round(digits = 2) |> 
+  as.data.frame() |> 
+  rename(
+    "Raça/Cor"        = Var1, # nome novo = nome antigo
+    "Porcentagem (%)" = Freq
+    ) |> 
+  gt(
+    caption = "Notificações Covid-19 (ano 2024, Goiás) - Tabela de frequência relativa (%) pelos estratos de raça/cor e de NA (não preenchido) no total das notificações de suspeita de Covid-19"
+  )
+```
+
+A raça/cor `parda`, com 47,45%, é a que apresenta a maior proporção de notificações de suspeita de Covid-19 no ano de 2024 no Estado de Goiás.
+
+Essa proporção não é afetada quando se computam também os `NA'`s, pois a proporção deles nos dados, ou seja, no total de notificações, é de 0,01%.
+
+### Item 4
+
+#### Faça um gráfico em setores para a variável "recebeu vacina" (codigoRecebeuVacina) das notificações de suspeita de Covid-19 no ano de 2024 no Estado de Goiás. Utilize a frequência relativa em porcentagem. Além disso, responda: Qual é a categoria mais frequente nas notificações? Para o gráfico, adicione os nomes das categorias e as porcentagens como rótulos. Utilize uma casa decimal.
+
+Dica: crie antes uma tabela com as proporções relativas da variável de interesse. E formule um título adequado para esse gráfico.
+
+```{r, fig.align='center'}
+
+# Opção 1: gráfico em setores para a variável "recebeu vacina" (codigoRecebeuVacina)
+# Variável: codigoRecebeuVacina
+table(covid19$codigoRecebeuVacina)
+table(covid19$codigoRecebeuVacina) |> sum()
+
+# Salvando as porcentagens em uma variável:
+# com uma casa decimal
+porc.codigoRecebeuVacina <- 
+  round(100 * prop.table( table(covid19$codigoRecebeuVacina) ), 1)
+porc.codigoRecebeuVacina
+
+# Criando os rótulos: valor porcentagem + símbolo % :
+# colar valor da procentagem e símbolo em uma string
+rotulos1.codigoRecebeuVacina <- paste(porc.codigoRecebeuVacina, "%", sep = "")
+rotulos1.codigoRecebeuVacina
+
+# Adicionando rótulos aos setores e legenda ao gráfico de pizza:   
+pie(porc.codigoRecebeuVacina, 
+    # Título do gráfico
+    main = "Notificações Covid-19 (ano 2024, Goiás)\nRecebeu vacina Covid-19?",
+    # cores dos setores
+    col = c("green", "red", "yellow"),
+    # rótulos dos setores (porcentagens)
+    labels = rotulos1.codigoRecebeuVacina)
+legend(1, 1,
+       names(porc.codigoRecebeuVacina),
+       # notar que para a legenda usamos as mesmas cores que para o gráfico
+       col = c("green", "red", "yellow"),
+       # pch - é formato do ícone da legenda: quadrado cheio
+       pch = 15)
+# legend(1, 1,
+#        names(porc.codigoRecebeuVacina),
+#        # notar que para a legenda usamos as mesmas cores que para o gráfico
+#        col = c("black", "black", "black"),
+#        bg  = c("green", "red"  , "yellow"),
+#        # pch - é formato do ícone da legenda: bordas do quadrado vazio
+#        pch = 21)
+
+
+# Opção 2: Adicionando tanto os nomes das categorias quanto frequências como rótulos
+
+# Criando os rótulos: nomes das categorias + parênteses + valor porcentagem + símbolo %
+rotulos2.codigoRecebeuVacina <- paste(names(porc.codigoRecebeuVacina),
+                                      " (",
+                                      porc.codigoRecebeuVacina,
+                                      "%)",
+                                      sep= "")
+rotulos2.codigoRecebeuVacina
+
+# Adicionando rótulos aos setores do gráfico de setores: 
+pie(porc.codigoRecebeuVacina,
+    # Título do gráfico
+    main = "Notificações Covid-19 (ano 2024, Goiás)\nRecebeu vacina Covid-19?",
+    # cores dos setores
+    col  = c("green", "red", "yellow"),
+    # rótulos dos setores (nomes e porcentagens)
+    labels = rotulos2.codigoRecebeuVacina)
+```
+
+A a categoria mais frequente nas notificações é **`s - sim`**, recebeu vacina Covid-19; ou seja, 84,2% das notificações de suspeita de Covid-19 no ano de 2024 no Estado de Goiás estão associadas a pessoas observadas que já foram vacinadas pelo menos uma vez contra Covid-19.
+
+Uma relativamente expressiva minoria de pessoas, que representa 15,7% nesse conjunto observacional total de 210.209 notificações, **`n - não`** recebeu, ainda, vacina Covid-19 em pleno ano de 2024 em curso.
+
+Uma informação interessante seria levantar, nesses doi subgrupos, quantos vieram a obito em 2024, para chegar-se a uma proporção de mortes: ***dado que*** recebeu e ***dado que*** *não* recebeu vacina Covid-19.
+
+### Item 5
+
+#### Faça um gráfico em barras para a variável "classificação final" (classificacaoFinal) das notificações de suspeita de Covid-19 no ano de 2024 no Estado de Goiás. Utilize a frequência absoluta. Além disso, analisando o gráfico, responda: Qual é a classificação mais frequente?
+
+Dica: gráfico de barras (horizontais) é diferente de um gráfico de colunas (verticais), muito embora possam veicular a mesma informação. E formule um título adequado para esse gráfico, bem como o rótulo para o seu eixo x (para o eixo y será necessário?).
+
+```{r, fig.align='center'}
+
+# Tabela de frequência absoluta da variável:
+tab.classificacaoFinal <- table(covid19$classificacaoFinal)
+tab.classificacaoFinal
+
+# Incrementar tamanho da margem esquerda
+# aumentar a margem esquerda : c(baixo, esquerda, cima, direita)
+# aumentar só a margem da esquerda de 1 (default) para 2
+par(mai = c(1, 2.6, 1, 1))
+
+# Gráfico em colunas utilizando frequência absoluta:
+barplot(tab.classificacaoFinal,
+        ## para gráfico de barras (horizontais)
+        horiz = TRUE,
+        ## para rótulos impressos na horizontal
+        las = 1,
+        ## título do gráfico
+        main = "Notificações Covid-19 (ano 2024, Goiás)\nClassificação Final",
+        ## rótulo do eixo x
+        xlab = "Frequência Absoluta",
+        ## rótulo do eixo x
+        ylab = "",
+        ## cor das barras
+        col = "lightblue",
+        ## tamanho da fonte do eixo y
+        font.lab = 2,
+        cey.axis = 0.2,
+        ## limites do eixo x
+        xlim = c(0, 70000)
+        )
+```
+
+Olhando para o gráfico acima a classificação mais frequente é a `Síndrome Gripal não Especificada`, com 71868 notificações, ou seja, com 71.868 (setenta e um mil, oitocentos e sessenta e oito) notificações.
+
+### Item 6
+
+#### Faça um histograma para a idade (em anos) das pessoas que tiveram notificações de suspeita de Covid-19 no ano de 2024 no Estado de Goiás. Utilize a densidade de frequência e classes de amplitude 10 (com a primeira iniciando na idade 0). Além disso, analisando o gráfico, responda: Qual é a faixa etária mais frequente?
+
+Histograma da idade: Notificações Covid-19 (ano 2024, Goiás).
+
+```{r, fig.align='center'}
+
+# Adicionar título e rótulos dos eixos (histograma com frequências absolutas):
+hist(covid19$idade,
+     ## título
+     main = "Notificações Covid-19 (ano 2024, Goiás)\nHistograma da idade",
+     ## rótulo do eixo x
+     xlab = "idade (em anos completos)",
+     ## rótulo do eixo y
+     ylab = "Frequências Absolutas")
+
+# Adicionar título e rótulos dos eixos (histograma com densidade de frequências):
+hist(covid19$idade,
+     ## para densidade de frequências
+     freq = FALSE,
+     ## título
+     main = "Notificações Covid-19 (ano 2024, Goiás)\nHistograma da idade",
+      ## rótulo do eixo x
+     xlab = "idade (em anos completos)",
+     ## rótulo do eixo y
+     ylab = "Densidade de frequências")
+
+# Escolhendo a cor das barras do histograma:
+hist(covid19$idade,
+     ## alterar o default do histograma para densidade de frequências
+     freq = FALSE,
+     ## título
+     main = "Notificações Covid-19 (ano 2024, Goiás)\nHistograma da idade",
+     ## rótulo do eixo x
+     xlab = "idade (em anos completos, 11 classes)",
+     ## rótulo do eixo y
+     ylab = "Densidade de frequências",
+     ## usar a cor roxa nas barras
+     col  = 'darkblue')
+
+# Escolher o número de classes do histograma:
+hist(covid19$idade,
+     ## alterar o default do histograma para densidade de frequências
+     freq = FALSE,
+     ## Número de classes
+     nclass = 22, # o dobro do número de classe dos anterior
+     ## título
+     main = "Notificações Covid-19 (ano 2024, Goiás)\nHistograma da idade",
+     ## rótulo do eixo x
+     xlab = "idade (em anos completos, 22 classes)",
+     ## rótulo do eixo y
+     ylab = "Densidade de frequências",
+     ## usar a cor púrpura nas barras
+     col  = 'purple')
+
+# Escolher as quebras dos intervalos de classes do histograma:
+hist(covid19$idade,
+     ## alterar o default do histograma para densidade de frequências
+     freq = FALSE,
+     ## Quebras das classes
+     breaks = seq(0, 60, 10), # Amplitudes das classes = 10 anos
+     ## para interalos fechados à esquerda, vai iniciar do zero,
+     ## com a primeira classe iniciando na idade 0
+     right = FALSE,
+     ## título
+     main = "Notificações Covid-19 (ano 2024, Goiás)\nHistograma da idade",
+     ## rótulo do eixo x
+     xlab = "idade (em anos completos, amplitude = 10)",
+     ## rótulo do eixo y
+     ylab = "Densidade de frequências",
+#    xlim = c(0, 60),     ## limites do eixo x (não necessário)
+     ylim = c(0,  0.025), ## limites do eixo y
+     ## usar a cor púrpura nas barras
+     col  = 'purple')
+```
+
+Analisando o último histograma com amplitude igual a 10 (com 6 classes), observa-se que a faixa etária mais frequente é: \[30, 40 anos), ou seja, a que vai de 30 anos completos até 40 anos incompletos.
+
+Essa informação difere quando se compara com o histograma com 22 classes (amplitude = 2 anos)?
+
+Olhar para um histograma de amplitude igual a 1 ano (ano a ano).
+
+```{r}
+
+# Escolher as quebras dos intervalos de classes do histograma:
+hist(covid19$idade,
+     ## alterar o default do histograma para densidade de frequências
+     freq = FALSE,
+     ## Quebras das classes
+     breaks = seq(0, 60, 1), # Amplitudes das classes = 1 ano
+     ## para interalos fechados à esquerda, vai iniciar do zero,
+     ## com a primeira classe iniciando na idade 0
+     right = FALSE,
+     ## título
+     main = "Notificações Covid-19 (ano 2024, Goiás)\nHistograma da idade",
+     ## rótulo do eixo x
+     xlab = "idade (em anos completos, amplitude = 1)",
+     ## rótulo do eixo y
+     ylab = "Densidade de frequências",
+     xlim = c(0, 60),     ## limites do eixo x
+     ylim = c(0,  0.025), ## limites do eixo y
+     ## usar a cor púrpura nas barras
+     col  = 'purple')
+```
+
+A informação acima se assemelha quando comparada com o histograma com amplitude = 1 ano (55 classes, em que se observa que a faixa etária mais frequente é: \[0, 1 anos), ou seja, a que vai de 0 anos completos até 1 ano incompleto. Em outras palavras: a Cocid-19 atinge mais os bebes recém-nascidos?
+
+Não se pode esquecer que nessa contagem estão incluídos todos os casos, inclusives os de gripe simples.
+
+-   A **Parte II** deste Estudo Dirigido consiste nos itens a seguir.
+
+------------------------------------------------------------------------
+
+**Acompanhe** o desenvolvimento e as respostas dos itens abaixo.
+
+### Item 7
+
+#### Faça um sumário com as principais medidas resumo (média, mediana, mínimo, máximo, primeiro e terceiro quartil) da variavél `idade`. Além disso, calcule o desvio padrão e o coeficiente de variação para a variável `idade`.
+
+Medidas resumo.
+
+```{r}
+
+cat("Sumário com as principais medidas resumo (média, mediana, mínimo, máximo, primeiro e terceiro quartil, além da quantidade de NA's) da variavél idade:")
+cat("\n")
+covid19$idade |> summary()
+
+cat("\n")
+cat("\n")
+idade.dp <- covid19$idade |> sd(na.rm = TRUE) |> round(2)
+cat("Desvio Padrão da variavél idade:", idade.dp, " anos")
+cat("\n")
+
+
+cat("\n")
+cat("\n")
+idade.media <- covid19$idade |> mean(na.rm = TRUE) |> round(2)
+idade.cv <- round( (idade.dp / idade.media) * 100, 1 )
+cat("CV - Coeficiente de Variação da variavél idade:", idade.cv, "%")
+cat("\n")
+```
+
+Interpretando essas medidas resumos pode-se ver que a Covid-19 infectou pessoas em uma faixa etária cuja amplitude é igual a 54 anos, desde zero a 54 anos.
+
+50% das pessoas infectadas no ano de 2024 no Estado de Goiás encontram-se no seguinte intervalo de idades: de 20 (1º quartil) a 42 anos (3º quartil), com uma Amplitude Interquartílica de 22 anos.
+
+A média foi de 29,7 anos, que é menor que a mediana de 31 anos; denotando que a distribuição das idades das pessoas infectadas por Covid-19 no Estado de Goiás em 2024 apresenta assimetria negativa ou à esquerda.
+
+A média de 29,7 anos associa-se a um desvio padrão de 14,7 anos, com um coeficiente de variação igual a 49,7%; ou seja, desvio padrão praticamente igual à metade da média, que se mostra relativamente alto. Supondo a distribuição normal dessas idades, espera-se que **95%** delas (Regra empírica dos 95%) encontrem-se no intervalo `média ± 2 * DP`, a saber: `29.7 ± 2 * 14.7 = (15.0, 44.4) anos`.
+
+A variável idade não foi coletada em 67050 observações, num total de 255647, ou seja, em 26,2% do total de casos observados, que se mostra uma proporção relativamente grande.
+
+Vale dizer, não se pode olhar para os dados anteriores e crer que eles resumem com *fidedignidade* as informações da população formada pelas pessoas observadas; muito menos das pessoas infectadas, em razão da possibilidade de ocorrência de *ausência de notificações*: problema da subnotificação oficial (pessoas infectadas assintomáticas, sintomáticas que não procuram o sistema de saúde, sintomáticas que procuram o sistema de saúde mas não são devidamente registradas etc.).
+
+### Item 8
+
+#### Qual foi o sintoma mais frequente (moda da variável sintoma) registrado entre as notificações de suspeita de Covid-19 no ano de 2024 no Estado de Goiás?
+
+O pacote e sua função que calcula a moda é: `modeest::mfv(...)`, ou seja, trata-se da função `mfv` - *most frequent value*, que retorna o valor mais frequente, ou mesmo um conjnunto deles.
+
+Como nosso *conjunto de dados* tem valores ausentes em diversas variáveis, é prudente habilitar o parâmetro `na_rm = TRUE` para que os eventuais valores `NA`'s da variável `sintoma` sejam desconsiderados e a ***moda*** seja calculada corretamente (neste caso, o valor total será o de observações preenchidas).
+
+```{r}
+
+
+library(modeest) # habilitar o pacote
+
+## sintomas:
+
+# Obter a moda (função mfv - most frequent value)
+cat("\n")
+sintomas.moda <- mfv(covid19$sintomas, na_rm = TRUE)
+cat("Sintoma mais frequente (moda da variável sintoma) foi:", sintomas.moda)
+cat("\n")
+
+# Conferindo pela tabela de frequências:
+cat("\n")
+cat("Que pode ser conferindo na seguinte tabela de frequências relativas em ordem drescente da variável sintomas: com as 10 mais frequentes.")
+cat("\n")
+sort( round( 100 * prop.table( table(covid19$sintomas) ), 2 ),
+      decreasing = TRUE) |> head(10) # lista das 10 categorias mais frequentes
+
+# Total de NA's na variável sintomas:
+cat("\n")
+sintomas.na <- sum( is.na(covid19$sintomas) ) # há 255647 obs.
+cat("Total de NA's na variável sintomas:", sintomas.na)
+cat("\n")
+
+# Obter a moda (função mfv - most frequent value)
+# agora sem uso do parâmetro na_rm
+cat("\n")
+cat("Sintoma mais frequente (moda da variável sintoma) permenece sendo:",
+    mfv(covid19$sintomas))
+cat("\n")
+```
+
+Com exceção de "Assintomático", que não se pode tomar na conta de um efetivo sintoma e da categoria "Outros" (sintomas distintos dos que foram categorizados, estes certamente por serem mais prevalentes), observa-se que o conjunto de sintomas mais frequente foi o binômio: `Coriza, Tosse`, com 1,70% do total de ocorrências.
+
+Como não há `NA'`s nessa variável `sintomas`, que, assim, apresenta 255647 observações, esse é resultado mais fidedigno na amostra de pessoas infectadas observadas que o dado correspondente à sua `idade`.
+
+### Item 9
+
+#### Faça um boxplot da variável `idade` e responda: existem idades discrepantes (*outliers*) na amostra?
+
+Verificou-se, acima, `idade` máxima de 55 anos e mínima igual a zero.
+
+E que a variável `idade` não foi coletada em 67.050 observações, ouseja, há nela ***um provável viés de não resposta***.
+
+```{r}
+
+covid19$idade |> 
+  boxplot(horizontal = TRUE,
+          ## título do gráfico
+          main   = 'Notificações Covid-19 (ano 2024, Goiás)\nBoxplot da idade',
+          xlab   = 'Idade (anos)', ## rótulo do eixo x (horizontal)
+          col    = 4,              ## cor azul da caixa
+          boxwex = 0.45)           ## largura da caixa
+```
+
+Agora utilizar o pacote `ggplot2`.
+
+```{r}
+
+library(ggplot2)
+
+covid19 |>
+  select(idade) |> 
+  filter(!is.na(idade) ) |> 
+  ggplot( aes( x = idade) ) +
+  geom_boxplot(fill  = "lightblue",
+               alpha = 0.5,
+               width = 0.5) + # parâmetro boxwex não é reconhecido aqui
+  geom_point( x = mean(covid19$idade, na.rm = TRUE), y = 0 ,
+              size = 3, color = "blue") +
+  scale_x_continuous(breaks = seq(0, 55, 5) ) +
+  scale_y_continuous(breaks = NULL ) +
+  labs(title    = "Gráfico boxplot: idade em anos\nNotificações Covid-19 em todo o Estado de Goiás (GO)",
+       subtitle = "Período: 1º jan. a 15 jul. 2024 (n = 6,5 meses)",
+       x        = "idade em anos",
+       y        = "",
+       caption  = "1. Fonte: dados secundários coletados no site do Min. Saúde (OpenDataSUS).\n2. Idade média = 29,7 anos indicada no ponto azul < mediana de 31 anos\n3. Observações de idades ignoradas (67.050) não foram consideradas."
+       )
+```
+
+Olhando para o *boxplot* acima ***não existem idades discrepantes*** no conjunto de dados na amostra, ou seja, ***não há outliers na variável*** `idade`.
+
+### Item 10
+
+#### Faça uma tabela cruzada para as variáveis "evolução do caso" (`evolucaoCaso`) e "recebeu vacina" (`codigoRecebeuVacina`), utilizando frequências relativas pelo total da coluna (utilize 4 casas decimais para a proporção). Exclua valores ausentes (NA's) e Ignorados de ambas as variáveis. Responda: Do total de pessoas que tomaram vacina, qual a porcentagem de pessoas que foram internadas em UTI? E considerando o total de pessoas que não tomaram vacina, qual porcentagem foram internadas em UTI?
+
+Fazer uma tabela cruzada (tabela de contingência) para as variáveis "evolução do caso" (`evolucaoCaso`) e "recebeu vacina" (`codigoRecebeuVacina`).
+
+```{r}
+
+# Duas variáveis: evolucaoCaso x codigoRecebeuVacina
+# com exclusão de valores ausentes (Na's), valores Ignorados e em branco de ambas
+# filtrar as duas variáveis
+# resultado utilizando pipe: isso para garantir que
+# as duas colunas terminem com o mesmo número de observações (linhas)
+covid19.filtro <- covid19 |> 
+  dplyr::select(evolucaoCaso, codigoRecebeuVacina) |> # df [255,647 × 2]
+  mutate(codigoRecebeuVacina = as.character(codigoRecebeuVacina)) |> 
+  filter(evolucaoCaso != "Ignorado" &                 # df [136,354 × 2]
+         evolucaoCaso != ""         &
+         !is.na(evolucaoCaso)       ) |> 
+  filter(codigoRecebeuVacina != "ign" &               # df [102,290 × 2]
+         codigoRecebeuVacina != ""    &
+         !is.na(codigoRecebeuVacina)  )               # df [102,290 × 2]
+
+
+table(covid19.filtro$evolucaoCaso,
+      covid19.filtro$codigoRecebeuVacina)
+
+# Tabela de frequências relativas pelo total da coluna
+# com arredondamento para 4 casas:
+round( prop.table( table(covid19.filtro$evolucaoCaso,
+                         covid19.filtro$codigoRecebeuVacina),
+                   margin = 2), # pelo total das 2 colunas de codigoRecebeuVacina
+       digits = 4)
+
+
+# resultado equivalente utilizando pipe:
+table(covid19.filtro$evolucaoCaso,
+      covid19.filtro$codigoRecebeuVacina) |> 
+  prop.table(margin = 2) |> 
+  multiply_by(100) |> 
+  round(digits = 2) |>  # pelo total das 2 colunas de codigoRecebeuVacina
+  as.data.frame() |> 
+  rename(
+    "Evolução do Caso" = Var1, # nome novo = nome antigo
+    "Recebeu Vacina"   = Var2,
+    "Porcentagem (%)"  = Freq
+    )
+
+# |>
+#   gt(
+#     caption = "Notificações Covid-19 (ano 2024, Goiás) - Tabela de frequência relativa (%) pelos estratos de Evolução do Caso cruzada com as duas categroias de Recebeu Vacina (s - sim, n - não) no total das notificações de suspeita de Covid-19, descartados os Ignorados, em branco e NA's"
+#   )
+
+# Agora computando também os Ignorados, em branco e NA's
+table(covid19$evolucaoCaso,
+      covid19$codigoRecebeuVacina,
+      useNA = "always") |> 
+  prop.table(margin = 2) |>  # pelo total das 4 colunas de codigoRecebeuVacina:
+  multiply_by(100) |>        # "s", "n", "ign" e NA
+  round(digits = 2) |> 
+  as.data.frame() |> 
+  rename(
+    "Evolução do Caso" = Var1, # nome novo = nome antigo
+    "Recebeu Vacina"   = Var2,
+    "Porcentagem (%)"  = Freq
+    )
+
+# |>
+#   gt(
+#     caption = "Notificações Covid-19 (ano 2024, Goiás) - Tabela de frequência relativa (%) pelos estratos de Evolução do Caso cruzada com as duas categroias de Recebeu Vacina (s - sim, n - não) no total das notificações de suspeita de Covid-19, computados os Ignorados, em branco e NA's"
+#   )
+```
+
+Respondendo à 1ª pergunta: Do total de pessoas que tomaram vacina, qual a porcentagem de pessoas que foram internadas em UTI?
+
+Resposta: Com base na tabela de proporções percentuais, excluídos os valores Ignorados, em branco e NA's, foi de **0,01%** a **porcentagem** de **pessoas** que **foram internadas em UTI** [***e***]{.underline} que **tomaram vacina contra a Covid-**19.
+
+Respondendo à 2ª pergunta: E considerando o total de pessoas que não tomaram vacina, qual porcentagem foram internadas em UTI?
+
+Resposta: Com base na tabela de proporções percentuais, excluídos os valores Ignorados, em branco e NA's, também foi de **0,01%** a **porcentagem** de **pessoas** que **foram internadas em UTI** [***e***]{.underline} que [***não***]{.underline} **tomaram vacina contra a Covid-**19.
+
+Ao menos a princípio, não se evidencia uma diferença significativa entre as pessoas infectadas com Covid-19 em Goiás (2024) que foram internadas em UTI em relação ao fato de terem ou não sido vacinadas; enquanto que seria razoável esperar uma diferença a favor dos vacinados, ou seja, que sua proporção deveria ser significativamente menor, pressupondo-se a eficácia das vacinas aprovadas pelos órgãos de controle da saúde humana, como a Anvisa.
+
+Olhando para todas as demais categorias, nota-se que os vacinados não aparecem em posição mais favorável também entre os grupos que alcançaram a `cura` e nem entre os que vieram a `óbito`.
+
+Somente a percentagem dos `internados` que foram vacinados (0,03%) que ficou um pouco abaixo das dos não vacinados (0,08), mas que não se mostra uma diferença com significância prática.
+
+Na categoria `Em tratamento domiciliar` o grupo dos vacinados (3,14%) é maior que o dos não vacinados (1,39%), o que precisa ser interpretado dentro do contexto desse tramento, pois, ao menos a priori é mais difícil estabelecer o que é mais vantajoso para quem, especialmente para os infectados, nesse caso.
+
+Seria salutar prosseguir nessa pesquisa com algum tipo de *comparação* com outro grupo de pessoas, também dividido entre vacinados e não vacinados, que, no mesmo período, *não* foram infectados pela Covid-19 no Estado de Goiás.
+
+### Item 11
+
+#### Faça um gráfico de colunas justapostas para as variáveis raça (`racaCor`) e `sexo`. Exclua valores ausentes (NA's) e Ignorados de ambas as variáveis. Utilize a frequência relativa porcentagem para o eixo y do gráfico. Responda: qual a categoria com maior frequência conjunta dentre as notificações de suspeita de Covid-19 no ano de 2024 no Estado de Goiás?
+
+Fazer um gráfico de colunas justapostas para as variáveis raça (`racaCor`) e sexo (`sexo`).
+
+```{r}
+
+## Gráfico de colunas justapostas (bidimensional)
+#  para as variáveis racaCor e sexo
+#  Excluir valores ausentes (NA's) e Ignorados de ambas as variáveis
+#  Utilizar a frequência relativa em porcentagem para o eixo y do gráfico
+
+# Tabela bidimensional: racaCor x sexo
+# Excluir a categoria Ignorado: melhor dizendo, "ignorado" com minúscula.
+# transformar a variável racaCor de factor para character:
+covid19$racaCor <- as.character(covid19$racaCor)
+# inspecionar as categorias das duas variáveis:
+table(covid19$racaCor, useNA = "always") # 22 NA's e 38762 "ignorado"
+table(covid19$sexo   , useNA = "always") #  0 NA   e     0 "ignorado"
+# aplicar filtros adequados apenas na varíavel racaCor
+covid19.filtro.raca.sexo <- 
+  covid19[ (covid19$racaCor != "ignorado") & ( !is.na(covid19$racaCor) ), ]
+
+# Tabela de frequências absolutas: racaCor x sexo
+tab.sexo.racaCor <- table(covid19.filtro.raca.sexo$sexo,
+                          covid19.filtro.raca.sexo$racaCor)
+tab.sexo.racaCor
+
+# Tabela de porcentagens
+tab.sexo.racaCor.perc <- 100 * prop.table(tab.sexo.racaCor)
+
+# armazenar o gráfico em uma variável auxiliar
+b <- barplot(tab.sexo.racaCor.perc,
+        beside = TRUE,               # barras justapostas
+        legend = TRUE,               # habilita legenda
+        main = "Gráfico de colunas justapostas: Raça/cor x sexo\nNotificações Covid-19 em todo o Estado de Goiás (GO)", # Título
+        sub = "Período: 1º jan. a 15 jul. 2024 (n = 6,5 meses)", # subtítulo
+        col  = c("blue",             # cores das 2 categorias sexo no eixo x
+                 "red"),
+        ylab = "Porcentagem (%)",    # rótulo do eixo y
+        xlab = "sexo: m - masc.  e  f - fem.", # rótulo do eixo x
+        ylim = c(0, 35)) # ajuste para o eixo não terminar antes das barras
+
+# usar a função text:
+text(x = b,
+     y = tab.sexo.racaCor.perc + 1.2, # um pequeno shift de 1.2 para cima
+     labels = paste0( round(tab.sexo.racaCor.perc, 2), "%"), cex = 0.7 )
+```
+
+Uma primeira inspenção desse gráfico bidimensional evidencia uma predominânica da classe feminina em todas as demais categorias da variável Raça/Cor, ou seja, a percentagem do sexo feminino supera a do masculino em todas as 5 categorias de cor: amarela, branca, indígena (única que empata, mas inespressiva para fins práticos), parda e preta.
+
+A categoria de cor que prevalesce sobre todas as demais, seja na categora masculina ou na feminina, é a da cor parda; muito provavelmente como reflexo dessa mesma predominância de cor em toda a população goiana, o que precisa ser melhor investigado (a partir de dados secundários fornecidos pelo IBGE).
+
+Respondendo à pergunta: qual a categoria com **maior frequência conjunta** dentre as notificações de suspeita de Covid-19 no ano de 2024 no Estado de Goiás?
+
+Resposta: Considerando a análise acima sobre a relação das variáveis `sexo` e `racaCor`, a categoria com **maior frequência [*conjunta*]{.underline}** é a `feminina e parda`, com **32,15%** de todas as notificações.
+
+A diferença entre essa categoria conjunta prevalescente e a que vem em seguida, a `masculina e parda`, com **23,78%**, é de aproximadamente **8,37%**.
+
+Um aprofundamento para essa pesquisa seria investigar se essa diferença seria igual ou superior à mesma diferença calculada para toda subpopulação do Estado de Goiás composta por homens e mulheres de cor parda não infectadas (ao menos as assintomáticas) no mesmo período pesquisado.
+
+### Item 12
+
+#### Faça um *box-plot* comparativo das variáveis `idade` e `sexo` e comente a respeito da *dispersão* e da *idade mediana* dos dois grupos.
+
+Com a função `boxplot` do *`R base`*.
+
+```{r}
+
+## Box-plot comparativo: idade x sexo
+
+boxplot(covid19$idade ~ covid19$sexo, 
+        horizontal = TRUE,                           # rotaciona o gráfico
+        main = "Boxplot Comparativo: idade x sexo",  # Título
+        ylab = "sexo",                               # rótulo do eixo y
+        xlab = "idade (anos)",                       # rótulo do eixo x
+        col  = c(6, 4),                              # cores das caixas
+        boxwex = 0.5)                                # largura das caixas
+```
+
+Utilizar o `pipe` e `ggplot2`.
+
+```{r}
+
+#  sum( is.na(covid19$sexo ) ) # não há NA na variável sexo
+
+covid19 |>
+  dplyr::select(idade, sexo) |> 
+  filter(!is.na(idade) ) |> 
+  filter(!is.na(sexo ) ) |> 
+  ggplot( aes( x = idade, y = sexo) ) +
+  geom_boxplot(fill  = c("lightblue", "red"),
+               alpha = 0.5,
+               width = 0.5) + # parâmetro boxwex não é reconhecido aqui
+  geom_point( x = mean(covid19$idade[covid19$sexo == "m"],
+                       na.rm = TRUE),
+              y = "m" ,
+              size = 2, color = "blue") +
+  geom_point( x = mean(covid19$idade[covid19$sexo == "f"],
+                       na.rm = TRUE),
+              y = "f" ,
+              size = 2, color = "red") +
+  scale_x_continuous(breaks = seq(0, 55, 5) ) +
+  labs(title    = "Gráfico boxplot comparativo: idade x sexo\nNotificações Covid-19 em todo o Estado de Goiás (GO)",
+       subtitle = "Período: 1º jan. a 15 jul. 2024 (n = 6,5 meses)",
+       x        = "idade em anos",
+       y        = "sexo",
+       caption  = "1. Fonte: dados secundários coletados no site do Min. Saúde (OpenDataSUS).\n2. Idade média masc. = 28,0 anos indicada no ponto azul < mediana de 29 anos.\n3. Idade média fem. = 30,9 anos indicada no ponto vermelho < mediana de 32 anos.\n4. Observações de idades (67.050) ignoradas não foram consideradas.\n5. Não há dados de sexo ignorados."
+       )
+```
+
+Olhando para o gráfico dos dois *boxplots* comparativos acima percebe-se que a idade mediana do sexo feminino é ***superior*** à do sexo masculino.
+
+O que pode ser constatado calculando-se esses dois valores, filtrados: ***mediana*** para o sexo masculino é de 29 anos, enquanto que para o sexo feminino é de 32 anos.
+
+O gráfico acima também ilustra esse *mesmo padrão* observado nas ***médias*** de cada categoria, com um ponto dentro da respectiva caixa: para o sexo masculino é de 28,0 anos, enquanto que para o sexo feminino é de 30,9 anos.
+
+A assimetria à esquerda da distribuição de idades na categoria do sexo feminino é maior que a da idade do sexo masculino, indicada pela maior distância que vai do valor mínimo até a mediana de cada grupo, quando comparada com o segmento que vai da mediana de cada qual até o respectivo valor máximo.
+
+Todavia o boxplot da classe masculina apresenta maior disperssão, pois sua Amplitude Interquartil (AIQ = Q3 - Q2) é maior que a do bxoplot da classe feminina, pois o segmento horizontal (que vai de Q2 até Q3), a borda horizontal da caixa feminina é visualmente menor que a borda horizontal da caixa masculina.
+
+Como não há constatação de *outliers* nesses dois subgrupos, esse padrão de dispersão pode ser verificado calculando-se os desvios padrão desses dois subgrupos.
+
+```{r}
+
+# Desvio Padrão da variável idade em cada subgrupo de sexo:
+cat("\n")
+idade.dp.masc <- sd( covid19$idade[covid19$sexo == "m"],
+                     na.rm = TRUE ) #  15.31 anos.
+cat("Desvio Padrão da variável idade para o sexo masc.:", idade.dp.masc, "anos")
+cat("\n")
+
+cat("\n")
+idade.dp.fem <- sd( covid19$idade[covid19$sexo == "f"],
+                    na.rm = TRUE ) #  14.24 anos.
+cat("Desvio Padrão da variável idade para o sexo fem. :", idade.dp.fem, "anos")
+cat("\n")
+```
+
+O que corrobora a informação gráfica, pois, dada a **ausência** de ***outliers*** nos dois subgrupos, o desvio padrão da classe feminina é quase 1 ano menor que a do sexo masculino.
+
+O ***Coeficiente de Variação*** dos dois grupos deve retificar essa informação, uma vez que a categoria feminina, além de apresentar a maior média, detém o menor desvio padrão.
+
+```{r}
+
+idade.media.masc <- mean( covid19$idade[covid19$sexo == "m"],
+                          na.rm = TRUE ) |> round(2) ## 27.97 anos
+idade.cv.masc <- round( (idade.dp.masc / idade.media.masc) * 100, 1 )
+cat("CV - Coeficiente de Variação da idade no sexo masc.:", idade.cv.masc, "%")
+cat("\n")
+
+cat("\n")
+idade.media.fem <- mean( covid19$idade[covid19$sexo == "f"],
+                         na.rm = TRUE ) |> round(2) ## 30.89 anos
+idade.cv.fem <- round( (idade.dp.fem / idade.media.fem) * 100, 1 )
+cat("CV - Coeficiente de Variação da idade no sexo masc.:", idade.cv.fem, "%")
+cat("\n")
+```
+
+Como esperado, o Coeficiente de Variação da variável `idade` na classe masculina superou em 8,6% o da classe feminina.

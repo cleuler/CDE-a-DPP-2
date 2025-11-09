@@ -1,0 +1,334 @@
+# AEI - cap 17 moore - TSH0 {#sec-TSHN-basico}
+
+## Objetivos da Aprendizagem
+
+> Após ler este capítulo, você deve ser capaz de:
+>
+> ▶ 17.1 Usar o **raciocínio** dos **testes estatísticos** para estabelecer **se** os [**dados amostrais suportam**]{.underline}, [**ou não**]{.underline}, [**uma afirmativa**]{.underline} sobre a [**população**]{.underline}.
+>
+> ▶ 17.2 Estabelecer as [**hipóteses nula e alternativa**]{.underline} ao ***testar uma afirmativa sobre a [média]{.underline}*** de uma **população**.
+>
+> ▶ 17.3 Encontrar e [**interpretar valores P**]{.underline} e estabelecer **se** um **resultado de teste é, ou não, estatisticamente significante** em dado nível.
+>
+> ▶ 17.4 Calcular a **estatística** de **teste z** de **uma amostra**, para **testes** tanto **unilaterais** quanto **bilaterais**, de [**uma média populacional**]{.underline}, e tirar [**conclusões**]{.underline} a partir dos resultados.
+>
+> ▶ 17.5 Usar uma **tabela** para procurar **valores P** aproximados com **base** na **estatística z** e estabelecer [**se**]{.underline} o resultado [**é estatisticamente significante**]{.underline}.
+
+## Testes de Significância: o Básico
+
+> **Intervalos de confiança** são um dos dois tipos mais comuns de **inferência estatística**.
+>
+> Neste capítulo, discutimos **testes de significância** \[da Hipótese Nula - TSHN\], o **segundo tipo** de **inferência estatística**.
+>
+> A matemática da **probabilidade** – em particular, as **distribuições amostrais** discutidas no **Capítulo 15** – fornece a **base formal** para [**um teste de significância**]{.underline}.
+>
+> Aqui aplicaremos o **raciocínio** de **testes de significância** para a **média** de **uma população** que tem [**distribuição Normal**]{.underline}, em *um contexto simples e artificial* (em que ***supomos conhecer*** o [**desvio-padrão populacional**]{.underline}).
+>
+> Usaremos a mesma lógica em *capítulos futuros* para a *construção de testes de significância* para *parâmetros populacionais* em [*contextos mais realistas*]{.underline}.
+>
+> Use um **intervalo de confiança** quando seu **objetivo** for [**estimar um parâmetro da população**]{.underline}.
+>
+> Os [**testes de significância**]{.underline} têm um **objetivo diferente**: [**avaliar**]{.underline} a [**evidência**]{.underline} *fornecida pelos **dados*** sobre [***alguma afirmativa anterior***]{.underline} relativa a [**um parâmetro da população**]{.underline}.
+>
+> A seguir, apresentamos sucintamente a [**lógica**]{.underline} de testes estatísticos \[TSHN ou ***NHST*** - ***Null Hypothese Significant Test***\] [@Moore2023 , cap. 17, p. 308-323]
+
+::: callout-important
+## Inferência estatística
+
+A inferência estatística fornece [**métodos**]{.underline} para a ***extração de conclusões sobre uma população a partir de dados amostrais***. [@Moore2023 , cap. 16, p. 296]
+:::
+
+Recapitular as condições simples ou pressupostos para um TSHN de uma média populacional desconhecida.
+
+::: callout-important
+## Condições simples para inferência sobre uma média
+
+1.  Temos [**uma amostra aleatória simples**]{.underline} **(AAS)** da população de interesse.
+2.  Não há não resposta \[NA\] ou qualquer outra dificuldade prática.
+3.  A [**população é grande**]{.underline} em comparação ao tamanho da amostra \[N \> 20 x n\].
+4.  A **variável** que *medimos* tem [**uma distribuição exatamente normal**]{.underline} **N(µ; σ)** na população.
+5.  ***Não conhecemos*** a **média da população** µ.
+6.  Mas [**conhecemos**]{.underline} o [**desvio-padrão populacional**]{.underline} σ. [@Moore2023 , cap. 16, p. 297]
+:::
+
+A condição de que a população seja grande em relação ao tamanho da amostra será adequadamente satisfeita se a população for, digamos, pelo menos 20 vezes maior \[N \> 20 x n ou n \< 5% x N\].
+
+::: callout-important
+\[...\] *As **condições** \[ou pressupostos, **presunções relativas**\] de que temos uma AAS perfeita, de que a população é exatamente Normal e de que conhecemos o σ populacional são todas não realistas*. [@Moore2023 , cap. 16, p. 297]
+:::
+
+O **pesquisador** é o **responsável** pelo **ônus da prova** de [**verificar se**]{.underline}, na prática e diante de seus dados válidos, fidedignos e reproduzíveis, essas [***presunções relativas***]{.underline} [***não***]{.underline} ***são [satisfeitas]{.underline}***.
+
+Ou seja, de que existe evidência de não satisfação das condições para aplicação de um TSHN.
+
+Por exemplo:
+
+1.  a distribuição original na População da variável a ser testada não é Normal (padrão geral dos dados).
+2.  a amostra obtida não é uma AAS.
+3.  há considerável viés de NA.
+4.  há viés de subcobertura.
+5.  há viés de autoseleção.
+6.  há viés de resposta por autodeclaração.
+7.  há viés de resposta devido ao fraseado de questões do survey (intrumento de coleta).
+8.  pode haver insinceridade na resposta do entrevistado.
+9.  há *outliers* na amostra com forte desvio de assimetria à direita que fogem ao padrão geral dos dados.
+10. uso de *estimador enviesado* para obter uma estimativa do **desvio padrão** da **população** ($\sigma$) a partir do ***desvio padrão*** da ***amostra*** (s), o que é evitado pela divisão da soma dos desvios quadráticos pelo número de graus de liberdade da amostra (g.l. = n - 1) [@Moore2023 , cap. 2, p. 46].
+
+Recapitulando o conceito de desvio padrão amostral (s) como a raiz quadrada da **variâcia amostral** (s^2^):
+
+$$
+s^2 = \frac{(x_1-\bar{x})^2 + (x_2-\bar{x})^2 + \cdots + (x_n-\bar{x})^2}{n-1}
+$$
+
+Ou seja, a variância amostral também pode ser expressa por:
+
+$$
+s^2 = \frac{1}{n-1} \sum_{i=1}^n (x_i-\bar{x})^2
+$$
+
+Uma vez calculada a variância amostral acima, o desvio padrão amostral é obtido extraindo sua raiz quadrada [@Moore2023 , cap. 2, p. 46]:
+
+$$
+s^2 = \sqrt{\frac{1}{n-1} \sum_{i=1}^n (x_i-\bar{x})^2}
+$$
+
+### EXEMPLO 17.1 Eu sou um grande atirador de lances livres
+
+Eu **afirmo** que acerto 80% de meus lances livres no jogo de basquete.
+
+Para [**testar**]{.underline} *minha* **afirmativa**, *você me pede para* **fazer 20 lances livres**. \[coleta de uma amostra de tamanho 20\]
+
+Eu ***acerto apenas oito dos 20***.
+
+“Ah!”, você diz. “*Alguém que acerta 80% de seus lances livres* [**quase nunca**]{.underline} *acertaria [**apenas oito entre 20**]{.underline}*.
+
+[**Logo**]{.underline}, [**não acredito**]{.underline} em [**sua afirmativa**]{.underline}.” \[*decisão* baseada em *evidências* após um *teste* aplicado em *dados* de *uma amostra* validademente coletada\]
+
+Seu [**raciocínio**]{.underline} se baseia no **questionamento** do [***que ocorreria se minha afirmativa fosse verdadeira***]{.underline} [**e**]{.underline} [***repetíssemos a amostra de 20 lançamentos muitas vezes***]{.underline}: eu [**quase nunca acertaria oito ou menos**]{.underline}.
+
+\[Lei dos Grandes Números e Teorema Central do Limite:\]
+
+Esse [**resultado de oito em 20 é tão improvável**]{.underline}, que fornece uma [forte]{.underline} \[recitus razoável\] [**evidência**]{.underline} de que minha **afirmativa [não]{.underline} seja [verdadeira]{.underline}** \[sem jamais afastar a possibilidade de cometer um Erro de decisão do Tipo I, ou seja, o erro de decisão de *rejeitar a hipotese nula quando ela for verdadeira*\].
+
+Você pode dizer quão [forte]{.underline} é a evidência contra minha afirmativa, fornecendo a [**probabilidade**]{.underline} de eu acertar oito ou menos entre 20 lances livres, se eu realmente acertasse 80% no longo prazo.
+
+Essa probabilidade é 0,0001; como descrito no Capítulo 14, esse cálculo é feito com o uso da distribuição binomial.
+
+Assim, eu [**acertaria oito ou menos em 20 lances**]{.underline} em [**apenas**]{.underline} [**uma vez em 10 mil tentativas no longo prazo**]{.underline} – onde **cada “tentativa” são 20 lances livres** jogados – [**se**]{.underline} minha [**afirmativa de acertar 80% fosse verdadeira**]{.underline}.
+
+O [**pequeno valor da probabilidade**]{.underline} o [**convence**]{.underline} de que minha **afirmativa é [falsa]{.underline}**.
+
+Corretíssimo, mas esse indicador ***probabilidade***, [**valor P**]{.underline} ou ***Área sob a Curva*** [**não**]{.underline} nos fornece a **força** dessa [**evidência**]{.underline}.
+
+O [**coeficiente de Bayes**]{.underline} cumpre esse papel.
+
+## A lógica dos Testes de Significância da H~0~
+
+A [**lógica**]{.underline} dos [**testes estatísticos**]{.underline}, assim como a dos [**intervalos de confiança**]{.underline}, se [**baseia**]{.underline} no [**questionamento**]{.underline} do que [**ocorreria se repetíssemos a amostra ou experimento muitas vezes**]{.underline}.
+
+Essa lógica baseia-se na [**Lei dos Grandes Números**]{.underline} (LGN).
+
+Agiremos novamente [***como se***]{.underline} as “[**condições simples**]{.underline}” listadas em “Condições simples para inferência sobre uma média”, no Capítulo 16, ***fossem verdadeiras***: temos ***uma AAS perfeita*** de ***uma população exatamente Normal*** com ***desvio-padrão σ conhecido*** por nós.
+
+Eis um exemplo que analisaremos.
+
+### EXEMPLO 17.2 Adoçantes de refrigerantes
+
+Refrigerantes dietéticos usam adoçantes artificiais para evitar o uso de açúcar.
+
+Esses adoçantes gradualmente perdem sua doçura ao longo do tempo.
+
+Os fabricantes, portanto, testam a perda de doçura dos refrigerantes novos antes de colocá-los no mercado.
+
+Provadores treinados bebem um pequeno gole de refrigerante, juntamente com bebidas de doçura padrão, e atribuem ao refrigerante um “escore de doçura” de 1 a 10, com maiores escores correspondendo a maior doçura.
+
+O refrigerante é, então, ***armazenado por um mês em alta temperatura para imitar o efeito do armazenamento por 4 meses em temperatura ambiente***.
+
+***Cada provador atribui um escore ao refrigerante novamente após o armazenamento***.
+
+Esse é um experimento de ***dados emparelhados***.
+
+Nossos dados são as [**diferenças**]{.underline} (escore [***antes***]{.underline} do armazenamento [**menos**]{.underline} escore [***após***]{.underline} o armazenamento) dos escores dos provadores. \[Perda doçura = Antes - Após; se \> 0 então menos doçura\]
+
+Quanto [**maior a diferença**]{.underline} (diferença \> 0), ***maior será a perda de doçura***.
+
+***Suponha sabermos*** que, ***para qualquer refrigerante***, os ***escores de perda de doçura variem de provador para provador*** de acordo com uma [**distribuição Normal**]{.underline}, com [**desvio-padrão**]{.underline} σ = 1.
+
+A média µ de todos os provadores mede a perda de doçura e é ***diferente para diferentes refrigerantes***.
+
+A seguir, estão as perdas de doçura de um novo refrigerante, medidas por 10 provadores treinados:
+
+1,6   0,4   0,5 –2,0  1,5 –1,1  1,3 –0,1 –0,3   1,2
+
+A [**perda média de doçura**]{.underline} é [**dada**]{.underline} pela ***média amostral*** x = 0,3, de modo que, ***em média***, os ***10 provadores encontraram uma pequena perda de doçura***.
+
+Também, *mais da metade*, (seis) dos *provadores encontraram uma perda de doçura*.
+
+Esses dados são uma [**boa evidência**]{.underline} de que o refrigerante perdeu doçura com o armazenamento?
+
+O raciocínio é o mesmo do Exemplo 17.1.
+
+Fazemos [**uma afirmativa**]{.underline} e perguntamos [**se**]{.underline} os [**dados fornecem evidência contrária a ela**]{.underline}.
+
+Procuramos [**evidência**]{.underline} de que [**haja uma perda de doçura**]{.underline};
+
+logo, a [**afirmativa que testamos**]{.underline} é que [**não há perda**]{.underline}.
+
+Nesse caso, a **perda média para a população de todos os provadores treinados** seria µ = 0. \[H~0~\]
+
+• [**Se**]{.underline} a afirmativa de que **µ = 0** \[H~0~\] é **verdadeira**, a [**distribuição amostral**]{.underline} de $\bar{x}$ dos [**10 provadores**]{.underline} é [**Normal**]{.underline} com **média µ = 0** e desvio-padrão \[pelo Teorema Central do Limite\]:
+
+$$
+\text{Erro Padrão das médias amostrais} = \frac{\sigma}{\sqrt{n}} = \frac{1.0}{\sqrt{10}} = 0.316
+$$
+
+Esses são exatamente os cálculos que fizemos no Capítulo 15 (ver Exemplo 15.5) e no Capítulo 16 (ver Exemplo 16.1).
+
+A Figura 17.1 mostra essa distribuição amostral.
+
+***Podemos*** [**julgar**]{.underline} [**se**]{.underline} qualquer $\bar{x}$ ***observado*** \[nos dados amostrais\] é [**surpreendente**]{.underline}, localizando-o nessa distribuição.
+
+• Para esse refrigerante, ***10 provadores*** acusaram ***perda média*** \[doçura\] $\bar{x}$ = 0,3. É claro, a partir da Figura 17.1, que um $\bar{x}$ desse tamanho [**não é particularmente surpreendente**]{.underline}. Ele [**poderia facilmente ocorrer apenas devido**]{.underline} ao [**acaso**]{.underline}, **quando a média da população é µ = 0 \[supondo H~0~ verdadeira\]**. O [**fato**]{.underline} de ***obter*** $\bar{x}$ = 0,3 para [**10**]{.underline} provadores [**não é**]{.underline} [forte]{.underline} \[*rectius*\] [**boa evidência**]{.underline} de que esse refrigerante perca doçura.
+
+Script abaixo gera um gráfico da ***distribuição amostral das médias amostrais*** supondo que a Hipótese Nula fosse Verdadeira: $H_0: \mu = 0.0$
+
+Trata-se de um TSHN.
+
+```{r}
+
+# Gera gráfico da distribuição amostral das médias (nrep = 5000) para um vetor de observações.
+# Ajuste 'sample_size' conforme desejar; usa amostragem com reposição.
+# Requisitos: install.packages(c("ggplot2","dplyr"))
+library(ggplot2)
+library(dplyr)
+
+# Dados amostrais fornecidos
+x <- c(1.6, 0.4, 0.5, -2.0, 1.5, -1.1, 1.3, -0.1, -0.3, 1.2)
+
+# Parâmetros
+sample_size <- 10   # tamanho da amostra n (ajuste conforme necessário)
+nrep <- 5000        # número de repetições
+replace <- TRUE     # TRUE = com reposição (bootstrap-like); FALSE = sem reposição
+
+# Geração das médias amostrais
+set.seed(123) # para reprodutibilidade
+samp_means <- replicate(nrep,
+                        mean(sample(x,
+                                    size = sample_size,
+                                    replace = replace)
+                             )
+                        )
+
+# Estatísticas
+obs_mean <- mean(x)
+pop_sd   <- sd(x)                       # desvio amostral da "população" dada
+theoretical_sd <- pop_sd / sqrt(sample_size)
+dist_mean <- mean(samp_means)
+dist_sd   <- sd(samp_means)
+ci95 <- dist_mean + c(-1, 1) * qnorm(0.975) * theoretical_sd
+
+# Data frame para ggplot
+df_plot <- tibble(mean = samp_means)
+
+# Plotagem: histograma (densidade), densidade empírica e curva normal teórica
+p <- ggplot(df_plot, aes(x = mean)) +
+  geom_histogram(aes(y = ..density..), bins = max(10, round(sqrt(nrep))),
+                 fill = "#cce5ff", color = "#2b6fa6") +
+  geom_density(color = "#0055a4", size = 1) +
+  stat_function(fun = function(x) dnorm(x, mean = dist_mean, sd = theoretical_sd),
+                color = "#d9534f", size = 1, linetype = "dashed") +
+  geom_vline(xintercept = dist_mean, color = "darkgreen", size = 1, linetype = "solid") +
+  geom_vline(xintercept = 0.0, color = "purple", size = 1, linetype = "dotdash") +
+  geom_vline(xintercept = ci95, color = "#d9534f", linetype = "dotted", size = 0.8) +
+  annotate("text", x = dist_mean, y = max(density(samp_means)$y)*0.95,
+           label = sprintf("Média das médias = %.3f", dist_mean), vjust = -0.5, color = "darkgreen", size = 3.5) +
+  annotate("text", x = ci95[1], y = max(density(samp_means)$y)*0.75,
+           label = sprintf("IC95 teórico:[%.3f, %.3f]", ci95[1], ci95[2]), color = "#d9534f", hjust = 0, size = 3) +
+  labs(title = sprintf("Distribuição amostral das médias amostrais (n = %d, nrep = %d)", sample_size, nrep),
+       x = "Média amostral", y = "Densidade") +
+  theme_minimal(base_size = 12)
+
+# Exibir
+print(p)
+
+# Opcional: salvar
+# ggsave("dist_media_amostral.png", p, width = 8, height = 4.5, dpi = 300)
+```
+
+Agora centrando a distribuição amostral das médias amostrais em mu = 0 e mantendo a reta vertical em xbarra = 0.301
+
+```{r}
+
+# Gera distribuição amostral das médias, centra em mu = 0 e mantém reta vertical em xbarra = 0.301
+# Requisitos: install.packages(c("ggplot2","dplyr"))
+library(ggplot2)
+library(dplyr)
+
+# Dados amostrais fornecidos
+x <- c(1.6, 0.4, 0.5, -2.0, 1.5, -1.1, 1.3, -0.1, -0.3, 1.2)
+
+
+
+# Parâmetros
+sample_size <- 10   # tamanho da amostra n (ajuste se desejar)
+nrep <- 5000        # número de repetições
+replace <- TRUE     # amostragem com reposição
+set.seed(123)
+
+
+# Gerar médias amostrais
+samp_means <- replicate(nrep,
+                        mean(sample(x,
+                                    size = sample_size,
+                                    replace = replace)
+                             )
+                        )
+
+# média das médias (xbarra) e valor fixo solicitado para a reta vertical
+dist_mean <- mean(samp_means)        # média observada das médias (ex.: ~0.301)
+xbar_fixed <- 0.301                  # reta vertical fixada conforme solicitado
+
+# Centralizar a distribuição em mu = 0 (subtrair a média das médias)
+centered_means <- samp_means - dist_mean
+
+# Estatísticas
+pop_sd <- sd(x)                       # desvio amostral dos dados fornecidos
+theoretical_sd <- pop_sd / sqrt(sample_size)  # sd teórico da média amostral
+empirical_sd <- sd(centered_means)    # sd empírico da distribuição centralizada
+ci95 <- dist_mean - xbar_fixed + c(-1, 1) * qnorm(0.975) * theoretical_sd
+
+# Data frame para ggplot
+df_plot <- tibble(mean_centered = centered_means)
+
+# Plotagem: histograma (densidade), densidade empírica e curva normal teórica centrada em 0
+p <- ggplot(df_plot, aes(x = mean_centered)) +
+  geom_histogram(aes(y = ..density..), bins = max(10, round(sqrt(nrep))),
+                 fill = "#cce5ff", color = "#2b6fa6") +
+  geom_density(color = "#0055a4", size = 1) +
+  # curva normal teórica centrada em mu = 0 (usar theoretical_sd)
+  stat_function(fun = function(x) dnorm(x, mean = 0, sd = theoretical_sd),
+                color = "#d9534f", size = 1, linetype = "dashed") +
+  # linha vertical no zero (mu alvo)
+  geom_vline(xintercept = 0, color = "darkgreen", linetype = "solid", size = 1) +
+  # linha vertical fixa em xbar = 0.301 (na escala centrada, posiciona em x = 0.301 - dist_mean)
+  geom_vline(xintercept = xbar_fixed, color = "purple", linetype = "dotdash", size = 1) +
+  geom_vline(xintercept = ci95, color = "#d9534f", linetype = "dotted", size = 0.8) +
+  # anotações: média das médias (valor real) e legenda para mu=0
+  annotate("text", x = 0, y = max(density(centered_means)$y) * 0.95,
+           label = "mu = 0", color = "darkgreen", vjust = -0.5, size = 3.5) +
+  annotate("text", x = xbar_fixed, y = max(density(centered_means)$y) * 0.85,
+           label = sprintf("x̄ = %.3f", xbar_fixed), color = "purple", vjust = -0.5, size = 3.5) +
+  annotate("text", x = ci95[1], y = max(density(samp_means)$y)*0.75,
+           label = sprintf("IC95 teórico:[%.3f, %.3f]", ci95[1], ci95[2]), color = "#d9534f", hjust = +0.5, size = 3) +
+  labs(title = sprintf("Distribuição amostral das médias (centralizada em 0)\n n = %d, rep = %d", sample_size, nrep),
+       subtitle = sprintf("Média real das médias = %.3f (subtraída para centralizar)", dist_mean),
+       x = "Média amostral (centralizada)", y = "Densidade") +
+  theme_minimal(base_size = 12)
+
+print(p)
+
+# Opcional: salvar gráfico
+# ggsave("dist_media_centered.png", p, width = 8, height = 4.5, dpi = 300)
+```
+
+mmm

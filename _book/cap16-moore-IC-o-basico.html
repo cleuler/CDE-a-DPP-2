@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR" xml:lang="pt-BR"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Cleuler Barbosa das Neves">
+<title>9&nbsp; AEI - cap 16 moore - IC: o Básico – __Ciência de Dados e Estatística Aplicadas ao Direito e Políticas Públicas__</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 1em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./cap17-moore-TSHN-o-basico.html" rel="next">
+<link href="./replicar-suco-uva-tab-graf.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-364982630eef5352dd1537128a8ed5cb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+</head>
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cap16-moore-IC-o-basico.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">AEI - cap 16 moore - IC: o Básico</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./"><strong>Ciência de Dados e Estatística Aplicadas ao Direito e Políticas Públicas</strong></a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Alternar modo de leitor">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Procurar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pretexto</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AEID-cap18-Reproduzivel.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">AEID - Análise Exploratória e Inferencial de Dados</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap3-DistNorm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">AED - cap 3 - As Distribuições Normais</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap5-pldr-modelos-dados.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">AED - cap 5 pldr - Ajustando Modelos aos Dados</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap13-pldr-model-rel-contin.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">AID - cap 13 - Modelagem de Relações Contínuas</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap16-pldr-EstMultiv.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">AID - cap 16 - Estatística Multivariada</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap6-moore-tab-dupla-entrada.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">AED - cap 6 moore - Tabelas de Dupla Entrada</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./replicar-suco-uva-tab-graf.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">AED - suco uva - Tabelas e Gráficos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap16-moore-IC-o-basico.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">AEI - cap 16 moore - IC: o Básico</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap17-moore-TSHN-o-basico.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">AEI - cap 17 moore - TSH0</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./conclusao.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Conclusão</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./apendiceA.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Apêndice A - EMENTA</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./apendiceB-quadroVar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Apêndice B - Quadro Var</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./referencias.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Referências</span></a>
+  </div>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Sumário</h2>
+   
+  <ul>
+<li><a href="#objetivos-da-aprendizagem" id="toc-objetivos-da-aprendizagem" class="nav-link active" data-scroll-target="#objetivos-da-aprendizagem"><span class="header-section-number">9.1</span> Objetivos da Aprendizagem</a></li>
+  <li><a href="#intervalos-de-confian%C3%A7a-o-b%C3%A1sico" id="toc-intervalos-de-confiança-o-básico" class="nav-link" data-scroll-target="#intervalos-de-confian%C3%A7a-o-b%C3%A1sico"><span class="header-section-number">9.2</span> Intervalos de Confiança: o Básico</a></li>
+  <li>
+<a href="#a-l%C3%B3gica-da-estima%C3%A7%C3%A3o-estat%C3%ADstica" id="toc-a-lógica-da-estimação-estatística" class="nav-link" data-scroll-target="#a-l%C3%B3gica-da-estima%C3%A7%C3%A3o-estat%C3%ADstica"><span class="header-section-number">9.3</span> A lógica da estimação estatística</a>
+  <ul>
+<li>
+<a href="#exemplo-16.1-%C3%ADndice-de-massa-corporal-de-homens-jovens" id="toc-exemplo-16.1-índice-de-massa-corporal-de-homens-jovens" class="nav-link" data-scroll-target="#exemplo-16.1-%C3%ADndice-de-massa-corporal-de-homens-jovens"><span class="header-section-number">9.3.1</span> EXEMPLO 16.1 Índice de massa corporal de homens jovens</a>
+  <ul class="collapse">
+<li><a href="#carregar-pacotes-necess%C3%A1rios" id="toc-carregar-pacotes-necessários" class="nav-link" data-scroll-target="#carregar-pacotes-necess%C3%A1rios"><span class="header-section-number">9.3.1.1</span> Carregar pacotes necessários</a></li>
+  <li><a href="#carregar-data-set-nhanes" id="toc-carregar-data-set-nhanes" class="nav-link" data-scroll-target="#carregar-data-set-nhanes"><span class="header-section-number">9.3.1.2</span> Carregar data set: NHANES</a></li>
+  </ul>
+</li>
+  </ul>
+</li>
+  <li>
+<a href="#margem-de-erro-e-n%C3%ADvel-de-confian%C3%A7a" id="toc-margem-de-erro-e-nível-de-confiança" class="nav-link" data-scroll-target="#margem-de-erro-e-n%C3%ADvel-de-confian%C3%A7a"><span class="header-section-number">9.4</span> Margem de erro e nível de confiança</a>
+  <ul>
+<li><a href="#exemplo-16.2-estima%C3%A7%C3%A3o-estat%C3%ADstica-em-figuras" id="toc-exemplo-16.2-estimação-estatística-em-figuras" class="nav-link" data-scroll-target="#exemplo-16.2-estima%C3%A7%C3%A3o-estat%C3%ADstica-em-figuras"><span class="header-section-number">9.4.1</span> EXEMPLO 16.2 Estimação estatística em figuras</a></li>
+  </ul>
+</li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title"><span id="sec-IC-basico" class="quarto-section-identifier"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">AEI - cap 16 moore - IC: o Básico</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><section id="objetivos-da-aprendizagem" class="level2" data-number="9.1"><h2 data-number="9.1" class="anchored" data-anchor-id="objetivos-da-aprendizagem">
+<span class="header-section-number">9.1</span> Objetivos da Aprendizagem</h2>
+<blockquote class="blockquote">
+<p>Após ler este capítulo, você deve ser capaz de:</p>
+<p>▶ 16.1 Usar os <u><strong>princípios</strong></u> da <u><strong>inferência</strong></u> e <u><strong>estimação</strong></u> estatísticas para a <strong><em>interpretação de intervalos de confiança</em></strong>.</p>
+<p>▶ 16.2 Articular o <u><strong>significado</strong></u> de <em>afirmativas que envolvem</em> <u><strong>níveis de confiança</strong></u> e <u><strong>margens de erro</strong></u>.</p>
+<p>▶ 16.3 Calcular <u><strong>intervalos de confiança para médias</strong></u>, depois de confirmar que as <u><strong>condições necessárias são satisfeitas</strong></u>.</p>
+<p>▶ 16.4 Compreender como a <u><strong>margem de erro</strong></u> muda com o <u><strong>tamanho amostral</strong></u> e <u><strong>nível de confiança</strong></u>.</p>
+</blockquote>
+</section><section id="intervalos-de-confiança-o-básico" class="level2" data-number="9.2"><h2 data-number="9.2" class="anchored" data-anchor-id="intervalos-de-confiança-o-básico">
+<span class="header-section-number">9.2</span> Intervalos de Confiança: o Básico</h2>
+<blockquote class="blockquote">
+<p>Os Capítulos 8 e 9 dizem que a maneira pela qual produzimos dados (amostragem, planejamentos experimentais) afeta a condição de termos, ou não, uma boa base para a generalização para alguma população mais ampla.</p>
+<p>Os Capítulos 12, 13 e 14 discutem probabilidade, a ferramenta matemática que determina a natureza das inferências que fazemos.</p>
+<p>O Capítulo 15 discute distribuições amostrais, que nos dizem como repetidas AASs se comportam e o que uma estatística (em particular, uma média amostral), calculada a partir de nossa amostra, pode nos dizer sobre o parâmetro correspondente da população da qual a amostra foi selecionada.</p>
+<p>Neste capítulo [16], discutimos o <strong>raciocínio básico</strong> da <u><strong>estimação estatística</strong></u>, com ênfase na <em>estimação [intervalar] da média de uma população</em>.</p>
+<p>Após extrairmos uma amostra, sabemos as respostas dos indivíduos na amostra. O motivo usual da extração de uma amostra não é conhecer os indivíduos que a compõem, mas <u><strong>inferir</strong></u>, <strong><em>a partir dos dados amostrais</em></strong>, alguma <u><strong>conclusão</strong></u> sobre a <u><strong>população</strong></u> mais ampla que a <strong><em>amostra representa</em></strong>. <span class="citation" data-cites="Moore2023">(<a href="referencias.html#ref-Moore2023" role="doc-biblioref">MOORE; NOTZ; FLIGNER, 2023</a> , cap. 16, p.&nbsp;296)</span></p>
+</blockquote>
+<div class="callout callout-style-simple callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Inferência estatística
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A inferência estatística fornece <u><strong>métodos</strong></u> para a <strong><em>extração de conclusões sobre uma população a partir de dados amostrais</em></strong>.</p>
+</div>
+</div>
+<p>Como diferentes amostras podem conduzir a conclusões diferentes, não podemos ter certeza de que nossas conclusões sejam corretas. A inferência estatística usa a linguagem da probabilidade para expressar o grau de confiabilidade de nossas conclusões. Este capítulo introduz um dos dois tipos mais comuns de inferência, intervalos de confiança para estimar o valor de um parâmetro populacional. O próximo capítulo discute o outro tipo comum de inferência, testes de significância para avaliar a evidência de uma afirmativa sobre uma população. Ambos os tipos de inferência se baseiam nas distribuições amostrais de estatísticas. Ou seja, ambos utilizam a probabilidade para dizer o que aconteceria se usássemos o método de inferência muitas vezes.</p>
+<p>Este capítulo apresenta a lógica básica da inferência estatística. Para torná-la mais clara possível, começamos com um contexto que é muito simples para ser realista. Eis o contexto para nosso trabalho neste capítulo.</p>
+<div class="callout callout-style-simple callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Condições simples para inferência sobre uma média
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Temos <u><strong>uma amostra aleatória simples</strong></u> <strong>(AAS)</strong> da população de interesse. Não há não resposta ou qualquer outra dificuldade prática. A <u><strong>população é grande</strong></u> em comparação ao tamanho da amostra [N &gt; 20 x n].</li>
+<li>A <strong>variável</strong> que <em>medimos</em> tem <u><strong>uma distribuição exatamente normal</strong></u> <strong>N(µ; σ)</strong> na população.</li>
+<li>
+<strong><em>Não conhecemos</em></strong> a <strong>média da população</strong> µ. Mas <u><strong>conhecemos</strong></u> o <u><strong>desvio-padrão populacional</strong></u> σ.</li>
+</ol>
+</div>
+</div>
+<p>A condição de que a população seja grande em relação ao tamanho da amostra será adequadamente satisfeita se a população for, digamos, pelo menos 20 vezes maior.</p>
+<div class="callout callout-style-simple callout-important">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><em>As condições de que temos uma AAS perfeita, de que a população é exatamente Normal e de que conhecemos o σ populacional são todas não realistas</em>.</p>
+<p>O Capítulo 18 inicia o movimento que parte das “condições simples” em direção à realidade da prática estatística. Capítulos posteriores tratam da inferência em contextos completamente realistas.</p>
+<p>Se essas “condições simples” não são realistas, por que então estudá-las? Uma razão é que, sob essas condições simples, podemos aplicar o que aprendemos nos capítulos anteriores sobre distribuição Normal e sobre distribuição amostral de uma média amostral, para desenvolver, passo a passo, métodos para inferência sobre uma média. O raciocínio usado sob condições simples se aplica a contextos mais realistas, com matemática mais complicada.</p>
+<p>Embora nunca saibamos se uma população é exatamente Normal, e nunca conheçamos o σ populacional, os <u><strong>métodos</strong></u> que discutiremos neste e nos dois próximos capítulos <u><strong>são aproximadamente corretos para tamanhos amostrais suficientemente grandes</strong></u> [TCL], desde que <u><strong><em>tratemos o desvio-padrão amostral como se fosse o σ populacional</em></strong></u>. Assim, <strong><em>há situações (admitidamente raras) em que esses métodos podem ser usados na prática</em></strong>.</p>
+</div>
+</div>
+</div>
+</section><section id="a-lógica-da-estimação-estatística" class="level2" data-number="9.3"><h2 data-number="9.3" class="anchored" data-anchor-id="a-lógica-da-estimação-estatística">
+<span class="header-section-number">9.3</span> A lógica da estimação estatística</h2>
+<p>O índice de massa corporal (IMC) é usado para a análise de possíveis problemas de peso. Seu cálculo é feito dividindo o peso pelo quadrado da altura, sendo o peso medido em quilogramas, e a altura, em metros. Muitos programas online para cálculo do IMC permitem que você introduza o peso em libras e a altura em polegadas. Adultos com IMC menor do que 18,5 kg/m2 são considerados em subpeso, e aqueles com IMC acima de 25 kg/m2 estão em sobrepeso. Para dados sobre IMC, recorremos ao National Health and Nutrition Examination Survey (<code>NHANES</code>), uma pesquisa amostral contínua do governo que monitora a saúde da população norte-americana.</p>
+<section id="exemplo-16.1-índice-de-massa-corporal-de-homens-jovens" class="level3" data-number="9.3.1"><h3 data-number="9.3.1" class="anchored" data-anchor-id="exemplo-16.1-índice-de-massa-corporal-de-homens-jovens">
+<span class="header-section-number">9.3.1</span> EXEMPLO 16.1 Índice de massa corporal de homens jovens</h3>
+<p>Um relatório da NHANES fornece dados para <u><strong>936 homens</strong></u> com <u><strong>idade entre 20 e 29 anos</strong></u>.</p>
+<p>O IMC médio desses 936 homens foi <span class="math inline">\(\bar{x} = 27,2\)</span>.</p>
+<p>Com <strong><em>base nessa amostra</em></strong>, desejamos <strong><em>estimar o IMC médio</em></strong> µ na <u><strong>população</strong></u> de <em>todos</em> os <u><strong><em>23,2 milhões de homens nessa faixa etária</em></strong></u>.</p>
+<p>Para nos adequarmos às “condições simples”, trataremos a amostra da NHANES como uma AAS de uma população Normal, e vamos supor que conheçamos o desvio-padrão σ = 11,6. (O desvio-padrão amostral para esses 936 homens é 11,63 kg/m2. Para propósitos do exemplo, vamos arredondá-lo para 11,6 e <u><em>prosseguir como se isso fosse o desvio-padrão da população</em></u> σ.)</p>
+<p>Eis o raciocínio da estimação estatística em poucas palavras:</p>
+<p>1.Para estimar o <strong><em>desconhecido</em></strong> IMC médio µ da população, usamos a média <span class="math inline">\(\bar{x} = 27,2\)</span> da amostra aleatória. Não esperamos que x seja exatamente igual a µ, de modo que desejamos <strong><em>dizer quão precisa é essa estimativa [pontual]</em></strong>.</p>
+<p>2.Conhecemos a distribuição amostral de <span class="math inline">\(\bar{x}\)</span>. Em <strong><em>amostras repetidas</em></strong>, <span class="math inline">\(\bar{x}\)</span> tem <u><strong>distribuição Normal</strong></u> com média µ e desvio-padrão <span class="math inline">\(\sigma/\sqrt{n}\)</span>. Então, o IMC médio <span class="math inline">\(\bar{x}\)</span> de uma AAS de 936 homens jovens tem desvio-padrão</p>
+<p><span class="math display">\[
+\text{Erro Padrão das médias amostrais} = \frac{\sigma}{\sqrt{n}} = \frac{11.6}{\sqrt{936}} = 0.4
+\]</span></p>
+<p>3.A parte 95 da <u><strong>regra 68-95-99,7</strong></u> para distribuições Normais afirma que x está a <u><strong>até dois desvios-padrão da média µ em 95% de todas as amostras</strong></u>. O desvio-padrão é 0,4, de modo que <u><strong>dois desvios-padrão valem 0,8</strong></u>. Isto é, <u><strong>para 95% de todas as amostras de tamanho 936</strong></u>, a <em>distância entre a média amostral</em> <span class="math inline">\(\bar{x}\)</span> e a <em>média populacional</em> µ é <em>menor do que 0,8</em>. Logo, <u><strong>se estimarmos</strong></u> que µ <u><strong><em>esteja em algum lugar no intervalo</em></strong></u> de <span class="math inline">\(\bar{x}\)</span> – 0,8 a <span class="math inline">\(\bar{x}\)</span> + 0,8, <u><strong><em>estaremos corretos em 95% de todas as possíveis amostras</em></strong></u>. Para essa amostra particular, esse intervalo é</p>
+<p><span class="math inline">\(\bar{x}\)</span> – 0,8 = 27,2 – 0,8 = 26,4</p>
+<p>a</p>
+<p><span class="math inline">\(\bar{x}\)</span> + 0,8 = 27,2 + 0,8 = 28,0</p>
+<p>4.Como obtivemos o intervalo 26,4 a 28,0 a partir de <u><strong>um método que captura a média populacional</strong></u> <u><strong>em 95% de todas as amostras possíveis</strong></u>, dizemos que <u><strong>estamos 95% confiantes em que o IMC médio µ para todos os homens jovens seja algum valor naquele intervalo</strong></u> – não menor do que 26,4 e não maior do que 28,0.</p>
+<p>Carregar o arquivo <code>NHANES</code> do R.</p>
+<p>Para simular, na maior medida possível, esse exemplo 16.1 <span class="citation" data-cites="Moore2023">(<a href="referencias.html#ref-Moore2023" role="doc-biblioref">MOORE; NOTZ; FLIGNER, 2023</a> , p.&nbsp;297)</span>.</p>
+<p>Código a seguir adaptado a partir de <span class="citation" data-cites="poldrack_pensamento_est_2025">(<a href="referencias.html#ref-poldrack_pensamento_est_2025" role="doc-biblioref">Poldrack, 2025</a> , cap. 5, p.&nbsp;42)</span>.</p>
+<section id="carregar-pacotes-necessários" class="level4" data-number="9.3.1.1"><h4 data-number="9.3.1.1" class="anchored" data-anchor-id="carregar-pacotes-necessários">
+<span class="header-section-number">9.3.1.1</span> Carregar pacotes necessários</h4>
+<div class="cell">
+<details class="code-fold"><summary>Código</summary><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(NHANES)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cowplot)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(mapproj)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pander)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(modelr)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fu">panderOptions</span>(<span class="st">'round'</span>,<span class="dv">2</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">panderOptions</span>(<span class="st">'digits'</span>,<span class="dv">7</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>))</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123456</span>) <span class="co"># set random seed to exactly replicate results</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section><section id="carregar-data-set-nhanes" class="level4" data-number="9.3.1.2"><h4 data-number="9.3.1.2" class="anchored" data-anchor-id="carregar-data-set-nhanes">
+<span class="header-section-number">9.3.1.2</span> Carregar data set: NHANES</h4>
+<p>E filtrar um subconjunto do data sete para <code>sexo</code> homens e com <code>idade</code> entre 20 e 29 anos.</p>
+<div class="cell">
+<details class="code-fold"><summary>Código</summary><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>code <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="co"># somente irá resetar a Job Area se code == 1</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(code<span class="sc">==</span><span class="dv">1</span>) <span class="fu">rm</span>(<span class="at">list=</span><span class="fu">ls</span>()) <span class="co"># Remove toda a list de variáveis da Job Area, i. e., dá um reset na Environment</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># drop duplicated IDs within the NHANES dataset</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>NHANES <span class="ot">&lt;-</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  NHANES <span class="sc">%&gt;%</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">distinct</span>(ID, <span class="at">.keep_all =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># select the appropriate men with good Gender and Age measurements</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>NHANES_men <span class="ot">&lt;-</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  NHANES <span class="sc">%&gt;%</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(Gender) <span class="sc">%&gt;%</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(Age) <span class="sc">%&gt;%</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">subset</span>(Age <span class="sc">&gt;=</span> <span class="dv">20</span> <span class="sc">&amp;</span> Age <span class="sc">&lt;=</span> <span class="dv">29</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>NHANES_men <span class="sc">%&gt;%</span> <span class="fu">nrow</span>() <span class="co"># 880 homens entre 20 e 29 anos</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>NHANES_men <span class="sc">%&gt;%</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(BMI)) <span class="sc">+</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">100</span>) <span class="sc">+</span> </span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  <span class="at">title =</span> <span class="st">"Histograma do IMC [BMI]: 880 homens no NHANES"</span>,</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">subtitle =</span> <span class="st">"filtro: idade (age) &gt;= 20 e &lt;= 29 anos"</span>,</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>  <span class="at">caption =</span> <span class="st">"Fonte: Poldrack, 2025, p. 42; Moore, 2023, p. 297"</span>,</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="st">"IMC (kg/m2)"</span>,</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="st">"Contagem (Count)"</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>[1] 880</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="cap16-moore-IC-o-basico_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Salvar arquivo .csv</p>
+<div class="cell">
+<details class="code-fold"><summary>Código</summary><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Função para salvar um data.frame em CSV com opções comuns e mensagens informativas.</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Uso:</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   save_df_to_csv(df, "output/meu_arquivo.csv")</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Parâmetros:</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co">#   df               - objeto data.frame a ser salvo (obrigatório)</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#   file_path        - caminho do arquivo de saída (obrigatório)</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#   sep              - separador de campos (padrão: ",")</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#   na               - representação de valores NA no arquivo (padrão: "")</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#   row.names        - incluir nomes de linha (padrão: FALSE)</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co">#   col.names        - incluir cabeçalho (padrão: TRUE)</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">#   quote            - colocar aspas em campos (padrão: TRUE)</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">#   fileEncoding     - codificação do arquivo (padrão: "UTF-8")</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co">#   append_timestamp - acrescentar timestamp ao nome do arquivo (padrão: FALSE)</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>save_df_to_csv <span class="ot">&lt;-</span> <span class="cf">function</span>(df,</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>                           file_path,</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>                           <span class="at">sep =</span> <span class="st">","</span>,</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>                           <span class="at">na =</span> <span class="st">""</span>,</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>                           <span class="at">row.names =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>                           <span class="at">col.names =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>                           <span class="at">quote =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>                           <span class="at">fileEncoding =</span> <span class="st">"UTF-8"</span>,</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>                           <span class="at">append_timestamp =</span> <span class="cn">FALSE</span>) {</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Validações básicas</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">missing</span>(df) <span class="sc">||</span> <span class="sc">!</span><span class="fu">is.data.frame</span>(df)) {</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">"Parâmetro 'df' obrigatório e deve ser um data.frame."</span>)</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">missing</span>(file_path) <span class="sc">||</span> <span class="sc">!</span><span class="fu">is.character</span>(file_path) <span class="sc">||</span> <span class="fu">length</span>(file_path) <span class="sc">!=</span> <span class="dv">1</span>) {</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">"Parâmetro 'file_path' obrigatório e deve ser uma string única com o caminho."</span>)</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Se solicitado, anexa timestamp ao nome do arquivo antes da extensão</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (append_timestamp) {</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>    ext_index <span class="ot">&lt;-</span> <span class="fu">regexpr</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">.[^</span><span class="sc">\\</span><span class="st">.]*$"</span>, file_path)</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>    timestamp <span class="ot">&lt;-</span> <span class="fu">format</span>(<span class="fu">Sys.time</span>(), <span class="st">"%Y%m%d_%H%M%S"</span>)</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (ext_index[<span class="dv">1</span>] <span class="sc">&gt;</span> <span class="dv">0</span>) {</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>      file_path <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="fu">substr</span>(file_path, <span class="dv">1</span>, ext_index[<span class="dv">1</span>] <span class="sc">-</span> <span class="dv">1</span>), <span class="st">"_"</span>, timestamp, <span class="fu">substr</span>(file_path, ext_index[<span class="dv">1</span>], <span class="fu">nchar</span>(file_path)))</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    } <span class="cf">else</span> {</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>      file_path <span class="ot">&lt;-</span> <span class="fu">paste0</span>(file_path, <span class="st">"_"</span>, timestamp, <span class="st">".csv"</span>)</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Garante que o diretório de destino exista</span></span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>  dir_path <span class="ot">&lt;-</span> <span class="fu">dirname</span>(file_path)</span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">dir.exists</span>(dir_path)) {</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>    <span class="fu">dir.create</span>(dir_path, <span class="at">recursive =</span> <span class="cn">TRUE</span>, <span class="at">showWarnings =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Escrita do arquivo com tratamento de erro</span></span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>  result <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>({</span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>    <span class="co"># write.table usado para permitir controle fino do separador e encoding</span></span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>    <span class="fu">write.table</span>(df,</span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>                <span class="at">file =</span> file_path,</span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>                <span class="at">sep =</span> sep,</span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>                <span class="at">na =</span> na,</span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>                <span class="at">row.names =</span> row.names,</span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a>                <span class="at">col.names =</span> col.names,</span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>                <span class="at">quote =</span> quote,</span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>                <span class="at">fileEncoding =</span> fileEncoding)</span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>    <span class="fu">message</span>(<span class="fu">sprintf</span>(<span class="st">"Arquivo salvo com sucesso em: %s"</span>, <span class="fu">normalizePath</span>(file_path, <span class="at">winslash =</span> <span class="st">"/"</span>)))</span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>    <span class="cn">TRUE</span></span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a>  }, <span class="at">error =</span> <span class="cf">function</span>(e) {</span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>    <span class="fu">message</span>(<span class="fu">sprintf</span>(<span class="st">"Falha ao salvar arquivo: %s"</span>, e<span class="sc">$</span>message))</span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>    <span class="cn">FALSE</span></span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a>  })</span>
+<span id="cb5-66"><a href="#cb5-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-67"><a href="#cb5-67" aria-hidden="true" tabindex="-1"></a>  <span class="fu">invisible</span>(result)</span>
+<span id="cb5-68"><a href="#cb5-68" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-69"><a href="#cb5-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-70"><a href="#cb5-70" aria-hidden="true" tabindex="-1"></a><span class="co"># Exemplo de uso:</span></span>
+<span id="cb5-71"><a href="#cb5-71" aria-hidden="true" tabindex="-1"></a><span class="co"># save_df_to_csv(df_exemplo, "out/meu_df.csv", append_timestamp = TRUE)  # salva com timestamp</span></span>
+<span id="cb5-72"><a href="#cb5-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-73"><a href="#cb5-73" aria-hidden="true" tabindex="-1"></a><span class="fu">save_df_to_csv</span>(NHANES_men, <span class="st">"out/NHANES_men.csv"</span>)  <span class="co"># salva na pasta out</span></span>
+<span id="cb5-74"><a href="#cb5-74" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Arquivo com n = 880 observações de homens com idade entre 20 e 29 anos da pesquisa NHANES (2009-2012).</p>
+<p>É possível ver o TCL em ação no <a href="https://www.lock5stat.com/StatKey/index.html">statkey</a>. Em especial na aba para gerar uma distribuição amostral das médias amostrais.</p>
+<p>O script abaixo simula uma distribuição amostral de tamanho n para BMI.</p>
+<div class="cell">
+<details class="code-fold"><summary>Código</summary><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Gera distribuição amostral das médias (variável BMI) e calcula IC 95%</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Uso: sample_means_bmi(data_or_vector, bmi_col = "BMI", n = 30, sims = 1000, ...)</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Retorno: lista com vetor de médias amostrais e estatísticas (inclui intervalos de confiança)</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>sample_means_bmi <span class="ot">&lt;-</span> <span class="cf">function</span>(data_or_vector,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>                             <span class="at">bmi_col =</span> <span class="st">"BMI"</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>                             <span class="at">n =</span> <span class="dv">30</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>                             <span class="at">sims =</span> <span class="dv">1000</span>,</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>                             <span class="at">replace =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>                             <span class="at">seed =</span> <span class="cn">NULL</span>,</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>                             <span class="at">plot =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>                             <span class="at">save_csv =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>                             <span class="at">out_file =</span> <span class="st">"sampling_means_bmi.csv"</span>,</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>                             <span class="at">fileEncoding =</span> <span class="st">"UTF-8"</span>,</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>                             <span class="at">na.rm =</span> <span class="cn">TRUE</span>) {</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Validações básicas</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(seed)) <span class="fu">set.seed</span>(<span class="fu">as.integer</span>(seed))</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Extrai vetor numérico de BMI</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>  bmi_vec <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.data.frame</span>(data_or_vector)) {</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span>bmi_col <span class="sc">%in%</span> <span class="fu">names</span>(data_or_vector)) {</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>      <span class="fu">stop</span>(<span class="fu">sprintf</span>(<span class="st">"Coluna '%s' não encontrada no data.frame."</span>, bmi_col))</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    bmi_vec <span class="ot">&lt;-</span> data_or_vector[[bmi_col]]</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (<span class="fu">is.numeric</span>(data_or_vector)) {</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    bmi_vec <span class="ot">&lt;-</span> data_or_vector</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">"data_or_vector deve ser um data.frame ou um vetor numérico."</span>)</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Remove NAs se solicitado</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (na.rm) bmi_vec <span class="ot">&lt;-</span> bmi_vec[<span class="sc">!</span><span class="fu">is.na</span>(bmi_vec)]</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(bmi_vec) <span class="sc">==</span> <span class="dv">0</span>) <span class="fu">stop</span>(<span class="st">"Vetor BMI está vazio após remoção de NAs."</span>)</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.numeric</span>(bmi_vec)) <span class="fu">stop</span>(<span class="st">"Valores de BMI devem ser numéricos."</span>)</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Parâmetros populacionais estimados (a partir do vetor fornecido)</span></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>  pop_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(bmi_vec)</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>  pop_sd   <span class="ot">&lt;-</span> <span class="fu">sd</span>(bmi_vec)</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Gerar médias amostrais</span></span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>  samp_means <span class="ot">&lt;-</span> <span class="fu">numeric</span>(sims)</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_len</span>(sims)) {</span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>    samp <span class="ot">&lt;-</span> <span class="fu">sample</span>(bmi_vec, <span class="at">size =</span> n, <span class="at">replace =</span> replace)</span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>    samp_means[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>(samp)</span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Estatísticas da distribuição amostral</span></span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>  dist_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(samp_means)</span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a>  dist_sd   <span class="ot">&lt;-</span> <span class="fu">sd</span>(samp_means)</span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Desvio padrão teórico via TEORIA (se usar pop_sd como "população")</span></span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>  theoretical_sd <span class="ot">&lt;-</span> pop_sd <span class="sc">/</span> <span class="fu">sqrt</span>(n)</span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Intervalos de confiança</span></span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 1) IC 95% para a média populacional de BMI a partir dos dados (t-test)</span></span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>  t_res <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(<span class="fu">t.test</span>(bmi_vec, <span class="at">conf.level =</span> <span class="fl">0.95</span>), <span class="at">error =</span> <span class="cf">function</span>(e) <span class="cn">NULL</span>)</span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a>  ci_population <span class="ot">&lt;-</span> <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(t_res)) t_res<span class="sc">$</span>conf.int <span class="cf">else</span> <span class="fu">c</span>(<span class="cn">NA_real_</span>, <span class="cn">NA_real_</span>)</span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 2) IC 95% para a média amostral baseado na distribuição amostral (teórico)</span></span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a>  z <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="fl">0.975</span>)</span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>  ci_sampling_theoretical <span class="ot">&lt;-</span> <span class="fu">c</span>(dist_mean <span class="sc">-</span> z <span class="sc">*</span> theoretical_sd, dist_mean <span class="sc">+</span> z <span class="sc">*</span> theoretical_sd)</span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a>  <span class="co"># 3) IC 95% empírico da própria distribuição simulada (usando desvio empírico)</span></span>
+<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a>  ci_sampling_empirical <span class="ot">&lt;-</span> <span class="fu">c</span>(dist_mean <span class="sc">-</span> z <span class="sc">*</span> dist_sd, dist_mean <span class="sc">+</span> z <span class="sc">*</span> dist_sd)</span>
+<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a>  stats <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a>    <span class="at">population_mean =</span> pop_mean,</span>
+<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a>    <span class="at">population_sd =</span> pop_sd,</span>
+<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a>    <span class="at">sampling_mean =</span> dist_mean,</span>
+<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a>    <span class="at">sampling_sd =</span> dist_sd,</span>
+<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a>    <span class="at">theoretical_sd =</span> theoretical_sd,</span>
+<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a>    <span class="at">ci_population_95 =</span> ci_population,</span>
+<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a>    <span class="at">ci_sampling_theoretical_95 =</span> ci_sampling_theoretical,</span>
+<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a>    <span class="at">ci_sampling_empirical_95 =</span> ci_sampling_empirical,</span>
+<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a>    <span class="at">sims =</span> sims,</span>
+<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> n,</span>
+<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a>    <span class="at">replace =</span> replace</span>
+<span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Mensagem resumida com IC</span></span>
+<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a>  <span class="fu">message</span>(<span class="fu">sprintf</span>(<span class="st">"Média (pop): %.4f | IC95%% (pop, t-test): [%.4f, %.4f]"</span>,</span>
+<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a>                  pop_mean, ci_population[<span class="dv">1</span>], ci_population[<span class="dv">2</span>]))</span>
+<span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a>  <span class="fu">message</span>(<span class="fu">sprintf</span>(<span class="st">"Média (amostral): %.4f | IC95%% (teórico): [%.4f, %.4f]"</span>,</span>
+<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a>                  dist_mean, ci_sampling_theoretical[<span class="dv">1</span>], ci_sampling_theoretical[<span class="dv">2</span>]))</span>
+<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Salvar em CSV se pedido</span></span>
+<span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (save_csv) {</span>
+<span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a>    df_out <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">sample_mean =</span> samp_means)</span>
+<span id="cb6-87"><a href="#cb6-87" aria-hidden="true" tabindex="-1"></a>    write_success <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>({</span>
+<span id="cb6-88"><a href="#cb6-88" aria-hidden="true" tabindex="-1"></a>      <span class="fu">write.csv</span>(df_out, <span class="at">file =</span> out_file, <span class="at">row.names =</span> <span class="cn">FALSE</span>, <span class="at">fileEncoding =</span> fileEncoding)</span>
+<span id="cb6-89"><a href="#cb6-89" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span></span>
+<span id="cb6-90"><a href="#cb6-90" aria-hidden="true" tabindex="-1"></a>    }, <span class="at">error =</span> <span class="cf">function</span>(e) {</span>
+<span id="cb6-91"><a href="#cb6-91" aria-hidden="true" tabindex="-1"></a>      <span class="fu">warning</span>(<span class="fu">sprintf</span>(<span class="st">"Falha ao salvar CSV: %s"</span>, e<span class="sc">$</span>message))</span>
+<span id="cb6-92"><a href="#cb6-92" aria-hidden="true" tabindex="-1"></a>      <span class="cn">FALSE</span></span>
+<span id="cb6-93"><a href="#cb6-93" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb6-94"><a href="#cb6-94" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (write_success) <span class="fu">message</span>(<span class="fu">sprintf</span>(<span class="st">"Distribuição salva em: %s"</span>, <span class="fu">normalizePath</span>(out_file, <span class="at">mustWork =</span> <span class="cn">FALSE</span>)))</span>
+<span id="cb6-95"><a href="#cb6-95" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-96"><a href="#cb6-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-97"><a href="#cb6-97" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Plotagem (base R) — histograma + densidade empírica + curva normal teórica e QQ-plot</span></span>
+<span id="cb6-98"><a href="#cb6-98" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (plot) {</span>
+<span id="cb6-99"><a href="#cb6-99" aria-hidden="true" tabindex="-1"></a>    op <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">no.readonly =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-100"><a href="#cb6-100" aria-hidden="true" tabindex="-1"></a>    <span class="fu">on.exit</span>(<span class="fu">par</span>(op), <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-101"><a href="#cb6-101" aria-hidden="true" tabindex="-1"></a>    <span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<span id="cb6-102"><a href="#cb6-102" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Histograma com densidade empírica</span></span>
+<span id="cb6-103"><a href="#cb6-103" aria-hidden="true" tabindex="-1"></a>    <span class="fu">hist</span>(samp_means,</span>
+<span id="cb6-104"><a href="#cb6-104" aria-hidden="true" tabindex="-1"></a>         <span class="at">breaks =</span> <span class="fu">max</span>(<span class="dv">10</span>, <span class="fu">round</span>(<span class="fu">sqrt</span>(sims))),</span>
+<span id="cb6-105"><a href="#cb6-105" aria-hidden="true" tabindex="-1"></a>         <span class="at">prob =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb6-106"><a href="#cb6-106" aria-hidden="true" tabindex="-1"></a>         <span class="at">col =</span> <span class="st">"#cce5ff"</span>,</span>
+<span id="cb6-107"><a href="#cb6-107" aria-hidden="true" tabindex="-1"></a>         <span class="at">border =</span> <span class="st">"#2b6fa6"</span>,</span>
+<span id="cb6-108"><a href="#cb6-108" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="fu">sprintf</span>(<span class="st">"Distribuição amostral das médias</span><span class="sc">\n</span><span class="st">(n = %d, sims = %d)"</span>, n, sims),</span>
+<span id="cb6-109"><a href="#cb6-109" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">"Média amostral (BMI)"</span>)</span>
+<span id="cb6-110"><a href="#cb6-110" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lines</span>(<span class="fu">density</span>(samp_means), <span class="at">col =</span> <span class="st">"#0055a4"</span>, <span class="at">lwd =</span> <span class="dv">2</span>) <span class="co"># densidade empírica</span></span>
+<span id="cb6-111"><a href="#cb6-111" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Curva normal teórica usando média empírica e desvio teórico</span></span>
+<span id="cb6-112"><a href="#cb6-112" aria-hidden="true" tabindex="-1"></a>    <span class="fu">curve</span>(<span class="fu">dnorm</span>(x, <span class="at">mean =</span> dist_mean, <span class="at">sd =</span> theoretical_sd),</span>
+<span id="cb6-113"><a href="#cb6-113" aria-hidden="true" tabindex="-1"></a>          <span class="at">col =</span> <span class="st">"#d9534f"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-114"><a href="#cb6-114" aria-hidden="true" tabindex="-1"></a>    <span class="fu">legend</span>(<span class="st">"topright"</span>,</span>
+<span id="cb6-115"><a href="#cb6-115" aria-hidden="true" tabindex="-1"></a>           <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Densidade empírica"</span>, <span class="st">"Curva normal (teórica)"</span>),</span>
+<span id="cb6-116"><a href="#cb6-116" aria-hidden="true" tabindex="-1"></a>           <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"#0055a4"</span>, <span class="st">"#d9534f"</span>),</span>
+<span id="cb6-117"><a href="#cb6-117" aria-hidden="true" tabindex="-1"></a>           <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">bty =</span> <span class="st">"n"</span>)</span>
+<span id="cb6-118"><a href="#cb6-118" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Linhas verticais para os ICs</span></span>
+<span id="cb6-119"><a href="#cb6-119" aria-hidden="true" tabindex="-1"></a>    <span class="fu">abline</span>(<span class="at">v =</span> ci_sampling_theoretical, <span class="at">col =</span> <span class="st">"#d9534f"</span>, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="fl">1.5</span>)</span>
+<span id="cb6-120"><a href="#cb6-120" aria-hidden="true" tabindex="-1"></a>    <span class="fu">abline</span>(<span class="at">v =</span> ci_sampling_empirical, <span class="at">col =</span> <span class="st">"#0055a4"</span>, <span class="at">lty =</span> <span class="dv">3</span>, <span class="at">lwd =</span> <span class="fl">1.2</span>)</span>
+<span id="cb6-121"><a href="#cb6-121" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Marca média populacional</span></span>
+<span id="cb6-122"><a href="#cb6-122" aria-hidden="true" tabindex="-1"></a>    <span class="fu">abline</span>(<span class="at">v =</span> pop_mean, <span class="at">col =</span> <span class="st">"darkgreen"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb6-123"><a href="#cb6-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-124"><a href="#cb6-124" aria-hidden="true" tabindex="-1"></a>    <span class="co"># QQ-plot para checar normalidade da distribuição amostral</span></span>
+<span id="cb6-125"><a href="#cb6-125" aria-hidden="true" tabindex="-1"></a>    <span class="fu">qqnorm</span>(samp_means, <span class="at">main =</span> <span class="st">"QQ-plot das médias amostrais"</span>)</span>
+<span id="cb6-126"><a href="#cb6-126" aria-hidden="true" tabindex="-1"></a>    <span class="fu">qqline</span>(samp_means, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb6-127"><a href="#cb6-127" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb6-128"><a href="#cb6-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-129"><a href="#cb6-129" aria-hidden="true" tabindex="-1"></a>  <span class="fu">invisible</span>(<span class="fu">list</span>(<span class="at">sampling_means =</span> samp_means, <span class="at">stats =</span> stats))</span>
+<span id="cb6-130"><a href="#cb6-130" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-131"><a href="#cb6-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-132"><a href="#cb6-132" aria-hidden="true" tabindex="-1"></a><span class="co"># Exemplo de uso:</span></span>
+<span id="cb6-133"><a href="#cb6-133" aria-hidden="true" tabindex="-1"></a><span class="co"># 1) Usando um vetor:</span></span>
+<span id="cb6-134"><a href="#cb6-134" aria-hidden="true" tabindex="-1"></a><span class="co"># bmi_vector &lt;- c(22.1, 24.7, 30.2, 27.4, 23.5, 26.8, 21.9, 28.0, 24.3, 29.1)</span></span>
+<span id="cb6-135"><a href="#cb6-135" aria-hidden="true" tabindex="-1"></a><span class="co"># res &lt;- sample_means_bmi(bmi_vector, n = 5, sims = 1000, replace = TRUE, seed = 123, plot = TRUE)</span></span>
+<span id="cb6-136"><a href="#cb6-136" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb6-137"><a href="#cb6-137" aria-hidden="true" tabindex="-1"></a><span class="co"># 2) Usando um data.frame com coluna "BMI":</span></span>
+<span id="cb6-138"><a href="#cb6-138" aria-hidden="true" tabindex="-1"></a><span class="co"># df &lt;- data.frame(ID = 1:100, BMI = rnorm(100, mean = 26, sd = 4))</span></span>
+<span id="cb6-139"><a href="#cb6-139" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">sample_means_bmi</span>(NHANES_men,</span>
+<span id="cb6-140"><a href="#cb6-140" aria-hidden="true" tabindex="-1"></a>                        <span class="at">bmi_col =</span> <span class="st">"BMI"</span>,</span>
+<span id="cb6-141"><a href="#cb6-141" aria-hidden="true" tabindex="-1"></a>                        <span class="at">n =</span> <span class="dv">30</span>,</span>
+<span id="cb6-142"><a href="#cb6-142" aria-hidden="true" tabindex="-1"></a>                        <span class="at">sims =</span> <span class="dv">5000</span>,</span>
+<span id="cb6-143"><a href="#cb6-143" aria-hidden="true" tabindex="-1"></a>                        <span class="at">replace =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb6-144"><a href="#cb6-144" aria-hidden="true" tabindex="-1"></a>                        <span class="at">save_csv =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb6-145"><a href="#cb6-145" aria-hidden="true" tabindex="-1"></a>                        <span class="at">out_file =</span> <span class="st">"means_bmi.csv"</span>)</span>
+<span id="cb6-146"><a href="#cb6-146" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb6-147"><a href="#cb6-147" aria-hidden="true" tabindex="-1"></a><span class="co"># Resultado:</span></span>
+<span id="cb6-148"><a href="#cb6-148" aria-hidden="true" tabindex="-1"></a><span class="co"># - res$sampling_means: vetor com as médias amostrais</span></span>
+<span id="cb6-149"><a href="#cb6-149" aria-hidden="true" tabindex="-1"></a><span class="co"># - res$stats: estatísticas resumidas (média populacional, sd populacional, média da distribuição, sd empírico, sd teórico)</span></span>
+<span id="cb6-150"><a href="#cb6-150" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="cap16-moore-IC-o-basico_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>A seguir 4 simulações com amostras de tamanho n = 10, 20, 30 e 50.</p>
+<div class="cell">
+<details class="code-fold"><summary>Código</summary><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Função para gerar médias amostrais (sem plot automático) — versão enxuta da função anterior</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>sample_means_bmi <span class="ot">&lt;-</span> <span class="cf">function</span>(data_or_vector,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>                             <span class="at">bmi_col =</span> <span class="st">"BMI"</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                             <span class="at">n =</span> <span class="dv">30</span>,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>                             <span class="at">sims =</span> <span class="dv">1000</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                             <span class="at">replace =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>                             <span class="at">seed =</span> <span class="cn">NULL</span>,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>                             <span class="at">na.rm =</span> <span class="cn">TRUE</span>) {</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(seed)) <span class="fu">set.seed</span>(<span class="fu">as.integer</span>(seed))</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  bmi_vec <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">is.data.frame</span>(data_or_vector)) {</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="sc">!</span>bmi_col <span class="sc">%in%</span> <span class="fu">names</span>(data_or_vector)) <span class="fu">stop</span>(<span class="fu">sprintf</span>(<span class="st">"Coluna '%s' não encontrada."</span>, bmi_col))</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    bmi_vec <span class="ot">&lt;-</span> data_or_vector[[bmi_col]]</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (<span class="fu">is.numeric</span>(data_or_vector)) {</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    bmi_vec <span class="ot">&lt;-</span> data_or_vector</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="fu">stop</span>(<span class="st">"data_or_vector deve ser data.frame ou vetor numérico."</span>)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (na.rm) bmi_vec <span class="ot">&lt;-</span> bmi_vec[<span class="sc">!</span><span class="fu">is.na</span>(bmi_vec)]</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(bmi_vec) <span class="sc">==</span> <span class="dv">0</span>) <span class="fu">stop</span>(<span class="st">"Vetor BMI vazio após remoção de NAs."</span>)</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>  pop_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(bmi_vec)</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>  pop_sd   <span class="ot">&lt;-</span> <span class="fu">sd</span>(bmi_vec)</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>  samp_means <span class="ot">&lt;-</span> <span class="fu">numeric</span>(sims)</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_len</span>(sims)) {</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    samp <span class="ot">&lt;-</span> <span class="fu">sample</span>(bmi_vec, <span class="at">size =</span> n, <span class="at">replace =</span> replace)</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>    samp_means[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>(samp)</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>  dist_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(samp_means)</span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>  dist_sd   <span class="ot">&lt;-</span> <span class="fu">sd</span>(samp_means)</span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a>  theoretical_sd <span class="ot">&lt;-</span> pop_sd <span class="sc">/</span> <span class="fu">sqrt</span>(n)</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">list</span>(<span class="at">sampling_means =</span> samp_means,</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>       <span class="at">stats =</span> <span class="fu">list</span>(<span class="at">population_mean =</span> pop_mean,</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>                    <span class="at">population_sd =</span> pop_sd,</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>                    <span class="at">sampling_mean =</span> dist_mean,</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>                    <span class="at">sampling_sd =</span> dist_sd,</span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>                    <span class="at">theoretical_sd =</span> theoretical_sd,</span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>                    <span class="at">n =</span> n,</span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>                    <span class="at">sims =</span> sims,</span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>                    <span class="at">replace =</span> replace))</span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a><span class="co"># Função para plotar matriz 2x2 com histogramas (n valores padrão: 10,20,30,50)</span></span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>plot_sampling_matrix <span class="ot">&lt;-</span> <span class="cf">function</span>(data_or_vector,</span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">bmi_col =</span> <span class="st">"BMI"</span>,</span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">ns =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">20</span>, <span class="dv">30</span>, <span class="dv">50</span>),</span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">sims =</span> <span class="dv">2000</span>,</span>
+<span id="cb7-46"><a href="#cb7-46" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">replace =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb7-47"><a href="#cb7-47" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">seed =</span> <span class="cn">NULL</span>,</span>
+<span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">conf.level =</span> <span class="fl">0.95</span>,</span>
+<span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">main_title =</span> <span class="st">"Distribuição amostral médias (BMI)"</span>,</span>
+<span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a>                                 <span class="at">colors =</span> <span class="fu">list</span>(<span class="at">bg =</span> <span class="st">"#f7fbff"</span>, <span class="at">hist =</span> <span class="st">"#cce5ff"</span>, <span class="at">dens =</span> <span class="st">"#0055a4"</span>, <span class="at">normal =</span> <span class="st">"#d9534f"</span>)) {</span>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(seed)) <span class="fu">set.seed</span>(<span class="fu">as.integer</span>(seed))</span>
+<span id="cb7-52"><a href="#cb7-52" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(ns) <span class="sc">!=</span> <span class="dv">4</span>) <span class="fu">stop</span>(<span class="st">"Parâmetro 'ns' deve conter exatamente 4 tamanhos para a matriz 2x2."</span>)</span>
+<span id="cb7-53"><a href="#cb7-53" aria-hidden="true" tabindex="-1"></a>  z <span class="ot">&lt;-</span> <span class="fu">qnorm</span>((<span class="dv">1</span> <span class="sc">+</span> conf.level) <span class="sc">/</span> <span class="dv">2</span>)</span>
+<span id="cb7-54"><a href="#cb7-54" aria-hidden="true" tabindex="-1"></a>  op <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">no.readonly =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb7-55"><a href="#cb7-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">on.exit</span>(<span class="fu">par</span>(op), <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb7-56"><a href="#cb7-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>), <span class="at">mar =</span> <span class="fu">c</span>(<span class="fl">4.2</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">1</span>))</span>
+<span id="cb7-57"><a href="#cb7-57" aria-hidden="true" tabindex="-1"></a>  results <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="st">"list"</span>, <span class="fu">length</span>(ns))</span>
+<span id="cb7-58"><a href="#cb7-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">names</span>(results) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="st">"n="</span>, ns)</span>
+<span id="cb7-59"><a href="#cb7-59" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(ns)) {</span>
+<span id="cb7-60"><a href="#cb7-60" aria-hidden="true" tabindex="-1"></a>    n <span class="ot">&lt;-</span> ns[i]</span>
+<span id="cb7-61"><a href="#cb7-61" aria-hidden="true" tabindex="-1"></a>    res <span class="ot">&lt;-</span> <span class="fu">sample_means_bmi</span>(data_or_vector, <span class="at">bmi_col =</span> bmi_col, <span class="at">n =</span> n, <span class="at">sims =</span> sims, <span class="at">replace =</span> replace)</span>
+<span id="cb7-62"><a href="#cb7-62" aria-hidden="true" tabindex="-1"></a>    samp_means <span class="ot">&lt;-</span> res<span class="sc">$</span>sampling_means</span>
+<span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a>    stats <span class="ot">&lt;-</span> res<span class="sc">$</span>stats</span>
+<span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a>    pop_mean <span class="ot">&lt;-</span> stats<span class="sc">$</span>population_mean</span>
+<span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a>    dist_mean <span class="ot">&lt;-</span> stats<span class="sc">$</span>sampling_mean</span>
+<span id="cb7-66"><a href="#cb7-66" aria-hidden="true" tabindex="-1"></a>    dist_sd <span class="ot">&lt;-</span> stats<span class="sc">$</span>sampling_sd</span>
+<span id="cb7-67"><a href="#cb7-67" aria-hidden="true" tabindex="-1"></a>    theoretical_sd <span class="ot">&lt;-</span> stats<span class="sc">$</span>theoretical_sd</span>
+<span id="cb7-68"><a href="#cb7-68" aria-hidden="true" tabindex="-1"></a>    ci_theoretical <span class="ot">&lt;-</span> <span class="fu">c</span>(dist_mean <span class="sc">-</span> z <span class="sc">*</span> theoretical_sd, dist_mean <span class="sc">+</span> z <span class="sc">*</span> theoretical_sd)</span>
+<span id="cb7-69"><a href="#cb7-69" aria-hidden="true" tabindex="-1"></a>    ci_empirical  <span class="ot">&lt;-</span> <span class="fu">c</span>(dist_mean <span class="sc">-</span> z <span class="sc">*</span> dist_sd, dist_mean <span class="sc">+</span> z <span class="sc">*</span> dist_sd)</span>
+<span id="cb7-70"><a href="#cb7-70" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Histograma</span></span>
+<span id="cb7-71"><a href="#cb7-71" aria-hidden="true" tabindex="-1"></a>    <span class="fu">hist</span>(samp_means,</span>
+<span id="cb7-72"><a href="#cb7-72" aria-hidden="true" tabindex="-1"></a>         <span class="at">breaks =</span> <span class="fu">max</span>(<span class="dv">10</span>, <span class="fu">round</span>(<span class="fu">sqrt</span>(sims))),</span>
+<span id="cb7-73"><a href="#cb7-73" aria-hidden="true" tabindex="-1"></a>         <span class="at">prob =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb7-74"><a href="#cb7-74" aria-hidden="true" tabindex="-1"></a>         <span class="at">col =</span> colors<span class="sc">$</span>hist,</span>
+<span id="cb7-75"><a href="#cb7-75" aria-hidden="true" tabindex="-1"></a>         <span class="at">border =</span> <span class="st">"#2b6fa6"</span>,</span>
+<span id="cb7-76"><a href="#cb7-76" aria-hidden="true" tabindex="-1"></a>         <span class="at">main =</span> <span class="fu">sprintf</span>(<span class="st">"%s (n=%d)"</span>, <span class="fu">paste0</span>(main_title, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>) , n),</span>
+<span id="cb7-77"><a href="#cb7-77" aria-hidden="true" tabindex="-1"></a>         <span class="at">xlab =</span> <span class="st">"Média amostral (BMI)"</span>,</span>
+<span id="cb7-78"><a href="#cb7-78" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylab =</span> <span class="st">"Densidade"</span>,</span>
+<span id="cb7-79"><a href="#cb7-79" aria-hidden="true" tabindex="-1"></a>         <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(<span class="fu">density</span>(samp_means)<span class="sc">$</span>y, <span class="fl">0.1</span>)))</span>
+<span id="cb7-80"><a href="#cb7-80" aria-hidden="true" tabindex="-1"></a>    <span class="fu">lines</span>(<span class="fu">density</span>(samp_means), <span class="at">col =</span> colors<span class="sc">$</span>dens, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb7-81"><a href="#cb7-81" aria-hidden="true" tabindex="-1"></a>    <span class="fu">curve</span>(<span class="fu">dnorm</span>(x, <span class="at">mean =</span> dist_mean, <span class="at">sd =</span> theoretical_sd),</span>
+<span id="cb7-82"><a href="#cb7-82" aria-hidden="true" tabindex="-1"></a>          <span class="at">col =</span> colors<span class="sc">$</span>normal, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb7-83"><a href="#cb7-83" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Linhas IC e média população</span></span>
+<span id="cb7-84"><a href="#cb7-84" aria-hidden="true" tabindex="-1"></a>    <span class="fu">abline</span>(<span class="at">v =</span> ci_theoretical, <span class="at">col =</span> colors<span class="sc">$</span>normal, <span class="at">lty =</span> <span class="dv">2</span>, <span class="at">lwd =</span> <span class="fl">1.5</span>)</span>
+<span id="cb7-85"><a href="#cb7-85" aria-hidden="true" tabindex="-1"></a>    <span class="fu">abline</span>(<span class="at">v =</span> ci_empirical, <span class="at">col =</span> colors<span class="sc">$</span>dens, <span class="at">lty =</span> <span class="dv">3</span>, <span class="at">lwd =</span> <span class="fl">1.2</span>)</span>
+<span id="cb7-86"><a href="#cb7-86" aria-hidden="true" tabindex="-1"></a>    <span class="fu">abline</span>(<span class="at">v =</span> pop_mean, <span class="at">col =</span> <span class="st">"darkgreen"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb7-87"><a href="#cb7-87" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Legenda compacta com estatísticas principais</span></span>
+<span id="cb7-88"><a href="#cb7-88" aria-hidden="true" tabindex="-1"></a>    <span class="fu">legend</span>(<span class="st">"topright"</span>,</span>
+<span id="cb7-89"><a href="#cb7-89" aria-hidden="true" tabindex="-1"></a>           <span class="at">legend =</span> <span class="fu">c</span>(<span class="fu">sprintf</span>(<span class="st">"µ pop = %.2f"</span>, pop_mean),</span>
+<span id="cb7-90"><a href="#cb7-90" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">sprintf</span>(<span class="st">"µ samp = %.2f"</span>, dist_mean),</span>
+<span id="cb7-91"><a href="#cb7-91" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">sprintf</span>(<span class="st">"IC teor. %.0f%%: [%.2f, %.2f]"</span>, conf.level<span class="sc">*</span><span class="dv">100</span>, ci_theoretical[<span class="dv">1</span>], ci_theoretical[<span class="dv">2</span>])),</span>
+<span id="cb7-92"><a href="#cb7-92" aria-hidden="true" tabindex="-1"></a>           <span class="at">bg =</span> <span class="st">"white"</span>, <span class="at">cex =</span> <span class="fl">0.9</span>, <span class="at">bty =</span> <span class="st">"n"</span>)</span>
+<span id="cb7-93"><a href="#cb7-93" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Guardar resultado</span></span>
+<span id="cb7-94"><a href="#cb7-94" aria-hidden="true" tabindex="-1"></a>    results[[i]] <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">n =</span> n, <span class="at">sampling_means =</span> samp_means, <span class="at">stats =</span> stats,</span>
+<span id="cb7-95"><a href="#cb7-95" aria-hidden="true" tabindex="-1"></a>                         <span class="at">ci_theoretical =</span> ci_theoretical, <span class="at">ci_empirical =</span> ci_empirical)</span>
+<span id="cb7-96"><a href="#cb7-96" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb7-97"><a href="#cb7-97" aria-hidden="true" tabindex="-1"></a>  <span class="fu">invisible</span>(results)</span>
+<span id="cb7-98"><a href="#cb7-98" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-99"><a href="#cb7-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-100"><a href="#cb7-100" aria-hidden="true" tabindex="-1"></a><span class="co"># Exemplo de uso:</span></span>
+<span id="cb7-101"><a href="#cb7-101" aria-hidden="true" tabindex="-1"></a><span class="co"># 1) Com vetor de BMI</span></span>
+<span id="cb7-102"><a href="#cb7-102" aria-hidden="true" tabindex="-1"></a><span class="co"># bmi_vector &lt;- rnorm(500, mean = 26, sd = 4)</span></span>
+<span id="cb7-103"><a href="#cb7-103" aria-hidden="true" tabindex="-1"></a><span class="co"># plot_sampling_matrix(bmi_vector, ns = c(10,20,30,50), sims = 2000, seed = 123)</span></span>
+<span id="cb7-104"><a href="#cb7-104" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-105"><a href="#cb7-105" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb7-106"><a href="#cb7-106" aria-hidden="true" tabindex="-1"></a><span class="co"># 2) Com data.frame contendo coluna "BMI"</span></span>
+<span id="cb7-107"><a href="#cb7-107" aria-hidden="true" tabindex="-1"></a><span class="co"># df &lt;- data.frame(ID = 1:500, BMI = rnorm(500, 26, 4))</span></span>
+<span id="cb7-108"><a href="#cb7-108" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_sampling_matrix</span>(NHANES_men,</span>
+<span id="cb7-109"><a href="#cb7-109" aria-hidden="true" tabindex="-1"></a>                     <span class="at">bmi_col =</span> <span class="st">"BMI"</span>,</span>
+<span id="cb7-110"><a href="#cb7-110" aria-hidden="true" tabindex="-1"></a>                     <span class="at">ns =</span> <span class="fu">c</span>(<span class="dv">10</span>,<span class="dv">20</span>,<span class="dv">30</span>,<span class="dv">50</span>),</span>
+<span id="cb7-111"><a href="#cb7-111" aria-hidden="true" tabindex="-1"></a>                     <span class="at">sims =</span> <span class="dv">2000</span>,</span>
+<span id="cb7-112"><a href="#cb7-112" aria-hidden="true" tabindex="-1"></a>                     <span class="at">seed =</span> <span class="dv">123</span>)</span>
+<span id="cb7-113"><a href="#cb7-113" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="cap16-moore-IC-o-basico_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Verificar o efeito de aumentar o tamanho da amostra para 100, 200, 300, 500 no IC95%.</p>
+<div class="cell">
+<details class="code-fold"><summary>Código</summary><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_sampling_matrix</span>(NHANES_men,</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                     <span class="at">bmi_col =</span> <span class="st">"BMI"</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                     <span class="at">ns =</span> <span class="fu">c</span>(<span class="dv">100</span>,<span class="dv">200</span>,<span class="dv">300</span>,<span class="dv">500</span>),</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>                     <span class="at">sims =</span> <span class="dv">2000</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>                     <span class="at">seed =</span> <span class="dv">123</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="cap16-moore-IC-o-basico_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>A ideia principal é que a <strong><em>distribuição amostral</em></strong> de <span class="math inline">\(\bar{x}\)</span> [<strong><em>das médias amostrais</em></strong>] nos <strong><em>diz quão próximo de µ <u>está</u></em></strong>, <u><strong>provavelmente</strong></u>, a <strong><em>média amostral</em></strong> <span class="math inline">\(\bar{x}\)</span>.</p>
+<p>A <strong><em>estimação</em></strong> estatística apenas <strong><em>inverte</em></strong> essa informação <u><strong>para dizer quão perto de</strong></u> <span class="math inline">\(\bar{x}\)</span> a <u><strong>média populacional</strong></u> µ <u><strong>provavelmente estará</strong></u>.</p>
+<p>Chamamos o intervalo de números entre os valores <span class="math inline">\(\bar{x}\)</span> ± 0,8 de <u><strong>intervalo de confiança de 95%</strong></u> para µ.</p>
+</section></section></section><section id="margem-de-erro-e-nível-de-confiança" class="level2" data-number="9.4"><h2 data-number="9.4" class="anchored" data-anchor-id="margem-de-erro-e-nível-de-confiança">
+<span class="header-section-number">9.4</span> Margem de erro e nível de confiança</h2>
+<p>A maioria dos intervalos de confiança tem forma similar a esta:</p>
+<p><span class="math display">\[
+estimativa \pm \text{margem de erro}
+\]</span></p>
+<p>A estimativa (<span class="math inline">\(\bar{x}\)</span> = 27,2 no nosso exemplo) é a <u><strong>nossa conjectura</strong></u> sobre o <u><strong>valor</strong></u> do <u><strong>parâmetro desconhecido</strong></u>.</p>
+<p>A margem de erro [ME] ±0,8 mostra o <u><strong>grau de precisão</strong></u> que <u><strong>acreditamos</strong></u> que <u><strong>nossa conjectura tenha</strong></u>, <u><strong>com base na variabilidade da estimativa</strong></u>.</p>
+<p>Temos <u><strong>um intervalo de confiança de 95%</strong></u> porque o <u><strong>intervalo</strong></u> <span class="math inline">\(\bar{x}\)</span> ± 0,8 <u><strong><em>contém o parâmetro desconhecido em 95% de todas as amostras possíveis</em></strong></u>.</p>
+<p>Essa <u><strong>forma</strong></u> para um intervalo de confiança e <u><strong>sua interpretação</strong></u> se <em><strong>aplicam</strong> à maioria dos <strong>parâmetros</strong></em> que consideraremos neste livro, incluindo <u><strong>médias</strong></u> e <u><strong>proporções</strong></u>.</p>
+<div class="callout callout-style-simple callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Margem de erro
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A margem de erro é um número que é acrescentado a, ou subtraído de uma estimativa estatística para definir o intervalo de confiança a dado nível de confiança.</p>
+</div>
+</div>
+<p>Os usuários podem escolher o nível de confiança, quase sempre 90% ou mais, por quererem estar bastante seguros de suas conclusões. O nível de confiança mais comum é 95%.</p>
+<div class="callout callout-style-simple callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Intervalo de confiança
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Um intervalo de confiança de nível C para um parâmetro tem <strong>duas partes</strong>:</p>
+<p>•Um intervalo calculado a partir dos dados, usualmente da <strong>forma</strong></p>
+<p><span class="math display">\[
+estimativa \pm \text{margem de erro}
+\]</span></p>
+<p>•Um <strong>nível de confiança C</strong>, que dá a <u><strong>probabilidade</strong></u> de que <u><strong>o intervalo contenha o verdadeiro valor do parâmetro em amostras repetidas</strong></u>. Ou seja, o nível de confiança <u><strong>é a taxa de sucesso do método</strong></u>.</p>
+</div>
+</div>
+<p>NC que tem de ser interpretado do seguinte modo.</p>
+<div class="callout callout-style-simple callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Interpretação de um nível de confiança
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>O nível de confiança <u><strong>é a taxa de sucesso do método que produz o intervalo</strong></u>. Não sabemos se o intervalo de confiança de 95% obtido a partir de uma amostra particular é um dos 95% que contêm µ, ou se é um dos 5% que não contêm.</p>
+<p>Dizer que temos 95% de confiança em que o parâmetro desconhecido µ esteja entre 26,4 e 28,0 é uma maneira abreviada de dizer que <u><strong>“Obtivemos esses números por um método que fornece resultados corretos em 95% das vezes”</strong></u>.</p>
+</div>
+</div>
+<section id="exemplo-16.2-estimação-estatística-em-figuras" class="level3" data-number="9.4.1"><h3 data-number="9.4.1" class="anchored" data-anchor-id="exemplo-16.2-estimação-estatística-em-figuras">
+<span class="header-section-number">9.4.1</span> EXEMPLO 16.2 Estimação estatística em figuras</h3>
+<p>Um srcipt R que simula 20 IC-NC95% para o <code>BMI</code> do data set <code>NHANES</code>.</p>
+<div class="cell">
+<details class="code-fold"><summary>Código</summary><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Simula 20 IC 95% para a média do BMI no dataset NHANES e plota os intervalos.</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Requisitos: pacote 'NHANES' (CRAN). Instale com install.packages("NHANES") se necessário.</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Uso:</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#   simular_20_ic_bmi_nhanes(nsims = 20, n = 50, seed = 123, replace = TRUE, save_csv = FALSE, out_file = "ic20_bmi.csv")</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>simular_20_ic_bmi_nhanes <span class="ot">&lt;-</span> <span class="cf">function</span>(<span class="at">nsims =</span> <span class="dv">20</span>,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">n =</span> <span class="dv">50</span>,</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">seed =</span> <span class="dv">123</span>,</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">replace =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">bmi_col =</span> <span class="st">"BMI"</span>,</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">conf.level =</span> <span class="fl">0.95</span>,</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">save_csv =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">out_file =</span> <span class="st">"ic20_bmi.csv"</span>,</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>                                     <span class="at">quiet =</span> <span class="cn">FALSE</span>) {</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"NHANES"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) {</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stop</span>(<span class="st">"Pacote 'NHANES' não encontrado. Instale com: install.packages('NHANES')"</span>)</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.numeric</span>(nsims) <span class="sc">||</span> nsims <span class="sc">&lt;=</span> <span class="dv">0</span>) <span class="fu">stop</span>(<span class="st">"'nsims' deve ser inteiro positivo."</span>)</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.numeric</span>(n) <span class="sc">||</span> n <span class="sc">&lt;=</span> <span class="dv">1</span>) <span class="fu">stop</span>(<span class="st">"'n' deve ser inteiro maior que 1."</span>)</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set.seed</span>(<span class="fu">as.integer</span>(seed))</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a>  data <span class="ot">&lt;-</span> NHANES<span class="sc">::</span>NHANES</span>
+<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span>bmi_col <span class="sc">%in%</span> <span class="fu">names</span>(data)) <span class="fu">stop</span>(<span class="fu">sprintf</span>(<span class="st">"Coluna '%s' não encontrada no dataset NHANES."</span>, bmi_col))</span>
+<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>  bmi_all <span class="ot">&lt;-</span> data[[bmi_col]]</span>
+<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>  bmi_all <span class="ot">&lt;-</span> bmi_all[<span class="sc">!</span><span class="fu">is.na</span>(bmi_all)]</span>
+<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="fu">length</span>(bmi_all) <span class="sc">&lt;</span> <span class="dv">2</span>) <span class="fu">stop</span>(<span class="st">"Poucos valores de BMI disponíveis no dataset."</span>)</span>
+<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>  <span class="co"># "Média populacional" estimada a partir do dataset completo</span></span>
+<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a>  pop_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(bmi_all)</span>
+<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>  z_or_t <span class="ot">&lt;-</span> <span class="fu">qt</span>((<span class="dv">1</span> <span class="sc">+</span> conf.level) <span class="sc">/</span> <span class="dv">2</span>, <span class="at">df =</span> n <span class="sc">-</span> <span class="dv">1</span>) <span class="co"># t crítico</span></span>
+<span id="cb9-33"><a href="#cb9-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-34"><a href="#cb9-34" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Armazenar resultados</span></span>
+<span id="cb9-35"><a href="#cb9-35" aria-hidden="true" tabindex="-1"></a>  res <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">iter =</span> <span class="fu">seq_len</span>(nsims),</span>
+<span id="cb9-36"><a href="#cb9-36" aria-hidden="true" tabindex="-1"></a>                    <span class="at">mean =</span> <span class="fu">numeric</span>(nsims),</span>
+<span id="cb9-37"><a href="#cb9-37" aria-hidden="true" tabindex="-1"></a>                    <span class="at">sd =</span> <span class="fu">numeric</span>(nsims),</span>
+<span id="cb9-38"><a href="#cb9-38" aria-hidden="true" tabindex="-1"></a>                    <span class="at">se =</span> <span class="fu">numeric</span>(nsims),</span>
+<span id="cb9-39"><a href="#cb9-39" aria-hidden="true" tabindex="-1"></a>                    <span class="at">lower =</span> <span class="fu">numeric</span>(nsims),</span>
+<span id="cb9-40"><a href="#cb9-40" aria-hidden="true" tabindex="-1"></a>                    <span class="at">upper =</span> <span class="fu">numeric</span>(nsims),</span>
+<span id="cb9-41"><a href="#cb9-41" aria-hidden="true" tabindex="-1"></a>                    <span class="at">contains =</span> <span class="fu">logical</span>(nsims),</span>
+<span id="cb9-42"><a href="#cb9-42" aria-hidden="true" tabindex="-1"></a>                    <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb9-43"><a href="#cb9-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-44"><a href="#cb9-44" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_len</span>(nsims)) {</span>
+<span id="cb9-45"><a href="#cb9-45" aria-hidden="true" tabindex="-1"></a>    samp <span class="ot">&lt;-</span> <span class="fu">sample</span>(bmi_all, <span class="at">size =</span> n, <span class="at">replace =</span> replace)</span>
+<span id="cb9-46"><a href="#cb9-46" aria-hidden="true" tabindex="-1"></a>    m <span class="ot">&lt;-</span> <span class="fu">mean</span>(samp)</span>
+<span id="cb9-47"><a href="#cb9-47" aria-hidden="true" tabindex="-1"></a>    s <span class="ot">&lt;-</span> <span class="fu">sd</span>(samp)</span>
+<span id="cb9-48"><a href="#cb9-48" aria-hidden="true" tabindex="-1"></a>    se <span class="ot">&lt;-</span> s <span class="sc">/</span> <span class="fu">sqrt</span>(n)</span>
+<span id="cb9-49"><a href="#cb9-49" aria-hidden="true" tabindex="-1"></a>    lower <span class="ot">&lt;-</span> m <span class="sc">-</span> z_or_t <span class="sc">*</span> se</span>
+<span id="cb9-50"><a href="#cb9-50" aria-hidden="true" tabindex="-1"></a>    upper <span class="ot">&lt;-</span> m <span class="sc">+</span> z_or_t <span class="sc">*</span> se</span>
+<span id="cb9-51"><a href="#cb9-51" aria-hidden="true" tabindex="-1"></a>    contains <span class="ot">&lt;-</span> (lower <span class="sc">&lt;=</span> pop_mean) <span class="sc">&amp;&amp;</span> (pop_mean <span class="sc">&lt;=</span> upper)</span>
+<span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a>    res<span class="sc">$</span>mean[i]  <span class="ot">&lt;-</span> m</span>
+<span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a>    res<span class="sc">$</span>sd[i]    <span class="ot">&lt;-</span> s</span>
+<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a>    res<span class="sc">$</span>se[i]    <span class="ot">&lt;-</span> se</span>
+<span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a>    res<span class="sc">$</span>lower[i] <span class="ot">&lt;-</span> lower</span>
+<span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a>    res<span class="sc">$</span>upper[i] <span class="ot">&lt;-</span> upper</span>
+<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a>    res<span class="sc">$</span>contains[i] <span class="ot">&lt;-</span> contains</span>
+<span id="cb9-59"><a href="#cb9-59" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a>  coverage <span class="ot">&lt;-</span> <span class="fu">mean</span>(res<span class="sc">$</span>contains)</span>
+<span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (<span class="sc">!</span>quiet) {</span>
+<span id="cb9-63"><a href="#cb9-63" aria-hidden="true" tabindex="-1"></a>    <span class="fu">message</span>(<span class="fu">sprintf</span>(<span class="st">"Média estimada (</span><span class="sc">\"</span><span class="st">população</span><span class="sc">\"</span><span class="st"> NHANES): %.4f"</span>, pop_mean))</span>
+<span id="cb9-64"><a href="#cb9-64" aria-hidden="true" tabindex="-1"></a>    <span class="fu">message</span>(<span class="fu">sprintf</span>(<span class="st">"Simulações: %d | n = %d | IC nível: %.1f%%"</span>, nsims, n, conf.level <span class="sc">*</span> <span class="dv">100</span>))</span>
+<span id="cb9-65"><a href="#cb9-65" aria-hidden="true" tabindex="-1"></a>    <span class="fu">message</span>(<span class="fu">sprintf</span>(<span class="st">"Cobertura observada (proporção de ICs que contêm a média populacional): %.2f%%"</span>, coverage <span class="sc">*</span> <span class="dv">100</span>))</span>
+<span id="cb9-66"><a href="#cb9-66" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb9-67"><a href="#cb9-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-68"><a href="#cb9-68" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Plot básico (base R): cada linha = um IC; cor azul = contém, vermelho = não contém</span></span>
+<span id="cb9-69"><a href="#cb9-69" aria-hidden="true" tabindex="-1"></a>  x_min <span class="ot">&lt;-</span> <span class="fu">min</span>(res<span class="sc">$</span>lower)</span>
+<span id="cb9-70"><a href="#cb9-70" aria-hidden="true" tabindex="-1"></a>  x_max <span class="ot">&lt;-</span> <span class="fu">max</span>(res<span class="sc">$</span>upper)</span>
+<span id="cb9-71"><a href="#cb9-71" aria-hidden="true" tabindex="-1"></a>  op <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">no.readonly =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb9-72"><a href="#cb9-72" aria-hidden="true" tabindex="-1"></a>  <span class="fu">on.exit</span>(<span class="fu">par</span>(op), <span class="at">add =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb9-73"><a href="#cb9-73" aria-hidden="true" tabindex="-1"></a>  <span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="fl">4.2</span>, <span class="fl">2.5</span>, <span class="fl">3.2</span>, <span class="fl">1.5</span>))</span>
+<span id="cb9-74"><a href="#cb9-74" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(<span class="cn">NA</span>, <span class="at">xlim =</span> <span class="fu">c</span>(x_min, x_max), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, nsims <span class="sc">+</span> <span class="fl">0.5</span>),</span>
+<span id="cb9-75"><a href="#cb9-75" aria-hidden="true" tabindex="-1"></a>       <span class="at">xlab =</span> <span class="st">"Intervalo de Confiança 95% da média (BMI)"</span>,</span>
+<span id="cb9-76"><a href="#cb9-76" aria-hidden="true" tabindex="-1"></a>       <span class="at">ylab =</span> <span class="st">""</span>, <span class="at">yaxt =</span> <span class="st">"n"</span>,</span>
+<span id="cb9-77"><a href="#cb9-77" aria-hidden="true" tabindex="-1"></a>       <span class="at">main =</span> <span class="fu">sprintf</span>(<span class="st">"20 IC95%% para média do BMI (NHANES) — cobertura: %.1f%%"</span>, coverage <span class="sc">*</span> <span class="dv">100</span>))</span>
+<span id="cb9-78"><a href="#cb9-78" aria-hidden="true" tabindex="-1"></a>  <span class="fu">axis</span>(<span class="dv">2</span>, <span class="at">at =</span> <span class="fu">seq_len</span>(nsims), <span class="at">labels =</span> <span class="fu">seq_len</span>(nsims), <span class="at">las =</span> <span class="dv">1</span>, <span class="at">cex.axis =</span> <span class="fl">0.8</span>)</span>
+<span id="cb9-79"><a href="#cb9-79" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_len</span>(nsims)) {</span>
+<span id="cb9-80"><a href="#cb9-80" aria-hidden="true" tabindex="-1"></a>    col <span class="ot">&lt;-</span> <span class="cf">if</span> (res<span class="sc">$</span>contains[i]) <span class="st">"steelblue"</span> <span class="cf">else</span> <span class="st">"tomato"</span></span>
+<span id="cb9-81"><a href="#cb9-81" aria-hidden="true" tabindex="-1"></a>    <span class="fu">segments</span>(<span class="at">x0 =</span> res<span class="sc">$</span>lower[i], <span class="at">y0 =</span> i, <span class="at">x1 =</span> res<span class="sc">$</span>upper[i], <span class="at">y1 =</span> i, <span class="at">col =</span> col, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb9-82"><a href="#cb9-82" aria-hidden="true" tabindex="-1"></a>    <span class="fu">points</span>(res<span class="sc">$</span>mean[i], i, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col =</span> col)</span>
+<span id="cb9-83"><a href="#cb9-83" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb9-84"><a href="#cb9-84" aria-hidden="true" tabindex="-1"></a>  <span class="fu">abline</span>(<span class="at">v =</span> pop_mean, <span class="at">col =</span> <span class="st">"darkgreen"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb9-85"><a href="#cb9-85" aria-hidden="true" tabindex="-1"></a>  <span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Contém média pop."</span>, <span class="st">"Não contém"</span>, <span class="st">"Média pop."</span>),</span>
+<span id="cb9-86"><a href="#cb9-86" aria-hidden="true" tabindex="-1"></a>         <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"steelblue"</span>, <span class="st">"tomato"</span>, <span class="st">"darkgreen"</span>), <span class="at">pch =</span> <span class="fu">c</span>(<span class="dv">16</span>, <span class="dv">16</span>, <span class="cn">NA</span>), <span class="at">lty =</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="cn">NA</span>, <span class="dv">1</span>), <span class="at">lwd =</span> <span class="fu">c</span>(<span class="cn">NA</span>, <span class="cn">NA</span>, <span class="dv">2</span>),</span>
+<span id="cb9-87"><a href="#cb9-87" aria-hidden="true" tabindex="-1"></a>         <span class="at">bty =</span> <span class="st">"n"</span>)</span>
+<span id="cb9-88"><a href="#cb9-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-89"><a href="#cb9-89" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Salvar CSV opcional</span></span>
+<span id="cb9-90"><a href="#cb9-90" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (save_csv) {</span>
+<span id="cb9-91"><a href="#cb9-91" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tryCatch</span>({</span>
+<span id="cb9-92"><a href="#cb9-92" aria-hidden="true" tabindex="-1"></a>      <span class="fu">write.csv</span>(res, <span class="at">file =</span> out_file, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb9-93"><a href="#cb9-93" aria-hidden="true" tabindex="-1"></a>      <span class="cf">if</span> (<span class="sc">!</span>quiet) <span class="fu">message</span>(<span class="fu">sprintf</span>(<span class="st">"Resultados salvos em: %s"</span>, <span class="fu">normalizePath</span>(out_file, <span class="at">mustWork =</span> <span class="cn">FALSE</span>)))</span>
+<span id="cb9-94"><a href="#cb9-94" aria-hidden="true" tabindex="-1"></a>    }, <span class="at">error =</span> <span class="cf">function</span>(e) <span class="fu">warning</span>(<span class="st">"Falha ao salvar CSV: "</span>, e<span class="sc">$</span>message))</span>
+<span id="cb9-95"><a href="#cb9-95" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb9-96"><a href="#cb9-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-97"><a href="#cb9-97" aria-hidden="true" tabindex="-1"></a>  <span class="fu">invisible</span>(<span class="fu">list</span>(<span class="at">results =</span> res, <span class="at">pop_mean =</span> pop_mean, <span class="at">coverage =</span> coverage))</span>
+<span id="cb9-98"><a href="#cb9-98" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb9-99"><a href="#cb9-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-100"><a href="#cb9-100" aria-hidden="true" tabindex="-1"></a><span class="fu">simular_20_ic_bmi_nhanes</span>()</span>
+<span id="cb9-101"><a href="#cb9-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-102"><a href="#cb9-102" aria-hidden="true" tabindex="-1"></a><span class="fu">simular_20_ic_bmi_nhanes</span>(<span class="at">nsims =</span> <span class="dv">20</span>, <span class="at">n =</span> <span class="dv">50</span>, <span class="at">seed =</span> <span class="dv">123</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>, <span class="at">save_csv =</span> <span class="cn">FALSE</span>, <span class="at">out_file =</span> <span class="st">"ic20_bmi.csv"</span>)</span>
+<span id="cb9-103"><a href="#cb9-103" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="cap16-moore-IC-o-basico_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>mmm</p>
+
+
+<div id="refs" class="references csl-bib-body" data-entry-spacing="1" role="list" style="display: none">
+<div id="ref-Moore2023" class="csl-entry" role="listitem">
+MOORE, David S.; NOTZ, William I.; FLIGNER, Michael A. <strong><a href="https://www.grupogen.com.br/livro-a-estatistica-basica-e-sua-pratica-david-s-moore-william-i-notz-e-michael-a-fligner-editora-ltc-9788521638605">Estatística Básica e sua prática</a></strong>. 9. ed. Rio de Janeiro: LTC, 2023.
+</div>
+<div id="ref-poldrack_pensamento_est_2025" class="csl-entry" role="listitem">
+POLDRACK, Russell. <strong>Pensamento <span>Estatístico</span>: <span>Analisando</span> <span>Dados</span> em um <span>Mundo</span> de <span>Incertezas</span></strong>. Tradução: Cibelle Ravaglia. Rio de Janeiro, RJ: Alta Books, 2025.
+</div>
+</div>
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./replicar-suco-uva-tab-graf.html" class="pagination-link" aria-label="AED - suco uva - Tabelas e Gráficos">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">AED - suco uva - Tabelas e Gráficos</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./cap17-moore-TSHN-o-basico.html" class="pagination-link" aria-label="AEI - cap 17 moore - TSH0">
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">AEI - cap 17 moore - TSH0</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Relatório escrito em <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+
+
+</body></html>

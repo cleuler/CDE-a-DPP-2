@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR" xml:lang="pt-BR"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Cleuler Barbosa das Neves">
+
+<title>1&nbsp; Introdução – __Ciência de Dados e Estatística Aplicadas ao Direito e Políticas Públicas__</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 1em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./AEID-cap18-Reproduzivel.html" rel="next">
+<link href="./index.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-364982630eef5352dd1537128a8ed5cb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./"><strong>Ciência de Dados e Estatística Aplicadas ao Direito e Políticas Públicas</strong></a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Alternar modo de leitor">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Procurar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pretexto</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AEID-cap18-Reproduzivel.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">AEID - Análise Exploratória e Inferencial de Dados</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap3-DistNorm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">AED - cap 3 - As Distribuições Normais</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap5-pldr-modelos-dados.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">AED - cap 5 pldr - Ajustando Modelos aos Dados</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap13-pldr-model-rel-contin.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">AID - cap 13 - Modelagem de Relações Contínuas</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap16-pldr-EstMultiv.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">AID - cap 16 - Estatística Multivariada</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap6-moore-tab-dupla-entrada.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">AED - cap 6 moore - Tabelas de Dupla Entrada</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./replicar-suco-uva-tab-graf.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">AED - suco uva - Tabelas e Gráficos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap16-moore-IC-o-basico.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">AEI - cap 16 moore - IC: o Básico</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap17-moore-TSHN-o-basico.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">AEI - cap 17 moore - TSH0</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./conclusao.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Conclusão</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./apendiceA.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Apêndice A - EMENTA</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./apendiceB-quadroVar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Apêndice B - Quadro Var</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./referencias.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Referências</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Sumário</h2>
+   
+  <ul>
+  <li><a href="#objetivo-geral" id="toc-objetivo-geral" class="nav-link active" data-scroll-target="#objetivo-geral"><span class="header-section-number">1.1</span> Objetivo Geral</a></li>
+  <li><a href="#objetivos-específicos" id="toc-objetivos-específicos" class="nav-link" data-scroll-target="#objetivos-específicos"><span class="header-section-number">1.2</span> Objetivos Específicos</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="sec-introducao" class="quarto-section-identifier"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Segundo <span class="citation" data-cites="harari2018-21licoes">(<a href="referencias.html#ref-harari2018-21licoes" role="doc-biblioref">HARARI, 2018</a> , p.&nbsp;107-111)</span> , dentro do horizonte de tempo deste Século XXI, a conexão dos indivíduos à <em>web</em> será vital e “À medida que, através de sensores biométricos, cada vez mais dados fluírem de seu corpo e seu cérebro para máquinas inteligentes, será fácil para corporações e agências do governo <em>conhecer</em> você, <em>manipular</em> você e <em>tomar decisões</em> por você” (destacou-se).</p>
+<p>Não se pode imaginar risco maior para os modernos Estados Democráticos de Direito, pois nessa era digital em que já se vive revelou-se o poder daquelas instituições públicas ou privadas que detêm o poder dos dados (HARARI, 2020, p.&nbsp;1) <span class="citation" data-cites="Lock2017-EstRevPoderDados">(<a href="referencias.html#ref-Lock2017-EstRevPoderDados" role="doc-biblioref">LOCK et al., 2017</a>)</span>.</p>
+<p>Na interface do Direito e Políticas Públicas busca-se compreender o fenômeno da <strong><em>baixa efetividade</em></strong> de inúmeras normas constitucionais, notadamente aquelas insertas na CF/1988 na condição de direitos fundamentais.</p>
+<p>Esta disciplina, CDE-a-DPP: <em>Ciência de Dados e</em> <em>Estatística Básica</em> [<em>com R</em>] <em>Aplicada ao Direito e Políticas Públicas</em>, foi concebida absolutamente apoiada no <em>dogma</em> de que os <strong><em>fenômenos jurídicos</em></strong> e, mais ainda, sua conjunção com as Políticas Públicas (prodiga no uso de <em>indicadores</em>, de <em>índices</em> e de <em>rakeamentos</em> em suas abordagens para análise de processos e de resultados; ex.: AIR - Análise de Impacto Regulatório), <strong><em>apresentam uma componente estocástica</em></strong> [<span class="citation" data-cites="Becker2015">BECKER (<a href="referencias.html#ref-Becker2015" role="doc-biblioref">2015</a>)</span>]<span class="citation" data-cites="DietzKalof2015">(<a href="referencias.html#ref-DietzKalof2015" role="doc-biblioref">DIETZ; KALOF, Linda, 2015</a>)</span> e podem ser <strong><em>objeto de medição</em></strong>, dado que a <strong><em>mente humana é um instrumento de medição</em></strong> <span class="citation" data-cites="Kahneman2021">(<a href="referencias.html#ref-Kahneman2021" role="doc-biblioref">KAHNEMAN, Daniel; SIBONY, Oliver; SUNSTEIN, Cass R., 2021</a>)</span> quando opera julgamentos sob incerteza <span class="citation" data-cites="Kahneman1982">(<a href="referencias.html#ref-Kahneman1982" role="doc-biblioref">KAHNEMAN, Daniel; SLOVIC, Paul; TVERSKY, Amos, 1982</a>)</span>.</p>
+<p>Parte-se do <em>pressuposto</em> de que Direito é <em>uma Ciência Social Aplicada</em> e, assim como a Demografia, a Biometria, a Psicologia, a Economia, a Ciência Política, a Epidemiologia, a Ciência Forense etc., reclamam cada vez mais uma maior e melhor <em>compreensão</em> do seu <em>sujeito</em>-<em>objeto</em> por meio de <em>pesquisas empíricas</em>.</p>
+<p>O que impele seus atuais pesquisadores, quer em programas de pós-graduação acadêmicos ou profissionais, quer desde a graduação (iniciação científica, elaboração de TCCs e Núcleo Livre), a <em>levantar dados</em> (1º<sup>s</sup> e 2º<sup>s</sup>), no curso de pesquisas <em>quali-quantis</em>, para deles extrair <em>informações</em> e <em>padrões</em> perceptíveis, momento em que a <strong><em>Estatística Descritiva</em></strong>, com suas <em>consagradas técnicas</em> para <em>coletar</em>, <em>ordenar</em>, <em>resumir</em> e <em>apresentar</em> dados e informações torna-se imprescindível.</p>
+<p>A rigor, há de <em>4 a 7 momentos</em> de <em>síntese indutiva</em> em que um pesquisador empírico que colete dados na interface do Direito com as Políticas Públicas depara-se no curso de sua pesquisa:</p>
+<ol type="i">
+<li><p>na apropriação e <em>operacionalização de conceitos</em> e de indicadores necessários e suficientes para abordar sua <em>situção</em>-<em>problema</em> de pesquisa;</p></li>
+<li><p>na escolha e coleta dos dados de campo, notadamente quando, ao invés de censo, optar-se por colher <strong><em>1 amostra</em></strong> (parte) de tamanho adequado da população alvo, ou melhor, da população disponível (todo) de tamanho finito; pois, não raro, pretende valer-se de algum <em>poder inferencial</em> para, <em>a partir de uma parte, extrair conclusões para o todo</em>;</p></li>
+<li><p>na distribuição aleatorizada dos elementos entre um Grupo de Tratamento e um Grupo de Controle (que recebe um <em>placebo</em> sob <em>duplo cego</em>), nos experimentos controlados; para <em>extração inferencial de conclusões causais</em> a respeito dos efeitos esperados do tratamento (T) sobre toda uma <em>População disponível</em> pesquisada;</p></li>
+<li><p>na construção de <em>contrafactuais</em> (<em>quasi-experimentos</em>), quando, no caso das Ciências Sociais Aplicadas, não se pode dispor, por razões éticas, de um Grupo de Controle para se pesquisar sobre <em>efeitos causais</em> de <em>um Tratamento social</em> sobre toda uma População disponível pesquisada;</p></li>
+<li><p>na tomada de <em>decisões político-administrativas baseadas em evidências</em> (dados e informações);</p></li>
+<li><p>na escolha das ações para implementação e monitoramento (diagnóstico, avaliação e correção/controle) de indicadores e de metas assim colocados;</p></li>
+<li><p>na <em>prescrição</em> normativa de <em>novas intervenções</em> para melhoria na eficiência (orçamentária), na eficácia (jurídica) e na <strong><em>efetividade</em></strong> (social) dessas implementações metódicas, com foco na <em>melhoria da efetividade dos direitos fundamentais prescritos na CF/1988 no decorrer do tempo</em>.</p></li>
+</ol>
+<p>Nessa ótica, é necessário e preciso <strong><em>superar</em></strong> o <em>preconceito dos juristas</em> com as Ciências Exatas, em especial com a Probabilidade e Estatística. Além do dogma da onipotência dos juristas, que realizam a defesa de suas hipóteses como se fossem permeados de uma certeza determinística. É preciso reposicionar a Doutrina, que não é mais fonte do Direito desde a Modernidade e que repousa exclusivamente sobre argumento de autoridade e que não desvela os interesses subalternados de seus autores (ausência de <em>disclaimer</em>).</p>
+<p>A <strong><em>Estatística Indutiva</em></strong> ou <strong><em>Inferencial</em></strong> — com sua <em>Teoria da Amostragem</em>, desenvolvida a partir doe descobertas iniciadas no Séc. XVII:</p>
+<ul>
+<li><p>1654 com as famosas cartas trocadas por Pascal e Fermat, este um <em>jurista e matemático</em>, aquele um <em>filósofo e matemático</em>, em que se <em>resolve</em> o <em>problema da repartição do cacife de um jogo de pontos interrompido</em>;</p></li>
+<li><p>1713 publica-se, postumamente, a obra <em>Ars Conjecturandi</em>, de Jaques Bernoulli, um <em>jurista e matemático</em>) — que possibilita o emprego de <em>desenhos de pesquisa</em> (<em>D.o.E</em> - <em>Design of Experiment</em>) em que se pode <em>validamente</em> operar essas <em>inferências indutivas</em> por meio do estudo, da descrição e da comparação com os <em>padrões</em> encontrados nos <em>fenômenos aleatórios</em> (<em>alea</em> e Teoria das Medições, pelo estudo dos <em>viéses</em> e <em>ruídos</em>). É quem enuncia e prova pela primeira vez a Lei dos Grandes Números.</p></li>
+</ul>
+<p>É, pois, preciso dar-se ao trabalho de <em>refletir</em> sobre as possibilidades dos <em>desenhos de pesquisa empírica</em>, explicitando-os em nossos <em>projetos</em> e <em>protocolos de pesquisa empírica</em>, a fim de conferir <strong><em>replicabilidade</em></strong>, <strong><em>validade</em></strong> e <strong><em>confiabilidade</em></strong> aos diversos <strong><em>instrumentos de medição</em></strong> aplicáveis na interface do Direito e das Políticas Públicas, com uma <em>DPP-metria</em> ainda por ser concebida, construída, testada e validada.</p>
+<p>Como <em>um resultado esperado</em> a partir dessa abordagem de pesquisa, aponta-se para <em>um provável aumento da confiança no moderno Estado Democrático de Direito</em>, pela busca — por meio de <em>diagnósticos</em> e <em>decisões</em> <em>basedos em evidências empíricas</em> — da <em>redução</em> de <em>viéses</em> e de <em>ruídos</em> observáveis na atuação das suas instituições <span class="citation" data-cites="Kahneman2021">(<a href="referencias.html#ref-Kahneman2021" role="doc-biblioref">KAHNEMAN, Daniel; SIBONY, Oliver; SUNSTEIN, Cass R., 2021</a>)</span> no trato com seus concidadãos (ex. no Sistema de Justiça Criminal e Cível brasileiro).</p>
+<p>Ou seja, o grande desafio a ser enfrentado é construir uma Metodologia (<em>D.o.E.</em>) nos protocolos de pesquisa empírica do Direito e das Políticas como um caminho <em>ad-versus</em> ao da propalada <em>defesa de hipóteses</em>, tão encontradiço na doutrina jurídica nacional e, não raro, mesmo em variegados programas de pós-graduação meramente acadêmica do Direito.</p>
+<p>Trata-se da expectativa de qualificar a pesquisa acadêmica brasileira ao ponto de romper e superar a <em>dicotomia</em> entre <em>pesquisa pura</em> ou meramente acadêmica e <em>pesquisa aplicada</em> ou profissional no campo do Direito pela intrusão de uma “impureza” no seu susbtrato: o reconhecimento da importância da <strong><em>modelagem</em></strong> da <em>alea</em> em <em>pesquisas empíricas</em> com emprego de <em>modelos informacionais</em> (que apresentam uma parcela estocástica: sinal e ruído) ao tomar a <em>mente humana no seu processo decisório como um instrumento de medição que opera sob incertezas</em>.</p>
+<p>A proposta desta disciplina (CDE-a-DPP) é pretenciosa no sentido de dar um passo inicial junto à pós-graduação estrito senso exatamente nessa direção reflexiva, conjugando a compreensão e a sedimentação de uma Teoria Estatística Descritiva/Inferencial aprofundada combinada com Ciência de Dados voltadas para o emprego de <em>ferramentas tecnológicas disponíveis gratuitamente na web</em> (ex. <a href="https://www.lock5stat.com/StatKey/index.html">StatKey</a>, <a href="https://www.statdisk.com/">statdisk</a> etc.), notadamente pelo domínio, desenvolvimento e aplicção do básico em <a href="https://www.r-project.org/">Linguagem R</a>, por meio da <a href="https://posit.co/download/rstudio-desktop/">IDE R-Studio</a>; com o que se almeja <em>uma ainda mais desafiadora pretensão</em> de iniciar <em>uma formação interdisciplinar</em> de <em>Cientistas de Dados</em> no seio de um curso de pós-graduação estrito senso em Direito e Políticas Públicas.</p>
+<section id="objetivo-geral" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="objetivo-geral"><span class="header-section-number">1.1</span> Objetivo Geral</h2>
+<p>Propiciar aos pós-graduandos ingressos no PPGDP que já cursaram a disciplina DPP0009 - SEMINÁRIOS INTEGRADOS DE PESQUISA EM ARTICULAÇÃO À <em>PRAXIS</em> PROFISSIONAL – SIP-APP, um <em>letramento</em> em <em>Ciência de Dados</em>, <em>Estatística</em> e na abordagem <em>Direito</em> e <em>Políticas Públicas</em> (<em>Múltiplas Linguagens</em>) e o acesso a um ferramental <em>necessário</em> para a <em>produção científica</em> com emprego de técnicas <em>predominantemente</em> <em>quantitativas</em>, notadamente quanto ao conhecimento daquelas <em>necessárias</em> para a problematização (definição e delimitação da situação/problema com um adequado desenho do experimento e esquema/plano amostral a ser executado), a seleção de fontes, <u><strong><em>uma</em></strong></u> <strong><em>coleta</em></strong> <strong><em>válida</em></strong> e <strong><em>fidedigna</em></strong> de <strong><em>dados</em></strong>, uma revisão de literatura <strong><em>sistemática</em></strong>, <em>análise</em> e <em>interpretação</em> de <strong><em>dados</em></strong> e <strong><em>informações</em></strong>, uma <em>discussão cientificamente organizada dos <strong>resultados</strong></em> e a <em>publicação</em> de um <em>trabalho científico</em>, com foco na revisão e aprimoramento de um projeto de pesquisa (com um <em>plano de trabalho</em>) através do <strong><em>delineamento</em></strong> de um <strong><em>protocolo de pesquisa</em></strong> (Desenho de Pesquisa com Plano/Esquema Amostral) que possam articular a teoria com a praxis profissional em investigações jurídicas aplicadas, em <strong>pesquisa jurídica empírica</strong> e em projetos de pesquisa-ação na interface do Direito com as Políticas Públicas.</p>
+<p><strong><em>Objetivo geral é focar</em></strong> nas <strong><em>técnicas</em></strong> <strong>de <em>pesquisa empírica predominantemente quantitativas</em></strong> que podem ser consideradas <strong>adequadas</strong> e que ainda <u><strong><em>não</em></strong></u> foram <strong><em>aplicadas</em></strong> ou foram <strong><em>incompletamente aplicadas</em></strong> em <em>pesquisas anteriores do PPGDP</em>, a fim de <strong><em>avançar</em></strong> na <strong><em>fronteira</em></strong> <strong>do <em>conhecimento</em></strong> do <strong><em>estado da arte</em></strong> e da <strong><em>pesquisa empírica</em></strong> (levantar dados 1<sup><u>os</u></sup> e 2<sup><u>os</u></sup>) até aqui <strong><em>empreendida neste programa</em></strong>, como, por exemplo: <strong><em>testes de Hipótese</em></strong> em geral e da <strong><em>qualidade do ajuste de Modelos</em></strong> (seleção), modelo de regressão logística, modelos lineares generalizados (glm), análise de sobrevivência, análise de fatores de risco, análise de relações (DAG’s e inferência bayesiana), análise estatística da decisão por meio de árvore de decisão, aprendizado de máquina (supervisionado e não supervisionado), modelos de reologia e escoamento para análise de fluxos processuais no sistema de justiça criminal e cível etc.</p>
+</section>
+<section id="objetivos-específicos" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="objetivos-específicos"><span class="header-section-number">1.2</span> Objetivos Específicos</h2>
+<p><strong><em>Capacitar</em></strong> pós-graduandos (mestrado e doutorado) e egressos (laboratórios e observatórios) para o desenvolvimento das diversas fases de uma pesquisa científica – aprimorando a reelaboração de um projeto (NBR 15.287/2011), da sua redação monográfica (NBR 14.724/2011) e de relatórios técnicos (NBR 10.719/2015) sobre produtos alcançados na pesquisa empírica (pura ou aplicada) até sua <em>comunicação</em> (Relatório preliminar e definitivo de pesquisa), tendo em vista atender ao art. 42, RPPGDP.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Isso, com foco menos no aprendizado das regras de notação (o que se compreende como uma habilidade que já se deve dominar) e mais no <em>aprendizado</em> dos <strong><em>conceitos</em></strong> da <strong><em>Metodologia Científica</em></strong> e de <em>técnicas de <strong>pesquisa</strong></em> <strong>empírica</strong> <strong><em>predominantemente quantitativas</em></strong> mais específicas, adequadas e <strong><em>inovadoras</em></strong> em relação a dados colhidos e informações extraídas na interface do Direito com as Políticas Públicas.</p>
+<p><strong><em>Articular</em></strong> a pesquisa <em>jurídica</em> empírica às atividades e vivências da <em>prática jurídica</em>, considerando que Direito é uma Ciência Social <em>aplicada</em>.</p>
+<p><strong><em>Preparar</em></strong> o discente para <strong><em>aprimorar</em></strong> a escolha, a problematização, a delimitação e a <u><strong><em>reelaboração</em></strong></u> de um Projeto de Pesquisa (PP) jurídico-política, como guia de apoio metodológico, bem como para compreender o papel do <strong>método</strong> e a importância do referencial teórico na pesquisa aplicada e na pesquisa empírica, focos do PPGDP.</p>
+<p><strong><em>Promover</em></strong> um <strong><em>diálogo</em></strong>, pelo <strong><em>domínio/letramento</em></strong> em diversas <strong><em>linguagens</em></strong> (Ciência, Ciência de Dados e Probabilidade e Estatística – com suas Linguagens <em>Formais</em>; Direito e Políticas Públicas – com suas Linguagens <em>Naturais diferenciadas</em>), entre os pesquisadores do PPGDP <em>sobre</em> os <em>projeto de pesquisa institucionais</em> a que são <strong><em>aderentes</em></strong>, tomando como <strong><em>eixo condutor</em></strong> uma <em>ideia</em> ou <strong><em>conceito</em></strong> de <u><strong><em>ciclo de</em></strong></u> <strong><em>…</em></strong>, ou iteratividade (reiteratividade), nas 4 áreas de conhecimento cujos <em>pontos de vista/de partida</em> pretende-se valer esta disciplina <em>multidisciplinar</em>: CD ^ E::Dir&amp;PP’s.</p>
+<p><strong><em>Fornecer</em></strong> orientações iniciais sobre as técnicas de pesquisa <em>predominantemente quantitativas</em> mais utilizadas no <em>campo jurídico</em> e na <em>abordagem profissional</em> que o PPGDP adota e vem aplicando; todavia com <strong><em>foco</em></strong> naqueloutras <strong>técnicas adequadas</strong> que ainda <strong><em>não</em></strong> foram <strong><em>aplicadas</em></strong> ou <em>incipientemente utilizadas</em>, a fim de avançar na <a href="https://docs.google.com/document/d/1xDVEnbLBXm4tfnX2dvRWpL5_pQdGxwkhoJHAieg0glQ/mobilebasic#heading=h.5n2rkdaavr5x"><em>fronteira do conhecimento</em></a> empírico até aqui adquirido (criação e rearranjo teóricos e inovação no domínio da técnica).</p>
+<p><strong><em>Estimular</em></strong> o estudante/pesquisador na prossecução de uma nova perspectiva metodológica e acadêmica para permitir o conhecimento e a prática do Direito mais voltados para <em>superação</em> dos problemas diagnosticados na experiência jurídica brasileira<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> com suporte a <em>decisões</em> tomadas com <em>base</em> em <em>evidências ciêntíficas</em>.</p>
+<p><strong><em>Auxiliar</em></strong> o pesquisador para que ele prepare <em>um relatório parcial de pesquisa</em> de seu produto de pesquisa empírica em um seminário de pesquisa (pré-qualificação).</p>
+
+
+<div id="refs" class="references csl-bib-body" data-entry-spacing="1" role="list" style="display: none">
+<div id="ref-Becker2015" class="csl-entry" role="listitem">
+BECKER, João Luiz. <strong>Estatística Básica: transformando dados em informação</strong>. Porto Alegre: Bookman, 2015.
+</div>
+<div id="ref-DietzKalof2015" class="csl-entry" role="listitem">
+DIETZ, Thomaz; KALOF, LINDA. <strong>Introdução à Estatística Social</strong>. Tradução: Ana Maria Lima de Farias;Tradução: Vera Regina Lima de Faria e Flores. Rio de Janeiro: LTC, 2015.
+</div>
+<div id="ref-harari2018-21licoes" class="csl-entry" role="listitem">
+HARARI, Yuval Noah. <strong><a href="https://books.google.com.br/books?id=if5QDwAAQBAJ">21 li<span>ç</span><span>õ</span>es para o s<span>é</span>culo 21</a></strong>. Tradução: Paulo Geiger. 1. ed. <em>[S.l.]</em>: Companhia das Letras, 2018.
+</div>
+<div id="ref-Kahneman2021" class="csl-entry" role="listitem">
+KAHNEMAN, DANIEL; SIBONY, OLIVER; SUNSTEIN, CASS R. <strong>Ruído: uma falha no julgamento humano</strong>. Tradução: Cassio de Arantes Leite. 1. ed. Rio de Janeiro: Objetiva, 2021.
+</div>
+<div id="ref-Kahneman1982" class="csl-entry" role="listitem">
+KAHNEMAN, DANIEL; SLOVIC, PAUL; TVERSKY, AMOS. <strong>Judgment under incertaint: heuristics and biases</strong>. Cambridge, England: Cambridge University Press, 1982.
+</div>
+<div id="ref-Lock2017-EstRevPoderDados" class="csl-entry" role="listitem">
+LOCK, Patti Frazer <em>et al.</em> <strong>Estatística: revelando o poder dos dados</strong>. Tradução: Ana Maria Lima de Farias;Tradução: Vera Regina Lima de Farias e Flores. 1. ed. Rio de Janeiro: LTC, 2017.
+</div>
+</div>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>“Art. 42. O produto final da pesquisa do estudante no Programa pode ter a forma de:</p>
+<p>I- Dissertação;</p>
+<p>II- Estudo de Caso;</p>
+<p>III- Projeto Regulatório;</p>
+<p>IV- Desenvolvimento de processos e técnicas.”<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>A vida do Direito como ela é: pisar o chão de fábrica da arena jurídica. Não como deveria ser!<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link" aria-label="Pretexto">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Pretexto</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./AEID-cap18-Reproduzivel.html" class="pagination-link" aria-label="AEID - Análise Exploratória e Inferencial de Dados">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">AEID - Análise Exploratória e Inferencial de Dados</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Relatório escrito em <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

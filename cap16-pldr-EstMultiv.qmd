@@ -1,0 +1,171 @@
+# AID - cap 16 - Estatística Multivariada {#sec-stat-multivar}
+
+> A palavra multivariada se refere a análises que envolvem mais de uma variável aleatória. Apesar de termos visto exemplos em que o modelo incluía múltiplas variáveis (como na regressão linear), estávamos especificamente interessados em explicar a variação de uma variável dependente em termos de uma ou mais variáveis independentes, as quais, em geral, são especificadas pelo responsável do experimento em vez de serem especificadas por medidas. Em uma análise multivariada, tratamos normalmente todas as variáveis como iguais e procuramos entender como se relacionam entre si como um grupo. [@poldrack_pensamento_est_2025 , p. 201].
+
+## Objetivos da Aprendizagem
+
+> ▶Descrever a diferença entre aprendizado supervisionado e não supervisionado.
+>
+> ▶Usar técnicas de visualização, incluindo mapas de calor \[heatmaps\] a fim de visualizar a estrutura de dados multivariados.
+>
+> ▶Entender o conceito de clusterização e como ele pode ser usado para identificar a estrutura nos dados.
+>
+> ▶Entender o conceito de redução de dimensionalidade.
+>
+> ▶Descrever como a análise de componentes principais e a análise fatorial podem ser usadas para executar a redução de dimensionalidade. [@poldrack_pensamento_est_2025 , p. 201].
+
+## Variedades de Análise Multivariada
+
+> Existem inúmeros tipos diferentes de análise multivariada, mas, neste capítulo, nós nos concentraremos em duas abordagens principais.
+>
+> Na primeira, podemos simplesmente querer compreender e visualizar a estrutura que existe nos dados, ou seja, quais variáveis ou observações estão relacionadas. Em geral, definimos relacionadas em termos de alguma medida que indexa a distância entre os valores de diferentes variáveis. Um método importante que se encaixa nessa categoria é conhecido como clusterização, cujo intuito é encontrar clusters de variáveis ou observações semelhantes entre variáveis.
+>
+> Na segunda, podemos querer usar um grande número de variáveis e reduzi-lo, de modo que retenhamos o máximo de informações possíveis. Chamamos isso de redução de dimensionalidade, em que a dimensionalidade se refere ao número de variáveis no conjunto de dados.
+>
+> Analisaremos duas técnicas comumente usadas para redução de dimensionalidade: análise de componentes principais e análise fatorial. Com frequência, a clusterização e a redução de dimensionalidade são consideradas modalidades de aprendizado não supervisionado, diferentemente do aprendizado supervisionado, que caracteriza modelos como a regressão linear, sobre a qual você já aprendeu. A razão para considerarmos a regressão linear como “supervisionada” é que sabemos o valor daquilo que estamos tentando predizer (ou seja, a variável dependente) e estamos tentando encontrar o modelo que melhor prediz esses valores. No aprendizado não supervisionado, não estamos tentando predizer um valor específico; pelo contrário, estamos tentando descobrir estruturas nos dados as quais possam ser úteis para entendermos o que está acontecendo; isso, em geral, exige algumas suposições sobre o tipo de estrutura que queremos encontrar.
+>
+> Uma informação que você descobrirá neste capítulo é que, no aprendizado supervisionado, apesar de geralmente existir uma resposta “correta” (uma vez que chegamos a um consenso para determinar o “melhor” modelo, como a soma dos erros quadráticos), não raro, no aprendizado não supervisionado, não existe uma resposta “correta” consensual. Diferentes métodos de aprendizado não supervisionado podem fornecer respostas totalmente distintas sobre os mesmos dados. Em geral, não é possível, a princípio, determinar qual delas é “correta”, pois isso depende dos objetivos da análise e das suposições que estamos dispostos a fazer sobre os processos ou sistemas os quais originam os dados. Algumas pessoas ficam frustradas com isso, enquanto outras ficam entusiasmadas; caberá a você descobrir em qual desses grupos se encaixa. [@poldrack_pensamento_est_2025 , p. 201-202].
+
+## Dados Multivariados: Um Exemplo
+
+> Para exemplificar a análise multivariada, examinaremos um conjunto de dados coletado pela minha equipe e publicado em Eisenberg *et al*., 2019 [@eisenberg2019]. Ele é valioso por dois motivos: tem um grande número de variáveis interessantes, coletadas a partir de uma quantidade relativamente alta de indivíduos, e está disponível gratuitamente e online, possibilitando que você possa explorá-lo ainda mais.
+>
+> Realizamos este estudo porque estávamos interessados em compreender como diversos aspectos diferentes da função psicológica estão relacionados, com foco específico em medidas relacionadas à psicologia de autocontrole e conceitos correlatos. Os participantes realizaram uma bateria de testes cognitivos e questionários ao longo de uma semana, totalizando dez horas de experimentos. Nesse primeiro exemplo, focaremos as variáveis relacionadas a dois aspectos específicos do autocontrole; no Capítulo 17, veremos outra análise desses dados.
+>
+> A ***inibição de resposta*** é definida como a habilidade de interromper rapidamente uma ação e, nesse estudo, foi medida por meio de um conjunto de tarefas conhecidas como ***tarefas de sinal de parada*** \[*stop-signal tasks*\]. A variável de interesse para elas é uma estimativa de quanto tempo os indivíduos levam para se pararem, conhecida como o ***tempo de reação do sinal de parada*** (SSRT \[*stop-signal reaction time*\]).
+>
+> No conjunto de dados, existem quatro medidas diferentes de SSRT. A ***impulsividade*** é definida como a tendência de tomar decisões por impulso, sem considerar as consequências potenciais e os objetivos de longo prazo.
+>
+> O estudo inclui uma série de questionários diferentes que medem a impulsividade, mas nosso foco será o questionário UPPS-P que avalia cinco facetas diferentes da impulsividade.
+>
+> Após o cálculo dos escores para cada um dos 522 participantes do estudo de Eisenberg, obtemos 9 números para cada indivíduo. Tratamos cada uma dessas variáveis como uma dimensão do conjunto de dados; embora os dados multivariados possam, às vezes, ter milhares ou até milhões de dimensões, é útil observar primeiro como os métodos funcionam com um número reduzido de dimensões. [@poldrack_pensamento_est_2025 , p. 202-203]
+
+## Visualizando Dados Multivariados
+
+> Um dos principais desafios dos dados multivariados é que o olho e o cérebro humanos simplesmente não têm os recursos necessários para visualizar dados com mais de três dimensões.
+>
+> Podemos usar diversas ferramentas para tentar visualizar dados multivariados, porém todas elas perdem a eficiência à medida que o número de variáveis aumenta.
+>
+> Quando ele se torna muito grande para ser visualizado diretamente, em geral, a abordagem mais produtiva é reduzir primeiro o número de dimensões (conforme analisaremos mais adiante) e, em seguida, visualizar esse conjunto reduzido de dados. [@poldrack_pensamento_est_2025 , p. 203]
+
+### Gráfico de Dispersão de Matrizes
+
+> Uma forma útil de visualizar um pequeno número de variáveis é plotar cada par de variáveis entre si, às vezes conhecido como gráfico de dispersão de matrizes; um exemplo é mostrado na Figura 16.1. Cada linha/coluna na figura se refere a uma única variável — nesse caso, é uma de nossas variáveis sobre psicologia do exemplo de conjunto de dados de autocontrole visto anteriormente. Os elementos diagonais do gráfico mostram a distribuição de cada variável como um histograma. Os elementos abaixo da diagonal mostram um gráfico de dispersão para cada par de matrizes, sobreposto com uma linha de regressão que descreve a relação entre as variáveis. Os elementos acima da diagonal mostram o coeficiente de correlação para cada par de variáveis. Quando o número de variáveis é relativamente pequeno (cerca de 10 ou menos), essa pode ser uma forma útil de obter bons insights a partir de um conjunto de dados multivariados. De imediato, podemos observar que as correlações são altas entre cada uma das variáveis do SSRT e entre cada uma das variáveis de impulsividade do UPPS. No entanto, as correlações entre as duas são todas muito baixas. Essa é nossa primeira suspeita de que existem dois conjuntos de variáveis relacionadas nesse conjunto de dados. [@poldrack_pensamento_est_2025 , p. 203]
+
+```{r}
+
+# import MASS first because it otherwise will mask dplyr::select
+library(MASS)
+
+library(tidyverse)
+library(ggdendro)
+library(psych)
+library(gplots)
+library(pdist)
+library(factoextra)
+library(viridis)
+library(mclust)
+library(knitr)
+theme_set(theme_minimal())
+```
+
+### Dados Multivariados - *setup*
+
+Código para preparar os dados para gerar a fig. 16.1.
+
+```{r}
+
+behavdata <- read_csv('https://raw.githubusercontent.com/statsthinking21/statsthinking21-figures-data/main/Eisenberg/meaningful_variables.csv',
+                      show_col_types = FALSE)
+demoghealthdata <- read_csv('https://raw.githubusercontent.com/statsthinking21/statsthinking21-figures-data/main/Eisenberg/demographic_health.csv',
+                            show_col_types = FALSE)
+
+# recode Sex variable from 0/1 to Male/Female
+demoghealthdata <- demoghealthdata %>%
+  mutate(Sex = recode_factor(Sex, `0`="Male", `1`="Female"))
+
+# combine the data into a single data frame by subcode
+alldata <- merge(behavdata, demoghealthdata, by='subcode')
+
+rename_list = list('upps_impulsivity_survey'  = 'UPPS',
+                   'sensation_seeking_survey' = 'SSS',
+                   'dickman_survey'    = 'Dickman',
+                   'bis11_survey'      = 'BIS11',
+                   'spatial_span'      = 'spatial',
+                   'digit_span'        = 'digit',
+                   'adaptive_n_back'   = 'nback',
+                   'dospert_rt_survey' = 'dospert',
+                   'motor_selective_stop_signal.SSRT' = 'SSRT_motorsel',
+                   'stim_selective_stop_signal.SSRT'  = 'SSRT_stimsel',
+                   'stop_signal.SSRT_low'  = 'SSRT_low',
+                   'stop_signal.SSRT_high' = 'SSRT_high')
+
+impulsivity_variables = c('Sex')
+
+keep_variables <- c("spatial.forward_span",
+                    "spatial.reverse_span",
+                    "digit.forward_span",
+                    "digit.reverse_span",
+                    "nback.mean_load")
+
+for (potential_match in names(alldata)){
+  for (n in names(rename_list)){
+    if (str_detect(potential_match, n)){
+      # print(sprintf('found match: %s %s', n, potential_match))
+      replacement_name <- str_replace(potential_match, n, toString(rename_list[n]))
+      names(alldata)[names(alldata) == potential_match] <- replacement_name
+      impulsivity_variables <- c(impulsivity_variables, replacement_name)
+    }
+  }
+}
+
+impulsivity_data <- alldata[, impulsivity_variables] %>%
+  drop_na()
+
+
+ssrtdata = alldata[,c('subcode', names(alldata)[grep('SSRT_', names(alldata))])] %>%
+  drop_na() %>%
+  dplyr::select(-stop_signal.proactive_SSRT_speeding)
+
+upps_data <- alldata %>%
+  dplyr::select(starts_with('UPPS'), 'subcode') %>%
+  setNames(gsub("UPPS.", "", names(.)))
+
+impdata <- inner_join(ssrtdata, upps_data) %>%
+  drop_na() %>%
+  dplyr::select(-subcode) %>%
+  scale() %>%
+  as.data.frame() %>%
+  dplyr::rename(SSRT_motor   = SSRT_motorsel,
+                SSRT_stim    = SSRT_stimsel,
+                UPPS_pers    = lack_of_perseverance,
+                UPPS_premed  = lack_of_premeditation,
+                UPPS_negurg  = negative_urgency,
+                UPPS_posurg  = positive_urgency,
+                UPPS_senseek = sensation_seeking
+                )
+```
+
+### Figura 16.1 - Matriz de gráficos de dispersão (9 variáveis)
+
+```{r}
+
+pairs.panels(impdata, lm=TRUE)
+```
+
+Os gráficos em faceta acima permitem uma boa análise preliminar da possível associação linear entre cada para de variáveis quantitativas do conjunto de dados `autocontrole`.
+
+### Figure 16.2 - mapa de calor
+
+```{r}
+
+cc = cor(impdata)
+par(mai=c(2, 1, 1, 1)+0.1)
+
+heatmap.2(cc, trace='none', dendrogram='none',
+          cellnote=round(cc, 2), notecol='black', key=FALSE,
+          margins=c(12,8), srtCol=45, symm=TRUE, revC=TRUE, #notecex=4,
+          cexRow=1, cexCol=1, offsetRow=-150, col=viridis(50))
+```
+
+Mapa de calor da Matriz de Correlação para 9 variáveis do data set `autocontrole`.

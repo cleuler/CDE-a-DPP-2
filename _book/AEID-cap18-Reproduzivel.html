@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR" xml:lang="pt-BR"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Cleuler Barbosa das Neves">
+<title>2&nbsp; AEID - Análise Exploratória e Inferencial de Dados – __Ciência de Dados e Estatística Aplicadas ao Direito e Políticas Públicas__</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 1em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./cap3-DistNorm.html" rel="next">
+<link href="./intro.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-364982630eef5352dd1537128a8ed5cb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+</head>
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./AEID-cap18-Reproduzivel.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">AEID - Análise Exploratória e Inferencial de Dados</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./"><strong>Ciência de Dados e Estatística Aplicadas ao Direito e Políticas Públicas</strong></a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Alternar modo de leitor">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Procurar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pretexto</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AEID-cap18-Reproduzivel.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">AEID - Análise Exploratória e Inferencial de Dados</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap3-DistNorm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">AED - cap 3 - As Distribuições Normais</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap5-pldr-modelos-dados.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">AED - cap 5 pldr - Ajustando Modelos aos Dados</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap13-pldr-model-rel-contin.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">AID - cap 13 - Modelagem de Relações Contínuas</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap16-pldr-EstMultiv.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">AID - cap 16 - Estatística Multivariada</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap6-moore-tab-dupla-entrada.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">AED - cap 6 moore - Tabelas de Dupla Entrada</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./replicar-suco-uva-tab-graf.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">AED - suco uva - Tabelas e Gráficos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap16-moore-IC-o-basico.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">AEI - cap 16 moore - IC: o Básico</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap17-moore-TSHN-o-basico.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">AEI - cap 17 moore - TSH0</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./conclusao.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Conclusão</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./apendiceA.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Apêndice A - EMENTA</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./apendiceB-quadroVar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Apêndice B - Quadro Var</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./referencias.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Referências</span></a>
+  </div>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Sumário</h2>
+   
+  <ul>
+<li><a href="#aed---an%C3%A1lise-explorat%C3%B3ria-de-dados" id="toc-aed---análise-exploratória-de-dados" class="nav-link active" data-scroll-target="#aed---an%C3%A1lise-explorat%C3%B3ria-de-dados"><span class="header-section-number">2.1</span> AED - Análise <em>Exploratória</em> de Dados</a></li>
+  <li>
+<a href="#explora%C3%A7%C3%A3o-de-dados-cap.-1" id="toc-exploração-de-dados-cap.-1" class="nav-link" data-scroll-target="#explora%C3%A7%C3%A3o-de-dados-cap.-1"><span class="header-section-number">2.2</span> Exploração de Dados (cap. 1)</a>
+  <ul>
+<li><a href="#at%C3%A9-breve" id="toc-até-breve" class="nav-link" data-scroll-target="#at%C3%A9-breve"><span class="header-section-number">2.2.1</span> Até breve</a></li>
+  </ul>
+</li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title"><span id="sec-AEID" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">AEID - Análise Exploratória e Inferencial de Dados</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><section id="aed---análise-exploratória-de-dados" class="level2" data-number="2.1"><h2 data-number="2.1" class="anchored" data-anchor-id="aed---análise-exploratória-de-dados">
+<span class="header-section-number">2.1</span> AED - Análise <em>Exploratória</em> de Dados</h2>
+<blockquote class="blockquote">
+<p>A <strong>análise de dados</strong> se refere aos métodos e estratégias para se olhar para os dados – a <strong><em>exploração</em></strong>, <strong><em>organização</em></strong> e <strong><em>descrição</em></strong> de dados com auxílio de <strong><em>gráficos e resumos numéricos</em></strong>. <em>Sua exploração conscienciosa permite que os dados iluminem a realidade</em>. Os Capítulos 1 ao 6 discutem a análise de dados <span class="citation" data-cites="Moore2023">(<a href="referencias.html#ref-Moore2023" role="doc-biblioref">MOORE; NOTZ; FLIGNER, 2023</a> , p.&nbsp;6)</span>.</p>
+</blockquote>
+</section><section id="exploração-de-dados-cap.-1" class="level2" data-number="2.2"><h2 data-number="2.2" class="anchored" data-anchor-id="exploração-de-dados-cap.-1">
+<span class="header-section-number">2.2</span> Exploração de Dados (cap. 1)</h2>
+<blockquote class="blockquote">
+<p><strong>“O que [nos] dizem os dados?”</strong> é a primeira pergunta que fazemos em qualquer estudo estatístico. A <strong>análise de dados</strong> responde a essa questão por <strong><em>meio</em></strong> de uma <strong><em>exploração</em></strong> ampla dos dados. As <strong><em>ferramentas</em></strong> da análise de dados são <strong><em>gráficos</em></strong>, como os <em>histogramas</em> e os <em>diagramas de dispersão</em>, <strong><em>e medidas numéricas</em></strong>, como as <em>médias</em> e as <em>correlações</em>. No entanto, ao menos tão importantes quanto as <em>ferramentas</em>, são os <strong><em>princípios</em></strong> que <em><strong>organizam nosso pensamento</strong> no exame dos dados</em> <span class="citation" data-cites="Moore2023">(<a href="referencias.html#ref-Moore2023" role="doc-biblioref">MOORE; NOTZ; FLIGNER, 2023</a> , p.&nbsp;9)</span>.</p>
+</blockquote>
+<p>Quanto aos <strong><em>princípios organizadores</em></strong> de um <strong><em>letramento</em></strong> ou pensamento estatístico, dois destacam-se na AED - Análise Exploratória de Dados:</p>
+<blockquote class="blockquote">
+<p>Um dos princípios organizadores da análise de dados consiste em [<strong>P<sub>1</sub></strong>] <strong><em>olhar, primeiro, um item de cada vez e,</em></strong> [<strong>P<sub>2</sub></strong>] <strong><em>depois, as relações entre estes</em></strong>. Nossa apresentação segue esse princípio. Nos <strong>Capítulos 1 a 3</strong>, você estudará <strong><em>variáveis e suas distribuições</em></strong>. Os <strong>Capítulos 4 a 6</strong> referem-se a <strong><em>relações</em></strong> entre variáveis. O Capítulo 7 faz uma revisão dessa parte do texto <span class="citation" data-cites="Moore2023">(<a href="referencias.html#ref-Moore2023" role="doc-biblioref">MOORE; NOTZ; FLIGNER, 2023</a> , p.&nbsp;9)</span>.</p>
+</blockquote>
+<p>Abaixo uma figura que iluistra o <strong>Ciclo da Ciência de Dados</strong>. Não se esqueça que a Estatística é “…a Ciência dos Dados! <span class="citation" data-cites="Moore2023">(<a href="referencias.html#ref-Moore2023" role="doc-biblioref">MOORE; NOTZ; FLIGNER, 2023</a> , p.&nbsp;162)</span>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="fig/2-data-science-wrangle-01.png" class="img-fluid figure-img"></p>
+<figcaption>Ciclo da Ciência de Dados, suas 3 fases: 1 - Wrangle (importar, organizar e transformar), 2 - Understand (Transformar, Visualizar e Modelar; buscar melhor ajuste) e 3 - Communicate (relatar) and Replicate (automatizar; app)</figcaption></figure>
+</div>
+<p>A fase <strong>1 -</strong> <strong><em>Wrangle</em></strong> , quando inclusa um <em>levantamento de dados primários</em>, consome cerca de <strong>80%</strong> do tempo de uma pesquisa empírica <span class="citation" data-cites="Wickham2017R">(<a href="referencias.html#ref-Wickham2017R" role="doc-biblioref">WICKHAM; GROLEMUND, 2017, p. ix, xi, 117</a>)</span>. Essa tarefa é uma verdadeira luta, que não costuma nos agradar.</p>
+<p>Um similar <strong><em>conceito</em></strong> de <strong>Ciclo da Ciência de Dados</strong> (cf.&nbsp;<a href="https://livro.curso-r.com/livro-curso-r">Curso-R</a>), agora associando-o aos principais <code>pacotes</code> do <code>R</code> que auxiliam cada fase ou etapa dentro de cada fase: notadamente o pacote <code>tidyverse</code>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="fig/Conceito-Pacotes-R-ciclo-ciencia-de-dados.png" class="img-fluid figure-img" alt="Conceito de Ciclo da Ciência de Dados"></p>
+<figcaption>O tidyverse é um pacote guarda-chuva que consolida uma série de ferramentas que fazem parte do ciclo da ciência de dados. Fazem parte do {tidyverse} os pacotes {ggplot2}, {dplyr}, {tidyr}, {purrr}, {readr}, entre muitos outros, como é possível observar na figura.</figcaption></figure>
+</div>
+<p>Conferir uma <strong><em>cheat sheet</em></strong> com pacotes em <strong>R</strong> bem mais completa em: <a href="https://www.business-science.io/r-cheatsheet.html" class="uri">https://www.business-science.io/r-cheatsheet.html</a>.</p>
+<p>As habilidades que, assim, espera-se de um <strong><em>cientista de dados</em></strong> são assim resumidas <span class="citation" data-cites="grolemund2014hands">(<a href="referencias.html#ref-grolemund2014hands" role="doc-biblioref">GROLEMUND, 2014</a>)</span>:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="fig/hopr_fig-10-04-3Core-SkillSets-OfDataScience_CP-DC-SR-p185-grolemund-2014.png" class="img-fluid figure-img"></p>
+<figcaption>Three Core Skill sets of Data Science (GROLEMUND, 2017, p.&nbsp;185)</figcaption></figure>
+</div>
+<p>Já a <strong>Estatística</strong>, melhor é referir-se à <strong>Probabilidade e Estatística</strong>, é conceituada como: ramo da Matemática aplicada que reune <strong><em>um conjunto de métodos</em></strong> para:</p>
+<ul>
+<li>
+<strong>planejar</strong> estudos observacionais e experimentos aleatorizados em qualquer área do conhecimento científico, notadamente para pesquisas empíricas;</li>
+<li>
+<strong>coletar</strong> dados <strong>válidos</strong> e <strong>fidedignos</strong>;</li>
+<li>
+<strong>organizar</strong>,</li>
+<li>
+<strong>resumir</strong>,</li>
+<li>
+<strong>apresentar</strong> (listas, tabelas, diagramas, fórmulas, gráficos, grafos etc),</li>
+<li>
+<strong>analisar</strong>,</li>
+<li>
+<strong>formular</strong> e <strong>testar</strong> <strong><em>hipóteses</em></strong> e</li>
+<li>
+<strong>interpretar</strong> conjuntos de <strong>dados</strong> e <strong>informações</strong>;</li>
+<li>
+<strong>elaborar</strong> conclusões baseadas em <strong>evidências</strong> [dados e informações válidos e fidedignos] para</li>
+<li>
+<strong>apoiar</strong> tomadas de <strong>decisão</strong> e para</li>
+<li>
+<strong>gerir</strong> ou <strong>controlar</strong> um conjunto de <strong>ações</strong> em curso: qualidade, escala, cobertura, custos financeiros, eficiência, eficácia, efetividade etc. por meio de <strong>indicadores</strong> e de índices cuja <strong><em>aplicabilidade, comparabilidade, consistência e difusão</em></strong> possam ser <strong>testadas e validadas</strong> por uma comunidade de experts.</li>
+</ul>
+<p>O Professor João Luiz Becker <span class="citation" data-cites="Becker2015">(<a href="referencias.html#ref-Becker2015" role="doc-biblioref">BECKER, 2015</a>)</span> promove uma clara conceituação e distinção entre <strong>dados</strong> e <strong>informações</strong> e ilustra o ciclo em que a coleta e a extração deles inserem-se num processo mais amplo de obtenção de <strong>conhecimento</strong>, que prossegue e passa pela <strong>decisão</strong> e pela <strong>ação</strong>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="fig/Dados-Informacao-Decisao-Acao-Becker-fig11-p37-01.JPG" class="img-fluid quarto-figure quarto-figure-center figure-img"></p>
+</figure>
+</div>
+<p>Outros conceitos importantes são o de validade e de fidedignidade dos dados coletados, que podem ser compreendidos através da ilustração a seguir:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="fig/preciscao-ou-fidedignidade-x-exatidao-ou-acuracia.png" class="img-fluid figure-img"></p>
+<figcaption>Precisão ou Fidedignidade -x- Validade, Exatidão ou Acurácia</figcaption></figure>
+</div>
+<p>Conferir também a fig.&nbsp;2.1 - distinção entre confiabilidade e validade, usando tiro ao alvo <span class="citation" data-cites="poldrack_pensamento_est_2025">(<a href="referencias.html#ref-poldrack_pensamento_est_2025" role="doc-biblioref">Poldrack, 2025</a> , p.&nbsp;13)</span>, que ainda conceitua <em>validade aparente</em>, <em>de constructo</em> e <em>preditiva</em>. Segundo esse autor:</p>
+<blockquote class="blockquote">
+<p>“A <strong><em>confiabilidade</em></strong> se refere à <em>consistência da localização dos disparos</em>, e a <strong><em>validade</em></strong> se refere à <em>acurácia</em> [em sentido estrito] <em>dos disparos em relação ao alvo</em>”.</p>
+</blockquote>
+<p>Perceba que, na prática, quando coletamos dados, desconhecemos a localização do alvo, ou seja, não sabemos onde se localiza o <em>verdadeiro e desconhecido valor do parâmetro populacional</em> de interesse.</p>
+<p>Todavia, por meio de <u><strong><em>uma</em></strong></u> <strong><em>amostra probabilística</em></strong> de <strong><em>tamanho adequado</em></strong> (n), é possível <u><strong><em>estimar</em></strong></u> esse valor desconhecido de interesse da pesquisa, bem como sua <u><strong><em>acurácia</em></strong></u> sob a <u><strong><em>suposição</em></strong></u> uma <strong><em>coleta</em></strong> <strong><em>válida</em></strong> de <strong><em>dados fidedignos</em></strong>.</p>
+<p>Essa suposição só se sustenta se forem tomados todos os cuidados qualitativos de um adequado processo de amostragem probabilística, como, por exemplo, <strong><em>baixo</em></strong> <u><strong><em>viés não amostral</em></strong></u> caracterizado por <span class="citation" data-cites="bolfarineBussab-2005elemAm">(<a href="referencias.html#ref-bolfarineBussab-2005elemAm" role="doc-biblioref">BOLFARINE; BUSSAB, 2005</a> , p.&nbsp;9, 27-28)</span>:</p>
+<ul>
+<li>
+<em>baixa proporção</em> de <em>viés de subcobertura</em> (indivíduos não previstos no SR - Sistema de Referência), que são os <em>erros por</em> <em>omissão</em>;</li>
+<li>baixa proporção de <em>erros por comissão</em>, pela <em>inclusão de elementos de outras populações</em> que <em>não</em> a <em>população alvo</em> ou <em>inclusão</em> ou <em>substituição voluntária</em> de elementos não sorteados na amostra probabilística (uma espécie de <em>subamostra</em>, de conveniência, pela <em>escolha voluntária</em> do pesquisador, ou mesmo probabilística, ambas <em>contaminantes</em> da <em>amostra probabilística</em>, ex.: substituir todas as <code>k</code> observações perdidas – não respostas ou NA’s – da <em>amostra probabilística</em> de <em>tamanho</em> <code>n</code> por outras <code>k</code> observações, escolhidas por conveniência ou mesmo quando produto de <em>outra amostra aleatória de tamanho menor</em> <code>k</code> obtida da mesma população disponível);</li>
+<li>
+<em>baixa proporção</em> de não respondentes ou <em>NA</em> (observações perdidas, parcial ou totalmente, no momento da coleta da amostra probabilística);</li>
+<li>é necessário <em>avaliar os efeitos</em> (quantitativos, por subestimativa ou superestimativa, e qualitativos nos dados coletados) da <em>diferença de perfil</em> entre os <em>respondentes</em> e os <em>não respondentes</em> (NA’s);</li>
+<li>é necessário <em>avaliar os efeitos</em> do <em>eventual</em> <em>processo de imputação de dados</em>, caso tenha sido usado para suprir informações não coletadas (NA’s), como, por exemplo, substituição dos NA’s parciais pelo valor médio ou mediano do restante dos elementos da amostra probabilística;</li>
+<li>
+<em>ausência</em> de <em>viés de resposta voluntária</em> (os indivíduos da amostra escolheram-se);</li>
+<li>
+<em>ausência</em> de <em>viés de insuficiênia do questionário</em>, por problemas em sua redação (má compreensão do sentido da pergunta);</li>
+<li>
+<em>ausência</em> de <em>viés de fraseado</em> das perguntas no levantamento por survey (questionário fechado);</li>
+<li>
+<em>ausência</em> de <em>viés</em> por <em>efeito do entrevistador</em>, como seu seu modo de vestir, de postar ou de falar;</li>
+<li>
+<em>ausência</em> de <em>viés de fraseado</em> das perguntas no levantamento por survey (por indução de resposta no questionário fechado, ou mesmo no aberto);</li>
+<li>
+<em>ausência</em> de <em>erros de codificação</em> e de digitação dos dados tabulados;</li>
+<li>
+<em>minimização</em> dos <em>erros de observação</em>, ocorridos durante o processo de levantamento de dados;</li>
+<li>
+<em>minimização</em> dos <em>erros de medição</em>, em razão da <em>descalibração</em> do <em>instrumento utilizado</em> ou mesmo decorrentes de sua <em>inadequada aplicação</em> pelo <em>instrumentador</em>, ocorridos durante o <em>intervalo de tempo</em> decorrido no processo de levantamento de dados;</li>
+<li>etc.</li>
+</ul>
+<p>Trata-se de uma <em>lista meramente enumerativa</em>, que não afasta a <strong><em>necessidade</em></strong>, por exemplo, de uma <strong><em>reflexão crítica</em></strong> quanto às <em>possíveis</em> <strong><em>variáveis ocultas</em></strong> ou <strong><em>não observadas</em></strong> pelo <u><strong><em>quadro de variáveis</em></strong></u> que foi <u><strong><em>escolhido</em></strong></u> pelo <strong><em>pesquisador</em></strong> (geralmente produto de sua conveniência e <em>não</em> de uma <em>revisão sistemática da literatura</em> - RSL) que serviu de base para a <em>coleta e tabulação</em> dos <em>dados primários</em> levantados, seja diretamente por ele (de preferência), ou por pessoa por ele para tanto bem treinada e testada.</p>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Apenas quando <u><strong><em>todos</em></strong></u> esses <u><strong><em>cuidados qualitativos</em></strong></u> forem tomados para <u><strong><em>prevenção</em></strong></u> contra a presença de <u><strong><em>vieses não amostrais</em></strong></u> é que se poderá <u><strong><em>validar</em></strong></u> uma <em>coleta probabílistica</em> de <em>dados amostrais</em> <u><strong><em>fidedignos</em></strong></u>.</p>
+</div>
+</div>
+</div>
+<p>A seguir a ideia de Ciclo da <strong>Estatística Básica Inferencial</strong>, que, após uma boa Análise Estatística Descritiva (AED) e Exploratória (AEE) dos dados, busca <em>chegar</em>, por meio do <u><strong><em>método indutivo</em></strong></u>, a <u><strong><em>conclusões</em></strong></u> <u><strong><em>válidas</em></strong></u> <strong><em>e <u>confiáveis</u></em></strong> para <strong><em>toda</em></strong> a <u><strong><em>população amostrada</em></strong></u> a partir de <u><strong><em>uma</em></strong></u> <u><strong><em>amostra probabilística</em></strong></u> <u><strong><em>válida</em></strong></u> <em>e <u><strong>fidedígna</strong></u></em> daquela coletada.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="fig/inferencia.png" class="img-fluid figure-img"></p>
+<figcaption>Ciclo da Inferência ou indução Estatística.</figcaption></figure>
+</div>
+<p>O emprego desse método indutivo na inferência estatística pode ser visto na indicação da seta inferior esquerda ilustrada em um mais amplo <strong>Conceito</strong> de <strong>Ciclo da Ciência</strong>, cujo formato costuma ser designado como <strong><em>Diamond Shape</em></strong> <span class="citation" data-cites="Donovan2019-ug">(<a href="referencias.html#ref-Donovan2019-ug" role="doc-biblioref">DONOVAN; MICKEY, 2019</a> , p.&nbsp;274-275)</span>:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="fig/DiamondShape-Donovan.jpg" class="img-fluid figure-img" alt="Ciclo da Ciência" width="628"></p>
+<figcaption>Conceito de Ciclo da Ciência na forma de um Diamond Shape (DONOVAN; MICKEY, 2019, p.&nbsp;274-275))</figcaption></figure>
+</div>
+<p>Perceba-se, na ilustração acima, a importância da <strong><em>articulação</em></strong> da prévia da <u><strong><em>teoria</em></strong></u>, de <em>base</em> juntamente com <em>uma teoria rival</em>, na busca de <strong><em>extração</em></strong> de <u><strong><em>evidências</em></strong></u> a <em>partir</em> de <u><strong><em>um conjunto de dados validamente coletados</em></strong></u>.</p>
+<p>Primordial, para evitar <strong><em>Pràticas de Pesquisa Questionáveis</em></strong> – <strong>PPQ</strong>, que o pesquisador realize um <u><strong>pré-registro</strong></u> (ex.: sistema <a href="https://clinicaltrials.gov./"><em>ClinicalTrials.gov.</em></a>) de pelo menos um par de hipóteses, <em>nula</em> (H<sub>0</sub>) e alternativa (H<sub>a</sub>), <em>adequadamente formuladas</em>, que ele pretende testar. Isso bem <strong><em>antes</em></strong> dele <strong><em>iniciar</em></strong> sua <strong><em>coleta de dados</em></strong>, para prevenir e <u><strong><em>evitar</em></strong></u> qualquer possibilidade de prática de <u><strong><em>HARKing</em></strong></u> (<em>hypothesizing after the results are known</em>) ou de <em>p-hacking</em>, o que possibilita que o pesquisador <u><em>reformule</em></u> uma <u>conclusão <em>post-hoc</em></u> <strong><em>como se</em></strong> fora uma <u>predição <em>a priori</em></u>, que goza de maior confiança, dado que ele, nesse caso, estaria indevidamente <em>reescrevendo sua teoria</em> de partida <span class="citation" data-cites="poldrack_pensamento_est_2025">(<a href="referencias.html#ref-poldrack_pensamento_est_2025" role="doc-biblioref">Poldrack, 2025</a> , p.&nbsp;266-267)</span>, a de base e a rival, com <u><em>base nos conjunto de dados coletados</em></u> (uma espécie de <em>Teorização Fundamentada em Dados</em> - <strong><em>TFD ad hoc</em></strong>, que é obtida por meio da indução e que seria então “testada” com base no mesmo conjunto de dados donde ela, <em>a posteriori</em>, proveio, ou seja, sob um indevido e <em>inválido viés de confirmação</em>, uma vez que as hipóteses, assim reelaboradas, claramamente hão de ajustar-se aos dados colhidos), ao invés de elaborar <u><strong><em>predições</em></strong></u> ou <u><strong><em>conjecturas</em></strong></u> <u><strong><em>deduzidas</em></strong></u> das <u><strong><em>teorias</em></strong></u> <u><strong><em>previamente escolhidas</em></strong></u>, conforme muito bem ilustrado pelo <em>retângulo superior</em> e <em>seta superior direita</em> do <strong><em>diamond shape</em></strong> da figura acima.</p>
+<p>Logo, é somente a <u><strong><em>qualidade</em></strong></u> do <u><strong><em>desenho do experimento</em></strong></u> (<em>Design of Experiment</em> – <em>D.o.E.</em> referido na <em>seta inferior direita</em> do mesmo <em>diamond shape</em>) que <u><strong><em>garante</em></strong></u>, através do <u><strong><em>consenso</em></strong></u> dos <u><strong><em>experts</em></strong></u> que atuam na <em>específica área de conhecimento científico da pesquisa</em> proposta, muitas vezes denominado por <u><strong><em>crivo dos pares</em></strong></u>, que vai muito além de uma <em>avaliação independente duplo cego</em> pelos <em>referees</em> dos periódicos científicos, porquanto é <u><strong><em>ônus</em></strong></u> de <u><strong><em>qualquer pesquisador</em></strong></u> <em>demonstrar</em> que <u><strong><em>aderiu</em></strong></u> às seguintes <u><strong><em>boas práticas reproduzíveis</em></strong></u> de pesquisa:</p>
+<blockquote class="blockquote">
+<p>▶Decidir regras para finalizar a coleta de dados antes do seu início e elencá-la no artigo.</p>
+<p>▶Coletar, pelo menos, 20 observações por unidade de análise ou fornecer uma justificativa convincente do custo da coleta de dados.</p>
+<p>▶Listar todas as variáveis coletadas em um estudo.</p>
+<p>▶Relatar todas as condições experimentais, incluindo manipulações malsucedidas.</p>
+<p>▶Elencar como seriam os resultados estatísticos incluindo as observações eliminadas, se houver.</p>
+<p>▶Relatar os resultados estatísticos sem a covariável se uma análise incluir uma covariável.</p>
+<p><strong>Replicação</strong></p>
+<p>Um dos balizadores da ciência é o conceito de replicação — ou seja, <strong><em>outros pesquisadores devem ser capazes de realizar o mesmo estudo e obter o mesmo resultado</em></strong>. <em>Infelizmente</em>, conforme vimos o que aconteceu com o <em>Reproducibility Project</em> analisado anteriormente neste capítulo, <em>muitas descobertas <u>não</u> são replicáveis</em>.</p>
+<p>A <em>melhor forma</em> de <em>assegurar</em> a <em>replicabilidade</em> de sua <em>pesquisa</em> é, primeiro, <u><em>replicá-la por conta própria</em></u>; para alguns estudos, isso não será possível, mas <em>sempre que possível</em>, você <em>deve garantir</em> que <u><em>sua descoberta se sustente em uma amostra nova</em></u>, que deve ter <u><em>potência suficiente</em></u> para <u><em>encontrar</em></u> o <u><em>tamanho do efeito</em></u> de <em>interesse</em>; em <em>muitos casos</em>, isso <u><em>exigirá</em></u> <u><em>uma amostra maior do que a original</em></u>.</p>
+<p>É importante considerar alguns pontos quando se trata de replicação.</p>
+<p><u><strong>Primeiro</strong></u>, o fato de <u><strong><em>uma tentativa de replicação ser malsucedida não significa necessariamente que a descoberta original era falsa</em></strong></u>; lembre que, com o <u><em>nível padrão de 80% de potência</em></u>, <u><strong><em>ainda existe 1 chance em 5 de que o resultado não seja significativo</em></strong></u>, <u><strong><em>mesmo que exista um efeito verdadeiro</em></strong></u>.</p>
+<p>Por esse motivo, <em>queremos normalmente observar <u><strong>múltiplas replicações</strong></u></em> em <em>qualquer descoberta importante</em> <u><strong><em>antes de decidir se devemos ou não acreditar nela</em></strong></u> e, em geral, queremos que as <u><strong><em>tentativas de replicação tenham níveis de potência maiores do que o original</em></strong></u>.</p>
+<p>Infelizmente, <u><strong><em>muitas áreas</em></strong></u>, incluindo a <em>Psicologia</em>, <u><strong><em>não adotaram</em></strong></u> esse conselho [essa <em>Regra de Boas Práticas de Pesquisa Reproduzível - PPQ</em>] ao <em>longo</em> dos <u><strong><em>últimos anos</em></strong></u>, <u><strong><em>levando</em></strong></u> a <u><strong><em>descobertas</em></strong></u> <strong><em>“<u>amplamente aceitas</u>”</em></strong> que <u><strong><em>provavelmente se revelaram falsas</em></strong></u>.</p>
+<p>No que diz respeito aos estudos de PES de Daryl Bem, uma grande tentativa de replicação envolvendo sete estudos <em>não conseguiu replicar as descobertas</em> (Galak et al, 2012).</p>
+<p><u><strong>Segundo</strong></u>, lembre-se de que o <u><strong><em>valor-p não nos fornece uma medida da verossimilhança de replicação de uma descoberta</em></strong></u>.</p>
+<p>Conforme examinamos anteriormente, o <u><strong><em>valor-p</em></strong></u> é <u><strong><em>uma afirmação sobre a verossimilhança dos dados</em></strong></u>, <u><strong><em>considerando uma hipótese nula específica</em></strong></u> <strong><em>[sob a suposição de que Ho fosse verdadeira]</em></strong>; ele <u><strong><em>não indica nada</em></strong></u> sobre a <u><strong><em>probabilidade</em></strong></u> de que a <u><strong><em>descoberta</em></strong></u> seja <u><strong><em>efetivamente verdadeira</em></strong></u> (conforme aprendemos no Capítulo 11). Para <u><strong><em>saber</em></strong></u> a <u><strong><em>verossimilhança de replicação</em></strong></u>, <u><strong><em>precisamos saber a probabilidade de a descoberta ser verdadeira</em></strong></u>, o que <strong><em>geralmente não sabemos</em></strong>. <span class="citation" data-cites="poldrack_pensamento_est_2025">(<a href="referencias.html#ref-poldrack_pensamento_est_2025" role="doc-biblioref">Poldrack, 2025</a> , p.&nbsp;269-270)</span></p>
+</blockquote>
+<p>Tudo isso sob <u><strong><em>pena</em></strong></u> de sua <u><strong><em>pesquisa empírica</em></strong></u> ser <u><strong><em>classificada</em></strong></u> como <u><strong><em>facilmente contestável</em></strong></u>, por <strong><em>adesão</em></strong>, <em>voluntária</em> ou <em>involuntária</em>, às <u><strong>Práticas de Pesquisa Questionáveis – PPQ</strong></u> <span class="citation" data-cites="poldrack_pensamento_est_2025">(<a href="referencias.html#ref-poldrack_pensamento_est_2025" role="doc-biblioref">Poldrack, 2025</a> , p.&nbsp;266-267)</span>.</p>
+<p>Uma das modalidades de conceituar e aplicar a Probabilidade e Estatística é pela denominada <strong>Estatística bayesiana</strong>, ou seja, aquela apoiada no <strong>conceito</strong> de <strong><em>probabilidade condicional</em></strong> e no <strong><em>Teorema de Bayes</em></strong>, ilustrado na figura a seguir:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="fig/fig5.4_BayesTheorem.JPG" class="img-fluid figure-img"></p>
+<figcaption>Teorema de Bayes para testar um par de Hipóteses (Ho: ~A e Ha: A) com suas probabilidades a priori mediadas e atualizadas por uma coleta de dados B que permite inferir as respectivas probabilidades a posteriori desse par. Que pode ser reiterado com novas coletas de dados C, D, …</figcaption></figure>
+</div>
+<p>A partir do conceito de <u><em>probabilidade condicional</em></u> e de <u><strong>probabilidade <em>a priori</em></strong></u>, que se localiza no <em>primeiro fator</em> do <em>numerador</em> do <em>lado direito</em> da <em>igualdade</em> da <em>fórmula</em> da figura acima que <em>presenta</em> o <u><strong><em>Teorema de Byes</em></strong></u>, chegou-se ao <strong><em>conceito</em></strong> de <u><strong><em>Fator de Bayes</em></strong></u> (<strong>FB</strong>), que <u><strong><em>mede</em></strong></u> as <u><strong><em>razões de chance</em></strong></u> (<em>odds ratio</em>) entre a <u><strong><em>verossimilhança</em></strong></u> ou <u><strong><em>probabilidade a priori</em></strong></u> <u><strong><em>dos dados</em></strong></u> sob a <strong><em>Hipótese Alternativa</em></strong> (a probabilidade dos dados empíricos colhidos <u><em>supondo</em></u> que <strong>H<sub>a</sub></strong> fosse Verdadeira) em <u><em>relação à</em></u> <u><strong><em>verossimilhança</em></strong></u> ou <u><strong><em>probabilidade a priori</em></strong></u> <u><strong><em>dos dados</em></strong></u> sob a <em>Hipótese Nula</em> (a probabilidade dos dados empíricos colhidos <u><em>supondo</em></u> que <strong>H<sub>0</sub></strong> fosse Verdadeira), traduzida pela seguinte expressão:</p>
+<p><span class="math display">\[ FB = \frac{p(dados|H_a)}{p(dados|H_0)} \]</span></p>
+<p>Ou seja, o <strong>FB</strong> “…<strong><em>Fator de Bayes caracteriza a verossimilhança relativa dos dados</em></strong>, <strong><em>considerando duas hipóteses diferentes</em></strong>” <span class="citation" data-cites="poldrack_pensamento_est_2025">(<a href="referencias.html#ref-poldrack_pensamento_est_2025" role="doc-biblioref">Poldrack, 2025</a> , p.&nbsp;140)</span>.</p>
+<p>Esse <strong>FB</strong> - <strong><em>Fator de Bayes</em></strong>, agora sim, é capaz de <u><strong><em>medir</em></strong></u> a <u><strong><em>força</em></strong></u> da <u><strong><em>evidência</em></strong></u> do <u><strong><em>resultado</em></strong></u> consistente na <u><strong><em>decisão</em></strong></u> pela <u><strong><em>rejeição</em></strong></u> da <strong>H<sub>0</sub></strong> em <em>um</em> <u><strong><em>Teste de Significância da Hipótese Nula</em></strong></u> (<strong><em>NHST</em></strong> - <em>Null Huphoteses Significant Test</em>) <span class="citation" data-cites="poldrack_pensamento_est_2025">(<a href="referencias.html#ref-poldrack_pensamento_est_2025" role="doc-biblioref">Poldrack, 2025</a> , p.&nbsp;140-142)</span>, pois:</p>
+<blockquote class="blockquote">
+<p>Desse modo, <u><strong><em>um valor maior que 1 refletirá maior evidência</em></strong></u> para Smith [<strong>H<sub>a</sub></strong>], e <u><strong><em>um valor menor que 1 refletirá maior evidência</em></strong></u> para Jones [<strong>H<sub>0</sub></strong>].</p>
+<p>O <u><strong><em>fator de Bayes</em></strong></u> resultante (<strong>3325,26</strong>) fornece <u><strong><em>uma medida das evidências</em></strong></u> que <u><strong><em>os dados fornecem</em></strong></u> em <u><strong><em>relação às duas hipóteses</em></strong></u> — aqui, <u><strong><em>informa</em></strong></u> que a <u><strong><em>hipótese do senador Smith</em></strong></u> <u><strong><em>é mais fortemente respaldada pelos dados</em></strong></u> do <u><strong><em>que</em></strong></u> a <u><strong><em>hipótese do senador Jones</em></strong></u>. <span class="citation" data-cites="poldrack_pensamento_est_2025">(<a href="referencias.html#ref-poldrack_pensamento_est_2025" role="doc-biblioref">Poldrack, 2025</a> , p.&nbsp;140)</span></p>
+</blockquote>
+<p>Há um critério consensual na literatura de como se deve interpretar o Fator de Bayes.</p>
+<blockquote class="blockquote">
+<p><span class="smallcaps">interpretando os fatores de Bayes</span></p>
+<p><strong><em>Como sabemos se um fator de Bayes de 2 ou de 20 é eficaz ou ineficaz?</em></strong></p>
+<p>Existe <u><strong><em>uma diretriz geral</em></strong></u> para a <u><strong><em>interpretação</em></strong></u> dos <u><strong><em>fatores de Bayes</em></strong></u> sugerida por <a href="https://www.andrew.cmu.edu/user/kk3n/simplicity/KassRaftery1995.pdf">Kass e Raftery (1995)</a>:</p>
+</blockquote>
+<p>A tabela a seguir, cf.&nbsp;cap. 11 <span class="citation" data-cites="poldrack_pensamento_est_2025">(<a href="referencias.html#ref-poldrack_pensamento_est_2025" role="doc-biblioref">Poldrack, 2025</a> , cap. 11, p.&nbsp;143)</span>, resume esse <u><strong><em>critério de interpretação não discricionário</em></strong></u>, pois consensuado na literatura.</p>
+<p>A seguir carrega-se o conjunto de dados <code>NHANES</code>, que é muito trabalho ao longo de todo o livro de Poldrack.</p>
+<p>Bem como o conjunto de pacotes necessários para gerar a tabela referida.</p>
+<div class="cell">
+<details class="code-fold"><summary>Código</summary><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cowplot)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(BayesFactor)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>))</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123456</span>) <span class="co"># set random seed to exactly replicate results</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># load the NHANES data library</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(NHANES)</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co"># drop duplicated IDs within the NHANES dataset</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>NHANES <span class="ot">&lt;-</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  NHANES <span class="sc">%&gt;%</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">distinct</span>(ID, <span class="at">.keep_all =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>NHANES_adult <span class="ot">&lt;-</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  NHANES <span class="sc">%&gt;%</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(Weight) <span class="sc">%&gt;%</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">subset</span>(Age <span class="sc">&gt;=</span> <span class="dv">18</span>)</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Salvar o <em>data set</em> <code>NHANES</code> como arquivo <code>.csv</code> na pasta <code>out</code> deste Projeto.</p>
+<div class="cell">
+<details class="code-fold"><summary>Código</summary><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Salvar esse dataframe no formato binário do R na pasta out</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Sua próxima importação ela virá com todos os tratamentos até aqui realizados:</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># tipos de colunas preservados: &lt;char&gt;, &lt;date&gt;, &lt;time&gt;, &lt;fctr&gt;, &lt;int&gt;,</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 'A tibble':   6,779 × 76 [mais de 6 mil observações e 76 variáveis]</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">write_rds</span>(NHANES, <span class="at">file =</span> <span class="st">"out/NHANES.rds"</span>) <span class="co"># formato binário do R</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Salvar esse conjunto de dados tratado no formato .csv:</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(NHANES,</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>          <span class="at">file      =</span> <span class="st">"out/NHANES.csv"</span>,</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>          <span class="at">na        =</span> <span class="st">""</span>, <span class="co"># salvar campos NA como espaço vazio &lt;blank&gt;</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>          <span class="at">row.names =</span> <span class="cn">FALSE</span>) <span class="co"># não salvar coluna com números das linhas</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Conferir tabela da força do Fator de Bayes <span class="citation" data-cites="poldrack_pensamento_est_2025">(<a href="referencias.html#ref-poldrack_pensamento_est_2025" role="doc-biblioref">Poldrack, 2025</a> , p.&nbsp;143)</span>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="fig/Forca-Evidencia-FBayes-tab.png" class="img-fluid figure-img"></p>
+<figcaption>Interpretando os Fatores de Bayes (FB): Força da Evidência</figcaption></figure>
+</div>
+<p>As 2 fases, de <strong>AED</strong> (Análise Exploratória <em>Descritiva</em>) e de <strong>AEI</strong> (Análise Exploratória <em>Inferencial</em>), demandarão <strong>20%</strong> restante do tempo de uma pesquisa (80% é gasto com a coleta, organização e tratamento dos dados primários), costumam ser-nos bem <em>mais prazerosas</em>.</p>
+<p>Nessa nova fase, bem mais atraente, o objetivo é <em>explorar os dados</em> em busca do <strong>reconhecimento de padrões perceptíveis</strong>.</p>
+<p>Todavia, cuidado com a possibilidade do <em>erro percepcional</em> ou com a prática de <em>HARKing</em> ou de <em>p-haking</em>, como já visto.</p>
+<p>Gerar vários <strong>gráficos</strong> (barras, colunas, pizza, diagrama de ramo e folha, histogramas, <em>boxplot</em>, dispersão etc.) que permitam essa <strong><em>visualização</em></strong> e <strong><em>captura de padrões</em></strong> para cada <strong><em>tipo variável</em></strong> observada: categórica (nominal ou ordinal) ou quantitativa (discreta ou contínua).</p>
+<p>A figura a seguir ilustra essa classificação dos tipos de variáveis <span class="citation" data-cites="escovedo_introducao_EpCD_2024">(<a href="referencias.html#ref-escovedo_introducao_EpCD_2024" role="doc-biblioref">Escovedo, 2024</a> , p.&nbsp;17)</span>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="fig/TiposDeVariaveis.png" class="img-fluid figure-img"></p>
+<figcaption>Tipos de Variáveis</figcaption></figure>
+</div>
+<p><strong><em>Resumos dos dados</em></strong> são muito úteis: média e desvio padrão; mediana e AIQ (Amplitude Interquartil); resumo dos 5 números, coeficiente de variação, assimetria, curtose etc.</p>
+<p>Bem como para investigar possibilidade de <strong><em>associação</em></strong> entre elas: a depender da combinação dos seus <strong><em>tipos</em></strong>, por meio de <strong><em>testes estatísticos</em></strong> formais.</p>
+<p>Gerar tabelas de dupla entrada ou de contigência, quando ambas forem categóricas, do tipo <strong>factor</strong> &lt;<code>fctr</code>&gt;.</p>
+<p>Todavia, todas essas possibilidades de recorrer à <em>Data Science</em> e à Probabilidade e Estatística, no nosso caso, tomarão por <strong>domínio</strong> a interface do Direito com as Políticas Públicas.</p>
+<section id="até-breve" class="level3" data-number="2.2.1"><h3 data-number="2.2.1" class="anchored" data-anchor-id="até-breve">
+<span class="header-section-number">2.2.1</span> Até breve</h3>
+<p>Dúvidas serão debeladas a cada aula!</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="fig/ValeuGalera.png" class="img-fluid figure-img"></p>
+<figcaption>Até nosso pRRRóximo RRRencontro!</figcaption></figure>
+</div>
+
+
+<div id="refs" class="references csl-bib-body" data-entry-spacing="1" role="list" style="display: none">
+<div id="ref-Becker2015" class="csl-entry" role="listitem">
+BECKER, João Luiz. <strong>Estatística Básica: transformando dados em informação</strong>. Porto Alegre: Bookman, 2015.
+</div>
+<div id="ref-bolfarineBussab-2005elemAm" class="csl-entry" role="listitem">
+BOLFARINE, Heleno; BUSSAB, Wilton de Oliveira. <strong><a href="https://books.google.com.br/books/about/Elementos_de_Amostragem.html?id=iA9QcAAACAAJ&amp;redir_esc=y">Elementos de amostragem</a></strong>. 1. ed. São Paulo: Blucher, 2005.
+</div>
+<div id="ref-Donovan2019-ug" class="csl-entry" role="listitem">
+DONOVAN, Therese M.; MICKEY, Ruth M. <strong>Bayesian statistics for beginners</strong>. London, England: Oxford University Press, 2019.
+</div>
+<div id="ref-escovedo_introducao_EpCD_2024" class="csl-entry" role="listitem">
+ESCOVEDO, Tatiana. <strong>Introdução à <span>Estatística</span> para <span>Ciência</span> de <span>Dados</span>: <span>Da</span> exploração dos dados à experimentação contínua com exemplos de código em <span>Python</span> e <span>R</span></strong>. São Paulo, SP: Aovs Sistemas De Informatica Ltda., 2024.
+</div>
+<div id="ref-grolemund2014hands" class="csl-entry" role="listitem">
+GROLEMUND, Garrett. <strong><a href="https://rstudio-education.github.io/hopr/">Hands-On Programming with R: Write Your Own Functions and Simulations</a></strong>. <em>[S.l.]</em>: O’Reilly Media, 2014.
+</div>
+<div id="ref-Moore2023" class="csl-entry" role="listitem">
+MOORE, David S.; NOTZ, William I.; FLIGNER, Michael A. <strong><a href="https://www.grupogen.com.br/livro-a-estatistica-basica-e-sua-pratica-david-s-moore-william-i-notz-e-michael-a-fligner-editora-ltc-9788521638605">Estatística Básica e sua prática</a></strong>. 9. ed. Rio de Janeiro: LTC, 2023.
+</div>
+<div id="ref-poldrack_pensamento_est_2025" class="csl-entry" role="listitem">
+POLDRACK, Russell. <strong>Pensamento <span>Estatístico</span>: <span>Analisando</span> <span>Dados</span> em um <span>Mundo</span> de <span>Incertezas</span></strong>. Tradução: Cibelle Ravaglia. Rio de Janeiro, RJ: Alta Books, 2025.
+</div>
+<div id="ref-Wickham2017R" class="csl-entry" role="listitem">
+WICKHAM, Hadley; GROLEMUND, Garrett. <strong><a href="http://r4ds.had.co.nz/">R for Data Science: Import, Tidy, Transform, Visualize, and Model Data</a></strong>. 1. ed. <em>[S.l.]</em>: Paperback; O’Reilly Media, 2017.
+</div>
+</div>
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./intro.html" class="pagination-link" aria-label="Introdução">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./cap3-DistNorm.html" class="pagination-link" aria-label="AED - cap 3 - As Distribuições Normais">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">AED - cap 3 - As Distribuições Normais</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Relatório escrito em <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+
+
+</body></html>

@@ -1,0 +1,525 @@
+# Aula 5 - Wrangling Data: 1^st^ round {#sec-Wrangling-1st}
+
+As ***habilidades*** listadas seguir são desejáveis para qualquer ***Cientista de Dados*** que pretenda atuar no campo das Ciências Sociais aplicadas (Direito, Ciência Política, Ciências Sociais, Administração Pública, Políticas Públicas etc.).
+
+## Formas e cuidados em um levantamento de dados
+
+i.  ***levantar dados*** na forma de: *entrevistas* (escuta), *observações* (olhar), *artefatos* (coleta) e *sentimentos* (captura);
+
+ii. coletar dados *primários* ou *secundários* sobre seu *fenômeno de interesse* por meio de um ***quadro de variáveis*** (capazes de aferir ou medir, cada uma delas, uma característica comum entre as diversas Unidades Elementares observáveis de seu Espaço Amostral);
+
+iii. ***importar*** esses *arquivos de dados* para um ambiente computacional, de preferência uma ***IDE*** (*Integrated Development Environment*, ex.: RStudio ...) para sua ***manipulação*** por meio de uma ***linguagem comptacional*** compatível com ou voltada para Ciência de Dados (ex.: R, python): extração de ***informações*** e de ***padrões percepcionais*** (Evidências) a partir desse conjunto de dados ***validamente*** coletados;
+
+     ![Validade dos Dados Coletados](fig/Automation_Validity_Intuition_DataScience.png)
+
+iv. ***manipular*** dados (armazenar, organizar, acessar, transformar, filtrar, visualizar) de acordo com os objetivos e as questões de pesquisa científica a serem enfrentadas e ***sem introduzir erros*** no conjunto de dados coletados (*data set*, que pode ser um *Big Data*);
+
+v.  aplicar ***testes estatísticos*** a fim de ***verificar*** a ***adequação***, a ***qualidade do ajuste***, dos ***Modelos*** percepcionais propostos aos dados coletados sobre o fenômeno de interesse da pesquisa a fim de oferecer alternativas e respostas às questões de pesquisa.
+
+A proposta é para os ***estudantes*** ***praticarem*** como carregar um arquivo de dados secundários sobre jovens (*data frame*), crianças e adolecentes, que passaram pelo sistema de Justiça Criminal (Delegacias de Polícia) em razão de alguma investigação pela suposta prática de algum ato infracional.
+
+A pretensão científica é verificar a qualidade do ajuste das ***taxas de mortalidade*** nesse grupo de jovens e nos jovens em geral de mesma faixa etária domiciliados no Município de Goiânia, principalmente para verificar se há ou não uma diferença estatiscamente significativa, para um Erro Tipo I de 5% (Nível de Confiança de 95%) entre essas duas subpopulações goianienses no período de 2016 a 2023.
+
+Há outras variáveis observadas que permitirão estratificar esses jovens, como, por exemplo: sexo, cor, renda familiar (per capta?), número de ocorrências, bairro de ***domicílio*** (questão do morador de rua...), se faz uso de entorpecentes, tipos de entorpecentes, tipo infracional imputado, data do fato infracional apurado, idade do jovem na data do fato infracional apurado, gravidade do tipo infrancional imputado (CVLI), óbito, idade na data do óbito, morte violenta( ex.: PAF ...) etc.
+
+## Problema {#sec-problema-DEPAI}
+
+::: callout-tip
+## Problema da Pesquisa
+
+1\) Há alguma diferença estatisticamente significante nas taxas de mortalidades dos jovens em geral domiciliados em Goiânia (≠ Grande Goiânia, ≠ Região Metropolitana de Goiânia) no período de 2016 a 2023 e dos jovens de mesma faixa etária, domiciliados no mesmo Município (≠ mesma Comarca) que passaram pelo Sistema de Justiça Criminal Estadual especializado Infanto-Juvenil (Delegacia de Polícia: DEPAI -- Delegacia Estadual de Apuração de Atos Infracionais) situado em Goiânia?
+
+Uma analogia, para ajudar na ***organização*** da coleta e *armazenamento* dos dados observacionais secundários:
+
+-   Goiânia como uma Cidade com o seu **Sistema de Justiça Criminal** *como se* fosse um grande ***Aeroporto***;
+
+-   os seus ***jovens*** (crianças e adolescentes) como se fossem possíveis ***passageiros***;
+
+-   as ***Delegacias de Polícia*** como se fossem ***aviões*** estacionados nesse aeroporto, prontos para decolar. Em especial a ***DEPAI -- Delegacia Estadual de Apuração de Atos Infracionais***. Curioso que, ***uma vez embarcado***, os possíveis ***destinos*** são: i) retornar para Goiânia mesmo, o que equivale a desembarcar antes da decolagem (há a possibilidade alguma restrição de direitos que não a liberdade para voltar ao convívio na Cidade); ii) aterrizar numa cidade chamada Custódia no sistema fechado ou ***Grades dia e noite***, de onde, após algum tempo, é possível retornar para Goiânia; iii) aterrizar num Bairro de Goiânia chamado Custódia no sistema semi-aberto ou ***Grades a noite***, que permite visitas diárias à Cidade;
+
+-   os diferentes ***tipos*** de atos infracionais como se fossem os bilhetes de embarque; nesse caso a **1ª classe** ficaria reservada para aqueles delitos classificados como **CVLI** - Crimes Violentos e Lesões Intencionais; a **2ª classe** com todos os demais que ***não sejam violentos***; na **3ª classe** tomarão assento aqueles passageiros que, a despeito de embarcarem, ***desembarcam antes*** do avião levantar vôo.
+
+-   Um bairro chamado **Cemitério** onde são sepultados todos os jovens que vem a óbito, com duas grandes alas: uma, maior, para os jovens que não passaram pelo Aeroporto; outra, presumivelmente menor, para os que embarcaram em algum de seus aviões; essa 2ª ala tem subalas para os passageiros de 1ª, 2ª e 3ª classe.;
+
+-   Há um grande Bairro chamado **Centro**, bem próximo ao Aeroporto, em que domiciliam todos os jovens que não moram na periferia (centro e periferia, conforme a Escola de Chicago);
+
+-   Há um segundo grande Bairro, maior que o primeiro, chamado **Periferia**, bem mais distante do Aeroporto, em que domiciliam todos os jovens que ***moram na periferia de Goiânia*** (centro e periferia, conforme a Escola de Chicago, segundo um critério de julgamento a ser definido no curso da pesquisa, ex.: renda familiar percapta predominante, luz, iluminação pública, asfalto, água, esgoto, escolas públicas, Ginásios públicos, áreas de lazer etc.);
+
+-   A questão é saber: ***se*** os jovens "moradores" do Cemitério diferem em proporção dos jovens moradores da Cidade? Se essa diferença acentua-se nos seus diversos subestratos, como sexo, cor, idade, domicílio (centro e periferia), número de atos infracionais, gravidade dos atos infracionais etc.?
+:::
+
+Um bom começo é descrever sua:
+
+1.  ***População Alvo***: todos os inquerítos e outros procedimentos junto às delegacias de Goiânia em que tramitaram investigações tendo por suposto autor do fato um adolescente no período de 2016 a 2023
+
+2.  ***População Referida***: pelos Sistemas de Referência ou ***listas*** das Unidades Elementares (UE) ou de conjunto delas em outro tipo de Unidades Amostrais (ex. conglomerados: Delegacias).
+
+3.  ***População Amostrada***: aquela que foi efetivamente objeto da coleta de dados amostrais, que pode diferir da População Alvo e também da População Referida (por Unidades Amostrais previstas nos Sistemas de Referência, mas não localizadas em campo; ou pelo encontro de Unidades Amostrais ***não*** previstas nos Sistemas de Referência, mas que foram localizadas em campo).
+
+4.  ***Espaço Amostral*** (S~A~): pela descrição, listagem, tabulação ou, ao menos, uma simulação de *todas*, ou *quase todas*, as possíveis Unidades Elementares que poderiam ser encontradas na coleta de dados pesquisa.
+
+5.  ***Espaço Amostral de Probabilidades***, pela dupla (S~A~, P~A~): um Espaço Amostral qualificado pela probabilidade *a priori*, conhecida ou estimada subjetivamente, de uma Unidade Elementar qualquer desse Espaço ser escolhida ao acaso, aleatoriamente.
+
+6.  ***Unidade Elementar*** (UE): qualquer elemento indecomponível ou indivíduo pertencente ao S~A~.
+
+7.  ***Unidade Amostral*** (UA): um conjunto qualquer de Unidades Elementares (UE's); pode coincidir com uma só Unidade Elementar (UE) ou ser composta de uma ou mais Unidades Elementares (ex.: Um domícilio pode conter uma só pessoa ou vários indivíduos que serão entrevistados numa coleta de dados)
+
+8.  *Unidade Respondente* (UR): eleição de um só indivíduo ou elemento (UE) de uma Unidade Amostral (UA) para fornecer todas as informações dos demais elementos (UE's) que pertencem à Unidade Amostral selecionada (UA~selec~) na amostragem (ex.: o ou a chefe de família).
+
+9.  [***Quadro de Variáveis Aleatórias***]{.underline} a serem observadas (contadas, medidas) para cada Unidade Elementar (UE) que for selecionada no processo de amostragem; com a indicação do nome da variável, sua descrição, sua unidade de medida, o tipo de variável, sua escala de mediação. A suposição é que as diversas Unidades Elementares (UE's) de uma População Alvo (PA) podem ser todas elas objeto de observação (contagem, medição) para o conjunto de todas as Variáveis eleitas. Cada coluna representará uma Variável e cada linha uma observação da correspondente Unidade Elementar amostrada (UE~am~). Se forem eleitas m variáveis e o tamanho da amostra for n, então esse Quadro de Variáveis será um `data.frame` com `m` linhas e `n` colunas, ou seja, um *objeto 2-D*: uma *matriz* ou um `data.frame` m x n.
+
+10. ***Operacionalizar*** os ***conceitos necessários e suficientes*** para *carregar, armazenar, tratar e transformar* todos os dados coletados, ***sem introduzir-lhes erros ou desvios***, deixando-os prontos para a próxima fase, a da Análise Exploratória de Dados - AED (reiteradas vizualizações e extração de padrões perceptíveis).
+
+A ideia é [***organizar***]{.underline} *um conjunto de estruturas de dados que irá viabilizar todo o processamento de dados necessário para completar a pesquisa*: desde sua ***coleta*** de dados, seu ***processamento***, ***armazenamento***, ***transformação***, ***filtragem*** e ***exibição ordenada*** desses ***dados***, [***sem a introdução nele de erros***]{.underline}, a fim de ***extrair informações e padrões*** que permitam a [***construção***]{.underline} e a [***testagem***]{.underline} de [**Modelos**]{.underline} que os representem, a fim de [**escolher/selecionar**]{.underline} aquele que faça isso com o ***menor desvio (erros) possível***: *verificação da qualidade do ajuste desses Modelos aos dados coletados*.
+
+### Tabelas de *data sets* Relacionais
+
+A figura a seguir fornece uma ideia de como um conjunto de *data sets* ***relacionais*** (tabelas) pode ser concebido para *bem representar um fenômeno de interesse* [@Wickham2017R , p. 174]:
+
+![Diagrama de Dados Relacionais entre 5 data sets: cada relação dá-se em um par de tabelas e pode haver várias cadeias de relações](fig/relationalData-nycflights.png){fig-align="center"}
+
+Uma primeira versão, por analogia, para elaboração de um Diagrama de *data sets* Relacionais para a pesquisa sobre atos infracionais e taxa de mortalidade de jovens em Goiânia (2016-2023) é apresentada no tópico @sec-problema-DEPAI, acima.
+
+É preciso refletir a respeito e jogar esse Diagrama Relacional no papel.
+
+E criar e exibir um Diagrama de data sets Relacionais para a presente pesquisa, o que ainda está por ser feito.
+
+## Pré-processamento dos Dados Brutos
+
+### *Up load* dos dados originais
+
+*Up load* das tabelas com os dados coletados em formato .csv (*comma separeted value*).
+
+É necessário que o pesquisador prepare, a partir de uma planilha com os ***dados primários brutos***, uma outra, nesse formato `.csv`, que seja adequada para sua leitura pelo R ou outra linguagem apropriada e seu carregamento no RStudio, ou outra IDE de seu domínio.
+
+```{r}
+# carregar Quadro de Dados com jovens investigados que vieram a obito
+# Espaço: Comarca [ou Município?] de Goiânia
+# Tempo: 2016-2022
+# m = 20 colunas (variáveis observadas); passou para 22 colunas
+# n = 449 linhas (observações coletadas; uma para cada jovem)
+# Nova planilha acrescida de 3 variáveis:
+# sexo, dom <domicílio> e usudrog <S, N>;
+# 1 (uma) variável foi excluída: renda <7 categorias>
+# Demais variáveis os nomes foram mantidos, exceto:
+# subst <substância>  [esta já existia, nome foi alterado de usudrog para subst]
+# sitdiv <situações diversas, ex: TDAH, pai preso etc.; novo nome>
+# obsobt <observações óbito, ex.: passou mal na cela, fogo colchão morreu asfixiado; novo nome>
+obitj <- read.csv(file  = "dat/csv/obitojuv-com-sexo-13-05-2024.csv",
+                  header = TRUE,
+                  sep    = ",",
+                  quote  = "\"",
+                  dec    = ".",
+                  stringsAsFactors = FALSE, # para ler todas as colunas como <char>
+                  fill   = TRUE
+                 )
+cat("Nomes das 22 variáveis coletadas:\n")
+names(obitj)
+```
+
+Ler o **Quadro de Variáveis** criado para a presente coleta dos dados.
+
+```{r}
+# carregar o Quadro de Variáveis <quadrovar.csv>
+# Espaço: Comarca [ou Município?] de Goiânia
+# Tempo: 2016-2022
+# Pessoal : jovens investigados (crianças e adolescentes)
+# Material: que, posteriormente, vieram a obito (por causas diversas)
+# Planilha com todas as variáveis observadas
+# Exemplo: sexo, dom <domicílio> e usudrog <S, N>;
+# A variável que foi excluída: renda <7 categorias>, teve sua descrição mantida
+# As variáveis receberam nomes abreviados, cuja explicação encontra-se na 2ª linha, ex.:
+# subst <substância>  [esta já existia, nome foi alterado de usudrog para subst]
+# sitdiv <situações diversas, ex: TDAH, pai preso etc.; novo nome>
+# obsobt <observações óbito, ex.: passou mal na cela, fogo colchão morreu asfixiado; novo nome>
+# etc.
+quadrovar <- read.csv(file  = "dat/csv/quadrovar.csv",
+                  header = TRUE,
+                  sep    = ",",
+                  quote  = "\"",
+                  dec    = ".",
+                  stringsAsFactors = FALSE, # para ler todas as colunas como <char>
+                  fill   = TRUE
+                 )
+cat("Abreviaturas dos nomes, que devem ser associados à descrição, ao tipo e às categorias de todas as 25 variáveis coletadas:\n")
+names(quadrovar)
+```
+
+Organizar esse **Quadro de Variáveis** num `data frame` mais adequado.
+
+```{r}
+#---Função extrair tipo da variável do quadro de variáveis
+
+tipo <- function(x) {
+  # descartar campod vazios <blanck>
+  x <- x[x != ""]
+  l <- length(x)
+  if (l == 1) return("caracter")
+  if (l == 2) return("data")
+  if (l >= 2) return("categórica")
+}
+
+#---Função para extrair as categorias/formatos de todas variáveis
+#   será aplicada sobre todas as colunas do data set quadrovar
+#   extrair da 3ª linha em diante de cada coluna, todas as categorias <char>
+#   fazer um paste0 desse vetor para reunir todas elas, sepradas por ", "
+#   retornar esse resultado
+categ <- function(x) {
+  # descartar campos vazios <blanck>
+  x <- x[x != ""]
+  l <- length(x)
+  ifelse(l == 1, x[1], paste0(x[2:l], collapse = ", "))
+}
+
+library(magrittr)
+
+quadrovar.df <- data.frame(
+  n           = 1:length(quadrovar),
+  Abreviatura = names(quadrovar),
+  "Descrição" = quadrovar[1, ] |> unlist(),
+  Tipo        = apply(X = quadrovar, MARGIN = 2, FUN = tipo ),
+  Categorias  = apply(X = quadrovar, MARGIN = 2, FUN = categ)
+)
+rownames(quadrovar.df) <- NULL
+str(quadrovar.df)
+
+# salvar quadrovar.df num arquivo quadrovar.df.csv
+write.csv(quadrovar.df, file = "dat/csv/quadrovar.df.csv", row.names = FALSE)
+```
+
+### Exibição dos Dados brutos
+
+Exibir uma tabela com o **Quadro de Variáveis** da Pesquisa:
+
+```{r}
+#| warning: false
+
+library(kableExtra)
+
+quadrovar.df |> 
+  kable("html",
+        booktabs  = TRUE,
+        longtable = FALSE,
+        caption   = "Quadro de Variáveis Aleatórias da Pesquisa")  |>
+  kable_styling(bootstrap_options = c("striped"),
+                full_width    = FALSE,
+                latex_options = "scale_down")
+```
+
+Agora exibir (apenas as primeiros 20 observações) a tabela com o *corpus* de dados n. 1 (adolescentes que praticaram atos infracionais e que vieram a óbito) em um formato enxuto via *Package*: `KableExtra`. Para permitir uma primeira inspeção visual.
+
+O ideal é inspecinar todas as 449 observações nesse primeiro contato com os dados, a fim de tomar nota de uma lista de cuidados e tarefas a serem implementadas, o que foi feito antes de implementar a limitação acima, para fins de geração deste relatório de pesquisa.
+
+```{r}
+
+obitj |> 
+  head(20) |> 
+  kable("html",
+        booktabs  = TRUE,
+        longtable = FALSE,
+        caption   = "Tabela com 20 jovens que tiveram atos infracionais apurados e que vieram a óbito em Goiânia (2016 a 2023)")  |>
+  kable_styling(bootstrap_options = c("striped"),
+                full_width    = FALSE,
+                latex_options = "scale_down")
+```
+
+### Anonimização dos Dados
+
+Antes de tudo é preciso ***anonimizar*** esse conjunto de dados.
+
+```{r}
+# gerar um código identificador para cada um dos jovens: j1 a j449
+anon <- paste0("j", obitj$n)
+
+# embaralhar aleatoriamente esses identificadores
+set.seed(124567)
+anon <- sample(anon,
+               size = length(anon)
+              )
+anon
+```
+
+Agora incluir esse novo `id` anonimizado.
+
+Depois excluir as variáveis em que armazenados os seguintes dados:
+
+-   `n`: número,
+
+-   `nome`: nome do jovem,
+
+-   `cpf`: CPF do jovem (muitas vezes contém o RG da identidade civil),
+
+-   `mae`: nome da mãe do jovem (não foi coletado o *nome do pai*).
+
+Ou mesmo fazer uma função para extrair apenas as letras maíusculas iniciais das seguintes variáveis: `nome` e `mae` ; e mesmo assim fazer o *drop* da variável `cpf`. Isso será feito no script da aula 7.
+
+```{r}
+# substituir n (número) pelo novo id anonimizado
+obitj$n <- anon
+# trocar nome da variável: n para id, para ficar compatível com
+# seu novo conteúdo
+names(obitj)[1] <- "id"
+# obitj
+
+# descartar (drop) colunas com a variáveis identificadoras do jovem:
+# nome, cpf, mae
+# armazenar essa nova configuração em um novo data.frame
+# denominado obtjan - óbitos jovens anonimizado
+jid    <- subset( obitj, select =  c(nome, cpf, mae) )
+obtjan <- subset( obitj, select = -c(nome, cpf, mae) )
+
+# embaralhar mais uma vez as linhas do data set anonimizado para
+# descaracterizar sua parcial ordem alfabética inicial
+set.seed(7654321)
+chave   <- sample( nrow(obtjan) )
+dfchave <- data.frame(id = anon,
+                      ch = chave,
+                      nome = jid$nome,
+                      cpf  = jid$cpf,
+                      mae  = jid$mae)
+obtjan  <- obtjan[chave, ]
+# apagar o nome das linhas originais desse data frame para
+# eliminar esse vestígio e garantir a anonimização final
+row.names(obtjan) <- NULL
+```
+
+Visualizar esse novo data set anonimizado numa tabela com efeito scroll na tela (apenas os 30 primeiros).
+
+```{r}
+#| warning: false
+
+obtjan |> 
+  head(30) |> 
+  kable("html",
+        booktabs  = TRUE,
+        longtable = FALSE,
+        caption   = "Tabela anonimizada com 30 jovens que vieram a óbito e que tiveram atos infracionais apurados pela DEPAI de Goiânia (2016 a 2023)")  |>
+  kable_styling(bootstrap_options = c("striped"),
+                full_width    = FALSE,
+                latex_options = "scale_down")
+```
+
+### Salvar Tabela de Dados anonimizada
+
+Armazenar esse *data set* anonimizado (`obtjan`) e sua chave (`dfchave`), bem como o Quadro de Variáveis (`quadrovar`), na pasta `out` e depois numa `closure`, para não permitir seu indevido acesso a usuários externos.
+
+Depois apagar os dados originalmente lidos da pasta `csv` e da `lixeira` para evitar seu acesso inadvertido a partir do disco.
+
+Manter uma cópia de segurança salva em um lugar único e afastado do ambiente de processamento e mesmo da *web*, sob a responsabilidade do pesquisador.
+
+```{r}
+save(quadrovar.df, file = "out/quadrovar.df.RData")
+write.csv(obtjan , file = "out/obtjan.csv" , row.names = FALSE)
+write.csv(dfchave, file = "out/dfchave.csv", row.names = FALSE)
+```
+
+Agora encapsular os dois *data sets* de anonimização (`obtjan` e `dfchave`) e o `quadrovar` numa `closure`, que nada mais é que uma função em cujo *Child Environment* será armazenada uma cópia de cada um desses 3 objetos (`obtjan` e `dfchave`; `quadrovar`) e em que haverá funções (`GETjn`, `GETall`, `GETdfch` e `GETqdvar`) para acessar e devolver parte (amostras: `GETjn`) ou a integralidade (`GETall`) desses dois primeiros objetos ou, ainda, a chave (`GETdfch`) que *encriptografou* a anonimização dos dados; bem como o quadro de variáveis (`GETqdvar`).
+
+### Enclausurar Dados anonimizados
+
+```{r}
+# criar a clausure para encapsular os dois data sets:
+# obtjan e dfchave
+# fora do Global Environment: em um seu Child Environment 
+setup <- function(obtjan, dfchave, quadrovar.df) {
+  # Armazenar os dois data sets na clausure
+  obt   <- obtjan
+  dfch  <- dfchave
+  qdvar <- quadrovar.df
+  
+  # função para retornar uma amostra de tamanho n de obt
+  # n poderá ser um vetor contendo os índices para 1 AAS
+  GETjn <- function(n = 1) {
+    j <- obt[n, ]
+    j
+  }
+  
+  # função para retornar todos os dados de obt
+  GETall <- function() {
+    obt
+  }
+
+  # função para retornar todos os dados de dfch
+  GETdfch <- function() {
+    dfch
+  }
+  
+  # função para retornar todos os dados de qdvar
+  GETqdvar <- function() {
+    qdvar
+  }
+
+# função setup retorna uma lista contendo as 3 funções acima
+list(getjn = GETjn, getall = GETall, getdfch = GETdfch, getqdvar = GETqdvar)
+}
+```
+
+E, agora, já se pode ***remover*** esses 3 *data sets* da memória RAM: `obtjan`, `dfchave` e `quadrovar.df`.
+
+E mesmo assim acessar os 3 *data sets* através da lista dessas 4 funções enclausuradas; lista de funções essa que é retornada pela função `setup()`.
+
+Para isso basta armazenar a lista que essa função `setup()` retorna em um `objeto do tipo list` na memória RAM do computador, no seu *Global Environment*. E depois salvar esse objeto em um arquivo, para futuras recuperações desses dados anonimizados e do quadro de variáveis.
+
+```{r}
+# Armazenar o objeto tipo list retornado pela função setup()
+# Na variável denominada: jovens
+jovens <- setup(obtjan, dfchave, quadrovar.df)
+
+# Salvar o objeto jovens no HD
+save(jovens, file = "out/jovens.RData")
+
+# Remover todos os objetos, inclusive os 3 data sets (obitj, obtjan, dfchave),
+# da memória RAM do Global Environment:
+# ls() # listar todos os nomes de variáveis do Global Environment
+rm(list = ls() ) # remover todas as variáveis do Global Environment
+
+# Carregar apenas a closure: jovens <list> of 3 <functions> e 4 <df>
+load(file = "out/jovens.RData") # apenas com ela no Global Environment
+# será possível realizar todo o processamento de Engenharia de Dados
+# necessário para tratar e transformar os dados brutos,
+# antes de partir para sua Análise Exploratória dos dados colhidos
+```
+
+### Colher amostras dos Dados anoniminados enclausurados
+
+Agora ***colher amostras*** e recuperar, em parte ou o todo, os 2 *data sets* enclausurados, bem como o quadro de variáveis, mesmo após removidos os arquivos originalmente lidos e tratados que se encontravam na memória RAM (estavam no *Global Environment*).
+
+Primeiro o ***Quadro de Variáveis*** utilizado no levantamento de dados primários desta pesquisa.
+
+```{r}
+
+# Obter o Quadro de Variáveis dos dados 1º levantados na pesquisa
+# do respectivo data set enclausurado: jovens$getqdvar()
+jovens$getqdvar() |> 
+  kable("html",
+        booktabs  = TRUE,
+        longtable = FALSE,
+        caption   = "Quadro de Variáveis Aleatórias da Pesquisa: 25 colhidas em dois corpus (data sets)")  |>
+  kable_styling(bootstrap_options = c("striped"),
+                full_width    = FALSE,
+                latex_options = "scale_down")
+```
+
+Em seguida uma Amostra Aleatória Simples (AAS) de tamanho n = 30, que poderá servir para uma sondagem dos processos em que foram regitrados atos infracionais na DEAPAI de Goiânia (2016-2023).
+
+```{r}
+
+# Obter uma Amostra Aleatória Simples
+# de tamanho n = 30 jovens do data set enclausurado
+jovens$getjn( n = sample(1:449, size = 30) ) |> 
+  kable("html",
+        booktabs  = TRUE,
+        longtable = FALSE,
+        caption   = "Uma Amostra Aleatória Simples (AAS) de tamanho n = 30 jovens que vieram a óbito com processos em que foram regitrados atos infracionais na DEPAI de Goiânia (2016-2023)")  |>
+  kable_styling(bootstrap_options = c("striped"),
+                full_width    = FALSE,
+                latex_options = "scale_down")
+```
+
+Exibir o censo (apenas as 30 primeiras observações), anonimizado segundo um código aleatório cuja chave encriptografada encontra-se apenas numa `closure`, dos jovens que vieram a óbito e que tiveram atos infracionais investigados pela DEPAI Goiânia (2016/2023).
+
+```{r}
+
+# Obter o censo do data set enclausurado
+# Exibir apenas as 10 primeiras linhas
+jovens$getall() |> 
+  head(10) |> 
+  kable("html",
+        booktabs  = TRUE,
+        longtable = FALSE,
+        caption   = "Tabela anonimizada com 30 jovens que vieram a óbito e que tiveram atos infracionais apurados pela DEPAI de Goiânia (2016 a 2023)"
+        )  |>
+  kable_styling(bootstrap_options = c("striped"),
+                full_width    = FALSE,
+                latex_options = "scale_down")
+
+```
+
+Agora resgatar a chave de encriptografia, para fins de verificação sobre o controle da anonimização dos dados pelo pesquisador. Esse trecho de script não irá para o relatório final da pesquisa.
+
+```{r}
+
+# Resgatar a chave de identificação da anonimização
+# Exibir apenas as 10 primeiras linhas
+jovens$getdfch() |> 
+  head(10) |> 
+  kable("html",
+        booktabs  = TRUE,
+        longtable = FALSE,
+        caption   = "Chave de encriptografia")  |>
+  kable_styling(bootstrap_options = c("striped"),
+                full_width    = FALSE,
+                latex_options = "scale_down")
+```
+
+Reordenar a chave de identificação da anonimização para facilitar sua consulta e conferência. Exibir apenas suas 10 primeiras linhas. Esse trecho também não irá para o relatório final da pesquisa.
+
+```{r}
+
+# Reordenar a chave de identificação da anonimização
+# Para facilitar sua consulta e conferência
+# Exibir apenas as 10 primeiras linhas
+library(dplyr)
+jovens$getdfch() |> 
+  mutate(nid = 1:449) |> 
+  mutate(n = as.integer( substr(id, start = 2, stop = length(id) ) ) ) |> 
+  arrange(n) |> 
+  select(id, ch, nid, n, nome, cpf, mae) |> 
+  head(10) |> 
+  kable("html",
+        booktabs  = TRUE,
+        longtable = FALSE,
+        caption   = "Chave de encriptografia reordenada")  |>
+  kable_styling(bootstrap_options = c("striped"),
+                full_width    = FALSE,
+                latex_options = "scale_down")
+```
+
+### Homework: *Wrangling* 2º *round*
+
+Falta ainda completar o 2º *round* da fase de *Wrangling*.
+
+Como exercício para casa (***homework***) fazer um função que extraia apenas as ***letras maiúsculas iniciais*** dos *nomes, prenomes e sobrenomes* das seguintes variáveis: `nome` e `mae`; que pode ser considerada para fins de anonimização dos jovens pesquisados.
+
+Olhar para cada ***tipo*** de variável e escolher a ***estrutra de dados*** mais adequada para cada uma delas. Realizar as transformações necessárias para simplificar as futuras apresentações desses dados (ex.: s e n, em vez de sim e não para diversas variáveis categóricas binárias etc.).
+
+O que será realizado na aula da semana que vem: ou seja, estudar o tipo expandido de vetores do tipo `factor` é muito importante: \<`fctr`\>.
+
+Dúvidas serão debeladas a cada aula!
+
+![Até nosso pRRRóximo RRRencontro!](fig/ValeuGalera.png){fig-align="center"}
+
+Hint: homework solution com a estratégia Spli-Apply-Combine
+
+```{r}
+library(magrittr)
+# função get iniciais maiúsculas de um nome qualquer
+# argumento: recebe um vetor tipo <char>
+# retorna  : uma string com as iniciais maiúsculas seguidas de "."
+getinic <- function(e) {
+  stopifnot("Vetor tem de ser tipo <char>"= is.character(e))
+  p <- strsplit(e, "[ ]") |> unlist() # Split 1
+  p <- substring(p, 1, 1)             # Split 2
+  p <- toupper(p)                     # Aplly 1
+  p <- paste0(p, ".")                 # Aplly 2
+  paste(p, collapse = "")             # Combine 1 & return
+}
+
+getinic("teste")
+getinic("teste again")
+jovens$getdfch()["nome"][[1]][1]
+getinic(jovens$getdfch()["nome"][[1]][1])
+
+# Usar função apply
+jovens$getdfch()["nome"][[1]][1] |> # recebe  um vetor tipo <char>
+  sapply(FUN = "getinic")           # retorna um vetor tipo <char>
+
+# Há pelo menos 4 mulheres no data set: => incluir Variável sexo
+# LARYSSA EDUARDA DOS SANTOS MOREIRA
+# BRUNA APARECIDA DE OLIVEIRA BARCELOS
+# JULIA LEITE TELES FERNANDES
+# RITA BARBOSA PINHEIRO SENA
+
+# Há um nome:
+# REPETIDO
+```

@@ -1,0 +1,1818 @@
+# Aula 4 - Estatística Inferencial {#sec-aula-4-Est-Infer-est-dirig}
+
+## Estudo Dirigido - Exercícios para casa
+
+(i) *Antes de responder* aos itens, é preciso ***organizar/tratar*** o conjunto de dados;
+
+(ii) A ***exclusão*** dos `NA`’s deve ser realizada considerando ***apenas dados faltantes nas variáveis de interesse***; ou seja, deve-se realizar essas exclusões presenvando o *data set*, se modo que apenas a tabela ou gráfico gerado a partir do conjunto de dados reflita essas exclusões, mas sem deletar os `NA`'s do *data set* original.
+
+## Descrição do Banco de Dados
+
+**População indígena de 3 anos ou mais atendida pelo SASISUS (Subsistema de Atenção à Saúde Indígena do SUS).**
+
+-   Dados atualizados em 14/06/2024
+
+-   Os dados apresentados são preliminares e representam o consolidado total de doses aplicadas pelos Distritos Sanitários Especiais Indígenas (DSEI).
+
+-   O banco de dados "`dados_saude.xlsx`" disponiblizado na pasta `dat`, traz um conjunto de dados reais sobre a vacinação de covid-19 das populações indigenas de algumas regiões do pais (Distritos sanitários especiais indígenas - DSEI). O conjunto tem 13 covariáveis, que podem ser observadas com detalhes no arquivo disponibilizado nas aulas.
+
+## Tratar o conjunto de dados
+
+Preparar o ambiente de processamento da IDE RStudio.
+
+```{r}
+
+# Deletar os objetos da Global Environment
+rm(list=ls())
+
+# Padrão de saídas Rmarkdown
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
+# getOption("encoding")       # [1] "native.enc"
+# options(encoding = 'UTF-8') # [1] "UTF-8"
+```
+
+### Importar
+
+Importar o *data set* fornecido no [link](https://ensino.ead.ufg.br/mod/assign/view.php?id=140073 "Plataforma Moodle") da plataforma moodle desta disciplina: `dados_saude.xlsx`
+
+Que foi baixado e armazenado na pasta `dat` do projeto `CDE-a-DPP`, por mim criado para todas as atividades práticas deste curso.
+
+O uso de um *`project`* elimina o problema dos caminhos absolutos para importar *data sets*.
+
+Assim, basta fornecer o ***caminho relativo*** para importar o *data set* fornecido, o que foi feito a seguir.
+
+```{r}
+
+library(readxl)
+
+dados_saude <- read_excel("dat/dados_saude.xlsx")
+
+str(dados_saude)   # tibble [34 × 13] (S3: tbl_df/tbl/data.frame)
+print(dados_saude) # A tibble:34 × 13, ou seja, são 34 obs. de 13 variáveis
+
+# Total da População Indígena
+N_PI <- sum(dados_saude$PI)
+cat("\n")
+cat("Total da População Indígena =", N_PI)
+cat("\n")
+
+# Total de doses aplicadas: 1ª Dose + 2ª Dose e Única + Dose de Reforço
+N_D <- sum(dados_saude$D1) + sum(dados_saude$`D2&DU`) + sum(dados_saude$REF1_18M)
+cat("\n")
+cat("Total de doses aplicadas =", N_D)
+```
+
+O conjunto de dados reúne as populações indígenas em 34 regiões do país e traz os dados sobre a vacinação de covid-19, quanto às doses 1ª, 2ª e Única e de Reforço; ou seja cada região corresponde a uma linha ou observação do *dataset*.
+
+Total da população indígena no Brasil: Ni = 707.739 indígenas
+
+Total de doses da vacina de Covid-19 aplicadas: Nd = 1.490.036 doses
+
+### Rearranjar
+
+Agrupar variáveis (colunas do *data set*) por afinidade correspondente as doses: 1ª, 2ª e única e reforço.
+
+```{r}
+
+library(dplyr)
+
+dados_saude <- dados_saude |> 
+  select(c(1:4, 7:9, 5:6, 10:13))
+```
+
+As populações vacinadas encontram-se estratificadas por categorias de faixa de idade que, após o rearranjo para agrupar variáveis similares, encontra-se conforme ***lista*** a seguir, que esboça um *Dicionário de Dados* do *Quadro de Variáveis* do *data set*.
+
+São **13** *Variáveis no Banco de Dados*, que se repete no *data set:*
+
+V1 \<char\>: `DSEI` (nomes dos Distritos Sanitários Especiais Indígenas designados pelo SUS);
+
+V2 \<dbl\>: `PI` População Indígena (nº de indígenas por distrito);
+
+V3 \<dbl\>: `D1` Dose 1 (nº de indígenas vacinados com a 1ª dose);
+
+V4 \<dbl\>: `P1` % Dose 1 (percentual de indígenas vacinados com a 1ª dose);
+
+V5 \<dbl\>: `D1_3a4A` Dose 1 (3 a 4 anos): (nº de indígenas vacinados com a 1ª dose com faixa etária entre 3 e 4 anos);
+
+V6 \<dbl\>: `D1_5a17A` Dose 1 (5 a 17 anos): (nº de indígenas vacinados com a 1ª dose com faixa etária entre 5 e 17 anos);
+
+V7 \<dbl\>: `D1_18M` Dose 1 (\>18 anos): (nº de indígenas vacinados com a 1ª dose com faixa etária Maior que 18 anos);
+
+V8 \<dbl\>: `` `D2&DU` `` Dose 2 e Única (nº de indígenas vacinados com a 2ª dose e dose única);
+
+V9 \<dbl\>: `P2` % Dose 2 e Única (percentual de indígenas vacinados com a 2ª dose e dose única);
+
+V10 \<dbl\>: `D2_3a4A` Dose 2 (3 a 4 anos): (nº de indígenas vacinados com a 2ª dose com faixa etária entre 3 e 4 anos);
+
+V11 \<dbl\>: `D2_5a17A` Dose 2 (5 a 17 anos): (nº de indígenas vacinados com a 2ª dose com faixa etária entre 5 e 17 anos);
+
+V12 \<dbl\>: `D2_18M` Dose 2 (\>18 anos): (nº de indígenas vacinados com a 2a dose com faixa etária Maior que 18 anos);
+
+V13 \<dbl\>: `REF1_18M` Reforço 1 (\> 18 anos): (nº de indígenas vacinados com a 1a dose de Reforço com faixa etária maior que 18 anos);
+
+### Exportar
+
+Salvar como `.csv` e como `.rds` (formato binário do R) o *data set* tratado: `dados_saude`.
+
+```{r}
+
+library(readr)
+
+# Salvar esse dataframe no formato binário do R na pasta out
+# Sua próxima importação ela virá com todos os tratamentos até aqui realizados:
+# tipos de colunas preservados: <char>, <date>, <time>, <fctr>, <int>,
+# 'data.frame':	779927 obs. of  31 variables:
+write_rds(dados_saude, file = "out/dados_saude.rds") # formato binário do R
+
+# Salvar 1ª planilha de dado toda tratada e transformada:
+write.csv(dados_saude, file = "out/dados_saude.csv",
+          na = "", # salvar campos NA como espaço vazio <blank>
+          row.names = FALSE) # não salvar coluna com números das linhas
+```
+
+## Questão 1
+
+Questão 1
+
+Utilizando os comandos apresentados em aula e o banco de dados *dados_saude* determine os eventos:
+
+-   `A`: a população indígena da região tem mais que 5000 e menos que 10000 habitantes;
+
+### Evento A
+
+```{r}
+
+# determinar o Evento A: população indígena da região tem mais que 5000
+#                        e menos que 10000 habitantes
+A <- dados_saude |> 
+  filter(PI > 5000 & PI < 10000)
+```
+
+Uma forma adequada para imprimir a tabela de dados associada ao Evento A.
+
+```{r}
+#| label: tbl-evento-A
+#| tbl-cap: "Evento A: População indígena das 6 Regiões com mais que 5000 e menos que 10000 habitantes (ordem crescente)"
+#| warning: false
+
+library(gt)
+# Exibir o Evento A
+
+spanners_and_header <- function(gt_tbl) {
+  gt_tbl |> 
+    cols_label(
+    DSEI      = "DSEI",
+    PI        = "Indíg.",
+    D1        = "Vacina",
+    P1        = "(%)",
+    D1_3a4A   = "3 a 4",
+    D1_5a17A  = "5 a 17",
+    D1_18M    = ">18",
+    `D2&DU`   = "Vacina",
+    P2        = "(%)",
+    D2_3a4A   = "3 a 4",
+    D2_5a17A  = "5 a 17",
+    D2_18M    = ">18",
+    REF1_18M  = "Vacina"
+    ) |> 
+    tab_spanner(
+      label   = md("**Região**"),
+      columns = 1
+    ) |>
+    tab_spanner(
+      label   = md("**Popul.**"),
+      columns = c(2)
+    ) |> 
+    tab_spanner(
+      label   = md("**1ª Dose e Faixa Etária (anos)**"),
+      columns = c(3:7)
+    ) |> 
+    tab_spanner(
+      label   = md("**2ª Dose e Única e Faixa Etária (anos)**"),
+      columns = c(8:12)
+    ) |> 
+    tab_spanner(
+      label   = md("**Reforço (>18a)**"),
+      columns = c(13)
+    ) |>
+    tab_footnote(
+      footnote  = "Distritos Sanitários Especiais Indígenas: regiões e denominações designadas pelo SUS.",
+      locations = cells_column_labels(columns = DSEI)
+    ) # |> tab_options(table.width = pct(100), table.font.size = 10) # quebrou o pdf
+}
+
+A |> 
+  mutate(
+    P1 = round(P1 *100, 1),
+    P2 = round(P2 *100, 1)
+    ) |> 
+  arrange(PI) |> 
+  gt() |> 
+  spanners_and_header() |> 
+  tab_header(
+      title = "Evento A: População indígena das 6 Regiões com mais que 5000 e menos que 10000 habitantes (ordem crescente)",
+      subtitle = "Brasil (BR): no universo das Populações indígenas em 34 Regiões do país com dados sobre a vacinação de covid-19, quanto às doses 1ª, 2ª ou Única e de Reforço"
+    )
+```
+
+Determinar o tamanho da População Indígena do Evento A; e o tamanho da População de Vacinas aplicadas na 2ª Dose ou Única associadas ao Evento A.
+
+```{r}
+
+# Cardinalidade do Evento A para PI: número de indígenas do subconjunto A
+N_A.PI <- sum(A$PI)
+cat("\n")
+cat("Total de Indígenas do Evento A = N(A.PI) =", N_A.PI) # 41662
+
+# Cardinalidade do Evento A para D2&DU: número de indígenas Vacinados c/a 2ª Dose/Única do subconjunto A
+N_A.D2eDU <- sum(A$`D2&DU`)
+cat("\n")
+cat("\n")
+cat("Total de Indígenas Vacinados c/a 2ª Dose/Única do Evento A = N(A.D2eDU) =", N_A.D2eDU) # 30324
+```
+
+A cardinalidade da População de Indígenas do Evento A é:
+
+$$ N(A_{PI}) = 41662 $$
+
+Por sua vez, a cardinalidade da População de Indígenas Vacinados com a 2ª Dose ou Única do Evento A é:
+
+$$ N(A_{D2\&DU}) = 30324 $$
+
+Mais adiante essas cardinalidades serão adequadamente usadas para determinar probabilidades frequentistas desse Evento A.
+
+-   `B`: o percentual (ou proporção) da população indígena que tomou a segunda dose ou dose única é maior que 75% (ou 0.75) da população;
+
+### Evento B
+
+```{r}
+
+# determinar o Evento B: percentual (ou proporção) da população indígena que tomou
+#                        a segunda dose ou dose única é maior que 75% (ou 0.75) da
+#                        população [total de indígenas]
+B <- dados_saude |> 
+  filter(P2 > 0.75)
+
+B |> 
+  mutate(
+    P1 = round(P1 *100, 1),
+    P2 = round(P2 *100, 1)
+    ) |> 
+  arrange(P2) |> 
+  gt() |> 
+  spanners_and_header() |> 
+  tab_header(
+      title = "Evento B: Vacinação de covid-19 com percentual (ou proporção) da população indígena que tomou a 2ª Dose ou Dose Única é maior que 75% (ou 0.75) da população (ordem crescente de P2)",
+      subtitle = "Brasil (BR): no universo das Populações indígenas em 34 Regiões do país com dados sobre a vacinação de covid-19, quanto às doses 1ª, 2ª ou Única e de Reforço"
+    )
+
+# Cardinalidade do Evento B para PI: número de indígenas do subconjunto B
+N_B.PI <- sum(B$PI)
+cat("\n")
+cat("Total de Indígenas das Regiões do Evento B (P2>0.75) = N_B.PI = ", N_B.PI) # 440920
+
+# Cardinalidade do Evento B para D2&DU: número de indígenas Vacinados c/a 2ª Dose ou Única do subconjunto B
+N_B.D2eDU <- sum(B$`D2&DU`)
+cat("\n")
+cat("\n")
+cat("Total de Indígenas Vacinados c/a 2ª Dose ou Única do Evento B (P2>0.75) = N_B.D2eDU =",
+    N_B.D2eDU) # 393754
+```
+
+A cardinalidade da População de Indígenas do Evento B é:
+
+$$ N(B_{PI}) = 440920 $$
+
+Por sua vez, a cardinalidade da População de Indígenas Vacinados com a 2ª Dose ou Única do Evento B (P2\>0.75) é:
+
+$$ N(B_{D2\&DU}) = 393754 $$
+
+Logo a seguir essas cardinalidades serão adequadamente usadas para determinar probabilidades frequentistas desse Evento B.
+
+### Cálculo de Probabilidades
+
+**Calcule**: $P(A)$, $P(B)$, $P(A\cup B)$ e $P(A\cap B)$.
+
+#### Evento A
+
+Primeiro olhar para o Evento `A`: população indígena da região tem mais que 5000 e menos que 10000 habitantes.
+
+Sabido, segundo a definição frequentista de probabilidade, que:
+
+$$ P(A) = \frac{N(A)}{N(S)} $$
+
+Em que $N(S)$ é o tamanho total da População Indígena do Brasil segundo o *data set*.
+
+E $N(A)$ será considerado como a ***cardinalidade*** do Evento `A` em relação à Variável `PI` (População Indígena): $N(A_{PI})$.
+
+```{r}
+
+# Calcular P(A) = N(A) / N(S)
+P_A <- N_A.PI / N_PI # 41662 / 707739
+
+cat("\n")
+cat("Probabilidade do Evento A = N_A.PI / N_PI =", P_A)
+cat("\n")
+cat("\n")
+cat("Probabilidade do Evento A =", round(P_A * 100, 1), "%")
+```
+
+Ou seja, se um indígena for escolhido por meio de uma Amostra Aleatória simples com reposição de toda a População de Indígenas do Brasil então as razões de chance de ele pertencer ao Evento A (população indígena da região tem mais que 5000 e menos que 10000 habitantes) são de **5,9%**.
+
+Em resumo, aproximadamente 6 em cada 100 indígenas no Brasil (2024) **vivem em DSEI's** - Distritos Sanitários Especiais Indígenas (que são designados pelo SUS) que apresentam **mais que 5000 e menos que 10000 habitantes indígenas**.
+
+#### Evento B
+
+Agora olhar para o Evento `B`: ***composto pelos DSEI's em que*** o percentual (ou proporção) da população indígena que tomou a segunda dose ou dose única é maior que 75% (ou 0.75) da população da respectiva DSEI.
+
+Pela mesma definição frequentista de probabilidade: $P(B) = \frac{N(B)}{N(S)}$
+
+Uma confusão em que se poderia incorrer seria a de considerar que a População Universo $N(S)$ seria agora composto pelo total de doses de Vacinas de Covid-19 que foram aplicadas (D1, D2 e Única e Dose de Reforço) na População Indígena brasileira.
+
+Mas é preciso observar que o ***critério*** para ***seleção*** das `DSEI`'s que integram o Evento `B` é que apelou para a proporção: `P2 > 0.75` (proporção da população indígena que tomou a segunda dose ou dose única é maior que 75% da população da respectiva DSEI); sendo mantidos os mesmos conceitos de População e de seus Indivíduos (unidades elementares são os indígenas do Brasil que vivem nas DSEI's, assim designadas pelo SUS).
+
+Até porque uma mudança do conjunto Universo ou População não mais permitira relacionar a P(A) com a P(B), pois cada uma delas seria o resultado de um cálculo em relação a uma cardinalidade totalmente distinta da outra.
+
+Desse modo, $N(S)$ é o mesmo tamanho total da População Indígena do Brasil segundo o *data set*.
+
+E $N(B)$ será considerado como a ***cardinalidade*** do Evento `B` em relação à Variável `PI` (População Indígena): $N(B_{PI})$.
+
+O que leva à seguinte expressão:
+
+$$ P(B) = \frac{N(B_{PI})}{N(PI)} $$
+
+```{r}
+
+# Calcular P(B) = N(B.PI) / N(PI)
+P_B <- N_B.PI / N_PI # 440920 / 707739
+
+cat("\n")
+cat("Probabilidade do Evento B = N_B.PI / N_PI =", P_B)
+cat("\n")
+cat("\n")
+cat("Probabilidade do Evento B =", round(P_B * 100, 1), "%")
+```
+
+Ou seja, se um indígena for escolhido por meio de uma Amostra Aleatória Simples com reposição (AAS~c~) de toda a População de Indígenas do Brasil então as razões de chance de ele pertencer ao Evento B – viver em um dos ***DSEI's em que*** o **percentual** (ou proporção) da ***população indígena que tomou a segunda dose ou dose única é maior que 75%*** (ou 0.75) da população da respectiva DSEI – são de **62,3%**.
+
+Em resumo, aproximadamente 62 em cada 100 indígenas no Brasil (2024) **vivem em DSEI's** - Distritos Sanitários Especiais Indígenas (que são designados pelo SUS) que apresentaram **cobertura vacinal da 2ª Dose ou Dose Única contra Covid-19 superior a 75%** da respectiva população indígena de seu DSEI.
+
+#### Evento A ⋂ B
+
+Determinar e exibir o conjunto Interseção entre os cojuntos A e B.
+
+```{r}
+
+# Operação de intersecção entre dois vetores: com mesma DSEI
+intersect(A$DSEI, B$DSEI) # [1] "Cuiabá" "Vale do Javari" "Vilhena" "Xingu" 
+
+# Filtrar todas as obervações do Evento A que estão no Evento B:
+# preservadas todas as colunas de Ambos os Eventos A e B nessa intersecção
+AeB <- A[A$DSEI %in% B$DSEI, ]
+
+AeB |> 
+  mutate(
+    P1 = round(P1 *100, 1),
+    P2 = round(P2 *100, 1)
+    ) |> 
+  arrange(PI) |> 
+  gt() |> 
+  spanners_and_header() |> 
+  tab_header(
+      title = "Evento A e B: População indígena das Regiões com mais que 5000 e menos que 10000 habitantes e Vacinação de covid-19 com percentual (ou proporção) da população indígena que tomou a 2ª dose ou Dose Única é maior que 75% (ou 0.75) da respectiva população  (ordem crescente PI)",
+      subtitle = "Brasil (BR): no universo das Populações indígenas em 34 Regiões do país com dados sobre a vacinação de covid-19, quanto às doses 1ª, 2ª ou Única e de Reforço"
+    )
+
+# Cardinalidade do Evento A e B em relação à Variável PI:
+# é o número de indígenas do subconjunto A e B
+N_AeB.PI <- sum(AeB$PI)
+cat("\n")
+cat("Total de Indígenas das Regiões com mais que 5000 e menos que 10000 habitantes e que também foram Vacinados com a 2ª Dose ou Única numa cobertura vacinal superior a 75%, do Evento A e B = N_AeB.PI =", N_AeB.PI) # 27574
+```
+
+Um Diagrama de Venn (cf. [RPubs-Teoria de Conjuntos](https://rpubs.com/edneibecher/conjuntos "Diagramas Venn no R") e [r-graph-gallery.com](https://r-graph-gallery.com/14-venn-diagramm.html#rap)) ajuda a visualizar a cardinalidade desse conjunto intersecção em relação à Variável `DSEI`: são os nomes das Regiões ou Distritos Sanitários Especiais Indígenas (que são designados pelo SUS).
+
+O mesmo será feito depois em relação à Variável: `PI` (População de Indígenas nesses DSEI's).
+
+```{r}
+
+library(VennDiagram)
+
+set1 <- A$DSEI
+set2 <- B$DSEI
+
+# Prepare a palette of 3 colors with R colorbrewer:
+library(RColorBrewer)
+myCol <- brewer.pal(3,
+                    "Pastel2")
+
+venn.diagram(
+  x              = list(set1, set2),
+  category.names = c("A" , "B "),
+  filename       = '1_venn_diagramm_intersc.png',
+  output         = TRUE,
+  
+  # Output features
+  imagetype   = "png" ,
+  height      = 480 , 
+  width       = 480 , 
+  resolution  = 300,
+  compression = "lzw",
+  
+  # Circles
+  lwd  = 2,
+  # lty  = 'blank',
+  fill = myCol[1:2],
+  
+  # Numbers
+  cex        = .6,
+  fontface   = "bold",
+  fontfamily = "sans"
+  
+  # Set names
+  # cat.cex         = 0.6,
+  # cat.fontface    = "bold",
+  # cat.default.pos = "outer",
+  # cat.pos         = c(-27, 27),
+  # cat.dist        = c(0.055, 0.055),
+  # cat.fontfamily  = "sans",
+  # rotation        = 1
+  
+)
+```
+
+Esse diagrama foi armazenado no arquivo `1_venn_diagramm_intersc.png` e encontra-se inserido na figura a seguir:
+
+![Diagrama de Venn da intersecção de A e B: pelo número de DSEI's - Distritos Sanitários Especiais Indígenas](1_venn_diagramm_intersc.png){fig-align="center"}
+
+Observa-se que o Evento `A` é composto por 6 DSEI's.
+
+O Evento `B` é composto por 20 DSEI's.
+
+E o evento `A ⋂ B` é composto por 4 DSEI's.
+
+Agora outro Diagrama de Venn para visualizar a cardinalidade desse mesmo conjunto intersecção agora em relação à Variável: `PI` (População de Indígenas nesses DSEI's).
+
+Criar dois conjunto de dados simulados para fazer isso.
+
+```{r}
+
+# simular dois conjuntos (vetores) com as mesmas cardinalidades de A, B e AeB.
+# em relação à Variável PI - População Indígena
+set1 <- 1:sum(A$PI) # sequencia de 1 a  41662 (cardinalidade de A)
+set2 <- 1:sum(B$PI) # sequencia de 1 a 440920 (cardinalidade de B)
+# N_AeB.PI          #       N_AeB.PI  = 27574 (cardinalidade de AeB)
+# Deslocar (shift): set2  ( sum(A$PI) - 27574) para direita => interseção de 2754 elementos com set1
+set2 <- set2 + ( sum(A$PI) - 27574) # + 14088 (indígenas de A fora da interseção de A e B)
+#       Assim, restam 440920 - 27574 = 413346 (indígenas de B fora da interseção de A e B)
+
+venn.diagram(
+  x              = list(set1, set2),
+  category.names = c("A" , "B "),
+  filename       = '2_venn_diagramm_intersc-PI.png',
+  output         = TRUE,
+  
+  # Output features
+  imagetype   = "png" ,
+  height      = 880 , 
+  width       = 880 , 
+  resolution  = 300,
+  compression = "lzw",
+  
+  # Circles
+  lwd  = 2,
+  # lty  = 'blank',
+  fill = myCol[1:2],
+  
+  # Numbers
+  cex        = .6,
+  fontface   = "bold",
+  fontfamily = "sans"
+)
+```
+
+Esse diagrama foi armazenado no arquivo `2_venn_diagramm_intersc-PI.png` e encontra-se inserido na figura a seguir:
+
+![Diagrama de Veen da intersecção de A e B: pela somatória da PI - População Indígena dos respectivos Distritos Sanitários Especiais Indígenas](2_venn_diagramm_intersc-PI.png){fig-align="center" width="528"}
+
+Observa-se que o Evento `A`, que é composto por 6 DSEI's, contém uma População de Indígenas `PI = 41662` (cardinalidade de A).
+
+Isso é confirmado pelo diagrama de Venn acima, pois: 27574 + 14088 = 41662 (cardinalidade de A).
+
+O Evento `B`, que é composto por 20 DSEI's, contém uma População de Indígenas `PI = 440920` (cardinalidade de B).
+
+Isso é confirmado pelo diagrama de Venn acima, pois: 413346 + 27574 = 440920 (cardinalidade de B).
+
+E o evento `A ⋂ B`, que é composto por 4 DSEI's, contém uma População de Indígenas `PI = 27574` (cardinalidade de AeB).
+
+Desse modo fica claro o cálculo da probabilidade do Evento `A ⋂ B`.
+
+Segundo a definição frequentista de probabilidade, tem-se que:
+
+$$ P(A \cap B) = \frac{N(A \cap B)}{N(S)} $$
+
+Em que $N(S)$ é o tamanho total da População Indígena do Brasil segundo o *data set*.
+
+E $N(A \cap B)$ será considerado como a ***cardinalidade*** do Evento `A ⋂ B` em relação à Variável `PI` (População Indígena): $N(A \cap B_{PI})$, que foi designado neste *script* R pela variável `N_AeB.PI`.
+
+```{r}
+
+# Calcular a probabilidade frequentista de AeB: P(AeB)
+# Calcular P(AeB) = N(AeB.PI) / N(PI)
+P_AeB <- N_AeB.PI / N_PI # 27574 / 707739
+
+cat("\n")
+cat("Probabilidade do Evento AeB = N_AeB.PI / N_PI =", P_AeB)
+cat("\n")
+cat("\n")
+cat("Probabilidade do Evento AeB =", round(P_AeB * 100, 1), "%")
+```
+
+Ou seja, se um indígena for escolhido por meio de uma Amostra Aleatória Simples com reposição (AAS~c~) de toda a População de Indígenas do Brasil então as razões de chance de ele pertencer ao Evento `A ⋂ B` – população indígena da sua Região ter **mais que 5000 e menos que 10000 habitantes** [***E***]{.underline} ele viver em um dos ***DSEI's em que*** o **percentual** (ou proporção) da ***população indígena que tomou a segunda dose ou dose única é maior que 75%*** (ou 0.75) da população da respectiva DSEI – são de **3,9%**.
+
+Em resumo, aproximadamente 4 em cada 100 indígenas no Brasil (2024) **vivem em DSEI's** - Distritos Sanitários Especiais Indígenas (que são designados pelo SUS) tais que apresentam **mais que 5000 e menos que 10000 habitantes** [***e***]{.underline}, concomitantemente, **cobertura vacinal da 2ª Dose ou Dose Única contra Covid-19 superior a 75%** da respectiva população indígena de seu DSEI.
+
+#### Evento A ⋃ B
+
+Considerando que foi mantida a mesma População de Indígenas, variável `PI`, no cálculo das três probabilidades anteriores, então isso garante a aplicação do seguinte *Teorema da Soma* da Teoria da Probabilidade [@FonsecaMartins1996 , p. 19-20], que decorre do Axioma n. 3 da definição axiomática de probabilidade proposta por Kolmogorov [@Becker2015 , p. 152-4]:
+
+$$ P(A \cup B) = P(A) + P(B) - P(A \cap B) $$
+
+Que pode ser lido como: a probabilidade da soma ou união de dois Eventos quaisquer é igual à soma das probabilidades desses dois Eventos menos a probabilidade da intersecção deles.
+
+Se os dois Eventos são conjuntos disjuntos, então o *Teorema da Soma* resume-se ao ***Axioma n. 3*** da **Probabilidade Axiomática**:
+
+$$ A \cap B = \emptyset \Rightarrow P(A \cup B) = P(A) + P(B) $$
+
+No presente caso foi verificado que `A` e `B` ***não são conjuntos disjuntos***, de modo que será aplicado o *Teorema da Soma de dois eventos quaisquer*.
+
+```{r}
+
+# Calcular a probabilidade da soma ou União do Evento A com o Evento B
+# P(AouB) = P(A) + P(B) - P(AeB)
+P_AouB <- P_A + P_B - P_AeB
+
+cat("\n")
+cat("Probabilidade do Evento AouB = P_A + P_B - P_AeB =", P_AouB)
+cat("\n")
+cat("\n")
+cat("Probabilidade do Evento AouB =", round(P_AouB * 100, 1), "%")
+```
+
+Ou seja, se um indígena for escolhido por meio de uma Amostra Aleatória Simples com reposição (AAS~c~) de toda a População de Indígenas do Brasil então as razões de chance de ele pertencer ao Evento `A ⋃ B` – população indígena da sua Região ter **mais que 5000 e menos que 10000 habitantes** [***OU***]{.underline} ele viver em um dos ***DSEI's em que*** o **percentual** (ou proporção) da ***população indígena que tomou a segunda dose ou dose única é maior que 75%*** (ou 0.75) da população da respectiva DSEI – são de **64,3%**.
+
+Em resumo, aproximadamente 64 em cada 100 indígenas no Brasil (2024) **vivem em DSEI's** - Distritos Sanitários Especiais Indígenas (que são designados pelo SUS) tais que apresentam **mais que 5000 e menos que 10000 habitantes** [***ou***]{.underline}, *alternativamente*, apresentam **cobertura vacinal da 2ª Dose ou Dose Única contra Covid-19 superior a 75%** da respectiva população indígena de seu DSEI.
+
+## Questão 2
+
+O banco de dados *dados_vacinacao_sp.xls* contém informações sobre a quantidade de vacinas contra COVID-19 aplicadas, diariamente, em 2022, na cidade de São Paulo. Responda:
+
+(a) obtenha um intervalo de confiança de 90% para a quantidade média de vacinas contra COVID-19 aplicadas, diariamente, em 2022, na cidade de São Paulo. Interprete o resultado.
+
+(b) pode-se afirmar que a quantidade média diária de vacinas contra COVID-19 aplicadas em São Paulo, no ano de 2022, é igual a 30 mil doses, ao nível de significância de 5%? Ou seja
+
+-- $H_0:$ A média de vacinas aplicadas diariamente em São Paulo em 2022 é igual a 30 mil
+
+-- $H_1$: A média de vacinas aplicadas diariamente em São Paulo em 2022 é diferente de 30 mil
+
+Interprete o resultado.
+
+### Importar *data set*
+
+Importar o *data set* fornecido no [link](https://ensino.ead.ufg.br/mod/assign/view.php?id=140073 "Plataforma Moodle") da plataforma moodle desta disciplina: `dados_vacinacao_sp.xls`
+
+Que foi baixado e armazenado na pasta `dat` do projeto `EspDS-StatApp`, por mim criado para todas as atividades práticas deste curso.
+
+O uso de um *`project`* elimina o problema dos caminhos absolutos para importar *data sets*.
+
+Assim, basta fornecer o ***caminho relativo*** para importar o *data set* fornecido, o que foi feito a seguir.
+
+```{r}
+
+dados.vacina.sp <- read_excel("dat/dados_vacinacao_sp.xls")
+
+str(dados.vacina.sp)   # tibble [325 × 2] (S3: tbl_df/tbl/data.frame)
+# $ Data da Vacina: POSIXct[1:325], format: "2022-01-01" "2022-01-02" "2022-01-03" "2022-01-04" ...
+#  $ Total de Doses Aplicadas: num [1:325] 34 2780 88565 86571 93133 ... <dbl>
+
+print(dados.vacina.sp) # A tibble: 325 × 2, ou seja, são 325 obs. de 2 variáveis
+# $ Data da Vacina: <S3 POSIXct>, format: aaaa-mm-dd
+# $ Total de Doses Aplicadas: <dbl>
+
+# Total de doses aplicadas vacina Covid-19 em SP:
+N_D.sp <- sum(dados.vacina.sp$`Total de Doses Aplicadas`)
+cat("\n")
+cat("Total de doses vacina Covid-19 aplicadas na cidade de São Paulo (2022) =", N_D.sp)
+```
+
+### Tratar *data set*
+
+Alterar os nomes das variáveis do *data set*, para simplificação, clareza e melhor legibilidade do código.
+
+```{r}
+
+# Alterar os nomes das variáveis
+names(dados.vacina.sp) <- c("data", "doses")
+dados.vacina.sp
+
+# Alterar o tipo da variável doses de <dbl> para <int>
+dados.vacina.sp$doses <- as.integer(dados.vacina.sp$doses)
+dados.vacina.sp
+```
+
+### **Exportar** *data set* tratado
+
+```{r}
+
+# Salvar esse dataframe no formato binário do R na pasta out
+# Sua próxima importação ela virá com todos os tratamentos até aqui realizados:
+# tipos de colunas preservados: <char>, <date>, <time>, <fctr>, <int>,
+# 'data.frame':	779927 obs. of  31 variables:
+write_rds(dados.vacina.sp, file = "out/dados.vacina.sp.rds") # formato binário do R
+
+# Salvar 1ª planilha de dado toda tratada e transformada:
+write.csv(dados.vacina.sp, file = "out/dados.vacina.sp.csv",
+          na = "", # salvar campos NA como espaço vazio <blank>
+          row.names = FALSE) # não salvar coluna com números das linhas
+```
+
+### Intervalo de Confiança 90%
+
+Obter um intervalo de confiança de 90% para a quantidade **média de vacinas** contra COVID-19 aplicadas, diariamente, em 2022, na cidade de São Paulo. Interpretar o resultado.
+
+Exibir um **histograma** da variável `doses`.
+
+Para entender o comportamento da sua distribuição.
+
+```{r}
+
+options(scipen=999) # evitar saídas de números reais em notação científica
+
+# Resumo dos 5 números e média do número diários de doses aplicadas
+cat("Sumário com as principais medidas resumo (média, mediana, mínimo, máximo, primeiro e terceiro quartil, além da quantidade de NA's) da variavél doses:")
+cat("\n")
+summary(dados.vacina.sp$doses)
+# Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+#    1    8610   20483   28607   47212  105884
+
+cat("\n")
+cat("Data em que aplicadas o número  máximo da variavél doses num mesmo dia:")
+dados.vacina.sp$data[which(dados.vacina.sp$doses == 105884)] # no dia "2022-06-06 UTC"
+cat("\n")
+
+is.na(dados.vacina.sp$doses) |> sum() # = 0, ou seja, não há NA's
+is.null(dados.vacina.sp$doses) # FALSE
+dados.vacina.sp |> 
+  filter(doses == 0) # A tibble:0 × 2, ou seja, não há dia sem aplicar pelo menos 1 dose
+
+# Escolher um número adequado de classes do histograma:
+hist(dados.vacina.sp$doses,
+     ## alterar o default do histograma para densidade de frequências
+     freq = FALSE,
+     ## Número de classes
+     nclass = 22, # com 5000 doses em cada intervalo regular de classe
+     ## título
+     main = "Histograma das doses diárias aplicadas da vacina Covid-19 (ano 2022, São Paulo-SP)",
+     ## rótulo do eixo x
+     xlab = "Número de doses diárias aplicadas",
+     ## rótulo do eixo y
+     ylab = "Densidade de frequências",
+     ## usar a cor púrpura nas barras
+     col  = 'purple',
+     xlim = c(0, 120000),   ## limites do eixo x
+     ylim = c(0,  0.00005), ## limites do eixo y
+     )
+# Adicionar uma curva normal ao histograma
+curve(dnorm(x,
+            mean =   mean(dados.vacina.sp$doses),
+            sd   =     sd(dados.vacina.sp$doses) ),
+      add = TRUE,
+      col = "red",
+      lwd = 2)
+
+library(ggplot2)
+
+dados.vacina.sp |> 
+  ggplot(aes(x = doses, after_stat(density))) +
+  # com 30 classes
+  geom_histogram() +
+  geom_density(colour = "blue") # Adicionar uma curva normal ao histograma
+```
+
+Exibir um **boxplot** da variável `doses`.
+
+Para compreender ainda mais o comportamento da sua distribuição.
+
+```{r}
+
+dados.vacina.sp$doses |> 
+  boxplot(horizontal = TRUE, 
+        main = 'Vacinas Covid-19 (ano 2022, São Paulo-SP)\nBoxplot do número diário de doses', ## título do gráfico
+        xlab = 'doses (contagem diária)', ## rótulo do eixo x (horizontal)
+        col  = 4,                ## cor azul da caixa
+        boxwex = 0.45)           ## largura da caixa
+        # xlim = c(0, 120000) )  ## limites do eixo x (não funcionou)
+```
+
+Agora utilizar o pacote `ggplot2`.
+
+```{r}
+
+dados.vacina.sp |>
+  select(doses) |> 
+  filter(!is.na(doses) ) |> 
+  ggplot( aes( x = doses ) ) +
+  geom_boxplot(fill  = "lightblue",
+               alpha = 0.5,
+               width = 0.5) + # parâmetro boxwex não é reconhecido aqui
+  geom_point( x = mean(dados.vacina.sp$doses, na.rm = TRUE), y = 0 ,
+              size = 3, color = "blue") +
+  scale_x_continuous(breaks = seq(0, 110000, 10000) ) +
+  scale_y_continuous(breaks = NULL ) +
+  labs(title    = "Gráfico boxplot: número diário de vacinas aplicadas\nCovid-19 em São Paulo (SP)",
+       subtitle = "Período: 1º jan. a 31 dez. 2022 (n = 325 dias do ano)",
+       x        = "número diário de vacinas aplicadas",
+       y        = "",
+       caption  = "1. Fonte: dados secundários coletados no site do Min. Saúde (OpenDataSUS).\n2. Número médio de doses diárias aplicadas = 28607,1 doses indicada no ponto azul > mediana de 20483 doses\n3. Evidência de assimetria à direita\n4. Presença de um outlier com o máximo de 105884 doses aplicadas em um só dia em 2022-06-06"
+       )
+```
+
+Todos esses resumos descritivos são indicativos de que o cálculo de um Intervalo de Confiança com nível de confiança de 90% sob a suposição de que os dados de doses diárias seguiriam uma distribuição Normal não seria indicado para este caso.
+
+Pois o histograma evidencia que a distribuição da variável doses não se aproxima de uma distribuição normal.
+
+Todavia o **tamanho da amostra (n = 325) é grande o suficiente** para determinação de um intervalo de confiança *bootstrap* (obtido por reamostragem) localizado entre o percentil 5% e o percentil 95%, que corresponde a um IC bootstrap para um Nível de Confiança de 90% (95% - 5% = 90%).
+
+```{r}
+
+# Import library for bootstrap methods
+library(boot)
+
+#---função para calcular a média das médias amostrais
+mean.fun <- function(d, i)
+{    m <- mean(d$doses[i]) # média de doses de amostras de mesmo tamanho i = 325 c/repetição
+     n <- length(i)        # tamanho da amostra bootstrap = 325
+     v <- (n-1) * var(d$doses[i]) / n^2 # variância da amostra bootstrap corrigida pelo TCL
+     c(m, v) # retorna média e variância da amostra bootstrap
+}
+
+set.seed(123456) # para permitir a replicação desta simulação bootstrap
+doses.boot <- boot(dados.vacina.sp, # data set com a variável doses
+                   mean.fun, # função obter a média e var de cada amostra bootstrap
+                   R = 1000) # 1000 reamostragens bootstrap
+
+boot.ci(doses.boot,
+        conf = 0.90,
+        type = c("norm", "basic", "perc", "stud")
+        )
+
+
+cat("\n")
+cat("Intervalo de Confiança bootstrap por percentis c/NC de 90% = (26345, 31036)\n")
+cat("que deve conter, com 90% de confiança, o verdadeiro valor da média populacional das doses diárias aplicadas:",
+    mean(dados.vacina.sp$doses))
+cat("\n")
+```
+
+**Interpretação do resultado**: a cada **100 replicações** do **Evento** vacinar a população de São Paulo - SP que buscou os seus postos de vacinação no ano de 2022, ao longo de n = 325 dias desse mesmo ano, então poderemos estar 90% confiantes, ou seja, pelo menos em 90 dessas 100 replicações, que o **Intervalo de Confiança** *bootstrap* encontrado (26345, 31036) conterá o vedadeiro e desconhecido parâmetro populacional da **média diária de doses aplicadas** da vacina para imunizar a Covid-19 nessa mesma população.
+
+A figura a seguir ilustra esse conceito [@Triola2015intStat , p. 269].
+
+![Intervalos de Confiança (NC = 95%) replicados 20 vezes: pelo menos 19 (20x0.95) deles contêm o verdadeiro valor da proporção populacional pesquisada. É esperado que, no máximo, apenas 1 (=20x0.05) dessas 20 amostras replicadas não capture esse verdadeiro valor do parâmetro populacional de interesse (suposto em p = 0.75)](fig/Triola-NIvelConfianca-IC-Interpretacao.JPG){fig-align="center"}
+
+Um ***teste de normalidade Shapiro-Wilk*** dos dados de doses aplicadas diariamente pode tirar a dúvida sobre se esses dados seguem ou não uma distribuição Normal.
+
+Muito embora não seja necessário, pois o tamanho da amostra é maior que 30.
+
+```{r}
+
+# Teste para normalidade dos dados (tamanho da amostra < 30)
+# H.0: Os dados vieram de uma população normal
+shapiro.test(dados.vacina.sp$doses)
+# 	Shapiro-Wilk normality test
+# 
+# data:  dados.vacina.sp$doses
+# W = 0.8938, p-value = 0.00000000000002802
+
+qqnorm(dados.vacina.sp$doses)
+qqline(dados.vacina.sp$doses)
+```
+
+Neste caso, **rejeitamos a hipótese nula de normalidade**, ao nível de significância (Erro Tipo I) de 5%.
+
+Ou seja, há evidência estatisticamente significativa de que a distribuição dos dados da Variável Aleatória `dados.vacina.sp$doses` **não** segue uma **distribuição normal**.
+
+### Teste de Hipótese
+
+Seguir os seguintes passos:
+
+**1- Situação-Problema que requer um teste estatístico**: pode-se afirmar que a **quantidade média diária de vacinas contra COVID-19** aplicadas em São Paulo, no ano de 2022, é **igual** a **30 mil** doses, ao **nível de significância de 5%**?
+
+**2- Formular as Hipóteses**: Identificar o parâmetro populacional a ser testado (média diária de `doses` de vacinas contra COVID-19) e estabelecer a Hipótese Nula e a Hipótese Alternativa, a seguir.
+
+-   $H_0:$ A média de vacinas aplicadas diariamente em São Paulo em 2022 é **igual** a 30 mil
+-   $H_1$: A média de vacinas aplicadas diariamente em São Paulo em 2022 é **diferente** de 30 mil
+
+Ou seja, simbolicamente:
+
+$$H_0: \mu_{doses} = 30000 \ \ \text{contra} \ \ H_1: \mu_{doses} \neq 30000.$$
+
+O que equivale, simbolicamente, a:
+
+$$H_0: \mu_{doses} = 30000 \ \ \text{ contra } \ \ H_1: \mu_{doses} <> 30000.$$
+
+**3- Selecionar** o **tipo de teste adequado**: olhando para a Hipótese alternativa (H~1~: $\mu_{doses} <> 30000$) o teste adequado a ser aplicado é **um teste bilateral para uma média, com variância populacional desconhecida**, ou seja, será aplicado um **teste-t bilateral para média**, sob a ***suposição*** de que a média das doses diárias aplicadas é uma variável aleatória **T** que segue uma distribuição t-Student com `n-1` graus de liberdade e associada a um **nível de significância** pré-determinado de: $\alpha = 5\%$.
+
+**4- Verificar** as **condições para o teste**: considerando que o tamanho da amostra **`n = 325`** é considerado **grande**, então, pelo **TCL - Teorema Central do Limite**, pode-se considerar que a ***distribuição amostral das médias amostrais*** da variável aleatória `dados.vacina.sp$doses` aproximar-se-á assintoticamente de uma **distribuição normal** com **média das médias amostrais** aproximadamente igual à **média populacional** $\mu_{doses}$ e com **erro padrão da amostra** aproximadamente igual ao **desvio padrão populacional dividido pela raiz quadrada do tamanho amostral**: $\frac{\sigma_{doses}}{\sqrt{n}}$.
+
+**5- Calcular** a **estatística de teste** - usar o **teste** $t$ **para média**, já que **estamos comparando a média de uma amostra com um valor específico**. Neste caso, A estatística de teste $t_{obs}$ é calculada pela seguinte fórmula:
+
+$$t_{obs} = \frac{\sqrt{n}\left(\overline{x} - \mu_0\right)}{s},$$
+
+onde:
+
+-   $\overline{x}$ é a média amostral;
+-   $\mu_0 = 30000$ doses diárias de vacina Covid-19;
+-   $n = 325$ é o tamanho da amostra;
+-   $s$ é o desvio padrão amostral.
+
+**6- Encontrar** o **valor-p** correspondente à **estatística de teste**: considerando que a distribuição t-Student é simétrica em torno do eixo y
+
+$$ \hat{\alpha} = \text{valor-P} = 2 \cdot P(T>t_{obs} \mid H_0 \equiv \text{Verdadeira}) $$
+
+**7- Decidir se é caso de rejeição da H~0~ caso:**
+
+$$ \hat{\alpha} = \text{valor-P} < \alpha $$
+
+Ou seja, no presente caso:
+
+$$ \hat{\alpha} < 0.05 $$
+
+Se a Hipótese Nula vier a ser rejeitada então haverá evidência, para um nível de significância ou erro tipo I igual a 5%, de que a Hipótese Alternativa seja verdadeira.
+
+Implementando todos esses passos no R.
+
+```{r}
+
+t.test(dados.vacina.sp$doses,
+       mu = 30000,
+       alternative = "two.sided")
+
+# 95 percent confidence interval:
+#  25784.32 31429.90
+```
+
+**8- Interpretar os resultados do teste**:
+
+Como o valor-$p$ é igual a $0.3324 = 33.2\%$ que é **maior que** $\alpha = 0.05 = 5\%$, então ***não*** **rejeitamos a hipótese nula**.
+
+Isso significa que **há fortes evidências de que a média de vacinas aplicadas diariamente no Município de São Paulo em 2022 é significativamente igual a 30000 doses diárias**.
+
+Considerando que o teste-t forneceu o seguinte Intervalo de Confiança (Nível de Confiança = 95%): (25784.32, 31429.90), pode-se **complementar a interpretação**:
+
+-   Podemos afirmar, com 95% de confiança, que a média do número de vacinas aplicadas por dia em 2022, na cidade de São Paulo, está entre 25784 e 31430 doses.
+
+-   Isso quer dizer que, ao utilizar esse método para construir intervalos, a média verdadeira estará dentro desse intervalo em 95% dos casos.
+
+-   A administração de saúde pode usar esse intervalo para planejar a logística diária de vacinação. Eles podem ter certeza, com 95% de confiança, de que precisarão distribuir algo entre 25784 e 31430 doses por dia.
+
+-   Se houver uma necessidade de garantir que os centros de vacinação tenham recursos suficientes (vacinas, funcionários etc.), esse intervalo ajuda a determinar a quantidade mínima e máxima de doses esperadas por dia, com base nos dados históricos.
+
+## Questão 3
+
+O Departamento de Monitoramento e Avaliação (DEMAS) da Secretaria de Informação e Saúde Digital (SEIDIGI) desenvolveu em parceria com o Departamento de Imunização e Doenças Imunopreveníveis (DIMU) da Secretaria de Vigilância em Saúde e Ambiente (SVSA), um painel com dados sobre os imunizantes de COVID-19, [clique aqui](https://infoms.saude.gov.br/extensions/VACINOMETRO_COVID19/VACINOMETRO_COVID19.html) para acessar.
+
+As seguintes informações foram obtidas em **06/09/2024**.
+
+-   Quilombolas vacinados com a primeira dose no Brasil: 604.329
+
+-   População quilombola no Brasil: 1.133.106
+
+-   Quilombolas vacinados com a primeira dose na Região Norte: 79.111
+
+-   População quilombola na Região Norte: 154.911
+
+Responda:
+
+(a) é possível afirmar que a proporção de quilombolas vacinados com a primeira dose na Região Norte do Brasil é igual à proporção nacional? Considere o nível de significância de 5%. Interprete o resultado.
+
+(b) obtenha um intervalo de confiança de 99% para a proporção de quilombolas vacinados no Brasil. Interprete o resultado.
+
+Obs.: para o cálculo das proporções de quilombolas vacinados na Região Norte ou no país, utilize 3 casas decimais.
+
+### Importar *data sets*
+
+#### DataSus
+
+*Data set* obtido em **11/09/2024** no site: [**Ministério da Saúde** - Vacinômetro COVID-19](https://infoms.saude.gov.br/extensions/VACINOMETRO_COVID19/VACINOMETRO_COVID19.html)
+
+Uma figura ilustra essa pégina que foi acessada para obter o *data set*:
+
+![Ministério da Saúde: Vacinômetro Covid-19](fig/Vacinometro-Covid-19-MS.JPG){fig-alt="Clicar em: Exportar dados. Depois em: Doses aplicadas na população quilombola por município e estado: (Arquivo XLSX)" fig-align="center"}
+
+Clicar na opção: `Exportar dados`.
+
+Logo após clicar em: Doses aplicadas na população quilombola por município e estado: `(Arquivo XLSX)`.
+
+O *data set* foi obtido com a seguinte observação: "Atualização do painel em **10/09/2024** às **06:02:15**, com dados contidos na Rede Nacional de Dados em Saúde (RNDS) até as **18:06:16** do dia **08/09/2024**.".
+
+> "Fontes:
+>
+> Rede Nacional de Dados de Saúde- RNDS
+>
+> Subsistema de Atenção à Saúde Indígena do SUS- SASISUS"
+
+Para finalizar, após o *download,* clicar em: "Fechar".
+
+Esse *data set* foi baixado e armazenado na pasta `dat` do projeto `EspDS-StatApp`, por mim criado para todas as atividades práticas deste curso.
+
+O uso de um *`project`* elimina o problema dos caminhos absolutos para importar *data sets*.
+
+Assim, basta fornecer o ***caminho relativo*** para importar o *data set* fornecido, o que foi feito a seguir.
+
+```{r}
+
+# Doses aplicadas na população quilombola por município e estado ()
+library(readxl)
+dados.vacina.quilombola <- read_excel("dat/65560573-7c54-4ae2-b2a2-9b6555ebae1d.xlsx")
+
+str(dados.vacina.quilombola)   # tibble [166,365 × 13] (S3: tbl_df/tbl/data.frame)
+#  $ Município                         : chr [1:166365] "Acrelândia" "Bujari" "Bujari" "Cruzeiro Do Sul" ...
+#  $ cod_ibge                          : num [1:166365] 120001 120013 120013 120020 120020 ...
+#  $ UF                                : chr [1:166365] "AC" "AC" "AC" "AC" ...
+#  $ Região                            : chr [1:166365] "Norte" "Norte" "Norte" "Norte" ...
+#  $ Fabricante                        : chr [1:166365] "University of Oxford/AstraZeneca" "BioNTech/Fosun Pharma/Pfizer" "University of Oxford/AstraZeneca" "BioNTech/Fosun Pharma/Pfizer" ...
+#  $ Data                              : POSIXct[1:166365], format: "2021-07-12" "2022-08-11" "2021-09-20" "2022-11-22" ...
+#  $ Total de doses aplicadas          : num [1:166365] 1 1 4 1 1 1 1 1 1 1 ...
+#  $ Quilombolas Vacinados (Dose 1)    : num [1:166365] 0 0 0 0 0 0 0 0 0 0 ...
+#  $ Quilombolas Vacinados (Dose 2)    : num [1:166365] 1 0 4 0 0 0 0 0 1 0 ...
+#  $ Quilombolas Vacinados (Única)     : num [1:166365] 0 0 0 0 0 0 0 0 0 0 ...
+#  $ Quilombolas Vacinados (Adicional) : num [1:166365] 0 0 0 0 0 0 0 1 0 0 ...
+#  $ Quilombolas Vacinados (Reforço)   : num [1:166365] 0 0 0 0 0 1 1 0 0 0 ...
+#  $ Quilombolas Vacinados (2º Reforço): num [1:166365] 0 1 0 1 1 0 0 0 0 1 ...
+
+print(dados.vacina.quilombola) # A tibble: 166,365 × 13, ou seja, são 166.365 obs. de 13 variáveis
+#  Tipos das variáveis que não são <char>
+#  $ cod_ibge: <dbl>
+#  $ Data: <S3 POSIXct>, format: aaaa-mm-dd
+#  $ Total de doses aplicadas          : <dbl>
+#  $ Quilombolas Vacinados (Dose 1)    : <dbl>
+#  $ Quilombolas Vacinados (Dose 2)    : <dbl>
+#  $ Quilombolas Vacinados (Única)     : <dbl>
+#  $ Quilombolas Vacinados (Adicional) : <dbl>
+#  $ Quilombolas Vacinados (Reforço)   : <dbl>
+#  $ Quilombolas Vacinados (2º Reforço): <dbl>
+
+# Total de doses aplicadas vacina Covid-19: Doses aplicadas na população quilombola
+# por Município e Estado
+# Total de Doses aplicadas na População Quilombola no Brasil: 1.848.494
+N_D.quilombola <- sum(dados.vacina.quilombola$`Total de doses aplicadas`)
+cat("\n")
+cat("Total de doses vacina Covid-19 aplicadas na população quilombola (2024) =", N_D.quilombola)
+cat("\n")
+
+# Quilombolas vacinados com a primeira dose no Brasil: 604.329
+N_D1.quilombola <- sum(dados.vacina.quilombola$`Quilombolas Vacinados (Dose 1)`)
+cat("\n")
+cat("Total de Quilombolas vacinados com a primeira dose no Brasil (2024) =", N_D1.quilombola) # 604.329
+cat("\n")
+
+# Quilombolas vacinados com a primeira dose na Região Norte: 79.111
+N_D1_N.quilombola <- sum(dados.vacina.quilombola$`Quilombolas Vacinados (Dose 1)`[dados.vacina.quilombola$Região == "Norte"])
+cat("\n")
+cat("Total de Quilombolas vacinados com a primeira dose na Região Norte (2024) =", N_D1_N.quilombola) # 79.111
+cat("\n")
+
+```
+
+As duas últimas infomações resultaram iguais aos dados fornecidos no eneunciado do problema, a saber:
+
+> Total de Quilombolas vacinados com a primeira dose no Brasil (2024) = 604329
+>
+> Total de Quilombolas vacinados com a primeira dose na Região Norte (2024) = 79111
+
+De modo que esse ***teste de consistência*** é uma **evidência** de que acessou-se exatamente o mesmo *data set* a que a presente questão se refere.
+
+#### IBGE censo 2022
+
+O enunciado da questão também se refere a dados da **populção quilombola** no Brasil levantados pelo IBGE no censo 2022, que foram obtidos, por *download*, no seguinte site oficial: <https://www.ibge.gov.br/estatisticas/sociais/trabalho/22827-censo-demografico-2022.html>
+
+Onde baixou-se e renomeou-se o seguinte *data set*: `Tabela_01_censo-2022_IBGE.xlsx`
+
+Esse *data set* foi baixado e armazenado na pasta `dat` do projeto `EspDS-StatApp`, por mim criado para todas as atividades práticas deste curso.
+
+O uso de um *`project`* elimina o problema dos caminhos absolutos para importar *data sets*.
+
+Assim, basta fornecer o ***caminho relativo*** para importar o *data set* fornecido, o que foi feito a seguir.
+
+```{r}
+
+dados.pop.quilombola <- read_excel("dat/Tabela_01_censo-2022_IBGE.xlsx",
+                                   skip = 4)
+
+names(dados.pop.quilombola)
+
+names(dados.pop.quilombola) <- c(
+  "codUF"         ,
+  "UF"            ,
+  "nomeUF"        ,
+  "codUF_TQ"      ,
+  "nomeTQ"        ,
+  "stat_fund"     ,
+  "pop_res_tot"   ,
+  "sexo_pop_res_M",
+  "sexo_pop_res_F",
+  "quilomb_tot"   ,
+  "sexo_quilomb_M",
+  "sexo_quilomb_F"
+)
+
+names(dados.pop.quilombola)
+
+# Agora pode-se elimnar as 4 primeiras linhas linhas do data set
+# pois todos os nomes das colunas foram adequadamente atribuídos
+dados.pop.quilombola <- dados.pop.quilombola[-(1:4), ]
+
+# E também as linhas n. 504 e 505, que contém duas observaçoes na 1ª coluna, a saber:
+# Fonte: IBGE, Censo Demográfico 2022.
+# Nota: Foram considerados os Territórios Quilombolas com alguma delimitação formal no acervo fundiário do INCRA ou dos órgãos estaduais e municipais com competências fundiárias na data de 31 de julho de 2022, data de referência da pesquisa.
+dados.pop.quilombola <- dados.pop.quilombola[-(504:505), ]
+
+# Resultar no seguinte data frame tratado
+str(dados.pop.quilombola) # tibble [503 × 12] (S3: tbl_df/tbl/data.frame)
+                          # com 503 observações (linhas) e 12 colunas
+
+# Todavia o tipo das colunas 7 a 12 é <char>: character
+# mas seus dados devem ser tratados como numéricos
+# transformar: de <char> para <bdl> (numeric do tipo double)
+# usar a função apply
+dados.pop.quilombola[, 7:12] <- apply(dados.pop.quilombola[, 7:12], MARGIN = 2, FUN = as.numeric)
+
+# agora os dados encontram-se aptos a serem processados
+str(dados.pop.quilombola)
+```
+
+**Realizar** um **teste de integridade** em relação aos dados fornecidos pelo IBGE:
+
+```{r}
+
+# 1º Teste de Integridade dos dados importados
+# por Município e Estado
+# Total da População quilombola no Brasil em Territórios Quilombolas oficialmente delimitados: 1.133.106
+N_quilombola <- sum(dados.pop.quilombola$quilomb_tot,
+                    na.rm = TRUE)
+cat("\n")
+cat("Total da População quilombola que se encontra em Territórios Quilombolas oficialmente delimitados no Brasil (IBGE, censo 2022) =", N_quilombola) # 167.482
+cat("\n")
+
+# Total da População residente em Território quilombola no Brasil: 1.133.106
+N_pop_terr_quilombola <- sum(dados.pop.quilombola$pop_res_tot,
+                             na.rm = TRUE)
+cat("\n")
+cat("Total da População residente em Territórios Quilombolas oficialmente delimitados no Brasil (IBGE, censo 2022) =", N_pop_terr_quilombola) # 203.574
+cat("\n")
+
+library(dplyr)
+UF_quilombola <- dados.pop.quilombola |> 
+  select(UF) |> 
+  unique() |> 
+  table() |> 
+  names()
+
+names(UF_quilombola) <- 1:length(UF_quilombola)
+
+library(gt)
+library(tibble)
+UF_quilombola |> # Unidades da Federação com Comunidade Quilombola
+  as.data.frame() |> 
+  rownames_to_column() |> 
+  gt(caption = "Unidades da Federação com Comunidade Quilombola: n= 25")
+```
+
+Segundo relato divulgado pelo IBGE: <https://agenciadenoticias.ibge.gov.br/agencia-noticias/2012-agencia-de-noticias/noticias/37464-brasil-tem-1-3-milhao-de-quilombolas-em-1-696-municipios#:~:text=A%20popula%C3%A7%C3%A3o%20quilombola%20do%20pa%C3%ADs,reconhecidos%20pela%20Constitui%C3%A7%C3%A3o%20de%201988.>
+
+> "Foram identificados **494** Territórios Quilombolas oficialmente delimitados, presentes em **24** estados e no Distrito Federal, que abrigam **203.518** pessoas, sendo **167.202 quilombolas** (82,16%) e **36.316** (21,72%) **não quilombolas**." \[obs.: 36.316 representa 17,84% e não 21,72%, pois 100% - 82,16% = 17,84%\]
+
+Segundo os **dados aqui levantados**, em **23/09/2024**, junto ao site oficial do censo 2002 do IBGE acima indicado, encontrou-se as seguintes informações comparáveis:
+
+> Foram identificados **503** Territórios Quilombolas oficialmente delimitados, presentes em **24** estados e no Distrito Federal \[n = 25 UF's\], que abrigam **203.574** pessoas, sendo **167.482 quilombolas** (82,27%) e **36.092** (17,73%) **não quilombolas**. \[note-se que 82,27% + 17,73% = 100%\]
+
+Acredita-se que os dados aqui e agora levantados no site oficial do IBGE encontram-se um pouco mais atualizados que os da reportagem que foi publicada em pelo próprio IBGE: "27/07/2023 10h00 \| Atualizado em 27/10/2023 12h03"; mesmo porque as **proporções percentuais** de população quilombolas e não quilombolas que vivem em **Territórios Quilombolas oficialmente delimitados no Brasil** passaram pelo teste de consistência de soma igual a 100%.
+
+**Segunda verificação**, agora com os dados do IBGE baixados em 23/09/2024, junto ao site oficial do censo 2002 do IBGE para o **Total da População que se declara Quilombola**, mesmo que ainda **não domicilie em território já reconhecido**: <https://www.ibge.gov.br/estatisticas/sociais/trabalho/22827-censo-demografico-2022.html?edicao=40667&t=downloads>
+
+**Clicar** nas opções: Quilombolas_Primeiros_resultados_do_universo \> Historico_dos_resultados_da_1a_apuracao_20230727.
+
+Depois **baixar** a planilha: `tabela_04_pessoas_quilombolas_teritorios.xlsx`\]
+
+**Realizar** um **teste de integridade** em relação aos dados fornecidos pelo enunciado deste problema:
+
+-   População quilombola no Brasil: 1.133.106
+-   População quilombola na Região Norte: 154.911
+
+```{r}
+
+dados.pop.autodecl.quilombola <- read_excel("dat/tabela_04_pessoas_quilombolas_teritorios-censo-2022.xlsx",
+                                            skip = 9)
+
+names(dados.pop.autodecl.quilombola)
+# [1] "X"
+# [2] "X.1"
+# [3] "Total"
+# [4] "Percentual.no.total.de.quilombolas.no.recorte"
+# [5] "Total.1"
+# [6] "Percentual.no.total.de.quilombolas.no.recorte.1"
+# [7] "Total.2"
+# [8] "Percentual.no.total.de.pessoas.quilombolas.em.territórios.quilombolas.no.recorte"
+# [9] "Percentual.no.total.de.pessoas.quilombolas.no.recorte"
+#[10] "Fora.de.territórios.quilombolas.titulados"
+#[11] "Percentual.no.total.de.pessoas.quilombolas.no.recorte.1"
+
+names(dados.pop.autodecl.quilombola) <- c(
+  "nivelTerrit"            ,
+  "totPessoaQuilAutoDec"   ,
+  "totDentroTerrOfDelim"   ,
+  "pTotPessoaQuilDentro"   ,
+  "totForaTerrOfDelim"     ,
+  "pTotPessoaQuilFora"     ,
+  "totPessoaQuilAutoDecTit",
+  "pTotPessoaQuilDentroTit",
+  "pTotPessoaQuilAutoDec"  ,
+  "totForaTerrTit"         ,
+  "pTotForaTerrTit"
+)
+
+names(dados.pop.autodecl.quilombola)
+
+# Agora pode-se eliminar a última linha do data set
+# que contem a observação: Fonte: IBGE, Censo Demográfico 2022
+# pois todos os nomes das colunas foram adequadamente atribuídos
+dados.pop.autodecl.quilombola <- dados.pop.autodecl.quilombola[-(34), ]
+
+
+
+# Resultar no seguinte data frame tratado
+str(dados.pop.autodecl.quilombola) # tibble [33 × 11] (S3: tbl_df/tbl/data.frame)
+                          # com 33 observações (linhas) e 11 colunas
+
+# Todavia o tipo das colunas 2 a 11 é <char>: character
+# mas seus dados devem ser tratados como numéricos
+# transformar: de <char> para <bdl> (numeric do tipo double)
+
+# Todavia, antes é preciso substituir o char "-" por NA_char
+# df <- na_if(df, 'foo')
+dados.pop.autodecl.quilombola <- dados.pop.autodecl.quilombola  |> 
+   mutate( across( where(is.character), ~na_if(., "-") ) )
+
+# usar a função apply
+dados.pop.autodecl.quilombola[, 2:11] <- apply(dados.pop.autodecl.quilombola[, 2:11], MARGIN = 2, FUN = as.numeric)
+
+# agora os dados encontram-se aptos a serem processados
+str(dados.pop.autodecl.quilombola)
+
+# Ajustar as proporções para serem expressas em pocertegem com 1 casa decimal
+dados.pop.autodecl.quilombola <- dados.pop.autodecl.quilombola  |> 
+   mutate( across( starts_with("p") , ~round(., 3) * 100 ) )
+```
+
+**Exibir** uma adequada tabela do dados gerais sobre comunidades quilombolas em todo Brasil.
+
+```{r}
+#| label: tbl-quilombola
+#| tbl-cap: "Pessoas quilombolas por localização do domicílio em Territórios Quilombolas oficialmente delimitados e por Territórios Quilombolas titulados, segundo Unidades da Federação - 2022"
+#| warning: false
+
+
+# actual_colnames <- colnames(dados.pop.autodecl.quilombola)
+# actual_colnames
+## [1] "nivelTerrit"             "totPessoaQuilAutoDec"    "totDentroTerrOfDelim"    "pTotPessoaQuilDentro"
+##     "totForaTerrOfDelim"
+## [6] "pTotPessoaQuilFora"      "totPessoaQuilAutoDecTit" "pTotPessoaQuilDentroTit" "pTotPessoaQuilAutoDec"
+##     "totForaTerrTit"         
+##[11] "pTotForaTerrTit"
+
+# library(stringr)
+# desired_colnames <- actual_colnames |> 
+#   str_to_title()
+
+# names(desired_colnames) <- actual_colnames
+
+# desired_colnames
+## nivelTerrit      totPessoaQuilAutoDec      totDentroTerrOfDelim      pTotPessoaQuilDentro
+## totForaTerrOfDelim 
+## "Nivelterrit"    "Totpessoaquilautodec"    "Totdentroterrofdelim"    "Ptotpessoaquildentro"
+## "Totforaterrofdelim"
+## pTotPessoaQuilFora   totPessoaQuilAutoDecTit   pTotPessoaQuilDentroTit     pTotPessoaQuilAutoDec
+## totForaTerrTit
+## "Ptotpessoaquilfora" "Totpessoaquilautodectit" "Ptotpessoaquildentrotit"   "Ptotpessoaquilautodec"
+## "Totforaterrtit"
+## pTotForaTerrTit
+## "Ptotforaterrtit"
+
+
+library(gt)
+# Exibir a Tabela 04 do IBGE: Pessoas quilombolas por localização do domicílio em Territórios Quilombolas oficialmente delimitados e por Territórios Quilombolas titulados, segundo Unidades da Federação - 2022
+
+spanners_and_header_quilombola <- function(gt_tbl) {
+  gt_tbl |> 
+    cols_label(
+    nivelTerrit             = "",
+    totPessoaQuilAutoDec    = "Total de Pessoas Autodeclaradas Quilombolas",
+    totDentroTerrOfDelim    = "Total Dentro",
+    pTotPessoaQuilDentro    = "% do Total de Quilombolas Dentro",
+    totForaTerrOfDelim      = "Total Fora",
+    pTotPessoaQuilFora      = "% do Total de Quilombolas Fora",
+    totPessoaQuilAutoDecTit = "Total Dentro",
+    pTotPessoaQuilDentroTit = "% no Total de pessoas Quilombolas Dentro Territórios oficialmente Delimitados",
+    pTotPessoaQuilAutoDec   = "% Dentro no Total de Pessoas autodeclaradas Quilombolas",
+    totForaTerrTit          = "Total Fora",
+    pTotForaTerrTit         = "% Fora no Total de Pessoas autodeclaradas Quilombolas"
+    ) |> 
+    tab_spanner(
+      label   = md("**Região**"),
+      columns = 1
+    ) |>
+    tab_spanner(
+      label   = md("**Popul.**"),
+      columns = c(2)
+    ) |> 
+    tab_spanner(
+      label   = md("**Territórios Quilombolas oficialmente delimitados**"),
+      columns = c(3:6)
+    ) |> 
+    tab_spanner(
+      label   = md("**Territórios Quilombolas titulados**"),
+      columns = c(7:11)
+    ) |> 
+    tab_footnote(
+      footnote  = "Fonte: IBGE, Censo Demográfico 2022. Quilombolas - primeiros resultados",
+      locations = cells_column_labels(columns = totPessoaQuilAutoDec)
+    ) |>
+    tab_footnote(
+      footnote  = "Foram considerados pelo IBGE os Territórios Quilombolas com alguma delimitação formal no acervo fundiário do INCRA ou dos órgãos estaduais e municipais com competências fundiárias na data de 31 de julho de 2022, data de referência da pesquisa.",
+      locations = cells_column_labels(columns = totDentroTerrOfDelim)
+    )
+}
+
+dados.pop.autodecl.quilombola |> 
+  gt() |> 
+  # cols_label(.list = desired_colnames)  |> 
+  spanners_and_header_quilombola() |> 
+  sub_missing(missing_text = '-') |> 
+  tab_header(
+      title = "Pessoas quilombolas por localização do domicílio em Territórios Quilombolas oficialmente delimitados e por Territórios Quilombolas titulados, segundo Unidades da Federação - 2022",
+      subtitle = "Pessoas Autodelaradas Quilombolas por localização do domicílio"
+    )
+```
+
+Olhando para a tabela acima é possível perceber que, no Centro Oeste, o **DF**, embora com apenas **305 pessoas autodeclaradas quilombolas**, apresenta **100%** delas **fora de Territórios Quilomolas Oficialmente Delimitados** e, por consequência, também **100%** delas **Fora** de **Territórios Quilombolas titulados**.
+
+A mesma tabela informa a situação do **Estado de Goiás**:
+
+-   Há **30.387 pessoas** **autodeclaradas quilombolas**;
+-   Apenas **16,8%** delas [***domicilia***]{.underline} **Dentro** **de Territórios Quilombolas Oficialmente Delimitados** e,
+-   E um percentual ainda menor de **11,6%** [***domicilia***]{.underline} **Dentro** **de Territórios Quilombolas Titulados**.
+-   De modo que, por complementaridade, **88,4%** delas [***domicilia***]{.underline} **Fora** de **Territórios Quilombolas Titulados**.
+
+Ainda verificando as informações da tabela acima, ela passa **teste de integridade** em relação aos dados fornecidos pelo enunciado deste problema:
+
+-   População total de pessoas que se autodeclaram quilombola no Brasil: 1.327.822 (número próximo e um pouco abaixo de 1.133.106, informado no enunciado deste problema n. 3)
+-   População total de pessoas que se autodeclaram quilombola na Região Norte: 166.069 (também um número próximo e um pouco acima de 154.911, informado no enunciado deste problema n. 3)
+
+Acredita-se que, com o prosseguimento da consolidação do senso de 2022 o IBGE aprimorou a precisão da informação inicial da reportagem que divulgou.
+
+**Exibir** uma adequada tabela do dados gerais sobre comunidades quilombolas situadas no **Estado de Goias**.
+
+Filtrar os dados apenas para o Estado de Goias.
+
+```{r}
+
+dados.pop.quilombola |> 
+  filter(UF == "GO")
+```
+
+**Exibir** uma adequada tabela do dados gerais sobre comunidades quilombolas situadas no **Estado de Goias**.
+
+```{r}
+#| label: tbl-quilombola-goias
+#| tbl-cap: "Pessoas quilombolas ou não com domicílio em Territórios Quilombolas no Estado de Goiás - censo 2022"
+#| warning: false
+
+spanners_and_header_quilombola_go <- function(gt_tbl) {
+  gt_tbl |> 
+    cols_label(
+    nomeUF         = "",
+    codUF_TQ       = "IBGE",
+    nomeTQ         = "Nome Comunidade",
+    stat_fund      = "Status fundiário",
+    pop_res_tot    = "Total Pop. residente",
+    sexo_pop_res_M = "Masc.",
+    sexo_pop_res_F = "Fem.",
+    quilomb_tot    = "Total Quilombo resid.",
+    sexo_quilomb_M = "Masc.",
+    sexo_quilomb_F = "Fem."
+    ) |> 
+    tab_spanner(
+      label   = md("**Estado**"),
+      columns = 1
+    ) |>
+    tab_spanner(
+      label   = md("**Código**"),
+      columns = c(2)
+    ) |> 
+    tab_spanner(
+      label   = md("**Territórios Quilombolas oficialmente delimitados**"),
+      columns = c(3:10)
+    ) |> 
+    tab_footnote(
+      footnote  = "Fonte: IBGE, Censo Demográfico 2022. Quilombolas - primeiros resultados",
+      locations = cells_column_labels(columns = codUF_TQ)
+    ) |>
+    tab_footnote(
+      footnote  = "Foram considerados pelo IBGE os Territórios Quilombolas com alguma delimitação formal no acervo fundiário do INCRA ou dos órgãos estaduais e municipais com competências fundiárias na data de 31 de julho de 2022, data de referência da pesquisa.",
+      locations = cells_column_labels(columns = stat_fund)
+    )
+}
+
+dados.pop.quilombola |> 
+  filter(UF == "GO") |> 
+  select(
+    nomeUF,
+    codUF_TQ,
+    nomeTQ,
+    stat_fund,
+    pop_res_tot,
+    sexo_pop_res_M,
+    sexo_pop_res_F,
+    quilomb_tot,
+    sexo_quilomb_M,
+    sexo_quilomb_F
+  ) |> 
+  gt() |> 
+  # cols_label(.list = desired_colnames)  |> 
+  spanners_and_header_quilombola_go() |> 
+  sub_missing(missing_text = '-') |> 
+  tab_header(
+      title = "Pessoas quilombolas ou não com domicílio em Territórios Quilombolas no Estado de Goiás - censo 2022",
+      subtitle = "Estratificadas por sexo"
+    )
+```
+
+Imporante registrar que essas informações do censo IBGE 2022 não conferem com os dados de estimaitva da população Kilombo Kalunga fornecidos pela Fiocruz.
+
+### Exportar *data sets*
+
+```{r}
+
+# Salvar esse dataframe no formato binário do R na pasta out
+# Sua próxima importação ela virá com todos os tratamentos até aqui realizados:
+# Salvar 1ª planilha de dados toda tratada e transformada:
+# tipos de colunas preservados: <char>, <date>, <time>, <fctr>, <int>,
+# 'data.frame':	33 obs. of  11 variables
+write_rds(dados.pop.autodecl.quilombola,
+          file = "out/dados.pop.autodecl.quilombola.rds") # formato binário do R
+
+# Salvar 1ª planilha de dados toda tratada e transformada:
+write.csv(dados.pop.autodecl.quilombola |> 
+            filter( !(nivelTerrit %in% c("Brasil", "Norte", "Nordeste", "Sudeste",
+                                         "Sul", "Centro-Oeste")) ),
+          file = "out/dados.pop.autodecl.quilombola.csv",
+          na = "", # salvar campos NA como espaço vazio <blank>
+          row.names = FALSE) # não salvar coluna com números das linhas
+
+
+# Salvar 2ª planilha de dados toda tratada e transformada:
+# tipos de colunas preservados: <char>, <date>, <time>, <fctr>, <int>,
+# 'data.frame':	503 obs. of  12 variables
+write_rds(dados.pop.quilombola,
+          file = "out/dados.pop.quilombola.rds") # formato binário do R
+
+# Salvar 2ª planilha de dados toda tratada e transformada:
+write.csv(dados.pop.quilombola,
+          file = "out/dados.pop.quilombola.csv",
+          na = "", # salvar campos NA como espaço vazio <blank>
+          row.names = FALSE) # não salvar coluna com números das linhas
+
+
+# Salvar 3ª planilha de dados toda tratada e transformada:
+# tipos de colunas preservados: <char>, <date>, <time>, <fctr>, <int>,
+# 'data.frame':	166365 obs. of  13 variables
+write_rds(dados.vacina.quilombola,
+          file = "out/dados.vacina.quilombola.rds") # formato binário do R
+
+# Salvar 3ª planilha de dados toda tratada e transformada:
+write.csv(dados.vacina.quilombola,
+          file = "out/dados.vacina.quilombola.csv",
+          na = "", # salvar campos NA como espaço vazio <blank>
+          row.names = FALSE) # não salvar coluna com números das linhas
+```
+
+### Solução item a
+
+(a) é possível afirmar que a ***proporção*** de ***quilombolas vacinados*** com a ***primeira dose*** na ***Região Norte*** do Brasil [***é igual***]{.underline} à **proporção nacional**? Considere o nível de significância de 5%. Interprete o resultado.
+
+Obs.: para o cálculo das proporções de quilombolas vacinados na Região Norte ou no país, utilize 3 casas decimais.
+
+Trata-se de um teste-Z de Hipótese bicaudal (H~0~: igual a *versus* H~1~: difetente de) **paramétrico**, para **comparação** de **duas proporções populacionais**, cada uma delas referida à respectiva população, que será realizado a partir das **estimativas** obtidas de ***duas amostras independentes***:
+
+-   p~1~ = ***proporção*** de ***quilombolas vacinados*** com a ***primeira dose*** na [***Região Norte***]{.underline} (1ª população);
+-   p~2~ *= **proporção*** de ***quilombolas vacinados*** com a ***primeira dose*** em [***todo***]{.underline} o [***Brasil***]{.underline} (2ª população).
+
+Seguir o **fluxo** para esse tipo de teste [@Frei2018introInferencia , p. 154-155].
+
+1\) **Formular** adequadamente as **Hipótesese** feitas sobre os parâmetros das 2 populações:
+
+-   H~0~: p~1~ **=** p~2~ (é a hipótese que contém a igualdade: `p1 - p2 = 0`);
+-   H~1~: p~1~ ***≠*** p~2~(é a hipótese que só contém desigualdade: p~1~ **\<\>** p~2~ **=** ou seja `p1 - p2 <> 0`).
+
+É a ***HIpótese alternativa*** (H~1~) que determina, neste caso, que será um *teste bicaudal*.
+
+As duas desigualdades, menor que e maior que, apontam, cada uma delas, para as duas direções: cauda **à esquerda** (**\<**) e também cauda **à direita** (**\>**).
+
+2\) **Estabeler** o **nível de significância**: em Ciências da Saúde Pública, como na Epidemiologia, é usual adotar $\alpha = 5.0\%$, que é igual ao valor fornecido pelo enunciado do problema (item *a*).
+
+3\) **Calcular** as duas **proporções *amostrais***, ou seja, as duas ***estimativas*** ($\hat{p_1}$ e $\hat{p_2}$) necessárias para realizar o teste-Z.
+
+Para utilizar distribuição Normal é necessário que ela seja uma boa aproximação da binomial. Logo, necessário que se satisfação as seguintes duas condições para o teste:
+
+$$ n_1 \cdot \hat{p_1} \cdot \hat{q_1} \geq 5 $$
+
+e que:
+
+$$ n_2 \cdot \hat{p_2} \cdot \hat{q_2} \geq 5 $$
+
+Depois calcular a seguinte estatística de teste:
+
+$$ Z_{obs} = \frac{(\hat{p_1} - \hat{p_2})}{ \sqrt{\overline{p}(1-\overline{p}) \Big( \frac{1}{n_1} + \frac{1}{n_2} \Big) } } $$
+
+onde a ***proporção agregada*** (*pooled*) das duas populações, para testar *se* a diferença entre as duas proporções populacionais é igual a *zero*, é estimada por:
+
+$$ \overline{p} = \frac{n_1 \cdot \hat{p_1} + n_2 \cdot \hat{p_2}}{(n_1 + n_2)} $$
+
+Com os dados amostrais é possível verificar os pressupostos para aceitar a aproximação de uma Binomial por uma Normal.
+
+Usar o R para determinar esses valores.
+
+```{r}
+
+names(dados.vacina.quilombola) <- c(
+  "M",
+  "cod_ibge",
+  "UF",
+  "Reg",
+  "fabric",
+  "data",
+  "totD",
+  "quil_D1",
+  "quil_D2",
+  "quil_DU",
+  "quil_Ad",
+  "quil_Ref",
+  "quil_Ref2"
+)
+  
+
+n_1 <- dados.vacina.quilombola |> # 79111 quilombolas da Região Norte vacinados com a Dose 1
+  filter(Reg == "Norte") |> # A tibble:20,105 × 13
+  summarise( tot_quil_D1_N = sum(quil_D1) ) |> 
+  unlist() |> 
+  as.vector()
+
+n_2 <- dados.vacina.quilombola |> # 604329 quilombolas de todo Brasil vacinados com a Dose 1
+  summarise( tot_quil_D1_BR = sum(quil_D1) ) |> 
+  unlist() |> 
+  as.vector()
+
+n_N <- dados.pop.autodecl.quilombola$totPessoaQuilAutoDec[dados.pop.autodecl.quilombola$nivelTerrit == "Norte"]
+# A rigor número de quilombolas autodeclarados na Região Norte= 166069
+# Todavia o enunciado do problema assumiu que esse valor é: 154911
+n_N <- 154911
+
+n_Br <- dados.pop.autodecl.quilombola$totPessoaQuilAutoDec[dados.pop.autodecl.quilombola$nivelTerrit == "Brasil"]
+# A rigor número de quilombolas autodeclarados de todo o Brasil = 1327802
+# Todavia o enunciado do problema assumiu que esse valor é: 1.133.106
+n_Br <- 1133106
+
+# Com isso é possível realizar o cálculo das probalidades frequentistas
+
+# p_1 da população 1: proporção de quilombolas Região Norte vacinados com a D1
+p_1 <- n_1 / n_N
+# e seu complementar
+q_1 <- 1 - p_1
+
+# p_2 da população 2: proporção de quilombolas de todo  Brasil vacinados com a D1
+p_2 <- n_2 / n_Br
+# e seu complementar
+q_2 <- 1 - p_2
+
+n_1; p_1; q_1
+
+n_2; p_2; q_2
+```
+
+Resultados, considerando até 3 casas decimais para as proporções estimadas de cada população:
+
+$$ n_1 = 79111, \hat{p_1} = 0.511, \hat{q_1} = 0.489; \,\,\, n_2 = 604329, \hat{p_2} = 0.533, \hat{q_2} = 0.467  $$
+
+De modo que as condições pressupostas de aproximação da binomial por uma Normal resultaram satisfeitas para as duas populações, pois:
+
+```{r}
+
+n_1 * p_1 * q_1
+
+n_2 * p_2 * q_2
+
+p_1
+p_2
+```
+
+Simbolicamente a expressão que traduz que essas condições foram verificadas:
+
+$$ n_1 \cdot \hat{p_1} \cdot \hat{q_1} = 19768 \geq 5 \text{  e  } n_2 \cdot \hat{p_2} \cdot \hat{q_2} = 150410 \geq 5 $$
+
+Resultados das estatísticas amostrais que servirão como ***estimativas*** do **parâmetro proporção** das duas populações:
+
+$$ \hat{p_1} = \frac{n_1}{n_{Norte}} = 0.511 \text{  e  } \hat{p_2} = \frac{n_2}{n_{Br}} = 0.533 $$
+
+De modo que a curva **Normal** pode ser considerada como **boa aproximação** para a **distribuição Binomial**, que **bem modela o fenômeno estudado**, pois seus pressupostos pode ser considerados como atendidos no presente caso, a saber:
+
+-   ou os quilombolas **foram** (sucesso) ou **não foram** (fracasso) **vacinados** com a *1ª Dose da vacina contra Covid-19* (é um **Evento de Bernoulli**);
+-   pode-se, razoavelmente, considerar que a *probabilidade* (p) de cada quilombola brasileiro ter recebido essa 1ª Dose ser a mesma para toda essa população (**equiprobabilidade**), dado que tanto a **população quilombola brasileira** como a **população quilombola domicialiada na Região Norte** podem ser consideras **grandes** (\> 20 vezes o tamanho da amostra dos quilombolas em cada grupo que receberam a 1ª Dose da vacina),
+-   bem como que o valor dessa **probabilidade** *não variou ao longo de todo o período de tempo em que essa 1ª Dose foi disponobilizada e aplicada em todo o país*: **`p` (sucesso) é constante**; logo **`q = 1-p` (fracasso)** também é **constante**.
+
+**4) Calcular a Estatística de teste**: Z~obs~
+
+Antes calcular o valor de s~soma~, ou seja, o desvio padrão populacional combinado, conforme a fórmula abaixo, que utiliza a seguinte estatística de teste:
+
+$$ Z_{obs} = \frac{(\hat{p_1} - \hat{p_2}) - (p_1 - p_2)}{ \sqrt{\frac{ \hat{p_1}(1-\hat{p_1})}{n_1} + \frac{ \hat{p_2}(1-\hat{p_2})}{n_2}}} $$
+
+onde a diferença (d) entre as proporções das duas populações é:
+
+$$ d = (p_1 - p_2) $$
+
+Quando for o caso de realizar um teste para verificar se a diferença entre a diferença das duas proporções populacionais seria, ou não, igual a um determinado valor `d`.
+
+Que só seria usado caso fosse um teste para verificar se a hipótese nula, de diferença entre as duas proporções populacionais, seria igual a um determinado valor `d`. Ou seja, para testar (*unpooled*): $$H_0: p_1 - p_2 = d \ \ {\text{ contra }} \ \ H_1: p_1 - p_2 \ne d$$
+
+Mas que fica aqui registrado dada a possibilidade de valer-se do valor `d = 0`, para também testar, por um outro modo, o teste-Z ora proposto para diferença entre duas proporções populacionais.
+
+```{r}
+
+# desvio padrão populacional combinado: obtido pela raiz quadrada da soma das variâncias observadas em cada uma das duas amostras
+s_soma <- sqrt( p_1 * (1 - p_1) / n_1 + p_2 * (1 - p_2) / n_2 )
+
+s_soma # 0.001889581 = 0.19%
+
+# para testar se a diferença entre as duas proporções populacionais é: d=0
+d   <- 0
+z_d <- ( (p_1 - p_2) - d ) / s_soma
+
+z_d
+
+valor_p_d <- 2 * pnorm(- abs(z_d) ) # vezes 2 porque as duas caudas são simétricas
+                                    # menos o módulo de z_d para sempre retornar
+                                    # a área sob a cauda esquerda da curva normal
+
+valor_p_d # igual a 0.000000000000000000000000000000004123454 << 1.0% (que é menor que alpha = 5%)
+
+(p_1 - p_2) # valor da diferença entre as proporções -0.02265167 = -2.3%
+```
+
+Com esse valor-p \<\< 1% (que é menor que 5%), **rejeita-se** a **Hipótese Nula** de que a **diferença** entre as duas proporções populacionais **seria igual a zero** (`d = 0`), para um Nível de Confiança de 99%.
+
+Logo, há evidência suficiente para apoiar a Hipótese Alternativa de que essas duas proporções são diferentes, considerado um Erro Tipo I de 1%.
+
+Antes de fazer qualquer outro teste parece ser interessante fazer um **teste F**, ***de Snedecor***, para verificar se é, ou não, caso de **Homocedasticidade**.
+
+```{r}
+
+########### Realizar o teste F (funcao já existente no R)
+# Teste bilateral
+Vac.Norte <- dados.vacina.quilombola |> # Dose1 nos quilombolas da Região Norte
+  filter(Reg == "Norte") |> 
+  select(quil_D1) |>  # vacinados com a Dose 1 contra Covid-19
+  unlist() |> 
+  as.vector()
+
+Vac.Brasil <- dados.vacina.quilombola |> # Dose1 nos quilombolas de todo o Brasil
+  select(quil_D1) |>  # vacinados com a Dose 1 contra Covid-19
+  unlist() |> 
+  as.vector() 
+  
+var.test(Vac.Norte, Vac.Brasil) # p-value < 0.00000000000000022
+## alternative hypothesis: true ratio of variances is not equal to 1
+```
+
+Com valor-p \< 0.00000000000000022, ou seja, praticamente zero (\<\<1,0%), **rejeita-se** a **Hipótese Nula**: de Homocedasticidade.
+
+**Apoia-se** a **Hipótese Alternativa**: [**Heterocedasticidade**]{.underline} (*alternative hypothesis: true ratio of variances is not equal to 1*; F ≠ 1).
+
+Note que **rejeitamos** $H_0$, então temos uma indicação de que ambas as Regições, Região Norte e todo o Brasil, **não têm uma consistência semelhante nas suas quantidades de 1ª doses da vacina contra Covid-19 aplicadas à população autodeclarada quilombola, ao longo do tempo**.
+
+Pode ser que uma dessas duas Regiõs (Norte -x- Brasil) tenha uma estratégia de vacinação mais consistente, enquanto o outro pode ter ***flutuações maiores*** nas **quantidades de 1ª doses da vacina contra Covid-19 aplicadas, ao longo do tempo**.
+
+**Suponha** que temos o **interesse** em saber **qual dessas duas Regiões apresenta uma variabilidade maior nas 1ª doses aplicadas**.
+
+Nesse caso, precisamos realizar um teste unilateral, por exemplo, **à direita**. Ou seja, $$H_0: \sigma^2_{Norte} \leq \sigma^2_{Brasil} \ \ {\text{ contra }} \ \ H_1: \sigma^2_{Norte} > \sigma^2_{Brasil}.$$
+
+```{r}
+
+# Teste unilateral à direita
+var.test(Vac.Norte, Vac.Brasil, alternative = "greater")
+```
+
+Aqui, **também rejeitamos a hipótese nula**.
+
+Logo, **ao nível de 1%,** a **Região Norte tem flutuações maiores** nas quantidades de **1ª doses aplicadas aos quilombolas**, ao longo do tempo, do que todo o **Brasil**.
+
+Isso significa que a variância da Região Norte é significativamente maior que a de todo o Brasil (F \> 1).
+
+Realizar, então, o **teste de normalidade Shapiro-Wilk**, que indicou, ao **nível de 1%, que os dados não são provenientes de uma população normal** para as duas Regiões: Norte e todo o Brasil.
+
+```{r}
+
+# Teste para normalidade dos dados (tamanho da amostra >> 30)
+# H.0: Os dados vieram de uma população normal
+# shapiro.test( Vac.Norte  )
+# Error in shapiro.test(Vac.Norte) : sample size must be between 3 and 5000
+shapiro.test( Vac.Norte  |> sample(size = 5000) )
+
+shapiro.test( Vac.Brasil |> sample(size = 5000) )
+```
+
+Observar que essa função `shapiro.test` apresentou mensagem de erro quando executada pela primeira vez:
+
+> Error in shapiro.test(Vac.Norte) : sample size must be between 3 and 5000
+
+Razão porque limitou-se sua entrada de dados a uma amostra aleatória simples sem reposição (AAS~s~) de tamanho n = 5000 elementos de cada um dos dois conjunto de dados testados: `Vac.Norte` e `Vac.Brasil`.
+
+Com esses dois valores-p muito pequenos (\<\<1%) **rejeita-se** a **Hipótese Nula de Normalidade** das duas populações, ou seja, de que os dados viriam de 2 populações cujas distribuições empíricas *não* seriam *divergente*, significativamente, de uma distribuição Normal.
+
+Agora **calcular** o valor de Z~obs~ para a diferença da proporção populacional advinda das 2 amostras, segundo a fórmula da **proporção amostral combinada** (*pooled aproach*) apresentada na literatura para essa estatística de teste para duas proporções s[@Triola2015intStat , p. 372-373]: cf. também <https://www.qualitygurus.com/two-proportions-z-test-or-two-sample-z-test-for-proportions/>
+
+![Two Proportions Z Test or Two Sample Z Test for Proportions](fig/Two-proportions-z-Test-1024x588.jpg){fig-align="center"}
+
+Observar, ainda, ***se*** seria necessário uma **fórmula adequada** quando se verifica **heterocedasticidade**. O que **não parece ser o caso**, mas sim quando o teste é *um teste t-Student para diferença entre duas médias populacionais*; contudo *não* para um teste para verificar a diferença entre *duas proporções populacionais*, como é o presente caso.
+
+**Teste-Z para verificar se a diferença entre duas proporções populacionais é, ou não, igual a zero.**
+
+Vamos utilizar a opção ***pooled*** da figura acima, cuja *fórmula* já foi acima, logo no início da solução deste item *a*, apresentada em Latex como *adequada* para o presente caso.
+
+```{r}
+
+# z_obs <- ( (p_2 - p_1) / ( sqrt( (p_1*q_1/n_1) + (p_2*q_2/n_2) ) ) ) |> abs()
+
+p_combo <- (n_1*p_1 + n_2*p_2) / ( n_1 + n_2 )
+
+z_obs <- ( (p_1 - p_2) / ( sqrt( p_combo*(1-p_combo) * (1/n_1 + 1/n_2) ) ) )
+
+z_obs # -12.00484
+# com essa opção obteve-se um valor z_obs ligeiramente mais extremo que
+# o valor z_d acima calculado para a opção do teste upooled: -11.98767
+# mas nada que pudesse minimamente por em dúvida o resultado de ambos
+# pela rejeição da Hipótese Nula: p_1 = p_2
+
+# teste Z bilateral
+# Área sob a curva Normal padronizada: N(0, 1)
+# à esquerda do valor de z_obs e à direita do módulo de z_obs
+valor_p <- 2 * pnorm(- abs(z_obs) ) # vezes 2 porque as duas caudas são simétricas
+                                    # menos o módulo de z_obs para sempre retornar
+                                    # a área sob a cauda esquerda da curva normal
+
+valor_p # igual a 0.000000000000000000000000000000003351251 << 1.0% (menor que alpha = 5%)
+
+(p_1 - p_2) # valor da diferença entre as proporções -0.02265167 = -2.3%
+```
+
+**Hipótese Nula** da **nulidade da diferença** entre as **duas proporções populacionais** foi **rejeitada** com um valor-p \<\< 1.0%.
+
+Também podemos usar uma função que já está implementada no R. Porém, esta função para testar proporções usa o ***teste Qui-Quadrado*** (*não paramétrico*).
+
+```{r}
+
+pop_quil_Norte  <- 154911  #   154.911
+pop_quil_Brasil <- 1133106 # 1.133.106
+
+Vac_Norte  <- sum(Vac.Norte)  #  79111
+Vac_Brasil <- sum(Vac.Brasil) # 604329
+
+# Teste bilateral
+prop.test(x = c(Vac_Brasil     , Vac_Norte),      # um vetor com os dados da Região Norte e do Brasil
+          n = c(pop_quil_Brasil, pop_quil_Norte)) # um vetor com a população de Quilombola do Norte e do Brasil
+```
+
+**Hipótese Nula** da **igualdade** entre as **duas proporções populacionais** também foi **rejeitada** com um valor-p \<\< 1.0%.
+
+**Aplicar** também um teste Qui-quadrado **unilateral à direita**, já que há evidências de que `p2 > p1`.
+
+```{r}
+
+# Teste unilateral à direita
+prop.test(x = c(Vac_Brasil     , Vac_Norte),      # um vetor com os dados do Brasil e da Região Norte
+          n = c(pop_quil_Brasil, pop_quil_Norte), # um vetor com a população de Quilombola do Brasil e do Norte
+          alternative = "greater") # teste unilateral à direita: p2(Br) > p1(N)
+
+# sample estimates:
+#    prop 1    prop 2 
+# 0.5333385 0.5106868
+```
+
+Também **rejeitamos** a **Hipótese Nula** de **nulidade da diferença** entre as **duas proporções populacionais**, agora com evidência suficiente para **apoiar** a **Hipótese Alternativa** de que `p2(Br) > p1(N)`, com valor-p \<\< 1%.
+
+**Concluí-se** que, ao **nível de significância de 1%**, portanto **também para um nível de significância de 5%** (enunciado, item a), a **proporção** da **população autodeclarada Quilombola** que foi **vacinada contra COVID-19**, com a **primeira dose** (1ª Dose), em **todo o Brasil** (53,3%) é [**significativamente**]{.underline} [**maior do que**]{.underline} a da **Região Norte** (51,1%).
+
+**5) Resultado do Teste**:
+
+Como, nos **quatro testes** acima, o valor-p \<\< 1.0%, pela regra de julgamento adotada com Nível de Significância de 5% (enunciado do problema, item a), chega-se ao seguinte resultado do teste-Z para diferença entre duas proporções populacionais:
+
+[**Rejeita-se**]{.underline} a **Hipótese Nula** de **igualdade** entre as duas **proporções populacionais:** p~1~(N) e p~2~(Br).
+
+Há evidências observadas nos dados amostrais para, com um Nível de Confiança de 95% (até mesmo para NC = 99%), de que as duas **proporções populacionais** p~1~ e p~2~ **são diferentes**.
+
+Considerando que o valor Z~obs~ = -12.00484 foi negativo então pode concluir-se que p~1~ - p~2~ \< 0, ou seja, que p~2~ (Br) é maior que p~1~ (N): p~2~ \> p~1~, o que foi confirmado pelo teste qui-quadrado unilateral à direita acima aplicado.
+
+**6) interpretação do teste**
+
+Com **base nas evidências** coletadas (4 testes de hipótese) pode-se **concluir**, por **inferência estatística**, que: a **proporção de pessoas autodeclaradas quilombolas em todo Brasil e que receberam a 1ª Dose da vacina contra Covid-19** não é igual e foi mesmo [**superior**]{.underline} **(maior que)** à **proporção de pessoas autodeclaradas quilombolas domiciliadas na Região Norte e que receberam a 1ª Dose da vacina contra Covid-19**, para um Nível de Confiança de 95% (como pedido no enunciado do item a); ou seja, caso esse processo de amostragem das duas populações fosse *repetido um grande número de vezes* então em 95% delas também é esperada a rejeição da mesma Hipótese Nula aqui testada, dentro de uma margem de Erro Tipo I de 5% (aqueles casos em que rejeita-se uma Hipótese nula, *mas* ela é *verdadeira*), que também é conhecido como Falso Positivo (F^+^) ou *falso alarme*.
+
+### Solução item b
+
+(a) obtenha **um intervalo de confiança** de **99%** para a **proporção** de **quilombolas vacinados no Brasil**. **Interprete** o resultado.
+
+Obs.: para o cálculo das proporções de quilombolas vacinados na Região Norte ou no país, utilize 3 casas decimais.
+
+**1) Calcular IC para uma proporção populacional**
+
+A fórmula para um IC - Intervalo de Confiança para uma proporção populacional, associado a um certo Nível de Confiança ($1 - \alpha$), é dada por [@Frei2018introInferencia , p. 89-91]: cf. também [@Triola2015intStat, p. 271], que é mais rigoroso no uso da notação que, por isso, é aqui replicada.
+
+$$ P \Big( p - z_{\alpha/2} \cdot \sqrt{\frac{ \hat{p}(1-\hat{p}) }{n}}; p + z_{\alpha/2} \cdot \sqrt{\frac{ \hat{p}(1-\hat{p}) }{n}} \Big) = 1 - \alpha $$
+
+Neste caso a proporção populacional `p = p2` **de pessoas autodeclaradas quilombola em todo o Brasil e que foram vacinados com a 1ª Dose contra Covid-19** já foi calculada e pode ser considerada ***constante***.
+
+Considerando que `q = 1 - p = 1 - q2`, então esse Intervalo de Confiança (IC) pode ser obtido utilizando o R.
+
+Basta encontrar o valor de Z~c~ (Z crítico) associado a um Nível de Confiança de 99%, ou seja, Nivel de Significância (*alpha*) igual a 1%.
+
+```{r}
+
+p <- p_2 # é a proporção da população 2 , calculada acima
+q <- q_2 # observar que: q_2 = (1 - p_2), calculada acima
+n <- n_Br # calculado acima
+
+# Valor Z crítico padronidado para alpha = 1% = 0.01 (ou seja 0.5% em cada cauda)
+z_c <- qnorm(p = 0.005) |> abs() # pega-se o módulo do quantil retornado
+
+p; q; z_c; n
+
+# Intervalo de Confiança:
+# Calcular o limite inferior: li
+li <- ( p - z_c * sqrt( (p*q)/n ) ) |> round(3) # com 3 casas decimais
+# Calcular o limite superior: ls
+ls <- ( p + z_c * sqrt( (p*q)/n ) ) |> round(3) # com 3 casas decimais
+
+cat("Proporção populacional (p) de pessoas autodeclaradas quilombolas em todo o Brasil e que foram vacinadas com a 1ª Dose contra Covid-19:\n")
+
+cat("\n")
+cat("Intervalo de Confiança 99% proporção p = (", li, ",", ls, ")")
+cat("\n")
+
+cat("\n")
+cat("Intervalo de Confiança 99% proporção p = (",
+    paste0(li*100, "%"),
+    ",",
+    paste0(ls*100, "%"),
+    ")" )
+cat("\n")
+```
+
+Vale transcrever a seguinte e importante observação registrada por [@Triola2015intStat , p. 336]:
+
+> **ATENÇÃO**
+>
+> **Quando testamos afirmativas** sobre **proporções populacionais**, o **método do valor crítico e o método do valor P são equivalentes** no sentido de que eles sempre dão o mesmo resultado, **mas o método do intervalo de confiança não é equivalente** e pode resultar em uma conclusão diferente. (Ambos os métodos, do valor crítico e do valor P, usam o mesmo desvio-padrão baseado na proporção estabelecida p, mas o intervalo de confiança usa um desvio-padrão estimado, com base na proporção amostral.) Eis uma **boa estratégia**: **use o método do intervalo de confiança para [estimar]{.underline} uma proporção populacional**, [**mas**]{.underline} **use o método do valor P ou o método do valor crítico para [testar uma afirmativa]{.underline} sobre uma proporção populacional**.
+
+Em passagem anterior o mesmo autor oferece uma fonte para aprofundar nessa importante diferenciação [@Triola2015intStat , p. 268]:
+
+> **ATENÇÃO**
+>
+> Intervalos de confiança podem ser usados informalmente para a comparação de diferentes conjuntos de dados, mas **a sobreposição de intervalos de confiança não deve ser usada para se tirarem conclusões formais e finais sobre igualdade de proporções**. (Veja “On Judging the Significance of Differences by Examining the Overlap Between Confidence Intervals”, de Schenker e Gentleman, *American Statistician*, Vol. 55, Nº 3.)
+
+Com essas duas precauções em mente passa-se para fase final da interpretação dos resultados encontrados.
+
+**2) Interpretar o resultado de um IC(NC = 99%)**
+
+Não se sabe se o **verdadeiro parâmetro** da **proporção populacional** (p ou p~2~) de **pessoas autodeclaradas quilombolas em todo o Brasil e que foram vacinadas com a 1ª Dose contra Covid-19** realmente se encontra no seguinte Intervalo de Confiança :
+
+$$ IC_{(\alpha/2 = 0.5\%)} = (53,2\%;53,5\%) $$
+
+Todavia, pode-se **confiar** que, caso esse **processo de amostragem** fosse **repetido** por **100 vezes**, então **espera-se** que **em 99 deles** esse **verdadeiro e desconhecido parâmetro** da **proporção populacional** (p ou p~2~), de **pessoas autodeclaradas quilombolas em todo o Brasil e que foram vacinadas com a 1ª Dose contra Covid-19**, seja **capturado** pelo respetivo Intervalo de Confiança 99% que venha a ser calculado com a ***mesma metodologia*** aqui apresentada, mesmo considerando que esses 100 Intervalos de Confiança - IC's(li's; ls's) **variam de amostra para amostra**.
+
+A **confiança** que depositamos é no **método de obtenção** dos IC's [@vieira2022introBioStat , p. 147]:
+
+> "Sabe\[-se\] apenas que intervalos de confiança calculados da mesma maneira têm 95% \[no nosso caso **99%**\] de probabilidade de conter o parâmetro \[no nosso caso p\].
+>
+> Quanto **maior for a amostra**, **menor será a margem de erro**, mas o fato de o intervalo de confiança ficar menor **não significa que *contenha o parâmetro***.
+>
+> Conter o parâmetro **é uma probabilidade** \[de **99%** no nosso caso\].
+
+Com o que finaliza-se este estudo dirigido.

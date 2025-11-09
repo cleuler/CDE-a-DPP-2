@@ -1,0 +1,960 @@
+# Aula 8 - Wrangling Data: 4^th^ round {#sec-Wrangling-4th}
+
+Falta ainda completar o 4º *round* da fase de *Wrangling* (estruturação adequada dos dados): de carregamento (leitura), de armazenamento (salvar; enclausurar) e de ***transformação*** (anonimização) dos dados primários levantados nesta pesquisa.
+
+Neste script dar-se-á sequência e ênfase na fase de transformação dos dados, pela adequada reestruturação de todas as variáveis do tipo: \<`Date`\> (datas) e \<`fctr`\> (variáveis categóricas).
+
+Como exercício para casa (***homework***) pediu-se um função apropriada para criar a variável `idadeobt`, além de outras que se mostrem necessárias para um completo processamento dos dados brutos (talvez `idadeesc1`, a idade em que o jovem atingiu o nível de escolaridade 1, `esc1`).
+
+Olhar para cada ***tipo*** de variável, original ou criada, e escolher a ***estrutra de dados*** mais adequada para cada uma delas.
+
+Realizar as ***transformações*** necessárias para simplificar as futuras apresentações desses dados (ex.: `s` e `n`, em vez de sim e não ou SIM e NÃO; `f` e `m` para variável `sexo`; dentre as diversas variáveis categóricas binárias; susbtituir campos com a string "NC" pelo valor `NA` do R etc.).
+
+O que será realizado através da resolução de alguns dos exercícios constantes da lista de exercícios.
+
+Reitera-se que é preciso estudar o ***tipo expandido*** de vetores do tipo `factor` é muito importante: \<`fctr`\>. Outro tipo expandido muito útil será o tipo \<`Date`\> ou \<`dttm`\> (Date time) para a manipulação de datas, que será necessário para determinação da variável `idadeobt`, medida em anos com ponto decimal.
+
+## Pré-processamento dos Dados Brutos
+
+### *Up load* dos dados anonimizados pela abrev. dos nomes e enclausurados
+
+*Up load* das tabelas com os dados coletados em formato .RData (*já anonimizados e encalusurados*).
+
+A partir do que os dados foram anonimizados e enclausurados. Ou seja, será preciso ler esses dados e sua chave para desencriptografar suas informações de modo adequado a recompor os dados dos corpus n. 1 original.
+
+Limpar a *`Global Environment`*: serão limpados todos os objetos da Global Environment.
+
+```{r}
+#| warning: false
+
+rm(list = ls() ) # remover todas as variáveis do Global Environment
+
+library(magrittr)   # Carregar o pacote com o operador Pipe
+library(dplyr)      # Carregar o pacote para organizar dados
+library(kableExtra)
+library(tidyverse)
+library(lubridate)
+
+# Warning: package ‘tidyverse’ was built under R version 4.2.3Warning: package ‘ggplot2’ was built under R version 4.2.3Warning: package ‘tibble’ was built under R version 4.2.3Warning: package ‘tidyr’ was built under R version 4.2.3Warning: package ‘readr’ was built under R version 4.2.3Warning: package ‘purrr’ was built under R version 4.2.3Warning: package ‘dplyr’ was built under R version 4.2.3Warning: package ‘forcats’ was built under R version 4.2.3Warning: package ‘lubridate’ was built under R version 4.2.3── Attaching core tidyverse packages ───────────────────────────────────────────────────── tidyverse 2.0.0 ──
+# ✔ dplyr     1.1.2     ✔ readr     2.1.4
+# ✔ forcats   1.0.0     ✔ stringr   1.5.0
+# ✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+# ✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+# ✔ purrr     1.0.2     ── Conflicts ─────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+# ✖ dplyr::filter()     masks stats::filter()
+# ✖ dplyr::group_rows() masks kableExtra::group_rows()
+# ✖ dplyr::lag()        masks stats::lag()
+# ℹ Use the conflicted package to force all conflicts to become errors
+
+
+# Attaching package: ‘magrittr’
+#
+# The following object is masked from ‘package:purrr’:
+#
+#     set_names
+#
+# The following object is masked from ‘package:tidyr’:
+#
+#     extract
+```
+
+Em seguida carregar **Quadro de Dados** com jovens investigados que vieram a obito do corpus n. 2, anonimizados pelas abreviaturas com as iniciais dos nomes, seguidas por ponto.
+
+A partir dos arquivos de dados que já foram anonimizados e enclausurados na variável na aula passada.
+
+Ou seja, basta carregar apenas a *closure*: `jovens2` \<list\> of 4 \<functions\> e 6 \<df\>'s
+
+```{r}
+# carregar Quadro de Dados com jovens investigados que vieram a obito
+# Espaço: Comarca [ou Município?] de Goiânia
+# Tempo: 2016-2022
+# m = 20 colunas (variáveis observadas) de um total de 25 variáveis de quadrovar
+# n = 449 linhas (observações coletadas; uma para cada jovem)
+# há pelo menos uma observação (linha) repetida; talvez outras sem id
+# Carregar apenas a closure: jovens2 <list> of 4 <functions> e 6 <df>'s
+load(file = "out/jovens2.RData")
+```
+
+Uma inspenção na estrutura geral do data frame contido na posição n. 1 da lista que retorna com a execução da função que é o segundo elemento da lista de 4 funções do objeto `jovens2`, a saber: `jovens2$getall()`:
+
+```{r}
+
+# Seu tipo: é uma lista com 4 elementos:
+cat("Estrutura do objeto: jovens2\n")
+str(jovens2)
+cat("\n")
+
+# O tipo do elemento contido na 1ª posição da lista que retorna quando se executa a
+# 2ª função dessa lista de 4 (jovens2): é uma lista de 1 elemento
+# O elemento dessa 1ª posição dessa lista é um data frame: 449 obs. e 20 variáveis
+# que se encontra enclausurado no objeto jovens2 (uma closure)
+cat("Tipo do elemento contido na lista que retorna quando se executa a \n 2ª função dessa lista de 4 (jovens2):\n")
+typeof(jovens2$getall())
+cat("\n")
+
+# A estrutua desse elemento contido na 1ª posição da lista que retorna quando se executa a
+# 2ª função dessa lista de 4 jovens2 é:
+cat("Estrutura do elemento contido na 1ª posição da lista que retorna quando se executa a \n 2ª função dessa lista de 4 (jovens2):\n")
+str(jovens2$getall())
+cat("\n")
+```
+
+É importante compreender a estrutura de dados dessa listas que integram a closure desse corpus n. 2 enclausurado em `jovens2`.
+
+Nota-se que todas as 20 variáveis são indistintamente do tipo `<chr>`.
+
+Mas algumas delas armazenam datas \<`aaaa-mm-dd`\> e outras são variáveis categóricas, ou seja, do tipo factor `<fctr>`.
+
+O que demanda ***transformação*** do tipo dessas variáveis, a ser realizada neste script.
+
+E, assim, prosseguir com o tratamento e transformação dos dados brutos.
+
+E fazer isso utilizando o Operador Pipe `|>`, do pacote: `magrittr`
+
+E também as funções do pacote: `dplyr` , como, por exmplo: `mutate()`.
+
+### Colher amostras dos Dados anonimizados enclausurados no *Corpus* n. 2
+
+Agora ***colher amostras*** e recuperar, em parte ou o todo, os 2 *data sets* enclausurados (`obtjan2` e `chave`), mesmo após removidos os arquivos originalmente lidos e tratados que se encontravam na memória RAM (estavam no *Global Environment*).
+
+Primeiro reapresentar o **Quadro de Variáveis** da pesquisa que pode ser recuperado ao executar a 4ª função da lista de funções de `jovens2`, a saber: `jovens2$getqdvar()`, que retorna um objeto com todas as 25 variáveis levantadas nos 2 data sets originários; dados primários levantados pela análise de n = 449 processos administrativos junto à SSP-GO.
+
+```{r}
+
+# Obter o Quadro de Variáveis dos dados 1ºs levantados na pesquisa
+# do respectivo data set enclausurado: jovens$getqdvar()
+jovens2$getqdvar() |> 
+  kable("html",
+        booktabs  = TRUE,
+        longtable = FALSE,
+        caption   = "Quadro de Variáveis dos dados primários levantados na pesquisa (25 vars.) no dataset jovens2: anonimizado pelas iniciais dos nomes abreviadas")  |>
+  kable_styling(bootstrap_options = c("striped"),
+                full_width    = FALSE,
+                latex_options = "scale_down")
+```
+
+Em seguida, uma Amostra Aleatória Simples (AAS) de n = 30 elementos.
+
+```{r}
+
+# Obter uma Amostra Aleatória Simples de obtjan2
+# de tamanho n = 30 jovens do data set enclausurado
+jovens2$getjn( n = sample(1:449, size = 30) ) |> 
+   kable("html",
+         booktabs  = TRUE,
+         longtable = FALSE,
+         caption   = "Uma AAS (n = 30 jovens; 20 vars.) do dataset jovens2: anonimizado pelas iniciais dos nomes abreviadas")  |>
+   kable_styling(bootstrap_options = c("striped"),
+                 full_width    = FALSE,
+                 latex_options = "scale_down")
+```
+
+Agora acessar o censo de todo o data set `obtjan2` , anonimizado pelos nomes abreviados (exibir apenas as 10 primeiras linhas).
+
+```{r}
+
+# Obter o censo do data set enclausurado obtjan2
+# Exibir apenas as 10 primeiras linhas
+jovens2$getall() |>
+  head(10) |>
+  kable("html",
+        booktabs  = TRUE,
+        longtable = FALSE,
+        caption   = "Censo do dataset jovens2 (n = 449; 20 vars.): anonimizado pelas iniciais dos nomes abreviadas (primeiras 10 linhas)")  |>
+  kable_styling(bootstrap_options = c("striped"),
+                full_width    = FALSE,
+                latex_options = "scale_down")
+```
+
+Resgatar a chave de identificação da anonimização c/abreviaturas: `chave` (exibir apenas as 10 primeiras linhas).
+
+```{r}
+
+# Resgatar a chave de identificação da anonimização c/abreviaturas
+# Exibir apenas as 10 primeiras linhas
+jovens2$getdfabr() |> 
+   head(10) |> 
+   kable("html",
+         booktabs  = TRUE,
+         longtable = FALSE,
+         caption   = "Chave de identificação da anonimização (n = 449; 20 vars.): anonimizado pelas iniciais dos nomes abreviadas (primeiras 10 linhas)")  |>
+   kable_styling(bootstrap_options = c("striped"),
+                 full_width    = FALSE,
+                 latex_options = "scale_down")
+
+```
+
+Emabralhar a `chave` de identificação da anonimização (abreviaturas) para dificultar sua quebra (exibir apenas as 10 primeiras linhas).
+
+```{r}
+
+# Emabralhar a chave de identificação da anonimização (abreviaturas)
+# Para dificultar sua quebra
+# Exibir apenas as 10 primeiras linhas
+# library(dplyr)
+jovens2$getdfabr() |> 
+  mutate(nid = 1:nrow( jovens2$getdfabr() ) ) |> 
+  select(nid, nome, nomean, cpf, mae, maean) |> 
+  sample_n(size = nrow( jovens2$getdfabr() )) |> 
+  head(10) |> 
+  kable("html",
+        booktabs  = TRUE,
+        longtable = FALSE,
+        caption   = "Chave de identificação da anonimização (n = 449; 20 vars.): anonimizado pelas iniciais dos nomes abreviadas (primeiras 10 linhas)")  |>
+  kable_styling(bootstrap_options = c("striped"),
+                full_width    = FALSE,
+                latex_options = "scale_down")
+```
+
+Agora exibir essa tabela em um formato enxuto via *Package*: `KableExtra`, para simples conferência visual. Apenas as 30 primeiras observações.
+
+```{r}
+
+# armazenar o data set enclausurado na variável: obitj
+# 449 obs. of  20 variables
+obitj <- jovens2$getall() # anonimizada pelas abreviaturas dos nomes
+
+# Exibir esse dataframe já anonimizado pelas iniciais dos nomes abreviadas
+# Estão em ordem alfabética dos nomes no objeto: obitj
+# Apenas as 30 primeiras observações.
+obitj |> 
+  head(30) |> 
+  kable("html",
+        booktabs  = TRUE,
+        longtable = FALSE,
+        caption   = "Censo do dataset jovens2 (n = 449 obs.; 20 vars.): anonimizado pelas iniciais dos nomes abreviadas (estão em ordem alfabética; primeiras 30 obs.)" )  |>
+  kable_styling(bootstrap_options = c("striped"),
+                full_width    = FALSE,
+                latex_options = "scale_down")
+```
+
+### Lista de Exercícios: lidando com objetos em R
+
+1\) Exibir apenas as colunas pares de `obitj`.
+
+2\) Exibir apenas as colunas ímpares de `obitj`.
+
+3\) Exibir apenas as linhas pares de `obitj`.
+
+4\) Exibir apenas as linhas ímpares de `obitj`.
+
+5\) Exibir apenas as linhas pares e as colunas ímpares de `obitj`.
+
+6\) Que tipo de ***objeto*** é `obitj`.
+
+7\) Extrair apenas a 1ª coluna de `obitj`. Qual a estrutura e o tipo de dado dessa extração.
+
+8\) Extrair todas as colunas exceto a última de `obitj`.
+
+9\) Extrair todas as colunas exceto a antepenúltima e a última colunas de `obitj`.
+
+10\) Extrair apenas as colunas denomindas: "nome", "nasc", "dataobt".
+
+11\) Extrair todas exceto as colunas denomindas: "nome", "nasc", "dataobt".
+
+12\) ***Transformar*** as colunas denomindas: "`nasc`", "`dataesc1`" e "`dataobt`" em *date type* (`Date`)
+
+```{r}
+
+# Warning: There were 4 warnings in `dplyr::mutate()`.
+# The first warning was:
+# ℹ In argument: `nasc = lubridate::as_date(nasc, tz = lubridate::tz(tzgyn))`.
+# Caused by warning:
+# ! `tz` argument is ignored by `as_date()`
+# ℹ Run dplyr::last_dplyr_warnings() to see the 3 remaining warnings
+
+cat("Número total da string 'NC' nas var. nasc, dataesc1 e dataobt:")
+# Fazer esse teste de consistência antes de transformar em <Date>
+# Para poder comparar as 3 vars. <char> com 'NC', que é <char>
+obitj |>
+  select(nasc, dataesc1, dataobt) |> 
+  filter(nasc == "NC" | dataesc1 == "NC" | dataobt == "NC") |>
+  nrow() # retorna: 0 rows
+# há um total de 0 (zero) 'NC' <char> nessas 3 variáveis
+cat("\n")
+
+# identificar a time zone em que nos encontramos localizados:
+tzgyn <- Sys.timezone() # fornecida pelo sistema do R
+# [1] "America/Sao_Paulo"
+
+# usar: mutate()  para mudar o tipo dessas 3 variáveis
+# usar: as_date() para transformar do tipo <char> para <date>
+obitj |> 
+  dplyr::mutate(nasc     = lubridate::as_date(nasc, tz = lubridate::tz(tzgyn) ),
+                dataesc1 = lubridate::as_date(dataesc1, tz = lubridate::tz(tzgyn) ),
+                dataobt  = lubridate::as_date(dataobt, tz = lubridate::tz(tzgyn) )
+                ) -> obitj
+
+cat("\n")
+cat("\n")
+cat("Número total de NA's nas var. nasc, dataesc1 e dataobt:")
+obitj |>
+  select(nasc, dataesc1, dataobt) |> 
+  is.na() |>
+  sum() # há um total de 51 NA's nessas 3 variáveis
+# Pode haver, nos dados: duplicidades de observações, indisponibilidade dessas datas nos autos pesquisados etc.
+
+cat("\n")
+cat("Estrutura de obitj após transaformar 3 tipo <char> para <Date>:\n")
+str(obitj)
+```
+
+13\) Criar a variável `idadeobt` na data do óbito em anos, do tipo \<dbl\>, com uma casa decimal.
+
+```{r}
+
+# usar: mutate()  para criar essa variável idadeobt
+# usar operador - para <date>: idadeobt = dataobt - nasc
+
+obitj |> 
+  # resultado em intervalo de tempo: número de dias
+  dplyr::mutate(idadeobtd = (dataobt - nasc) ) |>
+  # resultado em intervalo de tempo: número de anos <dbl>
+  dplyr::mutate(idadeobta = as.numeric(idadeobtd / 365.25) ) -> obitj
+```
+
+14\) Exibir um histograma para a vaiável: `idadeobt`
+
+```{r}
+hist(obitj$idadeobta, breaks = 20)
+
+hist(obitj$idadeobta, breaks = 20, probability = TRUE)
+
+obitj |> 
+  ggplot( aes(x = idadeobta) ) +
+  geom_histogram() +
+  geom_vline(xintercept = mean(obitj$idadeobta, na.rm = TRUE),
+             color = "red", size = 0.7 , linetype = "dotdash") +
+  labs(
+       title = "Histograma da idade na data do óbito (N = 449 obs.) \nJovens c/passagem na DEPAI - Goiânia (2016-2023)",
+       y = "Freq. Absoluta (n)",
+       x = "Idade no óbito (anos <pt. dec.>; média em vermelho)"
+       )
+```
+
+Um histograma da mesma variável numérica contínua `idadeobta` mais sofisticado, reunindo mais informações no mesmo gráfico é o seguinte.
+
+```{r}
+
+media <- mean(obitj$idadeobta, na.rm = TRUE) |> 
+  round(1)
+
+ggplot(data = NULL,
+       aes(x = obitj$idadeobta)) +
+  geom_histogram(binwidth = 1, fill = "white", color = "gray80") +
+  scale_x_continuous(breaks = seq(-5, 35, 5)) +
+  stat_bin(binwidth  = 1,
+           geom      = "text",
+           aes(label = ..count..),
+           vjust     = -0.3,
+           size      = 3.5) +
+  stat_bin(
+    binwidth = 1, geom = "text", color = "black", cex = 2.2,
+    aes(y = after_stat(count / sum(count)), 
+        label = scales::percent(round(after_stat(count / sum(count)), 3))) ,
+    position = position_stack(vjust = 350.0)
+  ) +
+  geom_vline(xintercept = mean(obitj$idadeobta,  na.rm = TRUE),
+             color = "red", size = 0.4 , linetype = "dotdash", alpha = 0.5) +
+  labs(title    = "Histograma da idade na data do óbito (N = 449 obs.)",
+       subtitle = "Jovens c/passagem na DEPAI - Goiânia (2016-2023)",
+       y        = "Frequencia Absoluta (n) e Relativa (%)",
+       x        = paste0("Idade na data do óbito (média em vermelho = ",
+                         media, " anos)"),
+       caption  = "Fonte: dados primários levantados por Queops (2024).")
+```
+
+Olhando para esse histograma pode-se dizer que há uma espécie de padrão perceptível:
+
+-   a maioria desses jovens com passagem na DPAI - Goiânia, pesquisados no perído 2016-2023, morrem ao completar 18 anos;
+
+-   a distribuição de frequência dessa variável contínua real aproxíma-se de uma curva em forma de sino, ou seja, apresenta ***um comportamento compatível com o de uma variável aleatória***;
+
+-   há 2 ou 3 idades negativas e uma com 1 ano de idade, o que denota ***inconsistência*** em pelo menos 3 ou 4 observações, que precisam ser investigadas, pois jovens com essas idades não praticam atos infracionais;
+
+-   houve um ***outlier***, 1 jovem que veio a óbito com 32 anos de idade, o que também precisa ser investigado de perto, pois outliers interferem tanto na média como no desvio-padrão.
+
+-   Uma opção razoável pode ser olhar para a média aparada, a fim de afastar a influência desses 4 *outliers* (3 deles possíveis inconsistências e 1 real candidato a ser um dado discrepante);
+
+-   Observa-se alguma assimetria à direita na forma de sino deste histograma.
+
+Exibir as 3 observações com idades negativas e 1 com idade na data do óbito (`idadeobta`) menor que 2 anos.
+
+```{r}
+
+obitj |> 
+  filter(idadeobta < 0 | idadeobta < 2) |> 
+  kable("html",
+        booktabs  = TRUE,
+        longtable = FALSE,
+        caption   = "3 observações com idades negativas e 1 com idade < 2 anos no dataset jovens2 (n = 449 obs.; 20 vars.): para verificar eventuais erros de coleta nos autos em que os dados foram colhidos" )  |>
+  kable_styling(bootstrap_options = c("striped"),
+                full_width    = FALSE,
+                latex_options = "scale_down")
+```
+
+Que precisam de ***verificação nos respectivos autos*** de que foram colhidas (análise documental).
+
+15\) Calcular a média e o desvio padrão da vaiável: `idadeobt`
+
+```{r}
+
+cat("Média de idade na data do óbito é: ",
+    mean(obitj$idadeobta, na.rm = TRUE) |> round(1),
+    "anos\n")
+cat("\n")
+
+cat("Desvio padrão de idade na data do óbito é: ",
+    sd(obitj$idadeobta, na.rm = TRUE) |> round(1),
+    "anos\n")
+cat("\n")
+
+obitj |> 
+  select(idadeobta) |> 
+  as.vector() -> x
+str(x)
+cat("\n")
+cat("Média aparada em 1.2% de idade na data do óbito é: ",
+    mean(x[[1]], trim = 0.012, na.rm = TRUE) |> round(1),
+    "anos\n")
+cat("Os 4 outliers da esquerda equilibraram-se com aquele da direita\n")
+cat("Essa situação desaparece se corrigidas as inconsistências dos 4 à esquerda\n")
+```
+
+16\) Exibir um *boxplot* para a vaiável: `idadeobt`
+
+```{r}
+obitj |> 
+  ggplot( aes(x = idadeobta) ) +
+  geom_boxplot() +
+  scale_x_continuous(breaks = seq(-5, 35, 5)) +
+  geom_vline(xintercept = mean(obitj$idadeobta, na.rm = TRUE),
+             color = "red", size = 0.7 , linetype = "dotdash") +
+  labs(
+       title = "Boxplot da idade na data do óbito (N = 449 obs.) \nJovens c/passagem na DEPAI - Goiânia (2016-2023)",
+       y = "",
+       x = paste0("Idade na data do óbito (média em vermelho = ", media, " anos)")
+       )
+```
+
+Olhando para esse ***boxplot***, que é resistente à presença de ***outliers***, percebe-se claramente que:
+
+-   há indicação de 3 valores de idade na data do óbtio menores que zero e 1 com mais de 1 ano e menos que 2 anos;
+
+-   há 8 outilers à direta, o menor deles a partir de cerca de 23 anos;
+
+-   a mediana, barra central da caixa (box), é cerca de 18 anos e alguma coisa, ou seja, é próxima da média;
+
+-   a Amplitude Interquartílica (largura do box; no eixo x) é de aproximadamente 2 anos e alguma coisa.
+
+Essas informações podem ser checadas com precisão na resoluação do exercício seguinte.
+
+17\) Calcular a mediana e a AIQ (Amplitude Interquartílica) da vaiável: `idadeobt`
+
+```{r}
+
+cat("Mediana de idade na data do óbito é: ",
+    median(obitj$idadeobta, na.rm = TRUE) |> round(1),
+    "anos\n")
+cat("\n")
+
+cat("Resumo dos 5 números de Tukey da variável alea idadeobta é:\n")
+summary(obitj$idadeobta)
+summary(obitj$idadeobta)[2]
+
+cat("\n")
+cat("AIQ (Amplitude Interquartílica) da idade na data do óbito é igual\n")
+cat("a Q3 (3º Quartil) menos Q1 (1º Quartil): Q3 - Q1\n")
+cat("Q1 e Q3 no box blot são as retas vertiais à esquerda e a direita da mediana\n")
+cat("AIQ = Q3 - Q1 =", summary(obitj$idadeobta)[5] - summary(obitj$idadeobta)[2],"anos\n")
+cat("AIQ contem no seu intervalo 50% da ocorrência de todo conjunto de dados\n")
+cat("os outros 50%: 25% na cauda esquerda e 25% na direita do boxplot\n")
+cat("\n")
+
+cat("Ocorreram 9 NA's na variável alea idadeobta\n")
+cat("Que também precisam ser investigados\n")
+```
+
+18\) Substituir todos os possíveis campos que estão com codificação diferente de vazio (padronizar `NA`'s em vez de "NC"s)
+
+```{r}
+
+cat("Número total da string 'NC' em todas as variável alea de dataobt:\n")
+cat("\n")
+# Fazer esse teste de consistência antes de transformar 3 var. <char> em <Date>
+# Senão gera o erro: Error in charToDate(x) :
+#                       string de caracteres não é um formato padrão não ambíguo
+# E bem antes de transformar vars. <char> em <fctr>,
+# pois os labels (categorias) de factors são imutáveis.
+# Para poder comparar todas as vars. <char> com 'NC', que é <char>
+# e eventualmente substituir esses valores por NA.
+
+# Por isso, a esta altura, o teste será feito extraindo o data set da closure
+# soma, em todas as colunas, do número de células com a string "NC"
+res <- colSums(jovens2$getall() == 'NC')
+res # retorna um vetor nomeado com essas 20 contagens: todas foram igual a zero
+# nomean    maean     nasc     sexo      cor      dom dataesc1     esc1     esc2  compfam 
+#        0        0        0        0        0        0        0        0        0        0 
+#   relpai  usudrog    subst  orgcrim   sitdiv  dataobt    morte      paf  circobt   obsobt 
+#        0        0        0        0        0        0        0        0        0        0 
+
+# há um total de 0 (zero) 'NC' <char> em todas as variáveis
+cat("\n")
+cat("Há um total de 0 (zero) 'NC' <char> em todas as variáveis\n")
+cat("Isso porque este pesquisador fez a substituição dos 'NC' <char> em todas elas\n")
+cat("antes que o arquivo original com os dados primários .csv fosse carregado.\n")
+```
+
+Agora exibir esse resultado na forma de uma tabela adequadamente formatada.
+
+```{r}
+# Exibir um data frame com esse resultado
+data.frame(t(res)) |> 
+  kable("html",
+        booktabs  = TRUE,
+        longtable = FALSE,
+        caption   = "Verificação no dataset jovens2 (n = 449 obs.; 20 vars.): contagem do número de strings 'NC' em todas suas colunas <char>" )  |>
+  kable_styling(bootstrap_options = c("striped"),
+                full_width    = FALSE,
+                latex_options = "scale_down")
+```
+
+Há um total de 0 (zero) 'NC' \<char\> em todas as 20 variáveis do corpus n. 1.
+
+Isso porque este pesquisador fez a substituição dos 'NC' \<char\> em todas elas por \<blanck\>, que o R lê e carrega como `NA`. Isso antes que o arquivo original com os dados primários .csv fosse carregado.
+
+19\) Determinar quantos `NA`s há no dataframe `obitj`
+
+```{r}
+
+cat("Número total de NA's em todas as 22 var. alea de dataobt:")
+obitj |>
+  is.na() |>
+  sum() # há um total de [1] 69 NA's
+# Pode haver, nos dados: duplicidades de observações, indisponibilidade dessas datas nos autos pesquisados etc.
+```
+
+Esse número de 69 `NA`'s supera o número de 22 variáveis.
+
+Ou seja, não se pode descartar a possibilidade de mais de uma observação (linha) somente com `NA`'s, o que representa uma total ausência de informação na linha, que, assim, deveria ser descartada após uma verificaçãode porque ela acabaou sendo incluída na planilha de coleta de dados original.
+
+O *srcipt* a seguir verifica se há linhas (observações) toda em branco, bem como se há linhas duplicadas.
+
+```{r}
+
+cat("Número de linhas não duplicada no data set obitj:\n")
+obitj[!duplicated( obitj[, ] ), ] |> nrow()
+obitj %>% distinct() |> nrow()
+cat("Ou seja há 1 linha que é cópia da outra.\n")
+
+# Exibir linha (observação duplicada)
+obitj[duplicated( obitj[, ] ), ]
+```
+
+Uma inspensão visual nessa linha duplicada mostra que ela contém, com exceção da 1ª e 2ª coluna, todas as demais estão em branco (vazio) ou com `NA`.
+
+O script a seguir vai exibir todas as linhas (observaçõe) do data set com pelo menos 1 `NA`.
+
+```{r}
+
+obitj[!complete.cases(obitj), ] |> 
+  kable("html",
+        booktabs  = TRUE,
+        longtable = FALSE,
+        caption   = "Verificação no dataset jovens2 (n = 449 obs.; 20 vars.): 46 linhas (observaçõe) do data set com pelo menos 1 NA." )  |>
+  kable_styling(bootstrap_options = c("striped"),
+                full_width    = FALSE,
+                latex_options = "scale_down")
+```
+
+Visualmente percebe-se que as linhas n. 362 e 363, além de duplicadas, com exceção da 1ª (contendo "R.", provavemente de Repedito no campo `nome` do jovem) e 2ª coluna (só com ".", gerado quando aplicada função `getinic` num campo que estava vazio), apresenta todas as demais com campos em branco ou `NA`.
+
+Drop dessas 2 linhas do data set (MIP). E verificar em campo o que gerou essa duplicidade de 2 linhas vazias.
+
+```{r}
+
+# obitj <- obitj[-c(362, 363), ] # repetir a execuçao dessa linha mais de 1 vez
+# pode levar a drop indevido de observações que não poderiam ser descartadas
+# Melhoe é deletar as duas linhas cuja variável nome contém "R." (só ocorre c/362 e 363)
+obitj <- obitj[(obitj$nomean != "R."), ]
+# que pode ser repetidamente executado sem deleção inadequada
+
+# que passa agora a conter N = 447 observações (não mais 449)
+cat("obitj contém N =", nrow(obitj),"observações\n")
+```
+
+20\) Identificar todas as variáveis categóricas do dataframe `obitj`
+
+```{r}
+
+cat("As possíveis candidatas são as 17 que remanescem tipo <char>:\n")
+obitj |> 
+  select_if(is.character) |> 
+  names() -> varcateg
+varcateg
+
+cat("\n")
+cat("Vê-se claramente que as 2 seguintes não são: nomean e maean\n")
+cat("Portanto devem ser mantidas com o tipo <char>\n")
+cat("\n")
+cat("Então 15 serão tranformadas de <char> para tipo <fctr>, a saber :\n")
+cat(varcateg[-c(1, 2)], sep = ", ")
+```
+
+Ocorre que toda e qualquer transformarção das categoricas dessas 15 variáveis tipo \<char\> para \<fctr\> tem de ocorrer antes dessa transformação de tipo, pois \<factors\> não permite que seus \<labels\>, depois de criados sejam alterados.
+
+21\) Transformar todas as variáveis categóricas do dataframe `obitj` no tipo *factor* \<factr\>
+
+```{r}
+
+# Trecho a seguir não produz M.I.P. na var. obitj
+obitj |> 
+  select(sexo, cor, dom, esc1, esc2, compfam, relpai, usudrog, subst, orgcrim, sitdiv, morte, paf, circobt, obsobt) |> 
+  mutate_all(as.factor) |> 
+  str()
+```
+
+Olhando para essa estrutura é possível identicar quais variáveis demandam padronização em suas categorias para facilitar futuros processamento e exibição desses dados, principalmente em gráficos (espaço pequeno exige labels condensados), a saber:
+
+-   `sexo`: com as categorias `f` e `m` , em vez de "fem","masc";
+
+-   `usudrog`: com as categorias `n` e `s` , em vez de "N", "S";
+
+-   `orgcrim`: com as categorias `n` e `s` , em vez de "não","sim";
+
+-   `paf`: com as categorias `n` e `s` , em vez de "não","sim";
+
+-   `morte`: com as categorias `nat` e `viol` , em vez de "natural","violenta".
+
+-   ***criar*** uma variável `corag`: para agrupar a variável `cor` em 2 categorias ("branco","negro"), ao invés de 3 ("branco","pardo", "preto"), reunindo as contagens de "pardo" e "preto" na categoria "negro".
+
+```{r}
+# | warning: false
+
+# Transformações p/simplificar e padronizar algumas categorias <char>:
+obitj$sexo <- ifelse(obitj$sexo == "fem", "f", ifelse(obitj$sexo == "masc", "m", "") )
+
+obitj$usudrog <- ifelse(obitj$usudrog == "N", "n", ifelse(obitj$usudrog == "S", "s", "") )
+
+obitj$orgcrim <- ifelse(obitj$orgcrim == "não", "n", ifelse(obitj$orgcrim == "sim", "s", "") )
+
+obitj$paf <- ifelse(obitj$paf == "não", "n", ifelse(obitj$paf == "sim", "s", "") )
+
+obitj$morte <- ifelse(obitj$morte == "natural", "nat", ifelse(obitj$morte == "violenta", "viol", "") )
+
+# criar variável corag em obitj (MIP): será a coluna logo apóa a var; cor de de obitj
+# corag = cor agregada em duas categorias: branco e negro; além de "", que representa <NA>
+obitj |> 
+  mutate(corag = ifelse(obitj$cor == "branco", "branco", ifelse(obitj$cor == "pardo" | obitj$cor == "preto", "negro", "") ), .after = "cor" ) -> obitj
+
+# obitj$corag <- ifelse(obitj$cor == "branco", "branco", ifelse(obitj$cor == "pardo" | obitj$cor == "preto", "negro", "") )
+```
+
+Agora pode-se converter todas essas 15 variáveis no tipo \<fctr\>, pois não haverá mais, assim se espera, necessidade de recodificar seus \<labels\>.
+
+```{r}
+
+# selecionar apenas as 15 var. categóricas para
+# transformar do tipo <char> para <fctr>
+obitj |> 
+  select(sexo, cor, corag, dom, esc1, esc2, compfam, relpai, usudrog, subst, orgcrim, sitdiv, morte, paf, circobt, obsobt) |> 
+  mutate_all(as.factor) -> varcateg15 # armazenar essas 15 cols. em uma var. auxiliar
+
+# utilizar uma look up table para imputar varcateg15 <fctr> nas 15 var. cat. obitj <char>
+# segundo a ordem das variáveis já estabelecida em obitj
+obitj[names(varcateg15)] <- varcateg15
+
+# Verificar sua estrutura para checar se todas as variáveis estão com tipos adequados
+obitj |> 
+  str()
+```
+
+Uma vez finalizadas todas as ***transformações*** que foram ***projetadas*** como ***necessárias***, é primordial ***salvar*** esse ***novo objeto*** `obitj` como uma ***planilha*** `.csv` na ***pasta*** `out` para ***permitir seu uso por outros aplicativos***, como o `satatkey`.
+
+```{r}
+
+obitjcsv <- obitj
+
+# já foram eliminadas as linhas 362 e 363: não apresentam obs. (R. de Repedito)
+# elimina os 2 únicos NA's da var. nasc
+# obitjcsv <- obitjcsv[-c(362, 363), ] # N = 447
+
+# Transformar var. idadeobtd de <difftime> para <int>
+obitjcsv$idadeobtd <- as.integer(obitjcsv$idadeobtd)
+
+# Imprimir a estrutura de obitjcsv
+str(obitjcsv)
+
+# Salvar uma planilha de dados toda tratada e transformada:
+write.csv(obitjcsv, file = "out/obitjcsv.csv",
+          na = "", # salvar campos NA como espaço vazio <blank>
+          row.names = FALSE) # não salvar coluna com números das linhas
+
+# mais adiante será salva na closure do corpus n. 2
+# será a partir desta nova closure que se iniciará a fase da 
+# AED - Análise Exploratória de Dados no próximo script
+```
+
+22\) Exibir um gráfico adequado para pelo menos uma variável categórica do dataframe `obitj`
+
+```{r}
+
+plot(obitj$sexo)
+
+par(bg = "#fdf6e3") 
+par(mfrow=c(1,2), bg = "#fdf6e3")
+# Fonte: Apostila do Prof. Felipe Ribeiro
+contagem  <- table( obitj$sexo[obitj$sexo != ""] )
+nomes     <- levels( obitj$sexo[obitj$sexo != ""] )
+porcent   <-  round(contagem/sum(contagem) * 100, 1)
+rotulo    <- paste(nomes, " (", porcent, "%",")", sep = "")
+pie(table(obitj$sexo),
+    labels = rotulo,
+    main   = "Sexo: jovem c/passagem na DEPAI\nque veio a óbito", col = c("red", "blue")
+    )
+```
+
+23\) Exibir um gráfico *boxplot* lado a lado para a variável `idadeobt` para cada uma das categorias da variável `cor` ou `corag`. Há algum padrão perceptível nesse gráfico comparativo. Como comparar esse padrão com o padrão da população de jovens na mesma faixa etária da Cidade de Goiânia, no mesmo período pesquisado?
+
+```{r boxplots_ordered_obitj_max_jitted}
+
+mediana <- median(obitj$idadeobta, na.rm = TRUE) |> round(1)
+
+obitj |> 
+  ggplot(
+         aes(x = reorder(corag,
+                         idadeobta,
+                         FUN = max,
+                         na.rm = TRUE,
+                         .desc = FALSE),
+             y = idadeobta)) +
+  geom_boxplot(aes(fill = reorder(corag,
+                                  idadeobta,
+                                  FUN = max,
+                                  na.rm = TRUE,
+                                  .desc = FALSE))) +
+  geom_jitter(position = position_jitter(0.2)) +
+  labs(title    = "Boxplots da idade na data óbito por cor: jovem c/passagem na DEPAI (N = 447)",
+       subtitle = "Ordem crescente dos respectivas valores máximos observados - Goiânia (2016-2023: 8 anos)",
+       y        = paste0("Idade no óbito (mediana em vermelho = ",
+                         mediana, " anos)"),
+       x        = "Cor (no centro os NA's)",
+       caption  = "Fonte: dados primários levantados por Queops (2024).") +
+  geom_hline(yintercept = median(obitj$idadeobta, na.rm = TRUE),
+             color = "red",
+             linetype = 2) +
+  scale_fill_discrete(guide = guide_legend(title = "Cor"))
+```
+
+24\) Como coletar dados secundários do IBGE a fim de permitir a comparação proposta na questão anterior?
+
+25\) Como realizar um teste de hipóteses da qualidade do ajuste que as duas questões anteriores evocam? O que é erro tipo I e erro tipo II? Como formular as hipóteses a serem testadas? Há alguma função do R que realiza esse teste de hipóteses? Como interpretar o resultado dessa dunação?
+
+### Dados Transformados e Armazenados
+
+Atualizar a closure `jovens2` com os dados transformados e criados que se encontram em `obitj`.
+
+Ler a planilha `obitjcsv.csv` do arquivo `out` (exceto sua primeira coluna, com número de linhas) e também armazenar ela nessa mesma closure `jovens2`, que servirá de ponto de partida para fase de AED - Análise exploratória de dados.
+
+#### Enclausurar Corpus n. 2: Dados anonimizados, transformados e criados
+
+Ler arquivo `obitjcsv.csv` da pasta `out`, para checar visualmente sua consistência como .csv (com vazios no lugar de NAs quando aberto com bloco de notas ou *libre office*) e garantir que essa cópia consistente que irá para a nova closure.
+
+```{r}
+
+# Ler obitjcsv.csv do arquivo out
+# drop dos nomes das linhas
+obitjcsv <- read.csv(file  = "out/obitjcsv.csv",
+                     header = TRUE,
+                     sep    = ",",
+                     quote  = "\"",
+                     dec    = ".",
+                     stringsAsFactors = FALSE, # para ler todas as colunas como <char>
+                     fill   = TRUE
+                 )
+```
+
+Criar uma nova closure `setup3`, para evitar que ao rodar todo este script seguidas vezes ocorra erros que interrompem este script em razão da confusão entre data sets do corpus n. 2 ainda não tratados com data sets desse mesmo corpus n.2 já tratados neste sript.
+
+```{r}
+# | warning: false
+
+# Criar a closure para encapsular os 4 data sets deste script:
+# obitj que foi produto de transformações e de acréscimos de 2 novas variáveis
+# chave e quadrovar.df, que foram tratadas no sericpt anterior e mantidas neste
+# bem como obitjcsv.csv, versão .csv de obitj, com NA's substituídos por <blank>
+
+# fora do Global Environment: em um seu Child Environment
+# Acrescer o data set obitjcsv
+setup3 <- function(obitj, chave, quadrovar.df, obitjcsv) {
+  # Armazenar os dois data sets na clausure
+  obt    <- obitj
+  dfabr  <- chave
+  qdvar  <- quadrovar.df
+  obtcsv <- obitjcsv
+  
+  # função para retornar uma amostra de tamanho n de obtjan2
+  # n poderá ser um vetor contendo os índices para 1 AAS
+  GETjn <- function(n = 1) {
+    j <- obt[n, ]
+    j
+  }
+  
+  # função para retornar todos os dados de obt
+  GETall <- function() {
+    obt
+  }
+
+  # função para retornar todos os dados da chave
+  GETdfabr <- function() {
+    dfabr
+  }
+  
+  # função para retornar todos os dados de qdvar
+  GETqdvar <- function() {
+    qdvar
+  }
+  
+  # função para retornar todos os dados de obtcsv
+  GETobtcsv <- function() {
+    obtcsv
+  }
+
+# função setup2 retorna uma lista contendo as 3 funções acima
+list(getjn     = GETjn   , getall   = GETall,
+     getdfabr  = GETdfabr, getqdvar = GETqdvar,
+     getobtcsv = GETobtcsv)
+}
+```
+
+Já se pode ***remover*** todos os *data sets* e demais objetos da memória RAM.
+
+E mesmo assim acessar, através do objeto tipo lista `obtjan2`, todos os *data sets* (`obtjan2`, `chave` e `obitjcsv`) e mais o `quadrovar.df` através das 5 funções enclausuradas na função `setup2()`.
+
+Para isso basta armazenar em um arquivo a lista que retorna dessa função `setup2()`. Ela retorna um `objeto do tipo list` na memória RAM do computador, na variável tipo lista de 5 `jovens2` do seu *Global Environment*.
+
+```{r}
+
+# Resgatar chave e quadrovar antes de altear jovens2
+chave <- jovens2$getdfabr()        # com o data frame da chave das abreviaturas
+# É preciso drop das 2 observações com nome = "REPETIDO": linhas n. c(362, 363)
+# que contém apenas campos em branco (cpf, mae), nomean ("R.") e maean (".")
+chave <- chave[(chave$nome != "REPETIDO"), ]
+
+quadrovar.df <- jovens2$getqdvar() # com o data frame do Quadro de Variáveis
+
+# Para logo em seguida armazená-los (chave e quadrovar),
+# junto com os 2 novos datasetes aqui processados: obitj e obitjcsv
+# Armazenar o objeto tipo list retornado pela função setup()
+# Criando a variável já denominada por: jovens3
+# Com os dados transformados do corpus n. 2 (anonimizados pelas abrev. dos nomes)
+jovens3 <- setup3(obitj, chave, quadrovar.df, obitjcsv)
+
+# Salvar a variável criada jovens3 em um arquivo tipo .RData
+save(jovens3, file = "out/jovens3.RData")
+
+# Remover todos os objetos da RAM do
+# Global Environment:
+# ls()           # listar  todos os nomes de variáveis do Global Environment
+rm(list = ls() ) # remover todas as variáveis do Global Environment
+
+# Carregar apenas a closure: jovens3 <list> of 5 <functions> e 4 <df>
+load(file = "out/jovens3.RData")
+```
+
+Realizar um teste de conferência do funcionamento da closure recriada; não comporá o relatório final desta pesquisa.
+
+```{r}
+
+# Número de linhas do Corpus n.2 transformado: obitj
+N <- nrow(jovens3$getall()) # Número de observações do corpus n. 2
+
+# Obter o Quadro de Variáveis dos dados 1ºs levantados na pesquisa
+# do respectivo data set enclausurado: jovens2$getqdvar()
+jovens3$getqdvar() |> 
+  kable("html",
+        booktabs  = TRUE,
+        longtable = FALSE)  |>
+  kable_styling(bootstrap_options = c("striped"),
+                full_width    = FALSE,
+                latex_options = "scale_down")
+
+# Obter uma Amostra Aleatória Simples de obitj (trasnformado neste script)
+# de tamanho n = 30 jovens do data set enclausurado
+jovens3$getjn( n = sample(1:N, size = 30) ) |> 
+   kable("html",
+         booktabs  = TRUE,
+         longtable = FALSE)  |>
+   kable_styling(bootstrap_options = c("striped"),
+                 full_width    = FALSE,
+                 latex_options = "scale_down")
+
+# Obter o censo do data set enclausurado: obitj (trasnformado neste script)
+# Exibir apenas as 10 primeiras linhas
+jovens3$getall() |>
+  head(10) |>
+  kable("html",
+        booktabs  = TRUE,
+        longtable = FALSE)  |>
+  kable_styling(bootstrap_options = c("striped"),
+                full_width    = FALSE,
+                latex_options = "scale_down")
+
+# Resgatar a chave de identificação da anonimização c/abreviaturas
+# Exibir apenas as 10 primeiras linhas
+jovens3$getdfabr() |> 
+   head(10) |> 
+   kable("html",
+         booktabs  = TRUE,
+         longtable = FALSE)  |>
+   kable_styling(bootstrap_options = c("striped"),
+                 full_width    = FALSE,
+                 latex_options = "scale_down")
+
+# Emabralhar a chave de identificação da anonimização (abreviaturas)
+# Para dificultar sua quebra
+# Exibir apenas as 10 primeiras linhas
+jovens3$getdfabr() |> 
+  mutate(nid = 1:N) |> 
+  select(nid, nome, nomean, cpf, mae, maean) |> 
+  sample_n(size = N) |> 
+  head(10) |> 
+  kable("html",
+        booktabs  = TRUE,
+        longtable = FALSE)  |>
+  kable_styling(bootstrap_options = c("striped"),
+                full_width    = FALSE,
+                latex_options = "scale_down")
+
+# Exibir o obitjcsv
+jovens3$getobtcsv() |>
+  head(10) |>
+  kable("html",
+        booktabs  = TRUE,
+        longtable = FALSE)  |>
+  kable_styling(bootstrap_options = c("striped"),
+                full_width    = FALSE,
+                latex_options = "scale_down")
+```
+
+**Fim da fase de *Wrangling*** que, contou com **4 *rounds*** e que costuma **consumir 80% do tempo gasto** com o processamento dos dados; também conhecido como "Engenharia dos Dados".
+
+Prontos para iniciar a fase da ***Análise Exploratória dos Dados (AED)***.
+
+### Homework: *AED*
+
+Nessa nova fase, bem mais atraente, o objetivo é explorar os dados em busca do reconhecimento de padrões perceptíveis.
+
+Resumos dos dados são muito úteis: média e desvio padrão; mediana e AIQ (Amplitude Interquartil); resumo dos 5 números, coeficiente de variação, assimetria, curtose etc.
+
+Gerar vários gráficos (histogramas, boxplot, pizza, barras, colunas, dispersão, diagrama de ramo e folha etc.) que permitam essa visualização e captura de padrões para cada variável observada, a depender do tipode cada qual.
+
+Bem como para a associaçãoo entre elas: a depender da combinação de tipos de cada uma delas
+
+Gerando tabelas de dupla entrada ou de contigência, quando ambas forem categóricas, do tipo \<`fctr`\>.
+
+O que será realizado nas aulas subsequentes.
+
+Dúvidas serão debeladas a cada aula!
+
+![Até nosso pRRRóximo RRRencontro!](fig/ValeuGalera.png){fig-align="center"}

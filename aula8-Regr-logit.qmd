@@ -1,0 +1,235 @@
+# Aula 8 - Regressão Logística {#sec-aula-8-regr-logit}
+
+## Estatística e Ciência de Dados
+
+Para este estudo dirigido os conjuntos de dados que analisados e scripts foram estraídos de [@Giolo2017-intrAnalDatCat , cap. 3, 6, 7]. Os conjuntos de dados associados a esses capítulos foram importados para a pasta `dat/logit`.
+
+De acordo com essa autora, um modelo para ***organizar dados com variável resposta binária*** pode ser representado conforme a tabela da figura abaixo:
+
+![Tabela 7.1: Dados sobre doença coronária por intervalos de idade. (Giolo, 2017, p. 120)](fig/Giolo-tab-7.1-p120-doenca-coronaria.JPG){fig-align="center"}
+
+A variável resposta é caracterizada pela seguinte fórmula da ***Função de Distribuição Acumulada*** $F(y)$:
+
+$$
+E(Y \mid x) = E(Y = 1 \mid X = x) = F(x) = P(X \le x) = \frac {1}{1 + e^{-x} } = \frac {e^x}{1 + e^x} = p(x)
+$$
+
+onde:
+
+-   $Y$ é a variável aleatória dependente binária, tam que: $Y = 1 \mid x$ denota a ocorrência do evento de saída de interesse ***dado que*** (probabilidade condicional) a variável aleatória independetente $X$ tenha assumido um valor qualquer do seu domínio, indicado por $x$;
+-   $p(x)$ é a ***probabilidade de ocorrência*** do ***evento de interesse:*** $Y$;
+-   Logo: $p(\overline{x}) =  1 - p(x)$ é a ***probabilidade de NÃO ocorrência*** do ***evento de interesse:*** $\overline{Y}$;
+-   De modo que a chance dessa ocorrência é, por definição: $\frac{p(x)}{p(\overline{x})} = \frac{p(x)}{1 - p(x)} = e^{\beta x}$
+-   $F(x)=P(X \le x)$ é a ***Função de Distribuição Acumulada*** (FDA) da variável $X$.
+
+7.1 Estudo sobre doença coronária versus idade (dados na Tabela 7.1)
+
+```{r}
+
+rm(list=ls())
+
+resim  <- c( 1,  2,  3,  5,  6,  5, 13,  8)
+resnao <- c( 9, 13,  9, 10,  7,  3,  4,  2)
+idade  <- c(25, 32, 38, 43, 47, 53, 57, 65)
+
+dados  <- as.data.frame(cbind(resim, resnao, idade))
+dados
+attach(dados)
+
+theta <- resim / (resim + resnao)
+```
+
+Gráfico do valor Esperado de Y em funçao da variável x = idade.
+
+```{r}
+
+plot(idade, theta,
+     ylim = range(0, 0.9),
+     xlab = "Idade",
+     ylab = "E(Y|x)",
+     pch  = 16)
+```
+
+Ajuste de um modelo logit para os dados da tabela acima.
+
+```{r}
+
+ajust<-glm(cbind(resim, resnao) ~ idade,
+           family = binomial(link="logit"),
+           data = dados)
+ajust
+
+anova(ajust, test="Chisq")
+summary(ajust)
+
+cbind(ajust$fitted.values, ajust$y)
+
+ajust$residuals
+```
+
+No R, com, o script de Giolo:
+
+```{r}
+
+   dev<-residuals(ajust, type='deviance')
+   dev
+   QL<-sum(dev^2)
+   p1<-1-pchisq(QL,6)
+   cbind(QL,p1)
+   rpears<-residuals(ajust, type='pearson')
+   rpears
+   QP<-sum(rpears^2)
+   p2<-1-pchisq(QP,6)
+   cbind(QP,p2)
+ 
+   theta<-resim/(resim+resnao)
+   plot(idade, theta, ylim=range(0,0.9), xlab="Idade", ylab="E(Y|x)", pch=16)
+   idade<-20:70
+   modajust<-(exp(-5.123+0.1058*idade))/(1+exp(-5.123+0.1058*idade))
+   lines(idade, modajust)
+ 
+   par(mfrow=c(1,2))
+   plot(rpears, ylab="Resíduos Pearson", pch=16, ylim=c(-2,2))
+   abline(h=0, lty=3)    
+   plot(dev, ylab="Resíduos deviance", pch=16, ylim=c(-2,2))
+   abline(h=0, lty=3)    
+ 
+   par(mfrow=c(1,1))
+   ntot<-c(10,15,12,15,13,8,17,10)
+   fit.model<-ajust
+   source("http://www.ime.usp.br/~giapaula/envelr_bino")
+   
+   rm(list=ls())
+   dados1<-read.table("https://docs.ufpr.br/~giolo/LivroADC/Dados/coronaria.txt",h=T) 
+   attach(dados1)   # (dados1 = indivíduos por linha)
+ 
+   # > install.packages("Epi", dependencies=TRUE)
+   
+   # library(Epi)  
+   # ROC(form=y~idade, plot="ROC")
+```
+
+Importar os dados da pesquisa com suco de uva.
+
+```{r}
+
+suco <- read.csv(file = "dat/test/sucoUva-GC-GT.csv")
+
+suco
+
+tabsuco <- table(suco) # uma tabela de contigência 2 x 2
+tabsuco
+
+prop.table(table(suco)) * 100
+
+```
+
+Replicar o código da Giolo
+
+```{r}
+
+resim  <- tabsuco[, 2]
+resnao <- tabsuco[, 1]
+grupo  <- c(0, 1)
+
+dados  <- as.data.frame(cbind(resim, resnao, grupo))
+
+msuco <- glm(cbind(resim, resnao) ~ grupo,
+             family = binomial(link = "logit"),
+             data = dados)
+msuco
+
+anova(msuco, test = "Chisq")
+summary(msuco)
+
+cbind(msuco$fitted.values, msuco$y)
+
+msuco$residuals
+```
+
+Continuar replicando.
+
+```{r}
+dev <- residuals(msuco, type = 'deviance')
+dev
+
+   QL<-sum(dev^2)
+   p1<-1-pchisq(QL,6)
+   cbind(QL,p1)
+   rpears<-residuals(msuco, type = 'pearson')
+   rpears
+   QP<-sum(rpears^2)
+   p2<-1-pchisq(QP,6)
+   cbind(QP,p2)
+ 
+   theta<-resim/(resim+resnao)
+   plot(grupo, theta, ylim=range(0,0.9), xlab="GCxGT", ylab="E(Y|x)", pch=16)
+   grupo <- 1:2
+   modajust <- (exp(-0.1214 + 1.4297 * grupo)) / (1 + exp(-0.1214 + 1.4297 * grupo))
+   lines(grupo, modajust)
+ 
+   par(mfrow=c(1,2))
+   plot(rpears, ylab="Resíduos Pearson", pch=16, ylim=c(-2,2))
+   abline(h=0, lty=3)    
+   plot(dev, ylab="Resíduos deviance", pch=16, ylim=c(-2,2))
+   abline(h=0, lty=3)    
+ 
+   par(mfrow=c(1,1))
+   ntot <- c(66, 94)
+   fit.model <- msuco
+   attach(suco)
+   # source("envelr_bino.R")
+   # Error in e[, i] <- sort(resid(fit, type = "deviance")/sqrt(abs(1 - h))) :
+   # substituto tem comprimento zero: é um vetor numeric(0)
+   # 0 / 0 = NaN
+   # função sort() retorna um vetor numeric(0)
+   # quando tenta ordenar um vetor c(NaN, NaN)
+   
+   # rm(list=ls())
+   # dados1 <- read.table("https://docs.ufpr.br/~giolo/LivroADC/Dados/coronaria.txt",h=T) 
+   # attach(suco)   # (dados1 = indivíduos por linha)
+ 
+   # > install.packages("Epi", dependencies=TRUE)
+   
+   # library(Epi)  
+   # ROC(form=y~idade, plot="ROC")
+```
+
+Um gráfico da função de sobrevivência estimada pelo método de Kaplan-Meier.
+
+```{r}
+
+library(survival)
+library(survminer)
+
+surv_object <- Surv(
+  time  = df_7.2$tempo,
+  event = df_7.2$evento
+)
+
+mod1 <- survfit(surv_object ~ 1,
+                data = df_7.2)
+
+print(mod1)
+
+km <- ggsurvplot(mod1,
+                 data   = df_7.2,
+                 title  = "Curva de Sobrevivência estimada (Morettin; Singer, 2023, p. 207, fig. 7.5)",
+                 xlab   = "Tempo",
+                 ylab   = "Probab. Sobrevivência",
+                 legend = "none",
+                 conf.int = TRUE,
+                 palette  = "black",
+                 ggtheme  = theme_bw() + theme(aspect.ratio = 0.5),
+                 font.x   = c(16),
+                 font.y   = c(16),
+                 font.tickslab = c(14)
+                 )
+```
+
+Exibir o gráfico da função de Sobrevivência.
+
+```{r}
+
+km
+```

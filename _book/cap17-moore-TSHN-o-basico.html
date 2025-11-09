@@ -1,0 +1,1045 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR" xml:lang="pt-BR"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Cleuler Barbosa das Neves">
+<title>10&nbsp; AEI - cap 17 moore - TSH0 – __Ciência de Dados e Estatística Aplicadas ao Direito e Políticas Públicas__</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 1em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./conclusao.html" rel="next">
+<link href="./cap16-moore-IC-o-basico.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-364982630eef5352dd1537128a8ed5cb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+</head>
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cap17-moore-TSHN-o-basico.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">AEI - cap 17 moore - TSH0</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./"><strong>Ciência de Dados e Estatística Aplicadas ao Direito e Políticas Públicas</strong></a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Alternar modo de leitor">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Procurar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pretexto</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AEID-cap18-Reproduzivel.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">AEID - Análise Exploratória e Inferencial de Dados</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap3-DistNorm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">AED - cap 3 - As Distribuições Normais</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap5-pldr-modelos-dados.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">AED - cap 5 pldr - Ajustando Modelos aos Dados</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap13-pldr-model-rel-contin.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">AID - cap 13 - Modelagem de Relações Contínuas</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap16-pldr-EstMultiv.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">AID - cap 16 - Estatística Multivariada</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap6-moore-tab-dupla-entrada.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">AED - cap 6 moore - Tabelas de Dupla Entrada</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./replicar-suco-uva-tab-graf.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">AED - suco uva - Tabelas e Gráficos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap16-moore-IC-o-basico.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">AEI - cap 16 moore - IC: o Básico</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap17-moore-TSHN-o-basico.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">AEI - cap 17 moore - TSH0</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./conclusao.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Conclusão</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./apendiceA.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Apêndice A - EMENTA</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./apendiceB-quadroVar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Apêndice B - Quadro Var</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./referencias.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Referências</span></a>
+  </div>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Sumário</h2>
+   
+  <ul>
+<li><a href="#objetivos-da-aprendizagem" id="toc-objetivos-da-aprendizagem" class="nav-link active" data-scroll-target="#objetivos-da-aprendizagem"><span class="header-section-number">10.1</span> Objetivos da Aprendizagem</a></li>
+  <li>
+<a href="#testes-de-signific%C3%A2ncia-o-b%C3%A1sico" id="toc-testes-de-significância-o-básico" class="nav-link" data-scroll-target="#testes-de-signific%C3%A2ncia-o-b%C3%A1sico"><span class="header-section-number">10.2</span> Testes de Significância: o Básico</a>
+  <ul>
+<li><a href="#exemplo-17.1-eu-sou-um-grande-atirador-de-lances-livres" id="toc-exemplo-17.1-eu-sou-um-grande-atirador-de-lances-livres" class="nav-link" data-scroll-target="#exemplo-17.1-eu-sou-um-grande-atirador-de-lances-livres"><span class="header-section-number">10.2.1</span> EXEMPLO 17.1 Eu sou um grande atirador de lances livres</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#a-l%C3%B3gica-dos-testes-de-signific%C3%A2ncia-da-h0" id="toc-a-lógica-dos-testes-de-significância-da-h0" class="nav-link" data-scroll-target="#a-l%C3%B3gica-dos-testes-de-signific%C3%A2ncia-da-h0"><span class="header-section-number">10.3</span> A lógica dos Testes de Significância da H<sub>0</sub></a>
+  <ul>
+<li><a href="#exemplo-17.2-ado%C3%A7antes-de-refrigerantes" id="toc-exemplo-17.2-adoçantes-de-refrigerantes" class="nav-link" data-scroll-target="#exemplo-17.2-ado%C3%A7antes-de-refrigerantes"><span class="header-section-number">10.3.1</span> EXEMPLO 17.2 Adoçantes de refrigerantes</a></li>
+  </ul>
+</li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title"><span id="sec-TSHN-basico" class="quarto-section-identifier"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">AEI - cap 17 moore - TSH0</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><section id="objetivos-da-aprendizagem" class="level2" data-number="10.1"><h2 data-number="10.1" class="anchored" data-anchor-id="objetivos-da-aprendizagem">
+<span class="header-section-number">10.1</span> Objetivos da Aprendizagem</h2>
+<blockquote class="blockquote">
+<p>Após ler este capítulo, você deve ser capaz de:</p>
+<p>▶ 17.1 Usar o <strong>raciocínio</strong> dos <strong>testes estatísticos</strong> para estabelecer <strong>se</strong> os <u><strong>dados amostrais suportam</strong></u>, <u><strong>ou não</strong></u>, <u><strong>uma afirmativa</strong></u> sobre a <u><strong>população</strong></u>.</p>
+<p>▶ 17.2 Estabelecer as <u><strong>hipóteses nula e alternativa</strong></u> ao <strong><em>testar uma afirmativa sobre a <u>média</u></em></strong> de uma <strong>população</strong>.</p>
+<p>▶ 17.3 Encontrar e <u><strong>interpretar valores P</strong></u> e estabelecer <strong>se</strong> um <strong>resultado de teste é, ou não, estatisticamente significante</strong> em dado nível.</p>
+<p>▶ 17.4 Calcular a <strong>estatística</strong> de <strong>teste z</strong> de <strong>uma amostra</strong>, para <strong>testes</strong> tanto <strong>unilaterais</strong> quanto <strong>bilaterais</strong>, de <u><strong>uma média populacional</strong></u>, e tirar <u><strong>conclusões</strong></u> a partir dos resultados.</p>
+<p>▶ 17.5 Usar uma <strong>tabela</strong> para procurar <strong>valores P</strong> aproximados com <strong>base</strong> na <strong>estatística z</strong> e estabelecer <u><strong>se</strong></u> o resultado <u><strong>é estatisticamente significante</strong></u>.</p>
+</blockquote>
+</section><section id="testes-de-significância-o-básico" class="level2" data-number="10.2"><h2 data-number="10.2" class="anchored" data-anchor-id="testes-de-significância-o-básico">
+<span class="header-section-number">10.2</span> Testes de Significância: o Básico</h2>
+<blockquote class="blockquote">
+<p><strong>Intervalos de confiança</strong> são um dos dois tipos mais comuns de <strong>inferência estatística</strong>.</p>
+<p>Neste capítulo, discutimos <strong>testes de significância</strong> [da Hipótese Nula - TSHN], o <strong>segundo tipo</strong> de <strong>inferência estatística</strong>.</p>
+<p>A matemática da <strong>probabilidade</strong> – em particular, as <strong>distribuições amostrais</strong> discutidas no <strong>Capítulo 15</strong> – fornece a <strong>base formal</strong> para <u><strong>um teste de significância</strong></u>.</p>
+<p>Aqui aplicaremos o <strong>raciocínio</strong> de <strong>testes de significância</strong> para a <strong>média</strong> de <strong>uma população</strong> que tem <u><strong>distribuição Normal</strong></u>, em <em>um contexto simples e artificial</em> (em que <strong><em>supomos conhecer</em></strong> o <u><strong>desvio-padrão populacional</strong></u>).</p>
+<p>Usaremos a mesma lógica em <em>capítulos futuros</em> para a <em>construção de testes de significância</em> para <em>parâmetros populacionais</em> em <u><em>contextos mais realistas</em></u>.</p>
+<p>Use um <strong>intervalo de confiança</strong> quando seu <strong>objetivo</strong> for <u><strong>estimar um parâmetro da população</strong></u>.</p>
+<p>Os <u><strong>testes de significância</strong></u> têm um <strong>objetivo diferente</strong>: <u><strong>avaliar</strong></u> a <u><strong>evidência</strong></u> <em>fornecida pelos <strong>dados</strong></em> sobre <u><strong><em>alguma afirmativa anterior</em></strong></u> relativa a <u><strong>um parâmetro da população</strong></u>.</p>
+<p>A seguir, apresentamos sucintamente a <u><strong>lógica</strong></u> de testes estatísticos [TSHN ou <strong><em>NHST</em></strong> - <strong><em>Null Hypothese Significant Test</em></strong>] <span class="citation" data-cites="Moore2023">(<a href="referencias.html#ref-Moore2023" role="doc-biblioref">MOORE; NOTZ; FLIGNER, 2023</a> , cap. 17, p.&nbsp;308-323)</span></p>
+</blockquote>
+<div class="callout callout-style-simple callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Inferência estatística
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A inferência estatística fornece <u><strong>métodos</strong></u> para a <strong><em>extração de conclusões sobre uma população a partir de dados amostrais</em></strong>. <span class="citation" data-cites="Moore2023">(<a href="referencias.html#ref-Moore2023" role="doc-biblioref">MOORE; NOTZ; FLIGNER, 2023</a> , cap. 16, p.&nbsp;296)</span></p>
+</div>
+</div>
+<p>Recapitular as condições simples ou pressupostos para um TSHN de uma média populacional desconhecida.</p>
+<div class="callout callout-style-simple callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Condições simples para inferência sobre uma média
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Temos <u><strong>uma amostra aleatória simples</strong></u> <strong>(AAS)</strong> da população de interesse.</li>
+<li>Não há não resposta [NA] ou qualquer outra dificuldade prática.</li>
+<li>A <u><strong>população é grande</strong></u> em comparação ao tamanho da amostra [N &gt; 20 x n].</li>
+<li>A <strong>variável</strong> que <em>medimos</em> tem <u><strong>uma distribuição exatamente normal</strong></u> <strong>N(µ; σ)</strong> na população.</li>
+<li>
+<strong><em>Não conhecemos</em></strong> a <strong>média da população</strong> µ.</li>
+<li>Mas <u><strong>conhecemos</strong></u> o <u><strong>desvio-padrão populacional</strong></u> σ. <span class="citation" data-cites="Moore2023">(<a href="referencias.html#ref-Moore2023" role="doc-biblioref">MOORE; NOTZ; FLIGNER, 2023</a> , cap. 16, p.&nbsp;297)</span>
+</li>
+</ol>
+</div>
+</div>
+<p>A condição de que a população seja grande em relação ao tamanho da amostra será adequadamente satisfeita se a população for, digamos, pelo menos 20 vezes maior [N &gt; 20 x n ou n &lt; 5% x N].</p>
+<div class="callout callout-style-simple callout-important">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>[…] <em>As <strong>condições</strong> [ou pressupostos, <strong>presunções relativas</strong>] de que temos uma AAS perfeita, de que a população é exatamente Normal e de que conhecemos o σ populacional são todas não realistas</em>. <span class="citation" data-cites="Moore2023">(<a href="referencias.html#ref-Moore2023" role="doc-biblioref">MOORE; NOTZ; FLIGNER, 2023</a> , cap. 16, p.&nbsp;297)</span></p>
+</div>
+</div>
+</div>
+<p>O <strong>pesquisador</strong> é o <strong>responsável</strong> pelo <strong>ônus da prova</strong> de <u><strong>verificar se</strong></u>, na prática e diante de seus dados válidos, fidedignos e reproduzíveis, essas <u><strong><em>presunções relativas</em></strong></u> <u><strong><em>não</em></strong></u> <strong><em>são <u>satisfeitas</u></em></strong>.</p>
+<p>Ou seja, de que existe evidência de não satisfação das condições para aplicação de um TSHN.</p>
+<p>Por exemplo:</p>
+<ol type="1">
+<li>a distribuição original na População da variável a ser testada não é Normal (padrão geral dos dados).</li>
+<li>a amostra obtida não é uma AAS.</li>
+<li>há considerável viés de NA.</li>
+<li>há viés de subcobertura.</li>
+<li>há viés de autoseleção.</li>
+<li>há viés de resposta por autodeclaração.</li>
+<li>há viés de resposta devido ao fraseado de questões do survey (intrumento de coleta).</li>
+<li>pode haver insinceridade na resposta do entrevistado.</li>
+<li>há <em>outliers</em> na amostra com forte desvio de assimetria à direita que fogem ao padrão geral dos dados.</li>
+<li>uso de <em>estimador enviesado</em> para obter uma estimativa do <strong>desvio padrão</strong> da <strong>população</strong> (<span class="math inline">\(\sigma\)</span>) a partir do <strong><em>desvio padrão</em></strong> da <strong><em>amostra</em></strong> (s), o que é evitado pela divisão da soma dos desvios quadráticos pelo número de graus de liberdade da amostra (g.l. = n - 1) <span class="citation" data-cites="Moore2023">(<a href="referencias.html#ref-Moore2023" role="doc-biblioref">MOORE; NOTZ; FLIGNER, 2023</a> , cap. 2, p.&nbsp;46)</span>.</li>
+</ol>
+<p>Recapitulando o conceito de desvio padrão amostral (s) como a raiz quadrada da <strong>variâcia amostral</strong> (s<sup>2</sup>):</p>
+<p><span class="math display">\[
+s^2 = \frac{(x_1-\bar{x})^2 + (x_2-\bar{x})^2 + \cdots + (x_n-\bar{x})^2}{n-1}
+\]</span></p>
+<p>Ou seja, a variância amostral também pode ser expressa por:</p>
+<p><span class="math display">\[
+s^2 = \frac{1}{n-1} \sum_{i=1}^n (x_i-\bar{x})^2
+\]</span></p>
+<p>Uma vez calculada a variância amostral acima, o desvio padrão amostral é obtido extraindo sua raiz quadrada <span class="citation" data-cites="Moore2023">(<a href="referencias.html#ref-Moore2023" role="doc-biblioref">MOORE; NOTZ; FLIGNER, 2023</a> , cap. 2, p.&nbsp;46)</span>:</p>
+<p><span class="math display">\[
+s^2 = \sqrt{\frac{1}{n-1} \sum_{i=1}^n (x_i-\bar{x})^2}
+\]</span></p>
+<section id="exemplo-17.1-eu-sou-um-grande-atirador-de-lances-livres" class="level3" data-number="10.2.1"><h3 data-number="10.2.1" class="anchored" data-anchor-id="exemplo-17.1-eu-sou-um-grande-atirador-de-lances-livres">
+<span class="header-section-number">10.2.1</span> EXEMPLO 17.1 Eu sou um grande atirador de lances livres</h3>
+<p>Eu <strong>afirmo</strong> que acerto 80% de meus lances livres no jogo de basquete.</p>
+<p>Para <u><strong>testar</strong></u> <em>minha</em> <strong>afirmativa</strong>, <em>você me pede para</em> <strong>fazer 20 lances livres</strong>. [coleta de uma amostra de tamanho 20]</p>
+<p>Eu <strong><em>acerto apenas oito dos 20</em></strong>.</p>
+<p>“Ah!”, você diz. “<em>Alguém que acerta 80% de seus lances livres</em> <u><strong>quase nunca</strong></u> <em>acertaria <u><strong>apenas oito entre 20</strong></u></em>.</p>
+<p><u><strong>Logo</strong></u>, <u><strong>não acredito</strong></u> em <u><strong>sua afirmativa</strong></u>.” [<em>decisão</em> baseada em <em>evidências</em> após um <em>teste</em> aplicado em <em>dados</em> de <em>uma amostra</em> validademente coletada]</p>
+<p>Seu <u><strong>raciocínio</strong></u> se baseia no <strong>questionamento</strong> do <u><strong><em>que ocorreria se minha afirmativa fosse verdadeira</em></strong></u> <u><strong>e</strong></u> <u><strong><em>repetíssemos a amostra de 20 lançamentos muitas vezes</em></strong></u>: eu <u><strong>quase nunca acertaria oito ou menos</strong></u>.</p>
+<p>[Lei dos Grandes Números e Teorema Central do Limite:]</p>
+<p>Esse <u><strong>resultado de oito em 20 é tão improvável</strong></u>, que fornece uma <u>forte</u> [recitus razoável] <u><strong>evidência</strong></u> de que minha <strong>afirmativa <u>não</u> seja <u>verdadeira</u></strong> [sem jamais afastar a possibilidade de cometer um Erro de decisão do Tipo I, ou seja, o erro de decisão de <em>rejeitar a hipotese nula quando ela for verdadeira</em>].</p>
+<p>Você pode dizer quão <u>forte</u> é a evidência contra minha afirmativa, fornecendo a <u><strong>probabilidade</strong></u> de eu acertar oito ou menos entre 20 lances livres, se eu realmente acertasse 80% no longo prazo.</p>
+<p>Essa probabilidade é 0,0001; como descrito no Capítulo 14, esse cálculo é feito com o uso da distribuição binomial.</p>
+<p>Assim, eu <u><strong>acertaria oito ou menos em 20 lances</strong></u> em <u><strong>apenas</strong></u> <u><strong>uma vez em 10 mil tentativas no longo prazo</strong></u> – onde <strong>cada “tentativa” são 20 lances livres</strong> jogados – <u><strong>se</strong></u> minha <u><strong>afirmativa de acertar 80% fosse verdadeira</strong></u>.</p>
+<p>O <u><strong>pequeno valor da probabilidade</strong></u> o <u><strong>convence</strong></u> de que minha <strong>afirmativa é <u>falsa</u></strong>.</p>
+<p>Corretíssimo, mas esse indicador <strong><em>probabilidade</em></strong>, <u><strong>valor P</strong></u> ou <strong><em>Área sob a Curva</em></strong> <u><strong>não</strong></u> nos fornece a <strong>força</strong> dessa <u><strong>evidência</strong></u>.</p>
+<p>O <u><strong>coeficiente de Bayes</strong></u> cumpre esse papel.</p>
+</section></section><section id="a-lógica-dos-testes-de-significância-da-h0" class="level2" data-number="10.3"><h2 data-number="10.3" class="anchored" data-anchor-id="a-lógica-dos-testes-de-significância-da-h0">
+<span class="header-section-number">10.3</span> A lógica dos Testes de Significância da H<sub>0</sub>
+</h2>
+<p>A <u><strong>lógica</strong></u> dos <u><strong>testes estatísticos</strong></u>, assim como a dos <u><strong>intervalos de confiança</strong></u>, se <u><strong>baseia</strong></u> no <u><strong>questionamento</strong></u> do que <u><strong>ocorreria se repetíssemos a amostra ou experimento muitas vezes</strong></u>.</p>
+<p>Essa lógica baseia-se na <u><strong>Lei dos Grandes Números</strong></u> (LGN).</p>
+<p>Agiremos novamente <u><strong><em>como se</em></strong></u> as “<u><strong>condições simples</strong></u>” listadas em “Condições simples para inferência sobre uma média”, no Capítulo 16, <strong><em>fossem verdadeiras</em></strong>: temos <strong><em>uma AAS perfeita</em></strong> de <strong><em>uma população exatamente Normal</em></strong> com <strong><em>desvio-padrão σ conhecido</em></strong> por nós.</p>
+<p>Eis um exemplo que analisaremos.</p>
+<section id="exemplo-17.2-adoçantes-de-refrigerantes" class="level3" data-number="10.3.1"><h3 data-number="10.3.1" class="anchored" data-anchor-id="exemplo-17.2-adoçantes-de-refrigerantes">
+<span class="header-section-number">10.3.1</span> EXEMPLO 17.2 Adoçantes de refrigerantes</h3>
+<p>Refrigerantes dietéticos usam adoçantes artificiais para evitar o uso de açúcar.</p>
+<p>Esses adoçantes gradualmente perdem sua doçura ao longo do tempo.</p>
+<p>Os fabricantes, portanto, testam a perda de doçura dos refrigerantes novos antes de colocá-los no mercado.</p>
+<p>Provadores treinados bebem um pequeno gole de refrigerante, juntamente com bebidas de doçura padrão, e atribuem ao refrigerante um “escore de doçura” de 1 a 10, com maiores escores correspondendo a maior doçura.</p>
+<p>O refrigerante é, então, <strong><em>armazenado por um mês em alta temperatura para imitar o efeito do armazenamento por 4 meses em temperatura ambiente</em></strong>.</p>
+<p><strong><em>Cada provador atribui um escore ao refrigerante novamente após o armazenamento</em></strong>.</p>
+<p>Esse é um experimento de <strong><em>dados emparelhados</em></strong>.</p>
+<p>Nossos dados são as <u><strong>diferenças</strong></u> (escore <u><strong><em>antes</em></strong></u> do armazenamento <u><strong>menos</strong></u> escore <u><strong><em>após</em></strong></u> o armazenamento) dos escores dos provadores. [Perda doçura = Antes - Após; se &gt; 0 então menos doçura]</p>
+<p>Quanto <u><strong>maior a diferença</strong></u> (diferença &gt; 0), <strong><em>maior será a perda de doçura</em></strong>.</p>
+<p><strong><em>Suponha sabermos</em></strong> que, <strong><em>para qualquer refrigerante</em></strong>, os <strong><em>escores de perda de doçura variem de provador para provador</em></strong> de acordo com uma <u><strong>distribuição Normal</strong></u>, com <u><strong>desvio-padrão</strong></u> σ = 1.</p>
+<p>A média µ de todos os provadores mede a perda de doçura e é <strong><em>diferente para diferentes refrigerantes</em></strong>.</p>
+<p>A seguir, estão as perdas de doçura de um novo refrigerante, medidas por 10 provadores treinados:</p>
+<p>1,6   0,4   0,5 –2,0  1,5 –1,1  1,3 –0,1 –0,3   1,2</p>
+<p>A <u><strong>perda média de doçura</strong></u> é <u><strong>dada</strong></u> pela <strong><em>média amostral</em></strong> x = 0,3, de modo que, <strong><em>em média</em></strong>, os <strong><em>10 provadores encontraram uma pequena perda de doçura</em></strong>.</p>
+<p>Também, <em>mais da metade</em>, (seis) dos <em>provadores encontraram uma perda de doçura</em>.</p>
+<p>Esses dados são uma <u><strong>boa evidência</strong></u> de que o refrigerante perdeu doçura com o armazenamento?</p>
+<p>O raciocínio é o mesmo do Exemplo 17.1.</p>
+<p>Fazemos <u><strong>uma afirmativa</strong></u> e perguntamos <u><strong>se</strong></u> os <u><strong>dados fornecem evidência contrária a ela</strong></u>.</p>
+<p>Procuramos <u><strong>evidência</strong></u> de que <u><strong>haja uma perda de doçura</strong></u>;</p>
+<p>logo, a <u><strong>afirmativa que testamos</strong></u> é que <u><strong>não há perda</strong></u>.</p>
+<p>Nesse caso, a <strong>perda média para a população de todos os provadores treinados</strong> seria µ = 0. [H<sub>0</sub>]</p>
+<p>• <u><strong>Se</strong></u> a afirmativa de que <strong>µ = 0</strong> [H<sub>0</sub>] é <strong>verdadeira</strong>, a <u><strong>distribuição amostral</strong></u> de <span class="math inline">\(\bar{x}\)</span> dos <u><strong>10 provadores</strong></u> é <u><strong>Normal</strong></u> com <strong>média µ = 0</strong> e desvio-padrão [pelo Teorema Central do Limite]:</p>
+<p><span class="math display">\[
+\text{Erro Padrão das médias amostrais} = \frac{\sigma}{\sqrt{n}} = \frac{1.0}{\sqrt{10}} = 0.316
+\]</span></p>
+<p>Esses são exatamente os cálculos que fizemos no Capítulo 15 (ver Exemplo 15.5) e no Capítulo 16 (ver Exemplo 16.1).</p>
+<p>A Figura 17.1 mostra essa distribuição amostral.</p>
+<p><strong><em>Podemos</em></strong> <u><strong>julgar</strong></u> <u><strong>se</strong></u> qualquer <span class="math inline">\(\bar{x}\)</span> <strong><em>observado</em></strong> [nos dados amostrais] é <u><strong>surpreendente</strong></u>, localizando-o nessa distribuição.</p>
+<p>• Para esse refrigerante, <strong><em>10 provadores</em></strong> acusaram <strong><em>perda média</em></strong> [doçura] <span class="math inline">\(\bar{x}\)</span> = 0,3. É claro, a partir da Figura 17.1, que um <span class="math inline">\(\bar{x}\)</span> desse tamanho <u><strong>não é particularmente surpreendente</strong></u>. Ele <u><strong>poderia facilmente ocorrer apenas devido</strong></u> ao <u><strong>acaso</strong></u>, <strong>quando a média da população é µ = 0 [supondo H<sub>0</sub> verdadeira]</strong>. O <u><strong>fato</strong></u> de <strong><em>obter</em></strong> <span class="math inline">\(\bar{x}\)</span> = 0,3 para <u><strong>10</strong></u> provadores <u><strong>não é</strong></u> <u>forte</u> [<em>rectius</em>] <u><strong>boa evidência</strong></u> de que esse refrigerante perca doçura.</p>
+<p>Script abaixo gera um gráfico da <strong><em>distribuição amostral das médias amostrais</em></strong> supondo que a Hipótese Nula fosse Verdadeira: <span class="math inline">\(H_0: \mu = 0.0\)</span></p>
+<p>Trata-se de um TSHN.</p>
+<div class="cell">
+<details class="code-fold"><summary>Código</summary><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Gera gráfico da distribuição amostral das médias (nrep = 5000) para um vetor de observações.</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajuste 'sample_size' conforme desejar; usa amostragem com reposição.</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Requisitos: install.packages(c("ggplot2","dplyr"))</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Dados amostrais fornecidos</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.6</span>, <span class="fl">0.4</span>, <span class="fl">0.5</span>, <span class="sc">-</span><span class="fl">2.0</span>, <span class="fl">1.5</span>, <span class="sc">-</span><span class="fl">1.1</span>, <span class="fl">1.3</span>, <span class="sc">-</span><span class="fl">0.1</span>, <span class="sc">-</span><span class="fl">0.3</span>, <span class="fl">1.2</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Parâmetros</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>sample_size <span class="ot">&lt;-</span> <span class="dv">10</span>   <span class="co"># tamanho da amostra n (ajuste conforme necessário)</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>nrep <span class="ot">&lt;-</span> <span class="dv">5000</span>        <span class="co"># número de repetições</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>replace <span class="ot">&lt;-</span> <span class="cn">TRUE</span>     <span class="co"># TRUE = com reposição (bootstrap-like); FALSE = sem reposição</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Geração das médias amostrais</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>) <span class="co"># para reprodutibilidade</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>samp_means <span class="ot">&lt;-</span> <span class="fu">replicate</span>(nrep,</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">mean</span>(<span class="fu">sample</span>(x,</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">size =</span> sample_size,</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">replace =</span> replace)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>                             )</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>                        )</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Estatísticas</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>obs_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(x)</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>pop_sd   <span class="ot">&lt;-</span> <span class="fu">sd</span>(x)                       <span class="co"># desvio amostral da "população" dada</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>theoretical_sd <span class="ot">&lt;-</span> pop_sd <span class="sc">/</span> <span class="fu">sqrt</span>(sample_size)</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>dist_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(samp_means)</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>dist_sd   <span class="ot">&lt;-</span> <span class="fu">sd</span>(samp_means)</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>ci95 <span class="ot">&lt;-</span> dist_mean <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">*</span> <span class="fu">qnorm</span>(<span class="fl">0.975</span>) <span class="sc">*</span> theoretical_sd</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="co"># Data frame para ggplot</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>df_plot <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">mean =</span> samp_means)</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotagem: histograma (densidade), densidade empírica e curva normal teórica</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df_plot, <span class="fu">aes</span>(<span class="at">x =</span> mean)) <span class="sc">+</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..), <span class="at">bins =</span> <span class="fu">max</span>(<span class="dv">10</span>, <span class="fu">round</span>(<span class="fu">sqrt</span>(nrep))),</span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fill =</span> <span class="st">"#cce5ff"</span>, <span class="at">color =</span> <span class="st">"#2b6fa6"</span>) <span class="sc">+</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">color =</span> <span class="st">"#0055a4"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb2-41"><a href="#cb2-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x) <span class="fu">dnorm</span>(x, <span class="at">mean =</span> dist_mean, <span class="at">sd =</span> theoretical_sd),</span>
+<span id="cb2-42"><a href="#cb2-42" aria-hidden="true" tabindex="-1"></a>                <span class="at">color =</span> <span class="st">"#d9534f"</span>, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb2-43"><a href="#cb2-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> dist_mean, <span class="at">color =</span> <span class="st">"darkgreen"</span>, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"solid"</span>) <span class="sc">+</span></span>
+<span id="cb2-44"><a href="#cb2-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fl">0.0</span>, <span class="at">color =</span> <span class="st">"purple"</span>, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dotdash"</span>) <span class="sc">+</span></span>
+<span id="cb2-45"><a href="#cb2-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> ci95, <span class="at">color =</span> <span class="st">"#d9534f"</span>, <span class="at">linetype =</span> <span class="st">"dotted"</span>, <span class="at">size =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb2-46"><a href="#cb2-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> dist_mean, <span class="at">y =</span> <span class="fu">max</span>(<span class="fu">density</span>(samp_means)<span class="sc">$</span>y)<span class="sc">*</span><span class="fl">0.95</span>,</span>
+<span id="cb2-47"><a href="#cb2-47" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="fu">sprintf</span>(<span class="st">"Média das médias = %.3f"</span>, dist_mean), <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">color =</span> <span class="st">"darkgreen"</span>, <span class="at">size =</span> <span class="fl">3.5</span>) <span class="sc">+</span></span>
+<span id="cb2-48"><a href="#cb2-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> ci95[<span class="dv">1</span>], <span class="at">y =</span> <span class="fu">max</span>(<span class="fu">density</span>(samp_means)<span class="sc">$</span>y)<span class="sc">*</span><span class="fl">0.75</span>,</span>
+<span id="cb2-49"><a href="#cb2-49" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="fu">sprintf</span>(<span class="st">"IC95 teórico:[%.3f, %.3f]"</span>, ci95[<span class="dv">1</span>], ci95[<span class="dv">2</span>]), <span class="at">color =</span> <span class="st">"#d9534f"</span>, <span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb2-50"><a href="#cb2-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">sprintf</span>(<span class="st">"Distribuição amostral das médias amostrais (n = %d, nrep = %d)"</span>, sample_size, nrep),</span>
+<span id="cb2-51"><a href="#cb2-51" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Média amostral"</span>, <span class="at">y =</span> <span class="st">"Densidade"</span>) <span class="sc">+</span></span>
+<span id="cb2-52"><a href="#cb2-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span>
+<span id="cb2-53"><a href="#cb2-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-54"><a href="#cb2-54" aria-hidden="true" tabindex="-1"></a><span class="co"># Exibir</span></span>
+<span id="cb2-55"><a href="#cb2-55" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p)</span>
+<span id="cb2-56"><a href="#cb2-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-57"><a href="#cb2-57" aria-hidden="true" tabindex="-1"></a><span class="co"># Opcional: salvar</span></span>
+<span id="cb2-58"><a href="#cb2-58" aria-hidden="true" tabindex="-1"></a><span class="co"># ggsave("dist_media_amostral.png", p, width = 8, height = 4.5, dpi = 300)</span></span>
+<span id="cb2-59"><a href="#cb2-59" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="cap17-moore-TSHN-o-basico_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Agora centrando a distribuição amostral das médias amostrais em mu = 0 e mantendo a reta vertical em xbarra = 0.301</p>
+<div class="cell">
+<details class="code-fold"><summary>Código</summary><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Gera distribuição amostral das médias, centra em mu = 0 e mantém reta vertical em xbarra = 0.301</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Requisitos: install.packages(c("ggplot2","dplyr"))</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Dados amostrais fornecidos</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.6</span>, <span class="fl">0.4</span>, <span class="fl">0.5</span>, <span class="sc">-</span><span class="fl">2.0</span>, <span class="fl">1.5</span>, <span class="sc">-</span><span class="fl">1.1</span>, <span class="fl">1.3</span>, <span class="sc">-</span><span class="fl">0.1</span>, <span class="sc">-</span><span class="fl">0.3</span>, <span class="fl">1.2</span>)</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Parâmetros</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>sample_size <span class="ot">&lt;-</span> <span class="dv">10</span>   <span class="co"># tamanho da amostra n (ajuste se desejar)</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>nrep <span class="ot">&lt;-</span> <span class="dv">5000</span>        <span class="co"># número de repetições</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>replace <span class="ot">&lt;-</span> <span class="cn">TRUE</span>     <span class="co"># amostragem com reposição</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Gerar médias amostrais</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>samp_means <span class="ot">&lt;-</span> <span class="fu">replicate</span>(nrep,</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">mean</span>(<span class="fu">sample</span>(x,</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">size =</span> sample_size,</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">replace =</span> replace)</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>                             )</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>                        )</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="co"># média das médias (xbarra) e valor fixo solicitado para a reta vertical</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>dist_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(samp_means)        <span class="co"># média observada das médias (ex.: ~0.301)</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>xbar_fixed <span class="ot">&lt;-</span> <span class="fl">0.301</span>                  <span class="co"># reta vertical fixada conforme solicitado</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Centralizar a distribuição em mu = 0 (subtrair a média das médias)</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>centered_means <span class="ot">&lt;-</span> samp_means <span class="sc">-</span> dist_mean</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="co"># Estatísticas</span></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>pop_sd <span class="ot">&lt;-</span> <span class="fu">sd</span>(x)                       <span class="co"># desvio amostral dos dados fornecidos</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>theoretical_sd <span class="ot">&lt;-</span> pop_sd <span class="sc">/</span> <span class="fu">sqrt</span>(sample_size)  <span class="co"># sd teórico da média amostral</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>empirical_sd <span class="ot">&lt;-</span> <span class="fu">sd</span>(centered_means)    <span class="co"># sd empírico da distribuição centralizada</span></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>ci95 <span class="ot">&lt;-</span> dist_mean <span class="sc">-</span> xbar_fixed <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">*</span> <span class="fu">qnorm</span>(<span class="fl">0.975</span>) <span class="sc">*</span> theoretical_sd</span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Data frame para ggplot</span></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>df_plot <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">mean_centered =</span> centered_means)</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Plotagem: histograma (densidade), densidade empírica e curva normal teórica centrada em 0</span></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(df_plot, <span class="fu">aes</span>(<span class="at">x =</span> mean_centered)) <span class="sc">+</span></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..), <span class="at">bins =</span> <span class="fu">max</span>(<span class="dv">10</span>, <span class="fu">round</span>(<span class="fu">sqrt</span>(nrep))),</span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fill =</span> <span class="st">"#cce5ff"</span>, <span class="at">color =</span> <span class="st">"#2b6fa6"</span>) <span class="sc">+</span></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">color =</span> <span class="st">"#0055a4"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>  <span class="co"># curva normal teórica centrada em mu = 0 (usar theoretical_sd)</span></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x) <span class="fu">dnorm</span>(x, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> theoretical_sd),</span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>                <span class="at">color =</span> <span class="st">"#d9534f"</span>, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>) <span class="sc">+</span></span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>  <span class="co"># linha vertical no zero (mu alvo)</span></span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">0</span>, <span class="at">color =</span> <span class="st">"darkgreen"</span>, <span class="at">linetype =</span> <span class="st">"solid"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>  <span class="co"># linha vertical fixa em xbar = 0.301 (na escala centrada, posiciona em x = 0.301 - dist_mean)</span></span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> xbar_fixed, <span class="at">color =</span> <span class="st">"purple"</span>, <span class="at">linetype =</span> <span class="st">"dotdash"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> ci95, <span class="at">color =</span> <span class="st">"#d9534f"</span>, <span class="at">linetype =</span> <span class="st">"dotted"</span>, <span class="at">size =</span> <span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a>  <span class="co"># anotações: média das médias (valor real) e legenda para mu=0</span></span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> <span class="fu">max</span>(<span class="fu">density</span>(centered_means)<span class="sc">$</span>y) <span class="sc">*</span> <span class="fl">0.95</span>,</span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="st">"mu = 0"</span>, <span class="at">color =</span> <span class="st">"darkgreen"</span>, <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">size =</span> <span class="fl">3.5</span>) <span class="sc">+</span></span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> xbar_fixed, <span class="at">y =</span> <span class="fu">max</span>(<span class="fu">density</span>(centered_means)<span class="sc">$</span>y) <span class="sc">*</span> <span class="fl">0.85</span>,</span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="fu">sprintf</span>(<span class="st">"x̄ = %.3f"</span>, xbar_fixed), <span class="at">color =</span> <span class="st">"purple"</span>, <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">size =</span> <span class="fl">3.5</span>) <span class="sc">+</span></span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> ci95[<span class="dv">1</span>], <span class="at">y =</span> <span class="fu">max</span>(<span class="fu">density</span>(samp_means)<span class="sc">$</span>y)<span class="sc">*</span><span class="fl">0.75</span>,</span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a>           <span class="at">label =</span> <span class="fu">sprintf</span>(<span class="st">"IC95 teórico:[%.3f, %.3f]"</span>, ci95[<span class="dv">1</span>], ci95[<span class="dv">2</span>]), <span class="at">color =</span> <span class="st">"#d9534f"</span>, <span class="at">hjust =</span> <span class="sc">+</span><span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="fu">sprintf</span>(<span class="st">"Distribuição amostral das médias (centralizada em 0)</span><span class="sc">\n</span><span class="st"> n = %d, rep = %d"</span>, sample_size, nrep),</span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="fu">sprintf</span>(<span class="st">"Média real das médias = %.3f (subtraída para centralizar)"</span>, dist_mean),</span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Média amostral (centralizada)"</span>, <span class="at">y =</span> <span class="st">"Densidade"</span>) <span class="sc">+</span></span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">12</span>)</span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p)</span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a><span class="co"># Opcional: salvar gráfico</span></span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a><span class="co"># ggsave("dist_media_centered.png", p, width = 8, height = 4.5, dpi = 300)</span></span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="cap17-moore-TSHN-o-basico_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>mmm</p>
+
+
+<div id="refs" class="references csl-bib-body" data-entry-spacing="1" role="list" style="display: none">
+<div id="ref-Moore2023" class="csl-entry" role="listitem">
+MOORE, David S.; NOTZ, William I.; FLIGNER, Michael A. <strong><a href="https://www.grupogen.com.br/livro-a-estatistica-basica-e-sua-pratica-david-s-moore-william-i-notz-e-michael-a-fligner-editora-ltc-9788521638605">Estatística Básica e sua prática</a></strong>. 9. ed. Rio de Janeiro: LTC, 2023.
+</div>
+</div>
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./cap16-moore-IC-o-basico.html" class="pagination-link" aria-label="AEI - cap 16 moore - IC: o Básico">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">AEI - cap 16 moore - IC: o Básico</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./conclusao.html" class="pagination-link" aria-label="Conclusão">
+        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Conclusão</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Relatório escrito em <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+
+
+</body></html>

@@ -1,0 +1,736 @@
+# FD - Monografia Jurídica II {#sec-mono-ii-AED}
+
+## FAD0134
+
+Objetivos da presente análise:
+
+Após ler este capítulo, você deve ser capaz de:
+
+▶ 1 descrever o número de turmas (matutino e noturno) por semestre.
+
+▶ 2 descrever o número de alunos matriculados por turma.
+
+▶ 3 descrever o número de aprovados por semestre e sua proporção, bem como o de reprovados.
+
+▶ 4 compreender o padrão de comportamento dos alunos diante dessa oferta em todos os semestres (ímpares e pares).
+
+```{r}
+
+
+code <- 0 # somente irá resetar a Job Area se code == 1
+if(code==1) rm(list=ls()) # Remove toda a list de variáveis da Job Area, i. e., dá um reset na Environment
+```
+
+# Gerar dados
+
+Os dados a seguir gerados foram extraídos do sistema SIGAA da UFG.
+
+```{r}
+
+# Parser para relatório PDF de turmas - versão com divisão Mat_Cap_raw em main / extra
+# Requisitos:
+# install.packages(c("pdftools","stringr","dplyr","tidyr","readr"))
+library(pdftools)
+library(stringr)
+library(dplyr)
+library(tidyr)
+library(readr)
+
+SITUACAO_KEYWORDS <- c("CONSOLIDADA", "ABERTA", "A DEFINIR", "A DEFINIR DOCENTE",
+                      "INTERROMPIDA", "SUSPENSA", "CANCELADA", "MATRICULA")
+
+`%||%` <- function(a, b) {
+  if (is.null(a) || length(a) == 0) return(b)
+  if (length(a) == 1 && is.na(a)) return(b)
+  a
+}
+
+split_horario_local <- function(h_raw) {
+  h_raw <- str_squish(h_raw %||% "")
+  if (h_raw == "") return(list(Horario = NA_character_, Local = NA_character_))
+  m <- str_match(h_raw, "^\\s*(\\d{1,2}[A-Za-z]{1,2}\\d{0,3})\\b\\s*(.*)$")
+  if (!is.na(m[1,1])) {
+    horario <- str_trim(m[1,2]); local <- str_trim(m[1,3])
+    if (local == "") local <- NA_character_
+    return(list(Horario = horario, Local = local))
+  }
+  m2 <- str_match(h_raw, "(\\d{1,2}[A-Za-z]{1,2}\\d{0,3})")
+  if (!is.na(m2[1,1])) {
+    horario <- str_trim(m2[1,2])
+    local <- str_trim(str_replace(h_raw, regex(m2[1,2], ignore_case = TRUE), ""))
+    local <- str_squish(local)
+    if (local == "") local <- NA_character_
+    return(list(Horario = horario, Local = local))
+  }
+  return(list(Horario = NA_character_, Local = h_raw))
+}
+
+parse_record_line <- function(line) {
+  line <- str_squish(line)
+  m_ano <- str_match(line, "^(\\d{4}\\.\\d)\\s+(.+)$")
+  if (is.na(m_ano[1,1])) return(rep(NA_character_, 10))
+  ano_per <- m_ano[1,2]
+  rest <- m_ano[1,3]
+
+  loc_codigo <- str_locate(rest, regex("\\bTurma\\s*[^\\s,;]+", ignore_case = TRUE))
+  if (!is.na(loc_codigo[1,1])) {
+    nivel <- str_trim(str_sub(rest, 1, loc_codigo[1,1]-1))
+    codigo <- str_trim(str_sub(rest, loc_codigo[1,1], loc_codigo[1,2]))
+    rest2 <- str_trim(str_sub(rest, loc_codigo[1,2] + 1))
+  } else {
+    toks <- str_split(rest, "\\s{2,}|\\s\\-\\s")[[1]]
+    toks <- toks[toks != ""]
+    if (length(toks) >= 2 && str_detect(toks[2], regex("^Turma", ignore_case = TRUE))) {
+      nivel <- toks[1]; codigo <- toks[2]; rest2 <- paste(toks[-(1:2)], collapse = " ")
+    } else {
+      nivel <- toks[1]; codigo <- NA_character_; rest2 <- paste(toks[-1], collapse = " ")
+    }
+    nivel <- str_trim(nivel); rest2 <- str_trim(rest2)
+  }
+
+  pattern_sit <- str_c("\\b(", str_c(SITUACAO_KEYWORDS, collapse = "|"), ")\\b")
+  loc_sit <- str_locate(rest2, regex(pattern_sit, ignore_case = TRUE))
+
+  docente <- NA_character_; situacao <- NA_character_; rest3 <- rest2
+
+  if (!is.na(loc_sit[1,1])) {
+    situacao_found <- str_to_upper(str_trim(str_sub(rest2, loc_sit[1,1], loc_sit[1,2])))
+    rest_after_sit <- str_trim(str_sub(rest2, loc_sit[1,2] + 1))
+    if (str_detect(str_to_upper(rest2), regex("\\bA\\s+DEFINIR\\s+DOCENTE\\b", ignore_case = TRUE)) ||
+        (str_detect(situacao_found, regex("^A\\s*DEFINIR", ignore_case = TRUE)) &&
+         str_detect(rest_after_sit, regex("^DOCENTE\\b", ignore_case = TRUE)))) {
+      situacao <- "A DEFINIR DOCENTE"
+      docente <- NA_character_
+      rest3 <- str_trim(str_remove(rest_after_sit, regex("^DOCENTE\\b\\s*", ignore_case = TRUE)))
+    } else {
+      docente <- str_trim(str_sub(rest2, 1, loc_sit[1,1] - 1))
+      situacao <- situacao_found
+      rest3 <- str_trim(str_sub(rest2, loc_sit[1,2] + 1))
+    }
+  } else {
+    rest3 <- rest2
+  }
+
+  loc_mat <- str_locate_all(rest3, "\\d{1,3}/\\d{1,3}")[[1]]
+  if (nrow(loc_mat) >= 1) {
+    last <- loc_mat[nrow(loc_mat), , drop = FALSE]
+    mat_cap_raw <- str_trim(str_sub(rest3, last[1], nchar(rest3)))
+    horario_local_raw <- str_trim(str_sub(rest3, 1, last[1] - 1))
+  } else {
+    parts <- str_split(rest3, "\\s{2,}")[[1]]
+    parts <- parts[parts != ""]
+    if (length(parts) >= 2) {
+      horario_local_raw <- str_trim(parts[1])
+      mat_cap_raw <- str_trim(paste(parts[-1], collapse = " "))
+    } else {
+      horario_local_raw <- str_trim(rest3)
+      mat_cap_raw <- NA_character_
+    }
+  }
+
+  if ((is.na(docente) || docente == "") && !str_detect(toupper(situacao %||% ""), "A DEFINIR DOCENTE")) {
+    parts2 <- str_split(rest2, "\\s{2,}")[[1]]
+    parts2 <- parts2[parts2 != ""]
+    if (length(parts2) >= 1) {
+      docente <- str_trim(parts2[1])
+    } else {
+      docente <- NA_character_
+    }
+  }
+
+  h_split <- split_horario_local(horario_local_raw)
+  horario <- h_split$Horario
+  local <- h_split$Local
+
+  return(c(Ano_Per = ano_per,
+           Nivel = ifelse(nchar(nivel) == 0, NA_character_, nivel),
+           Codigo = ifelse(!is.na(codigo) & nchar(codigo) > 0, codigo, NA_character_),
+           Docente = ifelse(!is.na(docente) & nchar(docente) > 0, docente, NA_character_),
+           Situacao = ifelse(!is.na(situacao) & nchar(situacao) > 0, situacao, NA_character_),
+           Horario = horario,
+           Local = local,
+           Mat_Cap_raw = ifelse(!is.na(mat_cap_raw) & nchar(mat_cap_raw) > 0, mat_cap_raw, NA_character_),
+           page = NA_character_))
+}
+
+read_report_pdf_to_df <- function(pdf_file, out_csv = NULL, verbose = TRUE) {
+  if (!file.exists(pdf_file)) stop("Arquivo PDF não encontrado: ", pdf_file)
+  if (verbose) message("Lendo PDF: ", pdf_file)
+
+  df_rows <- list()
+  pages <- pdf_text(pdf_file)
+  page_idx <- 0
+  for (pg in pages) {
+    page_idx <- page_idx + 1
+    lines <- str_split(pg, "\n")[[1]]
+    lines <- lines[!str_detect(lines, regex("Sistema Integrado|SIGAA|https?://|UNIVERSIDADE|EMITIDO EM|Portal do Docente|SIGAA|CENTRO DE RECURSOS COMPUTACIONAIS", ignore_case = TRUE))]
+    records <- character(0)
+    buffer <- NULL
+    for (ln in lines) {
+      ln_trim <- str_squish(ln)
+      if (ln_trim == "") next
+      if (str_detect(ln_trim, regex("^\\d{4}\\.\\d", ignore_case = FALSE))) {
+        if (!is.null(buffer)) records <- c(records, buffer)
+        buffer <- ln_trim
+      } else {
+        if (is.null(buffer)) {
+          next
+        } else {
+          buffer <- paste(buffer, ln_trim, sep = "  ")
+        }
+      }
+    }
+    if (!is.null(buffer)) records <- c(records, buffer)
+
+    for (r in records) {
+      parsed <- parse_record_line(r)
+      parsed["page"] <- as.character(page_idx)
+      df_rows[[length(df_rows) + 1]] <- parsed
+    }
+  }
+
+  if (length(df_rows) == 0) stop("Nenhuma linha extraída do PDF.")
+
+  df_all <- bind_rows(lapply(df_rows, as.list)) %>%
+    mutate(across(everything(), ~ ifelse(. == "", NA_character_, .))) %>%
+    mutate(page = as.integer(page)) %>%
+    select(Ano_Per, Nivel, Codigo, Docente, Situacao, Horario, Local, Mat_Cap_raw, page)
+
+  # juntar linhas de continuação do Docente (quando a próxima linha só tem Docente)
+  if (nrow(df_all) >= 2) {
+    i <- 1
+    while (i < nrow(df_all)) {
+      cur <- df_all[i, ]
+      nxt <- df_all[i + 1, ]
+      cond_next_is_continuation <-
+        !is.na(nxt$Docente) &&
+        all(is.na(nxt$Nivel), is.na(nxt$Codigo), is.na(nxt$Situacao), is.na(nxt$Horario), is.na(nxt$Local), is.na(nxt$Mat_Cap_raw))
+      if (cond_next_is_continuation) {
+        combined_docente <- paste(cur$Docente %||% "", nxt$Docente %||% "")
+        combined_docente <- str_squish(str_replace_all(combined_docente, "\\s{2,}", " "))
+        df_all$Docente[i] <- ifelse(is.na(combined_docente) || combined_docente == "", NA_character_, combined_docente)
+        df_all <- df_all[-(i + 1), ]
+      } else {
+        i <- i + 1
+      }
+    }
+  }
+
+  # mover nomes que ficaram no início de Mat_Cap_raw para Docente da linha anterior
+  name_start_pat <- regex("^\\s*(?:e\\s+)?([A-Z\\p{L}\\.\\'\\-\\s]+\\(\\d{1,3}h\\))", multiline = FALSE)
+  if (nrow(df_all) >= 2) {
+    for (i in seq_len(nrow(df_all))) {
+      mat <- df_all$Mat_Cap_raw[i]
+      if (!is.na(mat) && str_detect(mat, name_start_pat)) {
+        mat2 <- mat
+        names_found <- character(0)
+        while (!is.na(mat2) && str_detect(mat2, name_start_pat)) {
+          m <- str_match(mat2, name_start_pat)[,2]
+          if (is.na(m) || m == "") break
+          names_found <- c(names_found, str_squish(m))
+          mat2 <- str_trim(str_remove(mat2, name_start_pat))
+        }
+        if (length(names_found) > 0) {
+          prev <- i - 1
+          if (prev >= 1) {
+            add_txt <- paste(names_found, collapse = " e ")
+            if (is.na(df_all$Docente[prev]) || df_all$Docente[prev] == "") {
+              df_all$Docente[prev] <- add_txt
+            } else {
+              df_all$Docente[prev] <- str_squish(paste(df_all$Docente[prev], add_txt, sep = " e "))
+            }
+          }
+          mat2 <- str_squish(mat2)
+          if (mat2 == "") mat2 <- NA_character_
+          df_all$Mat_Cap_raw[i] <- mat2
+        }
+      }
+    }
+  }
+
+  # tratar casos "A DEFINIR DOCENTE" que ficaram divididos
+  n <- nrow(df_all)
+  if (n > 0) {
+    situ_flag <- str_detect(toupper(df_all$Situacao %||% ""), regex("\\bA\\s*DEFINIR\\b", ignore_case = TRUE))
+    to_mark <- integer(0)
+    for (i in which(situ_flag)) {
+      cur_text <- paste(na_if(as.character(df_all[i, ]), "NA"), collapse = " ")
+      next_text <- if (i < n) paste(na_if(as.character(df_all[i + 1, ]), "NA"), collapse = " ") else ""
+      combined <- str_to_upper(paste(cur_text, next_text))
+      if (str_detect(combined, regex("\\bDOCENTE\\b", ignore_case = TRUE))) {
+        to_mark <- c(to_mark, i)
+      }
+    }
+    if (length(to_mark) > 0) {
+      df_all$Situacao[to_mark] <- "A DEFINIR DOCENTE"
+      df_all$Docente[to_mark] <- NA_character_
+      for (i in to_mark) {
+        j <- i + 1
+        if (j <= nrow(df_all)) {
+          for (col in c("Nivel", "Codigo", "Docente", "Situacao", "Horario", "Local", "Mat_Cap_raw")) {
+            if (!is.na(df_all[[col]][j]) && str_detect(df_all[[col]][j], regex("\\bDOCENTE\\b", ignore_case = TRUE))) {
+              df_all[[col]][j] <- str_squish(str_remove_all(df_all[[col]][j], regex("\\bDOCENTE\\b", ignore_case = TRUE)))
+              if (df_all[[col]][j] == "") df_all[[col]][j] <- NA_character_
+            }
+          }
+        }
+      }
+    }
+  }
+
+  # NOVA ETAPA: dividir Mat_Cap_raw em Mat_Cap_main (até "aluno(s)") e Mat_Cap_extra (resto)
+  split_at_alunos <- function(x) {
+    if (is.na(x) || x == "") return(list(main = NA_character_, extra = NA_character_))
+    # localizar primeira ocorrência de "aluno" ou "alunos" (case-insensitive)
+    loc <- str_locate(str_to_lower(x), "\\balunos?\\b")
+    if (is.na(loc[1])) {
+      return(list(main = str_squish(x), extra = NA_character_))
+    }
+    # incluir a palavra "aluno(s)" no main — loc[2] dá o final da palavra
+    main_part <- str_sub(x, 1, loc[2])
+    extra_part <- str_sub(x, loc[2] + 1)
+    main_part <- str_squish(main_part)
+    extra_part <- str_squish(extra_part)
+    if (extra_part == "") extra_part <- NA_character_
+    return(list(main = main_part, extra = extra_part))
+  }
+
+  if (nrow(df_all) > 0) {
+    splitted <- lapply(df_all$Mat_Cap_raw, split_at_alunos)
+    df_all$Mat_Cap_main <- vapply(splitted, `[[`, character(1), "main")
+    df_all$Mat_Cap_extra <- vapply(splitted, `[[`, character(1), "extra")
+  } else {
+    df_all$Mat_Cap_main <- NA_character_
+    df_all$Mat_Cap_extra <- NA_character_
+  }
+
+  # extrair Matricula e Capacidade a partir de Mat_Cap_main (antes era Mat_Cap_raw)
+  df_all <- df_all %>%
+    mutate(Mat_Cap_main = str_squish(Mat_Cap_main),
+           Matricula = str_extract(Mat_Cap_main, "\\d{1,3}(?=/)"),
+           Capacidade = str_extract(Mat_Cap_main, "(?<=/)\\d{1,3}"),
+           Observacao = str_trim(str_remove(Mat_Cap_main, "^\\d{0,3}/\\d{0,3}\\s*"))) %>%
+    relocate(Mat_Cap_main, Mat_Cap_extra, Matricula, Capacidade, Observacao, .after = Mat_Cap_raw)
+
+  df_all <- df_all %>% filter(!str_detect(Ano_Per, regex("Ano|Ano-Per|Código do componente", ignore_case = TRUE)))
+
+  if (!is.null(out_csv)) {
+    write_csv(df_all, out_csv)
+    if (verbose) message("CSV salvo em: ", normalizePath(out_csv, mustWork = FALSE))
+  }
+  if (verbose) message("Registros extraídos: ", nrow(df_all))
+  return(df_all)
+}
+
+# Exemplo:
+# pdf_file <- "dat/pdf/SIGAA-Relacao-MonoII-ofertadas-2009.1-2025.2.pdf"
+# df <- read_report_pdf_to_df(pdf_file, out_csv = "turmas_parsed.csv", verbose = TRUE)
+
+# Exemplo de uso:
+pdf_file <- "dat/pdf/SIGAA-Relacao-MonoII-ofertadas-2009.1-2025.2.pdf"
+df <- read_report_pdf_to_df(pdf_file, out_csv = "turmas_parsed.csv", verbose = TRUE)
+df
+```
+
+Tratar dados para que coluna Docente2 apresente o nome do segundo docente que ficou com uma CH de 1 h.
+
+```{r}
+
+# Renomeia Mat_Cap_extra -> Docente2 e move para ficar após a coluna Docente.
+# Executar após a criação de df.
+if (!"Mat_Cap_extra" %in% names(df)) {
+  warning("Coluna 'Mat_Cap_extra' não encontrada em df. Nenhuma alteração realizada.")
+} else {
+  if (!requireNamespace("dplyr", quietly = TRUE)) stop("Pacote 'dplyr' requerido. Instale com: install.packages('dplyr')")
+  library(dplyr)
+  # renomeia
+  df <- df %>% rename(Docente2 = Mat_Cap_extra)
+  # tenta recolocar após a coluna Docente; se não existir, deixa Docente2 no final
+  if ("Docente" %in% names(df)) {
+    df <- df %>% relocate(Docente2, .after = Docente)
+  } else {
+    df <- df %>% relocate(Docente2, .after = last_col())
+  }
+  # message("Coluna 'Mat_Cap_extra' renomeada para 'Docente2' e reposicionada.")
+}
+
+df
+```
+
+Agora gerar um pequeno bloco de código R para o mesmo data frame denominado df para que:
+
+1\. quando o conteúdo de Docente2 for "DOCENTE" substituir por NA;
+
+2\) quando o conteúdo de Docente2 iniciar com a palavra "DIREITO" remover esse conteúdo para ser acrescido ao final da variável Local;
+
+3\) quando o conteúdo de Docente2 iniciar com um número remover esse conteúdo para ser acrescido ao final da variável Horario;
+
+4\) deixar o último valor da variável Docente2 apenas com (32h);
+
+5\) manter os valores da variável Docente2 que se inicem com a letra "e" e
+
+6\) mover todos os demais valores restantes da variável Docente2 para acrescer ao final da variável Docente.
+
+```{r}
+
+# Move valores restantes de Docente2 para Docente sem acrescentar " e " indevidamente.
+# Executar após as transformações anteriores (regras 1..5).
+if (!exists("df")) stop("Data.frame 'df' não encontrado. Execute este bloco após criar 'df'.")
+
+if (!requireNamespace("dplyr", quietly = TRUE)) stop("Instale o pacote 'dplyr'")
+if (!requireNamespace("stringr", quietly = TRUE)) stop("Instale o pacote 'stringr'")
+
+library(dplyr)
+library(stringr)
+
+# garantir character
+df <- df %>% mutate(
+  Docente = as.character(Docente),
+  Docente2 = as.character(Docente2)
+)
+
+# máscara: preservar valores que começam com "e"
+mask_keep_e <- !is.na(df$Docente2) & str_detect(str_trim(df$Docente2), regex("^e\\b", ignore_case = TRUE))
+
+# máscara: mover todos os demais (não-NA e não começando com "e")
+mask_move <- !is.na(df$Docente2) & !mask_keep_e
+
+# função auxiliar para concatenar sem duplicar e sem inserir " e " quando não for necessário
+concat_docente <- function(old, add) {
+  old <- str_squish(as.character(old))
+  add <- str_squish(as.character(add))
+  if (is.na(old) || old == "" || old == "NA") return(add)
+  if (is.na(add) || add == "" || add == "NA") return(old)
+  # se o 'old' já termina exatamente com 'add' (case-insensitive) -> manter old
+  n_old <- nchar(old); n_add <- nchar(add)
+  if (n_add <= n_old) {
+    tail_old <- str_sub(old, n_old - n_add + 1, n_old)
+    if (!is.na(tail_old) && str_to_upper(str_squish(tail_old)) == str_to_upper(str_squish(add))) {
+      return(str_squish(old))
+    }
+  }
+  # decidir separador: evitar " e " se old já termina com 'e' isolado ou com ':' ',' ';' '/' ou '('
+  if (str_detect(old, regex("\\be$", ignore_case = TRUE)) ||
+      str_detect(old, "[,:;/\\(\\-\\–\\—]$")) {
+    sep <- " "
+  } else {
+    sep <- " "
+  }
+  res <- str_squish(paste0(old, sep, add))
+  # remover duplicações acidentais de " e e " ou espaços extras
+  res <- str_replace_all(res, regex("\\s+e\\s+e\\s+", ignore_case = TRUE), " e ")
+  res <- str_squish(res)
+  res
+}
+
+if (any(mask_move)) {
+  idx <- which(mask_move)
+  for (i in idx) {
+    old <- df$Docente[i]
+    add <- df$Docente2[i]
+    newval <- concat_docente(old, add)
+    df$Docente[i] <- ifelse(is.na(newval) | newval == "", NA_character_, newval)
+    df$Docente2[i] <- NA_character_
+  }
+  # limpeza final
+  df$Docente <- str_squish(df$Docente)
+}
+
+message("Regra 6 (corrigida) aplicada: valores restantes de Docente2 movidos para Docente sem ' e' indevido.")
+
+
+
+# resultado
+# message("Transformações aplicadas em 'df': regras 1..6.")
+
+df
+```
+
+mmm
+
+```{r}
+
+# Extrai tabela "Turma A" de um único PDF (páginas específicas, padrão 1 e 2)
+# Normaliza a coluna Situação para: "APROVADO", "REPROVADO" ou "CANCELADO"
+# Requisitos: install.packages(c("pdftools","stringr","dplyr","readr","tidyr"))
+library(pdftools)
+library(stringr)
+library(dplyr)
+library(readr)
+library(tidyr)
+
+# Normaliza valores de situação para três categorias
+normalize_situacao <- function(x) {
+  if (is.na(x) || x == "") return(NA_character_)
+  u <- str_to_upper(x)
+  if (str_detect(u, "APROV")) return("APROVADO")
+  if (str_detect(u, "REPROV")) return("REPROVADO")
+  if (str_detect(u, "CANCEL")) return("CANCELADO")
+  # fallback: procurar palavras-chaves no texto inteiro (caso token final não contenha)
+  if (str_detect(u, "\\bAPROV\\w*\\b")) return("APROVADO")
+  if (str_detect(u, "\\bREPROV\\w*\\b")) return("REPROVADO")
+  if (str_detect(u, "\\bCANCEL\\w*\\b")) return("CANCELADO")
+  return(NA_character_)
+}
+
+# Função que extrai registros formatados de uma página de texto
+parse_page_records <- function(page_text, matricula_regex = "^\\s*\\d{4,}\\b") {
+  lines <- str_split(page_text, "\n")[[1]]
+  lines <- lines[!str_detect(lines, regex("SIGAA|Sistema Integrado|UNIVERSIDADE|EMITIDO EM|Portal do Docente|https?://|Página", ignore_case = TRUE))]
+  lines <- str_trim(lines)
+  lines <- lines[lines != ""]
+  if (length(lines) == 0) return(tibble())
+
+  recs <- character(0)
+  buffer <- NULL
+  for (ln in lines) {
+    if (str_detect(ln, regex(matricula_regex))) {
+      if (!is.null(buffer)) recs <- c(recs, buffer)
+      buffer <- ln
+    } else {
+      if (is.null(buffer)) next else buffer <- paste(buffer, ln, sep = "  ")
+    }
+  }
+  if (!is.null(buffer)) recs <- c(recs, buffer)
+  if (length(recs) == 0) return(tibble())
+
+  parsed <- lapply(recs, function(r) {
+    parts <- str_split(r, "\\s{2,}")[[1]]
+    parts <- str_trim(parts)
+    parts <- parts[parts != ""]
+    if (length(parts) >= 4) {
+      matricula <- parts[1]
+      situacao_token <- parts[length(parts)]
+      curso     <- parts[length(parts)-1]
+      nome      <- paste(parts[2:(length(parts)-2)], collapse = " ")
+    } else if (length(parts) == 3) {
+      matricula <- parts[1]; nome <- parts[2]; curso <- parts[3]; situacao_token <- NA_character_
+    } else if (length(parts) == 2) {
+      matricula <- parts[1]; nome <- parts[2]; curso <- NA_character_; situacao_token <- NA_character_
+    } else {
+      matricula <- parts[1]; nome <- NA_character_; curso <- NA_character_; situacao_token <- NA_character_
+    }
+    # normalizar situação: prioriza token final; se NA tenta buscar no texto bruto
+    situacao_norm <- normalize_situacao(situacao_token)
+    if (is.na(situacao_norm)) {
+      situacao_norm <- normalize_situacao(r)
+    }
+    tibble(Matricula = matricula, Nome = nome, Curso = curso, Situacao = situacao_norm, raw = r)
+  })
+
+  bind_rows(parsed)
+}
+
+# Função principal para um único PDF
+extract_turmaA_from_pdf <- function(pdf_file,
+                                   pages = c(1, 2),
+                                   turma = "A",
+                                   matricula_min_digits = 4,
+                                   out_csv = NULL,
+                                   verbose = TRUE) {
+  if (!file.exists(pdf_file)) stop("Arquivo não encontrado: ", pdf_file)
+  if (verbose) message("Lendo: ", pdf_file)
+
+  txt <- pdf_text(pdf_file)
+  pages_to_read <- intersect(pages, seq_along(txt))
+  if (length(pages_to_read) == 0) {
+    if (verbose) message("Nenhuma das páginas solicitadas existe no PDF.")
+    return(tibble())
+  }
+
+  all_records <- list()
+  for (p in pages_to_read) {
+    page_text <- txt[[p]]
+    if (str_detect(page_text, regex(paste0("\\bTurma\\s*[:]?\\s*", turma, "\\b"), ignore_case = TRUE))) {
+      pos <- str_locate(page_text, regex(paste0("\\bTurma\\s*[:]?\\s*", turma, "\\b"), ignore_case = TRUE))[1,1]
+      page_text <- str_sub(page_text, pos, nchar(page_text))
+    }
+    df_page <- parse_page_records(page_text, matricula_regex = paste0("^\\s*\\d{", matricula_min_digits, ",}\\b"))
+    if (nrow(df_page) > 0) {
+      df_page <- df_page %>% mutate(source_pdf = basename(pdf_file), page = p)
+      all_records[[length(all_records) + 1]] <- df_page
+    }
+  }
+
+  if (length(all_records) == 0) {
+    if (verbose) message("Nenhum registro encontrado para Turma ", turma, " nas páginas solicitadas.")
+    return(tibble())
+  }
+
+  df_all <- bind_rows(all_records) %>%
+    mutate(across(c(Matricula, Nome, Curso, Situacao), ~ ifelse(. == "", NA_character_, .))) %>%
+    mutate(Nome = str_squish(str_remove_all(Nome, regex("\\b(MATRICULADO|MATRÍCULA)\\b", ignore_case = TRUE))),
+           Curso = str_squish(Curso),
+           Situacao = str_squish(Situacao)) %>%
+    filter(!is.na(Matricula) & str_detect(Matricula, "^\\d+")) %>%
+    distinct(Matricula, Nome, Curso, Situacao, source_pdf, page, .keep_all = TRUE)
+
+  if (!is.null(out_csv)) {
+    write_csv(df_all, out_csv)
+    if (verbose) message("CSV salvo em: ", normalizePath(out_csv, mustWork = FALSE))
+  }
+
+  if (verbose) message("Registros extraídos: ", nrow(df_all))
+  df_all
+}
+
+# Exemplo:
+# df_turmaA <- extract_turmaA_from_pdf("dat/pdf/meu_relatorio.pdf", pages = c(1,2), turma = "A", out_csv = "turmaA.csv")
+
+# Exemplo:
+df_turmaA <- extract_turmaA_from_pdf("dat/pdf/SIGAA-monoII-turmaA-2025.1.pdf",
+                                     pages = c(1,2),
+                                     turma = "A",
+                                     out_csv = "turmaA.csv")
+
+
+(df_turmaA)
+```
+
+mmm
+
+```{r}
+
+# Gera gráfico lado a lado: contagens e proporções por categoria da variável `Situacao` em `df_turmaA`
+# Requisitos: install.packages(c("ggplot2","dplyr","scales","gridExtra"))
+library(ggplot2)
+library(dplyr)
+library(scales)
+library(gridExtra)
+
+# Parâmetros (ajuste conforme necessário)
+output_file <- "situacao_counts_props-TurmaA-MonoII.png"   # ex: "situacao_counts_props.png" ou NULL para não salvar
+output_width <- 12    # polegadas
+output_height <- 6    # polegadas
+dpi <- 300
+
+# Verificações básicas
+if (!exists("df_turmaA")) stop("Data.frame 'df_turmaA' não encontrado no ambiente. Execute antes deste script.")
+if (!"Situacao" %in% names(df_turmaA)) stop("Coluna 'Situacao' não encontrada em df_turmaA.")
+
+# Preparar resumo: excluir NA em Situacao
+df_summary <- df_turmaA %>%
+  mutate(Situacao = as.character(Situacao)) %>%
+  filter(!is.na(Situacao)) %>%
+  count(Situacao, name = "n") %>%
+  arrange(desc(n)) %>%
+  mutate(prop = n / sum(n))
+
+# Se não houver registros
+if (nrow(df_summary) == 0) stop("Nenhuma observação com 'Situacao' não-NA encontrada em df_turmaA.")
+
+# Ordem categórica para manter mesma ordem nos dois gráficos
+df_summary <- df_summary %>%
+  mutate(Situacao = factor(Situacao, levels = df_summary$Situacao))
+
+# Gráfico 1: contagens
+p_count <- ggplot(df_summary, aes(x = Situacao, y = n, fill = Situacao)) +
+  geom_col(show.legend = FALSE, width = 0.7) +
+  geom_text(aes(label = n), vjust = -0.3, size = 3.5) +
+  scale_y_continuous(expand = expansion(c(0, 0.05))) +
+  labs(title = "Quantidade por Situação", x = "Situação", y = "Quantidade") +
+  theme_minimal(base_size = 12) +
+  theme(axis.text.x = element_text(angle = 0, vjust = 0.5))
+
+# Gráfico 2: proporções (percentual)
+p_prop <- ggplot(df_summary, aes(x = Situacao, y = prop, fill = Situacao)) +
+  geom_col(show.legend = FALSE, width = 0.7) +
+  geom_text(aes(label = percent(prop, accuracy = 0.1)), vjust = -0.3, size = 3.5) +
+  scale_y_continuous(labels = percent_format(accuracy = 1), expand = expansion(c(0, 0.05))) +
+  labs(title = "Proporção por Situação", x = "Situação", y = "Proporção") +
+  theme_minimal(base_size = 12) +
+  theme(axis.text.x = element_text(angle = 0, vjust = 0.5))
+
+# Dispor lado a lado
+plot_grid <- grid.arrange(p_count, p_prop, ncol = 2)
+
+# Salvar opcionalmente
+if (!is.null(output_file)) {
+  ggsave(filename = output_file, plot = plot_grid, width = output_width, height = output_height, dpi = dpi)
+  message("Gráfico salvo em: ", normalizePath(output_file, mustWork = FALSE))
+} else {
+  message("Gráfico exibido na janela gráfica. (output_file = NULL => não salvo)")
+}
+```
+
+MMM
+
+```{r}
+
+# Exemplo:
+df_turmaB <- extract_turmaA_from_pdf("dat/pdf/SIGAA-monoII-turmaB-2025.1.pdf",
+                                     pages = c(1,2),
+                                     turma = "A",
+                                     out_csv = "turmaA.csv")
+
+
+(df_turmaB)
+```
+
+mmm
+
+```{r}
+
+# Gera gráfico lado a lado: contagens e proporções por categoria da variável `Situacao` em `df_turmaB`
+# Requisitos: install.packages(c("ggplot2","dplyr","scales","gridExtra"))
+library(ggplot2)
+library(dplyr)
+library(scales)
+library(gridExtra)
+
+# Parâmetros (ajuste conforme necessário)
+output_file <- "situacao_counts_props-TurmaB-MonoII.png"   # ex: "situacao_counts_props.png" ou NULL para não salvar
+output_width <- 12    # polegadas
+output_height <- 6    # polegadas
+dpi <- 300
+
+# Verificações básicas
+if (!exists("df_turmaB")) stop("Data.frame 'df_turmaB' não encontrado no ambiente. Execute antes deste script.")
+if (!"Situacao" %in% names(df_turmaB)) stop("Coluna 'Situacao' não encontrada em df_turmaB.")
+
+# Preparar resumo: excluir NA em Situacao
+df_summary <- df_turmaB %>%
+  mutate(Situacao = as.character(Situacao)) %>%
+  filter(!is.na(Situacao)) %>%
+  count(Situacao, name = "n") %>%
+  arrange(desc(n)) %>%
+  mutate(prop = n / sum(n))
+
+# Se não houver registros
+if (nrow(df_summary) == 0) stop("Nenhuma observação com 'Situacao' não-NA encontrada em df_turmaB.")
+
+# Ordem categórica para manter mesma ordem nos dois gráficos
+df_summary <- df_summary %>%
+  mutate(Situacao = factor(Situacao, levels = df_summary$Situacao))
+
+# Gráfico 1: contagens
+p_count <- ggplot(df_summary, aes(x = Situacao, y = n, fill = Situacao)) +
+  geom_col(show.legend = FALSE, width = 0.7) +
+  geom_text(aes(label = n), vjust = -0.3, size = 3.5) +
+  scale_y_continuous(expand = expansion(c(0, 0.05))) +
+  labs(title = "Quantidade por Situação", x = "Situação", y = "Quantidade") +
+  theme_minimal(base_size = 12) +
+  theme(axis.text.x = element_text(angle = 0, vjust = 0.5))
+
+# Gráfico 2: proporções (percentual)
+p_prop <- ggplot(df_summary, aes(x = Situacao, y = prop, fill = Situacao)) +
+  geom_col(show.legend = FALSE, width = 0.7) +
+  geom_text(aes(label = percent(prop, accuracy = 0.1)), vjust = -0.3, size = 3.5) +
+  scale_y_continuous(labels = percent_format(accuracy = 1), expand = expansion(c(0, 0.05))) +
+  labs(title = "Proporção por Situação", x = "Situação", y = "Proporção") +
+  theme_minimal(base_size = 12) +
+  theme(axis.text.x = element_text(angle = 0, vjust = 0.5))
+
+# Dispor lado a lado
+plot_grid <- grid.arrange(p_count, p_prop, ncol = 2)
+
+# Salvar opcionalmente
+if (!is.null(output_file)) {
+  ggsave(filename = output_file, plot = plot_grid, width = output_width, height = output_height, dpi = dpi)
+  message("Gráfico salvo em: ", normalizePath(output_file, mustWork = FALSE))
+} else {
+  message("Gráfico exibido na janela gráfica. (output_file = NULL => não salvo)")
+}
+```
+
+mmm

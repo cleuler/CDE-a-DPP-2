@@ -1,0 +1,1313 @@
+# AED - suco uva - Tabelas e Gráficos {#sec-suco-uva-tab-graf}
+
+## Objetivos da Aprendizagem
+
+> Após ler este relatório de pesquisa, você deve ser capaz de:
+>
+> ▶ 1 Calcular e interpretar ***distribuições marginais*** em tabelas de dupla entrada.
+>
+> ▶ 2 Calcular e interpretar ***distribuições condicionais*** em tabelas de dupla entrada.
+>
+> ▶ 3 Reconhecer e explicar o ***paradoxo de Simpson***. [@Moore2023 , p. 130].
+>
+> ▶ 4 Resumir dados em tabelas de dupla entrada e interpretá-las.
+>
+> ▶ 5 Visualizar gráficos adequados para esse tipo de dado e interpretá-los.
+>
+> ▶ 6 Capturar modelos adequados e interpretá-los.
+
+Os dados dessa pesquisa empírica em Direito e Políticas Públicas foram estraídos de [@Aline-2020-sucouva].
+
+## Suco de uva
+
+### Replicar tabela mês a mês
+
+Grupo de Controle (GC) -x- Grupo de Taratamento (GT)
+
+```{r}
+
+# Gera tabela mensal com contagens por grupo (Controle/Experimental), calcula qui-quadrado 2x2 por mês
+# e acrescenta notação de significância.
+#
+# Corrigido: evita avaliação lógica com vetor (>1) usando inherits(..., "htest").
+
+# Pacotes (instala se necessário)
+if (!requireNamespace("dplyr", quietly = TRUE)) install.packages("dplyr")
+if (!requireNamespace("knitr", quietly = TRUE)) install.packages("knitr")
+library(dplyr)
+library(knitr)
+
+# Dados (criados com data.frame base)
+dados <- data.frame(
+  Mes = c("Abril","Abril","Maio","Maio","Junho","Junho","Julho","Julho",
+          "Agosto","Agosto","Setembro","Setembro","Outubro","Outubro",
+          "Novembro","Novembro","Dezembro","Dezembro"),
+  Grupo = c("Controle","Experimental","Controle","Experimental","Controle","Experimental",
+            "Controle","Experimental","Controle","Experimental","Controle","Experimental",
+            "Controle","Experimental","Controle","Experimental","Controle","Experimental"),
+  Nao = c(35,20,17, 7,18,17,20, 4,19, 8,24,13,8, 3,16,10,10, 2),
+  Sim = c(31,54,16,38,13,19,14,33,20,24,26,30,6,11, 8,49, 4,12), # 54 em vez 74
+  stringsAsFactors = FALSE                                      # pois 54+20=74
+)
+
+# Função utilitária: formata qui-quadrado + estrelas de significância
+stars_from_p <- function(p) {
+  if (is.na(p))  return("")
+  # caractere de ponto em posição elevada (dot above)
+  dot <- "\u02D9"  # '˙' (dot above) — aparece como pequeno ponto superiorizado
+  if (p < 0.01) return("**") # teste significativo a 99% de confiança
+  if (p < 0.05) return("*")  # teste significativo a 95% de confiança
+  if (p < 0.10) return(dot)   # teste significativo a 90% de confiança
+  return("") 
+}
+
+# Calcular qui-quadrado (Pearson) por mês
+res_list <- dados %>%
+  group_by(Mes) %>%
+  summarise(
+    c_nao = Nao[Grupo == "Controle"],
+    c_sim = Sim[Grupo == "Controle"],
+    e_nao = Nao[Grupo == "Experimental"],
+    e_sim = Sim[Grupo == "Experimental"],
+    .groups = "drop"
+  ) %>%
+  rowwise() %>%
+  mutate(
+    chi = {
+      m <- matrix(c(c_nao, c_sim, e_nao, e_sim), nrow = 2, byrow = TRUE)
+      tst <- tryCatch(chisq.test(m, correct = FALSE), error = function(e) NULL)
+      if (!inherits(tst, "htest")) {
+        ""  # teste inválido ou erro -> string vazia
+      } else {
+        stat <- unname(tst$statistic)
+        pval <- tst$p.value
+        stat_rounded <- formatC(stat, digits = 2, format = "f")
+        paste0(stat_rounded, stars_from_p(pval))
+      }
+    },
+    pval = {
+      m <- matrix(c(c_nao, c_sim, e_nao, e_sim), nrow = 2, byrow = TRUE)
+      tst <- tryCatch(chisq.test(m, correct = FALSE), error = function(e) NULL)
+      if (!inherits(tst, "htest")) {
+        ""  # teste inválido ou erro -> string vazia
+      } else {
+        pval <- tst$p.value
+        formatC(pval, digits = 4, format = "f")
+      }
+    }
+  ) %>%
+  ungroup() %>%
+  select(Mes, chi, pval)
+
+# Juntar resultado à tabela original (mostrar chi apenas na linha Controle)
+tabela_final <- dados %>%
+  left_join(res_list, by = "Mes") %>%
+  group_by(Mes) %>%
+  mutate(
+    Valor_do_qui_quadrado = ifelse(Grupo == "Controle", chi, ""),
+    Valor_p = ifelse(Grupo == "Controle", pval, "")
+  ) %>%
+  ungroup() %>%
+  select(Mes, Grupo, Nao, Sim, Valor_do_qui_quadrado, Valor_p)
+
+# Exibir tabela formatada
+cat("\nTabela com qui-quadrado por mês (aparecendo na linha Controle):\n")
+print(kable(tabela_final, align = c("l", "l", "r", "c", "l")))
+
+# (Opcional) salvar CSV:
+# write.csv(tabela_final, "tabela_mensal_chisq.csv", row.names = FALSE)
+```
+
+### Qui-quadrado dados agregados
+
+Teste qui-quadrado para todo o conjunto de dados não desagregado mês a mês.
+
+Manter os meses em ordem cronológica.
+
+```{r}
+
+# Teste qui-quadrado agregando todos os meses em Controle vs Tratamento
+# e executando testes por mês com meses ordenados cronologicamente.
+#
+# Entrada: objeto 'tabela_final' ou 'dados' no ambiente (colunas Mes, Grupo, Nao, Sim),
+# ou arquivo "tabela_mensal_chisq.csv".
+#
+# Saídas: tabela agregada 2x2, resultado do chi-squared (ou Fisher), phi e resultados por mês
+# com meses exibidos na ordem: Abril, Maio, Junho, Julho, Agosto, Setembro, Outubro, Novembro, Dezembro.
+
+if (!requireNamespace("dplyr", quietly = TRUE)) install.packages("dplyr")
+if (!requireNamespace("tidyr", quietly = TRUE)) install.packages("tidyr")
+library(dplyr)
+library(tidyr)
+
+# --- Obter data.frame (procura objetos no ambiente ou CSV) ---
+df <- NULL
+if (exists("tabela_final", envir = .GlobalEnv)) {
+  df <- get("tabela_final", envir = .GlobalEnv)
+} else if (exists("dados", envir = .GlobalEnv)) {
+  df <- get("dados", envir = .GlobalEnv)
+} else if (file.exists("tabela_mensal_chisq.csv")) {
+  df <- read.csv("tabela_mensal_chisq.csv", stringsAsFactors = FALSE, fileEncoding = "UTF-8")
+} else {
+  stop("Não encontrei 'tabela_final' nem 'dados' no ambiente, nem o ficheiro 'tabela_mensal_chisq.csv'.")
+}
+
+# --- Normalizar nomes de colunas (minúsculas, sem caracteres especiais) ---
+names(df) <- tolower(names(df))
+names(df) <- gsub("[^a-z0-9_]", "_", names(df))
+
+# identificar possíveis colunas
+col_grupo <- intersect(names(df), c("grupo","group","tratamento","treatment"))
+col_nao   <- intersect(names(df), c("nao","nao_","n_nao","n_nao","no","n"))
+col_sim   <- intersect(names(df), c("sim","yes","y","s"))
+# detectar coluna de mês por padrão buscando substrings
+col_mes <- names(df)[grepl("mes|month|m_", names(df), ignore.case = TRUE)]
+if (length(col_grupo) == 0) stop("Coluna de grupo não encontrada (procure por 'Grupo'/'group').")
+if (length(col_nao) == 0 || length(col_sim) == 0) stop("Colunas de contagem 'Nao' e 'Sim' não foram encontradas.")
+
+col_grupo <- col_grupo[1]
+col_nao   <- col_nao[1]
+col_sim   <- col_sim[1]
+mes_col   <- if (length(col_mes) >= 1) col_mes[1] else NA_character_
+
+# --- Padronizar rótulos de grupo: Controle / Tratamento ---
+df <- df %>%
+  mutate(
+    grupo_raw = as.character(.data[[col_grupo]]),
+    grupo = ifelse(tolower(trimws(grupo_raw)) %in% c("controle","control"), "Controle", "Tratamento"),
+    n_nao = as.numeric(.data[[col_nao]]),
+    n_sim = as.numeric(.data[[col_sim]])
+  )
+
+# --- Ordenar meses (se coluna de mês existir) ---
+month_levels <- c("Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro")
+
+if (!is.na(mes_col)) {
+  # mapear valores existentes para título padrão dos meses quando possível (ignora case)
+  map_month_value <- function(v) {
+    if (is.na(v)) return(NA_character_)
+    v_trim <- trimws(as.character(v))
+    # tentar correspondência direta ignorando case
+    match_idx <- match(tolower(v_trim), tolower(month_levels))
+    if (!is.na(match_idx)) return(month_levels[match_idx])
+    # tentar remover acentos e comparar (fallback)
+    v_clean <- iconv(v_trim, to = "ASCII//TRANSLIT")
+    match_idx <- match(tolower(v_clean), tolower(iconv(month_levels, to = "ASCII//TRANSLIT")))
+    if (!is.na(match_idx)) return(month_levels[match_idx])
+    # se não reconhecer, retorna o valor original (será colocado após os níveis definidos)
+    return(v_trim)
+  }
+  df$mes_mapped <- vapply(df[[mes_col]], map_month_value, character(1))
+  # definir factor com níveis na ordem desejada; níveis extras (não reconhecidos) ficarão NA se não estiverem incluídos
+  # incluir somente os meses presentes entre os month_levels para evitar NAs indesejadas
+  present_levels <- intersect(month_levels, unique(df$mes_mapped))
+  if (length(present_levels) == 0) {
+    # se nenhum mês reconhecido, criar factor com ordem alfabética dos valores existentes
+    df$mes_ord <- factor(df$mes_mapped, levels = unique(df$mes_mapped))
+  } else {
+    df$mes_ord <- factor(df$mes_mapped, levels = month_levels)
+  }
+} else {
+  df$mes_ord <- NA
+}
+
+# --- Agregar todos os meses por grupo (somar Nao/Sim) para teste agregado ---
+agg <- df %>%
+  group_by(grupo) %>%
+  summarise(nao = sum(n_nao, na.rm = TRUE), sim = sum(n_sim, na.rm = TRUE), .groups = "drop")
+
+# garantir linhas Controle/Tratamento
+agg <- agg %>% mutate(grupo = ifelse(grupo == "Controle", "Controle", "Tratamento")) %>%
+  group_by(grupo) %>% summarise(nao = sum(nao), sim = sum(sim), .groups = "drop") %>%
+  arrange(match(grupo, c("Controle","Tratamento")))
+
+# construir tabela 2x2
+tab <- matrix(c(agg$nao[agg$grupo=="Controle"], agg$sim[agg$grupo=="Controle"],
+                agg$nao[agg$grupo=="Tratamento"], agg$sim[agg$grupo=="Tratamento"]),
+              nrow = 2, byrow = TRUE)
+rownames(tab) <- c("Controle","Tratamento")
+colnames(tab) <- c("Nao","Sim")
+
+cat("Tabela agregada (linhas = Grupo; colunas = Nao/Sim):\n")
+print(tab)
+
+# Tabela de contingência (linhas = Grupo, colunas = acordo Nao/Sim)
+# Adicionar totais marginais (linha e coluna)
+tab_totais <- addmargins(tab)
+
+# Substituir o rótulo padrão "Sum" por "Total" nas margens (mais legível em pt-BR)
+rownames(tab_totais)[nrow(tab_totais)] <- "Total"
+colnames(tab_totais)[ncol(tab_totais)] <- "Total"
+
+# Exibir tabela com totais marginais
+cat("\nTabela com totais marginais:\n")
+print(tab_totais)
+cat("\nObservar que o total de 659 observações confere\ncom o tamanho da amostra reportado: n = 659\n")
+cat("\n")
+cat("\nO Grupo de Controle confere com o reportado (n_GC = 305 audiências).\n")
+cat("\n")
+cat("\nE o Grupo de Experimental confere c/o reportado (n_GT = 354 audiências).\n")
+
+# --- Marginais em contagem ---
+# Totais por linha (por grupo: controle x tratamento)
+margem_linhas <- margin.table(tab, 1)
+
+# Totais por coluna (por acordo: sim ou não)
+margem_colunas <- margin.table(tab, 2)
+
+cat("\nMarginal — por grupo: controle x tratamento (contagem):\n")
+print(margem_linhas)
+cat("\nMarginal — por acordo: sim ou não (contagem):\n")
+print(margem_colunas)
+
+# --- Marginais em proporção (relativas ao total geral) ---
+prop_linhas  <- prop.table(margem_linhas)  # soma = 1
+prop_colunas <- prop.table(margem_colunas) # soma = 1
+
+cat("\nMarginal — por grupo: controle x tratamento (proporção % do total):\n")
+print(100*round(prop_linhas, 4))
+cat("\nMarginal — por acordo: sim ou não (proporção % do total):\n")
+print(100*round(prop_colunas, 4))
+
+
+# --- Teste qui-quadrado agregado (ou Fisher se necessário) ---
+chisq_ok <- TRUE
+tst_chisq <- tryCatch(chisq.test(tab, correct = FALSE), error = function(e) e)
+if (inherits(tst_chisq, "error")) {
+  chisq_ok <- FALSE
+  message("chisq.test falhou: ", tst_chisq$message)
+} else {
+  expc <- as.numeric(tst_chisq$expected)
+  if (any(expc < 5)) {
+    chisq_ok <- FALSE
+    message("Algumas frequências esperadas < 5; usaremos Fisher exact test em vez de qui-quadrado.")
+  }
+}
+
+if (chisq_ok) {
+  cat("\nResultado do chi-squared test (Pearson):\n")
+  print(tst_chisq)
+  chi_stat <- as.numeric(tst_chisq$statistic)[1]
+  pval <- as.numeric(tst_chisq$p.value)[1]
+} else {
+  fisher_res <- fisher.test(tab)
+  cat("\nResultado do Fisher exact test:\n")
+  print(fisher_res)
+  chi_stat <- NA
+  pval <- as.numeric(fisher_res$p.value)[1]
+}
+
+# --- Medida de efeito phi para 2x2 ---
+n_total <- sum(tab)
+if (!is.na(chi_stat)) {
+  phi <- sqrt(chi_stat / n_total)
+  cat(sprintf("\nPhi (efeito para 2x2) = %.4f\n", phi))
+} else {
+  # tentar calcular chi via chisq.test fallback
+  chi_manual <- tryCatch({
+    ch <- chisq.test(tab, correct = FALSE)
+    as.numeric(ch$statistic)
+  }, error = function(e) NA)
+  if (!is.na(chi_manual)) {
+    phi <- sqrt(chi_manual / n_total)
+    cat(sprintf("\nPhi (calculado por fallback) = %.4f\n", phi))
+  } else {
+    cat("\nPhi não disponível (teste Fisher usado e chi2 não calculável).\n")
+  }
+}
+
+# --- Testes por mês ordenados (se coluna de mês detectada) ---
+if (!is.na(mes_col)) {
+  cat("\nTestes por mês (ordenados):\n")
+  per_month <- df %>%
+    group_by(mes_ord, grupo) %>%
+    summarise(nao = sum(n_nao, na.rm = TRUE), sim = sum(n_sim, na.rm = TRUE), .groups = "drop") %>%
+    # garantir que todos grupos apareçam para cada mês
+    complete(mes_ord, grupo, fill = list(nao = 0, sim = 0)) %>%
+    arrange(mes_ord, grupo)
+  # iterar mantendo a ordem de mes_ord (fator)
+  months_to_iter <- unique(per_month$mes_ord)
+  for (m in months_to_iter) {
+    sub <- filter(per_month, mes_ord == m)
+    # montar matriz 2x2 Controle vs Tratamento
+    row_ctrl <- sub %>% filter(grupo == "Controle")
+    row_trt  <- sub %>% filter(grupo == "Tratamento")
+    mtx <- matrix(c(row_ctrl$nao, row_ctrl$sim, row_trt$nao, row_trt$sim), nrow = 2, byrow = TRUE)
+    # escolher teste apropriado
+    tst <- tryCatch(chisq.test(mtx, correct = FALSE), error = function(e) NULL)
+    if (is.null(tst) || any(suppressWarnings(tst$expected) < 5)) {
+      tstf <- fisher.test(mtx)
+      cat(sprintf("%-10s: Fisher p = %.4g (Controle: %d/%d, Tratamento: %d/%d)\n",
+                  as.character(m), tstf$p.value,
+                  row_ctrl$nao, row_ctrl$nao + row_ctrl$sim,
+                  row_trt$nao, row_trt$nao + row_trt$sim))
+    } else {
+      cat(sprintf("%-10s: chi2 = %.2f, p = %.4g (Controle: %d/%d, Tratamento: %d/%d)\n",
+                  as.character(m), as.numeric(tst$statistic), as.numeric(tst$p.value),
+                  row_ctrl$nao, row_ctrl$nao + row_ctrl$sim,
+                  row_trt$nao, row_trt$nao + row_trt$sim))
+    }
+  }
+}
+
+cat("\nAnálise concluída.\n")
+```
+
+### Gráfico barras agregado
+
+Gráfico de barras empilhadas dos dados agregados com as proporções indicadas e o valor-p também.
+
+```{r}
+
+# Gráfico de barras empilhadas com proporções e valor-p agregado
+# - Detecta/analisa dados agregados no ambiente ou arquivo "tabela_mensal_chisq.csv"
+# - Calcula chi-squared (ou Fisher se necessário) e anota p-valor no gráfico
+# - Rótulos percentuais dentro dos segmentos (omitidos se muito pequenos)
+
+# Pacotes necessários
+if (!requireNamespace("ggplot2", quietly = TRUE)) install.packages("ggplot2")
+if (!requireNamespace("dplyr", quietly = TRUE)) install.packages("dplyr")
+if (!requireNamespace("scales", quietly = TRUE)) install.packages("scales")
+library(ggplot2)
+library(dplyr)
+library(scales)
+
+# montar tabela 2x2 (linhas = grupo; colunas = nao/sim)
+tab_mat <- tab
+agg_df  <- as.data.frame.matrix(tab)
+agg_df$grupo <- rownames(agg_df)
+names(agg_df) <- tolower( names(agg_df) )
+agg_df <- agg_df %>% select(grupo, everything())
+
+
+# --- Teste estatístico (chi-square ou Fisher se necessário) ---
+use_fisher <- FALSE
+test_res <- tryCatch(chisq.test(tab_mat, correct = FALSE), error = function(e) e)
+if (inherits(test_res, "error")) {
+  use_fisher <- TRUE
+} else {
+  expc <- suppressWarnings(test_res$expected)
+  if (any(expc < 5)) use_fisher <- TRUE
+}
+
+if (use_fisher) {
+  test_f <- fisher.test(tab_mat)
+  pval   <- as.numeric(test_f$p.value)
+  test_label <- sprintf("Fisher exact (p = %s)", ifelse(pval < 0.001, "<0.001", format.pval(pval, digits = 3)))
+} else {
+  test_chi <- chisq.test(tab_mat, correct = FALSE)
+  pval     <- as.numeric(test_chi$p.value)
+  test_label <- sprintf("Chi-square (p = %s, X² = %.2f)", ifelse(pval < 0.001, "<0.001", format.pval(pval, digits = 3)), as.numeric(test_chi$statistic))
+}
+
+# --- Preparar dados para plotagem (formato long) ---
+plot_df <- agg_df %>%
+  pivot_longer(cols = c("nao","sim"),
+               names_to = "resposta",
+               values_to = "contagem") %>%
+  group_by(grupo) %>%
+  mutate(total = sum(contagem),
+         prop = contagem / total,
+         pct_label = ifelse(prop >= 0.03, paste0(round(100*prop,1), "%"), "")) %>%
+  ungroup()
+
+# ordem das categorias na pilha (opcional: sim sobre nao)
+plot_df$resposta <- factor(plot_df$resposta, levels = c("nao","sim"))
+
+# --- Gráfico com título da legenda "Acordo" ---
+p <- ggplot(plot_df, aes(x = grupo, y = prop, fill = resposta)) +
+  geom_col(colour = "grey30", width = 0.6) +
+  geom_text(aes(label = pct_label),
+            position = position_stack(vjust = 0.5),
+            colour = "white", size = 3, fontface = "bold") +
+  # definir quebras do eixo y de 0 a 1 (0% a 100%)
+  # de 0.1 em 0.1 => mostra 0%,10%,...,100%
+  scale_y_continuous(labels = percent_format(accuracy = 1),
+                   breaks = seq(0, 1, by = 0.1)) +
+  scale_fill_manual(name = "Acordo", # <-- título da legenda definido aqui
+                  values = c("nao" = "#bdbdbd", "sim" = "#4E79A7"),
+                  labels = c("Não","Sim")) +
+  labs(title = "Composição por resposta ao acordo (agregado)",
+       subtitle = test_label,
+       x = "Grupo",
+       y = "Proporção dentro do grupo",
+       fill = "") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5, face = "italic"))
+
+# expandir espaço superior para anotar p-valor num lugar destacado
+p <- p + coord_cartesian(ylim = c(0, 1.09))
+
+# adicionar texto com p-valor acima das barras (centro)
+p <- p + annotate("text",
+                  x = mean(seq_along(unique(plot_df$grupo))),
+                  y = 1.05,
+                  label = paste0("Teste: ", test_label),
+                  size = 3.2)
+
+# exibir
+print(p)
+
+# (Opcional) salvar figura
+# ggsave("stacked_bar_aggregated_pvalue.png", p, width = 7, height = 5, dpi = 300)
+```
+
+### Gráfico barras facetas
+
+O mesmo gráfico acima, um para cada mês, em facetas na ordem cronológica dos mêses.
+
+```{r}
+
+# Faceted stacked bars por mês com p-valor correto por faceta
+# - calcula p-valor mês a mês (chi2 ou Fisher quando apropriado)
+# - anota cada faceta com o p-valor correspondente
+# - reduz tamanho dos valores do eixo y
+#
+# Requisitos: ggplot2, dplyr, tidyr, scales
+
+if (!requireNamespace("ggplot2", quietly = TRUE)) install.packages("ggplot2")
+if (!requireNamespace("dplyr", quietly = TRUE)) install.packages("dplyr")
+if (!requireNamespace("tidyr", quietly = TRUE)) install.packages("tidyr")
+if (!requireNamespace("scales", quietly = TRUE)) install.packages("scales")
+library(ggplot2); library(dplyr); library(tidyr); library(scales)
+
+# --- localizar/ler dados ---
+df_raw <- tabela_final
+
+# --- normalizar nomes de colunas ---
+names(df_raw) <- tolower(names(df_raw))
+names(df_raw) <- gsub("[^a-z0-9_]", "_", names(df_raw))
+
+# identificar colunas
+col_mes  <- intersect(names(df_raw), c("mes","month","mês","m"))
+col_grp  <- intersect(names(df_raw), c("grupo","group","tratamento","treatment"))
+col_nao  <- intersect(names(df_raw), c("nao","no","n_nao","n_nao"))
+col_sim  <- intersect(names(df_raw), c("sim","yes","y"))
+
+if (length(col_mes)==0) stop("Coluna de mês não encontrada (procure por 'Mes'/'month').")
+if (length(col_grp)==0) stop("Coluna de grupo não encontrada (procure por 'Grupo').")
+if (length(col_nao)==0 || length(col_sim)==0) stop("Colunas de contagem 'Nao' e 'Sim' não encontradas.")
+
+mes_col <- col_mes[1]; grp_col <- col_grp[1]; nao_col <- col_nao[1]; sim_col <- col_sim[1]
+
+# --- padronizar meses e grupos ---
+month_levels <- c("Abril","Maio","Junho","Julho","Agosto","Setembro",
+                  "Outubro","Novembro","Dezembro")
+map_month <- function(x) {
+  x0 <- trimws(as.character(x))
+  idx <- match(tolower(x0), tolower(month_levels))
+  if (!is.na(idx)) return(month_levels[idx])
+  x_clean <- iconv(x0, to = "ASCII//TRANSLIT")
+  idx2 <- match(tolower(x_clean), tolower(iconv(month_levels, to = "ASCII//TRANSLIT")))
+  if (!is.na(idx2)) return(month_levels[idx2])
+  return(x0)
+}
+
+df <- df_raw %>%
+  mutate(
+    mes_raw = .data[[mes_col]],
+    mes_mapped = vapply(mes_raw, map_month, character(1)),
+    mes_ord = factor(mes_mapped, levels = month_levels),
+    grupo_raw = as.character(.data[[grp_col]]),
+    grupo = ifelse(tolower(trimws(grupo_raw)) %in% c("controle","control"), "Controle", "Tratamento"),
+    nao = as.numeric(.data[[nao_col]]),
+    sim = as.numeric(.data[[sim_col]])
+  )
+
+# --- agregar por mês e grupo e garantir presença de ambos os grupos ---
+per_month <- df %>%
+  group_by(mes_ord, grupo) %>%
+  summarise(nao = sum(nao, na.rm = TRUE),
+            sim = sum(sim, na.rm = TRUE), .groups = "drop") %>%
+  filter(!is.na(mes_ord)) %>%
+  ungroup()
+
+# garantir linhas para ambos grupos em cada mês (preencher com zeros)
+per_month <- per_month %>%
+  complete(mes_ord, grupo = c("Controle", "Tratamento"),
+           fill = list(nao = 0, sim = 0)) %>%
+  arrange(mes_ord, grupo)
+
+# --- calcular p-valor corretamente para cada mês ---
+months <- unique(per_month$mes_ord)
+p_list <- lapply(months, function(m) {
+  sub <- filter(per_month, mes_ord == m) %>% arrange(match(grupo, c("Controle","Tratamento")))
+  # montar matriz 2x2
+  mtx <- matrix(c(sub$nao[1], sub$sim[1], sub$nao[2], sub$sim[2]), nrow = 2, byrow = TRUE)
+  # tentar chi2; se erro ou expected < 5 usar Fisher
+  tst <- tryCatch(chisq.test(mtx, correct = FALSE), error = function(e) NULL)
+  pval <- NA_real_
+  test_type <- NA_character_
+  if (is.null(tst)) {
+    f <- fisher.test(mtx)
+    pval <- f$p.value; test_type <- "Fisher"
+  } else {
+    expc <- suppressWarnings(tst$expected)
+    if (any(expc < 5)) {
+      f <- fisher.test(mtx)
+      pval <- f$p.value; test_type <- "Fisher"
+    } else {
+      pval <- tst$p.value; test_type <- "Chi-square"
+    }
+  }
+  tibble::tibble(mes_ord = m, p_value = pval, test = test_type)
+})
+p_by_month <- bind_rows(p_list)
+
+# Função utilitária: formata qui-quadrado + estrelas de significância
+stars_from_p <- function(p) {
+  if ( is.na(p) )  return("")
+  # caractere de ponto em posição elevada (dot above)
+  dot <- "\u02D9"  # '˙' (dot above) — aparece como pequeno ponto superiorizado
+  if (p < 0.001) return("<0.001") # teste significativo a 99.9% de confiança
+  if (p < 0.01) return("**")      # teste significativo a 99% de confiança
+  if (p < 0.05) return("*")       # teste significativo a 95% de confiança
+  if (p < 0.10) return(dot)       # teste significativo a 90% de confiança
+  return("") 
+}
+
+# label formatado
+# sapply(p_by_month$p_value, FUN = stars_from_p)
+
+p_by_month <- p_by_month %>%
+  mutate(p_label = format.pval(p_value, digits = 3),
+         label = paste0(test, ": p = ", p_label,
+                        sapply(p_by_month$p_value, FUN = stars_from_p)))
+
+# --- preparar dados para plotagem ---
+plot_df <- per_month %>%
+  pivot_longer(cols = c("nao","sim"),
+               names_to  = "resposta",
+               values_to = "contagem") %>%
+  group_by(mes_ord, grupo) %>%
+  mutate(total = sum(contagem), prop = ifelse(total>0, contagem / total, 0)) %>%
+  ungroup()
+
+plot_df$resposta <- factor(plot_df$resposta, levels = c("nao","sim"))
+
+# annotation_df contém mes_ord para cada faceta
+annotation_df <- p_by_month %>% mutate(x = 1.5, y = 1.08)
+
+# --- plot final ---
+p <- ggplot(plot_df, aes(x = grupo, y = prop, fill = resposta)) +
+  geom_col(colour = "grey30", width = 0.7) +
+  geom_text(aes(label = ifelse(prop >= 0.03, paste0(round(100*prop,1), "%"), "")),
+            position = position_stack(vjust = 0.5), colour = "white", size = 3) +
+  facet_wrap(~ mes_ord, ncol = 3, drop = TRUE) +
+  scale_y_continuous(labels = percent_format(accuracy = 1),
+                     breaks = seq(0, 1, by = 0.2),
+                     limits = c(0,1.12),
+                     expand = c(0,0)) +
+  scale_fill_manual(name = "Acordo", values = c("nao" = "#bdbdbd", "sim" = "#4E79A7"), labels = c("Não","Sim")) +
+  labs(title = "Composição por resposta ao acordo — por mês/2018 (n = 648)",
+       x = "Grupo",
+       y = "Proporção dentro grupos: Controle x Tratamento") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    strip.text = element_text(face = "bold"),
+    panel.grid.major.x = element_blank(),
+    axis.text.y = element_text(size = 7) # reduzir tamanho dos valores no eixo y
+  ) +
+  geom_text(data = annotation_df,
+            aes(x = x, y = 1.07, label = label),
+            inherit.aes = FALSE, size = 2)
+
+print(p)
+```
+
+Mês de **junho** é explicado pela mudança no nudge para um simples "SIRVA-SE" colocado sobre a mesa em frente às partes (autor e réu).
+
+Mês seguinte **julho** retornou-se para uma pessoa que entrava em cada audiência, servia o suco de uva para partes e seus advogados, depois dizia: "Podem se servir do suco pois é uma cortesia do Forum". Assim como ocorrera nos meses anteriores de **abril e maio**. E assim permaneceu **até o mês de dezembro**.
+
+Esse *nudge* mostrou-se muito mais persuasivo.
+
+Todavia registrou-se [**falta de significância**]{.underline}, no nivel de confiança adotado de 95% (erro tipo I = 5%), para os meses de [**setembro**]{.underline} e [**outubro**]{.underline}**/2018.**
+
+### Gráfico da Série temporal
+
+Gráfico da Série temporal da proporção de Acordos de Conciliação (Grupos Experimental e de Controle).
+
+```{r}
+
+# Série temporal da proporção de Acordos de Conciliação (Controle vs Tratamento)
+# Saída: gráfico com proporções por mês, IC95% e eixo y em percentuais (0%..100%, passo 10%)
+#
+# Requisitos: ggplot2, dplyr, tidyr, scales
+
+if (!requireNamespace("ggplot2", quietly = TRUE)) install.packages("ggplot2")
+if (!requireNamespace("dplyr", quietly = TRUE)) install.packages("dplyr")
+if (!requireNamespace("tidyr", quietly = TRUE)) install.packages("tidyr")
+if (!requireNamespace("scales", quietly = TRUE)) install.packages("scales")
+library(ggplot2); library(dplyr); library(tidyr); library(scales)
+
+# --- localizar data.frame mensal ---
+df_raw <- tabela_final
+
+# --- Normalizar nomes de colunas e identificar colunas relevantes ---
+names(df_raw) <- tolower(names(df_raw))
+names(df_raw) <- gsub("[^a-z0-9_]", "_", names(df_raw))
+col_mes  <- intersect(names(df_raw), c("mes","month","mês","m"))[1]
+col_grp  <- intersect(names(df_raw), c("grupo","group","tratamento","treatment"))[1]
+col_nao  <- intersect(names(df_raw), c("nao","no","n_nao","n_nao"))[1]
+col_sim  <- intersect(names(df_raw), c("sim","yes","y"))[1]
+if (any(is.na(c(col_mes, col_grp, col_nao, col_sim)))) stop("Colunas esperadas (mes, grupo, nao, sim) não foram encontradas.")
+
+# --- Padronizar mês e grupo ---
+month_levels <- c("Abril","Maio","Junho","Julho","Agosto",
+                  "Setembro","Outubro","Novembro","Dezembro")
+map_month <- function(x) {
+  x0 <- trimws(as.character(x))
+  idx <- match(tolower(x0), tolower(month_levels))
+  if (!is.na(idx)) return(month_levels[idx])
+  x_clean <- iconv(x0, to = "ASCII//TRANSLIT")
+  idx2 <- match(tolower(x_clean), tolower(iconv(month_levels, to = "ASCII//TRANSLIT")))
+  if (!is.na(idx2)) return(month_levels[idx2])
+  return(x0)
+}
+
+df <- df_raw %>%
+  mutate(
+    mes_raw = .data[[col_mes]],
+    mes = vapply(mes_raw, map_month, character(1)),
+    mes = factor(mes, levels = month_levels),
+    grupo_raw = as.character(.data[[col_grp]]),
+    grupo = ifelse(tolower(trimws(grupo_raw)) %in% c("controle","control"), "Controle", "Tratamento"),
+    nao = as.numeric(.data[[col_nao]]),
+    sim = as.numeric(.data[[col_sim]])
+  ) %>%
+  filter(!is.na(mes))
+
+# --- Agregar por mês e grupo (caso haja múltiplas linhas por combinação) ---
+per_month <- df %>%
+  group_by(mes, grupo) %>%
+  summarise(nao = sum(nao, na.rm = TRUE), sim = sum(sim, na.rm = TRUE), .groups = "drop") %>%
+  complete(mes, grupo = c("Controle", "Tratamento"), fill = list(nao = 0, sim = 0)) %>%
+  arrange(mes, grupo)
+
+# --- Calcular proporção e IC95% (prop.test) para cada (mes, grupo) ---
+stats <- per_month %>%
+  rowwise() %>%
+  mutate(
+    total = as.integer(nao + sim),
+    successes = as.integer(sim),
+    prop = if (total > 0) successes / total else NA_real_,
+    ci = list(
+      if (total > 0) {
+        # prop.test devolve intervalo; tryCatch protege contra erros
+        res <- tryCatch(prop.test(successes, total, correct = FALSE), error = function(e) NULL)
+        if (is.null(res)) c(NA_real_, NA_real_) else as.numeric(res$conf.int)
+      } else c(NA_real_, NA_real_)
+    ),
+    ci_low = ci[[1]],
+    ci_up  = ci[[2]]
+  ) %>%
+  ungroup() %>%
+  select(mes, grupo, total, successes, prop, ci_low, ci_up)
+
+# --- Preparar para plotagem (long format se necessário) ---
+plot_df <- stats %>%
+  mutate(prop = as.numeric(prop), ci_low = as.numeric(ci_low), ci_up = as.numeric(ci_up))
+
+# INVERSÃO DA ORDEM: definir factor com níveis invertidos (Tratamento primeiro, depois Controle)
+plot_df$grupo <- factor(plot_df$grupo, levels = c("Tratamento", "Controle"))
+
+# --- Plot: linhas por grupo com pontos e barras de erro; eixo y 0%..100% ---
+p <- ggplot(plot_df, aes(x = mes, y = prop, group = grupo, color = grupo)) +
+  geom_line(size = 0.9, na.rm = TRUE) +
+  geom_point(size = 2.4, na.rm = TRUE) +
+  geom_errorbar(aes(ymin = ci_low, ymax = ci_up), width = 0.15, size = 0.7, position = position_dodge(width = 0.2), na.rm = TRUE) +
+  scale_y_continuous(labels = percent_format(accuracy = 1), breaks = seq(0, 1, by = 0.1), limits = c(0, 1)) +
+  # definir cores e BREAKS na ordem desejada para garantir legenda nessa ordem
+  scale_color_manual(breaks = c("Tratamento", "Controle"),
+                     values = c("Controle" = "#1F78B4", "Tratamento" = "#E31A1C")) +
+  labs(
+    title = "Série temporal: proporção de Acordos de Conciliação",
+    subtitle = "Comparação entre Grupo Controle e Tratamento por mês/2018 (n=659)",
+    x = "Mês", y = "Proporção de Acordos (IC95%)",
+    color = "Grupo"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    plot.subtitle = element_text(hjust = 0.5),
+    axis.text.x = element_text(angle = 45, vjust = 0.5),
+    axis.text.y = element_text(size = 8)
+  )
+
+print(p)
+
+# Opcional: salvar figura
+# ggsave("ts_prop_acordos_by_month_inverted_groups.png", p, width = 10, height = 5)
+
+# Fim do script
+```
+
+A observação de que "2 - Apenas 28 audiências de conciliação aconteceram no mês de [***outubro***]{.underline}. Motivo: férias da magistrada." [@Aline-2020-sucouva , p. 221]. Não serve de justificativa para a variação observada nesse mês. Uma vez que todas as condições do teste foram mantidas e ***não era a magistrada*** que conduzia as ausiências de conciliação juunto ao CEJUSC.
+
+Outras observações registradas foram:
+
+> "3 A **Semana Nacional de Conciliação** ocorreu entre os dias 5 e 9 de [*novembro*]{.underline} de 2018.
+>
+> 4 Apenas 28 audiências de conciliação aconteceram no mês de [*dezembro*]{.underline}. Motivo: **Recesso forense** a partir de 20 de dezembro. Fonte: Dados da pesquisa." [@Aline-2020-sucouva , p. 221]
+
+O que também não justifica a variação observada, nos meses de [**setembro**]{.underline} e [**outubro**]{.underline}**/2018**, na replicação mensal deste *quase experimento*.
+
+Como o experimento foi replicado por ***nove meses***, o fato de em dois deles (2 / 9 = 22,2%) ***não resultar estatisticamente significativo*** é uma evidência no sentido que ele precisa ser novamente replicado, por período igual ou superior; pois há a possibilidade de que o acaso poderia ser uma explicação concorrente para a variabilidade desse subconjunto de insucessos.
+
+E é preciso que suas [**circunstâncias**]{.underline} sejam [**mais detidamente controladas**]{.underline}, tais como:
+
+1.  aumentar o período de aplicação para 12 meses;
+2.  manter um único *nudge* do começo ao fim: pessoa que entra, serve o suco ou a água fresca e sempre repete os mesmos dizeres;
+3.  essa pessoa que serve não poderá dizer a ninguem o que foi servido em cada audiência;
+4.  ***aleatorizar*** a ordem de chegada dos casos entre os doi grupos: de controle e tratamento;
+5.  utilizar *uma mesma sala* de conciliação para os dois grupos, desde que atenda à todas as recomendações da Resolução do CNJ;
+6.  ***aleatorizar*** qual dos 4 conciliadores (2 homens e 2 mulheres) irá presidir cada audiência de conciliação. Valer-se de pelo menos dois conciliadores treinados e com experiência de pelo menos 3 anos (1 homem e 1 mulher), a serem aleatorizados para acada audiência.
+7.  ***aleatorizar*** qual técnica de conciliação, entre seis encontradas na revisão da literatura, irá ser aplicada a cada audiência de conciliação;
+8.  ***organizar as pautas*** das audiências de conciliação de modo a respeitar os itens 4, 5, 6 e 7;
+9.  para buscar atender um pouco mais ao "*duplo cego*", servir tanto o suco de uva (Grupo de Tratamento) como o placebo água fresca (Grupo de Controle) em *copos de papel descartáveis não transparentes* e *grandes o suficiente*, de modo a evitar que o conciliador possa ver qual tipo de bebida (suco ou água) as partes e seus advogados estão ingerindo;
+10. refletir se vale a pena servir água fresca apenas com corante para deixar ela com a mesma cor do suco de uva, mas sem adição de qualquer glicose e dizer: que se trata de um "*suco de uva diet*" servido como cortesia na sala do Grupo de Controle;
+11. cuidar para que o Grupo de Controle mantenha seu *nível base de acordos observado no início do experimento* (abril a setembro de 2018, cf. *gráfico da série temporal* acima), *evitando-se* assim a *tendência de queda* observada nos meses de setembro a dezembro de 2018;
+12. **Evitar** que ***amostras pequenas***, menores que trinta (n \< 30), ocorram em qualquer um dos dois Grupos: Controle e Tratamento. Por exemplo agrupando no mesmo CEJUSC, processos oriundos de mais de uam vara nos meses de outubro e dezembro/2018 (n = 14; cf. abaixo gráfico da série temporal da ingestão de suco \<sim/não\> apenas no Grupo de Tratamento).
+
+### Gráfico da ingestão de suco
+
+Gerar dados sobre ingestão ou não de suci de uvo apenas no Grupo de Tratamento.
+
+```{r}
+
+# Replicar tabela: indivíduos do grupo Experimental que ingeriram / não ingeriram suco por mês
+# Saída: objeto 'tabela_experimental_summary' e impressão formatada (kable HTML quando possível)
+#
+# Copie/cole e execute no R/RStudio.
+
+# Pacotes
+if (!requireNamespace("dplyr", quietly = TRUE)) install.packages("dplyr")
+if (!requireNamespace("knitr", quietly = TRUE)) install.packages("knitr")
+if (!requireNamespace("kableExtra", quietly = TRUE)) {
+  message("kableExtra não encontrado: a impressão usará knitr::kable simples.")
+}
+library(dplyr)
+library(knitr)
+if ("kableExtra" %in% rownames(installed.packages())) library(kableExtra)
+library(tinytex)
+
+# --- Dados (valores extraídos da imagem) ---
+tabela_experimental_summary <- data.frame(
+  Mes = c("Abril","Maio","Junho","Julho","Agosto",
+          "Setembro","Outubro","Novembro","Dezembro"),
+  ing_n  = c(47, 43, 16, 35, 29, 38, 13, 55, 12),  # ingeriram suco
+  not_n  = c(27,  2, 20,  2,  3,  5,  1,  4,  2),  # não ingeriram suco
+  stringsAsFactors = FALSE
+)
+
+# --- Cálculos: total e percentuais (vetorizado) ---
+tabela_experimental_summary <- tabela_experimental_summary %>%
+  mutate(
+    total = ing_n + not_n,
+    pct_ing = ifelse(total > 0, 100 * ing_n / total, NA_real_),
+    pct_not = ifelse(total > 0, 100 * not_n / total, NA_real_),
+    # colunas formatadas com quebra de linha (HTML <br/>) para visual tipo tabela da imagem
+    Ingere     = ifelse(!is.na(total),
+                        paste0(ing_n, "<br/>(", sprintf("%.2f%%", pct_ing), ")"), NA_character_),
+    Nao_ingere = ifelse(!is.na(total),
+                        paste0(not_n, "<br/>(", sprintf("%.2f%%", pct_not), ")"), NA_character_),
+    Total_fmt  = ifelse(!is.na(total),
+                        paste0(total, "<br/>(100%)"), NA_character_)
+  ) %>%
+  select(Mês = Mes, Ingere, Nao_ingere, Total = Total_fmt)
+
+# --- Imprimir: tentar kable HTML com kableExtra; fallback para kable texto ---
+# if ("kableExtra" %in% rownames(installed.packages())) {
+#   kable(tabela_experimental_summary, format = "html", escape = FALSE, align = c("l","c","c","c")) %>%
+#     kable_styling(full_width = FALSE, bootstrap_options = c("striped", "condensed")) %>%
+#     add_header_above(c(" " = 1, "Indivíduos do grupo experimental que ingeriram suco" = 1,
+#                        "Indivíduos do grupo experimental que não ingeriram suco" = 1,
+#                        "Total" = 1))
+# } else {
+#   # versão texto: usar \n nas células para console
+#   tabela_texto <- tabela_experimental_summary %>%
+#     mutate(
+#       Ingere = gsub("<br/>", "\n", Ingere),
+#       Nao_ingere = gsub("<br/>", "\n", Nao_ingere),
+#       Total = gsub("<br/>", "\n", Total)
+#     )
+#   cat("\nTabela Experimental — ingestão de suco por mês\n")
+#   print(tabela_texto, right = FALSE, row.names = FALSE)
+# }
+# 
+# # objeto disponível para uso posterior
+assign("tabela_experimental_summary", tabela_experimental_summary, envir = .GlobalEnv)
+
+print(kable(tabela_experimental_summary,
+            align =c("l","c","c","c")))
+
+# Fim do script
+```
+
+Tabela como impressa no artigo [@Aline-2020-sucouva , p. 223].
+
+![Quantidade e proporção de indivíduos que ingeriram e não ingeriram suco no grupo experimental](fig/dados-ingestao-suco-uva-GT.png){fig-align="center"}
+
+Gráfico da série temporal da ingestão de suco (sim/não) apenas no Grupo de Tratamento.
+
+Com intervalo de confiança 95% para ponto da série.
+
+```{r}
+
+# Entrada: tabela_experimental_summary (criada anteriormente)
+# Saída: ts_suco_tratamento_table (tibble) e ts_suco_tratamento_plot (ggplot) no GlobalEnv
+#
+# O script:
+# - detecta/obtém colunas numéricas (ing_n / not_n) ou extrai números de strings formatadas
+# - normaliza meses na ordem Abril..Dezembro
+# - calcula proporção de "Sim" e IC95% (prop.test) por mês
+# - plota linha com pontos e barras de erro (IC95%)
+
+if (!requireNamespace("dplyr", quietly = TRUE)) install.packages("dplyr")
+if (!requireNamespace("tidyr", quietly = TRUE)) install.packages("tidyr")
+if (!requireNamespace("ggplot2", quietly = TRUE)) install.packages("ggplot2")
+if (!requireNamespace("scales", quietly = TRUE)) install.packages("scales")
+library(dplyr); library(tidyr); library(ggplot2); library(scales)
+
+# --- Verificar existência do objeto ---
+if (!exists("tabela_experimental_summary", envir = .GlobalEnv)) {
+  stop("Objeto 'tabela_experimental_summary' não encontrado no Global Environment.")
+}
+tab_in <- get("tabela_experimental_summary", envir = .GlobalEnv)
+
+# normalizar nomes
+names(tab_in) <- tolower(names(tab_in))
+names(tab_in) <- gsub("[^a-z0-9_áéíóúâêôãõç]", "_", names(tab_in), perl = TRUE)
+
+# candidates for month and count columns
+month_candidates <- c("mes","mês","m","month")
+ing_candidates <- c("ing_n","ingere","ingeriram","ingeriram_suco","ingested","ing")
+not_candidates <- c("not_n","nao_n","nao","nao_ingere","nao_ingere","not","not_ing")
+
+# localizar coluna de mês
+find_col <- function(nms, candidates) {
+  nms_l <- tolower(nms)
+  cand <- tolower(candidates)
+  m <- nms[nms_l %in% cand]
+  if (length(m)) return(m[1])
+  for (pat in cand) {
+    mm <- nms[grepl(pat, nms_l, ignore.case = TRUE)]
+    if (length(mm)) return(mm[1])
+  }
+  return(NA_character_)
+}
+col_mes <- find_col(names(tab_in), month_candidates)
+col_ing <- find_col(names(tab_in), ing_candidates)
+col_not <- find_col(names(tab_in), not_candidates)
+
+if (is.na(col_mes)) stop("Não foi possível localizar a coluna de mês em 'tabela_experimental_summary'.")
+
+# --- função para extrair inteiro do início de uma string (tratamento de células formatadas) ---
+extract_leading_int <- function(x) {
+  xch <- as.character(x)
+  # remove tags HTML e quebras, guarda primeiro inteiro encontrado
+  xch <- gsub("<[^>]+>", "", xch)        # remover HTML tags
+  xch <- gsub("\\\\n", "\n", xch)        # unescape se necessário
+  sapply(xch, function(s) {
+    m <- regmatches(s, regexpr("\\d+", s))
+    if (length(m) == 0 || m == "") NA_integer_ else as.integer(m)
+  }, USE.NAMES = FALSE)
+}
+
+# tentar obter contagens numéricas diretamente
+ing_vec <- if (!is.na(col_ing) && is.numeric(tab_in[[col_ing]])) as.integer(tab_in[[col_ing]]) else NULL
+not_vec <- if (!is.na(col_not) && is.numeric(tab_in[[col_not]])) as.integer(tab_in[[col_not]]) else NULL
+
+# se não numéricas, tentar extrair de strings formatadas (ex.: "47<br/>(63.51%)" ou "47\n(63.51%)")
+if (is.null(ing_vec) && !is.na(col_ing)) ing_vec <- extract_leading_int(tab_in[[col_ing]])
+if (is.null(not_vec) && !is.na(col_not)) not_vec <- extract_leading_int(tab_in[[col_not]])
+
+# se ainda NULL, tentar detectar colunas originais ing_n / not_n antes de formatação
+if (is.null(ing_vec)) {
+  # talvez o objeto contenha colunas ing_n / not_n sem formatação
+  alt_ing <- intersect(names(tab_in), c("ing_n","ingeriram","ingeriram_suco"))
+  if (length(alt_ing)) ing_vec <- extract_leading_int(tab_in[[alt_ing[1]]])
+}
+if (is.null(not_vec)) {
+  alt_not <- intersect(names(tab_in), c("not_n","nao_n","nao_ingere"))
+  if (length(alt_not)) not_vec <- extract_leading_int(tab_in[[alt_not[1]]])
+}
+
+# se não conseguimos obter contagens, aborta com mensagem informativa
+if (is.null(ing_vec) || is.null(not_vec)) {
+  stop("Não foi possível extrair contagens 'ingeriram' e 'não ingeriram' a partir de 'tabela_experimental_summary'. Verifique nomes/formatos das colunas.")
+}
+
+# montar data.frame padronizado
+df <- data.frame(
+  mes_raw = tab_in[[col_mes]],
+  ing_n = ing_vec,
+  not_n = not_vec,
+  stringsAsFactors = FALSE
+)
+
+# mapear meses e ordenar cronologicamente
+month_levels <- c("Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro")
+map_month <- function(x) {
+  s <- trimws(as.character(x))
+  idx <- match(tolower(s), tolower(month_levels))
+  if (!is.na(idx)) return(month_levels[idx])
+  s_clean <- iconv(s, to = "ASCII//TRANSLIT")
+  idx2 <- match(tolower(s_clean), tolower(iconv(month_levels, to = "ASCII//TRANSLIT")))
+  if (!is.na(idx2)) return(month_levels[idx2])
+  return(NA_character_)
+}
+df$mes <- vapply(df$mes_raw, map_month, character(1))
+df <- df %>% filter(!is.na(mes))
+df$mes <- factor(df$mes, levels = month_levels)
+
+# agregar por mês (caso haja múltiplas linhas)
+per_month <- df %>%
+  group_by(mes) %>%
+  summarise(
+    successes = sum(as.integer(ing_n), na.rm = TRUE),
+    total = sum(as.integer(ing_n) + as.integer(not_n), na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  # garantir todos os meses na sequência
+  complete(mes = factor(month_levels, levels = month_levels), fill = list(successes = 0, total = 0)) %>%
+  arrange(mes)
+
+# calcular proporção e IC95% (prop.test) por mês
+per_month <- per_month %>%
+  rowwise() %>%
+  mutate(
+    prop = if (total > 0) successes / total else NA_real_,
+    ci = list(if (total > 0) {
+      res <- tryCatch(prop.test(successes, total, correct = FALSE), error = function(e) NULL)
+      if (is.null(res)) c(NA_real_, NA_real_) else as.numeric(res$conf.int)
+    } else c(NA_real_, NA_real_)),
+    ci_low = ci[[1]],
+    ci_up  = ci[[2]]
+  ) %>%
+  ungroup()
+
+# salvar tabela de estatísticas
+assign("ts_suco_tratamento_table", per_month, envir = .GlobalEnv)
+
+# --- Plot: linha com pontos e IC95% ---
+p <- ggplot(per_month, aes(x = mes, y = prop, group = 1)) +
+  geom_line(color = "#E31A1C", size = 0.9, na.rm = TRUE) +
+  geom_point(color = "#E31A1C", size = 3, na.rm = TRUE) +
+  geom_errorbar(aes(ymin = ci_low, ymax = ci_up), width = 0.12, size = 0.7, na.rm = TRUE) +
+  geom_text(aes(label = ifelse(!is.na(prop), paste0(sprintf("%.1f%%", 100*prop), " (n=", total, ")"), "")),
+            vjust = -1.1, size = 3) +
+  scale_y_continuous(labels = percent_format(accuracy = 1),
+                     breaks = seq(0,1,by=0.1),
+                     limits = c(0,1.1), expand = c(0,0)) +
+  labs(
+    title = "Série temporal — Proporção de ingestão de suco (Grupo Experimental)",
+    subtitle = "Pontos: proporção mensal de 'Sim'; barras: IC95%-prop.test (n=288/354)",
+    x = "Mês",
+    y = "Proporção de ingestão de suco",
+    caption = "Fonte: tabela_experimental_summary"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    plot.subtitle = element_text(hjust = 0.5),
+    axis.text.y = element_text(size = 8)
+  )
+
+# salvar objeto de plot
+assign("ts_suco_tratamento_plot", p, envir = .GlobalEnv)
+
+# exibir
+print(p)
+```
+
+O gráfico acima evidencia a falha na troca do *nudge* utilizado apenas no mês de junho/2018.
+
+Ele também evidencia a falta de explicação para a [**ausência de significância estatística**]{.underline} verificada no [**teste qui-quadrado**]{.underline} para os **meses** de [**setembro e outubro/2018**]{.underline}. O que reforça ainda mais a ***necessidade de replicar o quasi-experimento*** a fim de testar se isso poderia ter sido provocado pela simples alea presente na variabilidade amostral, que acentua-se no caso de amostras pequenas, como ocorreu em outubro e dezembro (n = 14); mas não ocorreu em setembro/2018 (n = 43).
+
+### Gráfico do efeito dos conciliadores no GT
+
+Replicar tabela 5 - Desempenho dos conciliadores – Tabelas com qui-quadrado, do artigo [@Aline-2020-sucouva , p. 222].
+
+```{r}
+
+# Recria tabela Observado + Esperado por conciliador (A, B, C, D)
+# e formata expected com 1 casa decimal
+# Saída: tabela_conciliadores_display, obs_mat_conciliadores, expected_mat_conciliadores, chisq_res_conciliadores
+
+if (!requireNamespace("knitr", quietly = TRUE)) install.packages("knitr")
+library(knitr)
+
+# --- Dados observados (copiados da imagem) ---
+obs_mat <- matrix(
+  c(
+    35, 28, 21, 21,   # Controle
+    25, 37, 65, 89    # Experimental
+  ),
+  nrow = 2,
+  byrow = TRUE
+)
+rownames(obs_mat) <- c("Controle", "Experimental")
+colnames(obs_mat) <- c("Conciliador A", "Conciliador B", "Conciliador C", "Conciliador D")
+
+# --- Totais e expected (numéricos para cálculo) ---
+tot_col <- colSums(obs_mat)
+tot_row <- rowSums(obs_mat)
+grand_total <- sum(obs_mat)
+
+expected_mat <- outer(tot_row, tot_col) / grand_total
+rownames(expected_mat) <- rownames(obs_mat)
+colnames(expected_mat) <- colnames(obs_mat)
+
+# chi-squared test (Pearson)
+chisq_res <- suppressWarnings(chisq.test(obs_mat, correct = FALSE))
+
+# --- Preparar linhas para exibição ---
+# Observados (inteiros)
+obs_row1 <- as.character(obs_mat[1, ])
+obs_row2 <- as.character(obs_mat[2, ])
+
+# Esperados formatados com 1 casa decimal PARA EXIBIÇÃO
+exp_row1_fmt <- formatC(expected_mat[1, ], format = "f", digits = 1)
+exp_row2_fmt <- formatC(expected_mat[2, ], format = "f", digits = 1)
+
+# Totais
+tot_col_fmt <- as.character(tot_col)
+total_obs_row1 <- as.character(tot_row[1])
+total_obs_row2 <- as.character(tot_row[2])
+total_expected_row1 <- formatC(sum(expected_mat[1, ]), format = "f", digits = 1)
+total_expected_row2 <- formatC(sum(expected_mat[2, ]), format = "f", digits = 1)
+grand_total_fmt <- as.character(grand_total)
+
+# montar data.frame em ordem desejada (Controle, Esperado, Experimental, Esperado, Total)
+df_display <- data.frame(
+  Grupo = c("Controle", "Esperado", "Experimental", "Esperado", "Total"),
+  `Conciliador A` = c(obs_row1[1], exp_row1_fmt[1], obs_row2[1], exp_row2_fmt[1], tot_col_fmt[1]),
+  `Conciliador B` = c(obs_row1[2], exp_row1_fmt[2], obs_row2[2], exp_row2_fmt[2], tot_col_fmt[2]),
+  `Conciliador C` = c(obs_row1[3], exp_row1_fmt[3], obs_row2[3], exp_row2_fmt[3], tot_col_fmt[3]),
+  `Conciliador D` = c(obs_row1[4], exp_row1_fmt[4], obs_row2[4], exp_row2_fmt[4], tot_col_fmt[4]),
+  Total = c(total_obs_row1, total_expected_row1, total_obs_row2, total_expected_row2, grand_total_fmt),
+  stringsAsFactors = FALSE
+)
+
+
+# --- Imprimir tabela com formato simples ---
+
+cat("\nTabela: Desempenho dos conciliadores — Observado / Esperado\n(ambos com 1 casa decimal) apenas quando houve acordo\n\n")
+print(df_display)
+# print(knitr::kable(df_display, format = kable_format, escape = FALSE, align = align_vec, booktabs = TRUE))
+
+# --- Imprimir resultado do qui-quadrado ---
+cat("\nResultado do teste qui-quadrado (Pearson):\n")
+cat(sprintf("X-squared = %.2f, df = %d, p-value = %g\n\n",
+            as.numeric(chisq_res$statistic), chisq_res$parameter, chisq_res$p.value))
+
+# salvar objetos no Global Environment
+assign("obs_mat_conciliadores", obs_mat, envir = .GlobalEnv)
+assign("expected_mat_conciliadores", expected_mat, envir = .GlobalEnv)
+assign("chisq_res_conciliadores", chisq_res, envir = .GlobalEnv)
+assign("tabela_conciliadores_display", df_display, envir = .GlobalEnv)
+```
+
+Observar que o total de audiências presidida pelos quatro conciliadores foi **321**.
+
+O que é bem menor que o total geral de audiências do esperimento: **659**.
+
+Uma diferença de **-321** audiências, que foi parcialmente exlicada no artigo.
+
+> "Durante o primeiro mês da pesquisa (abril de 2018), nenhum registro foi feito em relação aos conciliadores. Apenas a partir de maio de 2018 a variável ‘conciliador’ começou a ser mensurada, não havendo informação sobre a atuação de conciliadores em ***140** audiências realizadas em abril*." [@Aline-2020-sucouva , p. 222]
+
+Gerar gráfico de barras lado a lado para exibir o desempnho dos conciliadores em audiências com acordo no Grupo de Controle e Experimental.
+
+```{r}
+
+# Script corrigido: proporções de acordos por conciliador (A,B,C,D)
+# Corrige bug que mapeava erroneamente vários rótulos para "C" (ex.: detectava 'C' em "Controle")
+#
+# Saída: df_counts_conciliadores, plot_long_conciliadores, p_conciliadores_proporcao
+
+if (!requireNamespace("ggplot2", quietly = TRUE)) install.packages("ggplot2")
+if (!requireNamespace("dplyr", quietly = TRUE)) install.packages("dplyr")
+if (!requireNamespace("tidyr", quietly = TRUE)) install.packages("tidyr")
+if (!requireNamespace("scales", quietly = TRUE)) install.packages("scales")
+
+library(ggplot2); library(dplyr); library(tidyr); library(scales)
+
+# conciliadores esperados (ordem fixa)
+desired <- c("A","B","C","D")
+
+# helper: extrai inteiro inicial de string (ex: "47<br/>(63.51%)" -> 47)
+extract_leading_int <- function(x) {
+  xch <- as.character(x)
+  sapply(xch, function(s) {
+    m <- regmatches(s, regexpr("\\d+", s))
+    if (length(m) == 0 || m == "") NA_integer_ else as.integer(m)
+  }, USE.NAMES = FALSE)
+}
+
+# CORREÇÃO: função robusta para extrair letra conciliador (A-D)
+extract_letter <- function(name) {
+  if (is.na(name)) return(NA_character_)
+  s <- as.character(name)
+  s_trim <- trimws(s)
+  # 1) procurar letra A-D como token isolado (word boundary) - evita "Controle"
+  m1 <- regmatches(s_trim, regexpr("\\b([A-Da-d])\\b", s_trim, perl = TRUE))
+  if (length(m1) && nzchar(m1)) return(toupper(m1))
+  # 2) procurar letra A-D no final do rótulo (ex.: "Conciliador A", "A")
+  m2 <- regmatches(s_trim, regexpr("([A-Da-d])\\s*$", s_trim, perl = TRUE))
+  if (length(m2) && nzchar(m2)) return(toupper(m2))
+  # 3) procurar padrão "conciliador ... A" ou "conciliador_a"
+  m3 <- regmatches(s_trim, regexpr("conciliador[^A-Za-z0-9]*([A-Da-d])", s_trim, ignore.case = TRUE, perl = TRUE))
+  if (length(m3) && nzchar(m3)) {
+    # extract captured group
+    cap <- sub(".*([A-Da-d]).*$", "\\1", m3)
+    return(toupper(cap))
+  }
+  # 4) fallback: primeira letter of last token if it matches A-D
+  toks <- unlist(strsplit(gsub("[^A-Za-z0-9 ]", " ", s_trim), "\\s+"))
+  if (length(toks) > 0) {
+    last <- toks[length(toks)]
+    fl <- toupper(substr(last, 1, 1))
+    if (fl %in% desired) return(fl)
+  }
+  # nothing found
+  return(NA_character_)
+}
+
+df_counts <- NULL
+
+# 1) usar obs_mat_conciliadores (matrix) se existir
+if (exists("obs_mat_conciliadores", envir = .GlobalEnv)) {
+  obs_mat <- get("obs_mat_conciliadores", envir = .GlobalEnv)
+  cn <- colnames(obs_mat)
+  if (is.null(cn)) cn <- paste0("Col", seq_len(ncol(obs_mat)))
+  letters <- sapply(cn, extract_letter, USE.NAMES = FALSE)
+  # se não extraiu corretamente para alguma coluna, tentar pegar último caractere
+  letters[is.na(letters)] <- toupper(substr(gsub("[^A-Za-z0-9]", "", cn[is.na(letters)]), 1, 1))
+  df_counts <- data.frame(
+    conciliador = letters,
+    Controle = as.integer(if ("Controle" %in% rownames(obs_mat)) obs_mat["Controle", , drop = TRUE]
+                         else if ("Control" %in% rownames(obs_mat)) obs_mat["Control", , drop = TRUE]
+                         else rep(0, ncol(obs_mat))),
+    Experimental = as.integer(if ("Experimental" %in% rownames(obs_mat)) obs_mat["Experimental", , drop = TRUE]
+                              else rep(0, ncol(obs_mat))),
+    stringsAsFactors = FALSE
+  )
+}
+
+# 2) tentar tabela_conciliadores_summary se existir
+if (is.null(df_counts) && exists("tabela_conciliadores_summary", envir = .GlobalEnv)) {
+  tab <- get("tabela_conciliadores_summary", envir = .GlobalEnv)
+  conciliador_col <- names(tab)[1]
+  # tentar localizar colunas numéricas de ingere/not
+  num_cols <- names(tab)[sapply(tab, is.numeric)]
+  if (length(num_cols) >= 2) {
+    # presumir que uma coluna é Experimental e outra Controle (usuário deve verificar)
+    df_counts <- data.frame(
+      conciliador = sapply(tab[[conciliador_col]], extract_letter),
+      Experimental = as.integer(tab[[num_cols[1]]]),
+      Controle = as.integer(tab[[num_cols[2]]]),
+      stringsAsFactors = FALSE
+    )
+  } else {
+    # extrair de strings formatadas
+    col_ing <- grep("ing|ingere|ingeram|sim", names(tab), ignore.case = TRUE, value = TRUE)[1]
+    col_not <- grep("nao|not|controle", names(tab), ignore.case = TRUE, value = TRUE)[1]
+    if (!is.na(col_ing) && !is.na(col_not)) {
+      df_counts <- data.frame(
+        conciliador = sapply(tab[[conciliador_col]], extract_letter),
+        Experimental = extract_leading_int(tab[[col_ing]]),
+        Controle = extract_leading_int(tab[[col_not]]),
+        stringsAsFactors = FALSE
+      )
+    }
+  }
+}
+
+# 3) fallback: usar tabela_final nível individual
+if (is.null(df_counts) && exists("tabela_final", envir = .GlobalEnv)) {
+  tf <- get("tabela_final", envir = .GlobalEnv)
+  names(tf) <- tolower(names(tf))
+  col_conc <- names(tf)[grepl("conciliador|conc|mediador|operador", names(tf), ignore.case = TRUE)][1]
+  col_grp  <- names(tf)[grepl("grupo|group|tratamento|condition", names(tf), ignore.case = TRUE)][1]
+  col_acr  <- names(tf)[grepl("acordo|agreement|resposta|sim|yes", names(tf), ignore.case = TRUE)][1]
+  if (is.na(col_conc) || is.na(col_grp) || is.na(col_acr)) {
+    stop("Não identifiquei colunas conciliador/grupo/acordo em tabela_final; forneça obs_mat_conciliadores ou tabela_conciliadores_summary.")
+  }
+  tf2 <- tf %>%
+    mutate(
+      conciliador = toupper(substr(trimws(as.character(.data[[col_conc]])), 1, 1)),
+      grupo = ifelse(tolower(trimws(as.character(.data[[col_grp]]))) %in% c("controle","control"), "Controle", "Experimental"),
+      acordo = tolower(trimws(as.character(.data[[col_acr]]))),
+      agree = ifelse(acordo %in% c("s","sim","yes","y","1","true"), 1,
+                     ifelse(acordo %in% c("n","nao","não","no","0","false"), 0, NA))
+    ) %>%
+    filter(conciliador %in% desired)
+  tab_counts <- tf2 %>%
+    group_by(conciliador, grupo) %>%
+    summarise(agreements = sum(agree == 1, na.rm = TRUE), .groups = "drop")
+  df_counts <- tab_counts %>%
+    pivot_wider(names_from = grupo, values_from = agreements, values_fill = 0) %>%
+    mutate(Controle = ifelse(is.na(Controle), 0, Controle),
+           Experimental = ifelse(is.na(Experimental), 0, Experimental),
+           conciliador = as.character(conciliador))
+}
+
+if (is.null(df_counts)) stop("Falha ao construir df_counts. Forneça dados em formato esperado.")
+
+# normalizar conciliador e garantir A-D presentes
+df_counts <- df_counts %>%
+  mutate(conciliador = sapply(conciliador, function(x) {
+    if (is.na(x)) return(NA_character_)
+    extract_letter(x)
+  })) %>%
+  filter(!is.na(conciliador)) %>%
+  group_by(conciliador) %>%
+  summarise(Controle = sum(as.integer(Controle), na.rm = TRUE),
+            Experimental = sum(as.integer(Experimental), na.rm = TRUE),
+            .groups = "drop") %>%
+  complete(conciliador = desired, fill = list(Controle = 0, Experimental = 0)) %>%
+  arrange(match(conciliador, desired))
+
+message("Contagens por conciliador (Controle / Experimental):")
+print(df_counts)
+
+# preparar dados long e calcular proporção dentro de cada conciliador
+plot_long <- df_counts %>%
+  pivot_longer(cols = c("Controle","Experimental"), names_to = "grupo", values_to = "agreements") %>%
+  group_by(conciliador) %>%
+  mutate(total_by_conc = sum(agreements, na.rm = TRUE),
+         prop_within_conc = ifelse(total_by_conc > 0, agreements / total_by_conc, 0)) %>%
+  ungroup()
+
+message("Dados long para plotagem (verifique se A-D aparecem):")
+print(plot_long)
+
+# plot
+p_conciliadores_proporcao <- ggplot(plot_long, aes(x = conciliador, y = prop_within_conc, fill = grupo)) +
+  geom_col(position = position_dodge(width = 0.8), width = 0.7, colour = "grey30") +
+  geom_text(aes(label = ifelse(!is.na(prop_within_conc), scales::percent(prop_within_conc, accuracy = 0.1), "0.0%")),
+            position = position_dodge(width = 0.8), vjust = -0.3, size = 3) +
+  scale_y_continuous(labels = scales::percent_format(accuracy = 1), breaks = seq(0,1,by=0.1), limits = c(0,1)) +
+  scale_fill_manual(values = c("Controle" = "#4E79A7", "Experimental" = "#F28E2B")) +
+  labs(title = "Proporção de acordos por conciliador (por Grupos)",
+       subtitle = "Comparação: Controle vs Experimental apenas quando houve acordo",
+       x = "Conciliador", y = "Proporção de acordos (por conciliador)",
+       fill = "Grupo") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5))
+
+assign("df_counts_conciliadores", df_counts, envir = .GlobalEnv)
+assign("plot_long_conciliadores", plot_long, envir = .GlobalEnv)
+assign("p_conciliadores_proporcao", p_conciliadores_proporcao, envir = .GlobalEnv)
+
+print(p_conciliadores_proporcao)
+```
+
+Há um claro padrão discrepante no desempenho dos conciliadores C e D em relação aos conciliadores A e B.
+
+Considerando que todos os conciliadores foram orientados para aplicarem sempre a mesma e única técnica de conciliação, essa discrepância acentuada é uma evidência de que C e D podem ter atuado com mais eficácia no Grupo Experimental que no Grupo de Controle.
+
+mmm

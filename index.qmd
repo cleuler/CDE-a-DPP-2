@@ -1,0 +1,240 @@
+# Pretexto {#sec-pretexto .unnumbered}
+
+Estado Moderno e o problema do poder de controle público, sob a pele privada, de seus cidadãos: competências criminal e cível discricionárias em ponderação com o princípio do *devido processo legal procedural e substantivo*.
+
+Num tal Moderno Estado Democrático de Direito tornam-se importantes as Análises de Processo e de Resultados do (des)controle do processo penal acusatório e da administração da execução penal.
+
+Bem como do processo cível, notadamente das ações coletivas.
+
+Na interface do Direito e Políticas Públicas busca-se compreender o fenômeno da ***baixa efetividade*** de inúmeras normas constitucionais, notadamente aquelas insertas na CF/1988 na condição de direitos fundamentais.
+
+Esta disciplina, CDE-a-DPP: *Ciência de Dados e* *Estatística (Básica e Inferecnial, com R) aplicada ao Direito e Políticas Públicas*, foi concebida absolutamente apoiada no *dogma* de que os fenômenos jurídicos e, mais ainda, sua conjunção com as Políticas Públicas (pródiga no uso de *indicadores* e de rakeamentos em suas abordagens para análise de processos e de resultados; ex.: AIR - Análise de Impacto Regulatório), ***apresentam uma componente estocástica*** [@Becker2015][@DietzKalof2015] e podem ser ***objeto de contagem ou de medição***, dado que a ***mente humana é um instrumento de medição*** [@Kahneman2021] *quando opera julgamentos sob incerteza* [@Kahneman1982].
+
+## Load packages {#sec-load-packages .unnumbered}
+
+```{r}
+#| label: init
+#| warning: false
+
+# load packages
+# carregar os pacotes
+# necessários para rodar os scripts em R
+library(tidyverse)
+library(downlit)
+library(reticulate)
+library(quarto)
+library(qreport)
+# library(kableExtra)
+library(gt)
+library(latex2exp)
+library(ggplot2)
+library(dplyr)
+library(tibble)
+library(lubridate)
+library(mixtools)
+library(descr)
+library(magrittr)
+```
+
+## Linguagem R - pacote Quarto {#sec-linguagem-r---pacote-quarto .unnumbered}
+
+***Desenvolvimento de softwares em linguagem R elaborados como apoio para resolução de problemas de pesquisa e para simulações*** na disciplina de doutorado/mestrado do PPGDP - Programa de Pós-Graduaçãoem Direito e Políticas Públicas sediado na Faculdade de Direito da UFG - Universidade Federal de Goiás, ministrada no 2. sem. 2024 e intitulada **Ciência de Dados e Estatística aplicada ao Direito e Políticas Públicas – CDEaDPP** - código DPP0053 (ago. 2024/dez. 2024). Goiânia: FD/UFG, 2024.
+
+Pretende-se gerar um *e-book* com os diversos *scripts* desses ***softwares em linguagem R*** a fim apoiar os estudantes na compreensão do conteúdo transmitido e também no auxílio à resolução de problemas de pesquisa e de geração de simulações, de modo a aplicar as ***técnicas*** **de *pesquisa empírica predominantemente quantitativas*** que podem ser consideradas **adequadas** e que ainda [***não***]{.underline} foram ***aplicadas*** ou foram ***incompletamente aplicadas*** em *pesquisas anteriores do PPGDP*, a fim de ***avançar*** na ***fronteira*** **do *conhecimento*** do ***estado da arte*** e da ***pesquisa empírica*** (levantar dados 1^[os]{.underline}^ e 2^[os]{.underline}^) até aqui ***empreendida neste programa***, como, por exemplo: ***testes de Hipótese*** em geral e da ***qualidade do ajuste de Modelos*** (seleção), modelo de regressão logística, modelos lineares generalizados (glm), análise de sobrevivência, análise de fatores de risco, análise de relações (DAG’s e inferência bayesiana), análise estatística da decisão por meio de árvore de decisão, aprendizado de máquina (supervisionado e não supervisionado), modelos de reologia e escoamento para análise de fluxos processuais no sistema de justiça criminal e cível etc.
+
+Também servirá de modelo para aqueles que optarem por apresentar seus Relatórios de Pesquisa ou mesmo dissertações, relatórios de produção técnica, tese etc. em formato de *e-book*, que pode ser hospedado em um domínio da web.
+
+Produzido em `Quarto`.\
+Para saber mais sobre `Quarto` cf.: <https://quarto.org>.
+
+Esta é uma obra científica produzida no `R Quarto`, numa proposta de *pesquisa empírica com produção técnica relevante* junto ao PPGDP/UFG, Progama de Pós-Graduação Profissional assim caracterizado:
+
+-   ::: {#AreaConc}
+    Área de concentração: *Direito da Administração e Políticas Públicas*;
+    :::
+
+-   ::: {#LinhasPesq}
+    Linhas de pesquisa:
+
+    I.  *Regulação*, *Efetividade* e *Controle* *Constitucional* das Políticas Públicas;
+    II. Políticas Públicas *de Segurança* e *de Enfrentamento à Desigualdade Estrutural*, e
+    III. *Novas Tecnologias* e *Novas Práticas* em *Políticas Públicas*: Soluções Jurídicas
+    :::
+
+-   Conduzida por: Cleuler Barbosa das NEVES. ([Lattes](#0 "Currículo"))
+
+-   e: Gaspar Alexandre Machado de SOUSA. ([Lattes](http://lattes.cnpq.br/6135605692550160))
+
+*Recommended Citation*:
+
+NEVES, Cleuler Barbosa das. **Ciência de Dados e Estatística aplicadas ao Direito e Políticas Públicas – CDEaDPP**: desenvolvimento de softwares em linguagem R elaborados como apoio para resolução de problemas de pesquisa e para simulações de modo a aplicar as ***técnicas*** **de *pesquisa empírica predominantemente quantitativas*** que podem ser consideradas **adequadas** e que ainda [***não***]{.underline} foram ***aplicadas*** ou foram ***incompletamente aplicadas*** em *pesquisas anteriores do PPGDP*, a fim de ***avançar*** na ***fronteira*** **do *conhecimento*** do ***estado da arte*** e da ***pesquisa empírica*** (levantar dados 1^[os]{.underline}^ e 2^[os]{.underline}^) até aqui ***empreendida neste programa***. Disciplina ministrada pela primeira vez no 2. sem. 2024 - código DPP0053 (ago. 2024/dez. 2024). Goiânia: FD/UFG, 2024.
+
+## Sobre o autor {#sec-sobre-Autor .unnumbered}
+
+Cleuler Barbosa DAS NEVES ([Lattes](http://lattes.cnpq.br/3567330317986829 "Currículo")) tem graduação em Direito pela Universidade Federal de Goiás (1997), especialização e mestrado em Direito Agrário pela Universidade Federal de Goiás (2001) e doutorado em Ciências Ambientais pela Universidade Federal de Goiás (2006). Atualmente é [professor](https://www.youtube.com/watch?v=K6PwUG283DU "Another Brick in the Wall Pt. 2 (The Wall, Pink Floyd)") *titular* integrante do quadro permanente do Programa de Mestrado Profissional em Direito e Políticas Públicas (PPGDP) da UFG e também junto à graduação em Direito da UFG. Procurador do Estado de Goiás (5/2/1999). Tem experiência na área de Direito, com ênfase em Direito Público, tendo atuado em Direito Agrário e Direito Ambiental, com foco de pesquisas em Áreas de Preservação Permanente - APP's, em recursos hídricos e em Processo Civil e Administrativo. Atualmente atuando em Direito Administrativo, com foco de pesquisas em: i) [Conflituosidade]{.smallcaps}, [Consensualidade e Políticas Públicas]{.smallcaps}: [Mediação, Conciliação e Arbitragem e outros mecanismos consensuais na Administração Pública]{.smallcaps} (Linha 3 do PPGDP) e em ii) Defesa Social e Segurança Pública: desafios para a implantação de políticas públicas de segurança no Brasil (Linha 2 do PPGDP).
+
+Também é graduado em Engenharia Elétrica pela Universidade Federal de Goiás (1986), com especialização em Engenharia de [Petróleo](https://www.youtube.com/watch?v=i9L6ypmosdE "Feira de Mangaio - Petrobras Sinfônica e Lucy Alves") pela Universidade Federal da Bahia em convênio com Centro de Treinamento do Nordeste da Petrobrás (1990).
+
+Ministra disciplinas relacionadas à Metodologia da Pesquisa Científica e à Epistemologia na graduação e na pós-graduação estrito senso da Faculdade de Direito da UFG (PPGDA e PPGDP) há mais de quinze anos.
+
+Tem dedicado-se ao estudo da Teoria da Probabilidade e Estatística aplicadas à pesquisa empírica, especialmente à *quali*-*quantitativa*, no campo do Direito em sua interface com as Políticas Públicas há mais de sete anos. Cursa atualmente a especialização *lato senso* em: *Data Science* e Estatística Aplicada, oferecida pela FEN - Faculdade de Enfermagem e pelo IME - Instituto de Matemática e Estatística da UFG.
+
+Num breviário de sua trajetória acadêmica, enumera suas seguintes produções (acadêmicas e técnicas) que, de um modo ou de outro, conduziram-lhe até a concepação das presentes notas de aula:
+
+1.  Dissertação (2001) [@dissert2001]: suas primeiras reflexões sobre a *questão do método* (cap. 2, p. 28-79), ainda sob influxos preponderantemente racionalista. Depois (2011) publicada como livro [@livro2011].
+
+2.  Tese (2006) [@tese2006]: trata dos *fenômenos* da *nomogênese*, da *nomoconcreção* e da *nomointernalização*/*nomosocialização* (itens 1.3, 1.4 e 1.5, cap. 1, f. 45-73) abordados à luz da *Teoria Tridimensional* de Reale [@Reale1994-uz], situando-a *entre razões e sentimentos*, conforme as *Lições sobre Ética*, de Ernst Tugendhat [@Tugendhat1997-le], sob a orientação do Prof. Dr. Nivado dos Santos. Disponível em: <https://files.cercomp.ufg.br/weby/up/104/o/Cleuler_Neves.pdf>;
+
+3.  artigo (2011): *Delimitação de Áreas de Preservação Permanente determinadas pelo relevo*: aplicação da legislação ambiental em duas Microbacias Hidrográficas no Estado de Goiás [@Borges2011-delimAPPrelevo], dado que o *principal produto* de sua tese de doutoramento foi estabeler *critérios para delimitação de APPs pelo Relevo*. Disponível em: <https://rbgeomorfologia.org.br/rbg/article/view/263>;
+
+4.  Livro (2018): *Trabalhos Científicos em Direito*: da elaboração à defesa, no campo acadêmico e profissional. Rio de Janeiro: Lumen Juris, há mais de sete anos no prelo [@livroMTC2018];
+
+5.  artigo (2018): Dever de consensualidade na atuação administrativa. *Revista de Informação Legislativa*: RIL [@neves2018deverConsensuAdm], v. 55, n. 218, p. 63-84, abr./jun. 2018. (qualis A2). Disponível em: <https://www12.senado.leg.br/ril/edicoes/55/218/ril_v55_n218_p63.pdf>
+
+6.  artigo (2018): Escolha do árbitro na terminação de conflitos administrativos: limites e possibilidades da atuação de um advogado público. *A&C -- Revista de Direito Administrativo & Constitucional* [@neves2018escolhaArbitro], Belo Horizonte, ano 18, n. 71, p. 167-195, jan./mar. 2018. qualis A2. DOI: 10.21056/aec.v18i71.587. Disponível em: <http://www.revistaaec.com/index.php/revistaaec/article/view/587>
+
+7.  artigo (2019): Previsão orçamentária de custo para alimentação em sessões de conciliação do Tribunal de Justiça de Goiás, com fundamento em pesquisa empírica. Artigo publicado na *Revista Fórum Administrativo*: Direito Público [@neves2019custoSucoUva], ano 19, n. 19, p. 18-25, maio 2019 (qualis A4);
+
+8.  artigo (2019): Controle concomitante de editais de licitação de obras como política pública de prevenção à corrupção. *Revista Fórum Administrativo*: Direito Público [@neves2019controleLicObras]. Belo Horizonte, v. 19, n. 220, p. 20-32, jun. 2019. Disponível em: [clique aqui](https://d1wqtxts1xzle7.cloudfront.net/60647461/Controle_concomitante_de_editais_de_licitacao_de_obras_como_politica_publica_de_prevencao_a_corrupcao20190919-80536-1cz6fg6-libre.pdf?1568923862=&response-content-disposition=attachment%3B+filename%3DControle_concomitante_de_editais_de_lici.pdf&Expires=1697602962&Signature=NdqS1iqtzLdSPNNB6-0g1qtabglXj8O5D4VBEI3zrMfoKB41LRPTucEP2LWCGualq~D8jmk4fNP4gXcowbsbPk3wYCeHuSCTolKftuJzSGeEAT1so70whKXqz69iV8lIp~91XbwfHAIxvVej1DKkbb4O3a~IdK8j5phOuRFaUZlS9V7r-5wy2U06EZG9v3R-EKzD4ActlA2z7O6SuvL-F1m8eE9BetdoFxfUYPF7que9Jytcc8pWEZJWDXUeiKxWBWXHuGj0VACeUQ8fvuMjFpNfKbkLhpeoy1WeK9UDXztZfVY6L41Jiz1CaR1a3UAdHVWz3GyIaUsHnssLnCPKVA__&Key-Pair-Id=APKAJLOHF5GGSLRBV4ZA "pdf").
+
+9.  artigo (2020): Avaliação de Políticas Públicas: uma abordagem DPP aplicada ao programa de incentivo fiscal "PRODUZIR" no Estado de Goiás (2000-2017). *Revista do Direito* (Santa Cruz do Sul *on line*), v. 3, p. 104-123, 2020. [@silva2020Fomentar-DPP]. DOI: 10.17058/rdunisc.v3i50.14648. Disponível em: [clique aqui](https://online.unisc.br/seer/index.php/direito/article/download/14648/8938 "DOI: 10.17058/rdunisc.v3i50.14648")
+
+10. artigo (2020): A Glicobiologia e a Psicologia Comportamental como Elementos Exógenos Estimuladores da Conciliação Judicial. Artigo publicado na *Revista Fórum Administrativo*: Direito Público [@neves2020glicobiologia], ano 20, n. 229, p. 26-34, mar. 2020 (qualis A4);
+
+11. artigo (2021): Avaliação de Políticas Públicas: análises de quebras estruturais em séries temporais de indicadores para aferir os resultados do programa de incentivo fiscal "Produzir" no Estado de Goiás (2000 - 2017). *Revista de Estudos Empíricos em Direito* \[*Brazilian Journal of Empirical Legal Studies*\], v. 8, p. 1-51, 2021, <https://doi.org/10.19092/reed.v8i.506> (qualis B1). [@silva2021tsFomentar];
+
+12. artigo (2021): *Uma hermenêutica para antinomias de princípios*: limites para seu controle constitucional e políticas públicas [@Neves2021-colPrincPP], que aborda o fenômeno da nomoconcreção pela ponderação de princípios à luz de uma Teoria racional dos Direitos Fundamentais [@Alexy2008-TDF], tentando afastar seus resíduos metafísicos por meio de uma Teoria Retórica do Direito, como preconizada por João Maurício Adeodato [@Adeodato2014-UTRNJDO] e sob o ponto de vista da Ciência do Direito como *Teoria da Decisão* [@FerrazJr1980CiDir]. Qualis A2. Disponível em: <https://doi.org/10.21056/aec.v21i84.1210>;
+
+13. artigo (2021): Lei Anticrime e Colaboração Premiada: os limites da sanção premial. *Humanidades & Inovação*: Novas teses jurídicas [@neves2021colabPremiada]. v. 8, n. 51, p. 147-160, jul. 2021. Qualis B1. Disponível em: <https://revista.unitins.br/index.php/humanidadeseinovacao/article/download/5115/3204>
+
+14. artigo (2022): *Variância da cor da morte violenta no seio da República Federativa do Brasil*: um estudo da variabilidade do perfil da morte violenta por sexo e por cor nas 27 Unidades Federativas (1997-2019) [@Neves2022-varCorMorte], que faz uma análise das *séries históricas* da taxa de homicídios/100.000hab./ano do país e de seus 26 Estados mais o DF nos últimos 40 anos por sexo e por cor (ainda não publicado, aguardando resposta da revista [Barbarói](https://online.unisc.br/seer/index.php/barbaroi) da Unisc - B1);
+
+15. artigo (2022): *Avaliação do Sistema Único de Segurança Pública — SUSP (PNSPDS 2018-2028)*: um modelo para capturar os níveis, a tendência e a variabilidade da taxa de homicídios em cada um dos 26 Estados e no DF (Ipea/IBGE 1998-2019 e MJSP jan. 2018-abr. 2021) [@Neves2022-avSUSP], que faz uma análise do SUSP - Sistema Único de Segurança Pública e do 1º PNSPDS - Plano Nacional de Segurança Pública e Defesa Social com base nas *séries históricas* da taxa de homicídios/100.000hab./ano do país e de seus 26 Estados mais o DF nos últimos 40 anos (ainda não publicado, aguardando resposta do Dossiê 3º milênio - B1);
+
+16. artigo (2022): *Abordagem Policial — PMGO (2016-2018)*: Sexo, Idade e Luz do Dia num Baculejo à Cor da Pele. Apresentado no XI ENCONTRO DE PESQUISA EMPÍRICA EM DIREITO, GT n. 11 - Aspectos Teóricos e Metodológicos e Proposições Normativas baseadas em Evidências Empíricas, Curitiba, 22-26 Ago. 2022. Que se vale de *DAGs* (*Direct Acyclic Graphs*) & Redes Bayesianas numa ousada e frustrada tentativa de *modelagem causal* no campo das Ciências Sociais aplicadas (ainda não publicado, *não submetido*) [@DasNeves2022];
+
+17. Livro em co-autoria (2022): *Inteligência Artificial e Jurisprudência* - delimitação jurisprudencial nas decisões do TCU do conceito aberto de cláusula restritiva ao caráter competitivo em editais de licitação [@Silva2022].
+
+18. Livro em co-autoria (2022): *Política pública de fomento às micro e pequenas empresas pelo poder das compras públicas no estado de Goiás* - controle externo pelo TCE/GO (2006-2019) [@Barzellay2022-ppfmpe].
+
+19. artigo (2022): *Para uma Teoria Geral do Processo Penal Byroniana -- TGPP-By*. Artigo escrito para coletânea em homenagem ao Professor Byron Seabra Guimarães,† aposentado na cadeira de Direito Processual Penal da Faculdade de Direito da UFG. Promoção da EJUG, edital n. 05/2021, projeto "Coleção Bico de Pena". [@Neves2022-TGPP-By] (aguardando publicação).
+
+20. artigo (2023): *E-commerce dos dados pessoais e a LGPD*: abordagem de uma lacuna à luz da Teoria do Ordenamento Jurídico de Bobbio [@Neves2022-ecommDP-LGPD]; que considera a possibilidade da *ponderação de princípios aplicada a um caso de integração de lacuna* na LGPD como um ensaio de expansão analógica da tensão entre a *norma geral exclusiva* e a *norma geral inclusiva*, como abordadas na *Teoria do Ordenamento Jurídico* de Norberto Bobbio [@Bobbio1995-TOJ]. Publicado na *Revista Constituição, Economia e Desenvolvimento*: Revista Eletrônica da Academia Brasileira de Direito Constitucional (ABDConst). Curitiba, v. 15, n. 28, p. 201-262, jan.-jun. 2023. ISSN 2177-8256. Disponível em: [[https://www.abdconstojs.com.br/index.php/revista/article/view/461/311]{.underline}](https://www.abdconstojs.com.br/index.php/revista/article/view/461/311);
+
+21. Tese (2023): NEVES, Cleuler Barbosa das. **Ruído num Espaço de Probabilidades Democrático de Direito**: análise do Furto Simples na perspectiva Estatística aplicada ao Direito. Tese/cátedra inédita para fins de avaliação de progressão para Professor Titular junto à Faculdade de Direito da UFG. 1. out. 2023, Goiânia-GO. Disponível em: [cleuler.com](https://cleuler.com/ "cleuler.com").
+
+22. artigo (2024): NEVES, Cleuler Barbosa das. MATOS, Gisele Gomes. A cor nas abordagens policiais no estado de Goiás: 2016-2018. *Contribuciones a Las Ciencias Sociales*, São José dos Pinhais, v. 17, n. 2, p. 01-41, e4146, fev. 2024.ISSN 1988-7833. DOI: [[https://doi.org/10.55905/revconv.17n.2-045]{.underline}](https://doi.org/10.55905/revconv.17n.2-045) . Disponível em: [[https://ojs.revistacontribuciones.com/ojs/index.php/clcs/article/view/4146]{.underline}](https://ojs.revistacontribuciones.com/ojs/index.php/clcs/article/view/4146)
+
+23. artigo (2024): NEVES, Cleuler Barbosa das; MATOS, Gisele Gomes. Avaliação do Sistema Único de Segurança Pública – SUSP (PNSPDS 2018-2028): um modelo para capturar os Níveis, a Tendência e a Variabilidade da Taxa de Homicídios em cada um dos 26 Estados e no DF (Ipea/IBGE 1998-2019 e MJSP jan. 2018-Abr. 2021), *Revista Observatorio de la Economia Latino Americana*, Curitiba, v. 22, n. 4, p. 01-55, e4204, abr. 2024. ISSN 1696-8352. DOI: <https://doi.org/10.55905/oelv22n4-110> . [[https://ojs.observatoriolatinoamericano.com/ojs/index.php/olel/article/view/4204]{.underline}](https://ojs.observatoriolatinoamericano.com/ojs/index.php/olel/article/view/4204)
+
+24. Artigo: MATOS, Gisele Gomes; NEVES, Cleuler Barbosa das. Da formação do mito da democracia racial à era do constitucionalismo contemporâneo: a premente necessidade de superação da mera igualdade formal da CF/88, *Revista Goyazes / Trbunal de Justiça do Estado de Goiás*, Goiânia, v. 2, n. 1, p. 11-32, 2. sem. 2024. ISSN 2965-8039. DOI: 10.5281/zenodo.13919778. Disponível em: <https://revistagoyazes.tjgo.jus.br/goyazes/article/view/20/79.>
+
+25. Artigo A2 (2025): NEVES, Cleuler Barbosa das; SANTOS, Maysa Teixeira. Política pública judiciária: análise do conceito de nudge na atuação do poder judiciário pela efetividade incremental das reurb-s de 56 municípios goianos (2023-2024), *Revista Aracê – Direitos Humanos em Revista*, v. 7, n. 2, 2025, p. 4863-4882. ISSN 2358-2472. DOI: [10.56238/arev7n2-021](10.56238/arev7n2-021 "doi"). Disponível em: <https://periodicos.newsciencepubl.com/arace/article/view/3126.> Acesso em: 14 fev. 2025.
+
+26. Artigo A2 (2025): NEVES, Cleuler Barbosa das; MATOS, Gisele Gomes. Microssistema legal brasileiro da “proteção” dos Dados Pessoais: uma suposta efetiva garantia da Titularidade Privada dos Próprios Dados Pessoais. *Revista Aracê – Direitos Humanos em Revista*, \[S. l.\], v. 7, n. 3, p. 10805-10867, 2025. ISSN: 2358-2472. DOI: [10.56238/arev7n3-045](10.56238/arev7n3-045 "doi"). Disponível em: <https://periodicos.newsciencepubl.com/arace/article/view/3690.> Acesso em: 9 mar. 2025. Bolsita de produtividade PPGDP/UFG. Brazilian Legal Microsystem for the 'Protection' of Personal Data: a Supposed Effective Guarantee of Private Ownership of One's Own Personal Data.
+
+27. Artigo A2 (2025): NEVES, Cleuler Barbosa das; MATOS, Gisele Gomes. Variância da cor da morte violenta no seio da República Federativa do Brasil: um estudo da variabilidade do perfil da morte violenta por sexo e por cor nas 27 Unidades Federativas (1997-2019). Revista Caderno Pedagógico (Lajeado.online), v. 22, n. 5, e14703, p. 1- 56, 2025. ISSN:1983-0882. DOI: [10.56238/arev7n2-021](10.56238/arev7n2-021 "doi"). Disponível em: <https://doi.org/10.54033/cadpedv22n5-072.> Acesso em: 12 mar. 2025. Bolsista de produtividade do Programa de Pós-Graduação em Direito e Políticas Públicas da Universidade Federal de Goiás (PPGDP/UFG).
+
+28. Artigo A2 (2025): NEVES, Cleuler Barbosa das; TOZETTO, Nathália Suzana Costa Silva. Diagnóstico do arranjo institucional e orçamentário de Goiânia (2011/21): existe uma política pública de meio ambiente? *Revista Caderno Pedagógico* (Lajeado.online), v. 22, n. 7, e16498, p. 1-35, 2025. ISSN:1983-0882. DOI: [10.54033/cadpedv22n7-219](10.54033/cadpedv22n7-219 "doi"). Disponível em: <https://ojs.studiespublicacoes.com.br/ojs/index.php/cadped/article/view/16498.> Acesso em: 03 ago. 2025. \[sem a observação de bolsista produtividade do PPGDP\]
+
+29. Artigo A2: NEVES, Cleuler Barbosa das; TOZETTO, Nathália Suzana Costa Silva. Inadequação das astreintes contra o Estado: da coerção genérica ao controle estruturado das políticas públicas. *Revista de Geopolítica – ReGeo*, v. 16, n. 4, e710, p. 1-18, 2025. ISSN:2177-3246. DOI: [10.56238/revgeov16n4-065](https://mail.revistageo.com.br/revista/article/view/710). Disponível em: <https://mail.revistageo.com.br/revista/article/view/710/524>. Acesso em: 24 set. 2025.
+
+30. Artigo A2: NEVES, Cleuler Barbosa das; GUIMARÃES; Tarsila Costa. Validade da colaboração premiada de advogado integrante de organização criminosa no ordenamento jurídico brasileiro. Aceito pela *Revista Aracê*, \[S. l.\]. ISSN: 2358-2472.
+
+{{< pagebreak >}}
+
+## RESUMO {#sec-resumo .unnumbered}
+
+Disciplina DPP0053 -Ciência de Dados e Estatística aplicada ao Direito e Políticas Públicas – CDEaDPP do Programa de Pós-Graduação em Direito e Políticas Públicas – PPGDP da Faculdade de Direito da Universidade Federal de Goiás – UFG, sob a responsabilidade do Prof. Dr. Cleuler Barbosa das Neves e do Prof. Dr. Gaspar Alexandre Machado de Sousa, ministrada no 2. sem. de 2025, 9ª turma Mestrado e 1ª Doutorado selecionadas, na Sala de Aula do PPGDP, com carga horária de 64 h-a (16 encontros de 4 h-a) e mais 32 h-a de atendimento para customizar o *desenho da pesquisa empírica*, lecionada no seguinte horário: quintas-feiras das 14:00 às 18:00 h, com intervalo: 15:50 às 16:10 h.
+
+**Palavras-chave**: 1. Direito. 2. Políticas Públicas. 3. Estatística Básica. 4. Axiomas, Teoremas e Conceitos essenciais. 5. Pesquisa empírica. 6. Análises de processo e de impacto.
+
+{{< pagebreak >}}
+
+## *ABSTRACT* {#sec-abstract .unnumbered}
+
+*Discipline DPP0053 - Data Science and Statistics applied to Law and Public Policy - CDEaDPP of the Postgraduate Program in Law and Public Policy - PPGDP of the Faculty of Law of the Federal University of Goiás - UFG, under the responsibility of Prof. Dr. Cleuler Barbosa das Neves and Prof. Dr. Gaspar Alexandre Machado de Sousa, taught in the 2nd semester of 2025, 9th Master's and 1st Doctorate class selected, in the PPGDP Classroom, with a workload of 64 hours (16 meetings of 4 hours) and another 32 hours of assistance to customize the design of the empirical research, taught at the following times: Thursdays from 2:00 pm to 6:00 pm, with a break: 3:50 pm to 4:10 pm.*
+
+***Keywords**: 1. Law. 2. Public Policies. 3. Basic Statistical. 4. Essential Axioms, Theorems and Concepts. 5. Empirical research 6. Process and Impact's analysis.*
+
+{{< pagebreak >}}
+
+## Epígrafe {#sec-Epigrafe .unnumbered}
+
+> ::: callout-tip
+> > ## Procura da Pesquisa
+> >
+> > **Entre Letras e Números: empoderando dados**
+> >
+> > Penetra surdamente no reino das *letras e números*.
+> >
+> > Lá estão os $\mu$*odelos* que esperam ser *representados*.
+> >
+> > Estão paralisados, mas não há desespero,
+> >
+> > há calma e frescura na superfície intata.
+> >
+> > Ei-los sós e mudos, em estado de *símbolos*.
+> >
+> > Convive com teus $\mu$*odelos*, antes de *descrevê*-los.
+> >
+> > Tem paciência se obscuros. Calma, se te provocam.
+> >
+> > Espera que cada um se realize e consume
+> >
+> > com seu poder *simbólico*
+> >
+> > e seu poder de silêncio.
+> >
+> > Não forces o $\mu$*odelo* a desprender-se do limbo.
+> >
+> > Não colhas no chão o $\mu$*odelo* que se perdeu.
+> >
+> > Não *envieses* o $\mu$*odelo*. Aceita-o
+> >
+> > como ele aceitará sua forma definitiva e concentrada
+> >
+> > no *tempo*-espaço.
+> >
+> > Chega mais perto e contempla *os symbols*.
+> >
+> > Cada *um*
+> >
+> > tem mil faces secretas sob a face neutra
+> >
+> > e te pergunta, sem interesse pela resposta,
+> >
+> > pobre ou terrível, que lhe deres:
+> >
+> > Trouxeste *la chiave* \[$\Theta \varepsilon \omega \rho \iota \alpha$\]?
+> >
+> > (parafraseando [Carlos Drummond de Andrade](https://www.letras.mus.br/carlos-drummond-de-andrade/460651/ "Procura da Poesia"))
+> :::
+
+{{< pagebreak >}}
+
+## Dedicatória {#sec-dedicatoria .unnumbered style="color:gray"}
+
+::: callout-important
+## Tributos
+
+À [minha mãe](https://www.youtube.com/watch?v=_x9mNq-eB6w "Oração a mãe menininha ( Dorival Caymmi )") Abigair de Souza Neves.
+
+A [meu pai](#0 "Espelho - João Nogueira"): João Barbosa das Neves.[†](https://www.goianatv.com/2014/07/ariano-suassuna-1927-2014-cultura-esta.html "Cumpriu sua sentença...")
+
+A ambos, por tudo: e pelos sacrifícios que não tive que fazer.
+
+Aos meus irmãos Tuller, Euler[†](https://www.goianatv.com/2014/07/ariano-suassuna-1927-2014-cultura-esta.html "...Aquele fato sem explicação...") e Miler. Meu grupo manos, para o que der e vier.
+
+À [Gisele](https://www.youtube.com/watch?v=UsXa9v-UXgM "Dona - Roupa Nova"), [rima de ventos e vela](https://www.youtube.com/watch?v=1tO_6H0fVcs "Porto solidão") que me leva e me trás sob o faro do amor, em rajadas que me tragam e que trago. Eu já não me pergunto incansavelmente por que isso se deu: não sei! [Só sei que foi assim](https://twitter.com/em_com/status/492057436183089154/photo/1 "Ariano Suassuna 1927-2014").
+
+Aos filhos, Ana Clara, Carlos André, Ana Luísa e Isadora, oro em [Deus](https://www.youtube.com/watch?app=desktop&v=Hk3GCxivgZE "Quem foi temperar o choro e acabou salgando o pranto - Ariano Suassuna") que lhes ponha saúde e virtude.
+:::
+
+## Agradecimentos {.unnumbered}
+
+À Universidade Federal de Goiás de Goiás, que há mais de 40 anos abriga-me, entre o Samabaia e a Praça *Universitates*; *locus* em que apreendi um *corpus* de letras e números e em que multipliquei *tempus* do que dividi.
+
+Aos Professores que me ensinaram aprender a aprender: a todos eles.
+
+Muito obrigado a todos os que me impulsionaram por nossos caminhos cruzados.

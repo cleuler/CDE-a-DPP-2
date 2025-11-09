@@ -1,0 +1,343 @@
+# Aula 6 - Wrangling Data: 2^nd^ round {#sec-Wrangling-2nd}
+
+Em *Wrangling Data* - *1^st^ round* operacionalizou-se o ***carregamento***, a ***anonimização*** por meio da aleatorização (chave encriptografada) e o ***armazenamento*** (em uma `closure`) do corpus n. 1 dos ***dados bruto primários*** originais, a partir de um qudro com 25 variáveis para coleta das seguintes observações: jovens que vieram óbito e que passaram pelo Sistema de Justiça Criminal Estadual especializado Infanto-Juvenil, a Delegacia de Polícia DEPAI -- Delegacia Estadual de Apuração de Atos Infracionais, situada em Goiânia, no período 2016 a 2023.
+
+Agora, neste *Wrangling Data* - *2^nd^ round*, buscar-se-á, a partir dos dados lidos na 1ª `closure`, uma segunda forma de anonimização, por meio apenas das iniciais, seguidas de pontos, dos nomes dos jovens e de suas mães, como é usual no Sistema de Justiça Criminal. E seu armazenamento em uma 2ª `closure`.
+
+Ou seja, será desenvolvida em R uma função que, tomando como entrada o nome completo do jovem e o de sua mãe, retorna uma abreviatura composta pelas suas iniciais miúsculas seguida de ponto. Essa função será, então aplicada a todas as 449 observações (linhas) das variáveis: `nome` e `mae` do corpus n. 1.
+
+## Pré-processamento dos Dados Brutos
+
+### *Up load* dos dados anonimizados e enclausurados
+
+*Up load* das tabelas com os dados coletados em formato .RData (*já anonimizados e encalusurados*).
+
+A partir do que os dados foram anonimizados e enclausurados. Ou seja, será preciso ler esses dados e sua chave para desencriptografar suas informações de modo adequado a recompor os dados dos corpus n. 1 original.
+
+Agora serão limpados todos os objetos do Global Environment.
+
+```{r}
+#| warning: false
+
+rm(list = ls() ) # remover todas as variáveis do Global Environment
+
+library(magrittr)   # Carregar o pacote com o operador Pipe
+library(dplyr)      # Carregar o pacote para organizar dados
+library(kableExtra)
+```
+
+Em seguida carregar **Quadro de Dados** e os dados com jovens investigados por ato infracional que vieram a obito.
+
+Isso a partir dos arquivos de dados que já foram anonimizados e enclausurados na variável `jovens`, no script anterior.
+
+Ou seja, basta carregar apenas a *closure*: `jovens` \<list\> of 4 \<functions\> e 6 \<df\>'s.
+
+```{r}
+
+# carregar Quadro de Dados com jovens investigados que vieram a obito
+# Espaço: Comarca [ou Município?] de Goiânia
+# Tempo: 2016-2022
+# m = 22 colunas (variáveis observadas) de um total de 25 variáveis
+# n = 449 linhas (observações coletadas; uma para cada jovem)
+# há pelo menos uma observação (linha) repetida; talvez outras sem id
+# Carregar apenas a closure: jovens <list> of 4 <functions> e 6 <df>
+load(file = "out/jovens.RData")
+```
+
+### Recombinação e Exibição dos Dados brutos
+
+Será preciso, depois de fazer o upload dos dados anonimizados na clousure: `jovens`.
+
+Recombinar esses dados brutos em sua forma original, ou seja, desfazendo-se a anonimização encriptografada.
+
+Para depois prosseguir na fase de Wrangling, com cada coluna (cada variável) sendo tratada e transformada separadamente.
+
+Primeiro o ***Quadro de Variáveis*** utilizado no levantamento de dados primários desta pesquisa.
+
+```{r}
+
+# Obter o Quadro de Variáveis dos dados 1º levantados na pesquisa
+# do respectivo data set enclausurado: jovens$getqdvar()
+jovens$getqdvar() |> 
+  kable("html",
+        booktabs  = TRUE,
+        longtable = FALSE,
+        caption   = "Quadro de Variáveis Aleatórias da Pesquisa: 25 colhidas em dois corpus (data sets)")  |>
+  kable_styling(bootstrap_options = c("striped"),
+                full_width    = FALSE,
+                latex_options = "scale_down")
+```
+
+Em seguida uma Amostra Aleatória Simples (AAS) de tamanho n = 30, que poderá servir para uma sondagem dos processos em que foram regitrados atos infracionais na DEAPAI de Goiânia (2016-2023).
+
+```{r}
+
+# Obter uma Amostra Aleatória Simples
+# de tamanho n = 30 jovens do data set enclausurado
+jovens$getjn( n = sample(1:449, size = 30) ) |> 
+  kable("html",
+        booktabs  = TRUE,
+        longtable = FALSE,
+        caption   = "Uma Amostra Aleatória Simples (AAS) de tamanho n = 30 jovens que vieram a óbito com processos em que foram regitrados atos infracionais na DEPAI de Goiânia (2016-2023)")  |>
+  kable_styling(bootstrap_options = c("striped"),
+                full_width    = FALSE,
+                latex_options = "scale_down")
+```
+
+Exibir o censo (apenas as 30 primeiras observações), anonimizado segundo um código aleatório cuja chave encriptografada encontra-se apenas numa `closure`, dos jovens que vieram a óbito e que tiveram atos infracionais investigados pela DEPAI Goiânia (2016/2023).
+
+```{r}
+
+# Obter o censo do data set enclausurado
+# Exibir apenas as 10 primeiras linhas
+jovens$getall() |> 
+  head(10) |> 
+  kable("html",
+        booktabs  = TRUE,
+        longtable = FALSE,
+        caption   = "Tabela anonimizada com 30 jovens que vieram a óbito e que tiveram atos infracionais apurados pela DEPAI de Goiânia (2016 a 2023)"
+        )  |>
+  kable_styling(bootstrap_options = c("striped"),
+                full_width    = FALSE,
+                latex_options = "scale_down")
+```
+
+Agora resgatar a chave de encriptografia, para fins de verificação sobre o controle da anonimização dos dados pelo pesquisador. Esse trecho de script não irá para o relatório final da pesquisa.
+
+```{r}
+
+# Resgatar a chave de identificação da anonimização
+# Exibir apenas as 10 primeiras linhas
+jovens$getdfch() |> 
+  head(10) |> 
+  kable("html",
+        booktabs  = TRUE,
+        longtable = FALSE,
+        caption   = "Chave de encriptografia")  |>
+  kable_styling(bootstrap_options = c("striped"),
+                full_width    = FALSE,
+                latex_options = "scale_down")
+```
+
+Reordenar a chave de identificação da anonimização para facilitar sua consulta e conferência. Exibir apenas suas 10 primeiras linhas. Esse trecho também não irá para o relatório final da pesquisa.
+
+```{r}
+
+# Reordenar a chave de identificação da anonimização
+# Para facilitar sua consulta e conferência
+# Exibir apenas as 10 primeiras linhas
+library(dplyr)
+jovens$getdfch() |> 
+  mutate(nid = 1:449) |> 
+  mutate(n = as.integer( substr(id, start = 2, stop = length(id) ) ) ) |> 
+  arrange(n) |> 
+  select(id, ch, nid, n, nome, cpf, mae) |> 
+  head(10) |> 
+  kable("html",
+        booktabs  = TRUE,
+        longtable = FALSE,
+        caption   = "Chave de encriptografia reordenada")  |>
+  kable_styling(bootstrap_options = c("striped"),
+                full_width    = FALSE,
+                latex_options = "scale_down")
+```
+
+### Desencriptografar por meio de um *Merge*
+
+Então fazer um *merge*/*joining Data Sets* desses 2 arquivos de Dados resgatados da `closure` para recombinar/reconstituir os dados brutos originais.
+
+E, assim, prosseguir com o tratamento e transformação dos dados brutos.
+
+Vamos fazer isso utilizando o Operador Pipe `|>`, do pacote: `magrittr`
+
+E também as funções do pacote: `dplyr`
+
+```{r}
+
+# jovens$getall() |> names()
+
+jovens$getall() |>
+  left_join(y = jovens$getdfch(), by = "id") |> 
+  select("id", "ch", "nome", "cpf", "mae",
+         "nasc", "sexo", "cor", "dom", "dataesc1", "esc1", "esc2", "compfam",
+         "relpai", "usudrog", "subst", "orgcrim", "sitdiv", "dataobt", "morte",
+         "paf", "circobt", "obsobt") |> # observações do óbito não mais foi  dropada
+# colocar todos os jovens em ordem alfabética
+  arrange(nome) -> obitj # armazenar o resultado desse processamento
+```
+
+Agora exibir essa tabela em um formato enxuto via *Package*: `KableExtra`, para simples conferência visual. Apenas as 30 primeiras observações.
+
+```{r}
+
+obitj |> 
+  head(30) |> # exibir as 30 primeiras observações
+  kable("html",
+        booktabs  = TRUE,
+        longtable = FALSE,
+        caption   = "Tabela desencriptografada com 30 jovens que vieram a óbito e que tiveram atos infracionais apurados pela DEPAI de Goiânia (2016 a 2023)")  |>
+  kable_styling(bootstrap_options = c("striped"),
+                full_width    = FALSE,
+                latex_options = "scale_down")
+```
+
+Para permitir uma conferência visual do sucesso da desencriptografia por comparação com os dados originalente carregados.
+
+É possível desenvolver um script em R para isso, o que, por hora, ficará do escopo deste relatório de pesquisa.
+
+### Lista de Exercícios: lidando com objetos em R
+
+1\) Exibir apenas as colunas pares de `obitj`.
+
+2\) Exibir apenas as colunas ímpares de `obitj`.
+
+3\) Exibir apenas as linhas pares de `obitj`.
+
+4\) Exibir apenas as linhas ímpares de `obitj`.
+
+5\) Exibir apenas as linhas pares e as colunas ímpares de `obitj`.
+
+6\) Que tipo de ***objeto*** é `obitj`.
+
+7\) Extrair apenas a 1ª coluna de `obitj`. Qual a estrutura e o tipo de dado dessa extração.
+
+8\) Extrair todas as colunas exceto a última de `obitj`.
+
+9\) Extrair todas as colunas exceto a antepenúltima e a última colunas de `obitj`.
+
+10\) Extrair apenas as colunas denomindas: "nome", "nasc", "dataobt".
+
+11\) Extrair todas exceto as colunas denomindas: "nome", "nasc", "dataobt".
+
+12\) Transformar as colunas denomindas: "nasc", "dataobt" em *date type* (`ts`)
+
+13\) Criar a variável `idadeobt` na data do óbito em anos, do tipo \<dbl\>.
+
+14\) Exibir um histograma para a vaiável: `idadeobt`
+
+15\) Calcular a média e o desvio padrão da vaiável: `idadeobt`
+
+16\) Exibir um *boxplot* para a vaiável: `idadeobt`
+
+17\) Calcular a mediana e a AIQ (Amplitude Interquartílica) da vaiável: `idadeobt`
+
+18\) Substituir todos os campos que estão com codificação diferente de vazio (padronizar; ex. "NC")
+
+19\) Determinar quantos `NA`'s há no dataframe `obitj`
+
+20\) Identificar todas as variáveis categóricas do dataframe `obitj`
+
+21\) Transformar todas as variáveis categóricas do dataframe `obitj` no tipo *factor* \<factr\>
+
+22\) Exibir um gráfico adequado para pelo menos uma variável categórica do dataframe `obitj`
+
+23\) Exibir um gráfico *boxplot* lado a lado para a variável `idadeobt` para cada uma das categorias da variável `cor`. Há algum padrão perceptível nesse grágico comparativo. Como comparar esse padrão com o padrão da população de jovens na mesma faixa etária da Cidade de Goiânia, no mesmo período pesquisado?
+
+24\) Como coletar dados secundários do IBGE a fim de permitir a comparação proposta na questão anterior?
+
+25\) Como realizar um teste de hipóteses da qualidade do ajuste que as duas questões anteriores evocam? O que é erro tipo I e erro tipo II? Como formular as hipóteses a serem testadas? Há alguma função do R que realiza esse teste de hipóteses? Como interpretar o resultado dessa dunação?
+
+### Nova Anonimização dos Dados
+
+Começar eliminando as duas primeiras colunas (1, 2) do dataframe `obitj`: `id` e `ch`.
+
+```{r}
+obitj <- obitj[, -c(1, 2)] # drop das duas primeiras colunas
+# Resta com 449 obs. de 23 - 2 = 21 variáveis
+```
+
+Agora lançar mão da ***anonimização*** desse conjunto de dados pelas ***iniciais aberivadas apenas pela primeira letra, seguida de um ponto,*** de cada `nome` dos jovens e do nome da respectiva `mae`.
+
+Valer-se do *homework* da aula passada com a estratégia: ***Split-Apply-Combine***.
+
+Atenção para fazer com que essas alterações sejam: ***Modify in Place (M.I.P.)*** no *data frame* `obitj`.
+
+```{r}
+#---função get iniciais maiúsculas de um nome qualquer
+#   argumento: receber um vetor tipo <char> com um nome qualquer
+#   retornar : um vetor apenas com as iniciais desse nome, todas maíusculas,
+#   separadas por um ponto. ex. A.J.D.S.S (AILTON JUNIO DE SOUSA SILVA)
+getinic <- function(e) {
+  stopifnot("Vetor tem de ser tipo <char>"= is.character(e))
+  p <- strsplit(e, "[ ]") |> unlist() # Split 1
+  p <- substring(p, 1, 1)             # Split 2
+  p <- toupper(p)                     # Aplly 1
+  p <- paste0(p, ".")                 # Aplly 2
+  paste(p, collapse = "")             # Combine 1 & return
+}
+```
+
+Agora excluir as variáveis em que armazenados o seguinte dado: `cpf` do jovem, para garantir a nova forma de anonimização.
+
+Ou seja, ***aplicar*** a função `getinic` para extrair apenas as letras maíusculas iniciais das seguintes variáveis: `nome` e `mae` ; e depois fazer o *drop* da variável `cpf`.
+
+```{r}
+
+# Usar a função apply para aplicar a função getinic nas colunas: nome e mae
+# observar e aprender com os resultados das seguintes aplicações:
+
+cat("apply(X = obitj[, c(\'nome\', \'mae\')], MARGIN = 2, FUN = getinic)\n")
+apply(X = obitj[, c("nome", "mae")], MARGIN = 2, FUN = getinic) |> 
+  substr(start = 1, stop = 80)
+cat("\n")
+
+cat("lapply(X = obitj[, c(\'nome\', \'mae\')], FUN = getinic)\n")
+cat("\n")
+lapply(X = obitj[, c("nome", "mae")], FUN = getinic) |> 
+  substr(start = 81, stop = 160)
+cat("\n")
+
+cat("sapply(X = obitj[, c(\'nome\', \'mae\')], FUN = getinic)\n")
+sapply(X = obitj[, c("nome", "mae")], FUN = getinic) |> 
+  substr(start = 161, stop = 240)
+cat("\n")
+
+cat("mapply(FUN = getinic, obitj[, c(\'nome\', \'mae\')])\n")
+mapply(FUN = getinic, obitj[, c("nome", "mae")]) |> 
+  substr(start = 241, stop = 320)
+```
+
+O chunck acima gerou string muito longas, que impedriam a renderização do arquivo .pdf como saída deste realtório.
+
+A saída foi limitar essas saídas em strings de até 80 \<char\>'s cada uma, a fim de buscar contornar esse erro de renderização.
+
+**O que corrigiu o erro de renderização para .pdf**.
+
+Nenhuma das funções da família `apply` resolveu o problema da nova anonimização, pois retornou listas ou vetores com todas as averiaturas numa só string para o nome do jovem e outra para o nome da mãe.
+
+Será preciso explorar a caracterísitica da vetorização da linguagem R.
+
+Ou seja, aplicar de forma vetorizada a função `getinic()` acima criada.
+
+Aliás, uma boa estratégia de ***Modularização*** é armazenar essa função numa pasta func, para que possa ser futuramente recuperada por qualquer outro chunck do conjunto de scripts ora desenvolvido, para evitar repetição de códigos e facilitar a tarefa de manutenção do código.
+
+```{r}
+
+rm("getinic") # remove o código da função getinic()
+
+# Uma pasta <func> com todos as funções deste projeto é recomendável
+# source("func/minhas_funcoes.R") # carregará esse conjunto funções
+
+# Para suprir essa falta:
+source("func/getinic.R") # carregará o código da função getinic
+```
+
+Para fins de teste dessa ***modularizaçã***o isso será realizado entre este script e o próximo.
+
+### Homework: *Wrangling* 3º *round*
+
+Falta ainda completar o 3º *round* da fase de *Wrangling*, em que serão promovidas as seguintes tarefas:
+
+Limpar a *`Global Environment`*.
+
+E depois Carregar a função `getinic()` gerada neste srcipt do Wrangling Data - 2^nd^ round, por meio da função `source`.
+
+Como exercício para casa (***homework***) fazer um função apropriada para criar outras variáveis além de `idadeobt`, proposta na lista de exercícios acima.
+
+Olhar para cada ***tipo*** criada de variável e escolher a ***estrutra de dados*** mais adequada para cada uma delas. Realizar as transformações necessárias para simplificar as futuras apresentações desses dados (ex.: s e n, em vez de sim e não para diversas variáveis categóricas binárias etc.).
+
+O que será realizado nas aulas subsequentes: ou seja, estudar o tipo expandido de vetores do tipo `factor` é muito importante: \<`fctr`\>.
+
+Dúvidas serão debeladas a cada aula!
+
+![Até nosso pRRRóximo RRRencontro!](fig/ValeuGalera.png){fig-align="center"}

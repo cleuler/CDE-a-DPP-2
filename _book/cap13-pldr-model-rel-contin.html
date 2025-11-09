@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR" xml:lang="pt-BR"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Cleuler Barbosa das Neves">
+<title>5&nbsp; AID - cap 13 - Modelagem de Relações Contínuas – __Ciência de Dados e Estatística Aplicadas ao Direito e Políticas Públicas__</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 1em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./cap16-pldr-EstMultiv.html" rel="next">
+<link href="./cap5-pldr-modelos-dados.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-364982630eef5352dd1537128a8ed5cb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nenhum resultado",
+    "search-matching-documents-text": "documentos correspondentes",
+    "search-copy-link-title": "Copiar link para a busca",
+    "search-hide-matches-text": "Esconder correspondências adicionais",
+    "search-more-match-text": "mais correspondência neste documento",
+    "search-more-matches-text": "mais correspondências neste documento",
+    "search-clear-button-title": "Limpar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Procurar"
+  }
+}</script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+</head>
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cap13-pldr-model-rel-contin.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">AID - cap 13 - Modelagem de Relações Contínuas</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./"><strong>Ciência de Dados e Estatística Aplicadas ao Direito e Políticas Públicas</strong></a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Alternar modo de leitor">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Procurar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Pretexto</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AEID-cap18-Reproduzivel.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">AEID - Análise Exploratória e Inferencial de Dados</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap3-DistNorm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">AED - cap 3 - As Distribuições Normais</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap5-pldr-modelos-dados.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">AED - cap 5 pldr - Ajustando Modelos aos Dados</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap13-pldr-model-rel-contin.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">AID - cap 13 - Modelagem de Relações Contínuas</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap16-pldr-EstMultiv.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">AID - cap 16 - Estatística Multivariada</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap6-moore-tab-dupla-entrada.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">AED - cap 6 moore - Tabelas de Dupla Entrada</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./replicar-suco-uva-tab-graf.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">AED - suco uva - Tabelas e Gráficos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap16-moore-IC-o-basico.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">AEI - cap 16 moore - IC: o Básico</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap17-moore-TSHN-o-basico.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">AEI - cap 17 moore - TSH0</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./conclusao.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Conclusão</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./apendiceA.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Apêndice A - EMENTA</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./apendiceB-quadroVar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Apêndice B - Quadro Var</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./referencias.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Referências</span></a>
+  </div>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Sumário</h2>
+   
+  <ul>
+<li>
+<a href="#objetivos-da-aprendizagem" id="toc-objetivos-da-aprendizagem" class="nav-link active" data-scroll-target="#objetivos-da-aprendizagem"><span class="header-section-number">5.1</span> Objetivos da Aprendizagem</a>
+  <ul>
+<li><a href="#carregar-pacotes-e-conjunto-de-dados-." id="toc-carregar-pacotes-e-conjunto-de-dados-." class="nav-link" data-scroll-target="#carregar-pacotes-e-conjunto-de-dados-."><span class="header-section-number">5.1.1</span> Carregar pacotes e conjunto de dados .</a></li>
+  </ul>
+</li>
+  <li><a href="#crimes-de-%C3%B3dio-e-desigualdade-de-renda-um-exemplo" id="toc-crimes-de-ódio-e-desigualdade-de-renda-um-exemplo" class="nav-link" data-scroll-target="#crimes-de-%C3%B3dio-e-desigualdade-de-renda-um-exemplo"><span class="header-section-number">5.2</span> Crimes de Ódio e Desigualdade de Renda: Um Exemplo</a></li>
+  <li><a href="#covari%C3%A2ncia-e-correla%C3%A7%C3%A3o" id="toc-covariância-e-correlação" class="nav-link" data-scroll-target="#covari%C3%A2ncia-e-correla%C3%A7%C3%A3o"><span class="header-section-number">5.3</span> Covariância e Correlação</a></li>
+  <li>
+<a href="#reta-de-regress%C3%A3o-um-exemplo" id="toc-reta-de-regressão-um-exemplo" class="nav-link" data-scroll-target="#reta-de-regress%C3%A3o-um-exemplo"><span class="header-section-number">5.4</span> Reta de Regressão: Um Exemplo</a>
+  <ul>
+<li><a href="#carregar" id="toc-carregar" class="nav-link" data-scroll-target="#carregar"><span class="header-section-number">5.4.1</span> carregar</a></li>
+  <li><a href="#gr%C3%A1fico-dispers%C3%A3o-creta-regress%C3%A3o" id="toc-gráfico-dispersão-creta-regressão" class="nav-link" data-scroll-target="#gr%C3%A1fico-dispers%C3%A3o-creta-regress%C3%A3o"><span class="header-section-number">5.4.2</span> gráfico dispersão c/reta regressão</a></li>
+  <li><a href="#predi%C3%A7%C3%A3o" id="toc-predição" class="nav-link" data-scroll-target="#predi%C3%A7%C3%A3o"><span class="header-section-number">5.4.3</span> predição</a></li>
+  <li><a href="#estat%C3%ADsticas-de-regress%C3%A3o" id="toc-estatísticas-de-regressão" class="nav-link" data-scroll-target="#estat%C3%ADsticas-de-regress%C3%A3o"><span class="header-section-number">5.4.4</span> Estatísticas de Regressão</a></li>
+  </ul>
+</li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title"><span id="sec-model-rel-contin" class="quarto-section-identifier"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">AID - cap 13 - Modelagem de Relações Contínuas</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><blockquote class="blockquote">
+<p>13 Modelagem de Relações Contínuas</p>
+<p>A maioria das pessoas conhece a ideia de correlação e, neste capítulo, apresentaremos uma compreensão mais formal desse conceito normalmente usado e incompreendido. <span class="citation" data-cites="poldrack_pensamento_est_2025">(<a href="referencias.html#ref-poldrack_pensamento_est_2025" role="doc-biblioref">Poldrack, 2025</a> , cap. 13, p.&nbsp;157)</span>.</p>
+</blockquote>
+<section id="objetivos-da-aprendizagem" class="level2" data-number="5.1"><h2 data-number="5.1" class="anchored" data-anchor-id="objetivos-da-aprendizagem">
+<span class="header-section-number">5.1</span> Objetivos da Aprendizagem</h2>
+<blockquote class="blockquote">
+<p>▶<em>Descrever</em> o <strong>conceito</strong> de <u><strong>coeficiente de correlação</strong></u> e <strong><em>sua interpretação</em></strong>.</p>
+<p>▶<em>Calcular</em> a correlação entre <strong><em>duas variáveis contínuas</em></strong>.</p>
+<p>▶<em>Descrever</em> o <strong><em>efeito</em></strong> de pontos de dados com <em>outliers</em> e como abordá-los.</p>
+<p>▶<em>Descrever</em> as <strong><em>possíveis influências causais</em></strong> que <em>podem originar</em> uma <em>correlação observada</em>. <span class="citation" data-cites="poldrack_pensamento_est_2025">(<a href="referencias.html#ref-poldrack_pensamento_est_2025" role="doc-biblioref">Poldrack, 2025</a> , p.&nbsp;157)</span>.</p>
+</blockquote>
+<section id="carregar-pacotes-e-conjunto-de-dados-." class="level3" data-number="5.1.1"><h3 data-number="5.1.1" class="anchored" data-anchor-id="carregar-pacotes-e-conjunto-de-dados-.">
+<span class="header-section-number">5.1.1</span> Carregar pacotes e conjunto de dados .</h3>
+<div class="cell">
+<details class="code-fold"><summary>Código</summary><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fivethirtyeight)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(BayesFactor)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(bayestestR)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cowplot)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DiagrammeR)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(htmltools)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(webshot)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>))</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123456</span>) <span class="co"># set random seed to exactly replicate results</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co"># load the NHANES data library</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(NHANES)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="co"># drop duplicated IDs within the NHANES dataset</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>NHANES <span class="ot">&lt;-</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  NHANES <span class="sc">%&gt;%</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">distinct</span>(ID,<span class="at">.keep_all=</span><span class="cn">TRUE</span>)</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>NHANES_adult <span class="ot">&lt;-</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  NHANES <span class="sc">%&gt;%</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(Weight) <span class="sc">%&gt;%</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">subset</span>(Age<span class="sc">&gt;=</span><span class="dv">18</span>)</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+</section></section><section id="crimes-de-ódio-e-desigualdade-de-renda-um-exemplo" class="level2" data-number="5.2"><h2 data-number="5.2" class="anchored" data-anchor-id="crimes-de-ódio-e-desigualdade-de-renda-um-exemplo">
+<span class="header-section-number">5.2</span> Crimes de Ódio e Desigualdade de Renda: Um Exemplo</h2>
+<blockquote class="blockquote">
+<p>Em 2017, o site fivethirtyeight.com publicou uma matéria chamada “<em>Higher Rates of Hate Crimes Are Tied to Income Inequality</em> [Taxas Mais Altas de Crimes de Ódio Estão Relacionadas à Desigualdade de Renda]”, que explorava a <strong><em>relação</em></strong> entre a <strong><em>prevalência de crimes de ódio</em></strong> <u><strong>e</strong></u> a <strong><em>desigualdade de renda</em></strong> <em>após a eleição presidencial de 2016 nos Estados Unidos</em>.</p>
+<p>A matéria apresentava uma análise de dados sobre crimes de ódio, <em>feita pelo</em> <strong>FBI</strong> e pelo <strong><em>Southern Poverty Law Center</em></strong>, a partir da qual relatava o seguinte:</p>
+<div class="line-block">
+<strong><em>Constatamos que a desigualdade de renda foi o fator determinante mais significativo dos crimes e incidentes de ódio</em></strong>, <em>ponderados pela população dos Estados Unidos</em>. (Majumder, 2017)</div>
+<p>. <span class="citation" data-cites="poldrack_pensamento_est_2025">(<a href="referencias.html#ref-poldrack_pensamento_est_2025" role="doc-biblioref">Poldrack, 2025</a> , p.&nbsp;157)</span>.</p>
+</blockquote>
+<p>Os dados para essa análise estão disponíveis como parte do pacote <code>fivethirtyeight</code> do software estatístico R, o que facilita o acesso.</p>
+<p>A análise apresentada na matéria focava a relação entre a desigualdade de renda (definida por uma medida chamada índice de Gini ou coeficiente de Gini — confira o apêndice deste capítulo para mais detalhes) e a prevalência de crimes de ódio em cada estado.</p>
+<p>Essa relação é mostrada na Figura 13.1.</p>
+<div class="cell">
+<details class="code-fold"><summary>Código</summary><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>hateCrimes <span class="ot">&lt;-</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  hate_crimes <span class="sc">%&gt;%</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">state_abb =</span> state.abb[<span class="fu">match</span>(state, state.name)]) <span class="sc">%&gt;%</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drop_na</span>(avg_hatecrimes_per_100k_fbi)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>hateCrimes<span class="sc">$</span>state_abb[hateCrimes<span class="sc">$</span>state<span class="sc">==</span><span class="st">"District of Columbia"</span>] <span class="ot">=</span> <span class="st">'DC'</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hateCrimes,<span class="fu">aes</span>(gini_index,avg_hatecrimes_per_100k_fbi,<span class="at">label=</span>state_abb)) <span class="sc">+</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">0.8</span>, <span class="at">color =</span> <span class="st">"blue"</span>, <span class="at">alpha=</span><span class="fl">0.4</span>) <span class="sc">+</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label=</span>state_abb), <span class="at">hjust=</span><span class="dv">0</span>, <span class="at">vjust=</span><span class="dv">0</span>, <span class="at">size =</span> <span class="dv">2</span>, <span class="co"># tamanho do texto</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">position =</span> <span class="fu">position_jitter</span>(<span class="at">width =</span> <span class="fl">0.003</span>, <span class="at">height =</span> <span class="fl">0.003</span>)) <span class="sc">+</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>, <span class="at">face =</span> <span class="st">"bold"</span>)) <span class="sc">+</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">'Gini index'</span>) <span class="sc">+</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">'Avg hate crimes per 100K population (FBI)'</span>) <span class="sc">+</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Gráfico de Dispersão"</span>,</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Ano: 2017 (n = 51 obs.)"</span>,</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Gini index"</span>,</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Avg hate crimes per 100K population (FBI)"</span>,</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption  =</span> <span class="st">"Gráfico do FBI das taxas médias de crimes de ódio por 100 mil habitantes [Average</span><span class="sc">\n</span><span class="st">hate crimes per 100K population (FBI)] em relação ao índice de Gini [Gini index].</span><span class="sc">\n</span><span class="st">Fonte: Poldrack(2025, p. 158, fig. 13.1)"</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>), <span class="st">"cm"</span>)) <span class="sc">+</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="fl">0.40</span>, <span class="fl">0.55</span>)</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="cap13-pldr-model-rel-contin_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Analisando os dados, parece <strong><em>possível</em></strong> existir <strong><em>uma relação positiva entre as duas variáveis</em></strong>.</p>
+<p>Como podemos quantificá-la?</p>
+</section><section id="covariância-e-correlação" class="level2" data-number="5.3"><h2 data-number="5.3" class="anchored" data-anchor-id="covariância-e-correlação">
+<span class="header-section-number">5.3</span> Covariância e Correlação</h2>
+<p>Uma maneira de quantificar a relação entre duas variáveis ​​é a <u><strong>covariância</strong></u>.</p>
+<p>Lembre-se de que a <u><strong>variância</strong></u> <u><strong><em>amostral</em></strong></u> para uma única variável é calculada como a diferença média quadrática entre cada ponto de dados e a média, dividida pelo tamanho amostral menos 1:</p>
+<p><span class="math display">\[
+s^2 = \frac{\sum_{i=1}^n (x_i - \bar{x})^2}{n-1}
+\]</span></p>
+<p>Isso nos diz o <em>quão distante cada observação está da</em> <em>média</em>, em <em>unidades quadradas</em>.</p>
+<p>A <u><strong>covariância</strong></u> nos diz <em><strong>se existe uma relação entre os desvios</strong> de <strong>duas variáveis ​​diferentes</strong> ao longo das observações</em>. Ela é definida assim:</p>
+<p><span class="math display">\[
+covariância =  \frac{\sum_{i=1}^n (x_i - \bar{x}) (y_i - \bar{y}) }{n-1}
+\]</span></p>
+<p>Esse valor estará <strong><em>longe de zero quando x e y forem ambos altamente desviantes da média</em></strong>; <strong><em>se forem desviantes na mesma direção</em></strong>, a covariância será <strong><em>positiva</em></strong>, enquanto se forem desviantes <strong><em>em direções opostas</em></strong>, a covariância <strong><em>será negativa</em></strong>.</p>
+<p>Vejamos primeiro um exemplo prático.</p>
+<p>Os dados são mostrados na tabela, juntamente com seus desvios individuais da média e seus produtos cruzados.</p>
+<div class="cell">
+<details class="code-fold"><summary>Código</summary><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># create data for toy example of covariance</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123456789</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">8</span>, <span class="dv">10</span>, <span class="dv">12</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">y =</span> x <span class="sc">+</span> <span class="fu">round</span>(<span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">5</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">2</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x_dev =</span> x <span class="sc">-</span> <span class="fu">mean</span>(x),</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y_dev =</span> y <span class="sc">-</span> <span class="fu">mean</span>(y)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">crossproduct =</span> x_dev <span class="sc">*</span> y_dev)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>covXY <span class="ot">&lt;-</span> <span class="fu">sum</span>(df<span class="sc">$</span>crossproduct) <span class="sc">/</span> (<span class="fu">nrow</span>(df) <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>corXY <span class="ot">&lt;-</span> <span class="fu">sum</span>(df<span class="sc">$</span>crossproduct) <span class="sc">/</span> ( (<span class="fu">nrow</span>(df) <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">*</span> <span class="fu">sd</span>(df<span class="sc">$</span>x) <span class="sc">*</span> <span class="fu">sd</span>(df<span class="sc">$</span>y) )</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="co"># calcular Z-escores: Z_x e Z_y</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> </span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">z_x =</span> x_dev <span class="sc">/</span> <span class="fu">sd</span>(x),</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">z_y =</span> y_dev <span class="sc">/</span> <span class="fu">sd</span>(y)</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">z_xy =</span> z_x <span class="sc">*</span> z_y)</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>corZxy <span class="ot">&lt;-</span> <span class="fu">sum</span>(df<span class="sc">$</span>z_xy) <span class="sc">/</span> ( <span class="fu">nrow</span>(df) <span class="sc">-</span> <span class="dv">1</span> )</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Dados para o exemplo ilustrativo de Covariância:</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Covariância covXY  = "</span>, covXY , <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Correlação  corXY  = "</span>, corXY , <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Correlação  corZxy = "</span>, corZxy, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>df</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>Dados para o exemplo ilustrativo de Covariância:
+Covariância covXY  =  10.1 
+Correlação  corXY  =  0.889221 
+Correlação  corZxy =  0.889221 
+# A tibble: 5 × 8
+      x     y  x_dev  y_dev crossproduct    z_x    z_y   z_xy
+  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;        &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+1     3     4 -4.6   -4.2          19.3  -1.26  -1.35  1.70  
+2     5     6 -2.6   -2.2           5.72 -0.713 -0.706 0.504 
+3     8    11  0.400  2.8           1.12  0.110  0.899 0.0986
+4    10     9  2.4    0.800         1.92  0.658  0.257 0.169 
+5    12    11  4.4    2.8          12.3   1.21   0.899 1.08  </code></pre>
+</div>
+</div>
+<p>A <u><strong>covariância</strong></u> é simplesmente a <strong><em>média dos produtos cruzados</em></strong>, nesse caso é de 17,05 [no livro texto].</p>
+<p>No nosso exemplo acima a <strong>covariância</strong> é: <strong>10,1</strong>.</p>
+<p>Normalmente, <strong><em>não a usamos para descrever as relações</em></strong> entre as variáveis, porque ela varia conforme o nível geral de variância nos dados.</p>
+<p>Ao contrário, em geral, <strong><em>usaríamos</em></strong> o <u><strong>coeficiente de correlação</strong></u>.</p>
+<p>A <u><strong>correlação</strong></u> (<em>r</em>) é calculada <strong><em>escalando a covariância pelos desvios-padrão</em></strong> das <strong><em>duas variáveis</em></strong>:</p>
+<p><span class="math display">\[
+r=\frac{covariância}{s_x \cdot s_y} =  \frac{\sum_{i=1}^n (x_i - \bar{x}) (y_i - \bar{y}) }{(n-1)s_x \cdot s_y} = \frac{\sum_{i=1}^n Z_x \cdot Z_y}{(n-1)}
+\]</span></p>
+<p>No exemplo ilustrativo da Tabela 13.1, o seu valor é de 0,89 [no livro texto].</p>
+<p>No nosso exemplo acima a <strong>correlação</strong> é: <strong>0.889221</strong>. Obtendo o mesmo resultado por dois métodos distintos equivalentes: a) dividindo a conavirância pelos produtos dos desvios padrão de x e de y; b) pelo produto cruzado dos Z-escores de x e de y, dividido pelo número de <em>graus</em> <em>de liberadade</em> da amostra (n-1).</p>
+<p>O <u><strong>coeficiente de correlação</strong></u> é útil porque varia entre −1 e 1, <em>independentemente da natureza dos dados</em>, sendo <em>facilmente interpretável</em> — na verdade, já o tínhamos visto quando analisamos os tamanhos dos efeitos no Capítulo 10.</p>
+<p>Conforme analisado, uma correlação de <em>1 indica uma relação linear perfeita</em>, uma correlação de <em>−1 indica uma relação negativa perfeita</em> e uma <em>correlação de 0 indica nenhuma relação linear</em>.</p>
+</section><section id="reta-de-regressão-um-exemplo" class="level2" data-number="5.4"><h2 data-number="5.4" class="anchored" data-anchor-id="reta-de-regressão-um-exemplo">
+<span class="header-section-number">5.4</span> Reta de Regressão: Um Exemplo</h2>
+<blockquote class="blockquote">
+<p>Por que algumas pessoas acham fácil permanecer magras? Seguindo o processo de quatro passos, mostramos o relato de um estudo que clareia um pouco o assunto de ganho de peso.</p>
+<p><code>ESTABELEÇA</code>: algumas pessoas não ganham peso, mesmo quando comem muito. Talvez a agitação e outras “atividades de não exercício” (ANE) expliquem por quê. De fato, algumas pessoas podem, espontaneamente, aumentar a atividade de não exercício quando comem mais, reduzindo, assim, a quantidade de peso que ganham com o excesso de comida. Para investigar o efeito de ANE no ganho de peso, pesquisadores, deliberadamente, superalimentaram 16 jovens adultos saudáveis durante oito semanas. Mediram o ganho de gordura (em quilogramas) e, como variável explicativa, mudanças no uso da energia (em calorias) em atividades diferentes de exercício deliberado – agitação, vida diária e semelhantes. A mudança no uso da energia foi a energia medida no último dia do período de oito semanas, menos o uso de energia medida no dia antes do início da superalimentação. Eis os dados:1</p>
+<p>As pessoas com os maiores aumentos em ANE tendem a ganhar menos gordura?</p>
+<p><code>PLANEJE</code>: faça um diagrama de dispersão dos dados e examine o padrão. Se for linear, use a correlação para medir sua intensidade e desenhe uma reta de regressão no diagrama para predizer o ganho de gordura a partir de mudança na ANE.</p>
+<p><code>RESOLVA</code>: a Figura 5.1 é um diagrama de dispersão desses dados. O gráfico mostra uma associação linear negativa ligeiramente forte, sem valores atípicos. A correlação é r = –0,7786. A reta no gráfico é uma reta de regressão para predição do ganho de gordura a partir de mudanças na ANE.</p>
+<p><code>CONCLUA</code>: pessoas com maiores aumentos em ANE realmente ganham menos gordura. Para acrescentarmos mais a essa conclusão, devemos estudar retas de regressão com mais detalhe.</p>
+<p>No entanto, já podemos usar a reta de regressão para predizer o ganho de gordura a partir do valor de ANE. Suponha que a ANE de um indivíduo cresça de 400 calorias quando ele se superalimenta. “Suba e vire” no gráfico da Figura 5.1. A partir de 400 calorias no eixo x, suba até a reta de regressão e, então, vá para o eixo y. O gráfico mostra que o ganho de gordura predito é um pouco maior do que 2 quilogramas. <span class="citation" data-cites="Moore2023">(<a href="referencias.html#ref-Moore2023" role="doc-biblioref">MOORE; NOTZ; FLIGNER, 2023</a> , cap. 5, exemplo 5.1, p.&nbsp;101)</span></p>
+</blockquote>
+<section id="carregar" class="level3" data-number="5.4.1"><h3 data-number="5.4.1" class="anchored" data-anchor-id="carregar">
+<span class="header-section-number">5.4.1</span> carregar</h3>
+<div class="cell">
+<details class="code-fold"><summary>Código</summary><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Importar como tibble o arquivo de dentro da pasta chamada: dat/csv.</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>gangord <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="at">file   =</span> <span class="st">"dat/csv/eg05-01fatgain.csv"</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>                           <span class="co"># delim  = ",",</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>                           <span class="at">quote  =</span> <span class="st">"</span><span class="sc">\"</span><span class="st">"</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>                           <span class="at">locale =</span> <span class="fu">locale</span>(</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>                             <span class="at">decimal_mark =</span> <span class="st">"."</span>,</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>                             <span class="at">encoding     =</span> <span class="st">"UTF-8"</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>                             )</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>                           )</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co"># cat - Concatenate And Print</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>) <span class="co"># imprime no console (saída) uma linha em branco</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Estrutura do objeto R denominado gangord:</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(gangord)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Nomes das 2 colunas do objeto gangord:</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(gangord)</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="co"># [1] "NEA" "Fat"</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a><span class="co"># NEA: NonExercise Activit</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Fat: Fat gain</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>gangord <span class="co"># tibble: 6 obs × 2 colunas (variáveis)</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="co"># renomear variáveis: português</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(gangord) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"ANE"</span>,    <span class="co"># Atividade de Não Exercício (cal)</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"gangor"</span>) <span class="co"># Ganho de gordura (kg)</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>gangord <span class="co"># tibble: 6 obs × 2 colunas (variáveis)</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>
+Estrutura do objeto R denominado gangord:
+spc_tbl_ [16 × 2] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+ $ NEA: num [1:16] -94 -57 -29 135 143 151 245 355 392 473 ...
+ $ Fat: num [1:16] 4.2 3 3.7 2.7 3.2 3.6 2.4 1.3 3.8 1.7 ...
+ - attr(*, "spec")=
+  .. cols(
+  ..   NEA = col_double(),
+  ..   Fat = col_double()
+  .. )
+ - attr(*, "problems")=&lt;externalptr&gt; 
+
+Nomes das 2 colunas do objeto gangord:
+[1] "NEA" "Fat"
+# A tibble: 16 × 2
+     NEA   Fat
+   &lt;dbl&gt; &lt;dbl&gt;
+ 1   -94   4.2
+ 2   -57   3  
+ 3   -29   3.7
+ 4   135   2.7
+ 5   143   3.2
+ 6   151   3.6
+ 7   245   2.4
+ 8   355   1.3
+ 9   392   3.8
+10   473   1.7
+11   486   1.6
+12   535   2.2
+13   571   1  
+14   580   0.4
+15   620   2.3
+16   690   1.1
+# A tibble: 16 × 2
+     ANE gangor
+   &lt;dbl&gt;  &lt;dbl&gt;
+ 1   -94    4.2
+ 2   -57    3  
+ 3   -29    3.7
+ 4   135    2.7
+ 5   143    3.2
+ 6   151    3.6
+ 7   245    2.4
+ 8   355    1.3
+ 9   392    3.8
+10   473    1.7
+11   486    1.6
+12   535    2.2
+13   571    1  
+14   580    0.4
+15   620    2.3
+16   690    1.1</code></pre>
+</div>
+</div>
+</section><section id="gráfico-dispersão-creta-regressão" class="level3" data-number="5.4.2"><h3 data-number="5.4.2" class="anchored" data-anchor-id="gráfico-dispersão-creta-regressão">
+<span class="header-section-number">5.4.2</span> gráfico dispersão c/reta regressão</h3>
+<div class="cell">
+<details class="code-fold"><summary>Código</summary><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># dados do data frame chamado gangord</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gangord<span class="sc">$</span>ANE)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(gangord<span class="sc">$</span>gangor)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Gráfico de dispersão com reta de regressão linear, r e R²</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(gangord, <span class="fu">aes</span>(<span class="at">x =</span> ANE,</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>                    <span class="at">y =</span> gangor)) <span class="sc">+</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"blue"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span>           <span class="co"># pontos de dispersão</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">TRUE</span>, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span> <span class="co"># reta de regressão linear com intervalo de confiança</span></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_cor</span>(</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste</span>(..r.label.., ..p.label.., <span class="at">sep =</span> <span class="st">"~`,`~"</span>)),</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">label.x =</span> <span class="cn">Inf</span>, <span class="at">label.y =</span> <span class="sc">-</span><span class="cn">Inf</span>, <span class="at">hjust =</span> <span class="fl">1.1</span>, <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">5</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="fu">stat_regline_equation</span>(</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste</span>(..eq.label.., ..rr.label.., <span class="at">sep =</span> <span class="st">"~~~"</span>)),</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>  <span class="at">label.x =</span> <span class="cn">Inf</span>, <span class="at">label.y =</span> <span class="cn">Inf</span>, <span class="at">hjust =</span> <span class="fl">1.1</span>, <span class="at">vjust =</span> <span class="dv">2</span>, <span class="at">size =</span> <span class="dv">5</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Gráfico de Dispersão c/Reta Regressão"</span>,</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Período: 16 jovens por 8 semanas (n = 16 obs.)"</span>,</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"mudança na ANE (cal.)"</span>,</span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"ganho de gordura (Kg)"</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">6</span>) <span class="sc">+</span></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="sc">-</span><span class="dv">200</span>, <span class="dv">1000</span>) <span class="sc">+</span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>)       <span class="co"># tema visual limpo e fonte maior</span></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  -94.0   141.0   373.5   324.8   544.0   690.0 
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  0.400   1.525   2.350   2.388   3.300   4.200 </code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="cap13-pldr-model-rel-contin_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="predição" class="level3" data-number="5.4.3"><h3 data-number="5.4.3" class="anchored" data-anchor-id="predição">
+<span class="header-section-number">5.4.3</span> predição</h3>
+<p>Recolocando <strong><em>uma questão de pesquisa subsequente</em></strong>:</p>
+<p><strong>Quanta ANE (cal) é necessária para reduzir o granho de peso a zero mesmo sob uma dieta hipercalórica?</strong></p>
+<div class="cell">
+<details class="code-fold"><summary>Código</summary><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co"># ajuste do modelo</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>lm_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(gangor <span class="sc">~</span> ANE, <span class="at">data =</span> gangord)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co"># intervalos</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>x_obs <span class="ot">&lt;-</span> <span class="fu">range</span>(gangord<span class="sc">$</span>ANE, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>x_plot <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">200</span>, <span class="dv">1050</span>)  <span class="co"># limites desejados na visualização</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="co"># sequências para cada segmento</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>left_seq <span class="ot">&lt;-</span> <span class="fu">seq</span>(x_plot[<span class="dv">1</span>], x_obs[<span class="dv">1</span>], <span class="at">length.out =</span> <span class="dv">100</span>)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>mid_seq  <span class="ot">&lt;-</span> <span class="fu">seq</span>(x_obs[<span class="dv">1</span>], x_obs[<span class="dv">2</span>], <span class="at">length.out =</span> <span class="dv">200</span>)</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>right_seq<span class="ot">&lt;-</span> <span class="fu">seq</span>(x_obs[<span class="dv">2</span>], x_plot[<span class="dv">2</span>], <span class="at">length.out =</span> <span class="dv">100</span>)</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co"># predições</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>left_df  <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">ANE =</span> left_seq,  <span class="at">fit =</span> <span class="fu">predict</span>(lm_mod, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">ANE =</span> left_seq)))</span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>mid_pred  <span class="ot">&lt;-</span> <span class="fu">predict</span>(lm_mod, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">ANE =</span> mid_seq), <span class="at">interval =</span> <span class="st">"confidence"</span>, <span class="at">level =</span> <span class="fl">0.95</span>)</span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>mid_df   <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">ANE =</span> mid_seq, <span class="at">fit =</span> mid_pred[, <span class="st">"fit"</span>], <span class="at">lwr =</span> mid_pred[, <span class="st">"lwr"</span>], <span class="at">upr =</span> mid_pred[, <span class="st">"upr"</span>])</span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>right_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">ANE =</span> right_seq, <span class="at">fit =</span> <span class="fu">predict</span>(lm_mod, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">ANE =</span> right_seq)))</span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a><span class="co"># plot</span></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(gangord, <span class="fu">aes</span>(<span class="at">x =</span> ANE, <span class="at">y =</span> gangor)) <span class="sc">+</span></span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"blue"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>  <span class="co"># IC apenas no trecho observado</span></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="at">data =</span> mid_df, <span class="fu">aes</span>(<span class="at">x =</span> ANE, <span class="at">ymin =</span> lwr, <span class="at">ymax =</span> upr), <span class="at">fill =</span> <span class="st">"red"</span>, <span class="at">alpha =</span> <span class="fl">0.15</span>, <span class="at">inherit.aes =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>  <span class="co"># linha sólida no trecho observado</span></span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> mid_df, <span class="fu">aes</span>(<span class="at">x =</span> ANE, <span class="at">y =</span> fit), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>  <span class="co"># extensões tracejadas esquerda e direita</span></span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> left_df, <span class="fu">aes</span>(<span class="at">x =</span> ANE, <span class="at">y =</span> fit), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> right_df, <span class="fu">aes</span>(<span class="at">x =</span> ANE, <span class="at">y =</span> fit), <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>  <span class="co"># estatísticas (r, p, equação) continuam funcionando</span></span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_cor</span>(</span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste</span>(..r.label.., ..p.label.., <span class="at">sep =</span> <span class="st">"~`,`~"</span>)),</span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">label.x =</span> <span class="cn">Inf</span>, <span class="at">label.y =</span> <span class="sc">-</span><span class="cn">Inf</span>, <span class="at">hjust =</span> <span class="fl">1.1</span>, <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">size =</span> <span class="dv">5</span></span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_regline_equation</span>(</span>
+<span id="cb10-39"><a href="#cb10-39" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">paste</span>(..eq.label.., ..rr.label.., <span class="at">sep =</span> <span class="st">"~~~"</span>)),</span>
+<span id="cb10-40"><a href="#cb10-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">label.x =</span> <span class="cn">Inf</span>, <span class="at">label.y =</span> <span class="cn">Inf</span>, <span class="at">hjust =</span> <span class="fl">1.1</span>, <span class="at">vjust =</span> <span class="dv">2</span>, <span class="at">size =</span> <span class="dv">5</span></span>
+<span id="cb10-41"><a href="#cb10-41" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb10-42"><a href="#cb10-42" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb10-43"><a href="#cb10-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Gráfico de Dispersão c/Reta Regressão extrapolada"</span>,</span>
+<span id="cb10-44"><a href="#cb10-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Período: 16 jovens por 8 semanas (n = 16 obs.)"</span>,</span>
+<span id="cb10-45"><a href="#cb10-45" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"mudança na ANE (cal.) [predição: (x=1029.4, y=0)]"</span>,</span>
+<span id="cb10-46"><a href="#cb10-46" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"ganho de gordura (Kg)"</span></span>
+<span id="cb10-47"><a href="#cb10-47" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb10-48"><a href="#cb10-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> x_plot, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">6</span>), <span class="at">expand =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb10-49"><a href="#cb10-49" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ponto adicional fixo em (1029.4, 0)</span></span>
+<span id="cb10-50"><a href="#cb10-50" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb10-51"><a href="#cb10-51" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> <span class="fu">data.frame</span>(<span class="at">ANE =</span> <span class="fl">1029.4</span>, <span class="at">gangor =</span> <span class="dv">0</span>),</span>
+<span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> ANE, <span class="at">y =</span> gangor),</span>
+<span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">alpha =</span> <span class="fl">1.0</span>, <span class="at">size =</span> <span class="dv">3</span>, <span class="at">shape =</span> <span class="dv">3</span>,</span>
+<span id="cb10-54"><a href="#cb10-54" aria-hidden="true" tabindex="-1"></a>    <span class="at">inherit.aes =</span> <span class="cn">FALSE</span></span>
+<span id="cb10-55"><a href="#cb10-55" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb10-56"><a href="#cb10-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>(<span class="at">base_size =</span> <span class="dv">14</span>)</span>
+<span id="cb10-57"><a href="#cb10-57" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output-display">
+<div>
+<figure class="figure"><p><img src="cap13-pldr-model-rel-contin_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Observa-se, no gráfico acima, que o <u><strong>intercepto</strong></u> da <u><strong>reta de regressão</strong></u> é: <strong>+3,5 Kg</strong>. ou seja, é a <strong><em>estimativa</em></strong> do <code>ganho de gordura</code> <strong><em>se</em></strong> o valor de <code>ANE</code> <em>não muda durante as 2 semanas que a pessoa superalimenta-se.</em></p>
+<p>E que a <u><strong>inclinação</strong></u> da <u><strong>reta de regressão</strong></u> é: <strong>-0,0034</strong> (um número puro ou sem unidade). Equivale à tangente do ângulo que essa reta forma com o eixo x.</p>
+<p>Isso significa que, quando a <strong>variável explicativa X</strong> <em>aumentar 1 unidade</em>, no caso, <strong><em>aumentar</em></strong> <strong>+1,0 cal</strong>, então a <strong>variável resposta Y</strong>, <em>segundo</em> a <em>reta de regressão de mínimos quadrados</em>, irá <strong><em>diminuir, <u>em média</u>,</em></strong> <strong>-0,0034 Kg</strong> = <strong>-3,4 g</strong>.</p>
+<p>Ou seja, para <strong>diminuir 1 kg</strong> na variável <code>ganho de gordura</code> sob dieta hipercalórica, é necessário <strong>aumentar</strong> a <code>ANE</code>:</p>
+<p><span class="math display">\[
+-0.0034 x = -1.0 \text{ kg} \Rightarrow x = \frac{1.0}{0.0034} \Rightarrow x = +294.2 \text{ cal}
+\]</span></p>
+<div class="callout callout-style-simple callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+inclinação da rela de regressão
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong><em>Não</em></strong> se pode dizer <strong><em>quão importante</em></strong> é <strong><em>uma relação</em></strong> pelo <strong><em>simples exame</em></strong> do <strong><em>tamanho</em></strong> da <strong><em>inclinação</em></strong> da <strong><em>reta de regressão</em></strong>. <span class="citation" data-cites="Moore2023">(<a href="referencias.html#ref-Moore2023" role="doc-biblioref">MOORE; NOTZ; FLIGNER, 2023</a> , cap. 5, p.&nbsp;102)</span></p>
+</div>
+</div>
+<p>Todavia a amostra de <code>n= 16</code> jovens é <em>pequena</em>.</p>
+<p>Portanto sujeita à maior <u><strong>variabilidade amostral</strong></u>, aquela <em>variação</em> nos dados observada <em>de amostra para amostra</em>.</p>
+<p>Isso implica <strong><em>uma reflexão</em></strong> sobre a <strong><em>predição</em></strong>.</p>
+<p>Voltando à questão: <strong>Quanta ANE (cal) é necessária para reduzir o granho de peso a zero mesmo sob uma dieta hipercalórica?</strong></p>
+<p>Então queremos descobrir: qual valor de <span class="math inline">\(x\)</span> para que <span class="math inline">\(\hat{y}=0\)</span> (lê-se <em>ypsilon chapeu</em>)?</p>
+<p><span class="math display">\[
+-0.0034 x + 3.50 = 0.0 \text{ kg} \Rightarrow x = \frac{3.50}{0.0034} \Rightarrow x = +1029.4 \text{ cal}
+\]</span></p>
+<p><strong>O quanto podemos confiar na predição:</strong> <span class="math inline">\(x=\)</span> <strong>1029,4 cal. ⟹</strong> <span class="math inline">\(\hat{y}=\)</span> <strong>0,0 Kg</strong> (lê-se <em>ypsilon chapeu</em>)<strong>?</strong></p>
+<p>É preciso ficar atento ao fato de que, <strong><em>quanto mais nos afastamos do intervalo de dados coletados</em></strong>, <strong><em>mais largo será o intervalo de predição</em></strong> (para um Nível de Confiança de 95%). Esse <em>intervalo</em> atinge sua menos expessura no seu <em>ponto coordenado médio</em>: <span class="math inline">\((\bar{x},\bar{y})\)</span>.</p>
+<p>Ou seja, o <strong><em>verdadeiro e desconhecido valor de x (</em></strong><code>ANE</code><strong><em>)</em></strong> poderá encontra-se, aproximadamente (pela <em>leitura do gráfico acima</em>), para o valor de y = 0 (pré-estabelecido), em <u><strong><em>algum valor de x</em></strong></u> <u><strong><em>pertencente</em></strong></u> ao seguinte <strong>intervalo de predição (NC=95%) para x: (750 cal, 1250 cal)</strong>.</p>
+</section><section id="estatísticas-de-regressão" class="level3" data-number="5.4.4"><h3 data-number="5.4.4" class="anchored" data-anchor-id="estatísticas-de-regressão">
+<span class="header-section-number">5.4.4</span> Estatísticas de Regressão</h3>
+<div class="cell">
+<details class="code-fold"><summary>Código</summary><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Pacotes necessários</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lmtest)   <span class="co"># dwtest</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)  <span class="co"># só se for anotar no gráfico</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Ajuste do modelo</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>lm_mod <span class="ot">&lt;-</span> <span class="fu">lm</span>(gangor <span class="sc">~</span> ANE, <span class="at">data =</span> gangord)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Resumo base</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>summary_lm <span class="ot">&lt;-</span> <span class="fu">summary</span>(lm_mod)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Tabela de coeficientes (estimate, std.error, t, p)</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>coef_table <span class="ot">&lt;-</span> summary_lm<span class="sc">$</span>coefficients</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="co"># R² e R² ajustado</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>r_sq      <span class="ot">&lt;-</span> summary_lm<span class="sc">$</span>r.squared</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>adj_r_sq  <span class="ot">&lt;-</span> summary_lm<span class="sc">$</span>adj.r.squared</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Estatística F e p-valor do teste F</span></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>fstat     <span class="ot">&lt;-</span> summary_lm<span class="sc">$</span>fstatistic</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>f_pvalue  <span class="ot">&lt;-</span> <span class="fu">pf</span>(fstat[<span class="dv">1</span>], fstat[<span class="dv">2</span>], fstat[<span class="dv">3</span>], <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Erro padrão residual e RMSE</span></span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>sigma_hat <span class="ot">&lt;-</span> summary_lm<span class="sc">$</span>sigma</span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>rmse      <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>(<span class="fu">residuals</span>(lm_mod)<span class="sc">^</span><span class="dv">2</span>))</span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a><span class="co"># AIC / BIC</span></span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>model_aic <span class="ot">&lt;-</span> <span class="fu">AIC</span>(lm_mod)</span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>model_bic <span class="ot">&lt;-</span> <span class="fu">BIC</span>(lm_mod)</span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a><span class="co"># Intervalos de confiança dos coeficientes (95%)</span></span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>conf_int <span class="ot">&lt;-</span> <span class="fu">confint</span>(lm_mod, <span class="at">level =</span> <span class="fl">0.95</span>)</span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Durbin-Watson (autocorrelação dos resíduos)</span></span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>dw <span class="ot">&lt;-</span> <span class="fu">tryCatch</span>(<span class="fu">dwtest</span>(lm_mod), <span class="at">error =</span> <span class="cf">function</span>(e) <span class="cn">NULL</span>)</span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Saídas com broom para fácil uso programático</span></span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a>tidy_coefs <span class="ot">&lt;-</span> broom<span class="sc">::</span><span class="fu">tidy</span>(lm_mod)    <span class="co"># coeficientes com estatísticas</span></span>
+<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a>glance_mod <span class="ot">&lt;-</span> broom<span class="sc">::</span><span class="fu">glance</span>(lm_mod)  <span class="co"># R², AIC, BIC, etc.</span></span>
+<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a>augment_df <span class="ot">&lt;-</span> broom<span class="sc">::</span><span class="fu">augment</span>(lm_mod) <span class="co"># observações, resíduos, fitted, .se.fit etc.</span></span>
+<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a><span class="co"># Previsões com intervalo de confiança para um grid (útil para plot)</span></span>
+<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a>x_grid <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">200</span>, <span class="dv">1000</span>, <span class="at">length.out =</span> <span class="dv">200</span>)</span>
+<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a>pred_df <span class="ot">&lt;-</span> <span class="fu">predict</span>(lm_mod, <span class="at">newdata =</span> <span class="fu">data.frame</span>(<span class="at">ANE =</span> x_grid), <span class="at">interval =</span> <span class="st">"confidence"</span>, <span class="at">level =</span> <span class="fl">0.95</span>)</span>
+<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a>pred_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">ANE =</span> x_grid, <span class="at">fit =</span> pred_df[, <span class="st">"fit"</span>], <span class="at">lwr =</span> pred_df[, <span class="st">"lwr"</span>], <span class="at">upr =</span> pred_df[, <span class="st">"upr"</span>])</span>
+<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a><span class="co"># Preparar etiquetas formatadas para anotar no ggplot</span></span>
+<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a>eq_label <span class="ot">&lt;-</span> <span class="fu">sprintf</span>(<span class="st">"y = %.3f %+.3f*x"</span>, coef_table[<span class="st">"(Intercept)"</span>, <span class="st">"Estimate"</span>], coef_table[<span class="st">"ANE"</span>, <span class="st">"Estimate"</span>])</span>
+<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a>r_label  <span class="ot">&lt;-</span> <span class="fu">sprintf</span>(<span class="st">"R² = %.3f"</span>, r_sq)</span>
+<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a>p_label  <span class="ot">&lt;-</span> <span class="fu">sprintf</span>(<span class="st">"p (slope) = %.3g"</span>, coef_table[<span class="st">"ANE"</span>, <span class="st">"Pr(&gt;|t|)"</span>])</span>
+<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a><span class="co"># Resultado: lista com principais objetos</span></span>
+<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a>resultados_reg <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb11-55"><a href="#cb11-55" aria-hidden="true" tabindex="-1"></a>  <span class="at">lm_mod =</span> lm_mod,</span>
+<span id="cb11-56"><a href="#cb11-56" aria-hidden="true" tabindex="-1"></a>  <span class="at">summary =</span> summary_lm,</span>
+<span id="cb11-57"><a href="#cb11-57" aria-hidden="true" tabindex="-1"></a>  <span class="at">coef_table =</span> coef_table,</span>
+<span id="cb11-58"><a href="#cb11-58" aria-hidden="true" tabindex="-1"></a>  <span class="at">tidy =</span> tidy_coefs,</span>
+<span id="cb11-59"><a href="#cb11-59" aria-hidden="true" tabindex="-1"></a>  <span class="at">glance =</span> glance_mod,</span>
+<span id="cb11-60"><a href="#cb11-60" aria-hidden="true" tabindex="-1"></a>  <span class="at">augment =</span> augment_df,</span>
+<span id="cb11-61"><a href="#cb11-61" aria-hidden="true" tabindex="-1"></a>  <span class="at">r_squared =</span> r_sq,</span>
+<span id="cb11-62"><a href="#cb11-62" aria-hidden="true" tabindex="-1"></a>  <span class="at">adj_r_squared =</span> adj_r_sq,</span>
+<span id="cb11-63"><a href="#cb11-63" aria-hidden="true" tabindex="-1"></a>  <span class="at">f_statistic =</span> fstat,</span>
+<span id="cb11-64"><a href="#cb11-64" aria-hidden="true" tabindex="-1"></a>  <span class="at">f_pvalue =</span> f_pvalue,</span>
+<span id="cb11-65"><a href="#cb11-65" aria-hidden="true" tabindex="-1"></a>  <span class="at">sigma =</span> sigma_hat,</span>
+<span id="cb11-66"><a href="#cb11-66" aria-hidden="true" tabindex="-1"></a>  <span class="at">rmse =</span> rmse,</span>
+<span id="cb11-67"><a href="#cb11-67" aria-hidden="true" tabindex="-1"></a>  <span class="at">aic =</span> model_aic,</span>
+<span id="cb11-68"><a href="#cb11-68" aria-hidden="true" tabindex="-1"></a>  <span class="at">bic =</span> model_bic,</span>
+<span id="cb11-69"><a href="#cb11-69" aria-hidden="true" tabindex="-1"></a>  <span class="at">confint =</span> conf_int,</span>
+<span id="cb11-70"><a href="#cb11-70" aria-hidden="true" tabindex="-1"></a>  <span class="at">durbin_watson =</span> dw,</span>
+<span id="cb11-71"><a href="#cb11-71" aria-hidden="true" tabindex="-1"></a>  <span class="at">prediction_grid =</span> pred_df,</span>
+<span id="cb11-72"><a href="#cb11-72" aria-hidden="true" tabindex="-1"></a>  <span class="at">labels =</span> <span class="fu">list</span>(<span class="at">equation =</span> eq_label, <span class="at">r2 =</span> r_label, <span class="at">pvalue =</span> p_label)</span>
+<span id="cb11-73"><a href="#cb11-73" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb11-74"><a href="#cb11-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-75"><a href="#cb11-75" aria-hidden="true" tabindex="-1"></a><span class="co"># Exibir sumário conciso no console</span></span>
+<span id="cb11-76"><a href="#cb11-76" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(eq_label)</span>
+<span id="cb11-77"><a href="#cb11-77" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(r_label)</span>
+<span id="cb11-78"><a href="#cb11-78" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p_label)</span>
+<span id="cb11-79"><a href="#cb11-79" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">sprintf</span>(<span class="st">"RMSE = %.3f | AIC = %.2f | BIC = %.2f"</span>, rmse, model_aic, model_bic))</span>
+<span id="cb11-80"><a href="#cb11-80" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"Um teste de hipótese para verificar autocorrelação dos resíduos:"</span>)</span>
+<span id="cb11-81"><a href="#cb11-81" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.null</span>(dw)) <span class="fu">print</span>(dw)</span>
+<span id="cb11-82"><a href="#cb11-82" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>[1] "y = 3.505 -0.003*x"
+[1] "R² = 0.606"
+[1] "p (slope) = 0.000381"
+[1] "RMSE = 0.692 | AIC = 39.63 | BIC = 41.95"
+[1] "Um teste de hipótese para verificar autocorrelação dos resíduos:"
+
+    Durbin-Watson test
+
+data:  lm_mod
+DW = 2.7523, p-value = 0.9058
+alternative hypothesis: true autocorrelation is greater than 0</code></pre>
+</div>
+</div>
+<p>Pela estatística de teste de Durbin-Watson, que varia de zero (0,0) até 4,0, que haja autocorrelação dos resíduos do modelo.</p>
+<p>Ou seja, não se pode rejeitar, para um erro tipo I de 5,0%, a hipótese nula de ausência de autocorrelação dos resíduos do modelo.</p>
+<p>O que significa decidir pela ausência de correlação entre os resíduos, o que uma evidência a favor do modelo linear que foi contruído para representar a relação entre X e Y.</p>
+<p>E que os resíduos, assim, aproxiam-se de uma distribuição Normal, que é um pressuposto para obtenção da reta de regressão.</p>
+<p>Pressuposto esse que foi verificado poe meio de um teste de hipótese no presente caso.</p>
+
+
+<div id="refs" class="references csl-bib-body" data-entry-spacing="1" role="list" style="display: none">
+<div id="ref-Moore2023" class="csl-entry" role="listitem">
+MOORE, David S.; NOTZ, William I.; FLIGNER, Michael A. <strong><a href="https://www.grupogen.com.br/livro-a-estatistica-basica-e-sua-pratica-david-s-moore-william-i-notz-e-michael-a-fligner-editora-ltc-9788521638605">Estatística Básica e sua prática</a></strong>. 9. ed. Rio de Janeiro: LTC, 2023.
+</div>
+<div id="ref-poldrack_pensamento_est_2025" class="csl-entry" role="listitem">
+POLDRACK, Russell. <strong>Pensamento <span>Estatístico</span>: <span>Analisando</span> <span>Dados</span> em um <span>Mundo</span> de <span>Incertezas</span></strong>. Tradução: Cibelle Ravaglia. Rio de Janeiro, RJ: Alta Books, 2025.
+</div>
+</div>
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./cap5-pldr-modelos-dados.html" class="pagination-link" aria-label="AED - cap 5 pldr - Ajustando Modelos aos Dados">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">AED - cap 5 pldr - Ajustando Modelos aos Dados</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./cap16-pldr-EstMultiv.html" class="pagination-link" aria-label="AID - cap 16 - Estatística Multivariada">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">AID - cap 16 - Estatística Multivariada</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Relatório escrito em <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+
+
+</body></html>

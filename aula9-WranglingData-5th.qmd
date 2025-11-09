@@ -1,0 +1,409 @@
+# Aula 9 - Wrangling Data: 5^th^ round {#sec-Wrangling-5th}
+
+O 5º *round* da fase de *Wrangling* (Banco de Dados ou tabelas relacionais): de carregamento (leitura), de armazenamento (salvar; enclausurar) e de ***transformação*** (anonimização) dos dados primários levantados do corpus n. 3 desta pesquisa, que contém as ocorrências da DPAI Goiânia associadas aos jovens que vieram a obito.
+
+Neste *script* dar-se-á sequência e ênfase na fase de transformação dos dados, pela adequada reestruturação das variáveis. É preciso olhar para cada ***tipo*** de variável, original ou criada, e escolher a ***estrutra de dados*** mais adequada para cada uma delas:
+
+-   \<`int`\>: só 1 variável `ndi` - número inteiro identificador do registro da ocorrência dos jovens;
+-   \<`char`\>: 2 variáveis `nome`, nome completo do jovem, sendo que será checado se existem homônimos e `obs`, para a última coluna com algumas observações esparssas;
+-   \<`fctr`\>: 6 variáveis categóricas como
+    -   `esp`, a espécie do ato (ato infracional ou crime),
+    -   `tipo`, o tipo penal associado ao registro (ex.: furto, homicídio, roubo/extorsão etc.),
+    -   `procpol`, o identificador do registro policial,
+    -   `projudi`, o número atribuído pelo TJGO ao respectivo procedimento policial civil,
+    -   `propjudi2`, há um único registro policial com dois números projudi diferentes (`nid` = 428) e
+    -   `sent`, o tipo de sentença (ex.: remissão própria, remissão c/ advertência, remissão c/ LA, remissão c/ PSC, remissão c/ LA + PSC, arquivamento - óbito, arquivamento crime, arquivamento infracional, Internação, absolvição, condenação, transação penal - TCO).
+-   \<`data`\>: 2 variáveis no formato \<aaaa-mm-dd\>
+    -   `datafato`, a data do fato (AI - Ato Infrcaional ou crime) e
+    -   `datasent`, a data da prolação da sentença.
+
+Como exercício para casa (***homework***) pediu-se um função apropriada para criar a anonimização das variável `nome`, que já foi salva na pasta `func`, denominada `getinic` que será aqui recarregada (`source("func/getinic.R")` \# carregará o código da função getinic) para para um completo processamento dos dados brutos do corpus n. 3 (para usar a variável `nome` anonimizada também como identificador, assim como `nid`).
+
+Realizar as ***transformações*** necessárias para simplificar as futuras apresentações desses dados (ex.: `esp` com as categorias `AI` e `crime`, em vez de "ato infracional" e "crime". Já foram susbtituídos, no arquivo `statcrim-18-04-2024.csv` campos com a string "NC" pelo campo em branco \<*blanck*\>, a que o R atribuiá o valor `NA`).
+
+Várias dessas tarefas necessárias também serão realizadas através da resolução de alguns dos exercícios constantes da lista de exercícios.
+
+Reitera-se que é preciso estudar o ***tipo expandido*** de vetores do tipo `factor` é muito importante: \<`fctr`\>.
+
+Outro tipo expandido muito útil será o tipo \<`Date`\> ou \<`dttm`\> (*Date time*) para a manipulação de datas, que será necessário para determinação das variáveis: `tempodfatosent` \<`date`, in `days`\> e `tempoafatosent` \<`dbl`\>, o intervalo de tempo decorrido desde a data do fato até a prolação da sentença, medido em dias e em anos com ponto decimal, respectivamente.
+
+## Pré-processamento dos Dados Brutos: corpus 3
+
+### *Up load* dos dados orginiais:
+
+*Up load* das tabelas com os dados originais coletados por Queops (2023): `mestrado - tabela - 18-04-2024.xlsx`, baixando em `.csv` a aba da *tabela* denominada "estatistica criminal", que recebeu o nome: `statcrim-18-04-2024.csv` e que foi armazenada na pasta `dat/csv`.
+
+Utilizou-se o `calc` do `broffice`, para tanto, por ser mais flexível que o excel.
+
+E promoveu-se neste último arquivo as seguines modicações, via `calc`:
+
+-   alterou-se a 1ª linha com os nomes das 11 variáveis para: `nid`, `nome`, `datafato`, `esp`, `tipo`, `procpol`, `projudi`, `projudi2` (essa coluna foi acrescida para receber a única observação com dois números diferente de projudi, `nid` = 428), `datasent`, `sent` e `obs`.
+-   formatou-se as colunas `datafato` e `datasent` para que apresentassem a data no formato: \<aaaa-mm-dd\>, mais adequado para ser lido e tratado pelo R.
+-   na última coluna, após a coluna da variável `sent`, foi acrescido nome de variável `obs`, tipo \<`char`\>.
+
+A partir do que os dados serão carregados, anonimizados pela abreviatura dos nomes dos jovens e enclausurados.
+
+Ou seja, será preciso M.I.P - *Modify In Place* esses dados e gerar sua chave para, no futuro, ser possível desencriptografar suas informações de modo adequado a recompor os dados dos ***corpus n. 3*** original.
+
+Limpar a *`Global Environment`*: serão removidos todos os objetos da Global Environment.
+
+E carregar os pacotes necessários para promover o completo tratamento dos dados primários a serem carregados.
+
+```{r}
+#| warning: false
+
+rm(list = ls() ) # remover todas as variáveis do Global Environment
+
+library(magrittr)   # Carregar o pacote com o operador Pipe
+library(dplyr)      # Carregar o pacote para organizar dados
+library(kableExtra)
+library(tidyverse)
+library(lubridate)
+
+# Warning: package ‘tidyverse’ was built under R version 4.2.3Warning: package ‘ggplot2’ was built under R version 4.2.3Warning: package ‘tibble’ was built under R version 4.2.3Warning: package ‘tidyr’ was built under R version 4.2.3Warning: package ‘readr’ was built under R version 4.2.3Warning: package ‘purrr’ was built under R version 4.2.3Warning: package ‘dplyr’ was built under R version 4.2.3Warning: package ‘forcats’ was built under R version 4.2.3Warning: package ‘lubridate’ was built under R version 4.2.3── Attaching core tidyverse packages ───────────────────────────────────────────────────── tidyverse 2.0.0 ──
+# ✔ dplyr     1.1.2     ✔ readr     2.1.4
+# ✔ forcats   1.0.0     ✔ stringr   1.5.0
+# ✔ ggplot2   3.4.4     ✔ tibble    3.2.1
+# ✔ lubridate 1.9.2     ✔ tidyr     1.3.0
+# ✔ purrr     1.0.2     ── Conflicts ─────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+# ✖ dplyr::filter()     masks stats::filter()
+# ✖ dplyr::group_rows() masks kableExtra::group_rows()
+# ✖ dplyr::lag()        masks stats::lag()
+# ℹ Use the conflicted package to force all conflicts to become errors
+
+
+# Attaching package: ‘magrittr’
+#
+# The following object is masked from ‘package:purrr’:
+#
+#     set_names
+#
+# The following object is masked from ‘package:tidyr’:
+#
+#     extract
+```
+
+Em seguida carregar **Quadro de Dados** com jovens investigados que vieram a obito do **corpus n. 3**, contendo os ***registros de passagem pela DEPAI***; a serem anonimizados pelas abreviaturas com as iniciais dos nomes, seguidas por ponto.
+
+```{r}
+
+# carregar Quadro de Dados com jovens investigados que vieram a obito
+# Espaço: Comarca de Goiânia / DEPAI
+# Tempo/Período levantado: 2016-2022
+# m = 10 colunas (variáveis observadas); acrescida 1 coluna - projudi2
+# n = 2071 linhas (observações coletadas; uma para cada ato ou passagem registrada na DEPAI - Goiânia)
+statcrim <- read.csv(file  = "dat/csv/statcrim-18-04-2024.csv",
+                  header = TRUE,
+                  sep    = ",",
+                  quote  = "\"",
+                  dec    = ".",
+                  stringsAsFactors = FALSE, # para ler todas as colunas como <char>
+                  fill   = TRUE
+                 )
+cat("Nomes das 10 variáveis coletadas:\n")
+names(statcrim)
+```
+
+Será preciso explorar a caracterísitica da vetorização da linguagem R.
+
+Ou seja, aplicar de forma vetorizada a função `getinic()`, já criada e armazenada.
+
+Uma boa estratégia de ***Modularização*** foi armazenar essa função na pasta `func`, para que possa ser agora recuperada no próximo *chunck* do conjunto de scripts ora desenvolvido, para evitar repetição de códigos e facilitar a tarefa de manutenção do código.
+
+Então recarregar a função `getinic()` gerada neste srcipt do Wrangling Data - 2^nd^ round, por meio da função `source`.
+
+```{r}
+
+# Modularização:
+# Uma pasta <func> com todos as funções deste projeto foi criada
+# source("func/minhas_funcoes.R") # carregará um tal conjunto funções
+
+# Recarregar o código função getinic:
+source("func/getinic.R") # carregará o código da função getinic
+```
+
+A partir das tabelas com os dados originais coletados por Queops (2023): `mestrado - tabela - 18-04-2024.xlsx`, baixou-se em `.csv` a aba da *tabela* denominada "variáveis", que recebeu o nome: `quadrovar.csv` e que foi armazenada na pasta `dat/csv`. Ela contém todas as variáveis dos corpus n. 1 e n. 2 e parte das variáveis do corpus n. 3.
+
+Ler o **Quadro de Variáveis** que foi ***criado*** para a presente coleta dos dados: `quadrovar3.df.csv`
+
+```{r}
+
+# carregar o Quadro de Variáveis <quadrovar2.df.csv>
+# Espaço: Comarca [ou Município?] de Goiânia
+# Tempo: 2016-2022
+# Pessoal : jovens investigados (crianças e adolescentes)
+# Material: que, posteriormente, vieram a obito (por causas diversas)
+# Planilha com todas as variáveis observadas no corpus n.3
+# com os registros das ocorrências desses jovens na DEPAI- Goiânia;
+quadrovar2.df <- read.csv(file  = "dat/csv/quadrovar2.df.csv",
+  header = TRUE,
+  sep    = ",",
+  quote  = "\"",
+  dec    = ".",
+  stringsAsFactors = FALSE, # para ler todas as colunas como <char>                  fill   = TRUE
+  )
+cat("Abreviaturas dos nomes, que devem ser associados à descrição, ao tipo e às categorias de todas as 11 variáveis coletadas no corpus n. 3:\n")
+names(quadrovar2.df)
+```
+
+Organizar esse **Quadro de Variáveis** num `data frame` mais adequado: `quadrovar3.df`.
+
+```{r}
+
+# Recarregar funções já armezanadas na pasta: func
+#---Função extrair tipo da variável do quadro de variáveis
+
+# e também
+
+#---Função para extrair as categorias/formatos de todas variáveis
+#   será aplicada sobre todas as colunas do data set quadrovar
+#   extrair da 3ª linha em diante de cada coluna, todas as categorias <char>
+#   fazer um paste0 desse vetor para reunir todas elas, sepradas por ", "
+#   retornar esse resultado
+# categ <- function(x) {
+    # descartar campos vazios <blanck>
+#   x <- x[x != ""]
+#   l <- length(x)
+#   ifelse(l == 1, x[1], paste0(x[2:l], collapse = ", "))
+# }
+
+# Recarregar o código dessas 2 funções: tipo() e categ()
+source("func/quadrovar-tipo-categ.R") # carregará o código das 2 funções
+
+quadrovar3.df <- quadrovar2.df
+
+# extraindo todos as categorias da variável: tipo
+quadrovar3.df$Categorias[5] <- statcrim$tipo |> unique() |> categ()
+
+# extraindo todos as categorias da variável: sent
+quadrovar3.df$Categorias[10] <- statcrim$sent |> unique() |> categ()
+
+# Modificar as categorias da variável: esp
+# espécie do fato registrado na DEPAI
+# de  : "ato infracional", "crime"
+# para: "AI", "crime"
+quadrovar3.df$Categorias[4] <- c("AI, crime")
+
+str(quadrovar3.df)
+
+# salvar quadrovar3.df num arquivo quadrovar3.df.RData
+write.csv(quadrovar3.df, file = "dat/csv/quadrovar3.df.csv", row.names = FALSE)
+```
+
+### Exibição dos Dados brutos
+
+Exibir uma tabela com o **Quadro de Variáveis** do ***corpus n. 3*** da Pesquisa:
+
+```{r}
+#| warning: false
+
+quadrovar3.df |> 
+  kable("html",
+        booktabs  = TRUE,
+        longtable = FALSE,
+        caption   = "Quadro de Variáveis Aleatórias do corpus n. 3 da Pesquisa")  |>
+  kable_styling(bootstrap_options = c("striped"),
+                full_width    = FALSE,
+                latex_options = "scale_down")
+```
+
+Agora exibir (apenas as primeiras 30 observações) a tabela com o ***corpus*** **de dados n. 3** (todos os atos infracionais e crimes que foram registrados na DEPAI dos adolescentes que praticaram atos infracionais e que vieram a óbito) em um formato enxuto via *Package*: `KableExtra`. Para permitir uma primeira inspeção visual.
+
+O ideal é inspecinar todas as 2071 observações nesse primeiro contato com esses dados, a fim de tomar nota de uma lista de cuidados e tarefas a serem implementadas, o que foi feito antes de implementar a limitação de linhas exibidas acima, para fins de geração deste relatório de pesquisa.
+
+```{r}
+
+statcrim |> 
+  head(30) |> 
+  kable("html",
+        booktabs  = TRUE,
+        longtable = FALSE,
+        caption   = "Tabela com os 30 primeiros registros/passagens pela DEPAI dos 449 jovens que tiveram atos infracionais apurados e que vieram a óbito em Goiânia (2016 a 2023; N = 2071 obs.)")  |>
+  kable_styling(bootstrap_options = c("striped"),
+                full_width    = FALSE,
+                latex_options = "scale_down")
+```
+
+### Anonimização dos Dados: pelas abreviaturas dos nomes
+
+Antes de tudo é preciso ***anonimizar*** tembém esse conjunto de dados do ***corpus n. 3***.
+
+Lançar mão da ***anonimização*** desse conjunto de dados pelas ***iniciais aberivadas apenas pela primeira letra*** de cada `nome` dos jovens.
+
+Valer-se da *função* já armazenada `getinic()` , que se valeu da estratégia *Split-Apply-Combine*, já acima carregada neste script. E que agora será aplicada às variáveis `nome` da tabela `statcrim3`, obtida por cópia da tabela original `satatcrim`.
+
+Observar para M.I.P. - *Modify in Place* no objeto `statcrim3`.
+
+```{r}
+
+# Fazer alterações (M.I.P.) numa cópia de statcrim: corpus n. 3
+statcrim3 <- statcrim
+
+# MIP - Modify in Place:
+# usar a família apply para mapear a vetorização: mapply
+# pela atribuição para direita após o operador pipe
+# primeiro para variável nome de statcrim3
+mapply(getinic, statcrim3$nome) |> 
+  unname() -> statcrim3$nomean
+# unname faz drop dos nomes do vetor de abreviaturas retornado
+
+# gerar a chave dessa anonimização para o corpus n. 3
+chave3 <- statcrim3 |> 
+  select(nid, nome, nomean)
+
+
+# drop da variável nome do objeto statcrim3
+names(statcrim3)
+# "nid"      "nome"     "datafato" "esp"      "tipo"     "procpol"  "projudi" 
+# "projudi2" "datasent" "sent"     "obs"      "nomean"
+
+statcrim3 |> # colocar variáveis recem criadas na mesma ordem que statcrim
+  select(  "nid", "nomean", "datafato", "esp", "tipo", "procpol",
+         "projudi",   "projudi2", "datasent", "sent", "obs") -> statcrim3
+```
+
+Visualizar esse novo *data set* anonimizado (`statcrim3`) pelas abreviaturas dos nomes dos jovens, numa tabela com efeito scroll na tela.
+
+Preferiu-se ***não*** ***embaralhar aleatoriamente sua ordem***, pois as ocorrências (`esp`: AI - Ato Infracional ou crime) estão ordenados em sequência para cada `nid` associado ao jovem.
+
+Mostrar apenas as 30 primeiras observações por questão de economia de espaço.
+
+Será nesse formato que os dados primários levantados deverão compor o segundo Anexo deste ***Relatório de Pesquisa***.
+
+```{r}
+
+# Todas essa operações não são M.I.P.:
+statcrim3 |>
+  head(30) |> 
+  mutate(n = 1:30, .before = 1) |> 
+  kable("html",
+        booktabs  = TRUE,
+        longtable = FALSE,
+        row.names = FALSE,
+        caption   = "Tabela anonimizada pelas iniciais dos campos com nomes das 30 primeiras ocorrências dos jovens que vieram a óbito, com os respectivos atos infracionais apurados pela DEPAI de Goiânia (2016 a 2023; N = 2071 obs.)")  |>
+  kable_styling(bootstrap_options = c("striped"),
+                full_width    = FALSE,
+                latex_options = "scale_down")
+```
+
+Verificar se `nomean` não apresenta repetição na tabela `statcrim3`.
+
+```{r}
+
+unique(statcrim3$nomean)
+```
+
+São N = 447 jovens (corpus n. 1 e 2; haviam 2 obs. duplicadas que foram dorpadas).
+
+Contudo, na lista acima, só se detectou 438 jovens associados à ocorrências (há um nome R. associado à "REPETIDO"); ou seja: 447 jovens - 438 com passagens = **9 jovens que vieram a obito sem que fossem localizados e associadas sua passagens pela DEPAI**, segundo os dados do ***corpus n. 3***.
+
+Fazer o drop da obsservação (linha da tabela `statcrim3`) em que a variável `nomean` foi populada com `R.` , de "REPETIDO".
+
+```{r}
+
+statcrim3 <- statcrim3[(statcrim3$nomean != "R."), ]
+# que pode ser repetidamente executado sem deleção inadequada
+
+# statcrim3 passa agora a conter N = 2070 observações/passagens (não mais 2071)
+cat("statcrim3 contém N =", nrow(statcrim3),"observações/passagens\n")
+```
+
+Criar variável que resume o número de registros/passagens na DEPAI Goiânia para cada jovem: `npassag`.
+
+Logo depois essa informação será incorporada na tabela `jovens3`, com mais uma variável.
+
+Resgatar `obitj` da sua closure.
+
+```{r}
+
+# Carregar apenas a closure: jovens3 <list> of 5 <functions> e 4 <df>
+load(file = "out/jovens3.RData")
+
+# Número de linhas do Corpus n.2 transformado: obitj
+N <- nrow(jovens3$getall()) # Número de 447 observações do corpus n. 2
+
+# Obter o censo do data set enclausurado: obitj (trasnformado neste script)
+# Exibir apenas as 10 primeiras linhas
+obitj <- jovens3$getall()
+```
+
+Criar a variável `npassag`.
+
+```{r}
+
+Npassag <- statcrim3 |> 
+  count(nomean) |> 
+  rename(npassag = n)
+# detectadas Np = 438 linhas, ou seja, 438 jovens que vieram a obito
+# com passagem/registro expressamente localizado pela DEPAI
+```
+
+E incorporá-la em nova coluna de `obitj`.
+
+```{r}
+
+obitj <- obitj |> 
+  right_join(Npassag, by = "nomean")
+```
+
+Para ***verificar possível correlação*** entre: idade na data do óbito em anos (`idadeobta`) e número de passagens (`npassag`).
+
+Salvar essa nova versão de `obitj` enriquecida com essa informação `npassag` em formato `.csv`, para ser explorada no aplicativo `statkey`.
+
+```{r}
+
+# Salvar uma planilha de dados toda tratada e transformada:
+write.csv(obitj, file = "out/obitjcsv.csv",
+          na = "", # salvar campos NA como espaço vazio <blank>
+          row.names = FALSE) # não salvar coluna com números das linhas
+
+# mais adiante será salva na closure do corpus n. 2
+# será a partir desta nova closure que se iniciará a fase da 
+# AED - Análise Exploratória de Dados no próximo script
+```
+
+Um gráfico de dispersão entre: `idadeobta` e `npassag`
+
+Mas agora com filtro das idades na data do óbito \> 2 anos.
+
+```{r}
+
+obitj |> 
+  select(idadeobta, npassag) |> 
+  filter(idadeobta > 2) |> 
+  ggplot(aes(x = idadeobta, y = npassag)) +
+  geom_point() +
+  geom_smooth(method = 'lm', formula = y~x) +
+  ggtitle("Diagrama de dispersão: jovens idobito x n. passagem DPAI")
+```
+
+Para investigar correlação entre: `idadeobta` e `npassag`
+
+```{r}
+
+lm_id_npas <- glm(obitj$idadeobta[obitj$idadeobta > 2] ~ obitj$npassag[obitj$idadeobta > 2])
+
+summary(lm_id_npas)
+
+plot(lm_id_npas)
+```
+
+É importante compreender a estrutura de dados dessa listas que integram a closure desse corpus n. 3 enclausurado em `jovens3` e em `statcrim3`.
+
+### Homework: *AED*
+
+Nessa nova fase, bem mais atraente, o objetivo é explorar os dados em busca do reconhecimento de padrões perceptíveis.
+
+Resumos dos dados são muito úteis: média e desvio padrão; mediana e AIQ (Amplitude Interquartil); resumo dos 5 números, coeficiente de variação, assimetria, curtose etc.
+
+Gerar vários gráficos (histogramas, boxplot, pizza, barras, colunas, dispersão, diagrama de ramo e folha etc.) que permitam essa visualização e captura de padrões para cada variável observada, a depender do tipode cada qual.
+
+Bem como para a associaçãoo entre elas: a depender da combinação de tipos de cada uma delas
+
+Gerando tabelas de dupla entrada ou de contigência, quando ambas forem categóricas, do tipo \<`fctr`\>.
+
+O que será realizado nas aulas subsequentes.
+
+Dúvidas serão debeladas a cada aula!
+
+![Até nosso pRRRóximo RRRencontro!](fig/ValeuGalera.png){fig-align="center"}

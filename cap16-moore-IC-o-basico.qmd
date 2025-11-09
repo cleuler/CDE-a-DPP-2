@@ -1,0 +1,679 @@
+# AEI - cap 16 moore - IC: o Básico {#sec-IC-basico}
+
+## Objetivos da Aprendizagem
+
+> Após ler este capítulo, você deve ser capaz de:
+>
+> ▶ 16.1 Usar os [**princípios**]{.underline} da [**inferência**]{.underline} e [**estimação**]{.underline} estatísticas para a ***interpretação de intervalos de confiança***.
+>
+> ▶ 16.2 Articular o [**significado**]{.underline} de *afirmativas que envolvem* [**níveis de confiança**]{.underline} e [**margens de erro**]{.underline}.
+>
+> ▶ 16.3 Calcular [**intervalos de confiança para médias**]{.underline}, depois de confirmar que as [**condições necessárias são satisfeitas**]{.underline}.
+>
+> ▶ 16.4 Compreender como a [**margem de erro**]{.underline} muda com o [**tamanho amostral**]{.underline} e [**nível de confiança**]{.underline}.
+
+## Intervalos de Confiança: o Básico
+
+> Os Capítulos 8 e 9 dizem que a maneira pela qual produzimos dados (amostragem, planejamentos experimentais) afeta a condição de termos, ou não, uma boa base para a generalização para alguma população mais ampla.
+>
+> Os Capítulos 12, 13 e 14 discutem probabilidade, a ferramenta matemática que determina a natureza das inferências que fazemos.
+>
+> O Capítulo 15 discute distribuições amostrais, que nos dizem como repetidas AASs se comportam e o que uma estatística (em particular, uma média amostral), calculada a partir de nossa amostra, pode nos dizer sobre o parâmetro correspondente da população da qual a amostra foi selecionada.
+>
+> Neste capítulo \[16\], discutimos o **raciocínio básico** da [**estimação estatística**]{.underline}, com ênfase na *estimação \[intervalar\] da média de uma população*.
+>
+> Após extrairmos uma amostra, sabemos as respostas dos indivíduos na amostra. O motivo usual da extração de uma amostra não é conhecer os indivíduos que a compõem, mas [**inferir**]{.underline}, ***a partir dos dados amostrais***, alguma [**conclusão**]{.underline} sobre a [**população**]{.underline} mais ampla que a ***amostra representa***. [@Moore2023 , cap. 16, p. 296]
+
+::: callout-important
+## Inferência estatística
+
+A inferência estatística fornece [**métodos**]{.underline} para a ***extração de conclusões sobre uma população a partir de dados amostrais***.
+:::
+
+Como diferentes amostras podem conduzir a conclusões diferentes, não podemos ter certeza de que nossas conclusões sejam corretas. A inferência estatística usa a linguagem da probabilidade para expressar o grau de confiabilidade de nossas conclusões. Este capítulo introduz um dos dois tipos mais comuns de inferência, intervalos de confiança para estimar o valor de um parâmetro populacional. O próximo capítulo discute o outro tipo comum de inferência, testes de significância para avaliar a evidência de uma afirmativa sobre uma população. Ambos os tipos de inferência se baseiam nas distribuições amostrais de estatísticas. Ou seja, ambos utilizam a probabilidade para dizer o que aconteceria se usássemos o método de inferência muitas vezes.
+
+Este capítulo apresenta a lógica básica da inferência estatística. Para torná-la mais clara possível, começamos com um contexto que é muito simples para ser realista. Eis o contexto para nosso trabalho neste capítulo.
+
+::: callout-important
+## Condições simples para inferência sobre uma média
+
+1.  Temos [**uma amostra aleatória simples**]{.underline} **(AAS)** da população de interesse. Não há não resposta ou qualquer outra dificuldade prática. A [**população é grande**]{.underline} em comparação ao tamanho da amostra \[N \> 20 x n\].
+2.  A **variável** que *medimos* tem [**uma distribuição exatamente normal**]{.underline} **N(µ; σ)** na população.
+3.  ***Não conhecemos*** a **média da população** µ. Mas [**conhecemos**]{.underline} o [**desvio-padrão populacional**]{.underline} σ.
+:::
+
+A condição de que a população seja grande em relação ao tamanho da amostra será adequadamente satisfeita se a população for, digamos, pelo menos 20 vezes maior.
+
+::: callout-important
+*As condições de que temos uma AAS perfeita, de que a população é exatamente Normal e de que conhecemos o σ populacional são todas não realistas*.
+
+O Capítulo 18 inicia o movimento que parte das “condições simples” em direção à realidade da prática estatística. Capítulos posteriores tratam da inferência em contextos completamente realistas.
+
+Se essas “condições simples” não são realistas, por que então estudá-las? Uma razão é que, sob essas condições simples, podemos aplicar o que aprendemos nos capítulos anteriores sobre distribuição Normal e sobre distribuição amostral de uma média amostral, para desenvolver, passo a passo, métodos para inferência sobre uma média. O raciocínio usado sob condições simples se aplica a contextos mais realistas, com matemática mais complicada.
+
+Embora nunca saibamos se uma população é exatamente Normal, e nunca conheçamos o σ populacional, os [**métodos**]{.underline} que discutiremos neste e nos dois próximos capítulos [**são aproximadamente corretos para tamanhos amostrais suficientemente grandes**]{.underline} \[TCL\], desde que [***tratemos o desvio-padrão amostral como se fosse o σ populacional***]{.underline}. Assim, ***há situações (admitidamente raras) em que esses métodos podem ser usados na prática***.
+:::
+
+## A lógica da estimação estatística
+
+O índice de massa corporal (IMC) é usado para a análise de possíveis problemas de peso. Seu cálculo é feito dividindo o peso pelo quadrado da altura, sendo o peso medido em quilogramas, e a altura, em metros. Muitos programas online para cálculo do IMC permitem que você introduza o peso em libras e a altura em polegadas. Adultos com IMC menor do que 18,5 kg/m2 são considerados em subpeso, e aqueles com IMC acima de 25 kg/m2 estão em sobrepeso. Para dados sobre IMC, recorremos ao National Health and Nutrition Examination Survey (`NHANES`), uma pesquisa amostral contínua do governo que monitora a saúde da população norte-americana.
+
+### EXEMPLO 16.1 Índice de massa corporal de homens jovens
+
+Um relatório da NHANES fornece dados para [**936 homens**]{.underline} com [**idade entre 20 e 29 anos**]{.underline}.
+
+O IMC médio desses 936 homens foi $\bar{x} = 27,2$.
+
+Com ***base nessa amostra***, desejamos ***estimar o IMC médio*** µ na [**população**]{.underline} de *todos* os [***23,2 milhões de homens nessa faixa etária***]{.underline}.
+
+Para nos adequarmos às “condições simples”, trataremos a amostra da NHANES como uma AAS de uma população Normal, e vamos supor que conheçamos o desvio-padrão σ = 11,6. (O desvio-padrão amostral para esses 936 homens é 11,63 kg/m2. Para propósitos do exemplo, vamos arredondá-lo para 11,6 e [*prosseguir como se isso fosse o desvio-padrão da população*]{.underline} σ.)
+
+Eis o raciocínio da estimação estatística em poucas palavras:
+
+1.Para estimar o ***desconhecido*** IMC médio µ da população, usamos a média $\bar{x} = 27,2$ da amostra aleatória. Não esperamos que x seja exatamente igual a µ, de modo que desejamos ***dizer quão precisa é essa estimativa \[pontual\]***.
+
+2.Conhecemos a distribuição amostral de $\bar{x}$. Em ***amostras repetidas***, $\bar{x}$ tem [**distribuição Normal**]{.underline} com média µ e desvio-padrão $\sigma/\sqrt{n}$. Então, o IMC médio $\bar{x}$ de uma AAS de 936 homens jovens tem desvio-padrão
+
+$$
+\text{Erro Padrão das médias amostrais} = \frac{\sigma}{\sqrt{n}} = \frac{11.6}{\sqrt{936}} = 0.4
+$$
+
+3.A parte 95 da [**regra 68-95-99,7**]{.underline} para distribuições Normais afirma que x está a [**até dois desvios-padrão da média µ em 95% de todas as amostras**]{.underline}. O desvio-padrão é 0,4, de modo que [**dois desvios-padrão valem 0,8**]{.underline}. Isto é, [**para 95% de todas as amostras de tamanho 936**]{.underline}, a *distância entre a média amostral* $\bar{x}$ e a *média populacional* µ é *menor do que 0,8*. Logo, [**se estimarmos**]{.underline} que µ [***esteja em algum lugar no intervalo***]{.underline} de $\bar{x}$ – 0,8 a $\bar{x}$ + 0,8, [***estaremos corretos em 95% de todas as possíveis amostras***]{.underline}. Para essa amostra particular, esse intervalo é
+
+$\bar{x}$ – 0,8 = 27,2 – 0,8 = 26,4
+
+a
+
+$\bar{x}$ + 0,8 = 27,2 + 0,8 = 28,0
+
+4.Como obtivemos o intervalo 26,4 a 28,0 a partir de [**um método que captura a média populacional**]{.underline} [**em 95% de todas as amostras possíveis**]{.underline}, dizemos que [**estamos 95% confiantes em que o IMC médio µ para todos os homens jovens seja algum valor naquele intervalo**]{.underline} – não menor do que 26,4 e não maior do que 28,0.
+
+Carregar o arquivo `NHANES` do R.
+
+Para simular, na maior medida possível, esse exemplo 16.1 [@Moore2023 , p. 297].
+
+Código a seguir adaptado a partir de [@poldrack_pensamento_est_2025 , cap. 5, p. 42].
+
+#### Carregar pacotes necessários
+
+```{r}
+
+library(tidyverse)
+library(NHANES)
+library(cowplot)
+library(mapproj)
+library(pander)
+library(knitr)
+library(modelr)
+
+panderOptions('round',2)
+panderOptions('digits',7)
+theme_set(theme_minimal(base_size = 14))
+
+options(digits = 2)
+set.seed(123456) # set random seed to exactly replicate results
+```
+
+#### Carregar data set: NHANES
+
+E filtrar um subconjunto do data sete para `sexo` homens e com `idade` entre 20 e 29 anos.
+
+```{r}
+
+code <- 0 # somente irá resetar a Job Area se code == 1
+if(code==1) rm(list=ls()) # Remove toda a list de variáveis da Job Area, i. e., dá um reset na Environment
+
+# drop duplicated IDs within the NHANES dataset
+NHANES <-
+  NHANES %>%
+  dplyr::distinct(ID, .keep_all = TRUE)
+
+# select the appropriate men with good Gender and Age measurements
+NHANES_men <-
+  NHANES %>%
+  drop_na(Gender) %>%
+  drop_na(Age) %>%
+  subset(Age >= 20 & Age <= 29)
+
+NHANES_men %>% nrow() # 880 homens entre 20 e 29 anos
+
+NHANES_men %>%
+  ggplot(aes(BMI)) +
+  geom_histogram(bins = 100) + 
+  labs(
+  title = "Histograma do IMC [BMI]: 880 homens no NHANES",
+  subtitle = "filtro: idade (age) >= 20 e <= 29 anos",
+  caption = "Fonte: Poldrack, 2025, p. 42; Moore, 2023, p. 297",
+  x = "IMC (kg/m2)",
+  y = "Contagem (Count)"
+)
+```
+
+Salvar arquivo .csv
+
+```{r}
+
+# Função para salvar um data.frame em CSV com opções comuns e mensagens informativas.
+# Uso:
+#   save_df_to_csv(df, "output/meu_arquivo.csv")
+# Parâmetros:
+#   df               - objeto data.frame a ser salvo (obrigatório)
+#   file_path        - caminho do arquivo de saída (obrigatório)
+#   sep              - separador de campos (padrão: ",")
+#   na               - representação de valores NA no arquivo (padrão: "")
+#   row.names        - incluir nomes de linha (padrão: FALSE)
+#   col.names        - incluir cabeçalho (padrão: TRUE)
+#   quote            - colocar aspas em campos (padrão: TRUE)
+#   fileEncoding     - codificação do arquivo (padrão: "UTF-8")
+#   append_timestamp - acrescentar timestamp ao nome do arquivo (padrão: FALSE)
+save_df_to_csv <- function(df,
+                           file_path,
+                           sep = ",",
+                           na = "",
+                           row.names = FALSE,
+                           col.names = TRUE,
+                           quote = TRUE,
+                           fileEncoding = "UTF-8",
+                           append_timestamp = FALSE) {
+  # Validações básicas
+  if (missing(df) || !is.data.frame(df)) {
+    stop("Parâmetro 'df' obrigatório e deve ser um data.frame.")
+  }
+  if (missing(file_path) || !is.character(file_path) || length(file_path) != 1) {
+    stop("Parâmetro 'file_path' obrigatório e deve ser uma string única com o caminho.")
+  }
+
+  # Se solicitado, anexa timestamp ao nome do arquivo antes da extensão
+  if (append_timestamp) {
+    ext_index <- regexpr("\\.[^\\.]*$", file_path)
+    timestamp <- format(Sys.time(), "%Y%m%d_%H%M%S")
+    if (ext_index[1] > 0) {
+      file_path <- paste0(substr(file_path, 1, ext_index[1] - 1), "_", timestamp, substr(file_path, ext_index[1], nchar(file_path)))
+    } else {
+      file_path <- paste0(file_path, "_", timestamp, ".csv")
+    }
+  }
+
+  # Garante que o diretório de destino exista
+  dir_path <- dirname(file_path)
+  if (!dir.exists(dir_path)) {
+    dir.create(dir_path, recursive = TRUE, showWarnings = FALSE)
+  }
+
+  # Escrita do arquivo com tratamento de erro
+  result <- tryCatch({
+    # write.table usado para permitir controle fino do separador e encoding
+    write.table(df,
+                file = file_path,
+                sep = sep,
+                na = na,
+                row.names = row.names,
+                col.names = col.names,
+                quote = quote,
+                fileEncoding = fileEncoding)
+    message(sprintf("Arquivo salvo com sucesso em: %s", normalizePath(file_path, winslash = "/")))
+    TRUE
+  }, error = function(e) {
+    message(sprintf("Falha ao salvar arquivo: %s", e$message))
+    FALSE
+  })
+
+  invisible(result)
+}
+
+# Exemplo de uso:
+# save_df_to_csv(df_exemplo, "out/meu_df.csv", append_timestamp = TRUE)  # salva com timestamp
+
+save_df_to_csv(NHANES_men, "out/NHANES_men.csv")  # salva na pasta out
+```
+
+Arquivo com n = 880 observações de homens com idade entre 20 e 29 anos da pesquisa NHANES (2009-2012).
+
+É possível ver o TCL em ação no [statkey](https://www.lock5stat.com/StatKey/index.html). Em especial na aba para gerar uma distribuição amostral das médias amostrais.
+
+O script abaixo simula uma distribuição amostral de tamanho n para BMI.
+
+```{r}
+
+# Gera distribuição amostral das médias (variável BMI) e calcula IC 95%
+# Uso: sample_means_bmi(data_or_vector, bmi_col = "BMI", n = 30, sims = 1000, ...)
+# Retorno: lista com vetor de médias amostrais e estatísticas (inclui intervalos de confiança)
+sample_means_bmi <- function(data_or_vector,
+                             bmi_col = "BMI",
+                             n = 30,
+                             sims = 1000,
+                             replace = TRUE,
+                             seed = NULL,
+                             plot = TRUE,
+                             save_csv = FALSE,
+                             out_file = "sampling_means_bmi.csv",
+                             fileEncoding = "UTF-8",
+                             na.rm = TRUE) {
+  # Validações básicas
+  if (!is.null(seed)) set.seed(as.integer(seed))
+  # Extrai vetor numérico de BMI
+  bmi_vec <- NULL
+  if (is.data.frame(data_or_vector)) {
+    if (!bmi_col %in% names(data_or_vector)) {
+      stop(sprintf("Coluna '%s' não encontrada no data.frame.", bmi_col))
+    }
+    bmi_vec <- data_or_vector[[bmi_col]]
+  } else if (is.numeric(data_or_vector)) {
+    bmi_vec <- data_or_vector
+  } else {
+    stop("data_or_vector deve ser um data.frame ou um vetor numérico.")
+  }
+  # Remove NAs se solicitado
+  if (na.rm) bmi_vec <- bmi_vec[!is.na(bmi_vec)]
+  if (length(bmi_vec) == 0) stop("Vetor BMI está vazio após remoção de NAs.")
+  if (!is.numeric(bmi_vec)) stop("Valores de BMI devem ser numéricos.")
+
+  # Parâmetros populacionais estimados (a partir do vetor fornecido)
+  pop_mean <- mean(bmi_vec)
+  pop_sd   <- sd(bmi_vec)
+
+  # Gerar médias amostrais
+  samp_means <- numeric(sims)
+  for (i in seq_len(sims)) {
+    samp <- sample(bmi_vec, size = n, replace = replace)
+    samp_means[i] <- mean(samp)
+  }
+
+  # Estatísticas da distribuição amostral
+  dist_mean <- mean(samp_means)
+  dist_sd   <- sd(samp_means)
+  # Desvio padrão teórico via TEORIA (se usar pop_sd como "população")
+  theoretical_sd <- pop_sd / sqrt(n)
+
+  # Intervalos de confiança
+  # 1) IC 95% para a média populacional de BMI a partir dos dados (t-test)
+  t_res <- tryCatch(t.test(bmi_vec, conf.level = 0.95), error = function(e) NULL)
+  ci_population <- if (!is.null(t_res)) t_res$conf.int else c(NA_real_, NA_real_)
+
+  # 2) IC 95% para a média amostral baseado na distribuição amostral (teórico)
+  z <- qnorm(0.975)
+  ci_sampling_theoretical <- c(dist_mean - z * theoretical_sd, dist_mean + z * theoretical_sd)
+
+  # 3) IC 95% empírico da própria distribuição simulada (usando desvio empírico)
+  ci_sampling_empirical <- c(dist_mean - z * dist_sd, dist_mean + z * dist_sd)
+
+  stats <- list(
+    population_mean = pop_mean,
+    population_sd = pop_sd,
+    sampling_mean = dist_mean,
+    sampling_sd = dist_sd,
+    theoretical_sd = theoretical_sd,
+    ci_population_95 = ci_population,
+    ci_sampling_theoretical_95 = ci_sampling_theoretical,
+    ci_sampling_empirical_95 = ci_sampling_empirical,
+    sims = sims,
+    n = n,
+    replace = replace
+  )
+
+  # Mensagem resumida com IC
+  message(sprintf("Média (pop): %.4f | IC95%% (pop, t-test): [%.4f, %.4f]",
+                  pop_mean, ci_population[1], ci_population[2]))
+  message(sprintf("Média (amostral): %.4f | IC95%% (teórico): [%.4f, %.4f]",
+                  dist_mean, ci_sampling_theoretical[1], ci_sampling_theoretical[2]))
+
+  # Salvar em CSV se pedido
+  if (save_csv) {
+    df_out <- data.frame(sample_mean = samp_means)
+    write_success <- tryCatch({
+      write.csv(df_out, file = out_file, row.names = FALSE, fileEncoding = fileEncoding)
+      TRUE
+    }, error = function(e) {
+      warning(sprintf("Falha ao salvar CSV: %s", e$message))
+      FALSE
+    })
+    if (write_success) message(sprintf("Distribuição salva em: %s", normalizePath(out_file, mustWork = FALSE)))
+  }
+
+  # Plotagem (base R) — histograma + densidade empírica + curva normal teórica e QQ-plot
+  if (plot) {
+    op <- par(no.readonly = TRUE)
+    on.exit(par(op), add = TRUE)
+    par(mfrow = c(1, 2))
+    # Histograma com densidade empírica
+    hist(samp_means,
+         breaks = max(10, round(sqrt(sims))),
+         prob = TRUE,
+         col = "#cce5ff",
+         border = "#2b6fa6",
+         main = sprintf("Distribuição amostral das médias\n(n = %d, sims = %d)", n, sims),
+         xlab = "Média amostral (BMI)")
+    lines(density(samp_means), col = "#0055a4", lwd = 2) # densidade empírica
+    # Curva normal teórica usando média empírica e desvio teórico
+    curve(dnorm(x, mean = dist_mean, sd = theoretical_sd),
+          col = "#d9534f", lwd = 2, add = TRUE)
+    legend("topright",
+           legend = c("Densidade empírica", "Curva normal (teórica)"),
+           col = c("#0055a4", "#d9534f"),
+           lwd = 2, bty = "n")
+    # Linhas verticais para os ICs
+    abline(v = ci_sampling_theoretical, col = "#d9534f", lty = 2, lwd = 1.5)
+    abline(v = ci_sampling_empirical, col = "#0055a4", lty = 3, lwd = 1.2)
+    # Marca média populacional
+    abline(v = pop_mean, col = "darkgreen", lwd = 2)
+
+    # QQ-plot para checar normalidade da distribuição amostral
+    qqnorm(samp_means, main = "QQ-plot das médias amostrais")
+    qqline(samp_means, col = "red", lwd = 2)
+  }
+
+  invisible(list(sampling_means = samp_means, stats = stats))
+}
+
+# Exemplo de uso:
+# 1) Usando um vetor:
+# bmi_vector <- c(22.1, 24.7, 30.2, 27.4, 23.5, 26.8, 21.9, 28.0, 24.3, 29.1)
+# res <- sample_means_bmi(bmi_vector, n = 5, sims = 1000, replace = TRUE, seed = 123, plot = TRUE)
+#
+# 2) Usando um data.frame com coluna "BMI":
+# df <- data.frame(ID = 1:100, BMI = rnorm(100, mean = 26, sd = 4))
+res <- sample_means_bmi(NHANES_men,
+                        bmi_col = "BMI",
+                        n = 30,
+                        sims = 5000,
+                        replace = TRUE,
+                        save_csv = FALSE,
+                        out_file = "means_bmi.csv")
+#
+# Resultado:
+# - res$sampling_means: vetor com as médias amostrais
+# - res$stats: estatísticas resumidas (média populacional, sd populacional, média da distribuição, sd empírico, sd teórico)
+```
+
+A seguir 4 simulações com amostras de tamanho n = 10, 20, 30 e 50.
+
+```{r}
+
+# Função para gerar médias amostrais (sem plot automático) — versão enxuta da função anterior
+sample_means_bmi <- function(data_or_vector,
+                             bmi_col = "BMI",
+                             n = 30,
+                             sims = 1000,
+                             replace = TRUE,
+                             seed = NULL,
+                             na.rm = TRUE) {
+  if (!is.null(seed)) set.seed(as.integer(seed))
+  bmi_vec <- NULL
+  if (is.data.frame(data_or_vector)) {
+    if (!bmi_col %in% names(data_or_vector)) stop(sprintf("Coluna '%s' não encontrada.", bmi_col))
+    bmi_vec <- data_or_vector[[bmi_col]]
+  } else if (is.numeric(data_or_vector)) {
+    bmi_vec <- data_or_vector
+  } else stop("data_or_vector deve ser data.frame ou vetor numérico.")
+  if (na.rm) bmi_vec <- bmi_vec[!is.na(bmi_vec)]
+  if (length(bmi_vec) == 0) stop("Vetor BMI vazio após remoção de NAs.")
+  pop_mean <- mean(bmi_vec)
+  pop_sd   <- sd(bmi_vec)
+  samp_means <- numeric(sims)
+  for (i in seq_len(sims)) {
+    samp <- sample(bmi_vec, size = n, replace = replace)
+    samp_means[i] <- mean(samp)
+  }
+  dist_mean <- mean(samp_means)
+  dist_sd   <- sd(samp_means)
+  theoretical_sd <- pop_sd / sqrt(n)
+  list(sampling_means = samp_means,
+       stats = list(population_mean = pop_mean,
+                    population_sd = pop_sd,
+                    sampling_mean = dist_mean,
+                    sampling_sd = dist_sd,
+                    theoretical_sd = theoretical_sd,
+                    n = n,
+                    sims = sims,
+                    replace = replace))
+}
+
+# Função para plotar matriz 2x2 com histogramas (n valores padrão: 10,20,30,50)
+plot_sampling_matrix <- function(data_or_vector,
+                                 bmi_col = "BMI",
+                                 ns = c(10, 20, 30, 50),
+                                 sims = 2000,
+                                 replace = TRUE,
+                                 seed = NULL,
+                                 conf.level = 0.95,
+                                 main_title = "Distribuição amostral médias (BMI)",
+                                 colors = list(bg = "#f7fbff", hist = "#cce5ff", dens = "#0055a4", normal = "#d9534f")) {
+  if (!is.null(seed)) set.seed(as.integer(seed))
+  if (length(ns) != 4) stop("Parâmetro 'ns' deve conter exatamente 4 tamanhos para a matriz 2x2.")
+  z <- qnorm((1 + conf.level) / 2)
+  op <- par(no.readonly = TRUE)
+  on.exit(par(op), add = TRUE)
+  par(mfrow = c(2, 2), mar = c(4.2, 4, 3, 1))
+  results <- vector("list", length(ns))
+  names(results) <- paste0("n=", ns)
+  for (i in seq_along(ns)) {
+    n <- ns[i]
+    res <- sample_means_bmi(data_or_vector, bmi_col = bmi_col, n = n, sims = sims, replace = replace)
+    samp_means <- res$sampling_means
+    stats <- res$stats
+    pop_mean <- stats$population_mean
+    dist_mean <- stats$sampling_mean
+    dist_sd <- stats$sampling_sd
+    theoretical_sd <- stats$theoretical_sd
+    ci_theoretical <- c(dist_mean - z * theoretical_sd, dist_mean + z * theoretical_sd)
+    ci_empirical  <- c(dist_mean - z * dist_sd, dist_mean + z * dist_sd)
+    # Histograma
+    hist(samp_means,
+         breaks = max(10, round(sqrt(sims))),
+         prob = TRUE,
+         col = colors$hist,
+         border = "#2b6fa6",
+         main = sprintf("%s (n=%d)", paste0(main_title, "\n") , n),
+         xlab = "Média amostral (BMI)",
+         ylab = "Densidade",
+         ylim = c(0, max(density(samp_means)$y, 0.1)))
+    lines(density(samp_means), col = colors$dens, lwd = 2)
+    curve(dnorm(x, mean = dist_mean, sd = theoretical_sd),
+          col = colors$normal, lwd = 2, add = TRUE)
+    # Linhas IC e média população
+    abline(v = ci_theoretical, col = colors$normal, lty = 2, lwd = 1.5)
+    abline(v = ci_empirical, col = colors$dens, lty = 3, lwd = 1.2)
+    abline(v = pop_mean, col = "darkgreen", lwd = 2)
+    # Legenda compacta com estatísticas principais
+    legend("topright",
+           legend = c(sprintf("µ pop = %.2f", pop_mean),
+                      sprintf("µ samp = %.2f", dist_mean),
+                      sprintf("IC teor. %.0f%%: [%.2f, %.2f]", conf.level*100, ci_theoretical[1], ci_theoretical[2])),
+           bg = "white", cex = 0.9, bty = "n")
+    # Guardar resultado
+    results[[i]] <- list(n = n, sampling_means = samp_means, stats = stats,
+                         ci_theoretical = ci_theoretical, ci_empirical = ci_empirical)
+  }
+  invisible(results)
+}
+
+# Exemplo de uso:
+# 1) Com vetor de BMI
+# bmi_vector <- rnorm(500, mean = 26, sd = 4)
+# plot_sampling_matrix(bmi_vector, ns = c(10,20,30,50), sims = 2000, seed = 123)
+
+#
+# 2) Com data.frame contendo coluna "BMI"
+# df <- data.frame(ID = 1:500, BMI = rnorm(500, 26, 4))
+plot_sampling_matrix(NHANES_men,
+                     bmi_col = "BMI",
+                     ns = c(10,20,30,50),
+                     sims = 2000,
+                     seed = 123)
+```
+
+Verificar o efeito de aumentar o tamanho da amostra para 100, 200, 300, 500 no IC95%.
+
+```{r}
+
+plot_sampling_matrix(NHANES_men,
+                     bmi_col = "BMI",
+                     ns = c(100,200,300,500),
+                     sims = 2000,
+                     seed = 123)
+```
+
+A ideia principal é que a ***distribuição amostral*** de $\bar{x}$ \[***das médias amostrais***\] nos ***diz quão próximo de µ [está]{.underline}***, [**provavelmente**]{.underline}, a ***média amostral*** $\bar{x}$.
+
+A ***estimação*** estatística apenas ***inverte*** essa informação [**para dizer quão perto de**]{.underline} $\bar{x}$ a [**média populacional**]{.underline} µ [**provavelmente estará**]{.underline}.
+
+Chamamos o intervalo de números entre os valores $\bar{x}$ ± 0,8 de [**intervalo de confiança de 95%**]{.underline} para µ.
+
+## Margem de erro e nível de confiança
+
+A maioria dos intervalos de confiança tem forma similar a esta:
+
+$$
+estimativa \pm \text{margem de erro}
+$$
+
+A estimativa ($\bar{x}$ = 27,2 no nosso exemplo) é a [**nossa conjectura**]{.underline} sobre o [**valor**]{.underline} do [**parâmetro desconhecido**]{.underline}.
+
+A margem de erro \[ME\] ±0,8 mostra o [**grau de precisão**]{.underline} que [**acreditamos**]{.underline} que [**nossa conjectura tenha**]{.underline}, [**com base na variabilidade da estimativa**]{.underline}.
+
+Temos [**um intervalo de confiança de 95%**]{.underline} porque o [**intervalo**]{.underline} $\bar{x}$ ± 0,8 [***contém o parâmetro desconhecido em 95% de todas as amostras possíveis***]{.underline}.
+
+Essa [**forma**]{.underline} para um intervalo de confiança e [**sua interpretação**]{.underline} se ***aplicam** à maioria dos **parâmetros*** que consideraremos neste livro, incluindo [**médias**]{.underline} e [**proporções**]{.underline}.
+
+::: callout-important
+## Margem de erro
+
+A margem de erro é um número que é acrescentado a, ou subtraído de uma estimativa estatística para definir o intervalo de confiança a dado nível de confiança.
+:::
+
+Os usuários podem escolher o nível de confiança, quase sempre 90% ou mais, por quererem estar bastante seguros de suas conclusões. O nível de confiança mais comum é 95%.
+
+::: callout-important
+## Intervalo de confiança
+
+Um intervalo de confiança de nível C para um parâmetro tem **duas partes**:
+
+•Um intervalo calculado a partir dos dados, usualmente da **forma**
+
+$$
+estimativa \pm \text{margem de erro}
+$$
+
+•Um **nível de confiança C**, que dá a [**probabilidade**]{.underline} de que [**o intervalo contenha o verdadeiro valor do parâmetro em amostras repetidas**]{.underline}. Ou seja, o nível de confiança [**é a taxa de sucesso do método**]{.underline}.
+:::
+
+NC que tem de ser interpretado do seguinte modo.
+
+::: callout-important
+## Interpretação de um nível de confiança
+
+O nível de confiança [**é a taxa de sucesso do método que produz o intervalo**]{.underline}. Não sabemos se o intervalo de confiança de 95% obtido a partir de uma amostra particular é um dos 95% que contêm µ, ou se é um dos 5% que não contêm.
+
+Dizer que temos 95% de confiança em que o parâmetro desconhecido µ esteja entre 26,4 e 28,0 é uma maneira abreviada de dizer que [**“Obtivemos esses números por um método que fornece resultados corretos em 95% das vezes”**]{.underline}.
+:::
+
+### EXEMPLO 16.2 Estimação estatística em figuras
+
+Um srcipt R que simula 20 IC-NC95% para o `BMI` do data set `NHANES`.
+
+```{r}
+
+# Simula 20 IC 95% para a média do BMI no dataset NHANES e plota os intervalos.
+# Requisitos: pacote 'NHANES' (CRAN). Instale com install.packages("NHANES") se necessário.
+#
+# Uso:
+#   simular_20_ic_bmi_nhanes(nsims = 20, n = 50, seed = 123, replace = TRUE, save_csv = FALSE, out_file = "ic20_bmi.csv")
+#
+simular_20_ic_bmi_nhanes <- function(nsims = 20,
+                                     n = 50,
+                                     seed = 123,
+                                     replace = TRUE,
+                                     bmi_col = "BMI",
+                                     conf.level = 0.95,
+                                     save_csv = FALSE,
+                                     out_file = "ic20_bmi.csv",
+                                     quiet = FALSE) {
+  if (!requireNamespace("NHANES", quietly = TRUE)) {
+    stop("Pacote 'NHANES' não encontrado. Instale com: install.packages('NHANES')")
+  }
+  if (!is.numeric(nsims) || nsims <= 0) stop("'nsims' deve ser inteiro positivo.")
+  if (!is.numeric(n) || n <= 1) stop("'n' deve ser inteiro maior que 1.")
+  set.seed(as.integer(seed))
+
+  data <- NHANES::NHANES
+  if (!bmi_col %in% names(data)) stop(sprintf("Coluna '%s' não encontrada no dataset NHANES.", bmi_col))
+  bmi_all <- data[[bmi_col]]
+  bmi_all <- bmi_all[!is.na(bmi_all)]
+  if (length(bmi_all) < 2) stop("Poucos valores de BMI disponíveis no dataset.")
+
+  # "Média populacional" estimada a partir do dataset completo
+  pop_mean <- mean(bmi_all)
+  z_or_t <- qt((1 + conf.level) / 2, df = n - 1) # t crítico
+
+  # Armazenar resultados
+  res <- data.frame(iter = seq_len(nsims),
+                    mean = numeric(nsims),
+                    sd = numeric(nsims),
+                    se = numeric(nsims),
+                    lower = numeric(nsims),
+                    upper = numeric(nsims),
+                    contains = logical(nsims),
+                    stringsAsFactors = FALSE)
+
+  for (i in seq_len(nsims)) {
+    samp <- sample(bmi_all, size = n, replace = replace)
+    m <- mean(samp)
+    s <- sd(samp)
+    se <- s / sqrt(n)
+    lower <- m - z_or_t * se
+    upper <- m + z_or_t * se
+    contains <- (lower <= pop_mean) && (pop_mean <= upper)
+
+    res$mean[i]  <- m
+    res$sd[i]    <- s
+    res$se[i]    <- se
+    res$lower[i] <- lower
+    res$upper[i] <- upper
+    res$contains[i] <- contains
+  }
+
+  coverage <- mean(res$contains)
+  if (!quiet) {
+    message(sprintf("Média estimada (\"população\" NHANES): %.4f", pop_mean))
+    message(sprintf("Simulações: %d | n = %d | IC nível: %.1f%%", nsims, n, conf.level * 100))
+    message(sprintf("Cobertura observada (proporção de ICs que contêm a média populacional): %.2f%%", coverage * 100))
+  }
+
+  # Plot básico (base R): cada linha = um IC; cor azul = contém, vermelho = não contém
+  x_min <- min(res$lower)
+  x_max <- max(res$upper)
+  op <- par(no.readonly = TRUE)
+  on.exit(par(op), add = TRUE)
+  par(mar = c(4.2, 2.5, 3.2, 1.5))
+  plot(NA, xlim = c(x_min, x_max), ylim = c(0.5, nsims + 0.5),
+       xlab = "Intervalo de Confiança 95% da média (BMI)",
+       ylab = "", yaxt = "n",
+       main = sprintf("20 IC95%% para média do BMI (NHANES) — cobertura: %.1f%%", coverage * 100))
+  axis(2, at = seq_len(nsims), labels = seq_len(nsims), las = 1, cex.axis = 0.8)
+  for (i in seq_len(nsims)) {
+    col <- if (res$contains[i]) "steelblue" else "tomato"
+    segments(x0 = res$lower[i], y0 = i, x1 = res$upper[i], y1 = i, col = col, lwd = 2)
+    points(res$mean[i], i, pch = 16, col = col)
+  }
+  abline(v = pop_mean, col = "darkgreen", lwd = 2)
+  legend("topright", legend = c("Contém média pop.", "Não contém", "Média pop."),
+         col = c("steelblue", "tomato", "darkgreen"), pch = c(16, 16, NA), lty = c(NA, NA, 1), lwd = c(NA, NA, 2),
+         bty = "n")
+
+  # Salvar CSV opcional
+  if (save_csv) {
+    tryCatch({
+      write.csv(res, file = out_file, row.names = FALSE)
+      if (!quiet) message(sprintf("Resultados salvos em: %s", normalizePath(out_file, mustWork = FALSE)))
+    }, error = function(e) warning("Falha ao salvar CSV: ", e$message))
+  }
+
+  invisible(list(results = res, pop_mean = pop_mean, coverage = coverage))
+}
+
+simular_20_ic_bmi_nhanes()
+
+simular_20_ic_bmi_nhanes(nsims = 20, n = 50, seed = 123, replace = TRUE, save_csv = FALSE, out_file = "ic20_bmi.csv")
+```
+
+mmm
