@@ -82,6 +82,7 @@ book:
     - cap16-moore-IC-o-basico.qmd
     - cap17-moore-TSHN-o-basico.qmd
     - cap17-LO-testes-significancia-basico.qmd
+    - cap17-TSHo-Oltramari.qmd
     - cap18-LO-inferencia-na-pratica.qmd
 #    - aula1-CiclosDe.qmd
 #    - aula2-obj-func.qmd

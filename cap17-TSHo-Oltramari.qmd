@@ -1,0 +1,306 @@
+---
+title: "Controle Externo da Atividade Policial (MP-GO)"
+subtitle: "Testes de Significância: Qui-Quadrado"
+author: "Cleuler apud Oltramari (2024)"
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    code-fold: true
+    embed-resources: true
+  pdf:
+    documentclass: article
+    geometry: margin=1in
+    fontsize: 11pt
+lang: pt
+bibliography: references.bib
+---
+
+# Testes de Significância: Oltramari
+
+A seguir, exemplificamos sucintamente a lógica de testes estatísticos.
+
+::: callout-note
+## Exemplo - Felipe Oltramari
+
+Trata-se de pesquisa consistente na verificação da (in)existência de impacto da Resolução n.º 4, de 28 de março de 2022, do Colégio de Procuradores de Justiça do Ministério Público do Estado de Goiás – que redistribuiu a atribuição para atuação na fase investigativa nos crimes militares – na tutela e garantia da cidadania e dos direitos dos cidadãos.
+
+Procurou-se observar, em uma pesquisa empírica, se a norma administrativa possui a eficiência, a eficácia e a efetividade esperadas, daí se extraindo conclusões generalizantes.
+
+Em busca de tal desiderato, foram analisados, dentre outros documentos, todos os **1.978 Registros de Atendimento Integrado** que registraram **mortes decorrentes de intervenção policial** no estado de Goiás entre os anos de **2019 e 2023**.
+
+Também foram pesquisados e acessados **4.995 autos judiciais que apuram a prática de crime de competência da Justiça Militar Estadual** autuados entre **janeiro de 2017 e outubro de 2023**.
+
+Com os dados coletados e tratados, é feita a exposição dos resultados finais da pesquisa.
+
+Analisamos a variação do número de crimes militares investigados no âmbito do próprio Ministério Público; [**comparamos a atuação dos Promotores de Justiça da capital**]{.underline}, que antes possuíam atuação exclusiva tanto da investigação quanto do exercício da *opinio delicti* em matéria afeta à competência da Justiça Militar Estadual, [**com**]{.underline} a **atuação dos Promotores de Justiça do interior**; verificamos eventual existência de interferência dessa forma de atuação, comprovando sua efetividade (ou não) ***sobre o número de mortes decorrentes de ação policial***; analisamos o número de agentes que se envolveram em ações com resultado morte (e também em fatos apurados pela Justiça Militar Estadual) e a [**proporção**]{.underline} entre estes e o número total de agentes ativos lotados em funções operacionais; fizemos levantamento da [**atuação processual**]{.underline} do Ministério Público em matéria de competência da Justiça Militar e da coincidência (ou não) entre sua análise jurídica e a do Juízo; e relacionamos, em Comarca específica, a atuação do Ministério Público em inquéritos policiais que apuram mortes violentas intencionais com a atuação do órgão em inquéritos policiais que apuram morte decorrente de intervenção policial.
+
+Após, considerando-se a data de início da vigência da **Resolução n.º 4, de 28 de março de 2022, do Colégio de Procuradores de Justiça**, um marco temporal divisório, **confrontamos** os resultados finais da pesquisa referente ao **período anterior** com os resultados da pesquisa relativa ao **período posterior**, explorando, finalmente, eventual ***existência ou não de elementos que confirmam a hipótese***.
+
+A contribuição desta pesquisa consiste na revelação de dados de interesse do Ministério Público e de entrega de produto à instituição (aplicativo Métis), aptos a contribuir no desenvolvimento de ações para ***aprimorar*** o [**controle externo da atividade policial**]{.underline} e no [***fomentar políticas públicas de segurança***]{.underline} com enfoque na [***redução***]{.underline} dos [***índices de violência policial no estado de Goiás***]{.underline}.
+:::
+
+## Aplicar um teste de significância da H~0~ {#sec-logica}
+
+Replicar o Teste qui-quadrado da figura abaixo.
+
+![](fig/AJCM-QuiQuad-nAJCM-Gyn&Int-x-ano2022&2023-TesteH-Rejeita-Ho-NC=99.9%.JPG){fig-align="center"}
+
+Atravé do seguinte código.
+
+```{r}
+# TESTE QUI-QUADRADO: num. Autos Judiciais Crime Militar - AJCM x Promotoria (Gyn e Int.)
+# Vara Auditoria Militar - VAM
+# Replicação do gráfico e tabelas da análise estatística
+# Arquivo: AJCM-QuiQuad-nAJCM-Gyn&Int-x-ano2022&2023-TesteH-Rejeita-Ho-NC=99.9%.JPG
+
+# Carregando bibliotecas necessárias
+library(ggplot2)
+library(dplyr)
+library(gridExtra)
+library(knitr)
+library(kableExtra)
+
+# ==============================================================================
+# DADOS OBSERVADOS - AJCM Gynecology & Internal Medicine por Ano: 2022 e 2023
+# ==============================================================================
+
+# Baseado na imagem, criando os dados da tabela de contingência
+# (Ajuste os valores conforme a imagem específica)
+dados_observados <- matrix(c(
+  304, 220,   # 2022: Gyn
+  761, 814    # 2023: Inter
+), nrow = 2, byrow = TRUE,
+dimnames = list(
+  Ano = c("2022", "2023"),
+  Local = c("Gyn", "Inter")
+))
+
+cat("TABELA DE CONTINGÊNCIA - DADOS OBSERVADOS\n")
+print(dados_observados)
+
+# Totais marginais
+totais_linha <- rowSums(dados_observados)
+totais_coluna <- colSums(dados_observados)
+total_geral <- sum(dados_observados)
+
+cat("\nTotais por Ano:\n")
+print(totais_linha)
+cat("\nTotais por Local:\n")
+print(totais_coluna)
+cat("\nTotal Geral:", total_geral, "\n\n")
+
+# ==============================================================================
+# CÁLCULO DAS FREQUÊNCIAS ESPERADAS
+# ==============================================================================
+
+# Frequências esperadas sob H₀ (independência)
+freq_esperadas <- outer(totais_linha, totais_coluna) / total_geral
+
+cat("FREQUÊNCIAS ESPERADAS (sob H₀):\n")
+print(round(freq_esperadas, 2))
+
+# ==============================================================================
+# TESTE QUI-QUADRADO DE INDEPENDÊNCIA
+# ==============================================================================
+
+# Cálculo manual da estatística qui-quadrado
+chi_squared_calc <- sum((dados_observados - freq_esperadas)^2 / freq_esperadas)
+
+# Graus de liberdade
+gl <- (nrow(dados_observados) - 1) * (ncol(dados_observados) - 1)
+
+# Valor crítico para NC = 99.9% (α = 0.001)
+alpha <- 0.001
+chi_critico <- qchisq(1 - alpha, gl)
+
+# Valor P
+p_value <- 1 - pchisq(chi_squared_calc, gl)
+
+# Teste usando função do R para verificação
+teste_chi <- chisq.test(dados_observados)
+
+cat("TESTE QUI-QUADRADO DE INDEPENDÊNCIA\n")
+cat("H₀: Não há associação entre Ano e Local\n")
+cat("H₁: Há associação entre Ano e Local\n")
+cat("Nível de Confiança: 99.9% (α = 0.001)\n\n")
+
+cat("Estatística qui-quadrado calculada:", round(chi_squared_calc, 4), "\n")
+cat("Graus de liberdade:", gl, "\n")
+cat("Valor crítico (α = 0.001):", round(chi_critico, 4), "\n")
+cat("Valor P:", ifelse(p_value < 0.0001, "< 0.0001", round(p_value, 6)), "\n")
+cat("Decisão:", ifelse(chi_squared_calc > chi_critico, "REJEITA H₀", "NÃO REJEITA H₀"), "\n")
+cat("Conclusão:", ifelse(chi_squared_calc > chi_critico, 
+                        "Há evidência significativa de associação", 
+                        "Não há evidência significativa de associação"), "\n\n")
+
+# ==============================================================================
+# TABELA DETALHADA DOS CÁLCULOS
+# ==============================================================================
+
+# Criando tabela detalhada dos cálculos
+calc_detalhado <- data.frame(
+  Célula = c("2022-Gyn", "2022-Int", "2023-Gyn", "2023-Int"),
+  Observado = as.vector(dados_observados),
+  Esperado = round(as.vector(freq_esperadas), 2),
+  Diferença = round(as.vector(dados_observados - freq_esperadas), 2),
+  Qui_Quadrado = round(as.vector((dados_observados - freq_esperadas)^2 / freq_esperadas), 4)
+)
+
+calc_detalhado$Contribuição_Perc <- round(calc_detalhado$Qui_Quadrado / chi_squared_calc * 100, 1)
+
+cat("CÁLCULOS DETALHADOS POR CÉLULA:\n")
+print(calc_detalhado)
+
+# ==============================================================================
+# GRÁFICO DA DISTRIBUIÇÃO QUI-QUADRADO
+# ==============================================================================
+
+# Sequência de valores para o gráfico
+x_seq <- seq(0, max(chi_squared_calc + 2, chi_critico + 2), length.out = 1000)
+y_seq <- dchisq(x_seq, gl)
+
+df_chi <- data.frame(x = x_seq, y = y_seq)
+
+# Região de rejeição
+x_reject <- seq(chi_critico, max(x_seq), length.out = 100)
+y_reject <- dchisq(x_reject, gl)
+df_reject <- data.frame(x = x_reject, y = y_reject)
+
+# Gráfico principal
+p_chi <- ggplot(df_chi, aes(x = x, y = y)) +
+  geom_line(size = 1.2, color = "blue") +
+  geom_area(data = df_reject, aes(x = x, y = y), 
+            fill = "red", alpha = 0.3) +
+  geom_vline(xintercept = chi_critico, color = "red", 
+             linetype = "solid", size = 1.2) +
+  geom_vline(xintercept = chi_squared_calc, color = "darkgreen", 
+             linetype = "dashed", size = 1.5) +
+  geom_point(aes(x = chi_squared_calc, y = dchisq(chi_squared_calc, gl)), 
+             color = "darkgreen", size = 4) +
+  labs(
+    title = "Teste Qui-Quadrado: Ano (2022, 2023) x Local (Gyn, Inter.)",
+    subtitle = paste("H₀: Independência entre Ano e Local | NC = 99.9% | gl =", gl),
+    x = "Estatística Qui-Quadrado (χ²)",
+    y = "Densidade",
+    caption = paste("χ² =", round(chi_squared_calc, 3), 
+                   "| χ² crítico =", round(chi_critico, 3),
+                   "| Decisão:", ifelse(chi_squared_calc > chi_critico, "REJEITA H₀", "NÃO REJEITA H₀"))
+  ) +
+  annotate("text", x = chi_critico, y = max(y_seq) * 0.8, 
+           label = paste("χ² crítico =", round(chi_critico, 3)), 
+           angle = 90, vjust = -0.5, color = "red", size = 3) +
+  annotate("text", x = chi_squared_calc, y = max(y_seq) * 0.6, 
+           label = paste("χ² observado =", round(chi_squared_calc, 3)), 
+           angle = 90, vjust = 1.2, color = "darkgreen", size = 3) +
+  annotate("text", x = (chi_critico + max(x_seq))/2, y = max(y_seq) * 0.4, 
+           label = paste("Região de\nRejeição\nα =", alpha), 
+           color = "red", size = 3, hjust = 0.5) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 14, face = "bold"),
+    plot.subtitle = element_text(hjust = 0.5, size = 12),
+    plot.caption = element_text(hjust = 0.5, size = 10, face = "bold")
+  )
+
+print(p_chi)
+
+# ==============================================================================
+# GRÁFICO DE BARRAS COMPARATIVO
+# ==============================================================================
+
+# Preparando dados para gráfico de barras
+dados_long <- data.frame(
+  Ano = rep(c("2022", "2023"), each = 2),
+  Local = rep(c("Gyn", "Inter"), 2),
+  Frequencia = as.vector(dados_observados),
+  Tipo = "Observado"
+)
+
+dados_esp_long <- data.frame(
+  Ano = rep(c("2022", "2023"), each = 2),
+  Local = rep(c("Gyn", "Inter"), 2),
+  Frequencia = as.vector(freq_esperadas),
+  Tipo = "Esperado"
+)
+
+dados_comparacao <- rbind(dados_long, dados_esp_long)
+
+p_barras <- ggplot(dados_comparacao, aes(x = Ano,
+                                         y = Frequencia,
+                                         fill = Local,
+                                         alpha = Tipo)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  scale_alpha_manual(values = c("Observado" = 0.8, "Esperado" = 0.4)) +
+  scale_fill_manual(values = c("Gyn" = "#E69F00", "Inter" = "#56B4E9")) +
+  labs(
+    title = "Frequências Observadas vs Esperadas",
+    subtitle = "num. AJCM: Local por Ano",
+    x = "Ano",
+    y = "Frequência",
+    fill = "Local",
+    alpha = "Tipo"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 14, face = "bold"),
+    plot.subtitle = element_text(hjust = 0.5, size = 12),
+    legend.position = "bottom"
+  )
+
+print(p_barras)
+
+# ==============================================================================
+# TABELA RESUMO FINAL
+# ==============================================================================
+
+# Criando tabela resumo para apresentação
+tabela_resumo <- data.frame(
+  Parâmetro = c("Estatística χ²", "Graus de Liberdade", "Valor Crítico", 
+                "Valor P", "Nível de Significância", "Decisão", "Conclusão"),
+  Valor = c(
+    round(chi_squared_calc, 4),
+    gl,
+    round(chi_critico, 4),
+    ifelse(p_value < 0.0001, "< 0.0001", round(p_value, 6)),
+    paste0(alpha * 100, "%"),
+    ifelse(chi_squared_calc > chi_critico, "REJEITA H₀", "NÃO REJEITA H₀"),
+    ifelse(chi_squared_calc > chi_critico, 
+           "Associação significativa", "Sem associação significativa")
+  )
+)
+
+cat("\nRESUMO DO TESTE QUI-QUADRADO:\n")
+print(tabela_resumo, row.names = FALSE)
+
+# ==============================================================================
+# MEDIDAS DE ASSOCIAÇÃO
+# ==============================================================================
+
+# Coeficiente de contingência
+C <- sqrt(chi_squared_calc / (chi_squared_calc + total_geral))
+
+# V de Cramér
+V <- sqrt(chi_squared_calc / (total_geral * min(nrow(dados_observados) - 1, 
+                                               ncol(dados_observados) - 1)))
+
+cat("\nMEDIDAS DE ASSOCIAÇÃO:\n")
+cat("Coeficiente de Contingência (C):", round(C, 4), "\n")
+cat("V de Cramér:", round(V, 4), "\n")
+cat("Interpretação:", ifelse(V < 0.1, "Associação fraca", 
+                            ifelse(V < 0.3, "Associação moderada", "Associação forte")), "\n")
+
+# Salvando resultados em arquivo (opcional)
+# write.csv(dados_observados, "ajcm_dados_observados.csv")
+# ggsave("ajcm_teste_qui_quadrado.png", p_chi, width = 12, height = 8, dpi = 300)
+```
+
+Os resultados acima evidenciam uma significância estatística (valor P \< 0,1%), para um Nível de Confiaça de 99,9%, de que **há uma associação significativa**, todavia fraca, para a distribuição do número de Autos Judiciais de Crimes Militares (AJCM com origem no MP-GO) entre o Ano (2022 - antes e 2023 - depois da Resolução CPJ n. 04/2022 do MP-GO) e o Local da Promotora (Gyn e Interior).
+
+mmm
+
+------------------------------------------------------------------------
+
+**Referências**: Este material é baseado em Oltramari, Felipe. *Controle Externo da Atividade Policial como questão de Política Pública*: análise do arranjo institucional da função persecutória-investigativa no âmbito do Ministério Público. Goiânia: 2024, PPGDP (linha 2). Relatório final de pesquisa.
