@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="pt-BR" xml:lang="pt-BR"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.8.25">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Cleuler Barbosa das Neves">
 <title>7&nbsp; AED - cap 6 moore - Tabelas de Dupla Entrada – __Ciência de Dados e Estatística Aplicadas ao Direito e Políticas Públicas__</title>
@@ -86,14 +86,15 @@ div.csl-indent {
 <link href="./cap16-pldr-EstMultiv.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-364982630eef5352dd1537128a8ed5cb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-70a47bd5681a7291082a5b9f83d58762.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -130,7 +131,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -162,7 +163,9 @@ window.Quarto = {
     </div>
   </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./"><strong>Ciência de Dados e Estatística Aplicadas ao Direito e Políticas Públicas</strong></a> 
         <div class="sidebar-tools-main">
@@ -249,8 +252,14 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./cap18-LO-inferencia-na-pratica.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Inferência na Prática</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./conclusao.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Conclusão</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Conclusão</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -339,7 +348,7 @@ window.Quarto = {
 <p>Assim como com variáveis quantitativas, devemos estar alertas para a influência de variáveis ocultas, e tomar cuidado para não assumirmos que os padrões que observamos continuem a valer para dados adicionais ou em um contexto mais amplo. <span class="citation" data-cites="Moore2023">(<a href="referencias.html#ref-Moore2023" role="doc-biblioref">MOORE; NOTZ; FLIGNER, 2023</a> , p.&nbsp;130)</span>.</p>
 </blockquote>
 <div class="cell">
-<details class="code-fold"><summary>Código</summary><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<details class="code-fold"><summary>Código</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(NHANES)</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cowplot)</span>
@@ -354,7 +363,7 @@ window.Quarto = {
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">digits =</span> <span class="dv">2</span>)</span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123456</span>) <span class="co"># set random seed to exactly replicate results</span></span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <section id="objetivos-da-aprendizagem" class="level2" data-number="7.1"><h2 data-number="7.1" class="anchored" data-anchor-id="objetivos-da-aprendizagem">
@@ -370,7 +379,7 @@ window.Quarto = {
 <p>Em 2017, o órgão norte-americano National Center for Education Statistics fez uma projeção do número de graus acadêmicos a serem dados em 2020 e 2021 para homens e mulheres. A Tabela 6.1 mostra suas projeções.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Essa é uma tabela de dupla entrada porque descreve duas variáveis categóricas. Uma é o sexo de um indivíduo. A outra é o grau acadêmico recebido. Sexo é a variável linha porque cada linha na tabela descreve o sexo de um indivíduo. Grau acadêmico conferido é a variável coluna porque cada coluna descreve um grau. Como o grau acadêmico conferido tem uma ordem natural, desde “Associado” a “Doutor”, as colunas estão nessa ordem. As entradas na tabela são as contagens de indivíduos (em milhares) em cada classe de sexo por grau acadêmico.</p>
 <p>As entradas na margem direita são os totais das entradas das linhas, as entradas na margem inferior são os totais das entradas das colunas, e a entrada embaixo à direita é o total de todos os estudantes previstos para receberem um grau acadêmico no período de 2020 e 2021.</p>
 <div class="cell">
-<details class="code-fold"><summary>Código</summary><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<details class="code-fold"><summary>Código</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Graus acadêmicos por sexo (com ordem explícita dos fatores)</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>grausex <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">sex  =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"M"</span>, <span class="dv">2283</span>), <span class="fu">rep</span>(<span class="st">"H"</span>, <span class="dv">1622</span>)),</span>
@@ -383,7 +392,7 @@ window.Quarto = {
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># tabela multiway do data.frame (mantém a ordem dos níveis)</span></span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(grausex)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>   grau
 sex  ass bach   ms   dr
@@ -393,7 +402,7 @@ sex  ass bach   ms   dr
 </div>
 <p>Acrescentar os totais marginais de linhas e de colunas.</p>
 <div class="cell">
-<details class="code-fold"><summary>Código</summary><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<details class="code-fold"><summary>Código</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Tabela de contingência (linhas = sexo, colunas = grau)</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> <span class="fu">table</span>(grausex<span class="sc">$</span>sex, grausex<span class="sc">$</span>grau)</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -411,7 +420,7 @@ sex  ass bach   ms   dr
 <span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Exemplo: acessar apenas totais de linha ou coluna (se precisar)</span></span>
 <span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co"># margin.table(tab, 1)  # totais por grau (linhas)</span></span>
 <span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co"># margin.table(tab, 2)  # totais por sexo (colunas)</span></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>
 Tabela com totais marginais:
@@ -428,7 +437,7 @@ Tabela com totais marginais:
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Tabela de dupla entrada
+<span class="screen-reader-only">Importante</span>Tabela de dupla entrada
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -449,7 +458,7 @@ Tabela de dupla entrada
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Distribuições marginais
+<span class="screen-reader-only">Importante</span>Distribuições marginais
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -462,7 +471,7 @@ Distribuições marginais
 <section id="exemplo-6.2-cálculo-de-uma-distribuição-marginal" class="level3" data-number="7.2.1"><h3 data-number="7.2.1" class="anchored" data-anchor-id="exemplo-6.2-cálculo-de-uma-distribuição-marginal">
 <span class="header-section-number">7.2.1</span> Exemplo 6.2 Cálculo de uma distribuição marginal</h3>
 <div class="cell">
-<details class="code-fold"><summary>Código</summary><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<details class="code-fold"><summary>Código</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Marginais em contagem ---</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Totais por linha (por sexo)</span></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>margem_linhas <span class="ot">&lt;-</span> <span class="fu">margin.table</span>(tab, <span class="dv">1</span>)</span>
@@ -512,7 +521,7 @@ Distribuições marginais
 <span id="cb7-48"><a href="#cb7-48" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(resumo_sexo)</span>
 <span id="cb7-49"><a href="#cb7-49" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Resumo por grau (contagem + proporção do total):</span><span class="sc">\n</span><span class="st">"</span>)</span>
 <span id="cb7-50"><a href="#cb7-50" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(resumo_grau)</span>
-<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-51"><a href="#cb7-51" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>
 Marginal — por sexo (contagem):
@@ -569,7 +578,7 @@ Resumo por grau (contagem + proporção do total):
 <p>Cada distribuição marginal de uma tabela de dupla entrada é uma distribuição para uma única variável categórica. Como vimos no Capítulo 1, podemos usar um gráfico de barras ou um gráfico de setores para apresentar essa distribuição. A Figura 6.1 é um gráfico de barras da distribuição de sexo entre os estudantes na amostra.</p>
 <p>Ao trabalhar com uma tabela de dupla entrada, você deve calcular muitos percentuais. Aqui está uma sugestão para ajudá-lo a decidir qual fração dá o percentual que você deseja. Pergunte-se: “qual grupo representa o total do qual eu desejo uma porcentagem?” A contagem para esse grupo é o denominador da fração que leva à porcentagem. No Exemplo 6.2, desejamos a porcentagem “de estudantes”, de modo que a contagem de estudantes (o total da tabela) é o denominador.</p>
 <div class="cell">
-<details class="code-fold"><summary>Código</summary><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<details class="code-fold"><summary>Código</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Pacotes necessários (instala se não existir)</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"ggplot2"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) <span class="fu">install.packages</span>(<span class="st">"ggplot2"</span>)</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"scales"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) <span class="fu">install.packages</span>(<span class="st">"scales"</span>)</span>
@@ -626,7 +635,7 @@ Resumo por grau (contagem + proporção do total):
 <span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p_grau_prop)</span>
 <span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a><span class="co"># ggsave("barra_grau_proporcao.png", p_grau_prop, width = 7, height = 4)</span></span>
-<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="cap6-moore-tab-dupla-entrada_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
@@ -658,7 +667,7 @@ Resumo por grau (contagem + proporção do total):
 <span class="header-section-number">7.2.2.1</span> 6.1 Videogames e conceitos.</h4>
 <p>A popularidade do computador, vídeo, internet e de jogos de realidade virtual tem aumentado a preocupação sobre sua capacidade de impactar negativamente a juventude. Os dados neste exercício se baseiam em pesquisa recente com alunos do Ensino Médio com idade entre 14 a 18 anos, em escolas de Connecticut. Eis as distribuições das notas dos meninos que jogaram e que não jogaram videogame.</p>
 <div class="cell">
-<details class="code-fold"><summary>Código</summary><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<details class="code-fold"><summary>Código</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Tabela de contingência: Conceito x Jogaram videogame</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Linhas: status (Jogaram / Nunca jogaram)</span></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Colunas: Conceito (As e Bs, Cs, Ds e Fs)</span></span>
@@ -684,7 +693,7 @@ Resumo por grau (contagem + proporção do total):
 <span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Exibir tabela original</span></span>
 <span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Tabela de contingência (contagens):</span><span class="sc">\n</span><span class="st">"</span>)</span>
 <span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(tab)</span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>Tabela de contingência (contagens):
                          Conceito
@@ -696,7 +705,7 @@ Status                    As e Bs  Cs Ds e Fs
 <p>(a) Quantas pessoas essa tabela descreve? Quantas delas jogaram videogame?</p>
 <p>(b) Dê a distribuição marginal dos conceitos. Qual percentual dos meninos representados na tabela teve conc eito C ou menos?</p>
 <div class="cell">
-<details class="code-fold"><summary>Código</summary><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<details class="code-fold"><summary>Código</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Adicionar totais marginais (linha e coluna) e renomear para "Total"</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>tab_totais <span class="ot">&lt;-</span> <span class="fu">addmargins</span>(tab)</span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(tab_totais)[<span class="fu">nrow</span>(tab_totais)] <span class="ot">&lt;-</span> <span class="st">"Total"</span></span>
@@ -754,7 +763,7 @@ Status                    As e Bs  Cs Ds e Fs
 <span id="cb12-56"><a href="#cb12-56" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(resumo_status)</span>
 <span id="cb12-57"><a href="#cb12-57" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Resumo por conceito:</span><span class="sc">\n</span><span class="st">"</span>)</span>
 <span id="cb12-58"><a href="#cb12-58" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(resumo_conceito)</span>
-<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-59"><a href="#cb12-59" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>
 Tabela com totais marginais:
@@ -823,7 +832,7 @@ Resumo por conceito:
 <span class="header-section-number">7.2.2.2</span> 6.2 Idades de Universitários.</h4>
 <p>Eis uma tabela de dupla entrada de dados do U.S. Census Bureau que descreve a idade e o gênero de todos os alunos universitários americanos. As entradas na tabela são contagens em milhares de estudantes.</p>
 <div class="cell">
-<details class="code-fold"><summary>Código</summary><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<details class="code-fold"><summary>Código</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Montar tabela Faixa etária x Sexo</span></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Linhas: faixas etárias (na ordem desejada)</span></span>
 <span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Colunas: Mulher, Homem</span></span>
@@ -848,7 +857,7 @@ Resumo por conceito:
 <span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a><span class="co"># Exibir tabela original</span></span>
 <span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Tabela Faixa etária x Sexo (contagens):</span><span class="sc">\n</span><span class="st">"</span>)</span>
 <span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(tab_faixa)</span>
-<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>Tabela Faixa etária x Sexo (contagens):
                 Mulher Homem
@@ -861,7 +870,7 @@ Resumo por conceito:
 <p>(a) Há quantos alunos universitários?</p>
 <p>(b) Encontre a distribuição marginal das faixas etárias. Qual percentual de universitários está na faixa etária de 20 a 24 anos?</p>
 <div class="cell">
-<details class="code-fold"><summary>Código</summary><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<details class="code-fold"><summary>Código</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Adicionar totais marginais (linhas e colunas)</span></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>tab_com_totais <span class="ot">&lt;-</span> <span class="fu">addmargins</span>(tab_faixa)</span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Renomear as margens para "Total" (substitui o rótulo padrão)</span></span>
@@ -892,7 +901,7 @@ Resumo por conceito:
 <span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Data.frame (long) pronto para plotagem/exportação:</span><span class="sc">\n</span><span class="st">"</span>)</span>
 <span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(df_long)</span>
-<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>
 Tabela com totais marginais:
@@ -933,7 +942,7 @@ Data.frame (long) pronto para plotagem/exportação:
 <p>Respostas:</p>
 <p>(a) Há 18397 alunos universitários no total.</p>
 <div class="cell">
-<details class="code-fold"><summary>Código</summary><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<details class="code-fold"><summary>Código</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># --- Distribuição marginal por faixa etária (contagens) ---</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>margem_faixa <span class="ot">&lt;-</span> <span class="fu">margin.table</span>(tab_faixa, <span class="dv">1</span>)   <span class="co"># soma sobre colunas =&gt; total por faixa</span></span>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Marginal (contagem) por faixa etária:</span><span class="sc">\n</span><span class="st">"</span>)</span>
@@ -945,7 +954,7 @@ Data.frame (long) pronto para plotagem/exportação:
 <span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Marginal (proporção) por faixa etária (em %):</span><span class="sc">\n</span><span class="st">"</span>)</span>
 <span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">round</span>(<span class="dv">100</span> <span class="sc">*</span> prop_faixa, <span class="dv">2</span>))            <span class="co"># exibir porcentagem com 2 casas</span></span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>
 Marginal (contagem) por faixa etária:
@@ -974,7 +983,7 @@ Marginal (proporção) por faixa etária (em %):
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Distribuições condicionais
+<span class="screen-reader-only">Importante</span>Distribuições condicionais
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -993,7 +1002,7 @@ Distribuições condicionais
 </div>
 <p>Gerar gráficos de barras empilhadas lado a lado para essas duas distribuições condicionais.</p>
 <div class="cell">
-<details class="code-fold"><summary>Código</summary><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<details class="code-fold"><summary>Código</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar data.frame com fatores e ordem explícita dos níveis</span></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>grausex <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">sex  =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"M"</span>, <span class="dv">2283</span>), <span class="fu">rep</span>(<span class="st">"H"</span>, <span class="dv">1622</span>)), <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"M"</span>, <span class="st">"H"</span>)),</span>
@@ -1042,7 +1051,7 @@ Distribuições condicionais
 <span id="cb20-47"><a href="#cb20-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribuição condicional: Grau dado o Sexo"</span>,</span>
 <span id="cb20-48"><a href="#cb20-48" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Sexo"</span>, <span class="at">y =</span> <span class="st">"Proporção (grau | sexo)"</span>) <span class="sc">+</span></span>
 <span id="cb20-49"><a href="#cb20-49" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
-<span id="cb20-50"><a href="#cb20-50" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-50"><a href="#cb20-50" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>Tabela de contagens (linhas = sexo, colunas = grau):
    
@@ -1084,7 +1093,7 @@ Data.frame com contagem + proporção condicional (ordenado):
 <p>No entanto, em geral, as porcentagens podem não ter soma exatamente 100% porque arredondamos para um número fixo de casas decimais. Esse é o <u><strong>erro de arredondamento</strong></u>, e vemos que há erro de arredondamento aqui.</p>
 <p>O mesmo gráfico mais elaborado: barras empilhadas lado a lado para essas duas distribuições condicionais com indicação dos percentuais de cada classe de <code>graus</code> dentro de cada classe de <code>sexo</code>.</p>
 <div class="cell">
-<details class="code-fold"><summary>Código</summary><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<details class="code-fold"><summary>Código</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Pacotes necessários</span></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"ggplot2"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) <span class="fu">install.packages</span>(<span class="st">"ggplot2"</span>)</span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">requireNamespace</span>(<span class="st">"scales"</span>, <span class="at">quietly =</span> <span class="cn">TRUE</span>)) <span class="fu">install.packages</span>(<span class="st">"scales"</span>)</span>
@@ -1135,7 +1144,7 @@ Data.frame com contagem + proporção condicional (ordenado):
 <span id="cb22-49"><a href="#cb22-49" aria-hidden="true" tabindex="-1"></a><span class="co"># - position = "fill" transforma as alturas em proporções por sexo (P(grau | sexo)).</span></span>
 <span id="cb22-50"><a href="#cb22-50" aria-hidden="true" tabindex="-1"></a><span class="co"># - Rótulos aparecem apenas quando proporção &gt;= 3% (ajuste em df$label_pct).</span></span>
 <span id="cb22-51"><a href="#cb22-51" aria-hidden="true" tabindex="-1"></a><span class="co"># - A ordem dos graus é preservada pelos levels definidos em grausex$grau.</span></span>
-<span id="cb22-52"><a href="#cb22-52" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-52"><a href="#cb22-52" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="cap6-moore-tab-dupla-entrada_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
@@ -1150,7 +1159,7 @@ Data.frame com contagem + proporção condicional (ordenado):
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Erro de Arredondamento
+<span class="screen-reader-only">Importante</span>Erro de Arredondamento
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1163,7 +1172,7 @@ Erro de Arredondamento
 <p>Poderíamos também examinar as <u>quatro distribuições condicionais de sexo</u>, <u>uma para cada categoria de grau conferido</u>, olhando separadamente as quatro colunas na Tabela 6.1. A Figura 6.3(b) faz essa comparação em um gráfico de barras, novamente com barras separadas para homens e mulheres, lado a lado, para cada categoria de grau. Note que os percentuais de cada par lado a lado têm soma 100%. A Figura 6.3(c) também faz essa comparação. Em (c), cada barra é dividida (segmentada) em duas partes, representadas por dois tons de cinza. A porção superior de cada barra representa a proporção de mulheres que receberam cada grau. A porção inferior representa a proporção de homens. Cada barra tem altura 1, porque cada barra representa todos os estudantes em cada grupo diferente de pessoas. Gráficos de barras como esse na Figura 6.3(c), nos quais cada barra é dividida em partes, cada parte representando uma categoria diferente, são algumas vezes chamados de <strong><em>gráficos de barras segmentadas</em></strong>.</p>
 <p>Gerar esses gráficos.</p>
 <div class="cell">
-<details class="code-fold"><summary>Código</summary><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<details class="code-fold"><summary>Código</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Preparar data.frame com contagens por grau x sexo</span></span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">table</span>(grausex<span class="sc">$</span>grau, grausex<span class="sc">$</span>sex))</span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"grau"</span>, <span class="st">"sexo"</span>, <span class="st">"contagem"</span>)</span>
@@ -1196,7 +1205,7 @@ Erro de Arredondamento
 <span id="cb23-31"><a href="#cb23-31" aria-hidden="true" tabindex="-1"></a><span class="co"># Observações:</span></span>
 <span id="cb23-32"><a href="#cb23-32" aria-hidden="true" tabindex="-1"></a><span class="co"># - Cada grupo em x (grau) contém duas barras: Mulher e Homem, lado a lado.</span></span>
 <span id="cb23-33"><a href="#cb23-33" aria-hidden="true" tabindex="-1"></a><span class="co"># - Ajuste width/position_dodge para espaçamento diferente entre as barras.</span></span>
-<span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb23-34"><a href="#cb23-34" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="cap6-moore-tab-dupla-entrada_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
@@ -1206,7 +1215,7 @@ Erro de Arredondamento
 </div>
 <p>Mesmo gráfico acima agora com proporções no eixo y ao invés de contagens.</p>
 <div class="cell">
-<details class="code-fold"><summary>Código</summary><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<details class="code-fold"><summary>Código</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar data.frame com fatores e ordem explícita dos níveis</span></span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>grausex <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">sex  =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"M"</span>, <span class="dv">2283</span>), <span class="fu">rep</span>(<span class="st">"H"</span>, <span class="dv">1622</span>)), <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"M"</span>, <span class="st">"H"</span>)),</span>
@@ -1268,7 +1277,7 @@ Erro de Arredondamento
 <span id="cb24-60"><a href="#cb24-60" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-61"><a href="#cb24-61" aria-hidden="true" tabindex="-1"></a><span class="co"># Exibir gráfico</span></span>
 <span id="cb24-62"><a href="#cb24-62" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p)</span>
-<span id="cb24-63"><a href="#cb24-63" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-63"><a href="#cb24-63" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="cap6-moore-tab-dupla-entrada_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
@@ -1278,7 +1287,7 @@ Erro de Arredondamento
 </div>
 <p>Mesmo gráfico acima com barras empilhadas.</p>
 <div class="cell">
-<details class="code-fold"><summary>Código</summary><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<details class="code-fold"><summary>Código</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Gerar gráfico de barras empilhadas (horizontais) mostrando P(sexo | grau)</span></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Cada barra representa um grau; segmentos mostram a proporção de Mulher/Homem dentro desse grau.</span></span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1333,7 +1342,7 @@ Erro de Arredondamento
 <span id="cb25-53"><a href="#cb25-53" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb25-54"><a href="#cb25-54" aria-hidden="true" tabindex="-1"></a><span class="co"># Exibir gráfico</span></span>
 <span id="cb25-55"><a href="#cb25-55" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p)</span>
-<span id="cb25-56"><a href="#cb25-56" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb25-56"><a href="#cb25-56" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="cap6-moore-tab-dupla-entrada_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
@@ -1343,7 +1352,7 @@ Erro de Arredondamento
 </div>
 <p>Mesmo gráfico anterior com as classes do grau ordenadas de cima para baixo.</p>
 <div class="cell">
-<details class="code-fold"><summary>Código</summary><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<details class="code-fold"><summary>Código</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Gráfico de barras empilhadas horizontais com as classes de 'grau'</span></span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ordenadas de cima para baixo (controle via levels do fator).</span></span>
 <span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1404,7 +1413,7 @@ Erro de Arredondamento
 <span id="cb26-59"><a href="#cb26-59" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-60"><a href="#cb26-60" aria-hidden="true" tabindex="-1"></a><span class="co"># Exibir gráfico</span></span>
 <span id="cb26-61"><a href="#cb26-61" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p)</span>
-<span id="cb26-62"><a href="#cb26-62" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb26-62"><a href="#cb26-62" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="cap6-moore-tab-dupla-entrada_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
@@ -1420,7 +1429,7 @@ Erro de Arredondamento
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Gráfico de Barras Segmentadas
+<span class="screen-reader-only">Importante</span>Gráfico de Barras Segmentadas
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1430,7 +1439,7 @@ Gráfico de Barras Segmentadas
 <p>A Figura 6.4 mostra um gráfico de mosaico, que é uma variação de um gráfico de barras segmentadas.</p>
 <p>Agora, as barras têm larguras diferentes, e essas larguras correspondem à proporção de estudantes em cada uma das quatro categorias de grau. Assim, as larguras mostram a distribuição marginal do grau conferido. Cada barra é, novamente, dividida (segmentada) em duas partes, representadas por dois tons de cinza. A porção superior (cinza-claro) de cada barra representa a proporção de mulheres entre os estudantes que receberam cada um dos graus. A outra porção (cinza-escuro) representa a proporção de homens. Cada barra tem altura de 100%, porque cada barra representa todos os adultos em cada grupo diferente de pessoas. O gráfico de mosaico é mais informativo do que o gráfico de barras segmentadas porque mostra a distribuição marginal do grau conferido, bem como a distribuição condicional de sexo, dado o grau conferido.</p>
 <div class="cell">
-<details class="code-fold"><summary>Código</summary><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<details class="code-fold"><summary>Código</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Gráfico mosaico para Grau x Sexo (preserva ordem dos níveis)</span></span>
 <span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Instala e carrega pacote vcd opcionalmente (melhor visual). Fallback para mosaicplot().</span></span>
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1470,7 +1479,7 @@ Gráfico de Barras Segmentadas
 <span id="cb27-38"><a href="#cb27-38" aria-hidden="true" tabindex="-1"></a>             <span class="at">xlab =</span> <span class="st">"Grau"</span>, <span class="at">ylab =</span> <span class="st">"Sexo"</span>,</span>
 <span id="cb27-39"><a href="#cb27-39" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> <span class="cn">TRUE</span>, <span class="at">las =</span> <span class="dv">1</span>)</span>
 <span id="cb27-40"><a href="#cb27-40" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb27-41"><a href="#cb27-41" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb27-41"><a href="#cb27-41" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>      
        Mulher Homem
@@ -1492,7 +1501,7 @@ Gráfico de Barras Segmentadas
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Gráfico de mosaico
+<span class="screen-reader-only">Importante</span>Gráfico de mosaico
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1501,7 +1510,7 @@ Gráfico de mosaico
 </div>
 <p>Mesmo gráfico acima indicando as percentagens no eixo y e seu valor dentro de cada mosaico.</p>
 <div class="cell">
-<details class="code-fold"><summary>Código</summary><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<details class="code-fold"><summary>Código</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Mosaic-like com eixo y em percentagem (corrigido)</span></span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Corrige erro: "subset(...) deve ser lógico" substituindo uso incorreto de subset por indexação com match()</span></span>
 <span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1590,7 +1599,7 @@ Gráfico de mosaico
 <span id="cb29-87"><a href="#cb29-87" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid =</span> <span class="fu">element_blank</span>())</span>
 <span id="cb29-88"><a href="#cb29-88" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb29-89"><a href="#cb29-89" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p)</span>
-<span id="cb29-90"><a href="#cb29-90" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb29-90"><a href="#cb29-90" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="cap6-moore-tab-dupla-entrada_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
@@ -1602,7 +1611,7 @@ Gráfico de mosaico
 <p>Precisaríamos de outro gráfico para apresentar o outro (a distribuição condicional de grau conferido, dado o sexo). Também, os gráficos nas Figuras 6.3 e 6.4 indicam apenas porcentagens ou proporções, não contagens totais.</p>
 <p>Script R comentado para o gráfico mosaico anterior agora para o <code>grau</code> dado o <code>sexo</code>.</p>
 <div class="cell">
-<details class="code-fold"><summary>Código</summary><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<details class="code-fold"><summary>Código</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Mosaic-like: Grau dado o Sexo (P(grau | sexo)) com rótulos "Mulher" / "Homem"</span></span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Legenda de 'Grau' invertida (ordem mostrada de cima para baixo invertida)</span></span>
 <span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -1692,7 +1701,7 @@ Gráfico de mosaico
 <span id="cb30-88"><a href="#cb30-88" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="dv">0</span>, <span class="at">size =</span> <span class="dv">9</span>, <span class="at">face =</span> <span class="st">"italic"</span>, <span class="at">margin =</span> <span class="fu">margin</span>(<span class="at">t =</span> <span class="dv">8</span>)))</span>
 <span id="cb30-89"><a href="#cb30-89" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb30-90"><a href="#cb30-90" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p)</span>
-<span id="cb30-91"><a href="#cb30-91" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb30-91"><a href="#cb30-91" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="cap6-moore-tab-dupla-entrada_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
@@ -1706,7 +1715,7 @@ Gráfico de mosaico
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Gráficos!
+<span class="screen-reader-only">Importante</span>Gráficos!
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1724,7 +1733,7 @@ Gráficos!
 <p>O Exercício 6.1 fornece os dados sobre a distribuição de conceitos de meninos que jogaram e não jogaram videogames.</p>
 <p>Para <strong><em>ver a relação</em></strong> entre <code>conceitos</code> e <code>jogar videogames</code>, <u><strong>determine as distribuições condicionais de conceitos (a variável resposta) para jogadores e não jogadores</strong></u>. O que você conclui?</p>
 <div class="cell">
-<details class="code-fold"><summary>Código</summary><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<details class="code-fold"><summary>Código</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar tabela agregada: Conceito x Jogaram videogame</span></span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>counts <span class="ot">&lt;-</span> <span class="fu">matrix</span>(</span>
 <span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(</span>
@@ -1796,7 +1805,7 @@ Gráficos!
 <span id="cb31-70"><a href="#cb31-70" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>))</span>
 <span id="cb31-71"><a href="#cb31-71" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb31-72"><a href="#cb31-72" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(p)</span>
-<span id="cb31-73"><a href="#cb31-73" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb31-73"><a href="#cb31-73" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>Tabela de contagens (linhas = status, colunas = conceito):
                         As e Bs  Cs Ds e Fs
@@ -1841,7 +1850,7 @@ Tamanho da amostra: 1808 </code></pre>
 <p>O Exercício 6.2 fornece dados do <em>U.S. Census Bureau</em> que descrevem a <code>idade</code> e o <code>sexo</code> de todos os estudantes universitários americanos.</p>
 <p>Suspeitamos de que o percentual de mulheres seja maior entre estudantes na faixa etária de 25 a 34 anos do que na faixa etária de 20 a 24 anos. Os dados apoiam essa suspeita? Siga o processo dos quatro passos, como ilustrado no Exemplo 6.3.</p>
 <div class="cell">
-<details class="code-fold"><summary>Código</summary><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<details class="code-fold"><summary>Código</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Análise: comparar percentual de mulheres em 25-34 vs 20-24</span></span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Entrada: tabela longa com colunas Age, Sex, Count (conforme fornecido)</span></span>
 <span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a><span class="co">#</span></span>
@@ -1956,7 +1965,7 @@ Tamanho da amostra: 1808 </code></pre>
 <span id="cb33-113"><a href="#cb33-113" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="fu">sprintf</span>(<span class="st">"p = %.4f &gt;= 0.05: sem evidência suficiente de que a proporção de mulheres seja maior em 25-34.</span><span class="sc">\n</span><span class="st">"</span>, pval))</span>
 <span id="cb33-114"><a href="#cb33-114" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb33-115"><a href="#cb33-115" aria-hidden="true" tabindex="-1"></a><span class="co"># FIM</span></span>
-<span id="cb33-116"><a href="#cb33-116" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb33-116"><a href="#cb33-116" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>
 total das contagens (tamanho amostra) n:
@@ -2002,7 +2011,7 @@ p = 0.0097 &lt; 0.05: evidência de que a proporção de mulheres é maior em 25
 <span class="header-section-number">7.4</span> Paradoxo de Simpson</h2>
 <p>Como no caso de variáveis quantitativas, os efeitos de <u><strong>variáveis ocultas</strong></u> podem mudar, ou mesmo inverter, relações entre duas variáveis categóricas. Aqui está um exemplo que demonstra as surpresas com as quais um usuário de dados menos avisado pode se defrontar.</p>
 <div class="cell">
-<details class="code-fold"><summary>Código</summary><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<details class="code-fold"><summary>Código</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Exemplo do Paradoxo de Simpson: socorro por Helicóptero vs Ambulância</span></span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Em cada estrato (Leve / Grave) Helicóptero tem maior taxa de sobrevivência,</span></span>
 <span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a><span class="co"># mas ao agregar os dados Ambulância apresenta taxa global maior.</span></span>
@@ -2108,7 +2117,7 @@ p = 0.0097 &lt; 0.05: evidência de que a proporção de mulheres é maior em 25
 <span id="cb35-104"><a href="#cb35-104" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"- Esse é o Paradoxo de Simpson: a tendência observada em cada estrato pode ser invertida ao agregar os dados.</span><span class="sc">\n</span><span class="st">"</span>)</span>
 <span id="cb35-105"><a href="#cb35-105" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb35-106"><a href="#cb35-106" aria-hidden="true" tabindex="-1"></a><span class="co"># Fim</span></span>
-<span id="cb35-107"><a href="#cb35-107" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb35-107"><a href="#cb35-107" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>Tabela de contagens (cada linha = estrato x transporte):
   estrato  transporte success total rate
@@ -2191,7 +2200,7 @@ Interpretação:
 <span class="header-section-number">7.5</span> Verifique suas habilidades</h2>
 <p>Redes sociais</p>
 <div class="cell">
-<details class="code-fold"><summary>Código</summary><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<details class="code-fold"><summary>Código</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Script: calculo de distribuições marginal e condicional</span></span>
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Como usar: execute no R ou RStudio: source("scripts/distribuicoes_marginais_condicionais.R")</span></span>
 <span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -2280,7 +2289,7 @@ Interpretação:
 <span id="cb37-87"><a href="#cb37-87" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"P(18-29 | Sim) ="</span>, <span class="fu">round</span>(p_18_29_sim, <span class="dv">4</span>), <span class="st">"("</span>, <span class="fu">round</span>(p_18_29_sim<span class="sc">*</span><span class="dv">100</span>,<span class="dv">2</span>), <span class="st">"% )</span><span class="sc">\n</span><span class="st">"</span>)</span>
 <span id="cb37-88"><a href="#cb37-88" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb37-89"><a href="#cb37-89" aria-hidden="true" tabindex="-1"></a><span class="co"># Fim do script</span></span>
-<span id="cb37-90"><a href="#cb37-90" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb37-90"><a href="#cb37-90" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>Tabela de contingência (frequências absolutas):
       Sim Não
@@ -2355,7 +2364,7 @@ P(18-29 | Sim) = 0.22 ( 22 % )</code></pre>
 </div>
 <p>Gráficos</p>
 <div class="cell">
-<details class="code-fold"><summary>Código</summary><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<details class="code-fold"><summary>Código</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Script: gráficos de barras empilhadas (contagem e 100% empilhado)</span></span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Como usar: source("scripts/graficos_barras_empilhadas.R") ou execute no RStudio</span></span>
 <span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Saídas: exibe os gráficos e salva arquivos PNG no diretório de trabalho</span></span>
@@ -2426,7 +2435,7 @@ P(18-29 | Sim) = 0.22 ( 22 % )</code></pre>
 <span id="cb39-69"><a href="#cb39-69" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-70"><a href="#cb39-70" aria-hidden="true" tabindex="-1"></a><span class="co"># 5) Mensagem final</span></span>
 <span id="cb39-71"><a href="#cb39-71" aria-hidden="true" tabindex="-1"></a><span class="fu">message</span>(<span class="st">"Gráficos gerados: 'barras_empilhadas_contagem.png' e 'barras_empilhadas_percentual.png' no diretório de trabalho."</span>)</span>
-<span id="cb39-72"><a href="#cb39-72" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb39-72"><a href="#cb39-72" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copiar para a área de transferência" class="code-copy-button"><i class="bi"></i></button></div>
 </details><div class="cell-output-display">
 <div>
 <figure class="figure"><p><img src="cap6-moore-tab-dupla-entrada_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
@@ -2503,13 +2512,14 @@ MOORE, David S.; NOTZ, William I.; FLIGNER, Michael A. <strong><a href="https://
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
