@@ -1,0 +1,2035 @@
+Inferência na Prática 
+
+A
+A
+té agora, nos foram apresentados somente dois procedimentos de 
+inferência estatística. Ambos dizem respeito à inferência sobre a 
+média µ de uma população, quando as "condições simples" são 
+verdadeiras: os dados são uma AAS, a população tem distribuição Normal, 
+e conhecemos o desvio-padrão a da população. Sob essas condições, um 
+intervalo de confiança para a média µ é 
+
+x± z* _Q_
+
+.n 
+
+em que z* é o valor crítico exigido para determinado nível de confiança. Para 
+testarmos uma hipótese H0: µ = µ0, usamos a estatística z de uma amostra: 
+
+x-µo
+
+z=--
+
+
+a/.n 
+
+Chamamos esses procedimentos de procedimentos z porque ambos 
+começam com a estatística z de uma amostra e usam a distribuição Normal 
+padrão. 
+
+Em capítulos posteriores, modificaremos esses procedimentos para 
+
+inferência sobre uma média populacional para torná-los mais úteis na prática. 
+Introduziremos, também, procedimentos para intervalos de confiança 
+e testes voltados para a maioria das situações que encontramos quando 
+aprendemos a explorar dados. Há bibliotecas -tanto de livros como de 
+softwares -repletas de técnicas estatísticas mais elaboradas. O raciocínio 
+usado em intervalos de confiança e em testes é o mesmo, não importa 
+quão elaborados sejam os detalhes do procedimento. 
+
+Existe um ditado entre os estatísticos que diz que "teoremas matemáticos 
+são verdadeiros; métodos estatísticos são eficazes quando usados com 
+discernimento". O fato de a estatística z de uma amostra ter distribuição 
+Normal padrão quando a hipótese nula é verdadeira corresponde a um 
+teorema matemático. O uso eficaz de métodos estatísticos requer mais do 
+que o conhecimento de tais fatos. Requer até mais do que compreender 
+
+o raciocínio subjacente. Este capítulo inicia o processo que ajudará você a 
+desenvolver o discernimento necessário para usar a estatística na prática. 
+Tal processo continuará em exemplos e exercícios no restante deste livro. 
+
+CAPÍTULO 18 
+
+1s.1 Condições para ESTATÍSTICA NO MUNDO REAL 
+
+inferência na prática 
+
+. . . . . . . . . . . . . . .. . . ... . . . . . . . . . . . . . 
+
+1 Qualquer intervalo de confiança ou teste de significância só 
+
+• é confiável sob condições específicas. Cabe a você entender 
+essas condições e julgar se elas se ajustam ao seu problema. Com 
+isso em mente, vamos examinar novamente as "condições simples" 
+para os procedimentos z para inferência sobre uma média. 
+Condições simples para inferência sobre 
+uma média 
+
+1. Temos uma amostra aleatória simples (AAS) da população 
+de interesse. Não há não resposta ou outra dificuldade 
+prática. A população é grande em comparação com o tamanho 
+da amostra. 
+2. A variável que medimos tem uma distribuição exatamente 
+Normal N(µ, a) na população. 
+3. Não conhecemos a média populacional µ. Mas conhecemos 
+o desvio-padrão populacional a. 
+A última das "condições simples" -conhecemos o desviopadrão 
+a da população -raramente é satisfeita na prática. 
+Os procedimentos z, portanto, são de pouco uso prático. 
+Felizmente, é fácil remover a condição "a conhecido". O 
+Capítulo 20 mostra como fazê-lo. A condição de que o 
+tamanho da população seja grande em comparação com o tamanho 
+da amostra é, em geral, fácil de ser verificada e, 
+quando não é satisfeita, há métodos especiais, avançados, para 
+a inferência. As outras "condições simples" (AAS, população 
+Normal) são mais difíceis de serem contornadas. Na verdade, 
+elas representam os tipos de condições necessárias para 
+que confiemos em quase qualquer inferência estatística. Ao 
+planejar inferência, você deve sempre perguntar-se "De onde 
+vieram os dados?" e também deve responder a outra questão, 
+"Qual é a forma da distribuição populacional?" Esse é o ponto 
+em que o conhecimento de fatos matemáticos cede lugar ao 
+julgamento criterioso. 
+
+EXEMPLO 18.1 O psicólogo e o sociólogo 
+
+Uma psicóloga está interessada em saber como nossa percepção 
+visual pode ser enganada por ilusões óticas. Seus 
+sujeitos são alunos da disciplina de Psicologia 101 de sua 
+universidade. A maioria dos psicólogos concordaria que é 
+seguro tratar os alunos como uma AAS de todas as pessoas 
+com visão normal. Não há nada incomum em ser estudante 
+que mude a percepção visual. 
+
+Um sociólogo da mesma universidade usa os alunos 
+da disciplina de Sociologia 101 para examinar as atitudes 
+com relação a pessoas pobres e programas de combate 
+
+Não toque nas plantas 
+Sabemos que o confundimento pode distorcer a inferência; no entanto, 
+nem sempre reconhecemos quão fácil é confundir dados. Considere a 
+cientista inocente que visita plantas no campo uma vez por semana para 
+medir seus tamanhos. Para medir as plantas, ela deve tocá-las. Um estudo 
+de seis espécies de plantas descobriu que um toque por semana aumenta 
+significantemente o dano causado à folha por insetos em duas espécies, 
+e diminui significantemente o dano causado à folha por insetos em outras 
+espécies. 
+
+De onde vieram os dados? O requisito mais impor
+
+
+tante de qualquer procedimento de inferência é que os dados 
+provenham de um processo ao qual se apliquem as leis de probabilidade. 
+A inferência é mais confiável quando os dados resultam 
+de uma amostra aleatória ou de um experimento comparativo 
+aleatorizado. Amostras aleatórias usam o acaso para escolher os 
+respondentes. Experimentos comparativos aleatorizados usam 
+
+o acaso para alocar os sujeitos aos tratamentos. O uso deliberado 
+do acaso assegura que as leis da probabilidade se apliquem 
+aos resultados, e isso, por sua vez, assegura que a inferência 
+estatística faça sentido. 
+A procedência dos dados importa 
+
+Ao usar inferência estatística, você age como se seus dados 
+fossem uma amostra aleatória ou provenientes de um experimento 
+comparativo aleatorizado. 
+
+Se seus dados não provêm de uma amostra aleatória ou de 
+
+um experimento comparativo aleatorizado, suas conclusões 
+podem ser questionadas. Para responder a esses questionamentos, 
+você muito frequentemente confiará no conhecimento 
+especializado do assunto, não na estatística. É comum aplicar 
+a inferência estatística a dados que não são produzidos por 
+seleção aleatória. Ao ver um tal estudo, pergunte a si mesmo 
+se é possível confiar nos dados como embasamento para as 
+conclusões do estudo. 
+
+
+à pobreza. Os alunos, como um grupo, são mais Jovens 
+do que a população adulta como um todo. Mesmo entre 
+pessoas jovens, os alunos como um grupo provêm de lares 
+mais educados e mais prósperos. Mesmo entre alunos, 
+essa universidade não é típica de todos os campi. Mesmo 
+nesse campus, os alunos em um curso de sociologia podem 
+ter opiniões bem diferentes daquelas dos alunos de engenharia. 
+O sociólogo não pode, razoavelmente, agir como 
+se esses alunos fossem uma amostra aleatória de qualquer 
+população de interesse. 
+
+Nossos primeiros exemplos de inferência, usando procedimentos z, consideram os 
+dados como uma AAS da população de interesse. Examinemos novamente os exemplos 
+dos Capítulos 16 e 17. 
+
+
+Inferência na Prática
+
+326 
+
+EXEMPLO 18.2 É realmente uma AAS? 
+
+A pesquisa NHANES, que produziu os dados de IMC para 
+
+o Exemplo 16.1, usou um planejamento amostral complexo 
+de estágios múltiplos, de modo que é bastante simplista 
+considerar os dados de IMC como provenientes de uma 
+AAS da população de homens jovens.1 Embora o efeito geral 
+da amostra NHANES seja próximo de uma AAS, estatísticos 
+profissionais usariam procedimentos de inferência mais 
+complexos para melhor adequação ao planejamento mais complexo 
+da amostra. 
+Os 20 clientes no estudo da gorjeta apresentado no 
+Exemplo 16.3 foram escolhidos, entre aqueles que comiam 
+em um restaurante particular, para receber um de vários tratamentos 
+em comparação com um experimento comparativo 
+aleatorizado. Lembre-se de que cada grupo de tratamento 
+em um experimento comparativo aleatorizado é uma AAS 
+dos sujeitos disponíveis. Às vezes, os pesquisadores agem 
+como se os sujeitos disponíveis fossem uma AAS de alguma 
+população, se não há qualquer coisa de especial sobre a origem 
+dos sujeitos. Em alguns casos, os pesquisadores coletam 
+
+dados demográficos sobre sujeitos para ajudar a justificar a 
+suposição de que os sujeitos são uma amostra representativa 
+de alguma população. Desejamos considerar os sujeitos 
+como uma AAS de uma população de clientes desse restaurante 
+particular, mas talvez isso deva ser mais explorado. Por 
+exemplo, se o dia em que o estudo foi realizado era especial 
+de algum modo (como Dia dos Namorados ou algum outro 
+feriado), os clientes podem não ser representativos dos que 
+tipicamente comem no restaurante. 
+
+O teste do sabor de refrigerante nos Exemplos 17.2 e 17.3 
+usa os escores de 10 provadores. Todos foram examinados 
+para verificar se não tinham qualquer condição médica que 
+interferisse no paladar normal e, então, foram treinados cuidadosamente 
+para pontuar a doçura usando um conjunto 
+de bebidas padrão. Desejamos considerar seus escores como 
+uma AAS da população de todos os provadores treinados. 
+
+O diretor médico que examinou o LDL de executivos no 
+Exemplo 17.7 escolheu, na verdade, uma AAS de registros 
+médicos de todos os executivos de sua companhia. 
+
+
+Esses exemplos são típicos. Um é uma AAS real; dois 
+
+• são situações em que a prática comum é considerar a 
+amostra como uma AAS; e, no exemplo restante, procedimentos 
+que assumem uma AAS são usados para uma análise rápida 
+de dados de uma amostra aleatória mais complexa. Não há regra 
+simp[es para decidir quando se pode considerar uma amostra como 
+uma AAS. Preste atenção a estes cuidados: 
+• Problemas práticos,·como não resposta em amostras ou desistências 
+em um experimento, podem prejudicar a inferência, mesmo em 
+um estudo bem planejado. A pesquisa NHANES tem taxa de 
+resposta de cerca de 80%. Isso é muito mais alto do que 
+o obtido em pesquisas de opinião e na maioria de outras 
+pesquisas nacionais, de modo que, por padrões realistas, os 
+dados da NHANES são bastante confiáveis (NHANES usa 
+métodos avançados para tentar corrigir a não resposta, mas 
+esses métodos funcionam melhor quando a resposta já é 
+alta, de início.) 
+• Métodos diferentes são necessários para planejamentos diferentes. 
+Os procedimentos z não são corretos para planejamentos 
+amostrais aleatórios mais complexos do que uma AAS. Em 
+capítulos posteriores, forneceremos métodos para alguns 
+outros planejamentos, mas não discutiremos inferência 
+para planejamentos realmente complexos, tais como aquele 
+usado na pesquisa NHANES. Certifique-se de que você (ou 
+seu consultor estatístico) saiba como executar a inferência 
+adequada ao seu planejamento 
+• Não há remédio para fa[has fundamentais, como resposta voluntária 
+ou experimentos não controlados. Reveja os maus exemplos 
+de como obter uma má amostra, nas Seções 8.2 e 9.3 e 
+ignore dados desses estudos. 
+Qual é a forma da distribuição populacional? A maioria 
+dos procedimentos de inferência estatística exige algumas 
+condições sobre a forma da distribuição populacional. Muitos 
+
+dos métodos mais básicos de inferência são planejados para populações 
+Normais. É o caso dos procedimentos z e também dm 
+procedimentos mais práticos para inferência sobre médias qUE 
+encontraremos nos Capítulos 20 e 21. Felizmente, essa condi 
+ção é menos essencial do que a procedência dos dados. 
+
+Isso é verdade porque os procedimentos z e muitrn 
+outros procedimentos planejados para distribuições Normaü 
+se baseiam na Normalidade da distribuição da média amos 
+tral x, e não na Normalidade das observações individuais. C 
+teorema limite central nos diz que a distribuição amostral d, 
+x é mais Normal do que as observações individuais, e que : 
+distribuição amostral de xse torna mais Normal à medida qu1 
+
+o tamanho da amostra aumenta. Na prática, os procedimento 
+z são razoavelmente precisos para qualquer distribuição razm 
+velmente simétrica, até mesmo para amostras de tamanho 
+moderados. Se a amostra for grande, a distribuição amostn: 
+de x terá distribuição aproximadamente Normal, mesmo qu 
+as medidas individuais sejam fortemente assimétricas, com 
+ilustram as Figuras 15.4 e 15.5. Capítulos posteriores fornecer 
+diretrizes práticas para procedimentos inferenciais específico 
+ESTATÍSTICA NO MUNDO REAL 
+
+~~--~~--~ 
+
+Números realmente errados 
+
+Por enquanto, sabemos que "estatísticas" que não provêm de estudo 
+
+adequadamente planejados são, em geral, dúbias e, algumas vezei 
+
+manipuladas. É raro encontrarmos números errados que qualquer pesso 
+
+pode ver que são errados, mas acontece. Um físico alemão afirmou qu 
+
+2006 era o primeiro ano, desde 1441, com mais de uma sexta-feira 1: 
+
+Sentimos muito: sexta-feira 13 ocorreu em fevereiro eagosto de 2004, qu 
+
+é mais recente do que 1441 . 
+
+Há uma importante exceção ao princípio de que a forn 
+da população seja menos crítica do que a procedência d 
+dados. Valores atípicos podem distorcer os resultados 
+inferência. Qualquer procedimento de inferência que se baseie 
+
+
+
+CAPÍTULO 18 
+
+estatísticas amostrais, como a média amostral x, que não são 
+resistentes a valores atípicos, pode ser fortemente influenciado 
+por algumas poucas observações extremas. 
+
+Raramente sabemos a forma da distribuição populacional. 
+Na prática, apoiamo-nos em estudos prévios e na análise de 
+dados. Algumas vezes, longa experiência sugere que nossos dados 
+sejam, ou não, provenientes de uma distribuição razoavelmente 
+Normal. Por exemplo, alturas de pessoas de mesmo 
+gênero e idades similares são próximas da Normal, mas os 
+pesos não o são. Sempre explore seus dados antes de fazer 
+inferência. Quando os dados são escolhidos aleatoriamente de 
+uma população, a forma da distribuição dos dados se parece 
+com a forma da distribuição populacional. Faça um diagrama 
+
+APLIQUE SEU CONHECIMENTO 
+
+18.1 Classifique esse produto. Um site de compras online 
+pede que os clientes classifiquem os produtos que compram 
+em uma escala de 1 (não gosto fortemente) a 5 (gosto 
+fortemente). O convite para a classificação de uma compra 
+recente é enviado aos clientes uma semana depois da 
+compra, e os clientes podem escolher ignorar o convite. 
+Qual das seguintes é a razão mais importante para que um 
+intervalo de confiança, com base nos dados de tais classificações, 
+seja de pouca utilidade para a classificação média 
+de todos os clientes que compraram um produto particular. 
+Comente brevemente cada razão para explicar sua resposta. 
+(a) Para alguns produtos, o número de clientes que os 
+compram é pequeno, de modo que a margem de erro 
+será grande. 
+(b) Muitos dos clientes podem não ler seus e-mails ou 
+podem ter um filtro de spam que identifica incorretamente 
+o e-mail que pede a classificação como spam. 
+(c) Os clientes que fornecem classificações não podem 
+ser considerados uma amostra aleatória da população 
+de todos os clientes 
+que compram um 
+produto particular. 
+
+18.2 Ultrapassando o sinal 
+vermelho. Uma pesquisa 
+com motoristas habilitados 
+fez perguntas 
+acerca da ultrapassagem 
+do sinal vermelho. Uma 
+das perguntas era "De 
+cada 10 motoristas que 
+18.2 Cuidados com os 
+intervalos de confiança 
+. . .... . . . . . . . .. . . . . . . ... .. . .. ... . . 
+
+A precaução mais importante acerca de intervalos de confiança, 
+em geral, é uma consequência do uso de uma distribuição 
+amostral. Uma distribuição amostral revela como uma estatís
+
+
+de ramo e folhas ou um histograma de seus dados e verifique se 
+a forma é razoavelmente Normal. Lembre-se de que amostras 
+pequenas têm muita variação em razão do acaso, de modo que 
+é difícil julgar a Normalidade a partir de poucas observações. 
+Procure sempre por valores atípicos e tente corrigi-los ou justificar 
+sua remoção, antes de realizar os procedimentos z ou 
+outra inferência com base em estatísticas como x, que não são 
+resistentes. 
+
+Quando ocorre a presença de valores atípicos, ou os dados 
+sugerem que a população seja fortemente não Normal, considere 
+métodos alternativos que não exijam a Normalidade e 
+não sejam sensíveis a valores atípicos. Alguns desses métodos 
+aparecem no Capítulo 28 (disponível online). 
+
+ultrapassam o sinal vermelho, cerca de quantos você acha 
+que serão flagrados?" O resultado médio para 880 respondentes 
+foi .x = 1,92 e o desvio-padrão s = 1,83.2 Para 
+uma amostra desse tamanho, s estará próximo do desviopadrão 
+da população a; então, suponha que sabemos que 
+a= 1,83. 
+
+(a) Forneça um intervalo de confiança de 95% para a 
+opinião média da população de todos os motoristas 
+habilitados. 
+(b) A distribuição das respostas é assimétrica à direita, 
+em vez de Normal. Isso não afetará intensamente o 
+intervalo de confiança z para essa amostra. Por que 
+não? 
+(c) Os 880 respondentes são uma MS das ligações 
+completadas entre 45.956 ligações para telefones 
+residenciais selecionados aleatoriamente no catálogo 
+telefônico. Apenas 5.029 das chamadas foram completadas. 
+Essa informação fornece duas razões para 
+suspeitar que a amostra, talvez, não represente todos 
+os motoristas habilitados. Quais são essas razões? 
+18.3 Amostragem de clientes. Um repórter de uma estação 
+local de televisão visita o novo centro de compras 
+de luxo da cidade, um dia antes do Natal, para entrevistar 
+clientes. Ele entrevista os 25 primeiros clientes que ele encontra 
+fora de uma das lojas de departamentos no centro 
+de compras. Ele pergunta aos clientes se o sentimento geral 
+deles sobre as compras de Natal é positivo, neutro ou negativo. 
+Sugira algumas razões pelas quais pode ser arriscado 
+agir como se os primeiros 25 clientes nesse local particular 
+fossem uma MS de todos os clientes na cidade. 
+tica, como x, varia em amostras repetidas. Essa variação gera 
+erro amostral aleatório, porque a estatística erra o verdadeiro 
+parâmetro por uma quantidade aleatória. Nenhuma outra 
+fonte de variação ou viés nos dados amostrais influencia a 
+distribuição amostral. Logo, a margem de erro em um intervalo de 
+
+confiança também ignora tudo, menos a variação de amostra 
+para amostra devido à seleção aleatória da amostra. 
+
+
+Inferência na Prática
+
+328 
+
+A margem de erro não cobre todos 
+os erros 
+
+A margem de erro em um intervalo de confiança cobre apenas 
+erros de amostragem aleatória. Dificuldades práticas, como 
+subcobertura e não resposta, são, muitas vezes, mais sérias do 
+que os erros de amostragem aleatória. A margem de erro não 
+leva em consideração essas dificuldades. 
+
+APLIQUE SEU CONHECIMENTO 
+
+18.4 Qual é o seu peso? Uma pesquisa Gallup de 2019 
+pediu a uma amostra aleatória nacional de 507 homens 
+adultos que eles fornecessem seus pesos atuais. O peso 
+médio na amostra foi x = 196. Vamos considerar esses 
+dados como uma AAS proveniente de uma população 
+Normalmente distribuída, com desvio-padrão a= 35. 
+(a) Dê um intervalo de confiança de 95% para o peso 
+médio de homens adultos, com base nesses dados. 
+(b) Você confia no intervalo de confiança que calculou 
+na parte (a) como sendo de 95% um intervalo de confiança 
+para o peso médio de todos os homens adultos 
+americanos? Por que sim ou por que não? 
+18.5 Tempo bom, gorjetas boas? O Exemplo 16.3 descreveu 
+um experimento que explorava o tamanho da 
+gorjeta em um restaurante particular, quando se escrevia 
+na conta do cliente uma mensagem de tempo bom no 
+dia seguinte. Você trabalha em tempo parcial em um restaurante 
+como garçom. Você lê em um jornal um artigo 
+sobre o estudo, que relata que, com 95% de confiança, a 
+gorjeta percentual média de clientes de restaurantes estará 
+entre 21,33 e 23,09 quando o garçom escreve uma mensagem, 
+na conta, que afirma que o tempo será bom no 
+dia seguinte. Você pode concluir que, se passar a escrever 
+mensagens nas contas dos clientes de que o tempo será 
+bom no dia seguinte, em aproximadamente 95% dos dias 
+em que você trabalhar sua gorjeta percentual média ficará 
+entre 21,33 e 23,09? Por que sim ou por que não? 
+18.6 Tamanho amostral e margem de erro. O Exemplo 
+16.1 descreveu dados da NHANES sobre o índice de 
+massa corporal (IMC) de 936 homens jovens. O IMC 
+18.3 Cuidados com os 
+testes de significância 
+. ...... . . . . . . .. . . . . . .. . .. . . . ... . . . 
+
+Testes de significância são amplamente utilizados na maioria 
+das áreas do trabalho estatístico. Novos produtos farmacêuticos 
+exigem evidência significante de eficácia e segurança. 
+Tribunais inquirem sobre a significância estatística nas 
+audiências de casos de discriminação em ações de classe. 
+Pesquisadores de mercado desejam saber se o desenho de 
+uma nova embalagem aumentará significantemente as vendas. 
+Pesquisadores médicos querem saber se uma nova terapia 
+
+Lembre-se, do Capítulo 8, de que pesquisas de opini 
+nacionais têm taxa de resposta menor do que 50%, e que mesr 
+pequenas mudanças na redação das questões podem influenc 
+fortemente os resultados. Nesses casos, a margem de erro relata 
+é, de maneira não realista, pequena. E, naturalmente, não 
+como associar uma margem de erro significativa a resultac 
+provenientes de resposta voluntária ou amostras de conveniênc 
+pois não há seleção aleatória. Observe cuidadosamente os de 
+lhes de um estudo antes de acreditar no intervalo de confiança 
+
+médio na amostra foi x = 27,2 kg/m2• Consideramos 
+
+esses dados como uma AAS de uma população Normal
+
+
+mente distribuída, com desvio-padrão a = 11,6. 
+
+(a) Suponha que tenhamos uma AAS de apenas 100 
+homens jovens. Qual seria a margem de erro para 
+95% de confiança? 
+(b) Encontre as margens de erro de 95% de confiança 
+com base em AASs de 400 homens jovens e 1.600 
+homens jovens. 
+(c) Compare as três margens de erro. Como o aumento 
+do tamanho amostral muda a margem de erro de 
+um intervalo de confiança, quando o nível de confiança 
+e o desvio-padrão populacional permanecem 
+os mesmos? 
+18.7 Você toma refrigerantes? Uma pesquisa do Gallup 
+de julho de 2015 perguntou a uma amostra nacional de 
+adultos com 18 anos ou mais se eles ativamente evitavam 
+beber refrigerantes. Dos amostrados, 61% indicaram que 
+eles evitavam. O Gallup anunciou a margem de erro da 
+pesquisa para 95% de confiança como ±4 pontos percentuais. 
+Quais das seguintes fontes estão incluídas na margem 
+de erro? 
+(a) O Gallup discou números de telefones fixos aleatoriamente 
+e, assim, omitiu todas as pessoas sem telefone 
+fixo, inclusive pessoas cujo único telefone é celular. 
+(b) Algumas pessoas cujos números foram escolhidos 
+nunca responderam às várias chamadas ou se recusaram 
+a participar da pesquisa. 
+(c) Há uma variação devida ao acaso na seleção aleatória 
+de números de telefone. 
+funciona significantemente melhor. Em todos esses usos, 
+significância estatística é avaliada, pois indica um efeito pou 
+provável de ocorrer simplesmente pelo acaso. Eis alguns pon 
+que não podemos esquecer no uso ou interpretação de tes 
+de significância. 
+
+Quão pequeno deve ser P para ser convincente? 
+
+propósito de um teste de significância é descrever o grau de 
+dência contra a hipótese nula fornecida pela amostra. O va 
+P faz isso. Mas quão pequeno deve ser um valor Ppara ser u 
+evidência convincente contra a hipótese nula? Isso depen 
+principalmente de duas circunstâncias: 
+
+
+• Quão plausível é H0? Se H0 for uma suposição na qual as pessoas 
+a serem convencidas acreditam há anos, será necessária 
+uma forte evidência (P pequeno) para persuadi-las 
+• Quais são as consequências de rejeitar H0? Se a rejeição de H0 em 
+favor de Hª significa fazer uma troca dispendiosa de um tipo de 
+embalagem de produto por outro, você precisa de uma forte 
+evidência de que a nova embalagem impulsionará as vendas. 
+Esses critérios são um pouco subjetivos. Pessoas diferentes, 
+muitas vezes, insistirão em níveis de significância distintos em 
+situações similares ou idênticas. O conhecimento do valor P 
+permite a cada um decidir individualmente se a evidência é 
+suficientemente forte. 
+
+Os usuários da estatística, com frequência, destacam 
+níveis de significância padrão, como 10, 5 e 1%. Essa ênfase 
+reflete o tempo em que tabelas de valores críticos dominavam 
+a prática estatística, em vez de programas de computadores. O 
+nível de 5% (a = 0,05) é particularmente comum. Não hd uma 
+
+fronteira exata entre "significante" e "não significante"; hd 
+
+• apenas evidência cada vez mais forte à medida que o valor P 
+decresce. Não hd uma distinção prdtica entre os valores P de 0,049 
+e 0,051. Não faz sentido tratar P ~ 0,05 como uma regra universal 
+para o que seja significante. 
+No entanto, existem situações em que significância no 
+nível de 5% é considerada uma referência estrita. Por exemplo, 
+os tribunais tendiam a aceitar 5% como o padrão em casos de 
+discriminação.3 Alguns periódicos tratam 5% como necessário 
+à demonstração da significância de resultados de pesquisa. 
+Agências reguladoras têm usado 5% como uma regra para a 
+declaração de significância de uma descoberta.4 
+
+Significância depende da hipótese alternativa. Você 
+deve ter notado que o valor P para o teste unilateral é metade 
+do valor P para o teste bilateral da mesma hipótese nula e com 
+base nos mesmos dados. O valor P bilateral combina duas áreas 
+iguais, uma em cada cauda da curva Normal. O valor Punilateral 
+é apenas uma dessas áreas, na direção especificada pela hipótese 
+alternativa. Faz sentido que a evidência contra H0 seja mais forte 
+quando a alternativa é unilateral, porque ela se baseia nos dados 
+mais a informação sobre a direção de possíveis afastamentos de 
+H0 -a informação ou razão que levou o pesquisador a escolher 
+
+o teste unilateral antes da coleta de dados. Se você não tem essa 
+informação, use sempre uma hipótese alternativa bilateral. 
+Significância depende do tamanho amostral. Uma pesquisa 
+amostral revela que significantemente menos estudantes 
+são bebedores pesados nas faculdades que proibiram o álcool 
+no campus. "Significantemente menos" não é informação suficiente 
+para decidir se há uma diferença importante no compor-
+f tamento relativo a bebidas nas escolas que proibiram o 
+
+álcool. A importância de um efeito depende do tamanho do 
+efeito bem como de sua significância estatística. Se o número de bebedores 
+pesados é apenas 1% menor nas escolas que proibiram 
+
+o álcool do que nas outras escolas, esse não é um efeito importante, 
+mesmo que seja estatisticamente significante. (Considere 
+se você descreveria 1% como "significantemente" menos 
+ao conversar com um amigo.) De fato, a pesquisa amostral revelou 
+que 38% dos estudantes de faculdades que proibiram o álcool 
+são "bebedores pesados eventuais", comparados com 48% 
+em outras faculdades.5 Essa diferença é grande o bastante para 
+CAPÍTULO 18 
+
+329 
+
+ser importante. (Naturalmente, esse estudo observacional não 
+prova que a proibição do álcool diretamente reduza a bebida; 
+pode ser que as faculdades que proíbem o álcool atraiam mais 
+estudantes que não querem beber muito.) 
+
+ESTATÍSTICA NO MUNDO REAL 
+
+Os testes devem ser banidos? 
+
+Os testes de significância não nos dizem quão grande ou quão importante 
+é um efeito. Pesquisa em psicologia tem enfatizado esses testes, mas 
+algumas pessoas acham que seu uso deveria ser banido devido a suas 
+fragilidades. A American Psychological Association pediu a um grupo de 
+especialistas para considerar o problema. Eles disseram "Use qualquer 
+coisa que jogue luz sobre seu e.studo. Use mais análise de dados e 
+intervalos de confiança". Disseram também: "a força-tarefa não apoia 
+qualquer ação que possa ser interpretada como banimento do uso da 
+testagem da significância de hipótese nula ou do valor Pem pesquisas e 
+publicações psicológicas". 
+
+Esses exemplos nos lembram de sempre observar o 
+tamanho de um efeito (como 38% versus 48%), bem como 
+sua significância. Eles também levantam uma questão: pode 
+um pequeno efeito ser de fato altamente significante? Sim. O 
+comportamento da estatística de teste z é típico. A estatística é 
+
+
+O numerador mede quanto a média amostral se afasta da 
+média da hipótese µ0• Valores maiores no numerador apresentam 
+evidência mais forte contra H0: µ = µ0• O denominador é 
+
+o desvio-padrão de x. Ele mede quanta variação aleatória esperamos. 
+Há menos variação quando o número de observações n 
+é grande. Assim, z se torna maior (mais significante) quando o 
+efeito estimado x -µ0 se torna maior ou quando o número de 
+observações n aumenta. A significância depende do tamanho do 
+efeito observado e do tamanho da amostra. A compreensão desse 
+fato é essencial para o entendimento dos testes de significância. 
+Tamanho amostral afeta a significância 
+estatística 
+
+Como grandes amostras aleatórias têm pequena variação do 
+acaso, os efeitos populacionais muito pequenos podem ser altamente 
+significantes se a amostra for grande. 
+Como amostras aleatórias pequenas têm muita variação do 
+acaso, mesmo efeitos populacionais grandes podem deixar de 
+ser significantes se a amostra for pequena. 
+
+Significância estatística não nos diz se um efeito é grande o 
+bastante para ser importante. Isto é, significância estatística não 
+é a mesma coisa que significância prática. 
+
+Tenha em mente que "significância estatística" quer dizer 
+que "a amostra exibiu um efeito maior do que em geral ocorreria 
+apenas por acaso". A extensão da variação do acaso muda 
+com o tamanho da amostra, de modo que o tamanho da amostra 
+importa muito. O Exercício 18.9 demonstra, em detalhe, 
+como o aumento do tamanho amostral diminui o valor P. A 
+seguir, outro exemplo. 
+
+
+Inferência na Prática 
+
+EXEMPLO 18.3 É significante. Ou não. E daí? 
+
+Estamos testando a hipótese de nenhuma correlação entre 
+duas variáveis. (Discutiremos como fazer isso no Capítulo 
+26.) Com mil observações, uma correlação observada de 
+apenas r = 0,08 é uma evidência significante no nível 1 % de 
+que a correlação na população não é zero e sim positiva. 
+O valor P pequeno não significa que haja uma forte 
+associação, apenas que há forte evidência de alguma associação. A 
+verdadeira correlação da população é, provavelmente, muito 
+próxima do valor amostral observado, r = 0,08. Seria possível, 
+então, concluir que, para fins práticos, podemos ignorar 
+
+a associação entre essas variáveis, mesmo estando confiantes 
+(no nível 1%) de que a correlação é positiva. 
+
+Por outro lado, se tivéssemos apenas 10 observações, uma 
+correlação de r = 0,5 não é significantemente maior do que 
+zero no nível 5%. Amostras pequenas variam tanto que é 
+necessário um r grande para que tenhamos confiança em 
+que não estamos vendo apenas variação do acaso. Assim, 
+uma amostra pequena sempre ficará abaixo da significância, 
+mesmo que a verdadeira correlação populacional seja 
+grande. 
+
+Na conversação normal, "significante" e "importante" 
+são tratados como sinônimos. Como a frase "estatisticamente 
+significante" pode ser mal interpretada como se implicasse 
+"importância prática", alguns autores propuseram substituir o 
+termo significância estatística. 
+
+EXEMPLO 18.4 Telefones celulares e câncer no cérebro 
+
+A radiação dos telefones celulares pode ser prejudicial aos 
+usuários? Muitos estudos encontraram pouca ou até mesmo 
+nenhuma conexão entre o uso de telefones celulares e diversas 
+doenças. A seguir, está parte de um relato de um desses 
+estudos: 
+
+Um estudo hospitalar, que comparou pacientes com 
+câncer no cérebro e um grupo similar sem câncer no 
+cérebro, não encontrou associação estatisticamente 
+significante entre o uso de telefones celulares e um 
+tipo de câncer no cérebro conhecido como glioma. 
+Porém, quando 20 tipos de glioma foram estudados 
+separadamente, foi encontrada uma associação 
+entre o uso de celular e uma forma rara da doença. 
+Enigmaticamente, contudo, esse risco parecia diminuir 
+em vez de aumentar com a maior frequência do 
+uso do telefone celular. 6 
+
+Conduzir um teste e alcançar o nível de significância de 5% 
+
+é uma evidência razoavelmente boa de que você encontrou 
+algo. Conduzir 20 testes e alcançar esse nível apenas uma vez não 
+corresponde a uma boa evidência. O cuidado em relação a análises 
+múltiplas se aplica a intervalos de confiança também. Um 
+único intervalo de confiança de 95% tem probabilidade de 
+
+EXEMPLO 18.5 Viés de publicação 
+
+Um exemplo sutil de análises múltiplas é o viés de publicação. 
+Suponha que 20 pesquisadores estejam, independentemente, 
+estudando a eficácia de uma nova terapia para o 
+tratamento de uma doença. Para publicar suas descobertas, 
+
+Cuidado com as análises múltiplas. Significância estatí 
+ca deve indicar que você encontrou um efeito que estava pro 
+rando. O raciocínio que fundamenta a significância estatíst 
+funciona bem se você decide qual efeito está procurando, 1 
+neja um estudo pará procurá-lo e usa um teste de significân 
+para ponderar a evidência obtida. Em contextos diferentes, 
+nificância pode ter pouco significado. 
+
+Suponha que as 20 hipóteses 
+nulas (nenhuma associação) 
+para esses 20 testes 
+de significância sejam todas 
+verdadeiras. Então, cada teste 
+tem uma chance de 5% de 
+ser significante no nível 5%. 
+lsso é o que a = 0,05 significa: 
+resultados tão extremos 
+ocorrem somente 5% 
+das vezes apenas ao acaso, 
+quando a hipótese nula é 
+verdadeira. Como 5% são 
+1/20, esperamos que cerca 
+de 1, entre 20 testes, forneça, 
+
+
+apenas devido ao acaso, um resultado significante. Isto é 
+que o estudo observou. 
+
+0,95 de conter o verdadeiro parâmetro cada vez que vod 
+lo. A probabilidade de que todos os 20 intervalos conter 
+seus parâmetros é muito menor do que 95%. Se você ach: 
+testes ou intervalos múltiplos podem ter descoberto um 1 
+importante, você precisa reunir mais dados para fazer in' 
+eia sobre aquele efeito específico. 
+
+os pesquisadores devem demonstrar que a nova terapü 
+eficaz no nível de significância de 0,05. Um dos pesquisai 
+res obtém resultados estatisticamente significantes, mas 
+outros 19 não. O único pesquisador que obteve resulta< 
+
+
+CAPÍTULO 18 
+
+331 
+
+estatisticamente significantes publica suas descobertas. Nada ao real efeito do tratamento. Se não sabemos dos 19 estudos 
+ficamos sabendo sobre os 19 pesquisadores que deixaram de que deixaram de encontrar um efeito do tratamento, sereencontrar 
+significância estatística. Se soubéssemos que apemos 
+"viesados" na direção de tratarmos as descobertas do 
+nas um dos 20 pesquisadores obteve significância estatística único estudo publicado com mais importância do que ele 
+no nível de 0,05, poderíamos suspeitar que os resultados merece. Esse é o viés de publicação. A solução é encorajar a 
+desse único pesquisador são devidos ao acaso mais do que replicação das descobertas com estudos adicionais. 
+
+APLIQUE SEU CONHECIMENTO 
+
+18.8 É significante? Na ausência de preparação especial, os 
+escores de matemática do teste SAT (SATM), em 
+2019, variaram Normalmente, com médiaµ= 528 
+e a= 117. Cinquenta alunos são submetidos a um 
+rigoroso programa de treinamento, planejado para elevar 
+seus escores no SATM com a melhoria de suas habilidades 
+matemáticas. À mão ou com o auxílio do applet P-Value of 
+a Test of Significance (conteúdo em inglês), execute um 
+teste de 
+
+H0: µ = 528 
+Hª: µ > 528 
+(com a = 117), em cada uma das seguintes situações: 
+
+(a) O escore médio dos alunos é x = 555. Esse resultado 
+é significante no nível de 5%? 
+(b) O escore médio é x = 556. Esse resultado é significante 
+no nível de 5%? 
+A diferença entre os dois resultados em (a) e (b) não tem qualquer 
+importância prática. Cuidado com tentativas de tratar 
+a = 0,05 como sagrado. 
+
+18.9 Detecção de chuva ácida. Emissões de dióxido de 
+enxofre pela indústria causam mudanças químicas na atmosfera 
+que resultam na chuva ácida. A acidez de líquidos 
+é medida pelo seu pH, em uma escala de Oa 14. Água 
+destilada tem pH 7,O e valores de pH mais baixos indicam 
+acidez. A chuva normal é um pouco ácida, de modo que 
+chuva ácida é, algumas vezes, definida como chuva com 
+pH abaixo de 5,0. Suponha que medições do pH da chuva 
+em dias diferentes em uma floresta no Canadá sigam uma 
+distribuição Normal, com desvio-padrão <J = 0,6. Uma 
+amostra de n dias encontra que o pH médio é x = 4,8. 
+Isso é boa evidência de que o pH médioµ para todos os 
+dias chuvosos seja menor do que 5,0? A resposta depende 
+do tamanho da amostra. 
+18.4 Planejamento de 
+estudos: tamanho amostral 
+para intervalos de confiança
+... . . . .. . ... . . . ... . .. . .. . . . . . . . . . . 
+
+Um usuário experiente de estatística nunca planeja uma 
+amostra ou um experimento sem, ao mesmo tempo, planejar 
+a inferência. O número de observações é uma parte crítica do 
+planejamento de um estudo. Amostras maiores apresentam 
+margens de erro menores para os intervalos de confiança e 
+
+
+À mão ou com o uso do applet P-Value of a 
+T est of Significance, realize quatro testes de 
+
+Ho: µ = 5,0 
+
+Hª: µ < 5,0 
+
+Use <J = 0,6 ex = 4,8 em todos os quatro testes. Mas 
+
+use quatro tamanhos amostrais diferentes: n = 9, n = 16, 
+
+n = 36 e n = 64. 
+
+(a) Quais os valores P para os quatro testes? O valor P do 
+mesmo resultado x= 4,8 se torna menor (mais significante) 
+à medida que o tamanho amostral aumenta. 
+(b) Para cada teste, esboce a curva Normal para a distribuição 
+amostral de x quando H0 é verdadeira. 
+Essa curva tem média 5,0 e desvio-padrão 0,6/.n. 
+Marque o valor observado x= 4,8 em cada curva. (Se 
+você usar o applet, você pode apenas copiar as curvas 
+apresentadas pelo applet.) O mesmo resultado x= 4,8 se 
+torna mais extremo na distribuição amostral à medida que 
+o tamanho amostral aumenta. 
+18.10 Ajuda dos intervalos de confiança. Dê um intervalo 
+de confiança de 95% para o pH médioµ para 
+cada tamanho amostral no exercício anterior. Os intervalos, 
+diferentemente dos valores P, fornecem uma imagem 
+clara de quais valores médios de pH são plausíveis 
+para cada amostra. 
+18.11 Procurando por PES. Um pesquisador, procurando 
+evidência de percepção extrassensorial (PES), testa mil 
+sujeitos. Desses sujeitos, 4 3 se saem significantemente 
+melhor (P <0,05) do que em adivinhação aleatória. 
+(a) Quarenta e três parece muitas pessoas, mas você 
+não pode concluir que essas 43 pessoas tenham 
+PES. Por que não? 
+(b) O que o pesquisador deve fazer agora para testar se 
+algum desses 43 sujeitos tem PES? 
+tornam os testes de significância mais capazes de detectar efeitos 
+na população. Porém, fazer muitas observações custa tempo e 
+dinheiro. Quantas observações são o bastante? Analisaremos 
+essa questão, primeiro para intervalos de confiança e depois para 
+testes. O planejamento de um intervalo de confiança é muito 
+mais simples do que o de um teste. É também mais útil, porque 
+a estimação é, em geral, mais informativa do que um teste. A 
+seção sobre planejamento de testes é, portanto, opcional. 
+Você pode arranjar para ter tanto alta confiança quanto uma 
+pequena margem de erro, tomando observações suficientes. A 
+
+
+
+Inferência na Prática
+
+332 
+
+margem de erro do intervalo de confiança z para a média de 
+uma população Normalmente distribuída é m = z* (J/.n. Note 
+1 que é o tamanho da amostra que determina a margem de erro 
+
+• para um dado nível de confiança. O tamanho da população 
+não influencia a margem de erro; portanto, o tamanho amostral é o 
+que precisamos. (Isso é verdade desde que a população seja bem 
+maior do que a amostra.) 
+Para obter uma margem de erro desejada, m, substitua o 
+valor de z* para seu nível de confiança desejado e resolva em 
+relação ao tamanho amostral n. A seguir, o resultado. 
+
+EXEMPLO 18.6 Quantas observações? 
+
+Tamanho da amostra para uma margem 
+de erro desejada 
+
+Para estimar a média de uma população Normal usando um intervalo 
+de confiança zcom dada margem de erro m e um nível 
+de confiança especificado, o tamanho da amostra n deve ser 
+
+
+em que z* é o valor crítico para o nível de confiança desejado. 
+Sempre arredonde n para o próximo inteiro acima quando 
+usar essa fórmula. 
+
+No Exemplo 16.3, psicólogos registraram o tamanho A margem de erro desejada é m = 0,5. Para 90% de condas 
+gorjetas de 20 clientes em um restaurante, quando fiança, a Tabela C fornece z* = 1,645. Portanto, 
+se escrevia, em sua conta, uma mensagem anunciando 
+tempo bom para o dia seguinte. Sabemos que o desvio
+
+
+n = (z:r = e,6~~/2 r = 43,3 
+
+padrão populacional é a = 2. Desejamos estimar a gorjeta 
+percentual média µ para clientes desse restaurante Como 43 clientes dão uma margem de erro ligeiramente 
+que recebem essa mensagem em suas contas, dentro de maior do que a desejada, e 44 clientes, uma margem de erro 
+±0,5, com 90% de confiança. Quantos clientes devem ser ligeiramente menor, devemos observar 44 clientes. Sempre 
+observados? arredonde para o maior inteiro mais próximo ao determinar n. 
+
+APLIQUE SEU CONHECIMENTO 
+
+18.12 Índice de massa corporal de homens jovens. 18.13 Habilidades numéricas de alunos do oitavo 
+O Exemplo 16.1 supôs que o índice de massa corpoano. 
+Suponha que os escores na parte de matemática 
+ral (IMC) de todos os homens jovens americanos sedo 
+teste National Assessment of Educational Progress 
+gue uma distribuição Normal, com desvio-padrão (NAEP), para alunos do oitavo ano, sigam uma distribuia 
+= 11,6 kg/m2• Qual o tamanho necessário da amosção 
+Normal, com desvio-padrão (J = 40. Você deseja estitra 
+para se estimar o IMC médio µ nessa população mar o escore médio dentro de ±1, com 90% de confiança. 
+dentro de ±1, com 95% de confiança? Qual tamanho de uma MS de escores você deve escolher? 
+Tamanho do efeito. Qual o tamanho de um efeito na
+
+18.5 Plánejamento de 
+população para ser importante na prática?
+
+estudos: o poder de um teste 
+estatístico de significância* 
+
+Tamanho do efeito 
+
+. . . . . ... . . . . . ... . .. . . . . . . . ... . .. 
+
+Qual o tamanho da amostra que devemos extrair quando O tamanho do efeito é a magnitude do efeito na poplanejamos 
+realizar um teste de significância? Sabemos que, se pulação. 
+
+nossa amostra for muito pequena, mesmo grandes efeitos na 
+população, em geral, deixarão de dar resultados estatisticamen
+
+
+Poder. Quão confiantes queremos estar de que nosso
+
+te significantes. Eis as questões a que devemos responder para 
+
+estudo detectará um efeito do tamanho que considera
+
+
+decidir quantas observações serão necessárias: 
+
+mos importante? 
+
+Nível de significância. Quanta proteção desejamos contra 
+a obtenção de um resultado significante a partir de 
+
+Nível de significância, tamanho do efeito, e poder 
+nossa amostra quando, na realidade, não há qualquer abreviações estatísticas para três peças de informação. Poder 
+ã 
+efeito na população? uma nova ideia. 
+
+*Cálculos de podersão importantes no planejamento de estudos, mas este material mais avançado não é necessário para a leitura do restant 
+do livro. 
+
+
+CAPÍTULO 18 333 
+
+EXEMPLO 18.7 Adoçante de refrigerantes: planejamento de um estudo 
+
+................... 
+
+Vamos ilustrar respostas típicas às questões que· acabamos 
+de colocar, olhando novamente o exemplo do teste de 
+um novo refrigerante em relação à perda de doçura na 
+armazenagem (Exemplo 17.2). Dez provadores treinados 
+classificam a doçura em uma escala de 10 pontos, antes e 
+depois do armazenamento. A diferença nos escores antes 
+e depois representa o julgamento de cada provador sobre 
+a perda de doçura, com a diferença de O significando 
+nenhuma perda. Pela experiência, sabemos que os escores 
+da perda de doçura variam de provador para provador de 
+acordo com uma distribuição Normal, com desvio-padrão 
+de cerca de CJ = l. Para verificar se o teste do sabor fornece 
+razão para pensar que o refrigerante realmente perde 
+doçura, testaremos 
+
+Ho: µ=O 
+
+Hª: µ>O 
+
+Dez provadores são suficientes ou devemos usar mais? 
+
+A probabilidade de o teste detectar, com sucesso, uma 
+perda de doçura do tamanho especificado é o poder do teste. 
+Você pode considerar testes com alto poder como altamente 
+sensíveis a afastamentos em relação à hipótese nula. No 
+Exemplo 18.6, decidimos por um poder de 90%, quando a 
+verdade sobre a população é queµ= 0,8. 
+
+Para a maioria dos testes estatísticos, o cálculo do poder 
+é trabalho para um amplo pacote estatístico. O cálculo do 
+poder para o teste zé mais fácil do que para a maioria dos testes 
+estatísticos, mas, mesmo assim, vamos omitir os detalhes. 
+
+Nível de significância. A exigência de significância no nível 
+de 5% é proteção suficiente contra a afirmativa de que há 
+uma perda de doçura quando, de fato, não há qualquer 
+mudança, se pudéssemos olhar para toda a população. 
+Isso significa que, quando não há mudança na doçura na 
+população, uma em 20 amostras de provadores encontrará, 
+erroneamente, uma perda significante. 
+
+Tamanho do efeito. Uma perda média de doçura de 0,8 
+ponto na escala de 10 pontos será notada pelos consumidores 
+e, assim, é importante na prática. 
+
+Poder. Desejamos estar 90% confiantes de que nosso teste 
+detectará uma perda média de 0,8 ponto na população de 
+todos os provadores. Concordamos em usar significância 
+no nível de 5% como nosso padrão para detectar um efeito. 
+Portanto, desejamos uma probabilidade de, pelo menos, 0,9 
+de que um teste no nível a = 0,05 rejeite a hipótese nula H0: 
+µ=O quando a verdadeira média populacional éµ= 0,8. 
+
+Os dois exemplos que seguem ilustram duas abordagens: um 
+applet que mostra o significado do poder e um programa 
+estatístico. 
+
+Poder 
+
+O poder de um teste contra uma alternativa específica é a 
+probabilidade de o teste rejeitar H0 em determinado nível de 
+significância a, quando o valor alternativo especificado do 
+parâmetro é verdadeiro. 
+
+EXEMPLO 18.8 Cálculo do poder com o uso de um applet 
+
+
+A determinação do poder de um teste z é menos rejeitará H0 cerca de 81% das vezes, quando essa alternativa 
+
+desafiadora do que a maioria dos outros cálculos for verdadeira. Assim, 10 observações não são suficientes 
+
+de poder, porque requer apenas um cálculo de para dar um poder de 90%. 
+
+probabilidade de uma distribuição Normal. 
+O appkt Statistical Power (conteúdo em 
+inglês) faz isso e ilustra o cálculo com curvas 
+Normais. Introduza a informação do 
+Exemplo 18. 7 no appkt: hipóteses, nível 
+de significância a = 0,05, valor alternativo 
+µ = 0,8, desvio-padrão CJ = l e o tamanho 
+amostral n = 10. Clique em "Update". A 
+saída do applet aparece na Figura 18.1. 
+
+O poder do teste contra a alternativa 
+específica µ = 0,8 é 0,812. Isto é, o teste 
+
+FIGURA 18.1 
+
+Saída do applet Statistical Power para 
+
+o Exemplo 18.8 (conteúdo em inglês), 
+juntamente com a informação introduzida 
+no applet. A curva de cima mostra o 
+comportamento de xquando a hipótese nula 
+é verdadeira (µ = O). A curva de baixo mostra 
+a distribuição de xquandoµ = 0,8. 
+Ha: (~µ>O 
+
+0µ<0 
+
+Qµ;t:O 
+
+n= ;10 
+
+Alpha (a): 
+
+-1.265 -0.849 -0.432 -0.016 0.400 0.816 1.232 1.649 2.065 
+
+Power = 0.812 
+
+
+RESET 
+
+-1.265 -0.849 -0.432 -0.016 0.400 0.816 1.232 1.649 2.065 
+
+
+
+Inferência na Prática 
+
+As duas curvas Normais na Figura 18.1 mostram a distribuição 
+amostral de x sob a hipótese nula µ = O (acima) e 
+também sob a alternativa específica µ = 0,8 (abaixo). As curvas 
+têm a mesma forma, porque a não muda. A curva do topo está 
+centrada em µ = O e a curva de baixo, em µ = 0,8. A região 
+sombreada à direita da curva superior tem área 0,05. Ela determina 
+os valores de x que são estatisticamente significantes no 
+
+nível a = 0,05. A curva de baixo mostra a probabilidade des 
+mesmos valores quando µ = 0,8. Essa área é o poder, 0,812 
+
+O applet encontrará o poder para qualquer tamanho arn 
+tral dado. É mais útil, na prática, reverter o processo e verifi, 
+de qual tamanho amostral precisamos para atingir determina 
+poder. Programas estatísticos farão isso, mas normalmente r 
+mostram as úteis curvas Normais que são parte da saída do app 
+
+EXEMPLO 18.9 Cálculo do poder com o uso de um programa 
+
+Alguns pacotes estatísticos (por exemplo, SAS, JMP, Minitab 
+e R) calcularão o poder. Pedimos ao Minitab que encontrasse 
+o número de observações necessárias para que um 
+teste z unilateral tivesse poder 0,9 contra várias alternativas 
+específicas no nível de significância de 5%, quando o desviopadrão 
+da população é a = l. Eis a tabela resultante: 
+
+Sample Target 
+
+Difference Size Power Actual Power 
+0.1 857 0.9 0.900184 
+0.2 215 0.9 0.901079 
+0.3 96 0.9 0.902259 
+0.4 54 0.9 0.902259 
+0.5 35 0.9 0.905440 
+0.6 24 0.9 0.902259 
+0.7 18 0.9 0.907414 
+0.8 14 0.9 0.911247 
+0.9 11 0.9 0.909895 
+1.0 9 0.9 0.912315 
+
+Nessa saída, "Difference" é a diferença entre o valor da 
+hipótese nula µ = O e a alternativa que desejamos detectar. 
+Esse é o tamanho do efeito. A coluna "Sample Size" mostra 
+
+o menor número de observações necessárias para o poder de 
+0,9 contra cada tamanho do efeito. 
+Vemos, novamente, que nossa amostra anterior de 10 
+provadores não é grande o suficiente para estarmos 90% 
+confiantes em detectar (no nível de 5% de significância) 
+um efeito de tamanho 0,8. Se desejarmos poder de 90% 
+contra o tamanho do efeito de 0,8, precisamos, pelo 
+menos, de 14 provadores. O poder real com 14 provadores 
+é 0,911247. 
+
+Um programa estatístico, diferentemente do applet, fará o 
+cálculo do poder para a maioria dos testes deste livro. 
+
+A tabela no Exemplo 18.9 torna claro que efeitos menores 
+exigem amostras maiores para alcançar 90% de poder. Eis uma 
+visão geral das influências sobre "Qual o tamanho da amostra 
+de que preciso?'' 
+
+• Se você insiste em um nível de significância menor (como 
+1% em vez de 5%), você precisará de uma amostra maior. 
+Nível de significância menor requer evidência mais forte 
+para a rejeição da hipótese nula. 
+• Se você insiste em poder mais alto (como 99% em vez de 
+90%), você precisará de uma amostra maior. Poder maior dá 
+melhor chance de detectar um efeito quando ele realmente 
+está lá. 
+• Para qualquer nível de significância e poder desejados, uma 
+alternativa bilateral requer uma amostra maior do que uma 
+alternativa unilateral. 
+• Para qualquer nível de significância e poder desejados, a 
+detecção de um pequeno efeito requer uma amostra maior 
+do que a detecção de um grande efeito. 
+ESTATÍSTICA NO MUNDO REAL 
+
+Peixe, pescador e poder 
+
+Os estoques de bacalhau no oceano a leste do Canadá estão diminuindo? 
+
+Durante vários anos, estudos deixaram de encontrar evidência significante 
+
+de um declínio. Esses estudos tinham baixo poder -isto é, eles podiam 
+
+deixar de encontrar um declínio, mesmo que um estivesse presente. Qua 
+ficou claro que obacalhau estava acabando, quotas sobre pesca devastan1 
+a economia em partes do Canadá. 
+Se estudos anteriores tivessem tido alto poder, eles provavelmente teri 
+percebido odeclínio. Ação rápida poderia ter reduzido os custos econômi 
+eambientais. 
+
+Planejar um estudo estatístico sério sempre requer u 
+resposta à questão "Qual o tamanho da amostra de que nec 
+to?" Se você pretende testar a hipótese H0: µ = µ0 sobre a mé 
+µ de uma população, você precisa de pelo menos alguma i 
+do tamanho do desvio~padrão da população a e de quão gli 
+de um desvio µ -µ0 da média populacional ao valor hipoté 
+você deseja ser capaz de detectar. Contextos mais elaborad 
+como a comparação dos efeitos médios de vários tratamen 
+requerem informação mais elaborada de antemão. Você p 
+deixar os detalhes para os especialistas, mas você deve en 
+der a ideia do poder e os fatores que influenciam o tama 
+da amostra de que você precisa. 
+
+Para o cálculo do poder de um teste, agimos como 
+estivéssemos interessados em um nível fixo de significân 
+como a = 0,05. Isso é essencial para o cálculo do poder, 
+lembre-se de que, na prática, pensamos em termos de valor 
+em lugar de um nível fixo a. Para planejar com eficiência 
+teste estatístico, devemos encontrar o poder para vários ní 
+
+
+de significância e para uma gama de tamanhos amostrais e 
+tamanhos de efeito, para obter uma imagem completa de como 
+
+o teste irá se comportar. 
+Erros Tipo I e Tipo li em testes de significância. Podemos 
+avaliar o desempenho de um teste fornecendo duas 
+probabilidades: o nível de significância a e o poder para uma 
+alternativa que queremos ser capazes de detectar. O nível de 
+significância de um teste é a probabilidade de se chegar a uma 
+conclusão errada quando a hipótese nula é verdadeira. Opoder 
+para uma alternativa específica é a probabilidade de se chegar 
+a uma conclusão certa quando a alternativa é verdadeira. Do 
+mesmo modo, podemos descrever o teste fornecendo as probabilidades 
+de uma decisão errada sob ambas as condições. 
+As possibilidades estão resumidas na Figura 18.2. Se 
+H0 é verdadeira, nossa decisão está correta se deixamos 
+de rejeitar H0, e é um erro Tipo I se rejeitamos H0• Se Hª 
+
+Conclusão Rejeitar H0 
+baseada na 
+amostra 
+
+Deixar de rejeitar H0 
+
+CAPÍTULO 18 
+
+é verdadeira, a nossa decisão ou está correta ou é um erro 
+Tipo II. Apenas um erro é possível de cada vez. A Figura 
+
+18.3 ilustra poder, erro Tipo I, eerro Tipo II no contexto 
+do Exemplo 18.7. 
+Erros Tipo I e Tipo li 
+
+Se rejeitamos H0 quando, de fato, H0 é verdadeira, esse é um 
+erro Tipo I. 
+Se deixamos de rejeitar H0 quando, de fato, Ha é verdadeira, 
+esse é um erro Tipo II. 
+O nível de significância a de qualquer teste de nível fixo é a 
+probabilidade de um erro Tipo L 
+O poder de um teste contra qualquer alternativa é a probabilidade 
+de rejeitarmos corretamente a hipótese nula para aquela 
+alternativa. Ele pode ser calculado como 1 menos a probabilidade 
+de um erro Tipo II para aquela alternativa. 
+
+Verdade sobre 
+a população 
+
+H0 Verdadeira Ha Verdadeira 
+
+Conclusão 
+
+Erro Tipo 1 
+
+correta 
+
+Conclusão 
+
+Erro Tipo li 
+
+correta 
+
+FIGURA 18.2 
+Os dois tipos de erro em testes de hipóteses. 
+
+Distribuição amostral 
+de xquando a hipótese 
+nula é verdadeira 
+
+
+µ,=o 
+Deixar de rejeitar H0 
+
+Rejeitar H0 
+
+Distribuição amostral 
+
+de xquando a hipótese 
+alternativa é 
+verdadeira 
+z' µ= 0,8 
+
+
+FIGURA 18.3 
+
+Ilustração do poder, erro Tipo 1, e 
+erro Tipo li no contexto do Exemplo 
+
+18.7. A curva Normal superior é a 
+distribuição amostral de xsob a 
+hipótese nula H0: µ = O. A área da 
+região sombreada de cinza-claro é o 
+nível de significância a, que é também 
+o erro Tipo 1. A curva Normal inferior 
+é a distribuição amostral de xquando 
+µ = 0,8. A área da região sombreada 
+de cinza-escuro é o poder. A área da 
+região não sombreada é o erro Tipo 
+li. A linha vertical se localiza no ponto 
+correspondente ao valor crítico z* 
+para um teste de nível a. Rejeitamos 
+H0 para valores à direita dez*. 
+
+336 
+
+Inferência na Prática 
+
+EXEMPLO 18.10 Cálculo de probabilidades de erro 
+
+
+Como as probabilidades dos dois tipos de erro 
+são apenas uma reescrita do nível de significância 
+applet e do poder, podemos ver, pela Figura 18.1, o que 
+
+são as probabilidades de erro para o teste no Exemplo 18.7: 
+
+P(erro Tipo I) P(rejeitar H0 quando de fato µ = O) 
+nível de significância a = 0,05 
+
+P(erro Tipo II) = P(deixar de rejeitar H0 quando de 
+fatoµ= 0,8) 
+1 -poder = 1 -0,812 = O,188 
+
+As duas curvas Normais na Figura 18.1 são usadas para 
+encontrarmos as probabilidades de um erro Tipo I (curva 
+superior, µ = O) e de um erro Tipo II (curva inferior, µ = 0,8). 
+
+APLIQUE SEU CONHECIMENTO 
+
+18.14 O que é poder? O Trial Urban District Assessment 
+(TUDA) mede o progresso educacional entre grandes 
+distritos urbanos participantes. TUDA aplica um teste 
+de leitura com escores de O a 500. Um escore de 208 
+é um nível "básico" de leitura para alunos do quarto 
+ano.7 Suponha que os escores no teste de leitura do 
+TUDA para alunos do quarto ano em seu distrito sigam 
+uma distribuição Normal com desvio-padrão a = 
+40. Em 2019, o escore médio para os alunos do quarto 
+ano em seu distrito foi 219. Nesse ano, você planeja 
+aplicar um teste a uma amostra aleatória de 25 alunos 
+do quarto ano em seu distrito para verificar se o escore 
+médio µ para todos os estudantes do quarto ano em seu 
+distrito ainda está acima do nível básico. Você, então, 
+testará 
+Ho: µ = 208 
+
+Hª: µ > 208 
+Se o verdadeiro escore médio for novamente 219, em 
+média, os alunos ainda têm desempenho acima do 
+nível básico. Você sabe que o poder de seu teste no 
+nível de significância de 5% contra a alternativa µ = 
+219 é 0,394. 
+
+(a) Explique, em linguagem simples, o que significa 
+"poder = 0,394". 
+(b) Explique por que o teste planejado não protegerá 
+você adequadamente contra decidir incorretamente 
+que a média dos escores de leitura em seu distrito 
+não está acima do nível básico. 
+18.15 Pensando sobre poder. Responda a estas questões 
+no contexto do Exercício 18.14 sobre medida dos escores 
+de leitura de alunos do quarto ano no TUDA. 
+(a) Você poderia obter poder mais alto contra a mesma 
+alternativa e com o mesmo a, mudando o número 
+de alunos que você testou. Você deveria testar mais 
+ou menos alunos para aumentar o poder? 
+(b) Se você decide usar a = 0,10 effi'vez de a = 0,05, 
+sem quaisquer outras mudanças no teste, o poder 
+do teste aumentará ou diminuirá? 
+(c) Se você muda seu interesse para a alternativa µ 
+= 214, sem quaisquer outras mudanças, o poder 
+aumentará ou diminuirá? 
+18.16 Como se comporta o poder. No contexto do 
+Exercício 18.14, use o applet Statistical Power para 
+encontrar o poder em cada uma das seguintes cirapplet 
+
+
+cunstâncias. 
+
+(a) Desvio-padrão a = 40; nível de significância 
+a = 0,05; alternativaµ = 219; e tamanhos amostrais 
+n = 25, n = 50, e n = 100. Como o aumento 
+do tamanho amostral, sem outras alterações, afeta 
+o poder? 
+(b) Desvio-padrão a= 40; nível'designificânciaa = 0,05; 
+tamanho amostral n = 25; e alternativas µ = 219, 
+µ = 224, e µ = 229. Como as alternativas mais 
+distantes da hipótese (maiores tamanhos do efeito) 
+afetam o poder? 
+(c) Desvio-padrão a = 40; tamanho amostral n = 25; 
+alternativaµ= 219; e níveis de significância a= 0,05, 
+a = O, 10, e a = 0,20. Como o aumento do nível de 
+significância desejado afetá o poder? 
+18.17 Como se comporta o poder. Utilize o applet Statistical 
+Power para encontrar o poder do teste no 
+Exercício 18.14 em cada uma destas circunstâncias: 
+applet nível de significância a = 0,05; alternativaµ = 219; 
+tamanho amostral n = 25; e a= 40, a= 30, e a= 20. 
+Como a diminuição da variabilidade da população de 
+medições afeta o poder? 
+
+18.18 Dois tipos de erro. Sua companhia comercializa 
+um programa computadorizado de diagnóstico médico 
+para avaliar milhares de pessoas. O programa escaneia 
+os resultados de testes médicos de rotina (pulso, testes 
+de sangue etc.) e relata o caso para um médico, se houver 
+evidência de um problema médico. O programa 
+toma uma decisão sobre cada pessoa. 
+(a) Quais são as duas hipóteses e os dois tipos de erro 
+que o programa pode cometer? Descreva os dois 
+tipos de erro em termos dos resultados de teste 
+falso-positivo e falso-negativo. 
+(b) O programa pode ser ajustado para diminuir a 
+probabilidade de um erro, ao custo do aumento 
+na probabilidade do outro erro. Qual probabilidade 
+de erro você escolheria para diminuir, e por 
+quê? (Essa é uma questão de julgamento. Não há 
+uma resposta correta.) 
+
+CAPÍTULO 18 
+
+RESUMO 
+
+......................................................... ................... 
+
+• Um intervalo de confiança ou teste específico são corretos 
+apenas sob condições específicas. As condições mais importantes 
+são relativas ao método usado para a produção dos 
+dados. Outros fatores, como a forma da distribuição populacional, 
+também podem ser importantes. 
+• Sempre que você usar inferência estatística, estará agindo 
+como se seus dados fossem uma amostra aleatória ou fossem 
+provenientes de um experimento comparativo aleatorizado. 
+• Antes da inferência, sempre faça uma análise dos dados para 
+detectar valores atípicos ou outros problemas que tornariam 
+a inferência não confiável. 
+• A margem de erro em um intervalo de confiança considera 
+apenas a variação casual devida à amostragem aleatória. Na 
+prática, erros causados pela não resposta ou subcobertura 
+são frequentemente mais sérios. 
+• Não há uma regra universal que determine quão pequeno 
+deva ser um valor P em um teste de significância para 
+considerá-lo evidência convincente contra a hipótese nula. 
+Cuidado para não colocar muito peso em níveis de significância 
+tradicionais, como a = 0,05. 
+• Efeitos muito pequenos podem ser altamente significantes 
+(valor P pequeno) quando um teste se baseia em uma amostra 
+grande. Sempre considere se o tamanho do efeito -magnitude 
+do efeito na população -é importante na prática. 
+Represente graficamente os dados para evidenciar o efeito 
+que está procurando e use intervalos de confiança para estimar 
+os verdadeiros valores dos parâmetros. 
+• Por outro lado, a ausência de significância não implica que 
+H0 seja verdadeira. Até mesmo um efeito grande pode deixar 
+VERIFIQUE SUAS HABILIDADES 
+
+18.19 A condição mais importante para conclusões sólidas a partir 
+de inferência estatística é, usualmente, que 
+(a) o valor P que calculamos seja pequeno. 
+(b) a distribuição da população seja exatamente Normal. 
+(c) os dados possam ser considerados como uma amostra 
+aleatória da população de interesse. 
+18.20 O treinador de um time feminino de futebol de uma universidade 
+canadense registra as taxas cardíacas em repouso 
+dos 25 membros do time. Você não deve confiar em um 
+intervalo de confiança para a taxa cardíaca média em repouso 
+de todas as mulheres estudantes dessa universidade 
+canadense com base nesses dados porque 
+(a) os membros do time de futebol não podem ser considerados 
+uma amostra aleatória de todas as mulheres 
+estudantes dessa universidade. 
+(b) as taxas cardíacas podem não ter uma distribuição 
+Normal. 
+(c) com apenas 25 observações, a margem de erro será 
+grande. 
+de ser significante quando um teste se baseia em uma amostra 
+pequena. 
+
+• Muitos testes realizados simultaneamente provavelmente 
+produzirão alguns resultados significantes apenas devido ao 
+acaso, mesmo que todas as hipóteses nulas sejam verdadeiras. 
+• Quando planejar um estudo estatístico, planeje também a 
+inferência. Em particular, determine qual o tamanho amostral 
+de que você necessita para uma inferência bem-sucedida. 
+• Para a estimação da média de uma população Normal usando 
+o intervalo de confiança z com dada margem de erro m e um 
+nível de confiança especificado, o tamanho amostral n deve ser 
+• Aqui, z* é o valor crítico para o nível de confiança desejado. 
+Sempre arredonde n para o primeiro número inteiro acima 
+quando usar essa fórmula. 
+• O poder de um teste de significância mede sua habilidade 
+de detectar a verdade de uma hipótese alternativa. O poder 
+contra uma alternativa específica é a probabilidade de o 
+teste rejeitar H0, em um nível particular a, quando aquela 
+alternativa é verdadeira (tópicos opcionais). 
+• O aumento do tamanho da amostra aumenta o poder de 
+um teste de significância. Você pode usar um programa estatístico 
+para encontrar o tamanho amostral necessário para 
+alcançar o poder desejado (tópicos adicionais). 
+• Se você rejeitar H0 quando, de fato, H0 é verdadeira, esse é 
+um erro Tipo I. Se você deixar de rejeitar H0 quando, de 
+fato, Ha é verdadeira, esse é um erro Tipo II. 
+18.21 Você se conecta à pesquisa online Harris lnteractive. Com 
+base em 2.223 respostas, a pesquisa relata que 60% dos 
+adultos americanos disseram que chefia é uma ocupação 
+de prestígio.8 Você deve se recusar a calcular um intervalo 
+de confiança de 95% para a proporção de todos os adultos 
+americanos que acreditam que chefia é uma ocupação de 
+prestígio com base nessa amostra porque 
+(a) esse percentual é muito pequeno. 
+(b) inferência a partir de amostra de resposta voluntária 
+não é confiável. 
+(c) a amostra é muito grande. 
+18.22 Muitas pesquisas amostrais usam amostras aleatórias bem 
+planejadas, mas metade ou mais das amostras originais não 
+pode ser contatada ou se recusa a participar. Quaisquer erros 
+devidos a essa não resposta 
+(a) não têm qualquer efeito sobre a precisão dos intervalos 
+de confiança. 
+(b) estão incluídos na margem de erro anunciada. 
+(c) são um acréscimo à variação aleatória considerada pela 
+margem de erro anunciada. 
+
+Inferência na Prática
+
+338 
+
+18.23 Um escritor, em um periódico médico, diz que "Um experimento 
+não controlado com 37 mulheres descobriu um 
+escore médio de sintoma clínico significantemente melhor 
+depois de tratamento. Falhas metodológicas tornam difícil 
+a interpretação dos resultados desse estudo". O escritor é 
+cético em relação à melhora significante porque 
+(a) não há grupo de controle, de modo que a melhora 
+pode dever-se ao efeito placebo ou ao fato de que muitas 
+condições clínicas melhoram ao longo do tempo. 
+(b) o valor P dado foi P = 0,048, que é muito grande para 
+ser convincente. 
+(c) a variável resposta pode não ter uma distribuição exatamente 
+Normal na população. 
+18.24 Exercício vigoroso está associado a alguns anos extras de 
+vida (em média). Pesquisadores na Dinamarca encontraram 
+evidência de que a caminhada vagarosa pode fornecer 
+até melhores benefícios para a expectativa de vida do que 
+corrida vigorosa.9 Suponha que o tempo a mais, além da 
+expectativa de vida, devido a caminhadas vagarosas regulares 
+por 30 minutos, três vezes na semana, seja de apenas 
+1 mês. Um teste estatístico tem mais chance de detectar 
+um aumento significante na expectativa média de vida para 
+aqueles que caminham lentamente, se 
+(a) ele se baseia em uma amostra aleatória muito grande. 
+(b) ele se baseia em uma amostra aleatória muito pequena. 
+(c) O tamanho da amostra não tem qualquer efeito sobre a 
+significância do teste para um aumento tão pequeno na 
+expectativa de vida. 
+EXERCÍCIOS 
+
+18.28 Gerentes de hotéis. No Exercício 17.30, você realizou um 
+teste de significância com base nos dados de 148 gerentes 
+gerais de hotéis três e quatro estrelas. Antes de acreditar 
+em seus resultados, você gostaria de obter mais informação 
+sobre os dados. Quais fatos você mais gostaria de saber? 
+18.29 Professores atraentes. Um psicólogo afirma que os estudantes 
+prestam mais atenção a aulas ministradas por professores 
+classificados como atraentes pelos alunos do que 
+a aulas com professores classificados como não atraentes. 
+Ele pesquisa estudantes em aulas ministradas por professores 
+classificados como atraentes e em aulas ministradas por 
+professores classificados como não atraentes. A proporção 
+de alunos que afirmam prestar muita atenção às aulas é 
+significantemente mais alta (P < 0,05) entre os estudantes 
+com professores atraentes. Qual informação adicional você 
+desejaria para ajudá-lo a decidir se você acredita na afirmativa 
+do psicólogo? 
+18.25 Um experimento médico comparou suplementos de zinco 
+com um placebo para a redução da duração de resfriados. 
+Seja µ a diminuição média, em dias, na duração de um 
+resfriado. Uma diminuição de µ = 2 é uma diminuição praticamente 
+importante. O hível de significância de um teste 
+de H0: µ = Oversus Hª: µ >Oé definido como 
+(a) a probabilidade de que o teste deixe de rejeitar H0 quando 
+µ = 2 é verdadeira. 
+(b) a probabilidade de que o teste rejeite H0 quandoµ= 2 
+é verdadeira. 
+(c) a probabilidade de que o teste rejeite H0 quando µ = O 
+é verdadeira. 
+18.26 (Tópico opcional) O poder do teste no Exercício 18.25 
+contra a alternativa específica µ = 2 é definido como 
+(a) a probabilidade de que o teste deixe de rejeitar H0 quando 
+µ = 2 é verdadeira. 
+(b) a probabilidade de que o teste rejeite H0 quandoµ= 2 
+é verdadeira. 
+(c) a probabilidade de que o teste rejeite H0 quando µ = O 
+é verdadeira. 
+18.27 (Tópico opcional) O poder de um teste é importante na 
+prática porque o poder 
+(a) descreve quão bom é o desempenho do teste quando a 
+hipótese nula é realmente verdadeira. 
+(b) descreve quão sensível é o teste a violações de condições 
+como distribuição populacional Normal. 
+(c) descreve quão bom é o desempenho do teste quando a 
+hipótese nula, realmente, não é verdadeira. 
+18.30 Amostragem em uma loja de comida gourmet. Um pesquisador 
+de mercado escolhe ao acaso entre homens que 
+entram em uma loja de comida gourmet. Um resultado do 
+estudo é um intervalo de confiança de 95% para a média 
+de "o maior preço que você pagaria por uma garrafa de 
+vinho". 
+(a) Explique por que esse intervalo de confiança não fornece 
+informação útil sobre a população de todos os homens. 
+(b) Explique por que ele pode fornecer informação útil sobre 
+a população de homens que compram em lojas de 
+comida gourmet. 
+18.31 Perguntas delicadas. A Youth Risk Behavior Survey de 
+2013 encontrou que 194 indivíduos em sua amostra de 
+1.450 estudantes do Ensino Médio em Ohio disseram que 
+eles carregaram uma arma, como um revólver, canivete, 
+faca ou um bastão nos 30 dias anteriores. Isso é 13,4% da 
+amostra. Por que essa afirmativa é provavelmente viesada? 
+Você acha que ela é viesada para mais ou para menos? A 
+margem de erro de um intervalo de confiança de 95% para 
+a proporção de todos os estudantes do Ensino Médio em 
+Ohio que carregaram uma arma, como um revólver, canivete, 
+faca ou um bastão nos 30 dias anteriores, leva em conta 
+esse viés? 
+18.32 Graus universitários. No site do Statistics Canada, www. 
+statcan.gc.ca, você pode encontrar o percentual de adultos 
+
+em cada província que possui, pelo menos, um certificado 
+ou diploma universitário, ou um grau de bacharel, ou mais 
+elevado. Não faz sentido calcular xpara esses dados e usar 
+para a obtenção de um intervalo de confiança para o percentual 
+médio µ em todas as 13 províncias ou territórios. 
+Por que não? 
+
+18.33 Um valor atípico ataca. Você tem dados sobre uma MS 
+de calouros de sua faculdade que mostram quanto tempo 
+cada estudante gasta estudando e fazendo as tarefas de casa. 
+Os dados contêm um valor atípico alto. Esse valor atípico 
+terá um efeito maior sobre um intervalo de confiança para 
+o tempo médio para completar as tarefas se sua amostra for 
+pequena ou grande? Por quê? 
+18.34 Podemos confiar nesse intervalo? A seguir, apresentamos 
+os dados sobre a variação percentual na massa total (em 
+toneladas) de vida selvagem em várias reservas na África 
+Ocidental, nos anos de 1971 a 1999:10 1.111 VIDASELV 
+1971 1972 1973 1974 1975 1976 1977 1978 1979 1980 
+2,9 3,1 -1,2 -1,1 -3,3 3,7 1,9 -0,3 _ -5,9 _-7,9_ 
+1981 1982 1983 1984 1985 1986 1987 1988 1989 1990 
+-5,5 -7,2 -4,1 -8,6 -5,5 -0,7 -5,1 -7,1 -4,2 0,9 
+1991 1992 1993 1994 1995 1996 1997 1998 1999 
+-6,1 -4,1 -4,8 -11,3 -9,3 -10,L.:l,§ -7,4 -22,9_ 
+Programas de computador fornecem o intervalo de confiança 
+de 95% para a variação percentual média anual 
+como -6,66% a -2,55%. Há várias razões pelas quais não 
+podemos confiar nesse intervalo. 
+(a) Examine a distribuição dos dados. Qual característica 
+da distribuição lança dúvida sobre a validade da inferência 
+estatística? 
+(b) Esboce os percentuais contra ano. Qual tendência 
+você vê nessa série temporal? Explique por que uma 
+tendência ao longo do tempo lança dúvida sobre 
+a condição de que os anos de 1971 a 1999 possam 
+ser considerados como uma MS de uma população 
+maior de anos. 
+18.35 Quando usar marca-passos. Um painel médico preparou 
+diretrizes sobre quando marca-passos devem ser implantados 
+em pacientes com problemas cardíacos. O painel 
+reviu um grande número de estudos médicos para julgar 
+a força da evidência que apoia cada recomendação. Para 
+cada recomendação, eles classificaram a evidência como 
+nível A (mais forte), B, ou C (mais fraca). A seguir, fora 
+de ordem, estão as descrições do painel dos três níveis de 
+evidência.11 Qual é A, qual é B e qual é C? Explique sua 
+classificação. 
+A evidência foi classificada como nível ____ quando 
+os dados derivavam de um número limitado de ensaios, envolvendo 
+número comparativamente pequeno de pacientes, 
+ou de uma análise de dados bem planejada de estudos não 
+aleatorizados ou registros de dados observacionais. 
+A evidência foi classificada como nível ____ se os dados 
+derivavam de ensaios clínicos aleatorizados múltiplos, 
+envolvendo um grande número de indivíduos. 
+A evidência foi classificada como nível ____ quando 
+o consenso de opiniões de especialistas foi a fonte primária 
+de recomendação. 
+
+CAPÍTULO "18 
+
+18.36 Para que serve a significância? Um teste de significância 
+responde a qual das seguintes perguntas? Explique sucintamente 
+suas respostas. 
+(a) O efeito observado é grande? 
+(b) O efeito observado é devido ao acaso? 
+(c) O efeito observado é importante? 
+18.37 Por que amostras maiores são melhores? Os estatísticos 
+preferem amostras grandes. Descreva resumidamente o 
+efeito de aumentar o tamanho da amostra (ou o número 
+de sujeitos do experimento) sobre cada um dos seguintes: 
+(a) O valor P de um teste, quando H0 é falsa e todos os fatos 
+sobre a população permanecem inalterados quando 
+n cresce. 
+(b) (Opcional) O poder de um teste de nível a fixado, 
+quando a, a hipótese alternativa, e todos os fatos sobre 
+a população permanecem inalterados. 
+18.38 Divórcios. As taxas de divórcio variam de cidade para cidade 
+nos Estados Unidos. Temos muitos dados sobre várias 
+cidades americanas. Programas estatísticos facilitam a 
+realização de dúzias de testes de significância sobre dúzias 
+de variáveis, para verificar quais predizem melhor a taxa 
+de divórcio. Uma descoberta interessante é que as cidades 
+com parques esportivos das Ligas Principais tendem a ter 
+significantemente mais divórcios do que as outras cidades. 
+Para melhorar suas chances de ter um casamento duradouro, 
+você deve usar essa variável "significante" para decidir 
+onde morar? Explique sua resposta. 
+18.39 Um teste sai errado. Programas de computador podem gerar 
+amostras de distribuições (quase) exatamente Normais. 
+Eis uma amostra aleatória de tamanho 5 de uma distribuição 
+Normal com média 20 e desvio-padrão 2,5: 1.111 ALEAT 
+22,94 17,04 17,58 20,96 19,29 
+Esses dados combinam as condições para um teste zmelhor 
+do que dados reais o farão: a população é muito próxima 
+da Normal e tem desvio-padrão conhecido cr = 2,5, e a 
+média populacional é µ = 20. Embora saibamos o verdadeiro 
+valor de µ, suponha que não o saibamos e testamos as 
+
+hipóteses 
+H0: µ = 17,5 
+Hª: µ =fa 17,5 
+
+(a) Quais são a estatística z e seu valor P? O teste é significante 
+no nível 5%? 
+(b) Sabemos que a hipótese nula não se verifica, mas o teste 
+deixou de dar evidência forte contra H0• Explique por 
+que isso não é de surpreender. 
+18.40 Reduzindo a lacuna de gênero. Em muitas disciplinas 
+científicas, as mulheres são superadas pelos homens nos 
+escores de testes. O "treinamento de afirmação de valores" 
+melhora a autoconfiança e, portanto, o desempenho das 
+mulheres em relação aos homens em cursos de ciências? 
+Um estudo realizado em uma grande universidade compara 
+os escores de homens e mulheres no final de um grande 
+curso introdutório de física, em um teste padronizado, 
+normatizado nacionalmente, de física conceitua!, o Force 
+and Motion Conceptual Evaluation (FMCE). Metade das 
+mulheres no curso foi associada a um treinamento de afirmação 
+de valores durante o curso; a outra metade não recebeu 
+qualquer treinamento. O estudo relata que houve 
+
+Inferência na Prática
+
+340 
+
+uma diferença significante (P < 0,01) na lacuna entre os 
+escores de homens e mulheres, embora a lacuna para as 
+mulheres que receberam o treinamento de afirmação de 
+valores tenha sido muito menor do que para as mulheres 
+que não receberam o treinamento. Como evidência de que 
+essa lacuna foi reduzida para as mulheres que receberam o 
+treinamento, o estudo relata, também, que um intervalo 
+de confiança de 95% para a diferença média nos escores 
+no exame FMCE entre mulheres que receberam o treinamento 
+e as que não receberam é 13 ± 8 pontos. Você é um 
+professor da universidade no departamento de física, e o 
+reitor, que está interessado em mulheres nas ciências, lhe 
+pergunta sobre o estudo. 
+
+(a) Explique, em uma linguagem simples, o que significa 
+"uma diferença significante (P <0,01)". 
+(b) Explique clara e resumidamente o que significa "95% 
+de confiança". 
+(c) Esse estudo é boa evidência de que a exigência do 
+treinamento de afirmação de valores para todas as estudantes 
+mulheres reduziria grandemente a lacuna de 
+gênero nos testes de ciências nos cursos das universidades? 
+18.41 Até onde pais ricos podem nos levar? O nível de educação 
+que as crianças alcançam está fortemente associado ao grau 
+de riqueza e status social dos pais. No jargão das ciências 
+sociais, esse é o status socioeconômico, ou SSE. Mas o SSE 
+dos pais tem pouca influência no fato de jovens que se graduaram 
+na faculdade obterem, ou não, mais educação. Um 
+estudo observou se graduados em faculdades fizeram testes 
+de admissão para administração, direito e outros programas 
+de graduação. Os efeitos do SSE dos pais sobre o fato de 
+jovens fazerem o teste LSAT para a escola de direito foram 
+"tanto estatisticamente insignificantes quanto pequenos". 
+(a) O que significa "estatisticamente insignificante"? 
+(b) Por que é importante que os efeitos tenham sido pequenos 
+em tamanho, bem como insignificantes? 
+18.42 Esse vinho cheira mal. Quão sensíveis são os olfatos não 
+treinados de estudantes? O Exercício 16.27 apresenta os níveis 
+mais baixos de dimetilsulfeto (OMS) que 10 estudantes 
+puderam detectar. Você deseja estimar o limiar médio de 
+odor do OMS entre todos os estudantes, e você gostaria 
+de estimar a média dento de ±0,1, com 99% de confiança. 
+Sabe-se que o desvio-padrão do limiar de odor para olfatos 
+não treinados é (J = 7 microgramas por litro de vinho. 
+Qual o tamanho de uma MS de estudantes com olfatos 
+não treinados de que você precisa? 
+18.43 Ruptura de madeira. Você deseja estimar a carga média necessária 
+para romper peças de madeira do Exercício 16.25, 
+dentro de ±600 libras, com 95% de confiança. Qual é o 
+tamanho de amostra necessário? 
+Os exercícios que seguem se referem ao material opcional sobre poder de 
+um teste. 
+
+18.44 O primeiro filho tem QI mais alto. A ordem dos nascimentos 
+dos filhos de uma família influencia seus escores 
+de QI? Um estudo cuidadoso de 241.310 noruegueses, com 
+idade entre 18 e 19 anos, encontrou que as crianças primogênitas 
+tinham escores 2,3 pontos mais altos, na média, do 
+que os segundos filhos na mesma família. Essa diferença foi 
+altamente significante (P <0,001). Um comentarista disse 
+que "Um enigma acentuado por essas últimas descoberta~ 
+é por que outros estudos dentro de famílias deixaram d~ 
+apresentar resultados igualmente consistentes. Alguns des 
+ses resultados nulos anteriores, que foram obtidos a parti1 
+de amostras muito menores, podem ser explicados pelo po 
+der estatístico inadequado".12 
+
+(a) Explique, em linguagem simples, por que testes que tên 
+poder baixo, em geral, deixam de dar evidência contra : 
+hipótese nula, mesmo quando ela é realmente falsa. 
+(b) Você acha que a diferença de 2,3 pontos nos escores d1 
+QI é uma diferença importante? 
+18.45 Como atua o Valium®. Valium® é um antidepressivo e sed, 
+tivo comum. Um estudo examinou como o Valium® atrn: 
+comparando seu efeito sobre o sono em sete camundongc 
+geneticamente modificados e oito camundongos normai 
+de controle. Não houve diferença significante entre os doi 
+grupos. Os autores dizem que a falta de significância "est 
+relacionada à grande variabilidade entre os indivíduos qu 
+também se reflete no baixo poder (20%) do teste".13 
+(a) Explique exatamente o que significa poder de 20% co1 
+trauma alternativa específica. 
+(b) Explique, em linguagem simples, por que testes qt 
+têm poder baixo, em geral, deixam de dar evidênc 
+contra uma hipótese nula, mesmo quando ela é reí 
+mente falsa. 
+(c) Qual fato relativo a esse experimento tem mais probal 
+lidade de explicar o baixo poder? 
+18.46 Doença arterial. Um artigo no New England Journal of Jv 
+dicine descreve um teste controlado aleatorizado que co1 
+parou os efeitos de usar um balão com uma cobertura 1 
+pedal em angioplastia (reparação dos vasos sanguíneos) e 
+lugar do balão padrão. De acordo com o artigo, o estui 
+foi planejado para ter poder de 90%, com um erro bilate 
+Tipo I de 0,05, para detectar uma diferença clinicamer 
+importante de aproximadamente 17 pontos percentuais 
+presença de certas lesões, 12 meses depois de cirurgia.14 
+(a) Qual nível fixo de significância foi usado no cálculo 
+poder? 
+(b) Explique, a alguém que não saiba estatística, por e 
+poder de 90% significa que, provavelmente, o expi 
+mento teria sido significante se tivesse havido difere, 
+entre o uso do balão com a cobertura especial e o i 
+do balão padrão. 
+18.47 Poder. No Exercício 18.39, uma amostra de uma pop, 
+ção Normal, com média µ = 20 e desvio-padrão o 
+2,5, deixou de rejeitar a hipótese nula Ho: µ = 1 
+no nível de significância a = 0,05. Introduza a in 
+mação desse exemplo no applet Statistical Power. (Nãc 
+esqueça de que a hipótese alternativa é bilateral.) Qual 
+poder do teste contra a alternativa µ =I=-17 ,5? Visto 
+
+o poder não é alto, não é de surpreender que a amostra 
+Exercício 18.39 tenha deixado de rejeitar H0• 
+18.48 Encontrando o poder à mão. Mesmo que os programas se 
+usados na prática para o cálculo do poder, fazer esse trab: 
+à mão ajuda na sua compreensão. Volte ao teste no Exen 
+18.7. Há n = 10 observações de uma população com de 
+padrão (J = 1 e média µ desconhecida. Testaremos 
+Ho: µ=O 
+Hª: µ>O 
+
+
+com nível fixo de significância a= 0,05. Ache o poder contra 
+a alternativa /,1, = 0,8, seguindo esses passos. 
+
+(a) A estatística de teste z é 
+x-µ0 x-0 _ 
+
+z = a-/.n = v-Jw = 3,162x 
+
+(Lembre-se de que você não conhece o valor numérico de x 
+
+até ter os dados.) Quais valores de z levam à rejeição de H0 
+
+no nível de significância de 5%? 
+
+(b) Começando pelo seu resultado de (a), quais valores de x 
+levam à rejeição de Ho? A área acima desses valores está 
+sombreada sob a curva superior na Figura 18.1. 
+(c) O poder é a probabilidade de você observar qualquer 
+desses valores de xquando /,1, = 0,8. Essa é a área sombreada 
+sob a curva inferior na Figura 18.1. Qual é essa 
+probabilidade? 
+18.49 Encontrando o poder à mão: teste bilateral. O Exercício 
+18.48 mostra como calcular o poder de um teste z unilateral. 
+Os cálculos do poder para testes bilaterais seguem 
+a mesma linha. Encontraremos o poder de um teste com 
+base em uma amostra aleatória de tamanho 5, discutida no 
+Exercício 18.39. As hipóteses são 
+H0: µ = 17,5 
+
+Hª: µ-=/=-17,5 
+A população de todas as medições é Normal, com desviopadrão 
+(J = 2,5, e a alternativa que esperamos ser capazes de 
+detectar é µ = 20 (a real média populacional). (Se você usou 
+
+o applet Statistical Power para o Exercício 18.47, as duas curvas 
+Normais para n = 5 ilustram as partes (a) e (b) a seguir.) 
+(a) Escreva a estatística de teste z em termos da média 
+amostral x. Para quais valores de z esse teste bilateral 
+rejeita H0 no nível de significância de 5%? 
+(b) Reformule seu resultado da parte (a). Quais valores de x 
+levam à rejeição de H0? 
+(c) Agora suponha que /,1, = 12. Qual é a probabilidade de 
+observar um xque leve à rejeição de H0? Esse é o poder 
+do teste. 
+18.50 Probabilidades de erro. Você lê que um teste estatístico, 
+no nível de significância a = 0,05, tem poder 0,80. 
+Quais são as probabilidades de erros Tipo I e Tipo II 
+para esse teste? 
+18.51 Poder. Você lê que um teste estatístico, no nível a = 0,01, 
+tem probabilidade 0,44 de fazer um erro Tipo II, quando 
+uma alternativa específica é verdadeira. Qual é o poder do 
+teste contra essa alternativa? 
+18.52 Encontre as probabilidades de erro. Você tem uma MS 
+de tamanho n = 25 de uma distribuição Normal, com 
+(J = 2,0. Você deseja testar 
+Ho: µ=O 
+Hª: µ>O 
+Você decide rejeitar H0, se x > O, e não rejeitar H0, caso 
+contrário. 
+
+(a) Ache a probabilidade de um erro Tipo I. Isto é, ache a 
+probabilidade de que o teste rejeite H0 quando, de fato, 
+/,1, = o. 
+(b) Ache a probabilidade de um erro Tipo II quando /,1, = 0,5. 
+Essa é a probabilidade de que o teste deixe de rejeitar 
+H0 quando, de fato,µ= 0,5. 
+(c) Ache a probabilidade de um erro Tipo li quando µ = 1,0. 
+CAPÍTULO 18 
+
+341 
+
+18.53 Dois tipos de erro. Vá ao applet Statistical Significance. 
+Esse applet realiza testes em um nível fixo de significância. 
+Quando você abrir o applet, ele estará preparado 
+para o teste de sabor de refrigerante do Exemplo 18.7. 
+Isto é, as hipóteses são 
+Ho: /,1, = O 
+Hª: µ>O 
+
+Temos uma MS de tamanho 10 de uma população Normal 
+com desvio-padrão (J = 1, e faremos um teste no nível 
+a = 0,05. No pé da tela, um botão permite que você escolha 
+um valor da média µ e, então, gere amostras aleatórias 
+de uma população com essa média. 
+
+(a) Faça -µ, = O, de modo que a hipótese nula é verdadeira. 
+Cada vez que você clica no botão, aparece uma nova 
+amostra. Se a média amostral xcai na região colorida, 
+aquela amostra rejeita H0 no nível 5%. Clique 100 vezes 
+rapidamente, mantendo registro de quantas amostras 
+rejeitam H0• Use seus resultados para estimar a probabilidade 
+de um erro Tipo I. Se você clicasse para sempre, 
+qual probabilidade você obteria? 
+(b) Faça, agora, -µ, = 0,8. O Exemplo 18.8 mostra que o teste 
+tem poder 0,812 contra essa alternativa. Clique 100 vezes 
+rapidamente, mantendo registro de quantas amostras 
+deixam de rejeitar H0• Use seus resultados para estimar 
+a probabilidade de um erro Tipo li. Se você clicasse para 
+sempre, qual probabilidade você obteria? 
+18.54 Erros Tipo I e Tipo II. A Seção 13.7 discute o teste do antígeno 
+específico para próstata (PSA) para o câncer de próstata. 
+O teste não é sempre correto, algumas vezes indicando câncer 
+de próstata (teste positivo) quando ele não está presente 
+(um falso-positivo), e muitas vezes deixando de detectar um 
+câncer (teste negativo) que está presente (um falso-negativo). 
+Eis uma tabela das quatro possibilidades. 
+Resultado do teste 
+Positivo Negativo
+
+··-----------·
+
+
+Câncer presente Teste está correto falso-n~gativo 
+Câncer ausente Falso-positivo Teste está correto 
+
+Se consideramos "Câncer ausente" corno nossa hipótese 
+nula e o resultado do teste de PSA como nossa estatística 
+de teste, qual das quatro combinações corresponde a um 
+erro Tipo I? Qual corresponde a um erro Tipo II? 
+
+18.55 Testagem múltipla. Este problema supõe que você tenha estudado 
+o Capítulo 14, opcional, sobre distribuições binomiais. Se a 
+hipótese nula é verdadeira, o teste no nível de significância 
+de 0,05 significa que a probabilidade é 0,05 de rejeitar, incorretamente, 
+a hipótese nula. Suponha que se realizem 20 
+testes independentes no nível de 0,05, e que, em cada caso, a 
+hipótese nula seja verdadeira. Seja X o número de testes que, 
+incorretamente, rejeitam a hipótese nula. X poderá assumir 
+valores de Oa 20 e seguirá uma distribuição binomial, com n 
+= 20 observações e probabilidade p = 0,05 de sucesso. Qual 
+é a probabilidade X ~ 1? Essa é a probabilidade de que pelo 
+menos um teste rejeitará a hipótese nula incorretamente. 
+18.56 Viés de publicação. Leia o Exemplo 18.5 sobre viés de 
+publicação. Use os resultados do Exercício 18.55 para determinar 
+a probabilidade de que pelo menos um dos 20 
+pesquisadores publicará seus resultados como sendo significantes 
+no nível 0,05, mesmo que a terapia não tenha 
+qualquer efeito sobre a doença. 
+

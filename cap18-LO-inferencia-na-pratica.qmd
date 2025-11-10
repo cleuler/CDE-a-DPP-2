@@ -1,0 +1,379 @@
+# Inferência na Prática {#sec-cap18-inferencia-pratica}
+
+::: callout-note
+## Capítulo 18 - Livro "A Estatística Básica e sua prática" (9ª ed.)
+
+Este capítulo apresenta os conceitos fundamentais para aplicação prática da inferência estatística, abordando as condições necessárias para procedimentos válidos e confiáveis.
+:::
+
+## Introdução
+
+Até agora, nos foram apresentados somente dois procedimentos de inferência estatística. Ambos dizem respeito à inferência sobre a média μ de uma população, quando as **"condições simples"** são verdadeiras: os dados são uma AAS, a população tem distribuição Normal, e conhecemos o desvio-padrão σ da população.
+
+Sob essas condições, um intervalo de confiança para a média μ é:
+
+$$\bar{x} \pm z^* \frac{\sigma}{\sqrt{n}}$$
+
+em que $z^*$ é o valor crítico exigido para determinado nível de confiança. Para testarmos uma hipótese $H_0: \mu = \mu_0$, usamos a estatística z de uma amostra:
+
+$$z = \frac{\bar{x} - \mu_0}{\sigma/\sqrt{n}}$$
+
+Chamamos esses procedimentos de **procedimentos z** porque ambos começam com a estatística z de uma amostra e usam a distribuição Normal padrão.
+
+Em capítulos posteriores, modificaremos esses procedimentos para inferência sobre uma média populacional para torná-los mais úteis na prática. Introduziremos, também, procedimentos para intervalos de confiança e testes voltados para a maioria das situações que encontramos quando aprendemos a explorar dados.
+
+::: callout-important
+## Ditado Estatístico
+
+Existe um ditado entre os estatísticos que diz que **"teoremas matemáticos são verdadeiros; métodos estatísticos são eficazes quando usados com discernimento"**. O fato de a estatística z de uma amostra ter distribuição Normal padrão quando a hipótese nula é verdadeira corresponde a um teorema matemático. O uso eficaz de métodos estatísticos requer mais do que o conhecimento de tais fatos.
+:::
+
+## 18.1 Condições para Inferência na Prática {#sec-condicoes-inferencia}
+
+::: callout-warning
+Qualquer intervalo de confiança ou teste de significância só é confiável sob condições específicas. Cabe a você entender essas condições e julgar se elas se ajustam ao seu problema.
+:::
+
+Com isso em mente, vamos examinar novamente as **"condições simples"** para os procedimentos z para inferência sobre uma média.
+
+### Condições Simples para Inferência sobre uma Média
+
+1.  **Amostragem**: Temos uma amostra aleatória simples (AAS) da população de interesse. Não há não resposta ou outra dificuldade prática. A população é grande em comparação com o tamanho da amostra.
+
+2.  **Normalidade**: A variável que medimos tem uma distribuição exatamente Normal N(μ, σ) na população.
+
+3.  **Desvio-padrão conhecido**: Não conhecemos a média populacional μ. Mas conhecemos o desvio-padrão populacional σ.
+
+A última das "condições simples" - conhecemos o desvio-padrão σ da população - raramente é satisfeita na prática. Os procedimentos z, portanto, são de pouco uso prático. Felizmente, é fácil remover a condição "σ conhecido". O Capítulo 20 mostra como fazê-lo.
+
+### A Procedência dos Dados Importa
+
+::: callout-tip
+## Pergunta Fundamental
+
+Ao planejar inferência, você deve sempre perguntar-se "**De onde vieram os dados?**" e também deve responder a outra questão, "**Qual é a forma da distribuição populacional?**"
+:::
+
+#### EXEMPLO 18.1: O psicólogo e o sociólogo
+
+**Psicóloga**: Uma psicóloga está interessada em saber como nossa percepção visual pode ser enganada por ilusões óticas. Seus sujeitos são alunos da disciplina de Psicologia 101 de sua universidade. A maioria dos psicólogos concordaria que é seguro tratar os alunos como uma AAS de todas as pessoas com visão normal. Não há nada incomum em ser estudante que mude a percepção visual.
+
+**Sociólogo**: Um sociólogo da mesma universidade usa os alunos da disciplina de Sociologia 101 para examinar as atitudes com relação a pessoas pobres e programas de combate à pobreza. Os alunos, como um grupo, são mais jovens do que a população adulta como um todo. Mesmo entre pessoas jovens, os alunos como um grupo provêm de lares mais educados e mais prósperos. O sociólogo não pode, razoavelmente, agir como se esses alunos fossem uma amostra aleatória de qualquer população de interesse.
+
+::: callout-note
+## De onde vieram os dados?
+
+O requisito mais importante de qualquer procedimento de inferência é que os dados provenham de um processo ao qual se apliquem as leis de probabilidade. A inferência é mais confiável quando os dados resultam de uma **amostra aleatória** ou de um **experimento comparativo aleatorizado**.
+:::
+
+### A Procedência dos Dados Importa
+
+::: callout-warning
+## Princípio Fundamental
+
+**Ao usar inferência estatística, você age como se seus dados fossem uma amostra aleatória ou provenientes de um experimento comparativo aleatorizado.**
+
+Se seus dados não provêm de uma amostra aleatória ou de um experimento comparativo aleatorizado, suas conclusões podem ser questionadas.
+:::
+
+#### EXEMPLO 18.2: É realmente uma AAS?
+
+**Pesquisa NHANES**: A pesquisa NHANES, que produziu os dados de IMC para o Exemplo 16.1, usou um planejamento amostral complexo de estágios múltiplos, de modo que é bastante simplista considerar os dados de IMC como provenientes de uma AAS da população de homens jovens. Embora o efeito geral da amostra NHANES seja próximo de uma AAS, estatísticos profissionais usariam procedimentos de inferência mais complexos para melhor adequação ao planejamento mais complexo da amostra.
+
+**Estudo da gorjeta**: Os 20 clientes no estudo da gorjeta apresentado no Exemplo 16.3 foram escolhidos, entre aqueles que comiam em um restaurante particular, para receber um de vários tratamentos em comparação com um experimento comparativo aleatorizado.
+
+### Cuidados Importantes
+
+::: callout-caution
+## Problemas Práticos
+
+-   **Problemas práticos**, como não resposta em amostras ou desistências em um experimento, podem prejudicar a inferência, mesmo em um estudo bem planejado.
+
+-   **Métodos diferentes** são necessários para planejamentos diferentes. Os procedimentos z não são corretos para planejamentos amostrais aleatórios mais complexos do que uma AAS.
+
+-   **Não há remédio** para falhas fundamentais, como resposta voluntária ou experimentos não controlados.
+:::
+
+### Qual é a Forma da Distribuição Populacional?
+
+A maioria dos procedimentos de inferência estatística exige algumas condições sobre a forma da distribuição populacional. Muitos dos métodos mais básicos de inferência são planejados para populações Normais.
+
+::: callout-tip
+## Teorema Limite Central na Prática
+
+Os procedimentos z e muitos outros procedimentos planejados para distribuições Normais se baseiam na **Normalidade da distribuição da média amostral** $\bar{x}$, e não na Normalidade das observações individuais.
+
+O teorema limite central nos diz que: - A distribuição amostral de $\bar{x}$ é mais Normal do que as observações individuais - A distribuição amostral de $\bar{x}$ se torna mais Normal à medida que o tamanho da amostra aumenta
+:::
+
+### Valores Atípicos e Robustez
+
+::: callout-warning
+## Exceção Importante
+
+Há uma importante exceção ao princípio de que a forma da população seja menos crítica do que a procedência dos dados. **Valores atípicos podem distorcer os resultados da inferência.**
+:::
+
+Qualquer procedimento de inferência que se baseie em estatísticas amostrais, como a média amostral $\bar{x}$, que não são resistentes a valores atípicos, pode ser fortemente influenciado por algumas poucas observações extremas.
+
+### Diretrizes Práticas
+
+1.  **Explore seus dados** antes de fazer inferência
+2.  **Faça um diagrama** de ramo e folhas ou um histograma de seus dados
+3.  **Verifique** se a forma é razoavelmente Normal
+4.  **Procure sempre por valores atípicos** e tente corrigi-los ou justificar sua remoção
+5.  **Considere métodos alternativos** que não exijam a Normalidade quando apropriado
+
+## 18.2 Cuidados com os Intervalos de Confiança {#sec-cuidados-intervalos}
+
+### A Margem de Erro Não Cobre Todos os Erros
+
+::: callout-important
+## Limitação da Margem de Erro
+
+A margem de erro em um intervalo de confiança cobre apenas **erros de amostragem aleatória**. Dificuldades práticas, como subcobertura e não resposta, são, muitas vezes, mais sérias do que os erros de amostragem aleatória. **A margem de erro não leva em consideração essas dificuldades.**
+:::
+
+A precaução mais importante acerca de intervalos de confiança, em geral, é uma consequência do uso de uma distribuição amostral. Uma distribuição amostral revela como uma estatística, como $\bar{x}$, varia em amostras repetidas. Essa variação gera erro amostral aleatório, porque a estatística erra o verdadeiro parâmetro por uma quantidade aleatória.
+
+### Exemplos de Aplicação
+
+#### EXEMPLO 18.4: Qual é o seu peso?
+
+Uma pesquisa Gallup de 2019 pediu a uma amostra aleatória nacional de 507 homens adultos que eles fornecessem seus pesos atuais. O peso médio na amostra foi $\bar{x} = 196$. Vamos considerar esses dados como uma AAS proveniente de uma população Normalmente distribuída, com desvio-padrão $\sigma = 35$.
+
+**Problema**: Você confia no intervalo de confiança calculado como sendo de 95% um intervalo de confiança para o peso médio de todos os homens adultos americanos?
+
+**Resposta**: Provavelmente não, porque as pessoas frequentemente mentem sobre seu peso, especialmente em pesquisas por telefone.
+
+## 18.3 Cuidados com os Testes de Significância {#sec-cuidados-testes}
+
+Testes de significância são amplamente utilizados na maioria das áreas do trabalho estatístico. Novos produtos farmacêuticos exigem evidência significante de eficácia e segurança. Tribunais inquirem sobre a significância estatística nas audiências de casos de discriminação em ações de classe.
+
+### Quão Pequeno Deve Ser P para Ser Convincente?
+
+O propósito de um teste de significância é descrever o grau de evidência contra a hipótese nula fornecida pela amostra. O valor P faz isso. Mas quão pequeno deve ser um valor P para ser uma evidência convincente contra a hipótese nula?
+
+Isso depende principalmente de duas circunstâncias:
+
+::: callout-note
+## Critérios para Avaliação do Valor P
+
+1.  **Quão plausível é H₀?** Se H₀ for uma suposição na qual as pessoas a serem convencidas acreditam há anos, será necessária uma forte evidência (P pequeno) para persuadi-las.
+
+2.  **Quais são as consequências de rejeitar H₀?** Se a rejeição de H₀ em favor de Hₐ significa fazer uma troca dispendiosa de um tipo de embalagem de produto por outro, você precisa de uma forte evidência de que a nova embalagem impulsionará as vendas.
+:::
+
+### Significância Depende da Hipótese Alternativa
+
+Você deve ter notado que o valor P para o teste **unilateral** é **metade** do valor P para o teste **bilateral** da mesma hipótese nula e com base nos mesmos dados.
+
+-   O valor P bilateral combina duas áreas iguais, uma em cada cauda da curva Normal
+-   O valor P unilateral é apenas uma dessas áreas, na direção especificada pela hipótese alternativa
+
+### Significância Depende do Tamanho Amostral
+
+::: callout-warning
+## Relação entre Significância e Tamanho da Amostra
+
+**Como grandes amostras aleatórias têm pequena variação do acaso, os efeitos populacionais muito pequenos podem ser altamente significantes se a amostra for grande.**
+
+**Como amostras aleatórias pequenas têm muita variação do acaso, mesmo efeitos populacionais grandes podem deixar de ser significantes se a amostra for pequena.**
+:::
+
+A estatística de teste z é:
+
+$$z = \frac{\bar{x} - \mu_0}{\sigma/\sqrt{n}}$$
+
+-   O **numerador** mede quanto a média amostral se afasta da média da hipótese μ₀
+-   O **denominador** é o desvio-padrão de $\bar{x}$. Há menos variação quando o número de observações n é grande
+-   Assim, z se torna maior (mais significante) quando o efeito estimado $\bar{x} - \mu_0$ se torna maior ou quando o número de observações n aumenta
+
+::: callout-important
+## Significância ≠ Importância Prática
+
+**Significância estatística não nos diz se um efeito é grande o bastante para ser importante. Isto é, significância estatística não é a mesma coisa que significância prática.**
+
+"Significância estatística" quer dizer que "a amostra exibiu um efeito maior do que em geral ocorreria apenas por acaso".
+:::
+
+#### EXEMPLO 18.3: É significante. Ou não. E daí?
+
+Estamos testando a hipótese de nenhuma correlação entre duas variáveis. Com mil observações, uma correlação observada de apenas r = 0,08 é uma evidência significante no nível 1% de que a correlação na população não é zero e sim positiva.
+
+O valor P pequeno não significa que haja uma forte associação, apenas que há forte evidência de alguma associação. Seria possível, então, concluir que, para fins práticos, podemos ignorar a associação entre essas variáveis, mesmo estando confiantes (no nível 1%) de que a correlação é positiva.
+
+### Cuidado com as Análises Múltiplas
+
+::: callout-caution
+## O Problema das Múltiplas Comparações
+
+Significância estatística deve indicar que você encontrou um efeito que estava procurando. O raciocínio que fundamenta a significância estatística funciona bem se você decide qual efeito está procurando, planeja um estudo para procurá-lo e usa um teste de significância para ponderar a evidência obtida.
+:::
+
+Suponha que as 20 hipóteses nulas (nenhuma associação) para 20 testes de significância sejam todas verdadeiras. Então, cada teste tem uma chance de 5% de ser significante no nível 5%. Como 5% são 1/20, esperamos que cerca de 1, entre 20 testes, forneça, apenas devido ao acaso, um resultado significante.
+
+#### EXEMPLO 18.4: Telefones celulares e câncer no cérebro
+
+Um estudo hospitalar, que comparou pacientes com câncer no cérebro e um grupo similar sem câncer no cérebro, não encontrou associação estatisticamente significante entre o uso de telefones celulares e um tipo de câncer no cérebro conhecido como glioma. Porém, quando 20 tipos de glioma foram estudados separadamente, foi encontrada uma associação entre o uso de celular e uma forma rara da doença.
+
+**Conduzir um teste e alcançar o nível de significância de 5% é uma evidência razoavelmente boa de que você encontrou algo. Conduzir 20 testes e alcançar esse nível apenas uma vez não corresponde a uma boa evidência.**
+
+#### EXEMPLO 18.5: Viés de publicação
+
+Um exemplo sutil de análises múltiplas é o **viés de publicação**. Suponha que 20 pesquisadores estejam, independentemente, estudando a eficácia de uma nova terapia para o tratamento de uma doença. Para publicar suas descobertas, os pesquisadores devem demonstrar que a nova terapia é eficaz no nível de significância de 0,05.
+
+Um dos pesquisadores obtém resultados estatisticamente significantes, mas os outros 19 não. O único pesquisador que obteve resultados estatisticamente significantes publica suas descobertas. Nada ficamos sabendo sobre os 19 pesquisadores que deixaram de encontrar significância estatística.
+
+## 18.4 Planejamento de Estudos: Tamanho Amostral para Intervalos de Confiança {#sec-tamanho-amostral}
+
+Um usuário experiente de estatística nunca planeja uma amostra ou um experimento sem, ao mesmo tempo, planejar a inferência. O número de observações é uma parte crítica do planejamento de um estudo.
+
+### Fórmula para o Tamanho Amostral
+
+A margem de erro do intervalo de confiança z para a média de uma população Normalmente distribuída é:
+
+$$m = z^* \frac{\sigma}{\sqrt{n}}$$
+
+Para obter uma margem de erro desejada, m, substitua o valor de z\* para seu nível de confiança desejado e resolva em relação ao tamanho amostral n:
+
+::: callout-tip
+## Tamanho da Amostra para uma Margem de Erro Desejada
+
+Para estimar a média de uma população Normal usando um intervalo de confiança z com dada margem de erro m e um nível de confiança especificado, o tamanho da amostra n deve ser:
+
+$$n = \left(\frac{z^* \sigma}{m}\right)^2$$
+
+em que z\* é o valor crítico para o nível de confiança desejado. **Sempre arredonde n para o próximo inteiro acima** quando usar essa fórmula.
+:::
+
+#### EXEMPLO 18.6: Quantas observações?
+
+No Exemplo 16.3, psicólogos registraram o tamanho das gorjetas de 20 clientes em um restaurante, quando se escrevia, em sua conta, uma mensagem anunciando tempo bom para o dia seguinte. Sabemos que o desvio-padrão populacional é σ = 2. Desejamos estimar a gorjeta percentual média μ para clientes desse restaurante que recebem essa mensagem em suas contas, dentro de ±0,5, com 90% de confiança. Quantos clientes devem ser observados?
+
+**Solução**: A margem de erro desejada é m = 0,5. Para 90% de confiança, a Tabela C fornece z\* = 1,645. Portanto:
+
+$$n = \left(\frac{1,645 \times 2}{0,5}\right)^2 = (6,58)^2 = 43,3$$
+
+Como 43 clientes dão uma margem de erro ligeiramente maior do que a desejada, e 44 clientes, uma margem de erro ligeiramente menor, devemos observar **44 clientes**.
+
+## 18.5 Planejamento de Estudos: O Poder de um Teste Estatístico de Significância\* {#sec-poder-teste}
+
+::: callout-note
+\*Cálculos de poder são importantes no planejamento de estudos, mas este material mais avançado não é necessário para a leitura do restante do livro.
+:::
+
+Qual o tamanho da amostra que devemos extrair quando planejamos realizar um teste de significância? Sabemos que, se nossa amostra for muito pequena, mesmo grandes efeitos na população, em geral, deixarão de dar resultados estatisticamente significantes.
+
+### Questões para Decidir o Tamanho Amostral
+
+1.  **Nível de significância**: Quanta proteção desejamos contra a obtenção de um resultado significante a partir de nossa amostra quando, na realidade, não há qualquer efeito na população?
+
+2.  **Tamanho do efeito**: Qual o tamanho de um efeito na população para ser importante na prática?
+
+3.  **Poder**: Quão confiantes queremos estar de que nosso estudo detectará um efeito do tamanho que consideramos importante?
+
+::: callout-tip
+## Definições Importantes
+
+**Tamanho do efeito**: A magnitude do efeito na população.
+
+**Poder**: O poder de um teste contra uma alternativa específica é a probabilidade de o teste rejeitar H₀ em determinado nível de significância α, quando o valor alternativo especificado do parâmetro é verdadeiro.
+:::
+
+### Erros Tipo I e Tipo II
+
+#### EXEMPLO 18.7: Adoçante de refrigerantes: planejamento de um estudo
+
+Vamos ilustrar respostas típicas às questões que acabamos de colocar, olhando novamente o exemplo do teste de um novo refrigerante em relação à perda de doçura na armazenagem. Dez provadores treinados classificam a doçura em uma escala de 10 pontos, antes e depois do armazenamento.
+
+Para verificar se o teste do sabor fornece razão para pensar que o refrigerante realmente perde doçura, testaremos:
+
+$$H_0: \mu = 0$$ $$H_a: \mu > 0$$
+
+**Decisões do estudo**:
+
+1.  **Nível de significância**: A exigência de significância no nível de 5% é proteção suficiente contra a afirmativa de que há uma perda de doçura quando, de fato, não há qualquer mudança.
+
+2.  **Tamanho do efeito**: Uma perda média de doçura de 0,8 ponto na escala de 10 pontos será notada pelos consumidores e, assim, é importante na prática.
+
+3.  **Poder**: Desejamos estar 90% confiantes de que nosso teste detectará uma perda média de 0,8 ponto na população de todos os provadores.
+
+::: callout-important
+## Erros Tipo I e Tipo II
+
+**Erro Tipo I**: Se rejeitamos H₀ quando, de fato, H₀ é verdadeira, esse é um erro Tipo I.
+
+**Erro Tipo II**: Se deixamos de rejeitar H₀ quando, de fato, Hₐ é verdadeira, esse é um erro Tipo II.
+
+-   O nível de significância α de qualquer teste de nível fixo é a probabilidade de um erro Tipo I
+-   O poder de um teste contra qualquer alternativa é a probabilidade de rejeitarmos corretamente a hipótese nula para aquela alternativa. Ele pode ser calculado como 1 menos a probabilidade de um erro Tipo II para aquela alternativa
+:::
+
+### Fatores que Influenciam o Tamanho da Amostra
+
+::: callout-tip
+## Influências sobre "Qual o tamanho da amostra de que preciso?"
+
+-   Se você insiste em um **nível de significância menor** (como 1% em vez de 5%), você precisará de uma **amostra maior**
+
+-   Se você insiste em **poder mais alto** (como 99% em vez de 90%), você precisará de uma **amostra maior**
+
+-   Para qualquer nível de significância e poder desejados, uma **alternativa bilateral** requer uma **amostra maior** do que uma alternativa unilateral
+
+-   Para qualquer nível de significância e poder desejados, a **detecção de um pequeno efeito** requer uma **amostra maior** do que a detecção de um grande efeito
+:::
+
+## Exercícios de Aplicação {#sec-exercicios}
+
+### APLIQUE SEU CONHECIMENTO
+
+**18.1 Classifique esse produto**: Um site de compras online pede que os clientes classifiquem os produtos que compram em uma escala de 1 (não gosto fortemente) a 5 (gosto fortemente). O convite para a classificação de uma compra recente é enviado aos clientes uma semana depois da compra, e os clientes podem escolher ignorar o convite. Qual das seguintes é a razão mais importante para que um intervalo de confiança, com base nos dados de tais classificações, seja de pouca utilidade para a classificação média de todos os clientes que compraram um produto particular?
+
+(a) Para alguns produtos, o número de clientes que os compram é pequeno, de modo que a margem de erro será grande.
+(b) Muitos dos clientes podem não ler seus e-mails ou podem ter um filtro de spam que identifica incorretamente o e-mail que pede a classificação como spam.
+(c) **Os clientes que fornecem classificações não podem ser considerados uma amostra aleatória da população de todos os clientes que compram um produto particular.**
+
+**Resposta**: (c) - A resposta voluntária é o maior problema, pois cria viés de seleção.
+
+### Problemas Adicionais
+
+**18.2 Ultrapassando o sinal vermelho**: Uma pesquisa com motoristas habilitados fez perguntas acerca da ultrapassagem do sinal vermelho. Uma das perguntas era "De cada 10 motoristas que ultrapassam o sinal vermelho, cerca de quantos você acha que serão flagrados?" O resultado médio para 880 respondentes foi $\bar{x} = 1,92$ e o desvio-padrão s = 1,83.
+
+(a) Forneça um intervalo de confiança de 95% para a opinião média da população de todos os motoristas habilitados.
+(b) A distribuição das respostas é assimétrica à direita, em vez de Normal. Isso não afetará intensamente o intervalo de confiança z para essa amostra. Por que não?
+(c) Os 880 respondentes são uma AAS das ligações completadas entre 45.956 ligações para telefones residenciais selecionados aleatoriamente no catálogo telefônico. Apenas 5.029 das chamadas foram completadas. Essa informação fornece duas razões para suspeitar que a amostra, talvez, não represente todos os motoristas habilitados. Quais são essas razões?
+
+## Resumo do Capítulo {#sec-resumo}
+
+::: callout-note
+## Pontos Principais
+
+-   **Condições específicas**: Um intervalo de confiança ou teste específico são corretos apenas sob condições específicas. As condições mais importantes são relativas ao método usado para a produção dos dados.
+
+-   **Procedência dos dados**: Sempre que você usar inferência estatística, estará agindo como se seus dados fossem uma amostra aleatória ou fossem provenientes de um experimento comparativo aleatorizado.
+
+-   **Análise exploratória**: Antes da inferência, sempre faça uma análise dos dados para detectar valores atípicos ou outros problemas que tornariam a inferência não confiável.
+
+-   **Limitações da margem de erro**: A margem de erro em um intervalo de confiança considera apenas a variação casual devida à amostragem aleatória. Na prática, erros causados pela não resposta ou subcobertura são frequentemente mais sérios.
+
+-   **Significância vs. importância**: Não há uma regra universal que determine quão pequeno deva ser um valor P em um teste de significância para considerá-lo evidência convincente contra a hipótese nula.
+
+-   **Efeito do tamanho amostral**: Efeitos muito pequenos podem ser altamente significantes (valor P pequeno) quando um teste se baseia em uma amostra grande. Sempre considere se o tamanho do efeito é importante na prática.
+
+-   **Planejamento de estudos**: Quando planejar um estudo estatístico, planeje também a inferência. Em particular, determine qual o tamanho amostral de que você necessita para uma inferência bem-sucedida.
+:::
+
+### Fórmulas Importantes
+
+**Tamanho amostral para margem de erro desejada**: $$n = \left(\frac{z^* \sigma}{m}\right)^2$$
+
+**Poder de um teste**: Probabilidade de rejeitar corretamente H₀ quando Hₐ é verdadeira.
+
+**Erros Tipo I e II**: - Tipo I: Rejeitar H₀ quando H₀ é verdadeira (probabilidade = α) - Tipo II: Não rejeitar H₀ quando Hₐ é verdadeira (probabilidade = β) - Poder = 1 - β
+
+::: callout-important
+## Lição Principal
+
+A **qualidade dos dados** é mais importante do que a **sofisticação dos métodos**. Métodos estatísticos são ferramentas poderosas, mas só são eficazes quando aplicados a dados de boa qualidade, coletados de forma apropriada.
+:::
