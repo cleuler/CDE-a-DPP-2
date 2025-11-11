@@ -8,7 +8,7 @@
 
 <meta name="author" content="Cleuler Barbosa das Neves">
 
-<title>12&nbsp; Inferência na Prática – __Ciência de Dados e Estatística Aplicadas ao Direito e Políticas Públicas__</title>
+<title>13&nbsp; Inferência na Prática – __Ciência de Dados e Estatística Aplicadas ao Direito e Políticas Públicas__</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -32,7 +32,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./conclusao.html" rel="next">
-<link href="./cap17-LO-testes-significancia-basico.html" rel="prev">
+<link href="./cap17-TSHo-Oltramari.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
@@ -113,7 +113,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cap18-LO-inferencia-na-pratica.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Inferência na Prática</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cap18-LO-inferencia-na-pratica.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Inferência na Prática</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Procurar" onclick="window.quartoOpenSearch();">
@@ -221,14 +221,20 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./cap17-TSHo-Oltramari.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Controle Externo da Atividade Policial (MP-GO)</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./cap18-LO-inferencia-na-pratica.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Inferência na Prática</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Inferência na Prática</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./conclusao.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Conclusão</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Conclusão</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -259,69 +265,69 @@ window.Quarto = {
     <h2 id="toc-title">Sumário</h2>
    
   <ul>
-  <li><a href="#introdução" id="toc-introdução" class="nav-link active" data-scroll-target="#introdução"><span class="header-section-number">12.1</span> Introdução</a></li>
-  <li><a href="#sec-condicoes-inferencia" id="toc-sec-condicoes-inferencia" class="nav-link" data-scroll-target="#sec-condicoes-inferencia"><span class="header-section-number">12.2</span> 18.1 Condições para Inferência na Prática</a>
+  <li><a href="#introdução" id="toc-introdução" class="nav-link active" data-scroll-target="#introdução"><span class="header-section-number">13.1</span> Introdução</a></li>
+  <li><a href="#sec-condicoes-inferencia" id="toc-sec-condicoes-inferencia" class="nav-link" data-scroll-target="#sec-condicoes-inferencia"><span class="header-section-number">13.2</span> 18.1 Condições para Inferência na Prática</a>
   <ul>
-  <li><a href="#condições-simples-para-inferência-sobre-uma-média" id="toc-condições-simples-para-inferência-sobre-uma-média" class="nav-link" data-scroll-target="#condições-simples-para-inferência-sobre-uma-média"><span class="header-section-number">12.2.1</span> Condições Simples para Inferência sobre uma Média</a></li>
-  <li><a href="#a-procedência-dos-dados-importa" id="toc-a-procedência-dos-dados-importa" class="nav-link" data-scroll-target="#a-procedência-dos-dados-importa"><span class="header-section-number">12.2.2</span> A Procedência dos Dados Importa</a>
+  <li><a href="#condições-simples-para-inferência-sobre-uma-média" id="toc-condições-simples-para-inferência-sobre-uma-média" class="nav-link" data-scroll-target="#condições-simples-para-inferência-sobre-uma-média"><span class="header-section-number">13.2.1</span> Condições Simples para Inferência sobre uma Média</a></li>
+  <li><a href="#a-procedência-dos-dados-importa" id="toc-a-procedência-dos-dados-importa" class="nav-link" data-scroll-target="#a-procedência-dos-dados-importa"><span class="header-section-number">13.2.2</span> A Procedência dos Dados Importa</a>
   <ul class="collapse">
-  <li><a href="#exemplo-18.1-o-psicólogo-e-o-sociólogo" id="toc-exemplo-18.1-o-psicólogo-e-o-sociólogo" class="nav-link" data-scroll-target="#exemplo-18.1-o-psicólogo-e-o-sociólogo"><span class="header-section-number">12.2.2.1</span> EXEMPLO 18.1: O psicólogo e o sociólogo</a></li>
+  <li><a href="#exemplo-18.1-o-psicólogo-e-o-sociólogo" id="toc-exemplo-18.1-o-psicólogo-e-o-sociólogo" class="nav-link" data-scroll-target="#exemplo-18.1-o-psicólogo-e-o-sociólogo"><span class="header-section-number">13.2.2.1</span> EXEMPLO 18.1: O psicólogo e o sociólogo</a></li>
   </ul></li>
-  <li><a href="#a-procedência-dos-dados-importa-1" id="toc-a-procedência-dos-dados-importa-1" class="nav-link" data-scroll-target="#a-procedência-dos-dados-importa-1"><span class="header-section-number">12.2.3</span> A Procedência dos Dados Importa</a>
+  <li><a href="#a-procedência-dos-dados-importa-1" id="toc-a-procedência-dos-dados-importa-1" class="nav-link" data-scroll-target="#a-procedência-dos-dados-importa-1"><span class="header-section-number">13.2.3</span> A Procedência dos Dados Importa</a>
   <ul class="collapse">
-  <li><a href="#exemplo-18.2-é-realmente-uma-aas" id="toc-exemplo-18.2-é-realmente-uma-aas" class="nav-link" data-scroll-target="#exemplo-18.2-é-realmente-uma-aas"><span class="header-section-number">12.2.3.1</span> EXEMPLO 18.2: É realmente uma AAS?</a></li>
+  <li><a href="#exemplo-18.2-é-realmente-uma-aas" id="toc-exemplo-18.2-é-realmente-uma-aas" class="nav-link" data-scroll-target="#exemplo-18.2-é-realmente-uma-aas"><span class="header-section-number">13.2.3.1</span> EXEMPLO 18.2: É realmente uma AAS?</a></li>
   </ul></li>
-  <li><a href="#cuidados-importantes" id="toc-cuidados-importantes" class="nav-link" data-scroll-target="#cuidados-importantes"><span class="header-section-number">12.2.4</span> Cuidados Importantes</a></li>
-  <li><a href="#qual-é-a-forma-da-distribuição-populacional" id="toc-qual-é-a-forma-da-distribuição-populacional" class="nav-link" data-scroll-target="#qual-é-a-forma-da-distribuição-populacional"><span class="header-section-number">12.2.5</span> Qual é a Forma da Distribuição Populacional?</a></li>
-  <li><a href="#valores-atípicos-e-robustez" id="toc-valores-atípicos-e-robustez" class="nav-link" data-scroll-target="#valores-atípicos-e-robustez"><span class="header-section-number">12.2.6</span> Valores Atípicos e Robustez</a></li>
-  <li><a href="#diretrizes-práticas" id="toc-diretrizes-práticas" class="nav-link" data-scroll-target="#diretrizes-práticas"><span class="header-section-number">12.2.7</span> Diretrizes Práticas</a></li>
+  <li><a href="#cuidados-importantes" id="toc-cuidados-importantes" class="nav-link" data-scroll-target="#cuidados-importantes"><span class="header-section-number">13.2.4</span> Cuidados Importantes</a></li>
+  <li><a href="#qual-é-a-forma-da-distribuição-populacional" id="toc-qual-é-a-forma-da-distribuição-populacional" class="nav-link" data-scroll-target="#qual-é-a-forma-da-distribuição-populacional"><span class="header-section-number">13.2.5</span> Qual é a Forma da Distribuição Populacional?</a></li>
+  <li><a href="#valores-atípicos-e-robustez" id="toc-valores-atípicos-e-robustez" class="nav-link" data-scroll-target="#valores-atípicos-e-robustez"><span class="header-section-number">13.2.6</span> Valores Atípicos e Robustez</a></li>
+  <li><a href="#diretrizes-práticas" id="toc-diretrizes-práticas" class="nav-link" data-scroll-target="#diretrizes-práticas"><span class="header-section-number">13.2.7</span> Diretrizes Práticas</a></li>
   </ul></li>
-  <li><a href="#sec-cuidados-intervalos" id="toc-sec-cuidados-intervalos" class="nav-link" data-scroll-target="#sec-cuidados-intervalos"><span class="header-section-number">12.3</span> 18.2 Cuidados com os Intervalos de Confiança</a>
+  <li><a href="#sec-cuidados-intervalos" id="toc-sec-cuidados-intervalos" class="nav-link" data-scroll-target="#sec-cuidados-intervalos"><span class="header-section-number">13.3</span> 18.2 Cuidados com os Intervalos de Confiança</a>
   <ul>
-  <li><a href="#a-margem-de-erro-não-cobre-todos-os-erros" id="toc-a-margem-de-erro-não-cobre-todos-os-erros" class="nav-link" data-scroll-target="#a-margem-de-erro-não-cobre-todos-os-erros"><span class="header-section-number">12.3.1</span> A Margem de Erro Não Cobre Todos os Erros</a></li>
-  <li><a href="#exemplos-de-aplicação" id="toc-exemplos-de-aplicação" class="nav-link" data-scroll-target="#exemplos-de-aplicação"><span class="header-section-number">12.3.2</span> Exemplos de Aplicação</a>
+  <li><a href="#a-margem-de-erro-não-cobre-todos-os-erros" id="toc-a-margem-de-erro-não-cobre-todos-os-erros" class="nav-link" data-scroll-target="#a-margem-de-erro-não-cobre-todos-os-erros"><span class="header-section-number">13.3.1</span> A Margem de Erro Não Cobre Todos os Erros</a></li>
+  <li><a href="#exemplos-de-aplicação" id="toc-exemplos-de-aplicação" class="nav-link" data-scroll-target="#exemplos-de-aplicação"><span class="header-section-number">13.3.2</span> Exemplos de Aplicação</a>
   <ul class="collapse">
-  <li><a href="#exemplo-18.4-qual-é-o-seu-peso" id="toc-exemplo-18.4-qual-é-o-seu-peso" class="nav-link" data-scroll-target="#exemplo-18.4-qual-é-o-seu-peso"><span class="header-section-number">12.3.2.1</span> EXEMPLO 18.4: Qual é o seu peso?</a></li>
+  <li><a href="#exemplo-18.4-qual-é-o-seu-peso" id="toc-exemplo-18.4-qual-é-o-seu-peso" class="nav-link" data-scroll-target="#exemplo-18.4-qual-é-o-seu-peso"><span class="header-section-number">13.3.2.1</span> EXEMPLO 18.4: Qual é o seu peso?</a></li>
   </ul></li>
   </ul></li>
-  <li><a href="#sec-cuidados-testes" id="toc-sec-cuidados-testes" class="nav-link" data-scroll-target="#sec-cuidados-testes"><span class="header-section-number">12.4</span> 18.3 Cuidados com os Testes de Significância</a>
+  <li><a href="#sec-cuidados-testes" id="toc-sec-cuidados-testes" class="nav-link" data-scroll-target="#sec-cuidados-testes"><span class="header-section-number">13.4</span> 18.3 Cuidados com os Testes de Significância</a>
   <ul>
-  <li><a href="#quão-pequeno-deve-ser-p-para-ser-convincente" id="toc-quão-pequeno-deve-ser-p-para-ser-convincente" class="nav-link" data-scroll-target="#quão-pequeno-deve-ser-p-para-ser-convincente"><span class="header-section-number">12.4.1</span> Quão Pequeno Deve Ser P para Ser Convincente?</a></li>
-  <li><a href="#significância-depende-da-hipótese-alternativa" id="toc-significância-depende-da-hipótese-alternativa" class="nav-link" data-scroll-target="#significância-depende-da-hipótese-alternativa"><span class="header-section-number">12.4.2</span> Significância Depende da Hipótese Alternativa</a></li>
-  <li><a href="#significância-depende-do-tamanho-amostral" id="toc-significância-depende-do-tamanho-amostral" class="nav-link" data-scroll-target="#significância-depende-do-tamanho-amostral"><span class="header-section-number">12.4.3</span> Significância Depende do Tamanho Amostral</a>
+  <li><a href="#quão-pequeno-deve-ser-p-para-ser-convincente" id="toc-quão-pequeno-deve-ser-p-para-ser-convincente" class="nav-link" data-scroll-target="#quão-pequeno-deve-ser-p-para-ser-convincente"><span class="header-section-number">13.4.1</span> Quão Pequeno Deve Ser P para Ser Convincente?</a></li>
+  <li><a href="#significância-depende-da-hipótese-alternativa" id="toc-significância-depende-da-hipótese-alternativa" class="nav-link" data-scroll-target="#significância-depende-da-hipótese-alternativa"><span class="header-section-number">13.4.2</span> Significância Depende da Hipótese Alternativa</a></li>
+  <li><a href="#significância-depende-do-tamanho-amostral" id="toc-significância-depende-do-tamanho-amostral" class="nav-link" data-scroll-target="#significância-depende-do-tamanho-amostral"><span class="header-section-number">13.4.3</span> Significância Depende do Tamanho Amostral</a>
   <ul class="collapse">
-  <li><a href="#exemplo-18.3-é-significante.-ou-não.-e-daí" id="toc-exemplo-18.3-é-significante.-ou-não.-e-daí" class="nav-link" data-scroll-target="#exemplo-18.3-é-significante.-ou-não.-e-daí"><span class="header-section-number">12.4.3.1</span> EXEMPLO 18.3: É significante. Ou não. E daí?</a></li>
+  <li><a href="#exemplo-18.3-é-significante.-ou-não.-e-daí" id="toc-exemplo-18.3-é-significante.-ou-não.-e-daí" class="nav-link" data-scroll-target="#exemplo-18.3-é-significante.-ou-não.-e-daí"><span class="header-section-number">13.4.3.1</span> EXEMPLO 18.3: É significante. Ou não. E daí?</a></li>
   </ul></li>
-  <li><a href="#cuidado-com-as-análises-múltiplas" id="toc-cuidado-com-as-análises-múltiplas" class="nav-link" data-scroll-target="#cuidado-com-as-análises-múltiplas"><span class="header-section-number">12.4.4</span> Cuidado com as Análises Múltiplas</a>
+  <li><a href="#cuidado-com-as-análises-múltiplas" id="toc-cuidado-com-as-análises-múltiplas" class="nav-link" data-scroll-target="#cuidado-com-as-análises-múltiplas"><span class="header-section-number">13.4.4</span> Cuidado com as Análises Múltiplas</a>
   <ul class="collapse">
-  <li><a href="#exemplo-18.4-telefones-celulares-e-câncer-no-cérebro" id="toc-exemplo-18.4-telefones-celulares-e-câncer-no-cérebro" class="nav-link" data-scroll-target="#exemplo-18.4-telefones-celulares-e-câncer-no-cérebro"><span class="header-section-number">12.4.4.1</span> EXEMPLO 18.4: Telefones celulares e câncer no cérebro</a></li>
-  <li><a href="#exemplo-18.5-viés-de-publicação" id="toc-exemplo-18.5-viés-de-publicação" class="nav-link" data-scroll-target="#exemplo-18.5-viés-de-publicação"><span class="header-section-number">12.4.4.2</span> EXEMPLO 18.5: Viés de publicação</a></li>
+  <li><a href="#exemplo-18.4-telefones-celulares-e-câncer-no-cérebro" id="toc-exemplo-18.4-telefones-celulares-e-câncer-no-cérebro" class="nav-link" data-scroll-target="#exemplo-18.4-telefones-celulares-e-câncer-no-cérebro"><span class="header-section-number">13.4.4.1</span> EXEMPLO 18.4: Telefones celulares e câncer no cérebro</a></li>
+  <li><a href="#exemplo-18.5-viés-de-publicação" id="toc-exemplo-18.5-viés-de-publicação" class="nav-link" data-scroll-target="#exemplo-18.5-viés-de-publicação"><span class="header-section-number">13.4.4.2</span> EXEMPLO 18.5: Viés de publicação</a></li>
   </ul></li>
   </ul></li>
-  <li><a href="#sec-tamanho-amostral" id="toc-sec-tamanho-amostral" class="nav-link" data-scroll-target="#sec-tamanho-amostral"><span class="header-section-number">12.5</span> 18.4 Planejamento de Estudos: Tamanho Amostral para Intervalos de Confiança</a>
+  <li><a href="#sec-tamanho-amostral" id="toc-sec-tamanho-amostral" class="nav-link" data-scroll-target="#sec-tamanho-amostral"><span class="header-section-number">13.5</span> 18.4 Planejamento de Estudos: Tamanho Amostral para Intervalos de Confiança</a>
   <ul>
-  <li><a href="#fórmula-para-o-tamanho-amostral" id="toc-fórmula-para-o-tamanho-amostral" class="nav-link" data-scroll-target="#fórmula-para-o-tamanho-amostral"><span class="header-section-number">12.5.1</span> Fórmula para o Tamanho Amostral</a>
+  <li><a href="#fórmula-para-o-tamanho-amostral" id="toc-fórmula-para-o-tamanho-amostral" class="nav-link" data-scroll-target="#fórmula-para-o-tamanho-amostral"><span class="header-section-number">13.5.1</span> Fórmula para o Tamanho Amostral</a>
   <ul class="collapse">
-  <li><a href="#exemplo-18.6-quantas-observações" id="toc-exemplo-18.6-quantas-observações" class="nav-link" data-scroll-target="#exemplo-18.6-quantas-observações"><span class="header-section-number">12.5.1.1</span> EXEMPLO 18.6: Quantas observações?</a></li>
+  <li><a href="#exemplo-18.6-quantas-observações" id="toc-exemplo-18.6-quantas-observações" class="nav-link" data-scroll-target="#exemplo-18.6-quantas-observações"><span class="header-section-number">13.5.1.1</span> EXEMPLO 18.6: Quantas observações?</a></li>
   </ul></li>
   </ul></li>
-  <li><a href="#sec-poder-teste" id="toc-sec-poder-teste" class="nav-link" data-scroll-target="#sec-poder-teste"><span class="header-section-number">12.6</span> 18.5 Planejamento de Estudos: O Poder de um Teste Estatístico de Significância*</a>
+  <li><a href="#sec-poder-teste" id="toc-sec-poder-teste" class="nav-link" data-scroll-target="#sec-poder-teste"><span class="header-section-number">13.6</span> 18.5 Planejamento de Estudos: O Poder de um Teste Estatístico de Significância*</a>
   <ul>
-  <li><a href="#questões-para-decidir-o-tamanho-amostral" id="toc-questões-para-decidir-o-tamanho-amostral" class="nav-link" data-scroll-target="#questões-para-decidir-o-tamanho-amostral"><span class="header-section-number">12.6.1</span> Questões para Decidir o Tamanho Amostral</a></li>
-  <li><a href="#erros-tipo-i-e-tipo-ii" id="toc-erros-tipo-i-e-tipo-ii" class="nav-link" data-scroll-target="#erros-tipo-i-e-tipo-ii"><span class="header-section-number">12.6.2</span> Erros Tipo I e Tipo II</a>
+  <li><a href="#questões-para-decidir-o-tamanho-amostral" id="toc-questões-para-decidir-o-tamanho-amostral" class="nav-link" data-scroll-target="#questões-para-decidir-o-tamanho-amostral"><span class="header-section-number">13.6.1</span> Questões para Decidir o Tamanho Amostral</a></li>
+  <li><a href="#erros-tipo-i-e-tipo-ii" id="toc-erros-tipo-i-e-tipo-ii" class="nav-link" data-scroll-target="#erros-tipo-i-e-tipo-ii"><span class="header-section-number">13.6.2</span> Erros Tipo I e Tipo II</a>
   <ul class="collapse">
-  <li><a href="#exemplo-18.7-adoçante-de-refrigerantes-planejamento-de-um-estudo" id="toc-exemplo-18.7-adoçante-de-refrigerantes-planejamento-de-um-estudo" class="nav-link" data-scroll-target="#exemplo-18.7-adoçante-de-refrigerantes-planejamento-de-um-estudo"><span class="header-section-number">12.6.2.1</span> EXEMPLO 18.7: Adoçante de refrigerantes: planejamento de um estudo</a></li>
+  <li><a href="#exemplo-18.7-adoçante-de-refrigerantes-planejamento-de-um-estudo" id="toc-exemplo-18.7-adoçante-de-refrigerantes-planejamento-de-um-estudo" class="nav-link" data-scroll-target="#exemplo-18.7-adoçante-de-refrigerantes-planejamento-de-um-estudo"><span class="header-section-number">13.6.2.1</span> EXEMPLO 18.7: Adoçante de refrigerantes: planejamento de um estudo</a></li>
   </ul></li>
-  <li><a href="#fatores-que-influenciam-o-tamanho-da-amostra" id="toc-fatores-que-influenciam-o-tamanho-da-amostra" class="nav-link" data-scroll-target="#fatores-que-influenciam-o-tamanho-da-amostra"><span class="header-section-number">12.6.3</span> Fatores que Influenciam o Tamanho da Amostra</a></li>
+  <li><a href="#fatores-que-influenciam-o-tamanho-da-amostra" id="toc-fatores-que-influenciam-o-tamanho-da-amostra" class="nav-link" data-scroll-target="#fatores-que-influenciam-o-tamanho-da-amostra"><span class="header-section-number">13.6.3</span> Fatores que Influenciam o Tamanho da Amostra</a></li>
   </ul></li>
-  <li><a href="#sec-exercicios" id="toc-sec-exercicios" class="nav-link" data-scroll-target="#sec-exercicios"><span class="header-section-number">12.7</span> Exercícios de Aplicação</a>
+  <li><a href="#sec-exercicios" id="toc-sec-exercicios" class="nav-link" data-scroll-target="#sec-exercicios"><span class="header-section-number">13.7</span> Exercícios de Aplicação</a>
   <ul>
-  <li><a href="#aplique-seu-conhecimento" id="toc-aplique-seu-conhecimento" class="nav-link" data-scroll-target="#aplique-seu-conhecimento"><span class="header-section-number">12.7.1</span> APLIQUE SEU CONHECIMENTO</a></li>
-  <li><a href="#problemas-adicionais" id="toc-problemas-adicionais" class="nav-link" data-scroll-target="#problemas-adicionais"><span class="header-section-number">12.7.2</span> Problemas Adicionais</a></li>
+  <li><a href="#aplique-seu-conhecimento" id="toc-aplique-seu-conhecimento" class="nav-link" data-scroll-target="#aplique-seu-conhecimento"><span class="header-section-number">13.7.1</span> APLIQUE SEU CONHECIMENTO</a></li>
+  <li><a href="#problemas-adicionais" id="toc-problemas-adicionais" class="nav-link" data-scroll-target="#problemas-adicionais"><span class="header-section-number">13.7.2</span> Problemas Adicionais</a></li>
   </ul></li>
-  <li><a href="#sec-resumo" id="toc-sec-resumo" class="nav-link" data-scroll-target="#sec-resumo"><span class="header-section-number">12.8</span> Resumo do Capítulo</a>
+  <li><a href="#sec-resumo" id="toc-sec-resumo" class="nav-link" data-scroll-target="#sec-resumo"><span class="header-section-number">13.8</span> Resumo do Capítulo</a>
   <ul>
-  <li><a href="#fórmulas-importantes" id="toc-fórmulas-importantes" class="nav-link" data-scroll-target="#fórmulas-importantes"><span class="header-section-number">12.8.1</span> Fórmulas Importantes</a></li>
+  <li><a href="#fórmulas-importantes" id="toc-fórmulas-importantes" class="nav-link" data-scroll-target="#fórmulas-importantes"><span class="header-section-number">13.8.1</span> Fórmulas Importantes</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -331,7 +337,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span id="sec-cap18-inferencia-pratica" class="quarto-section-identifier"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Inferência na Prática</span></span></h1>
+<h1 class="title"><span id="sec-cap18-inferencia-pratica" class="quarto-section-identifier"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Inferência na Prática</span></span></h1>
 </div>
 
 
@@ -361,8 +367,8 @@ window.Quarto = {
 <p>Este capítulo apresenta os conceitos fundamentais para aplicação prática da inferência estatística, abordando as condições necessárias para procedimentos válidos e confiáveis.</p>
 </div>
 </div>
-<section id="introdução" class="level2" data-number="12.1">
-<h2 data-number="12.1" class="anchored" data-anchor-id="introdução"><span class="header-section-number">12.1</span> Introdução</h2>
+<section id="introdução" class="level2" data-number="13.1">
+<h2 data-number="13.1" class="anchored" data-anchor-id="introdução"><span class="header-section-number">13.1</span> Introdução</h2>
 <p>Até agora, nos foram apresentados somente dois procedimentos de inferência estatística. Ambos dizem respeito à inferência sobre a média μ de uma população, quando as <strong>“condições simples”</strong> são verdadeiras: os dados são uma AAS, a população tem distribuição Normal, e conhecemos o desvio-padrão σ da população.</p>
 <p>Sob essas condições, um intervalo de confiança para a média μ é:</p>
 <p><span class="math display">\[\bar{x} \pm z^* \frac{\sigma}{\sqrt{n}}\]</span></p>
@@ -384,8 +390,8 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="sec-condicoes-inferencia" class="level2" data-number="12.2">
-<h2 data-number="12.2" class="anchored" data-anchor-id="sec-condicoes-inferencia"><span class="header-section-number">12.2</span> 18.1 Condições para Inferência na Prática</h2>
+<section id="sec-condicoes-inferencia" class="level2" data-number="13.2">
+<h2 data-number="13.2" class="anchored" data-anchor-id="sec-condicoes-inferencia"><span class="header-section-number">13.2</span> 18.1 Condições para Inferência na Prática</h2>
 <div class="callout callout-style-simple callout-warning">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -397,8 +403,8 @@ window.Quarto = {
 </div>
 </div>
 <p>Com isso em mente, vamos examinar novamente as <strong>“condições simples”</strong> para os procedimentos z para inferência sobre uma média.</p>
-<section id="condições-simples-para-inferência-sobre-uma-média" class="level3" data-number="12.2.1">
-<h3 data-number="12.2.1" class="anchored" data-anchor-id="condições-simples-para-inferência-sobre-uma-média"><span class="header-section-number">12.2.1</span> Condições Simples para Inferência sobre uma Média</h3>
+<section id="condições-simples-para-inferência-sobre-uma-média" class="level3" data-number="13.2.1">
+<h3 data-number="13.2.1" class="anchored" data-anchor-id="condições-simples-para-inferência-sobre-uma-média"><span class="header-section-number">13.2.1</span> Condições Simples para Inferência sobre uma Média</h3>
 <ol type="1">
 <li><p><strong>Amostragem</strong>: Temos uma amostra aleatória simples (AAS) da população de interesse. Não há não resposta ou outra dificuldade prática. A população é grande em comparação com o tamanho da amostra.</p></li>
 <li><p><strong>Normalidade</strong>: A variável que medimos tem uma distribuição exatamente Normal N(μ, σ) na população.</p></li>
@@ -406,8 +412,8 @@ window.Quarto = {
 </ol>
 <p>A última das “condições simples” - conhecemos o desvio-padrão σ da população - raramente é satisfeita na prática. Os procedimentos z, portanto, são de pouco uso prático. Felizmente, é fácil remover a condição “σ conhecido”. O Capítulo 20 mostra como fazê-lo.</p>
 </section>
-<section id="a-procedência-dos-dados-importa" class="level3" data-number="12.2.2">
-<h3 data-number="12.2.2" class="anchored" data-anchor-id="a-procedência-dos-dados-importa"><span class="header-section-number">12.2.2</span> A Procedência dos Dados Importa</h3>
+<section id="a-procedência-dos-dados-importa" class="level3" data-number="13.2.2">
+<h3 data-number="13.2.2" class="anchored" data-anchor-id="a-procedência-dos-dados-importa"><span class="header-section-number">13.2.2</span> A Procedência dos Dados Importa</h3>
 <div class="callout callout-style-simple callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -421,8 +427,8 @@ window.Quarto = {
 <p>Ao planejar inferência, você deve sempre perguntar-se “<strong>De onde vieram os dados?</strong>” e também deve responder a outra questão, “<strong>Qual é a forma da distribuição populacional?</strong>”</p>
 </div>
 </div>
-<section id="exemplo-18.1-o-psicólogo-e-o-sociólogo" class="level4" data-number="12.2.2.1">
-<h4 data-number="12.2.2.1" class="anchored" data-anchor-id="exemplo-18.1-o-psicólogo-e-o-sociólogo"><span class="header-section-number">12.2.2.1</span> EXEMPLO 18.1: O psicólogo e o sociólogo</h4>
+<section id="exemplo-18.1-o-psicólogo-e-o-sociólogo" class="level4" data-number="13.2.2.1">
+<h4 data-number="13.2.2.1" class="anchored" data-anchor-id="exemplo-18.1-o-psicólogo-e-o-sociólogo"><span class="header-section-number">13.2.2.1</span> EXEMPLO 18.1: O psicólogo e o sociólogo</h4>
 <p><strong>Psicóloga</strong>: Uma psicóloga está interessada em saber como nossa percepção visual pode ser enganada por ilusões óticas. Seus sujeitos são alunos da disciplina de Psicologia 101 de sua universidade. A maioria dos psicólogos concordaria que é seguro tratar os alunos como uma AAS de todas as pessoas com visão normal. Não há nada incomum em ser estudante que mude a percepção visual.</p>
 <p><strong>Sociólogo</strong>: Um sociólogo da mesma universidade usa os alunos da disciplina de Sociologia 101 para examinar as atitudes com relação a pessoas pobres e programas de combate à pobreza. Os alunos, como um grupo, são mais jovens do que a população adulta como um todo. Mesmo entre pessoas jovens, os alunos como um grupo provêm de lares mais educados e mais prósperos. O sociólogo não pode, razoavelmente, agir como se esses alunos fossem uma amostra aleatória de qualquer população de interesse.</p>
 <div class="callout callout-style-simple callout-note callout-titled">
@@ -440,8 +446,8 @@ window.Quarto = {
 </div>
 </section>
 </section>
-<section id="a-procedência-dos-dados-importa-1" class="level3" data-number="12.2.3">
-<h3 data-number="12.2.3" class="anchored" data-anchor-id="a-procedência-dos-dados-importa-1"><span class="header-section-number">12.2.3</span> A Procedência dos Dados Importa</h3>
+<section id="a-procedência-dos-dados-importa-1" class="level3" data-number="13.2.3">
+<h3 data-number="13.2.3" class="anchored" data-anchor-id="a-procedência-dos-dados-importa-1"><span class="header-section-number">13.2.3</span> A Procedência dos Dados Importa</h3>
 <div class="callout callout-style-simple callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -456,14 +462,14 @@ window.Quarto = {
 <p>Se seus dados não provêm de uma amostra aleatória ou de um experimento comparativo aleatorizado, suas conclusões podem ser questionadas.</p>
 </div>
 </div>
-<section id="exemplo-18.2-é-realmente-uma-aas" class="level4" data-number="12.2.3.1">
-<h4 data-number="12.2.3.1" class="anchored" data-anchor-id="exemplo-18.2-é-realmente-uma-aas"><span class="header-section-number">12.2.3.1</span> EXEMPLO 18.2: É realmente uma AAS?</h4>
+<section id="exemplo-18.2-é-realmente-uma-aas" class="level4" data-number="13.2.3.1">
+<h4 data-number="13.2.3.1" class="anchored" data-anchor-id="exemplo-18.2-é-realmente-uma-aas"><span class="header-section-number">13.2.3.1</span> EXEMPLO 18.2: É realmente uma AAS?</h4>
 <p><strong>Pesquisa NHANES</strong>: A pesquisa NHANES, que produziu os dados de IMC para o Exemplo 16.1, usou um planejamento amostral complexo de estágios múltiplos, de modo que é bastante simplista considerar os dados de IMC como provenientes de uma AAS da população de homens jovens. Embora o efeito geral da amostra NHANES seja próximo de uma AAS, estatísticos profissionais usariam procedimentos de inferência mais complexos para melhor adequação ao planejamento mais complexo da amostra.</p>
 <p><strong>Estudo da gorjeta</strong>: Os 20 clientes no estudo da gorjeta apresentado no Exemplo 16.3 foram escolhidos, entre aqueles que comiam em um restaurante particular, para receber um de vários tratamentos em comparação com um experimento comparativo aleatorizado.</p>
 </section>
 </section>
-<section id="cuidados-importantes" class="level3" data-number="12.2.4">
-<h3 data-number="12.2.4" class="anchored" data-anchor-id="cuidados-importantes"><span class="header-section-number">12.2.4</span> Cuidados Importantes</h3>
+<section id="cuidados-importantes" class="level3" data-number="13.2.4">
+<h3 data-number="13.2.4" class="anchored" data-anchor-id="cuidados-importantes"><span class="header-section-number">13.2.4</span> Cuidados Importantes</h3>
 <div class="callout callout-style-simple callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -482,8 +488,8 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="qual-é-a-forma-da-distribuição-populacional" class="level3" data-number="12.2.5">
-<h3 data-number="12.2.5" class="anchored" data-anchor-id="qual-é-a-forma-da-distribuição-populacional"><span class="header-section-number">12.2.5</span> Qual é a Forma da Distribuição Populacional?</h3>
+<section id="qual-é-a-forma-da-distribuição-populacional" class="level3" data-number="13.2.5">
+<h3 data-number="13.2.5" class="anchored" data-anchor-id="qual-é-a-forma-da-distribuição-populacional"><span class="header-section-number">13.2.5</span> Qual é a Forma da Distribuição Populacional?</h3>
 <p>A maioria dos procedimentos de inferência estatística exige algumas condições sobre a forma da distribuição populacional. Muitos dos métodos mais básicos de inferência são planejados para populações Normais.</p>
 <div class="callout callout-style-simple callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -500,8 +506,8 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="valores-atípicos-e-robustez" class="level3" data-number="12.2.6">
-<h3 data-number="12.2.6" class="anchored" data-anchor-id="valores-atípicos-e-robustez"><span class="header-section-number">12.2.6</span> Valores Atípicos e Robustez</h3>
+<section id="valores-atípicos-e-robustez" class="level3" data-number="13.2.6">
+<h3 data-number="13.2.6" class="anchored" data-anchor-id="valores-atípicos-e-robustez"><span class="header-section-number">13.2.6</span> Valores Atípicos e Robustez</h3>
 <div class="callout callout-style-simple callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -517,8 +523,8 @@ window.Quarto = {
 </div>
 <p>Qualquer procedimento de inferência que se baseie em estatísticas amostrais, como a média amostral <span class="math inline">\(\bar{x}\)</span>, que não são resistentes a valores atípicos, pode ser fortemente influenciado por algumas poucas observações extremas.</p>
 </section>
-<section id="diretrizes-práticas" class="level3" data-number="12.2.7">
-<h3 data-number="12.2.7" class="anchored" data-anchor-id="diretrizes-práticas"><span class="header-section-number">12.2.7</span> Diretrizes Práticas</h3>
+<section id="diretrizes-práticas" class="level3" data-number="13.2.7">
+<h3 data-number="13.2.7" class="anchored" data-anchor-id="diretrizes-práticas"><span class="header-section-number">13.2.7</span> Diretrizes Práticas</h3>
 <ol type="1">
 <li><strong>Explore seus dados</strong> antes de fazer inferência</li>
 <li><strong>Faça um diagrama</strong> de ramo e folhas ou um histograma de seus dados</li>
@@ -528,10 +534,10 @@ window.Quarto = {
 </ol>
 </section>
 </section>
-<section id="sec-cuidados-intervalos" class="level2" data-number="12.3">
-<h2 data-number="12.3" class="anchored" data-anchor-id="sec-cuidados-intervalos"><span class="header-section-number">12.3</span> 18.2 Cuidados com os Intervalos de Confiança</h2>
-<section id="a-margem-de-erro-não-cobre-todos-os-erros" class="level3" data-number="12.3.1">
-<h3 data-number="12.3.1" class="anchored" data-anchor-id="a-margem-de-erro-não-cobre-todos-os-erros"><span class="header-section-number">12.3.1</span> A Margem de Erro Não Cobre Todos os Erros</h3>
+<section id="sec-cuidados-intervalos" class="level2" data-number="13.3">
+<h2 data-number="13.3" class="anchored" data-anchor-id="sec-cuidados-intervalos"><span class="header-section-number">13.3</span> 18.2 Cuidados com os Intervalos de Confiança</h2>
+<section id="a-margem-de-erro-não-cobre-todos-os-erros" class="level3" data-number="13.3.1">
+<h3 data-number="13.3.1" class="anchored" data-anchor-id="a-margem-de-erro-não-cobre-todos-os-erros"><span class="header-section-number">13.3.1</span> A Margem de Erro Não Cobre Todos os Erros</h3>
 <div class="callout callout-style-simple callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -547,21 +553,21 @@ window.Quarto = {
 </div>
 <p>A precaução mais importante acerca de intervalos de confiança, em geral, é uma consequência do uso de uma distribuição amostral. Uma distribuição amostral revela como uma estatística, como <span class="math inline">\(\bar{x}\)</span>, varia em amostras repetidas. Essa variação gera erro amostral aleatório, porque a estatística erra o verdadeiro parâmetro por uma quantidade aleatória.</p>
 </section>
-<section id="exemplos-de-aplicação" class="level3" data-number="12.3.2">
-<h3 data-number="12.3.2" class="anchored" data-anchor-id="exemplos-de-aplicação"><span class="header-section-number">12.3.2</span> Exemplos de Aplicação</h3>
-<section id="exemplo-18.4-qual-é-o-seu-peso" class="level4" data-number="12.3.2.1">
-<h4 data-number="12.3.2.1" class="anchored" data-anchor-id="exemplo-18.4-qual-é-o-seu-peso"><span class="header-section-number">12.3.2.1</span> EXEMPLO 18.4: Qual é o seu peso?</h4>
+<section id="exemplos-de-aplicação" class="level3" data-number="13.3.2">
+<h3 data-number="13.3.2" class="anchored" data-anchor-id="exemplos-de-aplicação"><span class="header-section-number">13.3.2</span> Exemplos de Aplicação</h3>
+<section id="exemplo-18.4-qual-é-o-seu-peso" class="level4" data-number="13.3.2.1">
+<h4 data-number="13.3.2.1" class="anchored" data-anchor-id="exemplo-18.4-qual-é-o-seu-peso"><span class="header-section-number">13.3.2.1</span> EXEMPLO 18.4: Qual é o seu peso?</h4>
 <p>Uma pesquisa Gallup de 2019 pediu a uma amostra aleatória nacional de 507 homens adultos que eles fornecessem seus pesos atuais. O peso médio na amostra foi <span class="math inline">\(\bar{x} = 196\)</span>. Vamos considerar esses dados como uma AAS proveniente de uma população Normalmente distribuída, com desvio-padrão <span class="math inline">\(\sigma = 35\)</span>.</p>
 <p><strong>Problema</strong>: Você confia no intervalo de confiança calculado como sendo de 95% um intervalo de confiança para o peso médio de todos os homens adultos americanos?</p>
 <p><strong>Resposta</strong>: Provavelmente não, porque as pessoas frequentemente mentem sobre seu peso, especialmente em pesquisas por telefone.</p>
 </section>
 </section>
 </section>
-<section id="sec-cuidados-testes" class="level2" data-number="12.4">
-<h2 data-number="12.4" class="anchored" data-anchor-id="sec-cuidados-testes"><span class="header-section-number">12.4</span> 18.3 Cuidados com os Testes de Significância</h2>
+<section id="sec-cuidados-testes" class="level2" data-number="13.4">
+<h2 data-number="13.4" class="anchored" data-anchor-id="sec-cuidados-testes"><span class="header-section-number">13.4</span> 18.3 Cuidados com os Testes de Significância</h2>
 <p>Testes de significância são amplamente utilizados na maioria das áreas do trabalho estatístico. Novos produtos farmacêuticos exigem evidência significante de eficácia e segurança. Tribunais inquirem sobre a significância estatística nas audiências de casos de discriminação em ações de classe.</p>
-<section id="quão-pequeno-deve-ser-p-para-ser-convincente" class="level3" data-number="12.4.1">
-<h3 data-number="12.4.1" class="anchored" data-anchor-id="quão-pequeno-deve-ser-p-para-ser-convincente"><span class="header-section-number">12.4.1</span> Quão Pequeno Deve Ser P para Ser Convincente?</h3>
+<section id="quão-pequeno-deve-ser-p-para-ser-convincente" class="level3" data-number="13.4.1">
+<h3 data-number="13.4.1" class="anchored" data-anchor-id="quão-pequeno-deve-ser-p-para-ser-convincente"><span class="header-section-number">13.4.1</span> Quão Pequeno Deve Ser P para Ser Convincente?</h3>
 <p>O propósito de um teste de significância é descrever o grau de evidência contra a hipótese nula fornecida pela amostra. O valor P faz isso. Mas quão pequeno deve ser um valor P para ser uma evidência convincente contra a hipótese nula?</p>
 <p>Isso depende principalmente de duas circunstâncias:</p>
 <div class="callout callout-style-simple callout-note callout-titled">
@@ -581,16 +587,16 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="significância-depende-da-hipótese-alternativa" class="level3" data-number="12.4.2">
-<h3 data-number="12.4.2" class="anchored" data-anchor-id="significância-depende-da-hipótese-alternativa"><span class="header-section-number">12.4.2</span> Significância Depende da Hipótese Alternativa</h3>
+<section id="significância-depende-da-hipótese-alternativa" class="level3" data-number="13.4.2">
+<h3 data-number="13.4.2" class="anchored" data-anchor-id="significância-depende-da-hipótese-alternativa"><span class="header-section-number">13.4.2</span> Significância Depende da Hipótese Alternativa</h3>
 <p>Você deve ter notado que o valor P para o teste <strong>unilateral</strong> é <strong>metade</strong> do valor P para o teste <strong>bilateral</strong> da mesma hipótese nula e com base nos mesmos dados.</p>
 <ul>
 <li>O valor P bilateral combina duas áreas iguais, uma em cada cauda da curva Normal</li>
 <li>O valor P unilateral é apenas uma dessas áreas, na direção especificada pela hipótese alternativa</li>
 </ul>
 </section>
-<section id="significância-depende-do-tamanho-amostral" class="level3" data-number="12.4.3">
-<h3 data-number="12.4.3" class="anchored" data-anchor-id="significância-depende-do-tamanho-amostral"><span class="header-section-number">12.4.3</span> Significância Depende do Tamanho Amostral</h3>
+<section id="significância-depende-do-tamanho-amostral" class="level3" data-number="13.4.3">
+<h3 data-number="13.4.3" class="anchored" data-anchor-id="significância-depende-do-tamanho-amostral"><span class="header-section-number">13.4.3</span> Significância Depende do Tamanho Amostral</h3>
 <div class="callout callout-style-simple callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -626,14 +632,14 @@ window.Quarto = {
 <p>“Significância estatística” quer dizer que “a amostra exibiu um efeito maior do que em geral ocorreria apenas por acaso”.</p>
 </div>
 </div>
-<section id="exemplo-18.3-é-significante.-ou-não.-e-daí" class="level4" data-number="12.4.3.1">
-<h4 data-number="12.4.3.1" class="anchored" data-anchor-id="exemplo-18.3-é-significante.-ou-não.-e-daí"><span class="header-section-number">12.4.3.1</span> EXEMPLO 18.3: É significante. Ou não. E daí?</h4>
+<section id="exemplo-18.3-é-significante.-ou-não.-e-daí" class="level4" data-number="13.4.3.1">
+<h4 data-number="13.4.3.1" class="anchored" data-anchor-id="exemplo-18.3-é-significante.-ou-não.-e-daí"><span class="header-section-number">13.4.3.1</span> EXEMPLO 18.3: É significante. Ou não. E daí?</h4>
 <p>Estamos testando a hipótese de nenhuma correlação entre duas variáveis. Com mil observações, uma correlação observada de apenas r = 0,08 é uma evidência significante no nível 1% de que a correlação na população não é zero e sim positiva.</p>
 <p>O valor P pequeno não significa que haja uma forte associação, apenas que há forte evidência de alguma associação. Seria possível, então, concluir que, para fins práticos, podemos ignorar a associação entre essas variáveis, mesmo estando confiantes (no nível 1%) de que a correlação é positiva.</p>
 </section>
 </section>
-<section id="cuidado-com-as-análises-múltiplas" class="level3" data-number="12.4.4">
-<h3 data-number="12.4.4" class="anchored" data-anchor-id="cuidado-com-as-análises-múltiplas"><span class="header-section-number">12.4.4</span> Cuidado com as Análises Múltiplas</h3>
+<section id="cuidado-com-as-análises-múltiplas" class="level3" data-number="13.4.4">
+<h3 data-number="13.4.4" class="anchored" data-anchor-id="cuidado-com-as-análises-múltiplas"><span class="header-section-number">13.4.4</span> Cuidado com as Análises Múltiplas</h3>
 <div class="callout callout-style-simple callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -648,23 +654,23 @@ window.Quarto = {
 </div>
 </div>
 <p>Suponha que as 20 hipóteses nulas (nenhuma associação) para 20 testes de significância sejam todas verdadeiras. Então, cada teste tem uma chance de 5% de ser significante no nível 5%. Como 5% são 1/20, esperamos que cerca de 1, entre 20 testes, forneça, apenas devido ao acaso, um resultado significante.</p>
-<section id="exemplo-18.4-telefones-celulares-e-câncer-no-cérebro" class="level4" data-number="12.4.4.1">
-<h4 data-number="12.4.4.1" class="anchored" data-anchor-id="exemplo-18.4-telefones-celulares-e-câncer-no-cérebro"><span class="header-section-number">12.4.4.1</span> EXEMPLO 18.4: Telefones celulares e câncer no cérebro</h4>
+<section id="exemplo-18.4-telefones-celulares-e-câncer-no-cérebro" class="level4" data-number="13.4.4.1">
+<h4 data-number="13.4.4.1" class="anchored" data-anchor-id="exemplo-18.4-telefones-celulares-e-câncer-no-cérebro"><span class="header-section-number">13.4.4.1</span> EXEMPLO 18.4: Telefones celulares e câncer no cérebro</h4>
 <p>Um estudo hospitalar, que comparou pacientes com câncer no cérebro e um grupo similar sem câncer no cérebro, não encontrou associação estatisticamente significante entre o uso de telefones celulares e um tipo de câncer no cérebro conhecido como glioma. Porém, quando 20 tipos de glioma foram estudados separadamente, foi encontrada uma associação entre o uso de celular e uma forma rara da doença.</p>
 <p><strong>Conduzir um teste e alcançar o nível de significância de 5% é uma evidência razoavelmente boa de que você encontrou algo. Conduzir 20 testes e alcançar esse nível apenas uma vez não corresponde a uma boa evidência.</strong></p>
 </section>
-<section id="exemplo-18.5-viés-de-publicação" class="level4" data-number="12.4.4.2">
-<h4 data-number="12.4.4.2" class="anchored" data-anchor-id="exemplo-18.5-viés-de-publicação"><span class="header-section-number">12.4.4.2</span> EXEMPLO 18.5: Viés de publicação</h4>
+<section id="exemplo-18.5-viés-de-publicação" class="level4" data-number="13.4.4.2">
+<h4 data-number="13.4.4.2" class="anchored" data-anchor-id="exemplo-18.5-viés-de-publicação"><span class="header-section-number">13.4.4.2</span> EXEMPLO 18.5: Viés de publicação</h4>
 <p>Um exemplo sutil de análises múltiplas é o <strong>viés de publicação</strong>. Suponha que 20 pesquisadores estejam, independentemente, estudando a eficácia de uma nova terapia para o tratamento de uma doença. Para publicar suas descobertas, os pesquisadores devem demonstrar que a nova terapia é eficaz no nível de significância de 0,05.</p>
 <p>Um dos pesquisadores obtém resultados estatisticamente significantes, mas os outros 19 não. O único pesquisador que obteve resultados estatisticamente significantes publica suas descobertas. Nada ficamos sabendo sobre os 19 pesquisadores que deixaram de encontrar significância estatística.</p>
 </section>
 </section>
 </section>
-<section id="sec-tamanho-amostral" class="level2" data-number="12.5">
-<h2 data-number="12.5" class="anchored" data-anchor-id="sec-tamanho-amostral"><span class="header-section-number">12.5</span> 18.4 Planejamento de Estudos: Tamanho Amostral para Intervalos de Confiança</h2>
+<section id="sec-tamanho-amostral" class="level2" data-number="13.5">
+<h2 data-number="13.5" class="anchored" data-anchor-id="sec-tamanho-amostral"><span class="header-section-number">13.5</span> 18.4 Planejamento de Estudos: Tamanho Amostral para Intervalos de Confiança</h2>
 <p>Um usuário experiente de estatística nunca planeja uma amostra ou um experimento sem, ao mesmo tempo, planejar a inferência. O número de observações é uma parte crítica do planejamento de um estudo.</p>
-<section id="fórmula-para-o-tamanho-amostral" class="level3" data-number="12.5.1">
-<h3 data-number="12.5.1" class="anchored" data-anchor-id="fórmula-para-o-tamanho-amostral"><span class="header-section-number">12.5.1</span> Fórmula para o Tamanho Amostral</h3>
+<section id="fórmula-para-o-tamanho-amostral" class="level3" data-number="13.5.1">
+<h3 data-number="13.5.1" class="anchored" data-anchor-id="fórmula-para-o-tamanho-amostral"><span class="header-section-number">13.5.1</span> Fórmula para o Tamanho Amostral</h3>
 <p>A margem de erro do intervalo de confiança z para a média de uma população Normalmente distribuída é:</p>
 <p><span class="math display">\[m = z^* \frac{\sigma}{\sqrt{n}}\]</span></p>
 <p>Para obter uma margem de erro desejada, m, substitua o valor de z* para seu nível de confiança desejado e resolva em relação ao tamanho amostral n:</p>
@@ -683,8 +689,8 @@ window.Quarto = {
 <p>em que z* é o valor crítico para o nível de confiança desejado. <strong>Sempre arredonde n para o próximo inteiro acima</strong> quando usar essa fórmula.</p>
 </div>
 </div>
-<section id="exemplo-18.6-quantas-observações" class="level4" data-number="12.5.1.1">
-<h4 data-number="12.5.1.1" class="anchored" data-anchor-id="exemplo-18.6-quantas-observações"><span class="header-section-number">12.5.1.1</span> EXEMPLO 18.6: Quantas observações?</h4>
+<section id="exemplo-18.6-quantas-observações" class="level4" data-number="13.5.1.1">
+<h4 data-number="13.5.1.1" class="anchored" data-anchor-id="exemplo-18.6-quantas-observações"><span class="header-section-number">13.5.1.1</span> EXEMPLO 18.6: Quantas observações?</h4>
 <p>No Exemplo 16.3, psicólogos registraram o tamanho das gorjetas de 20 clientes em um restaurante, quando se escrevia, em sua conta, uma mensagem anunciando tempo bom para o dia seguinte. Sabemos que o desvio-padrão populacional é σ = 2. Desejamos estimar a gorjeta percentual média μ para clientes desse restaurante que recebem essa mensagem em suas contas, dentro de ±0,5, com 90% de confiança. Quantos clientes devem ser observados?</p>
 <p><strong>Solução</strong>: A margem de erro desejada é m = 0,5. Para 90% de confiança, a Tabela C fornece z* = 1,645. Portanto:</p>
 <p><span class="math display">\[n = \left(\frac{1,645 \times 2}{0,5}\right)^2 = (6,58)^2 = 43,3\]</span></p>
@@ -692,8 +698,8 @@ window.Quarto = {
 </section>
 </section>
 </section>
-<section id="sec-poder-teste" class="level2" data-number="12.6">
-<h2 data-number="12.6" class="anchored" data-anchor-id="sec-poder-teste"><span class="header-section-number">12.6</span> 18.5 Planejamento de Estudos: O Poder de um Teste Estatístico de Significância*</h2>
+<section id="sec-poder-teste" class="level2" data-number="13.6">
+<h2 data-number="13.6" class="anchored" data-anchor-id="sec-poder-teste"><span class="header-section-number">13.6</span> 18.5 Planejamento de Estudos: O Poder de um Teste Estatístico de Significância*</h2>
 <div class="callout callout-style-simple callout-note">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
@@ -705,8 +711,8 @@ window.Quarto = {
 </div>
 </div>
 <p>Qual o tamanho da amostra que devemos extrair quando planejamos realizar um teste de significância? Sabemos que, se nossa amostra for muito pequena, mesmo grandes efeitos na população, em geral, deixarão de dar resultados estatisticamente significantes.</p>
-<section id="questões-para-decidir-o-tamanho-amostral" class="level3" data-number="12.6.1">
-<h3 data-number="12.6.1" class="anchored" data-anchor-id="questões-para-decidir-o-tamanho-amostral"><span class="header-section-number">12.6.1</span> Questões para Decidir o Tamanho Amostral</h3>
+<section id="questões-para-decidir-o-tamanho-amostral" class="level3" data-number="13.6.1">
+<h3 data-number="13.6.1" class="anchored" data-anchor-id="questões-para-decidir-o-tamanho-amostral"><span class="header-section-number">13.6.1</span> Questões para Decidir o Tamanho Amostral</h3>
 <ol type="1">
 <li><p><strong>Nível de significância</strong>: Quanta proteção desejamos contra a obtenção de um resultado significante a partir de nossa amostra quando, na realidade, não há qualquer efeito na população?</p></li>
 <li><p><strong>Tamanho do efeito</strong>: Qual o tamanho de um efeito na população para ser importante na prática?</p></li>
@@ -727,10 +733,10 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="erros-tipo-i-e-tipo-ii" class="level3" data-number="12.6.2">
-<h3 data-number="12.6.2" class="anchored" data-anchor-id="erros-tipo-i-e-tipo-ii"><span class="header-section-number">12.6.2</span> Erros Tipo I e Tipo II</h3>
-<section id="exemplo-18.7-adoçante-de-refrigerantes-planejamento-de-um-estudo" class="level4" data-number="12.6.2.1">
-<h4 data-number="12.6.2.1" class="anchored" data-anchor-id="exemplo-18.7-adoçante-de-refrigerantes-planejamento-de-um-estudo"><span class="header-section-number">12.6.2.1</span> EXEMPLO 18.7: Adoçante de refrigerantes: planejamento de um estudo</h4>
+<section id="erros-tipo-i-e-tipo-ii" class="level3" data-number="13.6.2">
+<h3 data-number="13.6.2" class="anchored" data-anchor-id="erros-tipo-i-e-tipo-ii"><span class="header-section-number">13.6.2</span> Erros Tipo I e Tipo II</h3>
+<section id="exemplo-18.7-adoçante-de-refrigerantes-planejamento-de-um-estudo" class="level4" data-number="13.6.2.1">
+<h4 data-number="13.6.2.1" class="anchored" data-anchor-id="exemplo-18.7-adoçante-de-refrigerantes-planejamento-de-um-estudo"><span class="header-section-number">13.6.2.1</span> EXEMPLO 18.7: Adoçante de refrigerantes: planejamento de um estudo</h4>
 <p>Vamos ilustrar respostas típicas às questões que acabamos de colocar, olhando novamente o exemplo do teste de um novo refrigerante em relação à perda de doçura na armazenagem. Dez provadores treinados classificam a doçura em uma escala de 10 pontos, antes e depois do armazenamento.</p>
 <p>Para verificar se o teste do sabor fornece razão para pensar que o refrigerante realmente perde doçura, testaremos:</p>
 <p><span class="math display">\[H_0: \mu = 0\]</span> <span class="math display">\[H_a: \mu &gt; 0\]</span></p>
@@ -760,8 +766,8 @@ window.Quarto = {
 </div>
 </section>
 </section>
-<section id="fatores-que-influenciam-o-tamanho-da-amostra" class="level3" data-number="12.6.3">
-<h3 data-number="12.6.3" class="anchored" data-anchor-id="fatores-que-influenciam-o-tamanho-da-amostra"><span class="header-section-number">12.6.3</span> Fatores que Influenciam o Tamanho da Amostra</h3>
+<section id="fatores-que-influenciam-o-tamanho-da-amostra" class="level3" data-number="13.6.3">
+<h3 data-number="13.6.3" class="anchored" data-anchor-id="fatores-que-influenciam-o-tamanho-da-amostra"><span class="header-section-number">13.6.3</span> Fatores que Influenciam o Tamanho da Amostra</h3>
 <div class="callout callout-style-simple callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -782,10 +788,10 @@ window.Quarto = {
 </div>
 </section>
 </section>
-<section id="sec-exercicios" class="level2" data-number="12.7">
-<h2 data-number="12.7" class="anchored" data-anchor-id="sec-exercicios"><span class="header-section-number">12.7</span> Exercícios de Aplicação</h2>
-<section id="aplique-seu-conhecimento" class="level3" data-number="12.7.1">
-<h3 data-number="12.7.1" class="anchored" data-anchor-id="aplique-seu-conhecimento"><span class="header-section-number">12.7.1</span> APLIQUE SEU CONHECIMENTO</h3>
+<section id="sec-exercicios" class="level2" data-number="13.7">
+<h2 data-number="13.7" class="anchored" data-anchor-id="sec-exercicios"><span class="header-section-number">13.7</span> Exercícios de Aplicação</h2>
+<section id="aplique-seu-conhecimento" class="level3" data-number="13.7.1">
+<h3 data-number="13.7.1" class="anchored" data-anchor-id="aplique-seu-conhecimento"><span class="header-section-number">13.7.1</span> APLIQUE SEU CONHECIMENTO</h3>
 <p><strong>18.1 Classifique esse produto</strong>: Um site de compras online pede que os clientes classifiquem os produtos que compram em uma escala de 1 (não gosto fortemente) a 5 (gosto fortemente). O convite para a classificação de uma compra recente é enviado aos clientes uma semana depois da compra, e os clientes podem escolher ignorar o convite. Qual das seguintes é a razão mais importante para que um intervalo de confiança, com base nos dados de tais classificações, seja de pouca utilidade para a classificação média de todos os clientes que compraram um produto particular?</p>
 <ol type="a">
 <li>Para alguns produtos, o número de clientes que os compram é pequeno, de modo que a margem de erro será grande.</li>
@@ -794,8 +800,8 @@ window.Quarto = {
 </ol>
 <p><strong>Resposta</strong>: (c) - A resposta voluntária é o maior problema, pois cria viés de seleção.</p>
 </section>
-<section id="problemas-adicionais" class="level3" data-number="12.7.2">
-<h3 data-number="12.7.2" class="anchored" data-anchor-id="problemas-adicionais"><span class="header-section-number">12.7.2</span> Problemas Adicionais</h3>
+<section id="problemas-adicionais" class="level3" data-number="13.7.2">
+<h3 data-number="13.7.2" class="anchored" data-anchor-id="problemas-adicionais"><span class="header-section-number">13.7.2</span> Problemas Adicionais</h3>
 <p><strong>18.2 Ultrapassando o sinal vermelho</strong>: Uma pesquisa com motoristas habilitados fez perguntas acerca da ultrapassagem do sinal vermelho. Uma das perguntas era “De cada 10 motoristas que ultrapassam o sinal vermelho, cerca de quantos você acha que serão flagrados?” O resultado médio para 880 respondentes foi <span class="math inline">\(\bar{x} = 1,92\)</span> e o desvio-padrão s = 1,83.</p>
 <ol type="a">
 <li>Forneça um intervalo de confiança de 95% para a opinião média da população de todos os motoristas habilitados.</li>
@@ -804,8 +810,8 @@ window.Quarto = {
 </ol>
 </section>
 </section>
-<section id="sec-resumo" class="level2" data-number="12.8">
-<h2 data-number="12.8" class="anchored" data-anchor-id="sec-resumo"><span class="header-section-number">12.8</span> Resumo do Capítulo</h2>
+<section id="sec-resumo" class="level2" data-number="13.8">
+<h2 data-number="13.8" class="anchored" data-anchor-id="sec-resumo"><span class="header-section-number">13.8</span> Resumo do Capítulo</h2>
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -827,8 +833,8 @@ window.Quarto = {
 </ul>
 </div>
 </div>
-<section id="fórmulas-importantes" class="level3" data-number="12.8.1">
-<h3 data-number="12.8.1" class="anchored" data-anchor-id="fórmulas-importantes"><span class="header-section-number">12.8.1</span> Fórmulas Importantes</h3>
+<section id="fórmulas-importantes" class="level3" data-number="13.8.1">
+<h3 data-number="13.8.1" class="anchored" data-anchor-id="fórmulas-importantes"><span class="header-section-number">13.8.1</span> Fórmulas Importantes</h3>
 <p><strong>Tamanho amostral para margem de erro desejada</strong>: <span class="math display">\[n = \left(\frac{z^* \sigma}{m}\right)^2\]</span></p>
 <p><strong>Poder de um teste</strong>: Probabilidade de rejeitar corretamente H₀ quando Hₐ é verdadeira.</p>
 <p><strong>Erros Tipo I e II</strong>: - Tipo I: Rejeitar H₀ quando H₀ é verdadeira (probabilidade = α) - Tipo II: Não rejeitar H₀ quando Hₐ é verdadeira (probabilidade = β) - Poder = 1 - β</p>
@@ -1253,13 +1259,13 @@ window.Quarto = {
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./cap17-LO-testes-significancia-basico.html" class="pagination-link" aria-label="Testes de Significância: o Básico">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Testes de Significância: o Básico</span></span>
+      <a href="./cap17-TSHo-Oltramari.html" class="pagination-link" aria-label="Controle Externo da Atividade Policial (MP-GO)">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Controle Externo da Atividade Policial (MP-GO)</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./conclusao.html" class="pagination-link" aria-label="Conclusão">
-        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Conclusão</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Conclusão</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

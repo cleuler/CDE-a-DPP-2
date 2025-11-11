@@ -23,7 +23,7 @@ bibliography: references.bib
 A seguir, exemplificamos sucintamente a lógica de testes estatísticos.
 
 ::: callout-note
-## Exemplo - Felipe Oltramari
+### Exemplo - Felipe Oltramari
 
 Trata-se de pesquisa consistente na verificação da (in)existência de impacto da Resolução n.º 4, de 28 de março de 2022, do Colégio de Procuradores de Justiça do Ministério Público do Estado de Goiás – que redistribuiu a atribuição para atuação na fase investigativa nos crimes militares – na tutela e garantia da cidadania e dos direitos dos cidadãos.
 
@@ -39,7 +39,7 @@ Analisamos a variação do número de crimes militares investigados no âmbito d
 
 Após, considerando-se a data de início da vigência da **Resolução n.º 4, de 28 de março de 2022, do Colégio de Procuradores de Justiça**, um marco temporal divisório, **confrontamos** os resultados finais da pesquisa referente ao **período anterior** com os resultados da pesquisa relativa ao **período posterior**, explorando, finalmente, eventual ***existência ou não de elementos que confirmam a hipótese***.
 
-A contribuição desta pesquisa consiste na revelação de dados de interesse do Ministério Público e de entrega de produto à instituição (aplicativo Métis), aptos a contribuir no desenvolvimento de ações para ***aprimorar*** o [**controle externo da atividade policial**]{.underline} e no [***fomentar políticas públicas de segurança***]{.underline} com enfoque na [***redução***]{.underline} dos [***índices de violência policial no estado de Goiás***]{.underline}.
+A contribuição desta pesquisa consiste na revelação de dados de interesse do Ministério Público e de entrega de produto à instituição (aplicativo Métis), aptos a contribuir no desenvolvimento de ações para ***aprimorar*** o [**controle externo da atividade policial**]{.underline} e no [***fomentar políticas públicas de segurança***]{.underline} com enfoque na [***redução***]{.underline} dos [***índices de violência policial no estado de Goiás***]{.underline}. [@Oltramari-dissert2024 , p. 7]
 :::
 
 ## Aplicar um teste de significância da H~0~ {#sec-logica}
@@ -299,9 +299,11 @@ cat("Interpretação:", ifelse(V < 0.1, "Associação fraca",
 # ggsave("ajcm_teste_qui_quadrado.png", p_chi, width = 12, height = 8, dpi = 300)
 ```
 
-Os resultados acima constituem [**evidência**]{.underline} *decorrente* de uma ***significância estatística*** (valor P = 0,00012 \< 0,001 = 0,1%; tamanho da amostra = 2099) pela [**refutação**]{.underline} da *Hipótese Nula de nenhuma associação*, para um Nível de Confiaça de 99,9%, e [**em favor da Hipótese Alternativa**]{.underline} de que **há uma associação significativa**, todavia *fraca* (V de Cramér = 0,084), para a ***distribuição*** do ***número de Autos Judiciais de Crimes Militares*** (AJCM *com origem em investigação própria do MP-GO*) [**entre**]{.underline} o **Ano** (2022 - antes e 2023 - depois da Resolução CPJ n. 04/2022 do MP-GO, de 28 de março de 2022) e o **Local da Promotoria** (Gyn e Interior).
+Os resultados acima constituem [**evidência**]{.underline} *decorrente* de uma ***significância estatística*** (valor P = 0,00012 \< 0,001 = 0,1%; tamanho da amostra = 2099) pela [**refutação**]{.underline} da *Hipótese Nula de nenhuma associação*, para um Nível de Confiaça de 99,9%, e [**em favor da Hipótese Alternativa**]{.underline} de que [**há uma associação significativa**]{.underline}, todavia *fraca* (V de Cramér = 0,084), para a [***distribuição***]{.underline} do [***número de Autos Judiciais de Crimes Militares***]{.underline} (AJCM) no **Ano** de **2022** - [**após**]{.underline} e de 2023 - logicamente [**após**]{.underline} a [**vigência**]{.underline} da [**Resolução CPJ n. 04/2022 do MP-GO**]{.underline}, de [**28 de março de 2022**]{.underline}, e o **Local da Promotoria**: em **Gyn** (Promotoria de Goiânia especializada com 2 Promotores que atuam junto à VAM - Vara de Auditoria Militar) *ou* no **Interior**, este em matéria afeta à competência da Justiça Militar Estadual, após a entrada em vigor da Resolução CPJ n.º 4/2022.
 
-### Teste t da diferença entre duas médias
+Período observado foi: de 30 de março de 2022 a 31 de outubro de 2023. Para verificar se com a nova atribuição de competência aos Promotores do interior, houve um acréscimo na [**taxa**]{.underline} de [***Autos Judiciais de Crimes Militares***]{.underline} (AJCM) promovidos em 2022 e em 2023 pelas Promotorias de Gyn e do Interior. [@Oltramari-dissert2024 , p. 161]
+
+### Teste da diferença entre duas médias
 
 No período objeto da pesquisa, foram 249 denúncias em AJCMs antes da vigência da Resolução CPJ n.º 4/2022 (63 meses) e outras 164 sob a égide desta, em um período de 19 meses coberto pelo estudo (entre 30 de março de 2022 e 31 de outubro de 2023). Apresenta-se, portanto, uma **média** de 3,95 denúncias/mês [**antes**]{.underline} (249/63) da norma, para uma **média** de 8,63 [**após**]{.underline} (164/19), o que representa um aumento de 118,5%.
 
@@ -313,7 +315,7 @@ O script a seguir realiza um teste de significância randomizado para diferença
 
 Considerando a data de vigência da Resolução, temos que, no ano de 2022, foram 8 casos de denúncias oferecidas em AJCMs autuados em data anterior àquela, sendo o restante (62 casos) hipótese de denúncia de AJCM autuado após. Daqueles 8 casos, em apenas 3 foi oferecida denúncia por uma das Promotorias de Justiça de Goiânia (ou seja, as outras 5 já foram oferecidas por Promotorias de Justiça do interior por força da alteração normativa). Há, ainda, outras 6 denúncias relativas aos AJCMs de 2021 oferecidas após o marco temporal de 30 de março de 2022 por Promotoria de Justiça do interior do Estado.
 
-São casos em que, apesar de a autuação judicial ter ocorrido antes da vigência da Resolução, a ***denúncia foi oferecida após sua vigência***, com a remessa dos autos às Promotorias de Justiça criminais do local em que os fatos ocorreram, em cumprimento ao determinado pelo **artigo 5º** da Resolução CPJ n.º 4, de [**28 de março de 2022**]{.underline}: “Art. 5º No prazo de 90 (noventa) dias contados da publicação da presente Resolução, as Promotorias de Justiça da comarca de Goiânia com atuação perante a Vara da Auditoria Militar deverão encaminhar à Superintendência Judiciária da Instituição os inquéritos policiais militares e os autos administrativos similares que estiverem em sua posse e forem relacionados aos ***crimes militares*** ou ***praticados por militares*** a que se referem o artigo 3º, a fim de que sejam [**remetidos**]{.underline} para as [**Promotorias de Justiça criminais do local**]{.underline} em que os [**fatos**]{.underline} tiverem sido praticados.” (MINISTÉRIO PÚBLICO DO ESTADO DE GOIÁS. Resolução n.º 4, de 28 de março de 2022, do Colégio de Procuradores de Justiça. Disponível em: <https://www.mpgo.mp.br/portal/atos_normas/.> Acesso em: 15 nov. 2023).
+São casos em que, apesar de a autuação judicial ter ocorrido antes da vigência da Resolução, a ***denúncia foi oferecida após sua vigência***, com a remessa dos autos às Promotorias de Justiça criminais do local em que os fatos ocorreram, em cumprimento ao determinado pelo **artigo 5º** da Resolução CPJ n.º 4, de [**28 de março de 2022**]{.underline}: “Art. 5º No prazo de 90 (noventa) dias contados da publicação da presente Resolução, as Promotorias de Justiça da comarca de Goiânia com atuação perante a Vara da Auditoria Militar deverão encaminhar à Superintendência Judiciária da Instituição os inquéritos policiais militares e os autos administrativos similares que estiverem em sua posse e forem relacionados aos ***crimes militares*** ou ***praticados por militares*** a que se referem o artigo 3º, a fim de que sejam [**remetidos**]{.underline} para as [**Promotorias de Justiça criminais do local**]{.underline} em que os [**fatos**]{.underline} tiverem sido praticados.” (MINISTÉRIO PÚBLICO DO ESTADO DE GOIÁS. Resolução n.º 4, de 28 de março de 2022, do Colégio de Procuradores de Justiça. Disponível em: <https://www.mpgo.mp.br/portal/atos_normas/.> Acesso em: 15 nov. 2023). [@Oltramari-dissert2024 , p. 157]
 
 ```{r}
 # TESTE BOOTSTRAP PARA DIFERENÇA ENTRE DUAS MÉDIAS
@@ -723,10 +725,685 @@ Este script R fornece uma análise completa do teste bootstrap para diferença e
 
 O script está configurado para os dados específicos mencionados (x₁̄ = 3.95, n₁ = 63, x₂̄ = 8.63, n₂ = 19) e fornece uma análise estatística robusta usando métodos não-paramétricos bootstrap.
 
-O teste de diferença entre essas duas médias **corroborou**, pela **significância estatística** alcançada, a decisão no sentido de que a hipótese nula (de que a Res. CPJ nº 04/2022 *não* produziria qualquer efeito sobre o número de denúncias oferecidas pelo MPGO em AJCMs) restou **rejeitada**.
+> O teste de diferença entre essas duas médias **corroborou**, pela **significância estatística** alcançada, a decisão no sentido de que a hipótese nula (de que a Res. CPJ nº 04/2022 *não* produziria qualquer efeito sobre o número de denúncias oferecidas pelo MPGO em AJCMs) restou **rejeitada**. [@Oltramari-dissert2024 , 157]
 
-Ou seja, o [**Tratamento**]{.underline} (Res. CPJ nº 04/2022) foi ***efetivo*** quanto ao aumento da média do número de denúncias por mês [**antes**]{.underline} (249 em 63 meses) e número de denúncias por mês [**após**]{.underline} (164 em 19 meses) em relação ao total de denúncias oferecidas em AJCMs (413) no período de jan. 2017 até out. 2023. Isso para um Nível de Confiança de 99%, um Erro Tipo I = 1%, com valor P = 0,000046 \< 0.01 = 1%.
+Ou seja, o [**Tratamento**]{.underline} (Res. CPJ nº 04/2022) foi ***efetivo*** quanto ao aumento da média do [**número de denúncias por mês**]{.underline} [**antes**]{.underline} (249 em 63 meses) e número de denúncias por mês [**após**]{.underline} (164 em 19 meses) em relação ao total de denúncias oferecidas em AJCMs (413) no período de jan. 2017 até out. 2023. Isso para um Nível de Confiança de 99%, um Erro Tipo I = 1%, com valor P = 0,000046 \< 0.01 = 1%.
+
+### Teste tab. 37: Denuncia e Arquivamento em 2022 e 2023
+
+Replicar a tabela 37 (Oltramari, 2024, p. 161). [@Oltramari-dissert2024 , p. 161]
+
+Acrescentar análise descritiva com tabelas resumo e gráficos.
+
+Realizar teste de significância estatística para as relações observadas.
+
+```{r}
+# SCRIPT R PARA REPLICAR TABELA: AJCMs Promotorias Capital vs Interior
+# Com categorias: Providência (Denúncia/Arquivamento) e Ano (2022/2023)
+# Baseado em: Oltramari-AJCMs-Promotorias-capital-interior-30mar2022-31out2023.png
+
+# Carregando bibliotecas necessárias
+library(dplyr)
+library(tidyr)
+library(knitr)
+library(kableExtra)
+library(ggplot2)
+library(gridExtra)
+library(scales)
+library(tibble)  # Adicionado para column_to_rownames
+
+# ==============================================================================
+# DADOS DA TABELA COMPLETA (AJUSTAR VALORES CONFORME A IMAGEM)
+# ==============================================================================
+
+# Criando a tabela com todas as dimensões: Localização x Providência x Ano
+dados_ajcm_completo <- data.frame(
+  Localização = rep(c("Capital", "Interior"), each = 4),
+  Ano = rep(c("2022", "2023"), each = 2, times = 2),
+  Providência = rep(c("Denúncia", "Arquivamento"), times = 4),
+  
+  # AJUSTAR ESTES VALORES CONFORME A IMAGEM ESPECÍFICA
+  Quantidade = c(
+    # Capital 2022
+    20, 191,  # Denúncia, Arquivamento
+    # Capital 2023  
+    50, 595,  # Denúncia, Arquivamento
+    # Interior 2022
+    42, 207,  # Denúncia, Arquivamento  
+    # Interior 2023
+    41, 479   # Denúncia, Arquivamento
+  ),
+  
+  stringsAsFactors = FALSE
+)
+
+cat("TABELA: AJCMs nas Promotorias por Localização, Providência e Ano\n")
+cat("Período: 30/mar/2022 a 31/out/2023\n")
+cat("==============================================================\n\n")
+
+# ==============================================================================
+# EXIBINDO OS DADOS BRUTOS
+# ==============================================================================
+
+print("DADOS COMPLETOS (AJUSTAR CONFORME IMAGEM):")
+print(dados_ajcm_completo)
+cat("\n")
+
+# ==============================================================================
+# CRIANDO TABELA AGREGADA POR LOCALIZAÇÃO E PROVIDÊNCIA
+# ==============================================================================
+
+tabela_loc_prov <- dados_ajcm_completo %>%
+  group_by(Localização, Providência) %>%
+  summarise(Total = sum(Quantidade), .groups = "drop") %>%
+  pivot_wider(names_from = Providência, values_from = Total) %>%
+  mutate(
+    Total_Geral = Denúncia + Arquivamento,
+    Perc_Denúncia = round(Denúncia / Total_Geral * 100, 1),
+    Perc_Arquivamento = round(Arquivamento / Total_Geral * 100, 1)
+  )
+
+cat("TABELA POR LOCALIZAÇÃO E PROVIDÊNCIA:\n")
+print(tabela_loc_prov)
+cat("\n")
+
+# ==============================================================================
+# CRIANDO TABELA AGREGADA POR LOCALIZAÇÃO E ANO
+# ==============================================================================
+
+tabela_loc_ano <- dados_ajcm_completo %>%
+  group_by(Localização, Ano) %>%
+  summarise(Total = sum(Quantidade), .groups = "drop") %>%
+  pivot_wider(names_from = Ano, values_from = Total) %>%
+  mutate(
+    Total_Geral = `2022` + `2023`,
+    Variação = `2023` - `2022`,
+    Perc_Variação = round((`2023` - `2022`) / `2022` * 100, 1)
+  )
+
+cat("TABELA POR LOCALIZAÇÃO E ANO:\n")
+print(tabela_loc_ano)
+cat("\n")
+
+# ==============================================================================
+# CRIANDO TABELA AGREGADA POR ANO E PROVIDÊNCIA
+# ==============================================================================
+
+tabela_ano_prov <- dados_ajcm_completo %>%
+  group_by(Ano, Providência) %>%
+  summarise(Total = sum(Quantidade), .groups = "drop") %>%
+  pivot_wider(names_from = Providência, values_from = Total) %>%
+  mutate(
+    Total_Geral = Denúncia + Arquivamento,
+    Perc_Denúncia = round(Denúncia / Total_Geral * 100, 1),
+    Perc_Arquivamento = round(Arquivamento / Total_Geral * 100, 1)
+  )
+
+cat("TABELA POR ANO E PROVIDÊNCIA:\n")
+print(tabela_ano_prov)
+cat("\n")
+
+# ==============================================================================
+# TABELA CRUZADA COMPLETA (FORMATO MATRIZ)
+# ==============================================================================
+
+# Criando tabela no formato da imagem original
+tabela_cruzada <- dados_ajcm_completo %>%
+  unite("Ano_Providência", Ano, Providência, sep = "_") %>%
+  pivot_wider(names_from = Ano_Providência, values_from = Quantidade) %>%
+  mutate(
+    Total_2022 = `2022_Denúncia` + `2022_Arquivamento`,
+    Total_2023 = `2023_Denúncia` + `2023_Arquivamento`,
+    Total_Denúncia = `2022_Denúncia` + `2023_Denúncia`,
+    Total_Arquivamento = `2022_Arquivamento` + `2023_Arquivamento`,
+    Total_Geral = Total_2022 + Total_2023
+  )
+
+cat("TABELA CRUZADA COMPLETA:\n")
+print(tabela_cruzada)
+cat("\n")
+
+# ==============================================================================
+# ANÁLISE ESTATÍSTICA DESCRITIVA
+# ==============================================================================
+
+# Totais gerais
+total_geral <- sum(dados_ajcm_completo$Quantidade)
+total_capital <- sum(dados_ajcm_completo$Quantidade[dados_ajcm_completo$Localização == "Capital"])
+total_interior <- sum(dados_ajcm_completo$Quantidade[dados_ajcm_completo$Localização == "Interior"])
+total_2022 <- sum(dados_ajcm_completo$Quantidade[dados_ajcm_completo$Ano == "2022"])
+total_2023 <- sum(dados_ajcm_completo$Quantidade[dados_ajcm_completo$Ano == "2023"])
+total_denuncia <- sum(dados_ajcm_completo$Quantidade[dados_ajcm_completo$Providência == "Denúncia"])
+total_arquivamento <- sum(dados_ajcm_completo$Quantidade[dados_ajcm_completo$Providência == "Arquivamento"])
+
+cat("ESTATÍSTICAS DESCRITIVAS:\n")
+cat("=========================\n")
+cat("Total Geral de AJCMs:", format(total_geral, big.mark = "."), "\n\n")
+
+cat("Por Localização:\n")
+cat("  Capital:", format(total_capital, big.mark = "."), 
+    "(", round(total_capital/total_geral*100, 1), "%)\n")
+cat("  Interior:", format(total_interior, big.mark = "."), 
+    "(", round(total_interior/total_geral*100, 1), "%)\n\n")
+
+cat("Por Ano:\n")
+cat("  2022:", format(total_2022, big.mark = "."), 
+    "(", round(total_2022/total_geral*100, 1), "%)\n")
+cat("  2023:", format(total_2023, big.mark = "."), 
+    "(", round(total_2023/total_geral*100, 1), "%)\n")
+cat("  Variação 2022→2023:", ifelse(total_2023 > total_2022, "+", ""), 
+    round((total_2023-total_2022)/total_2022*100, 1), "%\n\n")
+
+cat("Por Providência:\n")
+cat("  Denúncia:", format(total_denuncia, big.mark = "."), 
+    "(", round(total_denuncia/total_geral*100, 1), "%)\n")
+cat("  Arquivamento:", format(total_arquivamento, big.mark = "."), 
+    "(", round(total_arquivamento/total_geral*100, 1), "%)\n\n")
+
+# ==============================================================================
+# GRÁFICOS ATUALIZADOS
+# ==============================================================================
+
+# 1. Gráfico de barras agrupadas por todas as categorias
+p1 <- ggplot(dados_ajcm_completo, aes(x = Localização, y = Quantidade, 
+                                     fill = Providência)) +
+  geom_bar(stat = "identity", position = "dodge", alpha = 0.8) +
+  facet_wrap(~ Ano, scales = "free_y") +
+  geom_text(aes(label = Quantidade), 
+            position = position_dodge(width = 0.9), vjust = -0.5, size = 3) +
+  scale_fill_manual(values = c("Denúncia" = "#e74c3c", "Arquivamento" = "#3498db")) +
+  scale_y_continuous(labels = comma_format(big.mark = ".", decimal.mark = ",")) +
+  labs(
+    title = "AJCMs por Localização, Providência e Ano",
+    subtitle = "Período: 30/mar/2022 a 31/out/2023",
+    x = "Localização",
+    y = "Número de AJCMs",
+    fill = "Providência",
+    caption = "Fonte: Dados Oltramari"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 14, face = "bold"),
+    plot.subtitle = element_text(hjust = 0.5, size = 12),
+    strip.text = element_text(size = 12, face = "bold")
+  )
+
+print(p1)
+
+# 2. Gráfico de evolução temporal
+dados_evolucao <- dados_ajcm_completo %>%
+  group_by(Localização, Ano) %>%
+  summarise(Total = sum(Quantidade), .groups = "drop")
+
+p2 <- ggplot(dados_evolucao, aes(x = Ano, y = Total, color = Localização, group = Localização)) +
+  geom_line(size = 1.5) +
+  geom_point(size = 4) +
+  geom_text(aes(label = Total), vjust = -0.8, size = 4, fontface = "bold") +
+  scale_color_manual(values = c("Capital" = "#e74c3c", "Interior" = "#2ecc71")) +
+  scale_y_continuous(labels = comma_format(big.mark = ".", decimal.mark = ",")) +
+  labs(
+    title = "Evolução das AJCMs: 2022 vs 2023",
+    subtitle = "Comparação Capital vs Interior",
+    x = "Ano",
+    y = "Total de AJCMs",
+    color = "Localização",
+    caption = "Fonte: Dados Oltramari"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 14, face = "bold"),
+    plot.subtitle = element_text(hjust = 0.5, size = 12),
+    legend.position = "bottom"
+  )
+
+print(p2)
+
+# 3. Gráfico de proporções por providência
+dados_prop <- dados_ajcm_completo %>%
+  group_by(Localização, Providência) %>%
+  summarise(Total = sum(Quantidade), .groups = "drop") %>%
+  group_by(Localização) %>%
+  mutate(Proporção = round(Total / sum(Total) * 100, 1))
+
+p3 <- ggplot(dados_prop, aes(x = Localização, y = Proporção, fill = Providência)) +
+  geom_bar(stat = "identity", position = "stack", alpha = 0.8) +
+  geom_text(aes(label = paste0(Proporção, "%")), 
+            position = position_stack(vjust = 0.5), size = 4, fontface = "bold") +
+  scale_fill_manual(values = c("Denúncia" = "#e74c3c", "Arquivamento" = "#3498db")) +
+  scale_y_continuous(breaks = seq(0, 100, 25), labels = paste0(seq(0, 100, 25), "%")) +
+  labs(
+    title = "Proporção de Providências por Localização",
+    subtitle = "Distribuição: Denúncia vs Arquivamento",
+    x = "Localização",
+    y = "Proporção (%)",
+    fill = "Providência",
+    caption = "Fonte: Dados Oltramari"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 14, face = "bold"),
+    plot.subtitle = element_text(hjust = 0.5, size = 12),
+    legend.position = "bottom"
+  )
+
+print(p3)
+
+# ==============================================================================
+# TESTES ESTATÍSTICOS (CORRIGIDOS)
+# ==============================================================================
+
+# 1. Teste Qui-quadrado: Localização x Providência
+# Método alternativo sem column_to_rownames
+dados_loc_prov <- dados_ajcm_completo %>%
+  group_by(Localização, Providência) %>%
+  summarise(Total = sum(Quantidade), .groups = "drop") %>%
+  pivot_wider(names_from = Providência, values_from = Total)
+
+# Criando matriz manualmente
+matriz_loc_prov <- as.matrix(dados_loc_prov[, -1])  # Remove coluna Localização
+rownames(matriz_loc_prov) <- dados_loc_prov$Localização
+
+teste_qui_loc_prov <- chisq.test(matriz_loc_prov)
+
+cat("TESTE QUI-QUADRADO: LOCALIZAÇÃO x PROVIDÊNCIA\n")
+cat("============================================\n")
+print(matriz_loc_prov)
+cat("\nQui-quadrado:", round(teste_qui_loc_prov$statistic, 4), "\n")
+cat("Valor P:", round(teste_qui_loc_prov$p.value, 6), "\n")
+cat("Conclusão:", ifelse(teste_qui_loc_prov$p.value < 0.05, 
+                        "Há associação significativa", 
+                        "Não há associação significativa"), "\n\n")
+
+# 2. Teste Qui-quadrado: Ano x Providência
+dados_ano_prov <- dados_ajcm_completo %>%
+  group_by(Ano, Providência) %>%
+  summarise(Total = sum(Quantidade), .groups = "drop") %>%
+  pivot_wider(names_from = Providência, values_from = Total)
+
+# Criando matriz manualmente
+matriz_ano_prov <- as.matrix(dados_ano_prov[, -1])  # Remove coluna Ano
+rownames(matriz_ano_prov) <- dados_ano_prov$Ano
+
+teste_qui_ano_prov <- chisq.test(matriz_ano_prov)
+
+cat("TESTE QUI-QUADRADO: ANO x PROVIDÊNCIA\n")
+cat("====================================\n")
+print(matriz_ano_prov)
+cat("\nQui-quadrado:", round(teste_qui_ano_prov$statistic, 4), "\n")
+cat("Valor P:", round(teste_qui_ano_prov$p.value, 6), "\n")
+cat("Conclusão:", ifelse(teste_qui_ano_prov$p.value < 0.05, 
+                        "Há associação significativa", 
+                        "Não há associação significativa"), "\n\n")
+
+# 3. Teste Qui-quadrado: Localização x Ano
+dados_loc_ano <- dados_ajcm_completo %>%
+  group_by(Localização, Ano) %>%
+  summarise(Total = sum(Quantidade), .groups = "drop") %>%
+  pivot_wider(names_from = Ano, values_from = Total)
+
+# Criando matriz manualmente
+matriz_loc_ano <- as.matrix(dados_loc_ano[, -1])  # Remove coluna Localização
+rownames(matriz_loc_ano) <- dados_loc_ano$Localização
+
+teste_qui_loc_ano <- chisq.test(matriz_loc_ano)
+
+cat("TESTE QUI-QUADRADO: LOCALIZAÇÃO x ANO\n")
+cat("====================================\n")
+print(matriz_loc_ano)
+cat("\nQui-quadrado:", round(teste_qui_loc_ano$statistic, 4), "\n")
+cat("Valor P:", round(teste_qui_loc_ano$p.value, 6), "\n")
+cat("Conclusão:", ifelse(teste_qui_loc_ano$p.value < 0.05, 
+                        "Há associação significativa", 
+                        "Não há associação significativa"), "\n\n")
+
+# ==============================================================================
+# TABELA FINAL FORMATADA (REPLICANDO A IMAGEM)
+# ==============================================================================
+
+# Criando tabela no formato da imagem original
+tabela_final <- dados_ajcm_completo %>%
+  pivot_wider(names_from = c(Ano, Providência), 
+              values_from = Quantidade,
+              names_sep = "_") %>%
+  mutate(
+    Total_2022 = `2022_Denúncia` + `2022_Arquivamento`,
+    Total_2023 = `2023_Denúncia` + `2023_Arquivamento`,
+    Total_Geral = Total_2022 + Total_2023
+  ) %>%
+  select(Localização, `2022_Denúncia`, `2022_Arquivamento`, Total_2022,
+         `2023_Denúncia`, `2023_Arquivamento`, Total_2023, Total_Geral)
+
+# Adicionando linha de totais
+linha_totais <- tabela_final %>%
+  summarise(
+    Localização = "TOTAL",
+    across(where(is.numeric), sum)
+  )
+
+tabela_final_com_totais <- bind_rows(tabela_final, linha_totais)
+
+cat("TABELA FINAL REPLICADA (FORMATO DA IMAGEM):\n")
+cat("==========================================\n")
+print(tabela_final_com_totais)
+
+# ==============================================================================
+# TABELA FORMATADA PARA APRESENTAÇÃO
+# ==============================================================================
+
+# Criando tabela formatada com nomes de colunas mais legíveis
+tabela_apresentacao <- tabela_final_com_totais %>%
+  rename(
+    "Localização" = Localização,
+    "2022 Denúncia" = `2022_Denúncia`,
+    "2022 Arquivamento" = `2022_Arquivamento`, 
+    "Total 2022" = Total_2022,
+    "2023 Denúncia" = `2023_Denúncia`,
+    "2023 Arquivamento" = `2023_Arquivamento`,
+    "Total 2023" = Total_2023,
+    "Total Geral" = Total_Geral
+  )
+
+# Aplicando formatação com separadores de milhares
+tabela_apresentacao_formatada <- tabela_apresentacao %>%
+  mutate(across(where(is.numeric), ~ format(.x, big.mark = ".", decimal.mark = ",")))
+
+cat("\nTABELA FORMATADA PARA APRESENTAÇÃO:\n")
+cat("==================================\n")
+print(tabela_apresentacao_formatada)
+
+# Salvando estrutura para preenchimento
+tryCatch({
+  write.csv(dados_ajcm_completo, "estrutura_dados_oltramari.csv", row.names = FALSE)
+  cat("\nArquivo 'estrutura_dados_oltramari.csv' criado para referência.\n")
+}, error = function(e) {
+  cat("\nNão foi possível criar o arquivo CSV.\n")
+})
+
+cat("Script executado com sucesso!\n")
+```
+
+### Gráficos de facetas para 2022 e 2023
+
+Acrescentar um gráfico de facetas, uma para cada ano (2022 e 2023), de barras empilhadas com as proporções (%) de Providência (Arquivamento ou Denúncia), uma barra para cada Localização no eixo x (Capital ou Interior)
+
+```{r}
+# GRÁFICO DE FACETAS: PROPORÇÕES DE PROVIDÊNCIA POR LOCALIZAÇÃO E ANO
+# Aproveitando dados já criados na global environment
+
+# Calculando proporções por Localização e Ano
+dados_prop_facetas <- dados_ajcm_completo %>%
+  group_by(Localização, Ano) %>%
+  mutate(
+    Total_Ano_Local = sum(Quantidade),
+    Proporção = round(Quantidade / Total_Ano_Local * 100, 1)
+  ) %>%
+  ungroup()
+
+# Criando o gráfico de facetas com barras empilhadas
+p_facetas <- ggplot(dados_prop_facetas, aes(x = Localização, y = Proporção, fill = Providência)) +
+  geom_bar(stat = "identity", position = "stack", alpha = 0.8, width = 0.6) +
+  
+  # Adicionando rótulos nas barras
+  geom_text(aes(label = paste0(Proporção, "%")), 
+            position = position_stack(vjust = 0.5), 
+            size = 4, fontface = "bold", color = "white") +
+  
+  # Facetas por ano
+  facet_wrap(~ Ano, scales = "fixed", labeller = label_both) +
+  
+  # Configurações de cores
+  scale_fill_manual(
+    values = c("Denúncia" = "#e74c3c", "Arquivamento" = "#3498db"),
+    name = "Providência"
+  ) +
+  
+  # Configurações dos eixos
+  scale_y_continuous(
+    breaks = seq(0, 100, 25), 
+    labels = paste0(seq(0, 100, 25), "%"),
+    limits = c(0, 100)
+  ) +
+  
+  # Rótulos e títulos
+  labs(
+    title = "Proporção de Providências por Localização e Ano",
+    subtitle = "Distribuição percentual: Denúncia vs Arquivamento",
+    x = "Localização das Promotorias",
+    y = "Proporção (%)",
+    fill = "Tipo de Providência",
+    caption = "Fonte: Dados Oltramari | Período: 30/mar/2022 a 31/out/2023"
+  ) +
+  
+  # Tema e customizações
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 16, face = "bold"),
+    plot.subtitle = element_text(hjust = 0.5, size = 13, color = "gray30"),
+    plot.caption = element_text(hjust = 0.5, size = 10, color = "gray50"),
+    
+    # Configurações das facetas
+    strip.text = element_text(size = 14, face = "bold", 
+                             color = "white", margin = margin(5,5,5,5)),
+    strip.background = element_rect(fill = "gray20", color = NA),
+    
+    # Configurações da legenda
+    legend.position = "bottom",
+    legend.title = element_text(size = 12, face = "bold"),
+    legend.text = element_text(size = 11),
+    legend.key.size = unit(1, "cm"),
+    
+    # Configurações dos eixos
+    axis.title.x = element_text(size = 12, face = "bold", margin = margin(t = 15)),
+    axis.title.y = element_text(size = 12, face = "bold", margin = margin(r = 15)),
+    axis.text = element_text(size = 11),
+    
+    # Configurações do painel
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.border = element_rect(color = "gray30", fill = NA, size = 0.5)
+  )
+
+# Exibindo o gráfico
+print(p_facetas)
+
+# Salvando o gráfico (opcional)
+# ggsave("grafico_facetas_proporcoes_oltramari.png", p_facetas, 
+#        width = 12, height = 8, dpi = 300, bg = "white")
+```
+
+Percebe-se que, em 2022, há uma significativa diferença, deixando claro descompasso entre a atuação das Promotorias de Justiça da capital em relação aos Promotores de Justiça do interior, com maior proporção de oferecimento de denúncias por parte destes enquanto há, em proporções para o anos de 2023, um semelhante comportamento entre os dois grupos, quanto à arquivamentos e denúncias.
+
+### Teste X^2^ para cada faceta.
+
+Agora Script R para um chunk subsequente apenas para Acrescentar ao mesmo gráfico de facetas, uma para cada ano (2022 e 2023), de barras empilhadas com as proporções (%) de Providência (Arquivamento ou Denúncia), uma barra para cada Localização no eixo x (Capital ou Interior), o resultado de testes quiquadrado aplicado a cada um dos anos. Não é necessário gerar novamente os dados e sim aproveitar as variáveis já criadas na global environment.
+
+```{r}
+# GRÁFICO DE FACETAS COM TESTES QUI-QUADRADO POR ANO
+# Aproveitando dados já criados na global environment
+
+# Realizando testes qui-quadrado para cada ano separadamente
+resultados_testes_ano <- list()
+
+# Teste qui-quadrado para 2022
+dados_2022 <- dados_ajcm_completo %>% 
+  filter(Ano == "2022") %>%
+  group_by(Localização, Providência) %>%
+  summarise(Total = sum(Quantidade), .groups = "drop") %>%
+  pivot_wider(names_from = Providência, values_from = Total)
+
+matriz_2022 <- as.matrix(dados_2022[, -1])
+rownames(matriz_2022) <- dados_2022$Localização
+teste_2022 <- chisq.test(matriz_2022)
+
+resultados_testes_ano[["2022"]] <- list(
+  chi_squared = teste_2022$statistic,
+  p_value = teste_2022$p.value,
+  significativo = teste_2022$p.value < 0.05
+)
+
+# Teste qui-quadrado para 2023
+dados_2023 <- dados_ajcm_completo %>% 
+  filter(Ano == "2023") %>%
+  group_by(Localização, Providência) %>%
+  summarise(Total = sum(Quantidade), .groups = "drop") %>%
+  pivot_wider(names_from = Providência, values_from = Total)
+
+matriz_2023 <- as.matrix(dados_2023[, -1])
+rownames(matriz_2023) <- dados_2023$Localização
+teste_2023 <- chisq.test(matriz_2023)
+
+resultados_testes_ano[["2023"]] <- list(
+  chi_squared = teste_2023$statistic,
+  p_value = teste_2023$p.value,
+  significativo = teste_2023$p.value < 0.05
+)
+
+# Criando labels com os resultados dos testes para cada faceta
+criar_label_teste <- function(ano) {
+  resultado <- resultados_testes_ano[[ano]]
+  chi2 = round(resultado$chi_squared, 3)
+  p_val = ifelse(resultado$p_value < 0.001, "< 0.001", round(resultado$p_value, 3))
+  significancia = ifelse(resultado$significativo, "Significativo", "Não Significativo")
+  
+  paste0(
+    "χ² = ", chi2, "\n",
+    "p = ", p_val, "\n",
+    significancia
+  )
+}
+
+# Criando data frame com labels dos testes
+labels_testes <- data.frame(
+  Ano = c("2022", "2023"),
+  label = sapply(c("2022", "2023"), criar_label_teste),
+  x = 1.5,  # Posição central entre Capital e Interior
+  y = 85    # Posição no topo do gráfico
+)
+
+# Recriando o gráfico com os testes qui-quadrado
+p_facetas_com_testes <- ggplot(dados_prop_facetas, aes(x = Localização, y = Proporção, fill = Providência)) +
+  geom_bar(stat = "identity", position = "stack", alpha = 0.8, width = 0.6) +
+  
+  # Adicionando rótulos nas barras
+  geom_text(aes(label = paste0(Proporção, "%")), 
+            position = position_stack(vjust = 0.5), 
+            size = 4, fontface = "bold", color = "white") +
+  
+  # Adicionando resultados dos testes qui-quadrado
+  geom_text(data = labels_testes, 
+            aes(x = x, y = y, label = label), 
+            inherit.aes = FALSE,
+            size = 3.5, 
+            fontface = "bold",
+            color = "black",
+            fill = "white",
+            alpha = 0.9,
+            hjust = 0.5,
+            vjust = 1,
+            # Criando caixa de texto
+            geom = "label",
+            label.padding = unit(0.3, "lines"),
+            label.size = 0.5) +
+  
+  # Facetas por ano
+  facet_wrap(~ Ano, scales = "fixed", labeller = label_both) +
+  
+  # Configurações de cores
+  scale_fill_manual(
+    values = c("Denúncia" = "#e74c3c", "Arquivamento" = "#3498db"),
+    name = "Providência"
+  ) +
+  
+  # Configurações dos eixos
+  scale_y_continuous(
+    breaks = seq(0, 100, 25), 
+    labels = paste0(seq(0, 100, 25), "%"),
+    limits = c(0, 100)
+  ) +
+  
+  # Rótulos e títulos
+  labs(
+    title = "Proporção de Providências por Localização e Ano",
+    subtitle = "Distribuição percentual com Testes Qui-Quadrado de Independência",
+    x = "Localização das Promotorias",
+    y = "Proporção (%)",
+    fill = "Tipo de Providência",
+    caption = "Fonte: Dados Oltramari | Período: 30/mar/2022 a 31/out/2023\nTeste: H₀ = Independência entre Localização e Providência"
+  ) +
+  
+  # Tema e customizações
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 16, face = "bold"),
+    plot.subtitle = element_text(hjust = 0.5, size = 13, color = "gray30"),
+    plot.caption = element_text(hjust = 0.5, size = 10, color = "gray50"),
+    
+    # Configurações das facetas
+    strip.text = element_text(size = 14, face = "bold", 
+                             color = "white", margin = margin(5,5,5,5)),
+    strip.background = element_rect(fill = "gray20", color = NA),
+    
+    # Configurações da legenda
+    legend.position = "bottom",
+    legend.title = element_text(size = 12, face = "bold"),
+    legend.text = element_text(size = 11),
+    legend.key.size = unit(1, "cm"),
+    
+    # Configurações dos eixos
+    axis.title.x = element_text(size = 12, face = "bold", margin = margin(t = 15)),
+    axis.title.y = element_text(size = 12, face = "bold", margin = margin(r = 15)),
+    axis.text = element_text(size = 11),
+    
+    # Configurações do painel
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.border = element_rect(color = "gray30", fill = NA, size = 0.5)
+  )
+
+# Exibindo o gráfico
+print(p_facetas_com_testes)
+
+# Exibindo resumo dos testes no console
+cat("RESUMO DOS TESTES QUI-QUADRADO POR ANO:\n")
+cat("======================================\n\n")
+
+for(ano in c("2022", "2023")) {
+  resultado <- resultados_testes_ano[[ano]]
+  cat("ANO", ano, ":\n")
+  cat("  χ² =", round(resultado$chi_squared, 4), "\n")
+  cat("  p-valor =", ifelse(resultado$p_value < 0.001, "< 0.001", round(resultado$p_value, 6)), "\n")
+  cat("  Resultado:", ifelse(resultado$significativo, "SIGNIFICATIVO (p < 0.05)", "NÃO SIGNIFICATIVO (p ≥ 0.05)"), "\n")
+  cat("  Interpretação:", ifelse(resultado$significativo, 
+                                "Há associação entre Localização e Providência", 
+                                "Não há associação entre Localização e Providência"), "\n\n")
+}
+
+# Salvando o gráfico atualizado (opcional)
+# ggsave("grafico_facetas_proporcoes_com_testes_oltramari.png", p_facetas_com_testes, 
+#        width = 14, height = 9, dpi = 300, bg = "white")
+```
+
+O teste de significância para a Hipótese de Nula de nenhuma associação entre Providência (Arquivamento ou Denúncia) e Localização (Capital ou interior) para o ano de [**2022**]{.underline}, após a entrada em vigor do tratamento, foi [**significativo**]{.underline} para um Nível de Confiança de 95% (erro tipo I de 5%).
+
+Para 2022 pode-se [**rejeitar**]{.underline} a Hipótese Nula e apoiar a Hipótese Alternativa de que há uma associação significativa entre Providência e Localização, sendo que o gráfico de barras empilhadas ilustra que o interior denunciou proporcionalmente mais e arquivou proporcionalmente signifcativamente menos que a capital (promororia especializada junto à VAM).
+
+Todavia o mesmo teste para o ano de [**2023 não foi significativo**]{.underline}. E o mesmo gráfico de barras empilhadas denota uma atuação similar entre interior e Capital.
+
+### Variável Oculta
+
+Nssa análise acima, permaneceu como variável oculta o crescimento no volume de AJCM.
+
+Uma possível explicação é observar o efeito que o crescimento no volume de AJCM de um ano (2022) para o outro (2023), que foi de:
+
+Por Ano:
+2022: 460 ( 28.3 %)
+2023: 1.165 ( 71.7 %)
+Variação 2022→2023: + 153.3 %
+
+> "Após 2019, os números de AJCM permanecem relativamente estáveis até o ano de 2022 quando, em 2023, há um aumento abrupto de 145% em relação ao ano anterior." [@Oltramari-dissert2024 , p. 158]
+
+Esse cescimento poderia explicar a mudança de comportamento dos promotores do interior, que passaram a adotar uma postura que refeltiu em uma proporção anual de arquivamentos em 2023 (92,1%) muito próxima à que foi observada na Capital no mesmo ano de 2023 (92,2%).
 
 ------------------------------------------------------------------------
 
-**Referências**: Este material é baseado em Oltramari, Felipe. *Controle Externo da Atividade Policial como questão de Política Pública*: análise do arranjo institucional da função persecutória-investigativa no âmbito do Ministério Público. Goiânia: 2024, PPGDP (linha 2). Relatório final de pesquisa.
+**Referências**: Este material é baseado em Oltramari, Felipe. *Controle Externo da Atividade Policial como questão de Política Pública*: análise do arranjo institucional da função persecutória-investigativa no âmbito do Ministério Público. Goiânia: 2024, PPGDP (linha 2). Relatório final de pesquisa. [@Oltramari-dissert2024]
