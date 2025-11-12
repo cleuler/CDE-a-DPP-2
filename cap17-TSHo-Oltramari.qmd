@@ -1,24 +1,10 @@
----
-title: "Controle Externo da Atividade Policial (MP-GO)"
-subtitle: "Testes de Significância: Qui-Quadrado"
-author: "Cleuler apud Oltramari (2024)"
-format:
-  html:
-    theme: cosmo
-    toc: true
-    toc-depth: 3
-    number-sections: true
-    code-fold: true
-    embed-resources: true
-  pdf:
-    documentclass: article
-    geometry: margin=1in
-    fontsize: 11pt
-lang: pt
-bibliography: references.bib
----
+# Testes de Significância: Oltramari
 
-## Testes de Significância: Oltramari
+Tema: Controle Externo da Atividade Policial (MP-GO).
+
+Testes de Significância: Qui-Quadrado.
+
+Cleuler apud Oltramari (2024).
 
 A seguir, exemplificamos sucintamente a lógica de testes estatísticos.
 
@@ -42,15 +28,15 @@ Após, considerando-se a data de início da vigência da **Resolução n.º 4, d
 A contribuição desta pesquisa consiste na revelação de dados de interesse do Ministério Público e de entrega de produto à instituição (aplicativo Métis), aptos a contribuir no desenvolvimento de ações para ***aprimorar*** o [**controle externo da atividade policial**]{.underline} e no [***fomentar políticas públicas de segurança***]{.underline} com enfoque na [***redução***]{.underline} dos [***índices de violência policial no estado de Goiás***]{.underline}. [@Oltramari-dissert2024 , p. 7]
 :::
 
-## Aplicar um teste de significância da H~0~ {#sec-logica}
+## Aplicar um teste de significância da H~0~
 
 ### Teste Qui-Quadrado
 
 Replicar o Teste qui-quadrado da figura abaixo.
 
-![](fig/AJCM-QuiQuad-nAJCM-Gyn&Int-x-ano2022&2023-TesteH-Rejeita-Ho-NC=99.9%.JPG){fig-align="center"}
+![](fig/AJCM-QuiQuad-nAJCM-Gyn&Int-x-ano2022&2023-TesteH-Rejeita-Ho-NC=99.9.JPG){fig-align="center"}
 
-Atravé do seguinte código.
+Através do seguinte código R.
 
 ```{r}
 # TESTE QUI-QUADRADO: num. Autos Judiciais Crime Militar - AJCM x Promotoria (Gyn e Int.)
@@ -1395,10 +1381,7 @@ Nssa análise acima, permaneceu como variável oculta o crescimento no volume de
 
 Uma possível explicação é observar o efeito que o crescimento no volume de AJCM de um ano (2022) para o outro (2023), que foi de:
 
-Por Ano:
-2022: 460 ( 28.3 %)
-2023: 1.165 ( 71.7 %)
-Variação 2022→2023: + 153.3 %
+Por Ano: 2022: 460 ( 28.3 %) 2023: 1.165 ( 71.7 %) Variação 2022→2023: + 153.3 %
 
 > "Após 2019, os números de AJCM permanecem relativamente estáveis até o ano de 2022 quando, em 2023, há um aumento abrupto de 145% em relação ao ano anterior." [@Oltramari-dissert2024 , p. 158]
 

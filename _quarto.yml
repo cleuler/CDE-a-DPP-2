@@ -152,6 +152,7 @@ format:
     author-meta: "Cleuler Barbosa das Neves"
     callout-appearance: simple
   pdf:
+    pdf-engine: xelatex
     documentclass: scrreprt
     papersize: A4
     toc: true
@@ -185,6 +186,14 @@ format:
         \fancyhead[LE]{\nouppercase{\rightmark\hfill\leftmark}}
         \fancyhead[RO]{\nouppercase{\leftmark\hfill\rightmark}}
         \fancyfoot[LE,RO]{\hfill\thepage\hfill}
+        \usepackage[utf8]{inputenc}
+        \usepackage[T1]{fontenc}
+        \usepackage{lmodern}
+        \usepackage{fontspec}
+        \usepackage{polyglossia}
+        \setmainlanguage{portuguese}
+        \setmainfont{Liberation Serif}
+        \usepackage{grffile}
 #        \usepackage{makeidx}
 #        \makeindex
 #    include-after-body:
@@ -202,4 +211,3 @@ output:
     extra_dependencies:
       - "subfig"
 editor: visual
-lang: pt-BR
