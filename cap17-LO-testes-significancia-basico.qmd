@@ -1,24 +1,6 @@
----
-title: "Testes de Significância: o Básico"
-subtitle: "Capítulo 17 - A Estatística Básica e sua prática (9ª ed.)"
-author: "Baseado em Moore, Notz & Fligner"
-format:
-  html:
-    theme: cosmo
-    toc: true
-    toc-depth: 3
-    number-sections: true
-    code-fold: true
-    embed-resources: true
-  pdf:
-    documentclass: article
-    geometry: margin=1in
-    fontsize: 11pt
-lang: pt
-bibliography: references.bib
----
-
 # Testes de Significância: o Básico
+
+Capítulo 17 - A Estatística Básica e sua prática (9ª ed.) [@Moore2023 , cap. 17, p. 296-323]
 
 Intervalos de confiança são um dos dois tipos mais comuns de inferência estatística. Neste capítulo, discutimos testes de significância, o segundo tipo de inferência estatística.
 

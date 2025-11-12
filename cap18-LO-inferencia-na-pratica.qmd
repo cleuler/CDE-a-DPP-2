@@ -308,6 +308,14 @@ $$H_0: \mu = 0$$ $$H_a: \mu > 0$$
 
 -   O nível de significância α de qualquer teste de nível fixo é a probabilidade de um erro Tipo I
 -   O poder de um teste contra qualquer alternativa é a probabilidade de rejeitarmos corretamente a hipótese nula para aquela alternativa. Ele pode ser calculado como 1 menos a probabilidade de um erro Tipo II para aquela alternativa
+
+Uma figura ilustra e resume melhor esses dois conceitos.
+
+![Os dois tipos de Erro em Testes de Significância da Hipótese Nula (Moore, 2023, cap. 18, p. 335)](fig/Erro-tipo-I-e-II.png){fig-align="center"}
+
+Nas linhas o que a amostragem, com seu erro amostral, nos mostra.
+
+Nas colunas a vida da População como ela é.
 :::
 
 ### Fatores que Influenciam o Tamanho da Amostra

@@ -68,7 +68,6 @@ book:
       Relatório escrito em <a href="https://quarto.org/">Quarto</a>.
   cover-image: |
     cover.pdf
-#  favicon: cover.png
   chapters:
     - index.qmd
     - intro.qmd
@@ -84,31 +83,13 @@ book:
     - cap17-LO-testes-significancia-basico.qmd
     - cap17-TSHo-Oltramari.qmd
     - cap18-LO-inferencia-na-pratica.qmd
-#    - aula1-CiclosDe.qmd
-#    - aula2-obj-func.qmd
-#    - aula3-est-dir-estDescr.qmd
-#    - aula4-est-dir-testeH-Kalunga.qmd
-#    - aula5-est-dir-testeH-Fluxos.qmd
-#    - aula6-TesteH-Andre-Eliane-Comparacao-Frequencias-X2.qmd
-#    - aula7-Anal-Sobrev.qmd
-#    - aula8-Regr-logit.qmd
-#    - aula3-DeMere-n1.qmd
-#    - aula4-Bolsa9Moedas.qmd
-#    - aula5-WranglingData-1st.qmd
-#    - aula6-WranglingData-2nd.qmd
-#    - aula7-WranglingData-3rd.qmd
-#    - aula8-WranglingData-4th.qmd
-#    - aula9-WranglingData-5th.qmd
-#    - aula10-AtividadeAvaliativa-1.qmd
-#    - aula11-AtividadeAvaliativa-Res.qmd
-#    - aula8.qmd
     - conclusao.qmd
     - apendiceA.qmd
     - apendiceB-quadroVar.qmd
     - referencias.qmd
+
 bibliography: references.bib
-csl: abnt-github.csl # This is crucial for ABNT formatting
-#         Citation Style Language (CSL) repository on GitHub
+csl: abnt-github.csl
 biblio-title: "Referências"
 toc-title: "Sumário"
 lof-title: "Lista de Figuras"
@@ -118,39 +99,41 @@ cap-location: bottom
 tbl-cap-location: top
 number-sections: true
 prefer-html: true
+
 crossref:
   chapters: true
   lof-title: "Lista de Figuras"
   lot-title: "Lista de Tabelas"
   lol-title: "Lista de Definições"
-#  chap-prefix: cap.      # (default is "Chapters", cf. @sec-prefix: sec.)
-  fig-title: Fig.       # (default is "Figure")
+  fig-title: Fig.
   fig-prefix: fig.
-  tbl-title: Tab.       # (default is "Table")
+  tbl-title: Tab.
   tbl-prefix: tab.
-  thm-title: Teorema    # (default is "Theorem")
+  thm-title: Teorema
   thm-prefix: teor.
-  def-title: Definição  # (default is "Definition")
+  def-title: Definição
   def-prefix: def.
-  cnj-title: Conjectura # (default is "Conjecture")
+  cnj-title: Conjectura
   cnj-prefix: Hip.
-  eq-title: Eq.         # (default is "Equation")
+  eq-title: Eq.
   eq-prefix: eq.
-  exm-title: Exemplo    # (default is "Example"")
+  exm-title: Exemplo
   exm-prefix: ex.
   sec-prefix: sec.
-  title-delim: ""    # (default is ":")
+  title-delim: ""
+
 format:
   html:
     theme: cosmo
     code-link: true
     code-fold: true
     toc-title: "Sumário"
-    toc-depth: 4  # upto three depths of headings (specified by #, ##, ### and ####)
-    number-sections: true # if you want number sections at each table header
+    toc-depth: 4
+    number-sections: true
     number-depth: 4
     author-meta: "Cleuler Barbosa das Neves"
     callout-appearance: simple
+    
   pdf:
     pdf-engine: xelatex
     documentclass: scrreprt
@@ -159,7 +142,6 @@ format:
     lof: true
     lot: true
     lol: true
-#    latex-makeindex: "Índice remissivo"
     number-sections: true
     colorlinks: true
     code-line-numbers: true
@@ -177,6 +159,11 @@ format:
       \titlehead{\includegraphics[width=6.25in]{cover.pdf}}
     include-in-header:
       text: |
+        \usepackage{fontspec}
+        \usepackage{polyglossia}
+        \setmainlanguage{portuguese}
+        \setmainfont{Liberation Serif}
+        \usepackage{grffile}
         \usepackage{fvextra}
         \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
         \DefineVerbatimEnvironment{OutputCode}{Verbatim}{breaklines,commandchars=\\\{\}}
@@ -186,28 +173,9 @@ format:
         \fancyhead[LE]{\nouppercase{\rightmark\hfill\leftmark}}
         \fancyhead[RO]{\nouppercase{\leftmark\hfill\rightmark}}
         \fancyfoot[LE,RO]{\hfill\thepage\hfill}
-        \usepackage[utf8]{inputenc}
-        \usepackage[T1]{fontenc}
-        \usepackage{lmodern}
-        \usepackage{fontspec}
-        \usepackage{polyglossia}
-        \setmainlanguage{portuguese}
-        \setmainfont{Liberation Serif}
-        \usepackage{grffile}
-#        \usepackage{makeidx}
-#        \makeindex
-#    include-after-body:
-#      text: |
-#        \printindex
-  docx: default
+
 execute:
   echo: fenced
   warning: false
-latex-auto-mk: true
-keep-tex: true
-context: context
-output:
-  pdf_document:
-    extra_dependencies:
-      - "subfig"
+
 editor: visual

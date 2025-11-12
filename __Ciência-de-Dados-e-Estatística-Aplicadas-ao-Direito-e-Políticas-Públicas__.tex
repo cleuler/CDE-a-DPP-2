@@ -203,6 +203,11 @@
 \usepackage[normalem]{ulem}
 \usepackage{makecell}
 \usepackage{xcolor}
+\usepackage{fontspec}
+\usepackage{polyglossia}
+\setmainlanguage{portuguese}
+\setmainfont{Liberation Serif}
+\usepackage{grffile}
 \usepackage{fvextra}
 \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
 \DefineVerbatimEnvironment{OutputCode}{Verbatim}{breaklines,commandchars=\\\{\}}
@@ -212,14 +217,6 @@
 \fancyhead[LE]{\nouppercase{\rightmark\hfill\leftmark}}
 \fancyhead[RO]{\nouppercase{\leftmark\hfill\rightmark}}
 \fancyfoot[LE,RO]{\hfill\thepage\hfill}
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
-\usepackage{fontspec}
-\usepackage{polyglossia}
-\setmainlanguage{portuguese}
-\setmainfont{Liberation Serif}
-\usepackage{grffile}
 \KOMAoption{captions}{tableheading}
 \titlehead{\includegraphics[width=6.25in]{cover.pdf}}
 \makeatletter
@@ -292,7 +289,7 @@
 \makeatletter
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[breakable, enhanced, boxrule=0pt, interior hidden, sharp corners, frame hidden]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, enhanced, interior hidden, sharp corners, breakable, boxrule=0pt]}{\end{tcolorbox}}\fi
 \makeatother
 \usepackage{bookmark}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
@@ -333,7 +330,7 @@ Ciência de Dados e Estatística com R Aplicada ao Direito e Políticas
 Públicas\\
 (Disciplina DPP0053 junto ao PPGDP da UFG)\\}
 \author{Prof.~Dr.~Cleuler Barbosa das Neves}
-\date{12 de nov. de 2025}
+\date{Nov 12, 2025}
 \begin{document}
 \maketitle
 \begin{abstract}
@@ -897,7 +894,7 @@ research 6. Process and Impact's analysis.}
 \markright{Epígrafe}
 
 \begin{quote}
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-tip-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-tip-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 \begin{quote}
 \section*{Procura da Pesquisa}\label{procura-da-pesquisa}
@@ -965,7 +962,7 @@ Drummond de Andrade})
 
 \markright{Dedicatória}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-important-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Tributos}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Tributos}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 À \href{https://www.youtube.com/watch?v=_x9mNq-eB6w}{minha mãe} Abigair
 de Souza Neves.
@@ -1586,7 +1583,7 @@ serviu de base para a \emph{coleta e tabulação} dos \emph{dados
 primários} levantados, seja diretamente por ele (de preferência), ou por
 pessoa por ele para tanto bem treinada e testada.
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-warning-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-warning-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-warning-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 Apenas quando \ul{\textbf{\emph{todos}}} esses
 \ul{\textbf{\emph{cuidados qualitativos}}} forem tomados para
@@ -7820,7 +7817,7 @@ Ou seja, para \textbf{diminuir 1 kg} na variável
 -0.0034 x = -1.0 \text{ kg} \Rightarrow x = \frac{1.0}{0.0034} \Rightarrow x = +294.2 \text{ cal}
 \]
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-warning-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{inclinação da rela de regressão}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-warning-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-warning-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{inclinação da rela de regressão}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 \textbf{\emph{Não}} se pode dizer \textbf{\emph{quão importante}} é
 \textbf{\emph{uma relação}} pelo \textbf{\emph{simples exame}} do
@@ -8446,7 +8443,7 @@ Tabela com totais marginais:
   Total 1041 1891  789  184  3905
 \end{verbatim}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-important-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Tabela de dupla entrada}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Tabela de dupla entrada}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 Uma tabela de contagens usada para a \textbf{\emph{organização de dados
 sobre duas variáveis categóricas}}.
@@ -8479,7 +8476,7 @@ totais. As distribuições de sexo apenas e de grau conferido apenas são
 chamadas distribuições marginais, porque elas aparecem nas margens
 direita e inferior da tabela de dupla entrada.
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-important-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Distribuições marginais}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Distribuições marginais}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 A distribuição marginal de uma das variáveis categóricas em uma tabela
 de dupla entrada de contagens é a distribuição dos valores daquela
@@ -9077,7 +9074,7 @@ distribuição \textbf{\emph{descreve apenas estudantes que satisfazem a
 condição de serem mulheres}}. (MOORE; NOTZ; FLIGNER, 2023 , p.~132)
 \end{quote}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-important-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Distribuições condicionais}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Distribuições condicionais}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 Uma distribuição condicional de uma variável é a
 \textbf{\emph{distribuição dos valores daquela variável apenas entre os
@@ -9284,7 +9281,7 @@ enquanto a porcentagem projetada de \texttt{homens} a \ul{receber outros
 graus diferentes} de \texttt{associado} é \ul{ligeiramente maior} do que
 a porcentagem de \texttt{mulheres}.
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-important-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Erro de Arredondamento}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Erro de Arredondamento}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 O erro de arredondamento é a \textbf{\emph{pequena diferença entre um
 número decimal arredondado e seu valor preciso antes do
@@ -9585,7 +9582,7 @@ Fica claro agora que, nos EUA, a categoria Mulher na variável
 
 No Brasil espera-se uma distribuição oposta a essa.
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-important-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Gráfico de Barras Segmentadas}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Gráfico de Barras Segmentadas}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 Um gráfico de barras segmentadas é \textbf{\emph{um gráfico de barras
 para a apresentação de dados sobre duas variáveis categóricas no qual
@@ -9670,7 +9667,7 @@ como a distribuição condicional de sexo, dado o grau conferido.
 
 \pandocbounded{\includegraphics[keepaspectratio]{cap6-moore-tab-dupla-entrada_files/figure-pdf/unnamed-chunk-17-1.pdf}}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-important-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Gráfico de mosaico}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Gráfico de mosaico}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 \textbf{\emph{Um gráfico de barras segmentadas}} no qual a
 \textbf{\emph{largura de cada barra representa a proporção de todas as
@@ -9887,7 +9884,7 @@ Script R comentado para o gráfico mosaico anterior agora para o
 
 \pandocbounded{\includegraphics[keepaspectratio]{cap6-moore-tab-dupla-entrada_files/figure-pdf/unnamed-chunk-19-1.pdf}}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-important-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Gráficos!}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Gráficos!}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 Nenhum gráfico único retrata a forma da relação entre variáveis
 categóricas (como um diagrama de dispersão faz para variáveis
@@ -12339,7 +12336,7 @@ partir dos dados amostrais}}, alguma \ul{\textbf{conclusão}} sobre a
 representa}}. (MOORE; NOTZ; FLIGNER, 2023 , cap. 16, p.~296)
 \end{quote}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-important-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Inferência estatística}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Inferência estatística}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 A inferência estatística fornece \ul{\textbf{métodos}} para a
 \textbf{\emph{extração de conclusões sobre uma população a partir de
@@ -12364,7 +12361,7 @@ torná-la mais clara possível, começamos com um contexto que é muito
 simples para ser realista. Eis o contexto para nosso trabalho neste
 capítulo.
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-important-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Condições simples para inferência sobre uma média}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Condições simples para inferência sobre uma média}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -12388,7 +12385,7 @@ A condição de que a população seja grande em relação ao tamanho da
 amostra será adequadamente satisfeita se a população for, digamos, pelo
 menos 20 vezes maior.
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-important-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 \emph{As condições de que temos uma AAS perfeita, de que a população é
 exatamente Normal e de que conhecemos o σ populacional são todas não
@@ -12994,7 +12991,7 @@ Essa \ul{\textbf{forma}} para um intervalo de confiança e
 \textbf{parâmetros}} que consideraremos neste livro, incluindo
 \ul{\textbf{médias}} e \ul{\textbf{proporções}}.
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-important-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Margem de erro}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Margem de erro}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 A margem de erro é um número que é acrescentado a, ou subtraído de uma
 estimativa estatística para definir o intervalo de confiança a dado
@@ -13006,7 +13003,7 @@ Os usuários podem escolher o nível de confiança, quase sempre 90\% ou
 mais, por quererem estar bastante seguros de suas conclusões. O nível de
 confiança mais comum é 95\%.
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-important-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Intervalo de confiança}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Intervalo de confiança}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 Um intervalo de confiança de nível C para um parâmetro tem \textbf{duas
 partes}:
@@ -13026,7 +13023,7 @@ taxa de sucesso do método}}.
 
 NC que tem de ser interpretado do seguinte modo.
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-important-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Interpretação de um nível de confiança}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Interpretação de um nível de confiança}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 O nível de confiança \ul{\textbf{é a taxa de sucesso do método que
 produz o intervalo}}. Não sabemos se o intervalo de confiança de 95\%
@@ -13232,7 +13229,7 @@ Hypothese Significant Test}}{]} (MOORE; NOTZ; FLIGNER, 2023 , cap. 17,
 p.~308-323)
 \end{quote}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-important-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Inferência estatística}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Inferência estatística}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 A inferência estatística fornece \ul{\textbf{métodos}} para a
 \textbf{\emph{extração de conclusões sobre uma população a partir de
@@ -13243,7 +13240,7 @@ dados amostrais}}. (MOORE; NOTZ; FLIGNER, 2023 , cap. 16, p.~296)
 Recapitular as condições simples ou pressupostos para um TSHN de uma
 média populacional desconhecida.
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-important-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Condições simples para inferência sobre uma média}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Condições simples para inferência sobre uma média}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -13273,7 +13270,7 @@ amostra será adequadamente satisfeita se a população for, digamos, pelo
 menos 20 vezes maior {[}N \textgreater{} 20 x n ou n \textless{} 5\% x
 N{]}.
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-important-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 {[}\ldots{]} \emph{As \textbf{condições} {[}ou pressupostos,
 \textbf{presunções relativas}{]} de que temos uma AAS perfeita, de que a
@@ -13687,14 +13684,8 @@ mmm
 \chapter{Testes de Significância: o
 Básico}\label{testes-de-significuxe2ncia-o-buxe1sico-1}
 
-Capítulo 17 - A Estatística Básica e sua prática (9ª ed.)
-
-\hfill\break
-
-\bookmarksetup{startatroot}
-
-\chapter{Testes de Significância: o
-Básico}\label{testes-de-significuxe2ncia-o-buxe1sico-2}
+Capítulo 17 - A Estatística Básica e sua prática (9ª ed.) (MOORE; NOTZ;
+FLIGNER, 2023 , cap. 17, p.~296-323)
 
 Intervalos de confiança são um dos dois tipos mais comuns de inferência
 estatística. Neste capítulo, discutimos testes de significância, o
@@ -13718,7 +13709,7 @@ afirmativa anterior relativa a um parâmetro da população.
 
 A seguir, apresentamos sucintamente a lógica de testes estatísticos.
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-note-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Exemplo 17.1 - Eu sou um grande atirador de lances livres}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-note-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Exemplo 17.1 - Eu sou um grande atirador de lances livres}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 Eu afirmo que acerto 80\% de meus lances livres no jogo de basquete.
 Para testar minha afirmativa, você me pede para fazer 20 lances livres.
@@ -13766,7 +13757,7 @@ sobre uma média'', no Capítulo 16, fossem verdadeiras: temos uma AAS
 perfeita de uma população exatamente Normal com desvio-padrão \(\sigma\)
 conhecido por nós. Eis um exemplo que analisaremos.
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-note-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Exemplo 17.2 - Adoçantes de refrigerantes}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-note-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Exemplo 17.2 - Adoçantes de refrigerantes}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 Refrigerantes dietéticos usam adoçantes artificiais para evitar o uso de
 açúcar. Esses adoçantes gradualmente perdem sua doçura ao longo do
@@ -13827,7 +13818,7 @@ esse refrigerante perca doçura.
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-note-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Exemplo 17.3 - Adoçantes de refrigerantes, novamente}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-note-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Exemplo 17.3 - Adoçantes de refrigerantes, novamente}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 A seguir, estão as perdas de doçura de um novo refrigerante, conforme
 medidas por 10 provadores treinados:
@@ -14112,7 +14103,7 @@ REFRIGERANTE 2:
 
 \subsection{Aplique seu conhecimento}\label{aplique-seu-conhecimento-2}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-tip-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Exercício 17.1 - GMAT}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-tip-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Exercício 17.1 - GMAT}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 O \emph{Graduate Management Admission Test} (GMAT) é feito por
 indivíduos interessados em seguir a educação na graduação em
@@ -14164,7 +14155,7 @@ qual buscamos evidência, tal qual ``nenhuma perda de doçura''.
 \subsection{Hipóteses nula e
 alternativa}\label{hipuxf3teses-nula-e-alternativa}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-important-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Definições importantes}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Definições importantes}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 A afirmativa testada por um teste estatístico de significância é chamada
 de \textbf{hipótese nula}. O teste é planejado para avaliar a força da
@@ -14201,7 +14192,7 @@ A \textbf{\emph{hipótese alternativa}} é \textbf{\emph{unilateral}}
 porque estamos interessados apenas em saber se o refrigerante perdeu
 doçura.
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-note-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Exemplo 17.4 - Estudo da satisfação no emprego}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-note-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Exemplo 17.4 - Estudo da satisfação no emprego}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 A satisfação no emprego de operários de montadoras difere quando seu
 trabalho é ritmado pelas máquinas em vez de autorritmado? Aloque
@@ -14230,7 +14221,7 @@ portanto, bilateral:
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-warning-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Estatística no mundo real - Hipóteses honestas?}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-warning-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-warning-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Estatística no mundo real - Hipóteses honestas?}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 Pessoas chinesas e japonesas, para as quais o número 4 é de má sorte,
 morrem mais frequentemente no quarto dia do mês do que em outros dias.
@@ -14263,7 +14254,7 @@ por dados e usemos a probabilidade para dizer quão forte é a evidência.
 A probabilidade que mede a força da evidência contra a hipótese nula é
 chamada de \textbf{valor P}.
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-important-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Estatística de teste e valor P}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Estatística de teste e valor P}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 Uma \textbf{\emph{estatística de teste}} calculada a partir de dados
 amostrais \textbf{\emph{mede quanto os dados divergem do que
@@ -14292,7 +14283,7 @@ Quão pequeno deve ser o valor P para ser evidência convincente contra
 \(H_0\)? Muitos usuários de estatística consideram valores menores do
 que 0,05 ou 0,01 como convincentes.
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-note-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Exemplo 17.5 - Adoçante de refrigerantes: valor P unilateral}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-note-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Exemplo 17.5 - Adoçante de refrigerantes: valor P unilateral}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 O estudo da perda de doçura nos Exemplos 17.2 e 17.3 testa as seguintes
 hipóteses:
@@ -14338,7 +14329,7 @@ contra \(H_0\). No Exemplo 17.5, apenas valores grandes, positivos,
 contam, porque a alternativa é unilateral do lado mais alto. Se a
 alternativa for bilateral, ambas as direções contam.
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-note-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Exemplo 17.6 - Satisfação no emprego: valor P bilateral}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-note-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Exemplo 17.6 - Satisfação no emprego: valor P bilateral}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 O estudo sobre satisfação no emprego no Exemplo 17.4 requer que
 testemos:
@@ -14365,7 +14356,7 @@ verdadeira \textbf{não é} \textbf{boa evidência contra} \(H_0\).
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-warning-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Importante sobre interpretação}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-warning-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-warning-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Importante sobre interpretação}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 \textbf{A conclusão do Exemplo 17.6 não é que} \(H_0\) seja verdadeira.
 
@@ -14405,7 +14396,7 @@ No entanto, podemos comparar um valor P com alguns valores fixos que
 comumente são utilizados como \textbf{padrões para evidência} contra
 \(H_0\).
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-important-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Significância estatística}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Significância estatística}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 Se o valor P é tão pequeno quanto \(\alpha\), ou menor do que
 \(\alpha\), dizemos que os dados são \textbf{estatisticamente
@@ -14435,7 +14426,7 @@ significante''.
 \textbf{estatística no contexto do problema} para o qual os dados foram
 coletados.
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-warning-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Estatística no mundo real - Significância derruba um novo medicamento}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-warning-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-warning-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Estatística no mundo real - Significância derruba um novo medicamento}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 A companhia farmacêutica Pfizer gastou US\$ 1 bilhão no desenvolvimento
 de uma nova droga contra o colesterol. A \textbf{verificação final} de
@@ -14463,7 +14454,7 @@ Na prática, os passos para a realização de um teste de significância
 refletem o processo geral de \textbf{quatro passos} para a
 \textbf{organização} \textbf{de problemas estatísticos realistas}.
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-important-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Testes de significância: o processo de quatro passos}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Testes de significância: o processo de quatro passos}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 \textbf{ESTABELEÇA}: qual é a questão prática que requer um teste
 estatístico?
@@ -14487,7 +14478,7 @@ condições para seu teste, você ou um programa de computador podem
 encontrar a estatística de teste e o valor P seguindo um roteiro. Esse é
 o roteiro para o teste que usamos em nossos exemplos.
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-important-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Teste z de uma amostra para uma média populacional}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Teste z de uma amostra para uma média populacional}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 Extraia uma AAS de tamanho n de uma população Normal que tenha média
 \(\mu\) desconhecida e desvio-padrão \(\sigma\) conhecido. Para testar a
@@ -14514,7 +14505,7 @@ calcule a \textbf{estatística de teste z de uma amostra}:
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-note-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Exemplo 17.7 - Colesterol de executivos}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-note-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Exemplo 17.7 - Colesterol de executivos}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 \textbf{ESTABELEÇA}: o \emph{National Center for Health Statistics}
 relata que o colesterol LDL para adultos tem média 130 e desvio-padrão
@@ -14634,7 +14625,7 @@ conhecido.
 
 \section{Exercícios selecionados}\label{sec-exercicios}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-tip-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Para praticar}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-tip-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Para praticar}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -14670,7 +14661,7 @@ Cleuler apud Oltramari (2024).
 
 A seguir, exemplificamos sucintamente a lógica de testes estatísticos.
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-note-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Exemplo - Felipe Oltramari}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-note-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Exemplo - Felipe Oltramari}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 Trata-se de pesquisa consistente na verificação da (in)existência de
 impacto da Resolução n.º 4, de 28 de março de 2022, do Colégio de
@@ -16521,6 +16512,459 @@ promotores do interior, que passaram a adotar uma postura que refeltiu
 em uma proporção anual de arquivamentos em 2023 (92,1\%) muito próxima à
 que foi observada na Capital no mesmo ano de 2023 (92,2\%).
 
+Refazer um gráfico de barras lado a lado para duas facetas dos anos 2022
+e 2023 com mudança na escala do eixo y para evidenciar esse ocultamento.
+
+\begin{Shaded}
+\begin{Highlighting}[numbers=left,,]
+\InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r\}}
+\CommentTok{\# =====================================================}
+\CommentTok{\#                 GRÁFICOS ATUALIZADOS}
+\CommentTok{\# =====================================================}
+
+\CommentTok{\# 1. Gráfico de barras agrupadas por todas as categorias com proporções}
+\NormalTok{p1 }\OtherTok{\textless{}{-}}\NormalTok{ dados\_ajcm\_completo }\SpecialCharTok{\%\textgreater{}\%}
+  \CommentTok{\# Calculando proporções por ano e localização}
+  \FunctionTok{group\_by}\NormalTok{(Ano, Localização) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{Total\_Ano\_Local =} \FunctionTok{sum}\NormalTok{(Quantidade),}
+\NormalTok{    Proporção }\OtherTok{=} \FunctionTok{round}\NormalTok{(Quantidade }\SpecialCharTok{/}\NormalTok{ Total\_Ano\_Local }\SpecialCharTok{*} \DecValTok{100}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{ungroup}\NormalTok{() }\SpecialCharTok{\%\textgreater{}\%}
+  
+  \FunctionTok{ggplot}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Localização, }\AttributeTok{y =}\NormalTok{ Quantidade, }\AttributeTok{fill =}\NormalTok{ Providência)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_bar}\NormalTok{(}\AttributeTok{stat =} \StringTok{"identity"}\NormalTok{, }\AttributeTok{position =} \StringTok{"dodge"}\NormalTok{, }\AttributeTok{alpha =} \FloatTok{0.8}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{facet\_wrap}\NormalTok{(}\SpecialCharTok{\textasciitilde{}}\NormalTok{ Ano, }\AttributeTok{scales =} \StringTok{"fixed"}\NormalTok{) }\SpecialCharTok{+}
+  
+  \CommentTok{\# Rótulos com quantidade e proporção}
+  \FunctionTok{geom\_text}\NormalTok{(}\FunctionTok{aes}\NormalTok{(}\AttributeTok{label =} \FunctionTok{paste0}\NormalTok{(Quantidade, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{("}\NormalTok{, Proporção, }\StringTok{"\%)"}\NormalTok{)), }
+            \AttributeTok{position =} \FunctionTok{position\_dodge}\NormalTok{(}\AttributeTok{width =} \FloatTok{0.9}\NormalTok{), }
+            \AttributeTok{vjust =} \SpecialCharTok{{-}}\FloatTok{0.2}\NormalTok{, }
+            \AttributeTok{size =} \DecValTok{3}\NormalTok{,}
+            \AttributeTok{fontface =} \StringTok{"bold"}\NormalTok{) }\SpecialCharTok{+}
+  
+  \FunctionTok{scale\_fill\_manual}\NormalTok{(}\AttributeTok{values =} \FunctionTok{c}\NormalTok{(}\StringTok{"Denúncia"} \OtherTok{=} \StringTok{"\#e74c3c"}\NormalTok{, }\StringTok{"Arquivamento"} \OtherTok{=} \StringTok{"\#3498db"}\NormalTok{)) }\SpecialCharTok{+}
+  \FunctionTok{scale\_y\_continuous}\NormalTok{(}
+    \AttributeTok{labels =} \FunctionTok{comma\_format}\NormalTok{(}\AttributeTok{big.mark =} \StringTok{"."}\NormalTok{, }\AttributeTok{decimal.mark =} \StringTok{","}\NormalTok{),}
+    \CommentTok{\# Expandindo os limites para acomodar os rótulos}
+    \AttributeTok{expand =} \FunctionTok{expansion}\NormalTok{(}\AttributeTok{mult =} \FunctionTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.15}\NormalTok{))}
+\NormalTok{  ) }\SpecialCharTok{+}
+  
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{title =} \StringTok{"AJCMs por Localização, Providência e Ano"}\NormalTok{,}
+    \AttributeTok{subtitle =} \StringTok{"Valores absolutos e proporções (\%) por localização"}\NormalTok{,}
+    \AttributeTok{x =} \StringTok{"Localização"}\NormalTok{,}
+    \AttributeTok{y =} \StringTok{"Número de AJCMs"}\NormalTok{,}
+    \AttributeTok{fill =} \StringTok{"Providência"}\NormalTok{,}
+    \AttributeTok{caption =} \StringTok{"Fonte: Dados Oltramari | Proporções calculadas por ano e localização"}
+\NormalTok{  ) }\SpecialCharTok{+}
+  
+  \FunctionTok{theme\_minimal}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}
+    \AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{hjust =} \FloatTok{0.5}\NormalTok{, }\AttributeTok{size =} \DecValTok{14}\NormalTok{, }\AttributeTok{face =} \StringTok{"bold"}\NormalTok{),}
+    \AttributeTok{plot.subtitle =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{hjust =} \FloatTok{0.5}\NormalTok{, }\AttributeTok{size =} \DecValTok{12}\NormalTok{),}
+    \AttributeTok{plot.caption =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{hjust =} \FloatTok{0.5}\NormalTok{, }\AttributeTok{size =} \DecValTok{10}\NormalTok{),}
+    \AttributeTok{strip.text =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{size =} \DecValTok{12}\NormalTok{, }\AttributeTok{face =} \StringTok{"bold"}\NormalTok{)}
+\NormalTok{  )}
+
+\FunctionTok{print}\NormalTok{(p1)}
+\InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{cap17-TSHo-Oltramari_files/figure-pdf/unnamed-chunk-6-1.pdf}}
+
+Essa \textbf{mudança de escala no eixo y} é fundamental para percepção
+de que o crescimento do volume de AJCM's pode alterar o padrão da
+proporção de denúncias propostas pelos Promotores de Justiça da Capital
+(VAM) e do Interior, para os anos de 2022 e 2023, após a vigência da
+Resolução CPJ n.~04/2022 do MP-GO, de 28 de março de 2022.
+
+Período observado foi: de 30 de março de 2022 a 31 de outubro de 2023.
+
+Aqui está o script R comentado para teste de significância adequado aos
+dados do gráfico anterior:
+
+\begin{Shaded}
+\begin{Highlighting}[numbers=left,,]
+\InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r\}}
+\CommentTok{\# ==============================================================================}
+\CommentTok{\# TESTE DE SIGNIFICÂNCIA PARA ASSOCIAÇÃO ENTRE VARIÁVEIS CATEGÓRICAS}
+\CommentTok{\# Análise das AJCMs por Localização, Providência e Ano}
+\CommentTok{\# ==============================================================================}
+
+\CommentTok{\# Carregando bibliotecas necessárias}
+\FunctionTok{library}\NormalTok{(dplyr)}
+\FunctionTok{library}\NormalTok{(vcd)        }\CommentTok{\# Para testes de associação avançados}
+\FunctionTok{library}\NormalTok{(DescTools)  }\CommentTok{\# Para estatísticas descritivas adicionais}
+
+\CommentTok{\# ==============================================================================}
+\CommentTok{\# 1. TESTE QUI{-}QUADRADO DE INDEPENDÊNCIA (ANÁLISE GERAL)}
+\CommentTok{\# ==============================================================================}
+
+\CommentTok{\# H₀: Não há associação entre Localização e Providência}
+\CommentTok{\# H₁: Há associação entre Localização e Providência}
+
+\FunctionTok{cat}\NormalTok{(}\StringTok{"TESTE QUI{-}QUADRADO DE INDEPENDÊNCIA}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"===================================}\SpecialCharTok{\textbackslash{}n\textbackslash{}n}\StringTok{"}\NormalTok{)}
+
+\CommentTok{\# Criando tabela de contingência agregada (todos os anos)}
+\NormalTok{tabela\_geral }\OtherTok{\textless{}{-}}\NormalTok{ dados\_ajcm\_completo }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(Localização, Providência) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{Total =} \FunctionTok{sum}\NormalTok{(Quantidade), }\AttributeTok{.groups =} \StringTok{"drop"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{pivot\_wider}\NormalTok{(}\AttributeTok{names\_from =}\NormalTok{ Providência, }\AttributeTok{values\_from =}\NormalTok{ Total) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{column\_to\_rownames}\NormalTok{(}\StringTok{"Localização"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{as.matrix}\NormalTok{()}
+
+\CommentTok{\# Exibindo a tabela}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"TABELA DE CONTINGÊNCIA (AGREGADA):}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\FunctionTok{print}\NormalTok{(tabela\_geral)}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+
+\CommentTok{\# Realizando o teste qui{-}quadrado}
+\NormalTok{teste\_qui\_geral }\OtherTok{\textless{}{-}} \FunctionTok{chisq.test}\NormalTok{(tabela\_geral)}
+
+\CommentTok{\# Resultados do teste}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"RESULTADOS DO TESTE QUI{-}QUADRADO:}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"χ² ="}\NormalTok{, }\FunctionTok{round}\NormalTok{(teste\_qui\_geral}\SpecialCharTok{$}\NormalTok{statistic, }\DecValTok{4}\NormalTok{), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"gl ="}\NormalTok{, teste\_qui\_geral}\SpecialCharTok{$}\NormalTok{parameter, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"p{-}valor ="}\NormalTok{, }\FunctionTok{ifelse}\NormalTok{(teste\_qui\_geral}\SpecialCharTok{$}\NormalTok{p.value }\SpecialCharTok{\textless{}} \FloatTok{0.001}\NormalTok{, }\StringTok{"\textless{} 0.001"}\NormalTok{, }
+                       \FunctionTok{round}\NormalTok{(teste\_qui\_geral}\SpecialCharTok{$}\NormalTok{p.value, }\DecValTok{6}\NormalTok{)), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"Conclusão:"}\NormalTok{, }\FunctionTok{ifelse}\NormalTok{(teste\_qui\_geral}\SpecialCharTok{$}\NormalTok{p.value }\SpecialCharTok{\textless{}} \FloatTok{0.05}\NormalTok{, }
+                        \StringTok{"REJEITA H₀ (há associação significativa)"}\NormalTok{, }
+                        \StringTok{"NÃO REJEITA H₀ (não há associação significativa)"}\NormalTok{), }\StringTok{"}\SpecialCharTok{\textbackslash{}n\textbackslash{}n}\StringTok{"}\NormalTok{)}
+
+\CommentTok{\# Verificando pressupostos do teste}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"VERIFICAÇÃO DE PRESSUPOSTOS:}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{frequencias\_esperadas }\OtherTok{\textless{}{-}}\NormalTok{ teste\_qui\_geral}\SpecialCharTok{$}\NormalTok{expected}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"Frequências esperadas mínimas:"}\NormalTok{, }\FunctionTok{round}\NormalTok{(}\FunctionTok{min}\NormalTok{(frequencias\_esperadas), }\DecValTok{2}\NormalTok{), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"Pressuposto atendido:"}\NormalTok{, }\FunctionTok{ifelse}\NormalTok{(}\FunctionTok{min}\NormalTok{(frequencias\_esperadas) }\SpecialCharTok{\textgreater{}=} \DecValTok{5}\NormalTok{, }\StringTok{"SIM"}\NormalTok{, }\StringTok{"NÃO"}\NormalTok{), }
+    \StringTok{"(todas as células ≥ 5)}\SpecialCharTok{\textbackslash{}n\textbackslash{}n}\StringTok{"}\NormalTok{)}
+
+\CommentTok{\# ==============================================================================}
+\CommentTok{\# 2. TESTE DE HOMOGENEIDADE ENTRE ANOS (ANÁLISE TEMPORAL)}
+\CommentTok{\# ==============================================================================}
+
+\FunctionTok{cat}\NormalTok{(}\StringTok{"TESTE DE HOMOGENEIDADE ENTRE ANOS}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"=================================}\SpecialCharTok{\textbackslash{}n\textbackslash{}n}\StringTok{"}\NormalTok{)}
+
+\CommentTok{\# H₀: A distribuição de providências é homogênea entre os anos}
+\CommentTok{\# H₁: A distribuição de providências difere entre os anos}
+
+\CommentTok{\# Teste qui{-}quadrado para cada localização separadamente}
+\ControlFlowTok{for}\NormalTok{(local }\ControlFlowTok{in} \FunctionTok{c}\NormalTok{(}\StringTok{"Capital"}\NormalTok{, }\StringTok{"Interior"}\NormalTok{)) \{}
+  
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"LOCALIZAÇÃO:"}\NormalTok{, }\FunctionTok{toupper}\NormalTok{(local), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \FunctionTok{cat}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\StringTok{"{-}"}\NormalTok{, }\FunctionTok{nchar}\NormalTok{(local) }\SpecialCharTok{+} \DecValTok{13}\NormalTok{), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, }\AttributeTok{sep =} \StringTok{""}\NormalTok{)}
+  
+  \CommentTok{\# Criando tabela para a localização específica}
+\NormalTok{  dados\_local }\OtherTok{\textless{}{-}}\NormalTok{ dados\_ajcm\_completo }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{filter}\NormalTok{(Localização }\SpecialCharTok{==}\NormalTok{ local) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{select}\NormalTok{(Ano, Providência, Quantidade) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{pivot\_wider}\NormalTok{(}\AttributeTok{names\_from =}\NormalTok{ Providência, }\AttributeTok{values\_from =}\NormalTok{ Quantidade) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{column\_to\_rownames}\NormalTok{(}\StringTok{"Ano"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{as.matrix}\NormalTok{()}
+  
+  \FunctionTok{print}\NormalTok{(dados\_local)}
+  
+  \CommentTok{\# Teste qui{-}quadrado}
+\NormalTok{  teste\_local }\OtherTok{\textless{}{-}} \FunctionTok{chisq.test}\NormalTok{(dados\_local)}
+  
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"χ² ="}\NormalTok{, }\FunctionTok{round}\NormalTok{(teste\_local}\SpecialCharTok{$}\NormalTok{statistic, }\DecValTok{4}\NormalTok{), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"gl ="}\NormalTok{, teste\_local}\SpecialCharTok{$}\NormalTok{parameter, }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"p{-}valor ="}\NormalTok{, }\FunctionTok{ifelse}\NormalTok{(teste\_local}\SpecialCharTok{$}\NormalTok{p.value }\SpecialCharTok{\textless{}} \FloatTok{0.001}\NormalTok{, }\StringTok{"\textless{} 0.001"}\NormalTok{, }
+                         \FunctionTok{round}\NormalTok{(teste\_local}\SpecialCharTok{$}\NormalTok{p.value, }\DecValTok{6}\NormalTok{)), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"Conclusão:"}\NormalTok{, }\FunctionTok{ifelse}\NormalTok{(teste\_local}\SpecialCharTok{$}\NormalTok{p.value }\SpecialCharTok{\textless{}} \FloatTok{0.05}\NormalTok{, }
+                          \StringTok{"Há diferença significativa entre anos"}\NormalTok{, }
+                          \StringTok{"Não há diferença significativa entre anos"}\NormalTok{), }\StringTok{"}\SpecialCharTok{\textbackslash{}n\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{\}}
+
+\CommentTok{\# ==============================================================================}
+\CommentTok{\# 3. TESTE DE MCNEMAR (SE DADOS FOREM PAREADOS)}
+\CommentTok{\# ==============================================================================}
+
+\CommentTok{\# Aplicável se os mesmos locais/unidades foram medidos em ambos os anos}
+\CommentTok{\# Este teste é mais apropriado para dados pareados temporais}
+
+\FunctionTok{cat}\NormalTok{(}\StringTok{"TESTE DE MCNEMAR (DADOS PAREADOS)}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"=================================}\SpecialCharTok{\textbackslash{}n\textbackslash{}n}\StringTok{"}\NormalTok{)}
+
+\CommentTok{\# Criando tabela 2x2 para cada localização (2022 vs 2023)}
+\CommentTok{\# Comparando proporções de denúncias entre anos}
+
+\ControlFlowTok{for}\NormalTok{(local }\ControlFlowTok{in} \FunctionTok{c}\NormalTok{(}\StringTok{"Capital"}\NormalTok{, }\StringTok{"Interior"}\NormalTok{)) \{}
+  
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"TESTE DE MCNEMAR {-}"}\NormalTok{, }\FunctionTok{toupper}\NormalTok{(local), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \FunctionTok{cat}\NormalTok{(}\FunctionTok{rep}\NormalTok{(}\StringTok{"{-}"}\NormalTok{, }\FunctionTok{nchar}\NormalTok{(local) }\SpecialCharTok{+} \DecValTok{18}\NormalTok{), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{, }\AttributeTok{sep =} \StringTok{""}\NormalTok{)}
+  
+  \CommentTok{\# Extraindo dados para a localização}
+\NormalTok{  dados\_mcnemar }\OtherTok{\textless{}{-}}\NormalTok{ dados\_ajcm\_completo }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{filter}\NormalTok{(Localização }\SpecialCharTok{==}\NormalTok{ local) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{select}\NormalTok{(Ano, Providência, Quantidade) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{pivot\_wider}\NormalTok{(}\AttributeTok{names\_from =}\NormalTok{ Ano, }\AttributeTok{values\_from =}\NormalTok{ Quantidade) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{column\_to\_rownames}\NormalTok{(}\StringTok{"Providência"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{as.matrix}\NormalTok{()}
+  
+  \FunctionTok{print}\NormalTok{(dados\_mcnemar)}
+  
+  \CommentTok{\# Aplicando teste de McNemar}
+  \CommentTok{\# Nota: Este teste requer dados em formato específico}
+  \CommentTok{\# Para proporções, usamos qui{-}quadrado de homogeneidade}
+  
+\NormalTok{  teste\_mcnemar }\OtherTok{\textless{}{-}} \FunctionTok{chisq.test}\NormalTok{(dados\_mcnemar)}
+  
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"χ² ="}\NormalTok{, }\FunctionTok{round}\NormalTok{(teste\_mcnemar}\SpecialCharTok{$}\NormalTok{statistic, }\DecValTok{4}\NormalTok{), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"p{-}valor ="}\NormalTok{, }\FunctionTok{ifelse}\NormalTok{(teste\_mcnemar}\SpecialCharTok{$}\NormalTok{p.value }\SpecialCharTok{\textless{}} \FloatTok{0.001}\NormalTok{, }\StringTok{"\textless{} 0.001"}\NormalTok{, }
+                         \FunctionTok{round}\NormalTok{(teste\_mcnemar}\SpecialCharTok{$}\NormalTok{p.value, }\DecValTok{6}\NormalTok{)), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"Interpretação:"}\NormalTok{, }\FunctionTok{ifelse}\NormalTok{(teste\_mcnemar}\SpecialCharTok{$}\NormalTok{p.value }\SpecialCharTok{\textless{}} \FloatTok{0.05}\NormalTok{, }
+                             \StringTok{"Mudança significativa nas proporções entre 2022 e 2023"}\NormalTok{, }
+                             \StringTok{"Não há mudança significativa nas proporções"}\NormalTok{), }\StringTok{"}\SpecialCharTok{\textbackslash{}n\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{\}}
+
+\CommentTok{\# ==============================================================================}
+\CommentTok{\# 4. ANÁLISE DE RESÍDUOS PADRONIZADOS}
+\CommentTok{\# ==============================================================================}
+
+\FunctionTok{cat}\NormalTok{(}\StringTok{"ANÁLISE DE RESÍDUOS PADRONIZADOS}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"================================}\SpecialCharTok{\textbackslash{}n\textbackslash{}n}\StringTok{"}\NormalTok{)}
+
+\CommentTok{\# Calculando resíduos padronizados para identificar células que mais contribuem}
+\CommentTok{\# para a associação (se houver)}
+
+\NormalTok{residuos }\OtherTok{\textless{}{-}}\NormalTok{ teste\_qui\_geral}\SpecialCharTok{$}\NormalTok{residuals}
+\NormalTok{residuos\_padronizados }\OtherTok{\textless{}{-}}\NormalTok{ teste\_qui\_geral}\SpecialCharTok{$}\NormalTok{stdres}
+
+\FunctionTok{cat}\NormalTok{(}\StringTok{"RESÍDUOS PADRONIZADOS:}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\FunctionTok{print}\NormalTok{(}\FunctionTok{round}\NormalTok{(residuos\_padronizados, }\DecValTok{3}\NormalTok{))}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+
+\FunctionTok{cat}\NormalTok{(}\StringTok{"INTERPRETAÇÃO DOS RESÍDUOS:}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"Valores \textgreater{} |2|: contribuição significativa para associação}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"Valores \textgreater{} |3|: contribuição muito significativa}\SpecialCharTok{\textbackslash{}n\textbackslash{}n}\StringTok{"}\NormalTok{)}
+
+\CommentTok{\# Identificando células com maior contribuição}
+\NormalTok{células\_significativas }\OtherTok{\textless{}{-}} \FunctionTok{which}\NormalTok{(}\FunctionTok{abs}\NormalTok{(residuos\_padronizados) }\SpecialCharTok{\textgreater{}} \DecValTok{2}\NormalTok{, }\AttributeTok{arr.ind =} \ConstantTok{TRUE}\NormalTok{)}
+\ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(células\_significativas) }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{) \{}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"CÉLULAS COM CONTRIBUIÇÃO SIGNIFICATIVA:}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{nrow}\NormalTok{(células\_significativas)) \{}
+\NormalTok{    linha }\OtherTok{\textless{}{-}} \FunctionTok{rownames}\NormalTok{(residuos\_padronizados)[células\_significativas[i,}\DecValTok{1}\NormalTok{]]}
+\NormalTok{    coluna }\OtherTok{\textless{}{-}} \FunctionTok{colnames}\NormalTok{(residuos\_padronizados)[células\_significativas[i,}\DecValTok{2}\NormalTok{]]}
+\NormalTok{    valor }\OtherTok{\textless{}{-}}\NormalTok{ residuos\_padronizados[células\_significativas[i,}\DecValTok{1}\NormalTok{], células\_significativas[i,}\DecValTok{2}\NormalTok{]]}
+    \FunctionTok{cat}\NormalTok{(}\StringTok{"{-}"}\NormalTok{, linha, }\StringTok{"×"}\NormalTok{, coluna, }\StringTok{": resíduo ="}\NormalTok{, }\FunctionTok{round}\NormalTok{(valor, }\DecValTok{3}\NormalTok{), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{  \}}
+\NormalTok{\} }\ControlFlowTok{else}\NormalTok{ \{}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"Nenhuma célula com contribuição significativa identificada.}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{\}}
+
+\CommentTok{\# ==============================================================================}
+\CommentTok{\# 5. COEFICIENTES DE ASSOCIAÇÃO}
+\CommentTok{\# ==============================================================================}
+
+\FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{COEFICIENTES DE ASSOCIAÇÃO}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"=========================}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+
+\CommentTok{\# V de Cramér (intensidade da associação)}
+\NormalTok{v\_cramer }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(teste\_qui\_geral}\SpecialCharTok{$}\NormalTok{statistic }\SpecialCharTok{/}\NormalTok{ (}\FunctionTok{sum}\NormalTok{(tabela\_geral) }\SpecialCharTok{*}\NormalTok{ (}\FunctionTok{min}\NormalTok{(}\FunctionTok{dim}\NormalTok{(tabela\_geral)) }\SpecialCharTok{{-}} \DecValTok{1}\NormalTok{)))}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"V de Cramér:"}\NormalTok{, }\FunctionTok{round}\NormalTok{(v\_cramer, }\DecValTok{4}\NormalTok{), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"Interpretação:"}\NormalTok{, }
+    \FunctionTok{ifelse}\NormalTok{(v\_cramer }\SpecialCharTok{\textless{}} \FloatTok{0.1}\NormalTok{, }\StringTok{"Associação fraca"}\NormalTok{,}
+           \FunctionTok{ifelse}\NormalTok{(v\_cramer }\SpecialCharTok{\textless{}} \FloatTok{0.3}\NormalTok{, }\StringTok{"Associação moderada"}\NormalTok{, }\StringTok{"Associação forte"}\NormalTok{)), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+
+\CommentTok{\# Coeficiente Phi (para tabelas 2x2)}
+\NormalTok{phi }\OtherTok{\textless{}{-}} \FunctionTok{sqrt}\NormalTok{(teste\_qui\_geral}\SpecialCharTok{$}\NormalTok{statistic }\SpecialCharTok{/} \FunctionTok{sum}\NormalTok{(tabela\_geral))}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"Coeficiente Phi:"}\NormalTok{, }\FunctionTok{round}\NormalTok{(phi, }\DecValTok{4}\NormalTok{), }\StringTok{"}\SpecialCharTok{\textbackslash{}n\textbackslash{}n}\StringTok{"}\NormalTok{)}
+
+\CommentTok{\# ==============================================================================}
+\CommentTok{\# 6. TESTE DE TENDÊNCIA LINEAR (SE APLICÁVEL)}
+\CommentTok{\# ==============================================================================}
+
+\FunctionTok{cat}\NormalTok{(}\StringTok{"TESTE DE TENDÊNCIA TEMPORAL}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"===========================}\SpecialCharTok{\textbackslash{}n\textbackslash{}n}\StringTok{"}\NormalTok{)}
+
+\CommentTok{\# Testando se há tendência linear nas proporções ao longo do tempo}
+\CommentTok{\# Usando teste de Cochran{-}Armitage para tendência}
+
+\CommentTok{\# Para cada localização, testamos se a proporção de denúncias muda linearmente}
+\ControlFlowTok{for}\NormalTok{(local }\ControlFlowTok{in} \FunctionTok{c}\NormalTok{(}\StringTok{"Capital"}\NormalTok{, }\StringTok{"Interior"}\NormalTok{)) \{}
+  
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"TENDÊNCIA {-}"}\NormalTok{, }\FunctionTok{toupper}\NormalTok{(local), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  
+\NormalTok{  dados\_tendencia }\OtherTok{\textless{}{-}}\NormalTok{ dados\_ajcm\_completo }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{filter}\NormalTok{(Localização }\SpecialCharTok{==}\NormalTok{ local) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Ano\_num =} \FunctionTok{as.numeric}\NormalTok{(Ano)) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{group\_by}\NormalTok{(Ano\_num) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Total\_ano =} \FunctionTok{sum}\NormalTok{(Quantidade)) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{filter}\NormalTok{(Providência }\SpecialCharTok{==} \StringTok{"Denúncia"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Prop\_denuncia =}\NormalTok{ Quantidade }\SpecialCharTok{/}\NormalTok{ Total\_ano)}
+  
+  \CommentTok{\# Correlação simples como aproximação}
+  \ControlFlowTok{if}\NormalTok{(}\FunctionTok{nrow}\NormalTok{(dados\_tendencia) }\SpecialCharTok{\textgreater{}} \DecValTok{1}\NormalTok{) \{}
+\NormalTok{    correlacao }\OtherTok{\textless{}{-}} \FunctionTok{cor}\NormalTok{(dados\_tendencia}\SpecialCharTok{$}\NormalTok{Ano\_num, dados\_tendencia}\SpecialCharTok{$}\NormalTok{Prop\_denuncia)}
+    \FunctionTok{cat}\NormalTok{(}\StringTok{"Correlação Ano × Proporção Denúncia:"}\NormalTok{, }\FunctionTok{round}\NormalTok{(correlacao, }\DecValTok{4}\NormalTok{), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+    
+    \CommentTok{\# Teste t para correlação}
+\NormalTok{    n }\OtherTok{\textless{}{-}} \FunctionTok{nrow}\NormalTok{(dados\_tendencia)}
+\NormalTok{    t\_stat }\OtherTok{\textless{}{-}}\NormalTok{ correlacao }\SpecialCharTok{*} \FunctionTok{sqrt}\NormalTok{((n}\DecValTok{{-}2}\NormalTok{)}\SpecialCharTok{/}\NormalTok{(}\DecValTok{1}\SpecialCharTok{{-}}\NormalTok{correlacao}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}
+\NormalTok{    p\_valor }\OtherTok{\textless{}{-}} \DecValTok{2} \SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}} \FunctionTok{pt}\NormalTok{(}\FunctionTok{abs}\NormalTok{(t\_stat), n}\DecValTok{{-}2}\NormalTok{))}
+    
+    \FunctionTok{cat}\NormalTok{(}\StringTok{"p{-}valor da correlação:"}\NormalTok{, }\FunctionTok{ifelse}\NormalTok{(p\_valor }\SpecialCharTok{\textless{}} \FloatTok{0.001}\NormalTok{, }\StringTok{"\textless{} 0.001"}\NormalTok{, }
+                                        \FunctionTok{round}\NormalTok{(p\_valor, }\DecValTok{6}\NormalTok{)), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+    \FunctionTok{cat}\NormalTok{(}\StringTok{"Tendência:"}\NormalTok{, }\FunctionTok{ifelse}\NormalTok{(p\_valor }\SpecialCharTok{\textless{}} \FloatTok{0.05}\NormalTok{, }
+                            \FunctionTok{ifelse}\NormalTok{(correlacao }\SpecialCharTok{\textgreater{}} \DecValTok{0}\NormalTok{, }\StringTok{"Crescente significativa"}\NormalTok{, }
+                                   \StringTok{"Decrescente significativa"}\NormalTok{), }
+                            \StringTok{"Não significativa"}\NormalTok{), }\StringTok{"}\SpecialCharTok{\textbackslash{}n\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{  \}}
+\NormalTok{\}}
+
+\CommentTok{\# ==============================================================================}
+\CommentTok{\# 7. RESUMO EXECUTIVO DOS TESTES}
+\CommentTok{\# ==============================================================================}
+
+\FunctionTok{cat}\NormalTok{(}\StringTok{"RESUMO EXECUTIVO DOS TESTES ESTATÍSTICOS}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"========================================}\SpecialCharTok{\textbackslash{}n\textbackslash{}n}\StringTok{"}\NormalTok{)}
+
+\FunctionTok{cat}\NormalTok{(}\StringTok{"1. ASSOCIAÇÃO GERAL (Localização × Providência):}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"   {-} Teste: Qui{-}quadrado de independência}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"   {-} Resultado:"}\NormalTok{, }\FunctionTok{ifelse}\NormalTok{(teste\_qui\_geral}\SpecialCharTok{$}\NormalTok{p.value }\SpecialCharTok{\textless{}} \FloatTok{0.05}\NormalTok{, }\StringTok{"SIGNIFICATIVO"}\NormalTok{, }\StringTok{"NÃO SIGNIFICATIVO"}\NormalTok{), }\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"   {-} Intensidade: V de Cramér ="}\NormalTok{, }\FunctionTok{round}\NormalTok{(v\_cramer, }\DecValTok{3}\NormalTok{), }
+    \StringTok{"("}\NormalTok{, }\FunctionTok{ifelse}\NormalTok{(v\_cramer }\SpecialCharTok{\textless{}} \FloatTok{0.1}\NormalTok{, }\StringTok{"fraca"}\NormalTok{, }\FunctionTok{ifelse}\NormalTok{(v\_cramer }\SpecialCharTok{\textless{}} \FloatTok{0.3}\NormalTok{, }\StringTok{"moderada"}\NormalTok{, }\StringTok{"forte"}\NormalTok{)), }\StringTok{")}\SpecialCharTok{\textbackslash{}n\textbackslash{}n}\StringTok{"}\NormalTok{)}
+
+\FunctionTok{cat}\NormalTok{(}\StringTok{"2. HOMOGENEIDADE TEMPORAL:}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"   {-} Teste: Qui{-}quadrado por localização}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\FunctionTok{cat}\NormalTok{(}\StringTok{"   {-} Avalia se as proporções mudaram entre 2022 e 2023}\SpecialCharTok{\textbackslash{}n\textbackslash{}n}\StringTok{"}\NormalTok{)}
+
+\FunctionTok{cat}\NormalTok{(}\StringTok{"3. IMPLICAÇÕES PRÁTICAS:}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\ControlFlowTok{if}\NormalTok{(teste\_qui\_geral}\SpecialCharTok{$}\NormalTok{p.value }\SpecialCharTok{\textless{}} \FloatTok{0.05}\NormalTok{) \{}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"   {-} Há evidência de que o padrão de providências difere}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"     entre Capital e Interior}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"   {-} Recomenda{-}se investigar as causas dessa diferença}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{\} }\ControlFlowTok{else}\NormalTok{ \{}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"   {-} Não há evidência estatística de diferença no padrão}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+  \FunctionTok{cat}\NormalTok{(}\StringTok{"     de providências entre Capital e Interior}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\NormalTok{\}}
+
+\FunctionTok{cat}\NormalTok{(}\StringTok{"}\SpecialCharTok{\textbackslash{}n}\StringTok{NOTA: Todos os testes assumem α = 0.05}\SpecialCharTok{\textbackslash{}n}\StringTok{"}\NormalTok{)}
+\InformationTok{\textasciigrave{}\textasciigrave{}\textasciigrave{}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+TESTE QUI-QUADRADO DE INDEPENDÊNCIA
+===================================
+
+TABELA DE CONTINGÊNCIA (AGREGADA):
+         Arquivamento Denúncia
+Capital           786       70
+Interior          686       83
+
+RESULTADOS DO TESTE QUI-QUADRADO:
+χ² = 2.9501 
+gl = 1 
+p-valor = 0.085874 
+Conclusão: NÃO REJEITA H₀ (não há associação significativa) 
+
+VERIFICAÇÃO DE PRESSUPOSTOS:
+Frequências esperadas mínimas: 72.4 
+Pressuposto atendido: SIM (todas as células ≥ 5)
+
+TESTE DE HOMOGENEIDADE ENTRE ANOS
+=================================
+
+LOCALIZAÇÃO: CAPITAL 
+--------------------
+     Denúncia Arquivamento
+2022       20          191
+2023       50          595
+χ² = 0.4223 
+gl = 1 
+p-valor = 0.515793 
+Conclusão: Não há diferença significativa entre anos 
+
+LOCALIZAÇÃO: INTERIOR 
+---------------------
+     Denúncia Arquivamento
+2022       42          207
+2023       41          479
+χ² = 13.1934 
+gl = 1 
+p-valor = < 0.001 
+Conclusão: Há diferença significativa entre anos 
+
+TESTE DE MCNEMAR (DADOS PAREADOS)
+=================================
+
+TESTE DE MCNEMAR - CAPITAL 
+-------------------------
+             2022 2023
+Denúncia       20   50
+Arquivamento  191  595
+χ² = 0.4223 
+p-valor = 0.515793 
+Interpretação: Não há mudança significativa nas proporções 
+
+TESTE DE MCNEMAR - INTERIOR 
+--------------------------
+             2022 2023
+Denúncia       42   41
+Arquivamento  207  479
+χ² = 13.1934 
+p-valor = < 0.001 
+Interpretação: Mudança significativa nas proporções entre 2022 e 2023 
+
+ANÁLISE DE RESÍDUOS PADRONIZADOS
+================================
+
+RESÍDUOS PADRONIZADOS:
+         Arquivamento Denúncia
+Capital         1.803   -1.803
+Interior       -1.803    1.803
+
+INTERPRETAÇÃO DOS RESÍDUOS:
+Valores > |2|: contribuição significativa para associação
+Valores > |3|: contribuição muito significativa
+
+Nenhuma célula com contribuição significativa identificada.
+
+COEFICIENTES DE ASSOCIAÇÃO
+=========================
+V de Cramér: 0.0426 
+Interpretação: Associação fraca 
+Coeficiente Phi: 0.0426 
+
+TESTE DE TENDÊNCIA TEMPORAL
+===========================
+
+TENDÊNCIA - CAPITAL 
+Correlação Ano × Proporção Denúncia: -1 
+p-valor da correlação: NA 
+Tendência: NA 
+
+TENDÊNCIA - INTERIOR 
+Correlação Ano × Proporção Denúncia: -1 
+p-valor da correlação: NA 
+Tendência: NA 
+
+RESUMO EXECUTIVO DOS TESTES ESTATÍSTICOS
+========================================
+
+1. ASSOCIAÇÃO GERAL (Localização × Providência):
+   - Teste: Qui-quadrado de independência
+   - Resultado: NÃO SIGNIFICATIVO 
+   - Intensidade: V de Cramér = 0.043 ( fraca )
+
+2. HOMOGENEIDADE TEMPORAL:
+   - Teste: Qui-quadrado por localização
+   - Avalia se as proporções mudaram entre 2022 e 2023
+
+3. IMPLICAÇÕES PRÁTICAS:
+   - Não há evidência estatística de diferença no padrão
+     de providências entre Capital e Interior
+
+NOTA: Todos os testes assumem α = 0.05
+\end{verbatim}
+
+mmm
+
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
 \textbf{Referências}: Este material é baseado em Oltramari, Felipe.
@@ -16533,7 +16977,7 @@ persecutória-investigativa no âmbito do Ministério Público. Goiânia:
 
 \chapter{Inferência na Prática}\label{sec-cap18-inferencia-pratica}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-note-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Capítulo 18 - Livro ``A Estatística Básica e sua prática'' (9ª ed.)}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-note-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Capítulo 18 - Livro ``A Estatística Básica e sua prática'' (9ª ed.)}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 Este capítulo apresenta os conceitos fundamentais para aplicação prática
 da inferência estatística, abordando as condições necessárias para
@@ -16569,7 +17013,7 @@ prática. Introduziremos, também, procedimentos para intervalos de
 confiança e testes voltados para a maioria das situações que encontramos
 quando aprendemos a explorar dados.
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-important-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Ditado Estatístico}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Ditado Estatístico}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 Existe um ditado entre os estatísticos que diz que \textbf{``teoremas
 matemáticos são verdadeiros; métodos estatísticos são eficazes quando
@@ -16583,7 +17027,7 @@ estatísticos requer mais do que o conhecimento de tais fatos.
 \section{18.1 Condições para Inferência na
 Prática}\label{sec-condicoes-inferencia}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-warning-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-warning-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-warning-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 Qualquer intervalo de confiança ou teste de significância só é confiável
 sob condições específicas. Cabe a você entender essas condições e julgar
@@ -16619,7 +17063,7 @@ condição ``σ conhecido''. O Capítulo 20 mostra como fazê-lo.
 \subsection{A Procedência dos Dados
 Importa}\label{a-proceduxeancia-dos-dados-importa}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-tip-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Pergunta Fundamental}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-tip-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Pergunta Fundamental}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 Ao planejar inferência, você deve sempre perguntar-se ``\textbf{De onde
 vieram os dados?}'' e também deve responder a outra questão,
@@ -16646,7 +17090,7 @@ educados e mais prósperos. O sociólogo não pode, razoavelmente, agir
 como se esses alunos fossem uma amostra aleatória de qualquer população
 de interesse.
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-note-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{De onde vieram os dados?}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-note-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{De onde vieram os dados?}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 O requisito mais importante de qualquer procedimento de inferência é que
 os dados provenham de um processo ao qual se apliquem as leis de
@@ -16659,7 +17103,7 @@ aleatorizado}.
 \subsection{A Procedência dos Dados
 Importa}\label{a-proceduxeancia-dos-dados-importa-1}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-warning-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Princípio Fundamental}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-warning-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-warning-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Princípio Fundamental}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 \textbf{Ao usar inferência estatística, você age como se seus dados
 fossem uma amostra aleatória ou provenientes de um experimento
@@ -16689,7 +17133,7 @@ comparação com um experimento comparativo aleatorizado.
 
 \subsection{Cuidados Importantes}\label{cuidados-importantes}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-caution-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Problemas Práticos}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-caution-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-caution-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-caution-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Problemas Práticos}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 \begin{itemize}
 \item
@@ -16714,7 +17158,7 @@ A maioria dos procedimentos de inferência estatística exige algumas
 condições sobre a forma da distribuição populacional. Muitos dos métodos
 mais básicos de inferência são planejados para populações Normais.
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-tip-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Teorema Limite Central na Prática}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-tip-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Teorema Limite Central na Prática}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 Os procedimentos z e muitos outros procedimentos planejados para
 distribuições Normais se baseiam na \textbf{Normalidade da distribuição
@@ -16731,7 +17175,7 @@ tamanho da amostra aumenta
 \subsection{Valores Atípicos e
 Robustez}\label{valores-atuxedpicos-e-robustez}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-warning-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Exceção Importante}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-warning-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-warning-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Exceção Importante}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 Há uma importante exceção ao princípio de que a forma da população seja
 menos crítica do que a procedência dos dados. \textbf{Valores atípicos
@@ -16770,7 +17214,7 @@ Confiança}\label{sec-cuidados-intervalos}
 \subsection{A Margem de Erro Não Cobre Todos os
 Erros}\label{a-margem-de-erro-nuxe3o-cobre-todos-os-erros}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-important-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Limitação da Margem de Erro}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Limitação da Margem de Erro}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 A margem de erro em um intervalo de confiança cobre apenas \textbf{erros
 de amostragem aleatória}. Dificuldades práticas, como subcobertura e não
@@ -16823,7 +17267,7 @@ contra a hipótese nula?
 
 Isso depende principalmente de duas circunstâncias:
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-note-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Critérios para Avaliação do Valor P}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-note-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Critérios para Avaliação do Valor P}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -16860,7 +17304,7 @@ hipótese nula e com base nos mesmos dados.
 \subsection{Significância Depende do Tamanho
 Amostral}\label{significuxe2ncia-depende-do-tamanho-amostral}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-warning-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Relação entre Significância e Tamanho da Amostra}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-warning-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-warning-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-warning-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Relação entre Significância e Tamanho da Amostra}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 \textbf{Como grandes amostras aleatórias têm pequena variação do acaso,
 os efeitos populacionais muito pequenos podem ser altamente
@@ -16890,7 +17334,7 @@ A estatística de teste z é:
   aumenta
 \end{itemize}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-important-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Significância ≠ Importância Prática}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Significância ≠ Importância Prática}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 \textbf{Significância estatística não nos diz se um efeito é grande o
 bastante para ser importante. Isto é, significância estatística não é a
@@ -16918,7 +17362,7 @@ correlação é positiva.
 \subsection{Cuidado com as Análises
 Múltiplas}\label{cuidado-com-as-anuxe1lises-muxfaltiplas}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-caution-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{O Problema das Múltiplas Comparações}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-caution-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-caution-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-caution-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{O Problema das Múltiplas Comparações}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 Significância estatística deve indicar que você encontrou um efeito que
 estava procurando. O raciocínio que fundamenta a significância
@@ -16983,7 +17427,7 @@ Para obter uma margem de erro desejada, m, substitua o valor de z* para
 seu nível de confiança desejado e resolva em relação ao tamanho amostral
 n:
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-tip-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tamanho da Amostra para uma Margem de Erro Desejada}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-tip-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tamanho da Amostra para uma Margem de Erro Desejada}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 Para estimar a média de uma população Normal usando um intervalo de
 confiança z com dada margem de erro m e um nível de confiança
@@ -17020,7 +17464,7 @@ observar \textbf{44 clientes}.
 \section{18.5 Planejamento de Estudos: O Poder de um Teste Estatístico
 de Significância*}\label{sec-poder-teste}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-note-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-note-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 *Cálculos de poder são importantes no planejamento de estudos, mas este
 material mais avançado não é necessário para a leitura do restante do
@@ -17050,7 +17494,7 @@ Amostral}\label{questuxf5es-para-decidir-o-tamanho-amostral}
   detectará um efeito do tamanho que consideramos importante?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-tip-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Definições Importantes}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-tip-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Definições Importantes}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 \textbf{Tamanho do efeito}: A magnitude do efeito na população.
 
@@ -17095,7 +17539,7 @@ refrigerante realmente perde doçura, testaremos:
   provadores.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-important-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Erros Tipo I e Tipo II}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Erros Tipo I e Tipo II}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 \textbf{Erro Tipo I}: Se rejeitamos H₀ quando, de fato, H₀ é verdadeira,
 esse é um erro Tipo I.
@@ -17115,12 +17559,29 @@ verdadeira, esse é um erro Tipo II.
   para aquela alternativa
 \end{itemize}
 
+Uma figura ilustra e resume melhor esses dois conceitos.
+
+\begin{figure}[H]
+
+{\centering \pandocbounded{\includegraphics[keepaspectratio]{fig/Erro-tipo-I-e-II.png}}
+
+}
+
+\caption{Os dois tipos de Erro em Testes de Significância da Hipótese
+Nula (Moore, 2023, cap. 18, p.~335)}
+
+\end{figure}%
+
+Nas linhas o que a amostragem, com seu erro amostral, nos mostra.
+
+Nas colunas a vida da População como ela é.
+
 \end{tcolorbox}
 
 \subsection{Fatores que Influenciam o Tamanho da
 Amostra}\label{fatores-que-influenciam-o-tamanho-da-amostra}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-tip-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Influências sobre ``Qual o tamanho da amostra de que preciso?''}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-tip-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Influências sobre ``Qual o tamanho da amostra de que preciso?''}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 \begin{itemize}
 \item
@@ -17204,7 +17665,7 @@ desvio-padrão s = 1,83.
 
 \section{Resumo do Capítulo}\label{sec-resumo}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-note-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Pontos Principais}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-note-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-note-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Pontos Principais}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 \begin{itemize}
 \item
@@ -17257,7 +17718,7 @@ quando Hₐ é verdadeira.
 (probabilidade = α) - Tipo II: Não rejeitar H₀ quando Hₐ é verdadeira
 (probabilidade = β) - Poder = 1 - β
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-important-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Lição Principal}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-important-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Lição Principal}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 A \textbf{qualidade dos dados} é mais importante do que a
 \textbf{sofisticação dos métodos}. Métodos estatísticos são ferramentas
@@ -17270,7 +17731,7 @@ qualidade, coletados de forma apropriada.
 
 \chapter{Conclusão}\label{sec-conclusao}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-tip-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{O poder dos dados}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-tip-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{O poder dos dados}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 Iniciar AED com a análise de uma variável de cada vez.
 
@@ -17695,7 +18156,7 @@ uma \textbf{tabela} ou de um \textbf{gráfico de barras}.
 
 \markboth{Referências}{Referências}
 
-\begin{tcolorbox}[enhanced jigsaw, opacityback=0, coltitle=black, arc=.35mm, breakable, colframe=quarto-callout-tip-color-frame, leftrule=.75mm, titlerule=0mm, left=2mm, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Oh! Bendito\ldots{}}, bottomrule=.15mm, rightrule=.15mm, colbacktitle=quarto-callout-tip-color!10!white, bottomtitle=1mm, toprule=.15mm, opacitybacktitle=0.6, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-tip-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Oh! Bendito\ldots{}}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
 
 \textbf{\ldots{} \emph{o que semeia}}
 

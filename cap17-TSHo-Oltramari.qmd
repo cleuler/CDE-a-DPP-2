@@ -1387,6 +1387,329 @@ Por Ano: 2022: 460 ( 28.3 %) 2023: 1.165 ( 71.7 %) Variação 2022→2023: + 153
 
 Esse cescimento poderia explicar a mudança de comportamento dos promotores do interior, que passaram a adotar uma postura que refeltiu em uma proporção anual de arquivamentos em 2023 (92,1%) muito próxima à que foi observada na Capital no mesmo ano de 2023 (92,2%).
 
+Refazer um gráfico de barras lado a lado para duas facetas dos anos 2022 e 2023 com mudança na escala do eixo y para evidenciar esse ocultamento.
+
+```{r}
+
+# =====================================================
+#                 GRÁFICOS ATUALIZADOS
+# =====================================================
+
+# 1. Gráfico de barras agrupadas por todas as categorias com proporções
+p1 <- dados_ajcm_completo %>%
+  # Calculando proporções por ano e localização
+  group_by(Ano, Localização) %>%
+  mutate(
+    Total_Ano_Local = sum(Quantidade),
+    Proporção = round(Quantidade / Total_Ano_Local * 100, 1)
+  ) %>%
+  ungroup() %>%
+  
+  ggplot(aes(x = Localização, y = Quantidade, fill = Providência)) +
+  geom_bar(stat = "identity", position = "dodge", alpha = 0.8) +
+  facet_wrap(~ Ano, scales = "fixed") +
+  
+  # Rótulos com quantidade e proporção
+  geom_text(aes(label = paste0(Quantidade, "\n(", Proporção, "%)")), 
+            position = position_dodge(width = 0.9), 
+            vjust = -0.2, 
+            size = 3,
+            fontface = "bold") +
+  
+  scale_fill_manual(values = c("Denúncia" = "#e74c3c", "Arquivamento" = "#3498db")) +
+  scale_y_continuous(
+    labels = comma_format(big.mark = ".", decimal.mark = ","),
+    # Expandindo os limites para acomodar os rótulos
+    expand = expansion(mult = c(0, 0.15))
+  ) +
+  
+  labs(
+    title = "AJCMs por Localização, Providência e Ano",
+    subtitle = "Valores absolutos e proporções (%) por localização",
+    x = "Localização",
+    y = "Número de AJCMs",
+    fill = "Providência",
+    caption = "Fonte: Dados Oltramari | Proporções calculadas por ano e localização"
+  ) +
+  
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 14, face = "bold"),
+    plot.subtitle = element_text(hjust = 0.5, size = 12),
+    plot.caption = element_text(hjust = 0.5, size = 10),
+    strip.text = element_text(size = 12, face = "bold")
+  )
+
+print(p1)
+```
+
+Essa **mudança de escala no eixo y** é fundamental para percepção de que o crescimento do volume de AJCM's pode alterar o padrão da proporção de denúncias propostas pelos Promotores de Justiça da Capital (VAM) e do Interior, para os anos de 2022 e 2023, após a vigência da Resolução CPJ n. 04/2022 do MP-GO, de 28 de março de 2022.
+
+Período observado foi: de 30 de março de 2022 a 31 de outubro de 2023.
+
+Aqui está o script R comentado para teste de significância adequado aos dados do gráfico anterior:
+
+```{r}
+# ==============================================================================
+# TESTE DE SIGNIFICÂNCIA PARA ASSOCIAÇÃO ENTRE VARIÁVEIS CATEGÓRICAS
+# Análise das AJCMs por Localização, Providência e Ano
+# ==============================================================================
+
+# Carregando bibliotecas necessárias
+library(dplyr)
+library(vcd)        # Para testes de associação avançados
+library(DescTools)  # Para estatísticas descritivas adicionais
+
+# ==============================================================================
+# 1. TESTE QUI-QUADRADO DE INDEPENDÊNCIA (ANÁLISE GERAL)
+# ==============================================================================
+
+# H₀: Não há associação entre Localização e Providência
+# H₁: Há associação entre Localização e Providência
+
+cat("TESTE QUI-QUADRADO DE INDEPENDÊNCIA\n")
+cat("===================================\n\n")
+
+# Criando tabela de contingência agregada (todos os anos)
+tabela_geral <- dados_ajcm_completo %>%
+  group_by(Localização, Providência) %>%
+  summarise(Total = sum(Quantidade), .groups = "drop") %>%
+  pivot_wider(names_from = Providência, values_from = Total) %>%
+  column_to_rownames("Localização") %>%
+  as.matrix()
+
+# Exibindo a tabela
+cat("TABELA DE CONTINGÊNCIA (AGREGADA):\n")
+print(tabela_geral)
+cat("\n")
+
+# Realizando o teste qui-quadrado
+teste_qui_geral <- chisq.test(tabela_geral)
+
+# Resultados do teste
+cat("RESULTADOS DO TESTE QUI-QUADRADO:\n")
+cat("χ² =", round(teste_qui_geral$statistic, 4), "\n")
+cat("gl =", teste_qui_geral$parameter, "\n")
+cat("p-valor =", ifelse(teste_qui_geral$p.value < 0.001, "< 0.001", 
+                       round(teste_qui_geral$p.value, 6)), "\n")
+cat("Conclusão:", ifelse(teste_qui_geral$p.value < 0.05, 
+                        "REJEITA H₀ (há associação significativa)", 
+                        "NÃO REJEITA H₀ (não há associação significativa)"), "\n\n")
+
+# Verificando pressupostos do teste
+cat("VERIFICAÇÃO DE PRESSUPOSTOS:\n")
+frequencias_esperadas <- teste_qui_geral$expected
+cat("Frequências esperadas mínimas:", round(min(frequencias_esperadas), 2), "\n")
+cat("Pressuposto atendido:", ifelse(min(frequencias_esperadas) >= 5, "SIM", "NÃO"), 
+    "(todas as células ≥ 5)\n\n")
+
+# ==============================================================================
+# 2. TESTE DE HOMOGENEIDADE ENTRE ANOS (ANÁLISE TEMPORAL)
+# ==============================================================================
+
+cat("TESTE DE HOMOGENEIDADE ENTRE ANOS\n")
+cat("=================================\n\n")
+
+# H₀: A distribuição de providências é homogênea entre os anos
+# H₁: A distribuição de providências difere entre os anos
+
+# Teste qui-quadrado para cada localização separadamente
+for(local in c("Capital", "Interior")) {
+  
+  cat("LOCALIZAÇÃO:", toupper(local), "\n")
+  cat(rep("-", nchar(local) + 13), "\n", sep = "")
+  
+  # Criando tabela para a localização específica
+  dados_local <- dados_ajcm_completo %>%
+    filter(Localização == local) %>%
+    select(Ano, Providência, Quantidade) %>%
+    pivot_wider(names_from = Providência, values_from = Quantidade) %>%
+    column_to_rownames("Ano") %>%
+    as.matrix()
+  
+  print(dados_local)
+  
+  # Teste qui-quadrado
+  teste_local <- chisq.test(dados_local)
+  
+  cat("χ² =", round(teste_local$statistic, 4), "\n")
+  cat("gl =", teste_local$parameter, "\n")
+  cat("p-valor =", ifelse(teste_local$p.value < 0.001, "< 0.001", 
+                         round(teste_local$p.value, 6)), "\n")
+  cat("Conclusão:", ifelse(teste_local$p.value < 0.05, 
+                          "Há diferença significativa entre anos", 
+                          "Não há diferença significativa entre anos"), "\n\n")
+}
+
+# ==============================================================================
+# 3. TESTE DE MCNEMAR (SE DADOS FOREM PAREADOS)
+# ==============================================================================
+
+# Aplicável se os mesmos locais/unidades foram medidos em ambos os anos
+# Este teste é mais apropriado para dados pareados temporais
+
+cat("TESTE DE MCNEMAR (DADOS PAREADOS)\n")
+cat("=================================\n\n")
+
+# Criando tabela 2x2 para cada localização (2022 vs 2023)
+# Comparando proporções de denúncias entre anos
+
+for(local in c("Capital", "Interior")) {
+  
+  cat("TESTE DE MCNEMAR -", toupper(local), "\n")
+  cat(rep("-", nchar(local) + 18), "\n", sep = "")
+  
+  # Extraindo dados para a localização
+  dados_mcnemar <- dados_ajcm_completo %>%
+    filter(Localização == local) %>%
+    select(Ano, Providência, Quantidade) %>%
+    pivot_wider(names_from = Ano, values_from = Quantidade) %>%
+    column_to_rownames("Providência") %>%
+    as.matrix()
+  
+  print(dados_mcnemar)
+  
+  # Aplicando teste de McNemar
+  # Nota: Este teste requer dados em formato específico
+  # Para proporções, usamos qui-quadrado de homogeneidade
+  
+  teste_mcnemar <- chisq.test(dados_mcnemar)
+  
+  cat("χ² =", round(teste_mcnemar$statistic, 4), "\n")
+  cat("p-valor =", ifelse(teste_mcnemar$p.value < 0.001, "< 0.001", 
+                         round(teste_mcnemar$p.value, 6)), "\n")
+  cat("Interpretação:", ifelse(teste_mcnemar$p.value < 0.05, 
+                             "Mudança significativa nas proporções entre 2022 e 2023", 
+                             "Não há mudança significativa nas proporções"), "\n\n")
+}
+
+# ==============================================================================
+# 4. ANÁLISE DE RESÍDUOS PADRONIZADOS
+# ==============================================================================
+
+cat("ANÁLISE DE RESÍDUOS PADRONIZADOS\n")
+cat("================================\n\n")
+
+# Calculando resíduos padronizados para identificar células que mais contribuem
+# para a associação (se houver)
+
+residuos <- teste_qui_geral$residuals
+residuos_padronizados <- teste_qui_geral$stdres
+
+cat("RESÍDUOS PADRONIZADOS:\n")
+print(round(residuos_padronizados, 3))
+cat("\n")
+
+cat("INTERPRETAÇÃO DOS RESÍDUOS:\n")
+cat("Valores > |2|: contribuição significativa para associação\n")
+cat("Valores > |3|: contribuição muito significativa\n\n")
+
+# Identificando células com maior contribuição
+células_significativas <- which(abs(residuos_padronizados) > 2, arr.ind = TRUE)
+if(nrow(células_significativas) > 0) {
+  cat("CÉLULAS COM CONTRIBUIÇÃO SIGNIFICATIVA:\n")
+  for(i in 1:nrow(células_significativas)) {
+    linha <- rownames(residuos_padronizados)[células_significativas[i,1]]
+    coluna <- colnames(residuos_padronizados)[células_significativas[i,2]]
+    valor <- residuos_padronizados[células_significativas[i,1], células_significativas[i,2]]
+    cat("-", linha, "×", coluna, ": resíduo =", round(valor, 3), "\n")
+  }
+} else {
+  cat("Nenhuma célula com contribuição significativa identificada.\n")
+}
+
+# ==============================================================================
+# 5. COEFICIENTES DE ASSOCIAÇÃO
+# ==============================================================================
+
+cat("\nCOEFICIENTES DE ASSOCIAÇÃO\n")
+cat("=========================\n")
+
+# V de Cramér (intensidade da associação)
+v_cramer <- sqrt(teste_qui_geral$statistic / (sum(tabela_geral) * (min(dim(tabela_geral)) - 1)))
+cat("V de Cramér:", round(v_cramer, 4), "\n")
+cat("Interpretação:", 
+    ifelse(v_cramer < 0.1, "Associação fraca",
+           ifelse(v_cramer < 0.3, "Associação moderada", "Associação forte")), "\n")
+
+# Coeficiente Phi (para tabelas 2x2)
+phi <- sqrt(teste_qui_geral$statistic / sum(tabela_geral))
+cat("Coeficiente Phi:", round(phi, 4), "\n\n")
+
+# ==============================================================================
+# 6. TESTE DE TENDÊNCIA LINEAR (SE APLICÁVEL)
+# ==============================================================================
+
+cat("TESTE DE TENDÊNCIA TEMPORAL\n")
+cat("===========================\n\n")
+
+# Testando se há tendência linear nas proporções ao longo do tempo
+# Usando teste de Cochran-Armitage para tendência
+
+# Para cada localização, testamos se a proporção de denúncias muda linearmente
+for(local in c("Capital", "Interior")) {
+  
+  cat("TENDÊNCIA -", toupper(local), "\n")
+  
+  dados_tendencia <- dados_ajcm_completo %>%
+    filter(Localização == local) %>%
+    mutate(Ano_num = as.numeric(Ano)) %>%
+    group_by(Ano_num) %>%
+    mutate(Total_ano = sum(Quantidade)) %>%
+    filter(Providência == "Denúncia") %>%
+    mutate(Prop_denuncia = Quantidade / Total_ano)
+  
+  # Correlação simples como aproximação
+  if(nrow(dados_tendencia) > 1) {
+    correlacao <- cor(dados_tendencia$Ano_num, dados_tendencia$Prop_denuncia)
+    cat("Correlação Ano × Proporção Denúncia:", round(correlacao, 4), "\n")
+    
+    # Teste t para correlação
+    n <- nrow(dados_tendencia)
+    t_stat <- correlacao * sqrt((n-2)/(1-correlacao^2))
+    p_valor <- 2 * (1 - pt(abs(t_stat), n-2))
+    
+    cat("p-valor da correlação:", ifelse(p_valor < 0.001, "< 0.001", 
+                                        round(p_valor, 6)), "\n")
+    cat("Tendência:", ifelse(p_valor < 0.05, 
+                            ifelse(correlacao > 0, "Crescente significativa", 
+                                   "Decrescente significativa"), 
+                            "Não significativa"), "\n\n")
+  }
+}
+
+# ==============================================================================
+# 7. RESUMO EXECUTIVO DOS TESTES
+# ==============================================================================
+
+cat("RESUMO EXECUTIVO DOS TESTES ESTATÍSTICOS\n")
+cat("========================================\n\n")
+
+cat("1. ASSOCIAÇÃO GERAL (Localização × Providência):\n")
+cat("   - Teste: Qui-quadrado de independência\n")
+cat("   - Resultado:", ifelse(teste_qui_geral$p.value < 0.05, "SIGNIFICATIVO", "NÃO SIGNIFICATIVO"), "\n")
+cat("   - Intensidade: V de Cramér =", round(v_cramer, 3), 
+    "(", ifelse(v_cramer < 0.1, "fraca", ifelse(v_cramer < 0.3, "moderada", "forte")), ")\n\n")
+
+cat("2. HOMOGENEIDADE TEMPORAL:\n")
+cat("   - Teste: Qui-quadrado por localização\n")
+cat("   - Avalia se as proporções mudaram entre 2022 e 2023\n\n")
+
+cat("3. IMPLICAÇÕES PRÁTICAS:\n")
+if(teste_qui_geral$p.value < 0.05) {
+  cat("   - Há evidência de que o padrão de providências difere\n")
+  cat("     entre Capital e Interior\n")
+  cat("   - Recomenda-se investigar as causas dessa diferença\n")
+} else {
+  cat("   - Não há evidência estatística de diferença no padrão\n")
+  cat("     de providências entre Capital e Interior\n")
+}
+
+cat("\nNOTA: Todos os testes assumem α = 0.05\n")
+```
+
+mmm
+
 ------------------------------------------------------------------------
 
 **Referências**: Este material é baseado em Oltramari, Felipe. *Controle Externo da Atividade Policial como questão de Política Pública*: análise do arranjo institucional da função persecutória-investigativa no âmbito do Ministério Público. Goiânia: 2024, PPGDP (linha 2). Relatório final de pesquisa. [@Oltramari-dissert2024]
