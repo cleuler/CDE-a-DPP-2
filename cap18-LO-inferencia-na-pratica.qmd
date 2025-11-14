@@ -38,7 +38,7 @@ Com isso em mente, vamos examinar novamente as **"condições simples"** para os
 
 ### Condições Simples para Inferência sobre uma Média
 
-1.  **Amostragem**: Temos uma amostra aleatória simples (AAS) da população de interesse. Não há não resposta ou outra dificuldade prática. A população é grande em comparação com o tamanho da amostra.
+1.  **Amostragem**: Temos uma amostra aleatória simples (AAS) da população de interesse. Não há não resposta ou outra dificuldade prática. A população é grande em comparação com o tamanho da amostra (N \> 20 . n, para que 1 AAS~c~ $\sim$ 1 AAS~s~).
 
 2.  **Normalidade**: A variável que medimos tem uma distribuição exatamente Normal N(μ, σ) na população.
 
@@ -56,14 +56,16 @@ Ao planejar inferência, você deve sempre perguntar-se "**De onde vieram os dad
 
 #### EXEMPLO 18.1: O psicólogo e o sociólogo
 
-**Psicóloga**: Uma psicóloga está interessada em saber como nossa percepção visual pode ser enganada por ilusões óticas. Seus sujeitos são alunos da disciplina de Psicologia 101 de sua universidade. A maioria dos psicólogos concordaria que é seguro tratar os alunos como uma AAS de todas as pessoas com visão normal. Não há nada incomum em ser estudante que mude a percepção visual.
+**Psicóloga**: Uma psicóloga está interessada em saber como nossa percepção visual pode ser enganada por ilusões óticas. Seus sujeitos são alunos da disciplina de Psicologia 101 de sua universidade. A ***maioria dos psicólogos concordaria que é seguro tratar os alunos como uma AAS de todas as pessoas com visão normal***. Não há nada incomum em ser estudante que mude a percepção visual.
 
-**Sociólogo**: Um sociólogo da mesma universidade usa os alunos da disciplina de Sociologia 101 para examinar as atitudes com relação a pessoas pobres e programas de combate à pobreza. Os alunos, como um grupo, são mais jovens do que a população adulta como um todo. Mesmo entre pessoas jovens, os alunos como um grupo provêm de lares mais educados e mais prósperos. O sociólogo não pode, razoavelmente, agir como se esses alunos fossem uma amostra aleatória de qualquer população de interesse.
+**Sociólogo**: Um sociólogo da mesma universidade usa os alunos da disciplina de Sociologia 101 para ***examinar as atitudes com relação a pessoas pobres e programas de combate à pobreza***. Os [**alunos**]{.underline}, como um grupo, ***são mais jovens do que a população adulta como um todo***. Mesmo entre pessoas jovens, os alunos como um grupo ***provêm de lares mais educados*** e ***mais prósperos***. O [**sociólogo não pode**]{.underline}, razoavelmente, [***agir como se esses alunos fossem uma amostra aleatória de qualquer população de interesse***]{.underline}.
 
 ::: callout-note
 ## De onde vieram os dados?
 
-O requisito mais importante de qualquer procedimento de inferência é que os dados provenham de um processo ao qual se apliquem as leis de probabilidade. A inferência é mais confiável quando os dados resultam de uma **amostra aleatória** ou de um **experimento comparativo aleatorizado**.
+O requisito mais importante de qualquer procedimento de inferência é que os [***dados provenham de um processo ao qual se apliquem as leis de probabilidade***]{.underline}.
+
+A [**inferência**]{.underline} é mais confiável quando os dados resultam de uma **amostra aleatória** ou de um **experimento comparativo aleatorizado**.
 :::
 
 ### A Procedência dos Dados Importa
@@ -71,9 +73,9 @@ O requisito mais importante de qualquer procedimento de inferência é que os da
 ::: callout-warning
 ## Princípio Fundamental
 
-**Ao usar inferência estatística, você age como se seus dados fossem uma amostra aleatória ou provenientes de um experimento comparativo aleatorizado.**
+**Ao usar [inferência estatística]{.underline}, você [*age como se*]{.underline} seus [*dados fossem uma amostra aleatória*]{.underline} ou provenientes de um experimento comparativo aleatorizado.**
 
-Se seus dados não provêm de uma amostra aleatória ou de um experimento comparativo aleatorizado, suas conclusões podem ser questionadas.
+[**Se**]{.underline} seus dados [**não**]{.underline} provêm de uma amostra aleatória ou de um experimento comparativo aleatorizado, [***suas conclusões podem ser questionadas***]{.underline}.
 :::
 
 #### EXEMPLO 18.2: É realmente uma AAS?
@@ -87,23 +89,25 @@ Se seus dados não provêm de uma amostra aleatória ou de um experimento compar
 ::: callout-caution
 ## Problemas Práticos
 
--   **Problemas práticos**, como não resposta em amostras ou desistências em um experimento, podem prejudicar a inferência, mesmo em um estudo bem planejado.
+-   **Problemas práticos**, como [***não resposta***]{.underline} em amostras ou [***desistências***]{.underline} em um experimento, podem [***prejudicar***]{.underline} a [**inferência**]{.underline}, mesmo em um estudo bem planejado.
 
--   **Métodos diferentes** são necessários para planejamentos diferentes. Os procedimentos z não são corretos para planejamentos amostrais aleatórios mais complexos do que uma AAS.
+-   **Métodos diferentes** são necessários para planejamentos diferentes. Os procedimentos z [**não**]{.underline} são corretos para planejamentos amostrais aleatórios mais complexos do que uma AAS.
 
--   **Não há remédio** para falhas fundamentais, como resposta voluntária ou experimentos não controlados.
+-   **Não há remédio** para [**falhas fundamentais**]{.underline}, como [***resposta voluntária***]{.underline} ou [***experimentos não controlados***]{.underline}.
 :::
 
 ### Qual é a Forma da Distribuição Populacional?
 
-A maioria dos procedimentos de inferência estatística exige algumas condições sobre a forma da distribuição populacional. Muitos dos métodos mais básicos de inferência são planejados para populações Normais.
+A maioria dos procedimentos de inferência estatística exige algumas [**condições**]{.underline} sobre a [***forma***]{.underline} da [***distribuição populacional***]{.underline}.
+
+Muitos dos [**métodos mais básicos**]{.underline} de [**inferência**]{.underline} são *planejados* para [**populações Normais**]{.underline}.
 
 ::: callout-tip
-## Teorema Limite Central na Prática
+## Teorema Central do Limite na Prática
 
-Os procedimentos z e muitos outros procedimentos planejados para distribuições Normais se baseiam na **Normalidade da distribuição da média amostral** $\bar{x}$, e não na Normalidade das observações individuais.
+Os procedimentos z e muitos outros procedimentos planejados para distribuições Normais se baseiam na [**Normalidade**]{.underline} **da [*distribuição da média amostral*]{.underline}** $\bar{x}$, e não na Normalidade das observações individuais.
 
-O teorema limite central nos diz que: - A distribuição amostral de $\bar{x}$ é mais Normal do que as observações individuais - A distribuição amostral de $\bar{x}$ se torna mais Normal à medida que o tamanho da amostra aumenta
+O teorema do central limite ([**TCL**]{.underline}) nos diz que: - A distribuição amostral de $\bar{x}$ é mais Normal do que as observações individuais - A [***distribuição amostral***]{.underline} de $\bar{x}$ [**se torna**]{.underline} [***mais Normal à medida que o tamanho da amostra aumenta***]{.underline}.
 :::
 
 ### Valores Atípicos e Robustez
@@ -111,18 +115,20 @@ O teorema limite central nos diz que: - A distribuição amostral de $\bar{x}$ �
 ::: callout-warning
 ## Exceção Importante
 
-Há uma importante exceção ao princípio de que a forma da população seja menos crítica do que a procedência dos dados. **Valores atípicos podem distorcer os resultados da inferência.**
+Há uma [**importante exceção**]{.underline} ao princípio de que a forma da população seja menos crítica do que a procedência dos dados.
+
+**Valores atípicos podem distorcer os resultados da inferência.**
 :::
 
-Qualquer procedimento de inferência que se baseie em estatísticas amostrais, como a média amostral $\bar{x}$, que não são resistentes a valores atípicos, pode ser fortemente influenciado por algumas poucas observações extremas.
+Qualquer procedimento de inferência que se baseie em [**estatísticas amostrais**]{.underline}, como a [**média amostral**]{.underline} $\bar{x}$, que [***não são resistentes a valores atípicos***]{.underline}, pode ser [***fortemente influenciado***]{.underline} por algumas [***poucas observações extremas***]{.underline}.
 
 ### Diretrizes Práticas
 
 1.  **Explore seus dados** antes de fazer inferência
 2.  **Faça um diagrama** de ramo e folhas ou um histograma de seus dados
-3.  **Verifique** se a forma é razoavelmente Normal
-4.  **Procure sempre por valores atípicos** e tente corrigi-los ou justificar sua remoção
-5.  **Considere métodos alternativos** que não exijam a Normalidade quando apropriado
+3.  **Verifique** se a [**forma**]{.underline} é razoavelmente Normal
+4.  **Procure sempre por [valores atípicos]{.underline}** e tente corrigi-los ou justificar sua remoção
+5.  **Considere [métodos alternativos]{.underline}** que não exijam a Normalidade quando apropriado
 
 ## 18.2 Cuidados com os Intervalos de Confiança {#sec-cuidados-intervalos}
 
@@ -131,7 +137,7 @@ Qualquer procedimento de inferência que se baseie em estatísticas amostrais, c
 ::: callout-important
 ## Limitação da Margem de Erro
 
-A margem de erro em um intervalo de confiança cobre apenas **erros de amostragem aleatória**. Dificuldades práticas, como subcobertura e não resposta, são, muitas vezes, mais sérias do que os erros de amostragem aleatória. **A margem de erro não leva em consideração essas dificuldades.**
+A margem de erro em um intervalo de confiança cobre apenas **erros de amostragem aleatória**. Dificuldades práticas, como [**subcobertura**]{.underline} e [**não resposta**]{.underline}, são, muitas vezes, mais sérias do que os erros de amostragem aleatória. **A margem de erro não leva em consideração essas dificuldades.**
 :::
 
 A precaução mais importante acerca de intervalos de confiança, em geral, é uma consequência do uso de uma distribuição amostral. Uma distribuição amostral revela como uma estatística, como $\bar{x}$, varia em amostras repetidas. Essa variação gera erro amostral aleatório, porque a estatística erra o verdadeiro parâmetro por uma quantidade aleatória.
@@ -144,7 +150,7 @@ Uma pesquisa Gallup de 2019 pediu a uma amostra aleatória nacional de 507 homen
 
 **Problema**: Você confia no intervalo de confiança calculado como sendo de 95% um intervalo de confiança para o peso médio de todos os homens adultos americanos?
 
-**Resposta**: Provavelmente não, porque as pessoas frequentemente mentem sobre seu peso, especialmente em pesquisas por telefone.
+**Resposta**: Provavelmente [**não**]{.underline}, porque as pessoas frequentemente [***mentem***]{.underline} sobre seu peso, especialmente em pesquisas por telefone.
 
 ## 18.3 Cuidados com os Testes de Significância {#sec-cuidados-testes}
 
@@ -166,7 +172,7 @@ Isso depende principalmente de duas circunstâncias:
 
 ### Significância Depende da Hipótese Alternativa
 
-Você deve ter notado que o valor P para o teste **unilateral** é **metade** do valor P para o teste **bilateral** da mesma hipótese nula e com base nos mesmos dados.
+Você deve ter notado que o [**valor P**]{.underline} para o [**testeunilateral**]{.underline} é [**metade**]{.underline} do [**valor P**]{.underline} para o [**teste bilateral**]{.underline} da [***mesma hipótese nula***]{.underline} e ***com base*** nos [**mesmos dados**]{.underline}.
 
 -   O valor P bilateral combina duas áreas iguais, uma em cada cauda da curva Normal
 -   O valor P unilateral é apenas uma dessas áreas, na direção especificada pela hipótese alternativa
@@ -211,7 +217,11 @@ O valor P pequeno não significa que haja uma forte associação, apenas que há
 Significância estatística deve indicar que você encontrou um efeito que estava procurando. O raciocínio que fundamenta a significância estatística funciona bem se você decide qual efeito está procurando, planeja um estudo para procurá-lo e usa um teste de significância para ponderar a evidência obtida.
 :::
 
-Suponha que as 20 hipóteses nulas (nenhuma associação) para 20 testes de significância sejam todas verdadeiras. Então, cada teste tem uma chance de 5% de ser significante no nível 5%. Como 5% são 1/20, esperamos que cerca de 1, entre 20 testes, forneça, apenas devido ao acaso, um resultado significante.
+[**Suponha**]{.underline} que as 20 hipóteses nulas (nenhuma associação) para 20 testes de significância sejam ***todas verdadeiras***.
+
+Então, [**cada teste tem uma chance de 5% de ser significante no nível 5%**]{.underline}.
+
+Como 5% são 1/20, [**esperamos**]{.underline} que [**cerca de 1**]{.underline}, [***entre 20 testes***]{.underline}, [**forneça**]{.underline}, [***apenas devido ao acaso***]{.underline}, [***um resultado significante***]{.underline}.
 
 #### EXEMPLO 18.4: Telefones celulares e câncer no cérebro
 
@@ -221,9 +231,21 @@ Um estudo hospitalar, que comparou pacientes com câncer no cérebro e um grupo 
 
 #### EXEMPLO 18.5: Viés de publicação
 
-Um exemplo sutil de análises múltiplas é o **viés de publicação**. Suponha que 20 pesquisadores estejam, independentemente, estudando a eficácia de uma nova terapia para o tratamento de uma doença. Para publicar suas descobertas, os pesquisadores devem demonstrar que a nova terapia é eficaz no nível de significância de 0,05.
+Um [***exemplo sutil de análises múltiplas***]{.underline} é o **viés de publicação**.
 
-Um dos pesquisadores obtém resultados estatisticamente significantes, mas os outros 19 não. O único pesquisador que obteve resultados estatisticamente significantes publica suas descobertas. Nada ficamos sabendo sobre os 19 pesquisadores que deixaram de encontrar significância estatística.
+Suponha que 20 pesquisadores estejam, independentemente, estudando a eficácia de uma nova terapia para o tratamento de uma doença.
+
+Para publicar suas descobertas, os pesquisadores devem demonstrar que a nova terapia é [***eficaz***]{.underline} no nível de significância de 0,05.
+
+[***Um dos pesquisadores obtém resultados estatisticamente significantes***]{.underline}, mas os [***outros 19 não***]{.underline}.
+
+O [**único pesquisador**]{.underline} que obteve resultados estatisticamente significantes [***publica***]{.underline} suas descobertas.
+
+[***Nada ficamos sabendo sobre os 19 pesquisadores que deixaram de encontrar significância estatística***]{.underline}.
+
+Isso também pode ser visto como [***um viés de não resposta***]{.underline} (NA) por parte dos 19 que deixaram de enviar seus estudos para publicação.
+
+OU também [***um viés de resposta voluntária***]{.underline}, por parte do único que enviou sua pesquisa paea publicação.
 
 ## 18.4 Planejamento de Estudos: Tamanho Amostral para Intervalos de Confiança {#sec-tamanho-amostral}
 
@@ -251,11 +273,11 @@ em que z\* é o valor crítico para o nível de confiança desejado. **Sempre ar
 
 No Exemplo 16.3, psicólogos registraram o tamanho das gorjetas de 20 clientes em um restaurante, quando se escrevia, em sua conta, uma mensagem anunciando tempo bom para o dia seguinte. Sabemos que o desvio-padrão populacional é σ = 2. Desejamos estimar a gorjeta percentual média μ para clientes desse restaurante que recebem essa mensagem em suas contas, dentro de ±0,5, com 90% de confiança. Quantos clientes devem ser observados?
 
-**Solução**: A margem de erro desejada é m = 0,5. Para 90% de confiança, a Tabela C fornece z\* = 1,645. Portanto:
+**Solução**: A margem de erro desejada é m = 0,5. Para 95% de confiança, a Tabela C fornece z\* = 1,960. Portanto:
 
-$$n = \left(\frac{1,645 \times 2}{0,5}\right)^2 = (6,58)^2 = 43,3$$
+$$n = \left(\frac{1.960 \times 2}{0.5}\right)^2 = (7.84)^2 = 61.4656$$
 
-Como 43 clientes dão uma margem de erro ligeiramente maior do que a desejada, e 44 clientes, uma margem de erro ligeiramente menor, devemos observar **44 clientes**.
+Como 61 clientes dão uma margem de erro ligeiramente maior do que a desejada, e 62 clientes, uma margem de erro ligeiramente menor, devemos observar **62 clientes**.
 
 ## 18.5 Planejamento de Estudos: O Poder de um Teste Estatístico de Significância\* {#sec-poder-teste}
 
@@ -383,5 +405,7 @@ Nas colunas a vida da População como ela é.
 ::: callout-important
 ## Lição Principal
 
-A **qualidade dos dados** é mais importante do que a **sofisticação dos métodos**. Métodos estatísticos são ferramentas poderosas, mas só são eficazes quando aplicados a dados de boa qualidade, coletados de forma apropriada.
+A **qualidade dos dados** é mais importante do que a **sofisticação dos métodos**.
+
+Métodos estatísticos são ferramentas poderosas, mas só são [**eficazes**]{.underline} quando aplicados a dados de boa qualidade, coletados de forma apropriada.
 :::

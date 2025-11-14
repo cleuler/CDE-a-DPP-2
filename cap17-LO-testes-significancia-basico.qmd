@@ -28,9 +28,11 @@ O *applet Reasoning of a Statistical Test* (conteúdo em inglês) faz uma anima�
 Testes de significância usam um vocabulário elaborado, mas a ideia básica é simples: um resultado que raramente ocorreria se uma afirmativa fosse verdadeira é boa evidência de que a afirmativa não seja verdadeira.
 :::
 
-## A lógica dos testes de significância {#sec-logica}
+## A lógica dos testes de significância {#sec-logica-TSHN}
 
-A lógica dos testes estatísticos, assim como a dos intervalos de confiança, se baseia no questionamento do que ocorreria se repetíssemos a amostra ou experimento muitas vezes. Agiremos novamente como se as "condições simples" listadas em "Condições simples para inferência sobre uma média", no Capítulo 16, fossem verdadeiras: temos uma AAS perfeita de uma população exatamente Normal com desvio-padrão $\sigma$ conhecido por nós. Eis um exemplo que analisaremos.
+A lógica dos testes estatísticos, assim como a dos intervalos de confiança, se baseia no [**questionamento**]{.underline} do [**que ocorreria se repetíssemos a amostra ou experimento muitas vezes**]{.underline}.
+
+Agiremos novamente como se as "condições simples" listadas em "Condições simples para inferência sobre uma média", no Capítulo 16, fossem verdadeiras: temos uma AAS perfeita de uma população exatamente Normal com desvio-padrão $\sigma$ conhecido por nós. Eis um exemplo que analisaremos.
 
 ::: callout-note
 ## Exemplo 17.2 - Adoçantes de refrigerantes
@@ -39,7 +41,7 @@ Refrigerantes dietéticos usam adoçantes artificiais para evitar o uso de açú
 
 Provadores treinados bebem um pequeno gole de refrigerante, juntamente com bebidas de doçura padrão, e atribuem ao refrigerante um "escore de doçura" de 1 a 10, com maiores escores correspondendo a maior doçura. O refrigerante é, então, armazenado por um mês em alta temperatura para imitar o efeito do armazenamento por 4 meses em temperatura ambiente.
 
-Cada provador atribui um escore ao refrigerante novamente após o armazenamento. Esse é um experimento de dados emparelhados. Nossos dados são as diferenças (escore antes do armazenamento menos escore após o armazenamento) dos escores dos provadores. Quanto maior a diferença (diferença \> 0), maior será a perda de doçura.
+Cada provador atribui um escore ao refrigerante novamente após o armazenamento. Esse é [**um experimento de dados emparelhados**]{.underline}. Nossos dados são as diferenças (escore antes do armazenamento menos escore após o armazenamento) dos escores dos provadores. Quanto maior a diferença (diferença \> 0), maior será a perda de doçura.
 
 Suponha sabermos que, para qualquer refrigerante, os escores de perda de doçura variem de provador para provador de acordo com uma distribuição Normal, com desvio-padrão $\sigma = 1$. A média $\mu$ de todos os provadores mede a perda de doçura e é diferente para diferentes refrigerantes.
 
@@ -300,7 +302,7 @@ Uma pesquisadora nas Filipinas está preocupada com o desempenho no GMAT de não
 (c) Suponha que os dados amostrais resultem em $\bar{x} = 540$. Marque esse ponto em seu esboço. Usando seu esboço, explique, em linguagem simples, por que um resultado é boa evidência de que o escore médio de todos os estudantes de último ano de faculdades nas Filipinas, interessados em fazer a graduação em administração e que planejam fazer o GMAT, seria menor do que 563, e o outro resultado não é.
 :::
 
-## Estabelecimento de hipóteses {#sec-hipoteses}
+## Estabelecimento de hipóteses {#sec-hipoteses-TSHN}
 
 Um teste estatístico de significância começa com um enunciado cuidadoso das afirmativas que queremos comparar. No Exemplo 17.3, vimos que os dados de teste de sabor não são plausíveis se, de fato, o novo refrigerante não perde doçura. Como a lógica dos testes procura por evidência contrária à afirmativa, começamos com a afirmativa contra a qual buscamos evidência, tal qual "nenhuma perda de doçura".
 
@@ -347,32 +349,38 @@ Pessoas chinesas e japonesas, para as quais o número 4 é de má sorte, morrem 
 
 Você acredita nisso? Não, se os autores examinaram todos os dias, tomaram o que tinha mais mortes e, então, fizeram a afirmativa a ser testada "esse dia é diferente". Um crítico levantou esse problema, e os autores replicaram, "Não, nós tínhamos o dia 4 em mente antes, de modo que nosso teste é legítimo".
 
-**As hipóteses devem expressar as expectativas ou suspeitas que temos antes de vermos os dados.** É **trapaça** olhar primeiro os dados e então estabelecer hipóteses que se ajustem ao que os dados mostram.
+**As hipóteses devem expressar as expectativas ou suspeitas que temos [antes]{.underline} de vermos os dados.** É [**trapaça**]{.underline} olhar primeiro os dados e então estabelecer hipóteses que se ajustem ao que os dados mostram.
 :::
 
-## Valor P e significância estatística {#sec-valor-p}
+## Valor P e significância estatística {#sec-valor-p-TSHP}
 
-A ideia do estabelecimento de uma hipótese nula, contra a qual desejamos encontrar evidência, parece estranha no início. Pode ser útil pensar em um julgamento criminal. O acusado é "inocente até que se prove o contrário". É exatamente assim que funcionam os testes estatísticos de significância, embora, em estatística, lidemos com evidência fornecida por dados e usemos a probabilidade para dizer quão forte é a evidência.
+A ideia do estabelecimento de uma hipótese nula, contra a qual desejamos encontrar [**evidência**]{.underline}, parece estranha no início. Pode ser útil pensar em um julgamento criminal.
 
-A probabilidade que mede a força da evidência contra a hipótese nula é chamada de **valor P**.
+O acusado é "inocente até que se prove o contrário".
+
+É exatamente assim que funcionam os testes estatísticos de significância, embora, em estatística, lidemos com [**evidência**]{.underline} fornecida por [**dados**]{.underline} e usemos a [**probabilidade**]{.underline} para dizer [**quão**]{.underline} forte ou [**significante**]{.underline} é a evidência.
+
+A [**probabilidade**]{.underline} que mede a força da evidência contra a hipótese nula é chamada de [**valor P**]{.underline}.
 
 ::: callout-important
 ## Estatística de teste e valor P
 
 Uma ***estatística de teste*** calculada a partir de dados amostrais ***mede quanto os dados divergem do que esperaríamos***, ***se a hipótese*** ***nula*** $H_0$ fosse verdadeira.
 
-Valores não usualmente grandes da estatística mostram que os dados não são consistentes com $H_0$.
+Valores [**usualmente grandes**]{.underline} da [**estatística**]{.underline} mostram que [**os dados não são consistentes**]{.underline} com $H_0$.
 
-A probabilidade, calculada supondo $H_0$ verdadeira, de que a estatística de teste assuma um valor tão ou mais extremo do que o valor realmente observado é chamada de **valor P** do teste.
+A [**probabilidade**]{.underline}, calculada [**supondo**]{.underline} $H_0$ [**verdadeira**]{.underline}, de que a [**estatística de teste**]{.underline} assuma [***um valor tão ou mais extremo***]{.underline} do que o [**valor realmente observado**]{.underline} é chamada de [**valor P**]{.underline} do [***teste***]{.underline}.
 
-**Quanto menor o valor P, mais forte é a evidência contra** $H_0$ fornecida pelos dados.
+**Quanto [menor]{.underline} o [valor P]{.underline}, [mais]{.underline} forte é a [evidência]{.underline} contra** $H_0$ fornecida pelos [**dados**]{.underline}.
 
-**Valores P pequenos são evidência contra** $H_0$, pois ***afirmam*** ***que o resultado observado tem ocorrência improvável se*** $H_0$ for ***verdadeira***.
+[**Valores P pequenos**]{.underline} **são [evidência]{.underline} contra** $H_0$, pois ***afirmam*** ***que o [resultado observado]{.underline} tem [ocorrência improvável]{.underline}*** [***se***]{.underline} $H_0$ for [***verdadeira***]{.underline}.
 
-**Valores P grandes não fornecem evidência contra** $H_0$.
+[**Valores P grandes**]{.underline} **[nãofornecem evidência contra]{.underline}** $H_0$.
 :::
 
-Quão pequeno deve ser o valor P para ser evidência convincente contra $H_0$? Muitos usuários de estatística consideram valores menores do que 0,05 ou 0,01 como convincentes.
+Quão pequeno deve ser o valor P para ser evidência convincente contra $H_0$?
+
+Muitos usuários de estatística consideram valores menores do que 0,05 ou 0,01 como *convincentes*.
 
 ::: callout-note
 ## Exemplo 17.5 - Adoçante de refrigerantes: valor P unilateral
@@ -387,16 +395,16 @@ O experimento apresentado nos Exemplos 17.2 e 17.3 realmente comparava dois refr
 
 O valor P para cada teste é a probabilidade de obter um $\bar{x}$ desse tamanho quando a perda média de doçura é realmente $\mu = 0$.
 
-A curva Normal é a distribuição amostral de $\bar{x}$ quando a hipótese nula $H_0: \mu = 0$ é verdadeira, usando o desvio-padrão populacional $\sigma = 1$.
+A curva Normal *descreve* a distribuição amostral de $\bar{x}$ quando a hipótese nula $H_0: \mu = 0$ é verdadeira, usando o desvio-padrão populacional $\sigma = 1$.
 
 Um cálculo de probabilidade Normal mostra que o valor P é $P(\bar{x} \geq 0,3) = 0,1714$.
 
-Um valor tão grande quanto $\bar{x} = 0,3$ apareceria por acaso em 17% de todas as amostras, quando $H_0: \mu = 0$ fosse verdadeira. Assim, a observação de $\bar{x} = 0,3$ **não é evidência** forte contra $H_0$.
+Um valor tão grande quanto $\bar{x} = 0,3$ apareceria por acaso em 17% de todas as amostras, quando $H_0: \mu = 0$ fosse verdadeira. Assim, a observação de $\bar{x} = 0,3$ [**não**]{.underline} **é evidência** forte ***contra*** $H_0$.
 
-Por outro lado, pode-se verificar que a probabilidade de que $\bar{x}$ seja 1,02 ou maior, quando de fato $\mu = 0$, é de apenas 0,0006. Ou seja, raramente observaríamos uma perda média de doçura de 1,02 ou maior se $H_0$ fosse verdadeira. Esse **valor P pequeno** fornece forte **evidência contra** $H_0$ e a favor da alternativa $H_a: \mu > 0$.
+Por outro lado, pode-se verificar que a probabilidade de que $\bar{x}$ seja 1,02 ou maior, quando de fato $\mu = 0$, é de apenas 0,0006. Ou seja, raramente observaríamos uma perda média de doçura de 1,02 ou maior se $H_0$ fosse verdadeira. Esse [**valor P pequeno**]{.underline} fornece forte [**evidência contra**]{.underline} $H_0$ e a favor da alternativa $H_a: \mu > 0$.
 :::
 
-A hipótese alternativa estabelece a direção que conta como evidência contra $H_0$. No Exemplo 17.5, apenas valores grandes, positivos, contam, porque a alternativa é unilateral do lado mais alto. Se a alternativa for bilateral, ambas as direções contam.
+A [**hipótese alternativa**]{.underline} estabelece a [**direção**]{.underline} que [**conta**]{.underline} como [**evidência**]{.underline} [**contra**]{.underline} $H_0$. No Exemplo 17.5, apenas valores grandes, positivos, contam, porque a alternativa é unilateral do lado mais alto. Se a alternativa for bilateral, ambas as direções contam.
 
 ::: callout-note
 ## Exemplo 17.6 - Satisfação no emprego: valor P bilateral
@@ -417,38 +425,50 @@ Um resultado que ocorreria tão frequentemente quando $H_0$ é verdadeira **não
 ::: callout-warning
 ## Importante sobre interpretação
 
-**A conclusão do Exemplo 17.6 não é que** $H_0$ seja verdadeira.
+**A conclusão do Exemplo 17.6 [não]{.underline} é que** $H_0$ seja verdadeira.
 
 O estudo procurou evidência contrária a $H_0: \mu = 0$ e não conseguiu encontrar uma forte evidência. É tudo o que podemos dizer. Sem dúvida, a média $\mu$ para a população de todos os trabalhadores da montadora não é exatamente igual a 0. Uma amostra suficientemente grande forneceria evidência da diferença, mesmo que fosse muito pequena.
 
-Testes de significância avaliam a evidência contra $H_0$. **Se** a **evidência** é forte, **podemos confiantemente rejeitar** $H_0$ em **favor da alternativa**.
+[***Testes de significância avaliam a evidência contra***]{.underline} $H_0$.
+
+**Se** a **evidência** é forte, **podemos confiantemente rejeitar** $H_0$ em **favor da alternativa**.
 
 O fato de não conseguir encontrar evidência contra $H_0$ significa apenas que os ***dados não são*** ***inconsistentes com*** $H_0$, e ***não que tenhamos uma evidência clara de que*** $H_0$ seja verdadeira.
 
-**Apenas dados que são inconsistentes com** $H_0$ nos permitem fazer uma afirmativa positiva de que temos forte **evidência contra** $H_0$.
+[**Apenas**]{.underline} **dados que são inconsistentes com** $H_0$ nos permitem fazer uma afirmativa positiva de que temos forte **evidência contra** $H_0$.
 :::
 
 ### Significância estatística
 
 Nos Exemplos 17.5 e 17.6, decidimos que o valor P **P = 0,0006** era **evidência** forte contra a hipótese nula e que os **valores P = 0,1714 e P = 0,2293 não eram evidência convincente**.
 
-Não há uma regra sobre quão pequeno um valor P deva ser para que rejeitemos $H_0$; é ***uma questão de julgamento*** e depende das circunstâncias específicas.
+Não há uma regra sobre [***quão pequeno um valor P deva ser***]{.underline} para que rejeitemos $H_0$; é ***uma questão de julgamento*** e depende das circunstâncias específicas.
 
 No entanto, podemos comparar um valor P com alguns valores fixos que comumente são utilizados como **padrões para evidência** contra $H_0$.
 
 ::: callout-important
 ## Significância estatística
 
-Se o valor P é tão pequeno quanto $\alpha$, ou menor do que $\alpha$, dizemos que os dados são **estatisticamente significantes** no nível $\alpha$. A quantidade $\alpha$ é chamada de **nível de significância**.
+[**Se o valor P é tão pequeno quanto**]{.underline} $\alpha$, [**ou**]{.underline} [***menor do que***]{.underline} $\alpha$, [**dizemos**]{.underline} que os [**dados**]{.underline} [***são***]{.underline} [**estatisticamente significantes**]{.underline} no [***nível***]{.underline} $\alpha$.
 
-"Significante", em linguagem estatística, não tem o sentido de "importante". **Significa** simplesmente **"improvável de acontecer apenas por acaso"**. O **nível de significância** $\alpha$ torna "improvável" mais exato.
+A quantidade $\alpha$ é chamada de **nível de significância**.
+
+"[***Significante***]{.underline}", em linguagem estatística, não tem o sentido de "importante".
+
+[**Significa**]{.underline} simplesmente **"[*improvável de acontecer apenas por acaso*]{.underline}"**.
+
+O **nível de significância** $\alpha$ torna "improvável" mais exato.
 :::
 
-Os valores fixos mais comuns são 0,05 e 0,01. Se P = 0,05, não há mais do que uma chance em 20 de que uma amostra dê evidência tão forte apenas por acaso, quando $H_0$ é realmente verdadeira. Se P = 0,01, temos um resultado que, no longo prazo, aconteceria não mais do que uma vez em 100 amostras, se $H_0$ fosse verdadeira.
+Os valores fixos mais comuns são 0,05 e 0,01.
+
+Se P = 0,05, não há mais do que uma chance em 20 de que uma amostra dê evidência tão forte apenas por acaso, quando $H_0$ é realmente verdadeira.
+
+Se **P = 0,01**, [***temos um resultado***]{.underline} que, no [***longo prazo***]{.underline}, [***aconteceria não mais do que uma vez em 100 amostras***]{.underline}, [***se***]{.underline} $H_0$ fosse [***verdadeira***]{.underline}.
 
 Para evitar confusão, usaremos **"estatisticamente significante"** em vez de "significante" neste capítulo. No entanto, em artigos de pesquisa e publicações da mídia, você geralmente verá a palavra "significante" em vez da expressão "estatisticamente significante".
 
-É **boa prática interpretar as descobertas de significância** **estatística no contexto do problema** para o qual os dados foram coletados.
+É **boa prática [interpretar]{.underline} as descobertas de significância** **estatística [*no contexto do problema*]{.underline}** para o qual os dados foram coletados.
 
 ::: callout-warning
 ## Estatística no mundo real - Significância derruba um novo medicamento
@@ -492,7 +512,7 @@ $$z = \frac{\bar{x} - \mu_0}{\sigma / \sqrt{n}}$$
 **Em termos de uma variável Z com distribuição Normal padrão**, **o valor P para um teste de** $H_0$ contra:
 
 -   $H_a: \mu > \mu_0$ é $P(Z \geq z)$
--   $H_a: \mu < \mu_0$ é $P(Z \leq z)$\
+-   $H_a: \mu < \mu_0$ é $P(Z \leq z)$
 -   $H_a: \mu \neq \mu_0$ é $2P(Z \geq |z|)$
 :::
 
@@ -522,7 +542,7 @@ $$P = 2P(Z > 1.09) = 2(0.1379) = 0.2758$$
 
 Neste capítulo, estamos agindo como se as "condições simples" estabelecidas em "Condições simples para inferência sobre uma média", no Capítulo 16, fossem verdadeiras. Na **prática**, **você deve verificar essas condições**.
 
-1.  **AAS**: a condição mais importante é que os 72 executivos na **amostra** sejam **uma AAS** da **população de todos os executivos** **na empresa**. Devemos conferir essa exigência questionando como os dados foram produzidos.
+1.  **AAS**: a [***condição mais importante***]{.underline} é que os 72 executivos na **amostra** sejam **uma AAS** da **população de todos os executivos** **na empresa**. Devemos conferir essa exigência questionando como os dados foram produzidos.
 
 2.  **Distribuição Normal**: devemos examinar, também, a **distribuição** **das 72 observações** à **procura** de **sinais** de que a **distribuição populacional não seja Normal**.
 
