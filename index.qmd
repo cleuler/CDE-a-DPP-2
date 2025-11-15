@@ -1,14 +1,14 @@
-# Pretexto {#sec-pretexto .unnumbered}
+# **Pretexto** {#sec-pretexto .unnumbered}
 
-Estado Moderno e o problema do poder de controle público, sob a pele privada, de seus cidadãos: competências criminal e cível discricionárias em ponderação com o princípio do *devido processo legal procedural e substantivo*.
+**Moderno [Estado Democrático de Direito]{.underline}** e o [***problema***]{.underline} do [**poder**]{.underline} de [**controle público**]{.underline}, sob a pele privada, de [**seus cidadãos**]{.underline}: [***competências***]{.underline} criminal e cível [**discricionárias**]{.underline} em [**ponderação**]{.underline} com o [**princípio do *devido processo legal procedural e substantivo***]{.underline}.
 
 Num tal Moderno Estado Democrático de Direito tornam-se importantes as Análises de Processo e de Resultados do (des)controle do processo penal acusatório e da administração da execução penal.
 
 Bem como do processo cível, notadamente das ações coletivas.
 
-Na interface do Direito e Políticas Públicas busca-se compreender o fenômeno da ***baixa efetividade*** de inúmeras normas constitucionais, notadamente aquelas insertas na CF/1988 na condição de direitos fundamentais.
+Na [***interface***]{.underline} do [**Direito**]{.underline} e [**Políticas Públicas**]{.underline} busca-se compreender o [***fenômeno***]{.underline} da [***baixa efetividade***]{.underline} de inúmeras normas constitucionais, notadamente aquelas insertas na CF/1988 na condição de *direitos fundamentais*.
 
-Esta disciplina, CDE-a-DPP: *Ciência de Dados e* *Estatística (Básica e Inferecnial, com R) aplicada ao Direito e Políticas Públicas*, foi concebida absolutamente apoiada no *dogma* de que os fenômenos jurídicos e, mais ainda, sua conjunção com as Políticas Públicas (pródiga no uso de *indicadores* e de rakeamentos em suas abordagens para análise de processos e de resultados; ex.: AIR - Análise de Impacto Regulatório), ***apresentam uma componente estocástica*** [@Becker2015][@DietzKalof2015] e podem ser ***objeto de contagem ou de medição***, dado que a ***mente humana é um instrumento de medição*** [@Kahneman2021] *quando opera julgamentos sob incerteza* [@Kahneman1982].
+Esta disciplina, **CDE-a-DPP**: *Ciência de Dados e* *Estatística (Básica e Inferecnial, com R) aplicada ao Direito e Políticas Públicas*, foi concebida absolutamente apoiada no ***dogma*** de que os ***fenômenos jurídicos*** e, mais ainda, [***sua conjunção***]{.underline} com as [**Políticas Públicas**]{.underline} (pródiga no uso de [*indicadores*]{.underline} e de [*rakeamentos*]{.underline} em suas abordagens para [*análise de processos*]{.underline} e [*de resultados*]{.underline}; ex.: AIR - Análise de Impacto Regulatório), ***apresentam [uma componente estocástica]{.underline}*** [@Becker2015][@DietzKalof2015] e podem ser ***objeto de contagem ou de medição***, patindo-se do [***presuposto***]{.underline} de que a [***mente humana é um instrumento de medição***]{.underline} [@Kahneman2021] *quando opera [**julgamentos sob incerteza**]{.underline}* [@Kahneman1982].
 
 ## Load packages {#sec-load-packages .unnumbered}
 
@@ -40,9 +40,9 @@ library(magrittr)
 
 ***Desenvolvimento de softwares em linguagem R elaborados como apoio para resolução de problemas de pesquisa e para simulações*** na disciplina de doutorado/mestrado do PPGDP - Programa de Pós-Graduaçãoem Direito e Políticas Públicas sediado na Faculdade de Direito da UFG - Universidade Federal de Goiás, ministrada no 2. sem. 2024 e intitulada **Ciência de Dados e Estatística aplicada ao Direito e Políticas Públicas – CDEaDPP** - código DPP0053 (ago. 2024/dez. 2024). Goiânia: FD/UFG, 2024.
 
-Pretende-se gerar um *e-book* com os diversos *scripts* desses ***softwares em linguagem R*** a fim apoiar os estudantes na compreensão do conteúdo transmitido e também no auxílio à resolução de problemas de pesquisa e de geração de simulações, de modo a aplicar as ***técnicas*** **de *pesquisa empírica predominantemente quantitativas*** que podem ser consideradas **adequadas** e que ainda [***não***]{.underline} foram ***aplicadas*** ou foram ***incompletamente aplicadas*** em *pesquisas anteriores do PPGDP*, a fim de ***avançar*** na ***fronteira*** **do *conhecimento*** do ***estado da arte*** e da ***pesquisa empírica*** (levantar dados 1^[os]{.underline}^ e 2^[os]{.underline}^) até aqui ***empreendida neste programa***, como, por exemplo: ***testes de Hipótese*** em geral e da ***qualidade do ajuste de Modelos*** (seleção), modelo de regressão logística, modelos lineares generalizados (glm), análise de sobrevivência, análise de fatores de risco, análise de relações (DAG’s e inferência bayesiana), análise estatística da decisão por meio de árvore de decisão, aprendizado de máquina (supervisionado e não supervisionado), modelos de reologia e escoamento para análise de fluxos processuais no sistema de justiça criminal e cível etc.
+Pretende-se gerar um *e-book* com os diversos *scripts* desses ***softwares em linguagem R*** a fim apoiar os estudantes na compreensão do conteúdo transmitido e também no auxílio à resolução de problemas de pesquisa e de geração de *simulações*, de modo a aplicar as ***técnicas*** **de *pesquisa empírica predominantemente quantitativas*** que podem ser consideradas **adequadas** e que ainda [***não***]{.underline} foram ***aplicadas*** ou foram ***incompletamente aplicadas*** em *pesquisas anteriores do PPGDP*, a fim de ***avançar*** na ***fronteira*** **do *conhecimento*** do ***estado da arte*** e da [***pesquisa empírica aplicada***]{.underline} (levantar dados 1^[os]{.underline}^ e 2^[os]{.underline}^) até aqui ***empreendida neste programa***, como, por exemplo: ***testes de Hipótese*** em geral e da ***qualidade do ajuste de Modelos*** (seleção), modelo de *regressão logística*, *modelos lineares generalizados* (glm), *análise de sobrevivência*, *análise de fatores de risco (análise fatorial)*, *análise de relações* (DAG’s e inferência bayesiana), *análise estatística* da *decisão* por meio de árvore de decisão, aprendizado de máquina (supervisionado e não supervisionado), modelos de reologia e escoamento para *análise de fluxos processuais* no *sistema de justiça criminal e cível* etc.
 
-Também servirá de modelo para aqueles que optarem por apresentar seus Relatórios de Pesquisa ou mesmo dissertações, relatórios de produção técnica, tese etc. em formato de *e-book*, que pode ser hospedado em um domínio da web.
+Também servirá de modelo para aqueles que optarem por apresentar seus *Relatórios de Pesquisa* ou mesmo dissertações, relatórios de produção técnica, tese etc. em formato de *e-book*, que pode ser hospedado em um domínio da web.
 
 Produzido em `Quarto`.\
 Para saber mais sobre `Quarto` cf.: <https://quarto.org>.
@@ -63,7 +63,7 @@ Esta é uma obra científica produzida no `R Quarto`, numa proposta de *pesquisa
 
 -   Conduzida por: Cleuler Barbosa das NEVES. ([Lattes](#0 "Currículo"))
 
--   e: Gaspar Alexandre Machado de SOUSA. ([Lattes](http://lattes.cnpq.br/6135605692550160))
+-   e também: Gaspar Alexandre Machado de SOUSA. ([Lattes](http://lattes.cnpq.br/6135605692550160))
 
 *Recommended Citation*:
 

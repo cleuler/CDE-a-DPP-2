@@ -1,15 +1,37 @@
 # Conclusão {#sec-conclusao}
 
-::: callout-tip
+:::: callout-tip
 ## O poder dos dados
 
-Iniciar AED com a análise de uma variável de cada vez.
+Iniciar com uma AED - Análise Exploratória Descritiva pela a análise de [***uma variável de cada vez***]{.underline}.
 
-Capturar padrões por meio de gráficos adequados para cada tipo de variável.
+Capturar [***padrões***]{.underline} por meio de [***gráficos adequados***]{.underline} para [***cada tipo de variável***]{.underline}.
 
-Resumir os dados por meio de um único número; que pode ser uma medida de tendência central (média, mediana ou moda) ou uma medida da variabilidade presente no conjunto de dados daquela variável (Amplitude, desvio, variância, desvio padrão; quartis e AIQ - Amplitude Interquartil).
+[***Resumir***]{.underline} os dados por meio de um único número; que pode ser ***uma medida de tendência central*** (média, mediana ou moda) ou ***uma medida da variabilidade*** presente no conjunto de dados daquela variável (Amplitude, desvio, variância, desvio padrão; quartis e AIQ - Amplitude Interquartil).
 
-Somente depois dessa análise univariada que se deve proceder uma análise bivariada. Novamente por meio de gráficos e resumos numéricos adequados.
+[***Somente depois***]{.underline} dessa [***análise univariada***]{.underline} que se deve proceder [***uma análise bivariada***]{.underline}. Novamente por meio de ***gráficos*** e ***resumos numéricos*** [***adequados***]{.underline}.
 
-E somente depois de uma AED - Análise Exploratória de Dados, primeiro descritiva (AED) e depois inferencial (AEI), que se busca modelar os dados, ou seja, propor, testar e escolher modelos que melhor se ajustem aos dados empíricos colhidos.
+Aplicar TSHN - Teste de Significância contra a Hipótese Nula adequado para cada tipo específico de relações entre variáveis:
+
+1.  Uma só variável Quantitativa: teste-Z ou teste-T;
+2.  Uma só variável Qualitativa: teste-*X*^2^ da qualidade do ajuste (homogeneidade);
+3.  Quantitativa x Quantitativa: teste do coeficiente de regressão linear r de Pearson;
+4.  Quantitativa x Qualitativa: teste de ANOVA;
+5.  Qualitativa x Qualitativa: teste-*X*^2^ para associação.
+
+É necesário compreender a [**lógica**]{.underline} de um TSH~0~ através da conceituação de [**evidência empírica**]{.underline} como a [**verossimilhança**]{.underline} dos [**dados**]{.underline} colhidos, [**medida**]{.underline} como igual à [**probabilidade**]{.underline}, [**valor P**]{.underline} (área sob a curva de densidade de probabilidade da distribuição amostral da estatística amostral adequadamente escolhida) de [***encontra um valor tão extremo***]{.underline} ou igual à [***estatística de teste observada***]{.underline} nos [***dados amostrais coletados***]{.underline}.
+
+E somente depois de uma AED - Análise Exploratória de Dados, [***primeiro descritiva***]{.underline} (AED) e depois [***inferencial***]{.underline} (AEI), que se busca [***modelar***]{.underline} os [***dados***]{.underline}, ou seja, [***propor***]{.underline}, [***testar***]{.underline} e [***escolher***]{.underline}, por meio da *análise e comparação* de seus *resíduos*, os [***Modelos***]{.underline} que [***melhor se ajustem aos dados***]{.underline} empíricos colhidos (sem *sobreajustes* nem *subajustes*) para fins de realizar testes paramétricos de significância contra a Hipótese Nula mais precisos ou mesmo para fins de ***predição***.
+
+Todavia, nenhuma análise estatística, por mais sofisticada que seja, seria capaz de afastar ou corrigir os [***viéses decorrentes dos erros não amostrais***]{.underline} que podem ser cometidos no [***processo de amostragem***]{.underline} e de [***coletadas dos dados***]{.underline}.
+
+Ou seja, é o [***cuidado qualitativo***]{.underline} na [***coleta de dados empíricos***]{.underline} [**válidos, fidedignos e reproduzíveis**]{.underline} que [**garante**]{.underline} os [***resultados alcançados***]{.underline} e a [***replicabilidade***]{.underline} de uma [***pesquisa empírica aplicada generalizável e confiável***]{.underline}.
+
+::: callout-important
+## Ou seja:
+
+**Se entra lixo! Sai lixo!**
 :::
+::::
+
+É necessário desenvolver um [***espírito crítico***]{.underline} tanto para saber planejar, executar e apresentar os resultados válidos e confiáveis de uma pesquisa empírica aplicada reproduzível como também para defender-se dos argumentos daqueles que rompem com a ética e a integridade na pesquisa, seja por valer-se de mentiras contadas com apoio da Estatística seja por valer-se apenas de argumentos de autoridade sem qualquer apoio em evidências suportadas pela coleta adequada de dados empíricos.
