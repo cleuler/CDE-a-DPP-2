@@ -187,7 +187,7 @@ window.Quarto = {
 <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Pretexto</span></a>
+ <span class="menu-text"><strong>Pretexto</strong></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -301,19 +301,19 @@ window.Quarto = {
    
   <ul>
 <li>
-<a href="#sec-logica" id="toc-sec-logica" class="nav-link active" data-scroll-target="#sec-logica"><span class="header-section-number">11.1</span> A lógica dos testes de significância</a>
+<a href="#sec-logica-TSHN" id="toc-sec-logica-TSHN" class="nav-link active" data-scroll-target="#sec-logica-TSHN"><span class="header-section-number">11.1</span> A lógica dos testes de significância</a>
   <ul>
 <li><a href="#aplique-seu-conhecimento" id="toc-aplique-seu-conhecimento" class="nav-link" data-scroll-target="#aplique-seu-conhecimento"><span class="header-section-number">11.1.1</span> Aplique seu conhecimento</a></li>
   </ul>
 </li>
   <li>
-<a href="#sec-hipoteses" id="toc-sec-hipoteses" class="nav-link" data-scroll-target="#sec-hipoteses"><span class="header-section-number">11.2</span> Estabelecimento de hipóteses</a>
+<a href="#sec-hipoteses-TSHN" id="toc-sec-hipoteses-TSHN" class="nav-link" data-scroll-target="#sec-hipoteses-TSHN"><span class="header-section-number">11.2</span> Estabelecimento de hipóteses</a>
   <ul>
 <li><a href="#hip%C3%B3teses-nula-e-alternativa" id="toc-hipóteses-nula-e-alternativa" class="nav-link" data-scroll-target="#hip%C3%B3teses-nula-e-alternativa"><span class="header-section-number">11.2.1</span> Hipóteses nula e alternativa</a></li>
   </ul>
 </li>
   <li>
-<a href="#sec-valor-p" id="toc-sec-valor-p" class="nav-link" data-scroll-target="#sec-valor-p"><span class="header-section-number">11.3</span> Valor P e significância estatística</a>
+<a href="#sec-valor-p-TSHP" id="toc-sec-valor-p-TSHP" class="nav-link" data-scroll-target="#sec-valor-p-TSHP"><span class="header-section-number">11.3</span> Valor P e significância estatística</a>
   <ul>
 <li><a href="#signific%C3%A2ncia-estat%C3%ADstica" id="toc-significância-estatística" class="nav-link" data-scroll-target="#signific%C3%A2ncia-estat%C3%ADstica"><span class="header-section-number">11.3.1</span> Significância estatística</a></li>
   </ul>
@@ -365,9 +365,10 @@ window.Quarto = {
 <p>Testes de significância usam um vocabulário elaborado, mas a ideia básica é simples: um resultado que raramente ocorreria se uma afirmativa fosse verdadeira é boa evidência de que a afirmativa não seja verdadeira.</p>
 </div>
 </div>
-<section id="sec-logica" class="level2" data-number="11.1"><h2 data-number="11.1" class="anchored" data-anchor-id="sec-logica">
+<section id="sec-logica-TSHN" class="level2" data-number="11.1"><h2 data-number="11.1" class="anchored" data-anchor-id="sec-logica-TSHN">
 <span class="header-section-number">11.1</span> A lógica dos testes de significância</h2>
-<p>A lógica dos testes estatísticos, assim como a dos intervalos de confiança, se baseia no questionamento do que ocorreria se repetíssemos a amostra ou experimento muitas vezes. Agiremos novamente como se as “condições simples” listadas em “Condições simples para inferência sobre uma média”, no Capítulo 16, fossem verdadeiras: temos uma AAS perfeita de uma população exatamente Normal com desvio-padrão <span class="math inline">\(\sigma\)</span> conhecido por nós. Eis um exemplo que analisaremos.</p>
+<p>A lógica dos testes estatísticos, assim como a dos intervalos de confiança, se baseia no <u><strong>questionamento</strong></u> do <u><strong>que ocorreria se repetíssemos a amostra ou experimento muitas vezes</strong></u>.</p>
+<p>Agiremos novamente como se as “condições simples” listadas em “Condições simples para inferência sobre uma média”, no Capítulo 16, fossem verdadeiras: temos uma AAS perfeita de uma população exatamente Normal com desvio-padrão <span class="math inline">\(\sigma\)</span> conhecido por nós. Eis um exemplo que analisaremos.</p>
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -380,7 +381,7 @@ window.Quarto = {
 <div class="callout-body-container callout-body">
 <p>Refrigerantes dietéticos usam adoçantes artificiais para evitar o uso de açúcar. Esses adoçantes gradualmente perdem sua doçura ao longo do tempo. Os fabricantes, portanto, testam a perda de doçura dos refrigerantes novos antes de colocá-los no mercado.</p>
 <p>Provadores treinados bebem um pequeno gole de refrigerante, juntamente com bebidas de doçura padrão, e atribuem ao refrigerante um “escore de doçura” de 1 a 10, com maiores escores correspondendo a maior doçura. O refrigerante é, então, armazenado por um mês em alta temperatura para imitar o efeito do armazenamento por 4 meses em temperatura ambiente.</p>
-<p>Cada provador atribui um escore ao refrigerante novamente após o armazenamento. Esse é um experimento de dados emparelhados. Nossos dados são as diferenças (escore antes do armazenamento menos escore após o armazenamento) dos escores dos provadores. Quanto maior a diferença (diferença &gt; 0), maior será a perda de doçura.</p>
+<p>Cada provador atribui um escore ao refrigerante novamente após o armazenamento. Esse é <u><strong>um experimento de dados emparelhados</strong></u>. Nossos dados são as diferenças (escore antes do armazenamento menos escore após o armazenamento) dos escores dos provadores. Quanto maior a diferença (diferença &gt; 0), maior será a perda de doçura.</p>
 <p>Suponha sabermos que, para qualquer refrigerante, os escores de perda de doçura variem de provador para provador de acordo com uma distribuição Normal, com desvio-padrão <span class="math inline">\(\sigma = 1\)</span>. A média <span class="math inline">\(\mu\)</span> de todos os provadores mede a perda de doçura e é diferente para diferentes refrigerantes.</p>
 <p>A seguir, estão as perdas de doçura de um novo refrigerante, medidas por 10 provadores treinados:</p>
 <p><strong>1,6 0,4 0,5 -2,0 1,5 -1,1 1,3 -0,1 -0,3 1,2</strong></p>
@@ -693,7 +694,7 @@ REFRIGERANTE 2:
 </ol>
 </div>
 </div>
-</section></section><section id="sec-hipoteses" class="level2" data-number="11.2"><h2 data-number="11.2" class="anchored" data-anchor-id="sec-hipoteses">
+</section></section><section id="sec-hipoteses-TSHN" class="level2" data-number="11.2"><h2 data-number="11.2" class="anchored" data-anchor-id="sec-hipoteses-TSHN">
 <span class="header-section-number">11.2</span> Estabelecimento de hipóteses</h2>
 <p>Um teste estatístico de significância começa com um enunciado cuidadoso das afirmativas que queremos comparar. No Exemplo 17.3, vimos que os dados de teste de sabor não são plausíveis se, de fato, o novo refrigerante não perde doçura. Como a lógica dos testes procura por evidência contrária à afirmativa, começamos com a afirmativa contra a qual buscamos evidência, tal qual “nenhuma perda de doçura”.</p>
 <section id="hipóteses-nula-e-alternativa" class="level3" data-number="11.2.1"><h3 data-number="11.2.1" class="anchored" data-anchor-id="hipóteses-nula-e-alternativa">
@@ -747,13 +748,15 @@ REFRIGERANTE 2:
 <div class="callout-body-container callout-body">
 <p>Pessoas chinesas e japonesas, para as quais o número 4 é de má sorte, morrem mais frequentemente no quarto dia do mês do que em outros dias. Os autores de um estudo fizeram um teste estatístico da afirmativa de que o quarto dia tem mais mortes do que os outros dias, e encontraram boa evidência a favor dessa afirmativa.</p>
 <p>Você acredita nisso? Não, se os autores examinaram todos os dias, tomaram o que tinha mais mortes e, então, fizeram a afirmativa a ser testada “esse dia é diferente”. Um crítico levantou esse problema, e os autores replicaram, “Não, nós tínhamos o dia 4 em mente antes, de modo que nosso teste é legítimo”.</p>
-<p><strong>As hipóteses devem expressar as expectativas ou suspeitas que temos antes de vermos os dados.</strong> É <strong>trapaça</strong> olhar primeiro os dados e então estabelecer hipóteses que se ajustem ao que os dados mostram.</p>
+<p><strong>As hipóteses devem expressar as expectativas ou suspeitas que temos <u>antes</u> de vermos os dados.</strong> É <u><strong>trapaça</strong></u> olhar primeiro os dados e então estabelecer hipóteses que se ajustem ao que os dados mostram.</p>
 </div>
 </div>
-</section></section><section id="sec-valor-p" class="level2" data-number="11.3"><h2 data-number="11.3" class="anchored" data-anchor-id="sec-valor-p">
+</section></section><section id="sec-valor-p-TSHP" class="level2" data-number="11.3"><h2 data-number="11.3" class="anchored" data-anchor-id="sec-valor-p-TSHP">
 <span class="header-section-number">11.3</span> Valor P e significância estatística</h2>
-<p>A ideia do estabelecimento de uma hipótese nula, contra a qual desejamos encontrar evidência, parece estranha no início. Pode ser útil pensar em um julgamento criminal. O acusado é “inocente até que se prove o contrário”. É exatamente assim que funcionam os testes estatísticos de significância, embora, em estatística, lidemos com evidência fornecida por dados e usemos a probabilidade para dizer quão forte é a evidência.</p>
-<p>A probabilidade que mede a força da evidência contra a hipótese nula é chamada de <strong>valor P</strong>.</p>
+<p>A ideia do estabelecimento de uma hipótese nula, contra a qual desejamos encontrar <u><strong>evidência</strong></u>, parece estranha no início. Pode ser útil pensar em um julgamento criminal.</p>
+<p>O acusado é “inocente até que se prove o contrário”.</p>
+<p>É exatamente assim que funcionam os testes estatísticos de significância, embora, em estatística, lidemos com <u><strong>evidência</strong></u> fornecida por <u><strong>dados</strong></u> e usemos a <u><strong>probabilidade</strong></u> para dizer <u><strong>quão</strong></u> forte ou <u><strong>significante</strong></u> é a evidência.</p>
+<p>A <u><strong>probabilidade</strong></u> que mede a força da evidência contra a hipótese nula é chamada de <u><strong>valor P</strong></u>.</p>
 <div class="callout callout-style-simple callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -765,14 +768,15 @@ REFRIGERANTE 2:
 </div>
 <div class="callout-body-container callout-body">
 <p>Uma <strong><em>estatística de teste</em></strong> calculada a partir de dados amostrais <strong><em>mede quanto os dados divergem do que esperaríamos</em></strong>, <strong><em>se a hipótese</em></strong> <strong><em>nula</em></strong> <span class="math inline">\(H_0\)</span> fosse verdadeira.</p>
-<p>Valores não usualmente grandes da estatística mostram que os dados não são consistentes com <span class="math inline">\(H_0\)</span>.</p>
-<p>A probabilidade, calculada supondo <span class="math inline">\(H_0\)</span> verdadeira, de que a estatística de teste assuma um valor tão ou mais extremo do que o valor realmente observado é chamada de <strong>valor P</strong> do teste.</p>
-<p><strong>Quanto menor o valor P, mais forte é a evidência contra</strong> <span class="math inline">\(H_0\)</span> fornecida pelos dados.</p>
-<p><strong>Valores P pequenos são evidência contra</strong> <span class="math inline">\(H_0\)</span>, pois <strong><em>afirmam</em></strong> <strong><em>que o resultado observado tem ocorrência improvável se</em></strong> <span class="math inline">\(H_0\)</span> for <strong><em>verdadeira</em></strong>.</p>
-<p><strong>Valores P grandes não fornecem evidência contra</strong> <span class="math inline">\(H_0\)</span>.</p>
+<p>Valores <u><strong>usualmente grandes</strong></u> da <u><strong>estatística</strong></u> mostram que <u><strong>os dados não são consistentes</strong></u> com <span class="math inline">\(H_0\)</span>.</p>
+<p>A <u><strong>probabilidade</strong></u>, calculada <u><strong>supondo</strong></u> <span class="math inline">\(H_0\)</span> <u><strong>verdadeira</strong></u>, de que a <u><strong>estatística de teste</strong></u> assuma <u><strong><em>um valor tão ou mais extremo</em></strong></u> do que o <u><strong>valor realmente observado</strong></u> é chamada de <u><strong>valor P</strong></u> do <u><strong><em>teste</em></strong></u>.</p>
+<p><strong>Quanto <u>menor</u> o <u>valor P</u>, <u>mais</u> forte é a <u>evidência</u> contra</strong> <span class="math inline">\(H_0\)</span> fornecida pelos <u><strong>dados</strong></u>.</p>
+<p><u><strong>Valores P pequenos</strong></u> <strong>são <u>evidência</u> contra</strong> <span class="math inline">\(H_0\)</span>, pois <strong><em>afirmam</em></strong> <strong><em>que o <u>resultado observado</u> tem <u>ocorrência improvável</u></em></strong> <u><strong><em>se</em></strong></u> <span class="math inline">\(H_0\)</span> for <u><strong><em>verdadeira</em></strong></u>.</p>
+<p><u><strong>Valores P grandes</strong></u> <strong><u>nãofornecem evidência contra</u></strong> <span class="math inline">\(H_0\)</span>.</p>
 </div>
 </div>
-<p>Quão pequeno deve ser o valor P para ser evidência convincente contra <span class="math inline">\(H_0\)</span>? Muitos usuários de estatística consideram valores menores do que 0,05 ou 0,01 como convincentes.</p>
+<p>Quão pequeno deve ser o valor P para ser evidência convincente contra <span class="math inline">\(H_0\)</span>?</p>
+<p>Muitos usuários de estatística consideram valores menores do que 0,05 ou 0,01 como <em>convincentes</em>.</p>
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -788,13 +792,13 @@ REFRIGERANTE 2:
 <p>Como a hipótese alternativa diz que <span class="math inline">\(\mu &gt; 0\)</span>, valores de <span class="math inline">\(\bar{x}\)</span> maiores do que 0 favorecem <span class="math inline">\(H_a\)</span> em detrimento de <span class="math inline">\(H_0\)</span>. A estatística de teste compara o <span class="math inline">\(\bar{x}\)</span> observado com o valor da hipótese <span class="math inline">\(\mu = 0\)</span>. Por enquanto, vamos nos concentrar no valor P.</p>
 <p>O experimento apresentado nos Exemplos 17.2 e 17.3 realmente comparava dois refrigerantes. Para o primeiro refrigerante, os 10 provadores encontraram uma perda média de doçura de <span class="math inline">\(\bar{x} = 0,3\)</span>. Para o segundo, os dados forneceram <span class="math inline">\(\bar{x} = 1,02\)</span>.</p>
 <p>O valor P para cada teste é a probabilidade de obter um <span class="math inline">\(\bar{x}\)</span> desse tamanho quando a perda média de doçura é realmente <span class="math inline">\(\mu = 0\)</span>.</p>
-<p>A curva Normal é a distribuição amostral de <span class="math inline">\(\bar{x}\)</span> quando a hipótese nula <span class="math inline">\(H_0: \mu = 0\)</span> é verdadeira, usando o desvio-padrão populacional <span class="math inline">\(\sigma = 1\)</span>.</p>
+<p>A curva Normal <em>descreve</em> a distribuição amostral de <span class="math inline">\(\bar{x}\)</span> quando a hipótese nula <span class="math inline">\(H_0: \mu = 0\)</span> é verdadeira, usando o desvio-padrão populacional <span class="math inline">\(\sigma = 1\)</span>.</p>
 <p>Um cálculo de probabilidade Normal mostra que o valor P é <span class="math inline">\(P(\bar{x} \geq 0,3) = 0,1714\)</span>.</p>
-<p>Um valor tão grande quanto <span class="math inline">\(\bar{x} = 0,3\)</span> apareceria por acaso em 17% de todas as amostras, quando <span class="math inline">\(H_0: \mu = 0\)</span> fosse verdadeira. Assim, a observação de <span class="math inline">\(\bar{x} = 0,3\)</span> <strong>não é evidência</strong> forte contra <span class="math inline">\(H_0\)</span>.</p>
-<p>Por outro lado, pode-se verificar que a probabilidade de que <span class="math inline">\(\bar{x}\)</span> seja 1,02 ou maior, quando de fato <span class="math inline">\(\mu = 0\)</span>, é de apenas 0,0006. Ou seja, raramente observaríamos uma perda média de doçura de 1,02 ou maior se <span class="math inline">\(H_0\)</span> fosse verdadeira. Esse <strong>valor P pequeno</strong> fornece forte <strong>evidência contra</strong> <span class="math inline">\(H_0\)</span> e a favor da alternativa <span class="math inline">\(H_a: \mu &gt; 0\)</span>.</p>
+<p>Um valor tão grande quanto <span class="math inline">\(\bar{x} = 0,3\)</span> apareceria por acaso em 17% de todas as amostras, quando <span class="math inline">\(H_0: \mu = 0\)</span> fosse verdadeira. Assim, a observação de <span class="math inline">\(\bar{x} = 0,3\)</span> <u><strong>não</strong></u> <strong>é evidência</strong> forte <strong><em>contra</em></strong> <span class="math inline">\(H_0\)</span>.</p>
+<p>Por outro lado, pode-se verificar que a probabilidade de que <span class="math inline">\(\bar{x}\)</span> seja 1,02 ou maior, quando de fato <span class="math inline">\(\mu = 0\)</span>, é de apenas 0,0006. Ou seja, raramente observaríamos uma perda média de doçura de 1,02 ou maior se <span class="math inline">\(H_0\)</span> fosse verdadeira. Esse <u><strong>valor P pequeno</strong></u> fornece forte <u><strong>evidência contra</strong></u> <span class="math inline">\(H_0\)</span> e a favor da alternativa <span class="math inline">\(H_a: \mu &gt; 0\)</span>.</p>
 </div>
 </div>
-<p>A hipótese alternativa estabelece a direção que conta como evidência contra <span class="math inline">\(H_0\)</span>. No Exemplo 17.5, apenas valores grandes, positivos, contam, porque a alternativa é unilateral do lado mais alto. Se a alternativa for bilateral, ambas as direções contam.</p>
+<p>A <u><strong>hipótese alternativa</strong></u> estabelece a <u><strong>direção</strong></u> que <u><strong>conta</strong></u> como <u><strong>evidência</strong></u> <u><strong>contra</strong></u> <span class="math inline">\(H_0\)</span>. No Exemplo 17.5, apenas valores grandes, positivos, contam, porque a alternativa é unilateral do lado mais alto. Se a alternativa for bilateral, ambas as direções contam.</p>
 <div class="callout callout-style-simple callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -823,17 +827,18 @@ REFRIGERANTE 2:
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>A conclusão do Exemplo 17.6 não é que</strong> <span class="math inline">\(H_0\)</span> seja verdadeira.</p>
+<p><strong>A conclusão do Exemplo 17.6 <u>não</u> é que</strong> <span class="math inline">\(H_0\)</span> seja verdadeira.</p>
 <p>O estudo procurou evidência contrária a <span class="math inline">\(H_0: \mu = 0\)</span> e não conseguiu encontrar uma forte evidência. É tudo o que podemos dizer. Sem dúvida, a média <span class="math inline">\(\mu\)</span> para a população de todos os trabalhadores da montadora não é exatamente igual a 0. Uma amostra suficientemente grande forneceria evidência da diferença, mesmo que fosse muito pequena.</p>
-<p>Testes de significância avaliam a evidência contra <span class="math inline">\(H_0\)</span>. <strong>Se</strong> a <strong>evidência</strong> é forte, <strong>podemos confiantemente rejeitar</strong> <span class="math inline">\(H_0\)</span> em <strong>favor da alternativa</strong>.</p>
+<p><u><strong><em>Testes de significância avaliam a evidência contra</em></strong></u> <span class="math inline">\(H_0\)</span>.</p>
+<p><strong>Se</strong> a <strong>evidência</strong> é forte, <strong>podemos confiantemente rejeitar</strong> <span class="math inline">\(H_0\)</span> em <strong>favor da alternativa</strong>.</p>
 <p>O fato de não conseguir encontrar evidência contra <span class="math inline">\(H_0\)</span> significa apenas que os <strong><em>dados não são</em></strong> <strong><em>inconsistentes com</em></strong> <span class="math inline">\(H_0\)</span>, e <strong><em>não que tenhamos uma evidência clara de que</em></strong> <span class="math inline">\(H_0\)</span> seja verdadeira.</p>
-<p><strong>Apenas dados que são inconsistentes com</strong> <span class="math inline">\(H_0\)</span> nos permitem fazer uma afirmativa positiva de que temos forte <strong>evidência contra</strong> <span class="math inline">\(H_0\)</span>.</p>
+<p><u><strong>Apenas</strong></u> <strong>dados que são inconsistentes com</strong> <span class="math inline">\(H_0\)</span> nos permitem fazer uma afirmativa positiva de que temos forte <strong>evidência contra</strong> <span class="math inline">\(H_0\)</span>.</p>
 </div>
 </div>
 <section id="significância-estatística" class="level3" data-number="11.3.1"><h3 data-number="11.3.1" class="anchored" data-anchor-id="significância-estatística">
 <span class="header-section-number">11.3.1</span> Significância estatística</h3>
 <p>Nos Exemplos 17.5 e 17.6, decidimos que o valor P <strong>P = 0,0006</strong> era <strong>evidência</strong> forte contra a hipótese nula e que os <strong>valores P = 0,1714 e P = 0,2293 não eram evidência convincente</strong>.</p>
-<p>Não há uma regra sobre quão pequeno um valor P deva ser para que rejeitemos <span class="math inline">\(H_0\)</span>; é <strong><em>uma questão de julgamento</em></strong> e depende das circunstâncias específicas.</p>
+<p>Não há uma regra sobre <u><strong><em>quão pequeno um valor P deva ser</em></strong></u> para que rejeitemos <span class="math inline">\(H_0\)</span>; é <strong><em>uma questão de julgamento</em></strong> e depende das circunstâncias específicas.</p>
 <p>No entanto, podemos comparar um valor P com alguns valores fixos que comumente são utilizados como <strong>padrões para evidência</strong> contra <span class="math inline">\(H_0\)</span>.</p>
 <div class="callout callout-style-simple callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -845,13 +850,18 @@ REFRIGERANTE 2:
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Se o valor P é tão pequeno quanto <span class="math inline">\(\alpha\)</span>, ou menor do que <span class="math inline">\(\alpha\)</span>, dizemos que os dados são <strong>estatisticamente significantes</strong> no nível <span class="math inline">\(\alpha\)</span>. A quantidade <span class="math inline">\(\alpha\)</span> é chamada de <strong>nível de significância</strong>.</p>
-<p>“Significante”, em linguagem estatística, não tem o sentido de “importante”. <strong>Significa</strong> simplesmente <strong>“improvável de acontecer apenas por acaso”</strong>. O <strong>nível de significância</strong> <span class="math inline">\(\alpha\)</span> torna “improvável” mais exato.</p>
+<p><u><strong>Se o valor P é tão pequeno quanto</strong></u> <span class="math inline">\(\alpha\)</span>, <u><strong>ou</strong></u> <u><strong><em>menor do que</em></strong></u> <span class="math inline">\(\alpha\)</span>, <u><strong>dizemos</strong></u> que os <u><strong>dados</strong></u> <u><strong><em>são</em></strong></u> <u><strong>estatisticamente significantes</strong></u> no <u><strong><em>nível</em></strong></u> <span class="math inline">\(\alpha\)</span>.</p>
+<p>A quantidade <span class="math inline">\(\alpha\)</span> é chamada de <strong>nível de significância</strong>.</p>
+<p>“<u><strong><em>Significante</em></strong></u>”, em linguagem estatística, não tem o sentido de “importante”.</p>
+<p><u><strong>Significa</strong></u> simplesmente <strong>“<u><em>improvável de acontecer apenas por acaso</em></u>”</strong>.</p>
+<p>O <strong>nível de significância</strong> <span class="math inline">\(\alpha\)</span> torna “improvável” mais exato.</p>
 </div>
 </div>
-<p>Os valores fixos mais comuns são 0,05 e 0,01. Se P = 0,05, não há mais do que uma chance em 20 de que uma amostra dê evidência tão forte apenas por acaso, quando <span class="math inline">\(H_0\)</span> é realmente verdadeira. Se P = 0,01, temos um resultado que, no longo prazo, aconteceria não mais do que uma vez em 100 amostras, se <span class="math inline">\(H_0\)</span> fosse verdadeira.</p>
+<p>Os valores fixos mais comuns são 0,05 e 0,01.</p>
+<p>Se P = 0,05, não há mais do que uma chance em 20 de que uma amostra dê evidência tão forte apenas por acaso, quando <span class="math inline">\(H_0\)</span> é realmente verdadeira.</p>
+<p>Se <strong>P = 0,01</strong>, <u><strong><em>temos um resultado</em></strong></u> que, no <u><strong><em>longo prazo</em></strong></u>, <u><strong><em>aconteceria não mais do que uma vez em 100 amostras</em></strong></u>, <u><strong><em>se</em></strong></u> <span class="math inline">\(H_0\)</span> fosse <u><strong><em>verdadeira</em></strong></u>.</p>
 <p>Para evitar confusão, usaremos <strong>“estatisticamente significante”</strong> em vez de “significante” neste capítulo. No entanto, em artigos de pesquisa e publicações da mídia, você geralmente verá a palavra “significante” em vez da expressão “estatisticamente significante”.</p>
-<p>É <strong>boa prática interpretar as descobertas de significância</strong> <strong>estatística no contexto do problema</strong> para o qual os dados foram coletados.</p>
+<p>É <strong>boa prática <u>interpretar</u> as descobertas de significância</strong> <strong>estatística <u><em>no contexto do problema</em></u></strong> para o qual os dados foram coletados.</p>
 <div class="callout callout-style-simple callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -907,7 +917,7 @@ REFRIGERANTE 2:
 <span class="math inline">\(H_a: \mu &gt; \mu_0\)</span> é <span class="math inline">\(P(Z \geq z)\)</span>
 </li>
 <li>
-<span class="math inline">\(H_a: \mu &lt; \mu_0\)</span> é <span class="math inline">\(P(Z \leq z)\)</span><br>
+<span class="math inline">\(H_a: \mu &lt; \mu_0\)</span> é <span class="math inline">\(P(Z \leq z)\)</span>
 </li>
 <li>
 <span class="math inline">\(H_a: \mu \neq \mu_0\)</span> é <span class="math inline">\(2P(Z \geq |z|)\)</span>
@@ -939,7 +949,7 @@ REFRIGERANTE 2:
 </div>
 <p>Neste capítulo, estamos agindo como se as “condições simples” estabelecidas em “Condições simples para inferência sobre uma média”, no Capítulo 16, fossem verdadeiras. Na <strong>prática</strong>, <strong>você deve verificar essas condições</strong>.</p>
 <ol type="1">
-<li><p><strong>AAS</strong>: a condição mais importante é que os 72 executivos na <strong>amostra</strong> sejam <strong>uma AAS</strong> da <strong>população de todos os executivos</strong> <strong>na empresa</strong>. Devemos conferir essa exigência questionando como os dados foram produzidos.</p></li>
+<li><p><strong>AAS</strong>: a <u><strong><em>condição mais importante</em></strong></u> é que os 72 executivos na <strong>amostra</strong> sejam <strong>uma AAS</strong> da <strong>população de todos os executivos</strong> <strong>na empresa</strong>. Devemos conferir essa exigência questionando como os dados foram produzidos.</p></li>
 <li><p><strong>Distribuição Normal</strong>: devemos examinar, também, a <strong>distribuição</strong> <strong>das 72 observações</strong> à <strong>procura</strong> de <strong>sinais</strong> de que a <strong>distribuição populacional não seja Normal</strong>.</p></li>
 <li><p><span class="math inline">\(\sigma\)</span> conhecido: é, de fato, <strong>não realista</strong> supor que saibamos que <span class="math inline">\(\sigma = 40\)</span>. Veremos, no Capítulo 20, que é <strong>fácil</strong> nos <strong>livrarmos</strong> da <strong>necessidade</strong> de <strong>conhecer</strong> <span class="math inline">\(\sigma\)</span>.</p></li>
 </ol></section><section id="sec-resumo" class="level2" data-number="11.5"><h2 data-number="11.5" class="anchored" data-anchor-id="sec-resumo">

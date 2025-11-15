@@ -289,7 +289,7 @@
 \makeatletter
 \makeatother
 \makeatletter
-\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[frame hidden, enhanced, interior hidden, sharp corners, breakable, boxrule=0pt]}{\end{tcolorbox}}\fi
+\ifdefined\Shaded\renewenvironment{Shaded}{\begin{tcolorbox}[boxrule=0pt, frame hidden, interior hidden, breakable, sharp corners, enhanced]}{\end{tcolorbox}}\fi
 \makeatother
 \usepackage{bookmark}
 \IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
@@ -330,7 +330,7 @@ Ciência de Dados e Estatística com R Aplicada ao Direito e Políticas
 Públicas\\
 (Disciplina DPP0053 junto ao PPGDP da UFG)\\}
 \author{Prof.~Dr.~Cleuler Barbosa das Neves}
-\date{Nov 12, 2025}
+\date{Nov 15, 2025}
 \begin{document}
 \maketitle
 \begin{abstract}
@@ -382,15 +382,18 @@ CDD: 519.207.                                  CDU: 519.2:7
 
 \bookmarksetup{startatroot}
 
-\chapter*{Pretexto}\label{sec-pretexto}
-\addcontentsline{toc}{chapter}{Pretexto}
+\chapter*{\texorpdfstring{\textbf{Pretexto}}{Pretexto}}\label{sec-pretexto}
+\addcontentsline{toc}{chapter}{\textbf{Pretexto}}
 
-\markboth{Pretexto}{Pretexto}
+\markboth{\textbf{Pretexto}}{\textbf{Pretexto}}
 
-Estado Moderno e o problema do poder de controle público, sob a pele
-privada, de seus cidadãos: competências criminal e cível discricionárias
-em ponderação com o princípio do \emph{devido processo legal procedural
-e substantivo}.
+\textbf{Moderno \ul{Estado Democrático de Direito}} e o
+\ul{\textbf{\emph{problema}}} do \ul{\textbf{poder}} de
+\ul{\textbf{controle público}}, sob a pele privada, de \ul{\textbf{seus
+cidadãos}}: \ul{\textbf{\emph{competências}}} criminal e cível
+\ul{\textbf{discricionárias}} em \ul{\textbf{ponderação}} com o
+\ul{\textbf{princípio do \emph{devido processo legal procedural e
+substantivo}}}.
 
 Num tal Moderno Estado Democrático de Direito tornam-se importantes as
 Análises de Processo e de Resultados do (des)controle do processo penal
@@ -398,24 +401,27 @@ acusatório e da administração da execução penal.
 
 Bem como do processo cível, notadamente das ações coletivas.
 
-Na interface do Direito e Políticas Públicas busca-se compreender o
-fenômeno da \textbf{\emph{baixa efetividade}} de inúmeras normas
-constitucionais, notadamente aquelas insertas na CF/1988 na condição de
-direitos fundamentais.
+Na \ul{\textbf{\emph{interface}}} do \ul{\textbf{Direito}} e
+\ul{\textbf{Políticas Públicas}} busca-se compreender o
+\ul{\textbf{\emph{fenômeno}}} da \ul{\textbf{\emph{baixa efetividade}}}
+de inúmeras normas constitucionais, notadamente aquelas insertas na
+CF/1988 na condição de \emph{direitos fundamentais}.
 
-Esta disciplina, CDE-a-DPP: \emph{Ciência de Dados e} \emph{Estatística
-(Básica e Inferecnial, com R) aplicada ao Direito e Políticas Públicas},
-foi concebida absolutamente apoiada no \emph{dogma} de que os fenômenos
-jurídicos e, mais ainda, sua conjunção com as Políticas Públicas
-(pródiga no uso de \emph{indicadores} e de rakeamentos em suas
-abordagens para análise de processos e de resultados; ex.: AIR - Análise
-de Impacto Regulatório), \textbf{\emph{apresentam uma componente
-estocástica}} {[}BECKER (2015){]}(DIETZ; KALOF, Linda, 2015) e podem ser
-\textbf{\emph{objeto de contagem ou de medição}}, dado que a
-\textbf{\emph{mente humana é um instrumento de medição}} (KAHNEMAN,
-Daniel; SIBONY, Oliver; SUNSTEIN, Cass R., 2021) \emph{quando opera
-julgamentos sob incerteza} (KAHNEMAN, Daniel; SLOVIC, Paul; TVERSKY,
-Amos, 1982).
+Esta disciplina, \textbf{CDE-a-DPP}: \emph{Ciência de Dados e}
+\emph{Estatística (Básica e Inferecnial, com R) aplicada ao Direito e
+Políticas Públicas}, foi concebida absolutamente apoiada no
+\textbf{\emph{dogma}} de que os \textbf{\emph{fenômenos jurídicos}} e,
+mais ainda, \ul{\textbf{\emph{sua conjunção}}} com as
+\ul{\textbf{Políticas Públicas}} (pródiga no uso de
+\ul{\emph{indicadores}} e de \ul{\emph{rakeamentos}} em suas abordagens
+para \ul{\emph{análise de processos}} e \ul{\emph{de resultados}}; ex.:
+AIR - Análise de Impacto Regulatório), \textbf{\emph{apresentam \ul{uma
+componente estocástica}}} {[}BECKER (2015){]}(DIETZ; KALOF, Linda, 2015)
+e podem ser \textbf{\emph{objeto de contagem ou de medição}}, patindo-se
+do \ul{\textbf{\emph{presuposto}}} de que a \ul{\textbf{\emph{mente
+humana é um instrumento de medição}}} (KAHNEMAN, Daniel; SIBONY, Oliver;
+SUNSTEIN, Cass R., 2021) \emph{quando opera \ul{\textbf{julgamentos sob
+incerteza}}} (KAHNEMAN, Daniel; SLOVIC, Paul; TVERSKY, Amos, 1982).
 
 \section*{Load packages}\label{sec-load-packages}
 \addcontentsline{toc}{section}{Load packages}
@@ -468,30 +474,31 @@ Direito e Políticas Públicas -- CDEaDPP} - código DPP0053 (ago.
 Pretende-se gerar um \emph{e-book} com os diversos \emph{scripts} desses
 \textbf{\emph{softwares em linguagem R}} a fim apoiar os estudantes na
 compreensão do conteúdo transmitido e também no auxílio à resolução de
-problemas de pesquisa e de geração de simulações, de modo a aplicar as
-\textbf{\emph{técnicas}} \textbf{de \emph{pesquisa empírica
+problemas de pesquisa e de geração de \emph{simulações}, de modo a
+aplicar as \textbf{\emph{técnicas}} \textbf{de \emph{pesquisa empírica
 predominantemente quantitativas}} que podem ser consideradas
 \textbf{adequadas} e que ainda \ul{\textbf{\emph{não}}} foram
 \textbf{\emph{aplicadas}} ou foram \textbf{\emph{incompletamente
 aplicadas}} em \emph{pesquisas anteriores do PPGDP}, a fim de
 \textbf{\emph{avançar}} na \textbf{\emph{fronteira}} \textbf{do
 \emph{conhecimento}} do \textbf{\emph{estado da arte}} e da
-\textbf{\emph{pesquisa empírica}} (levantar dados
+\ul{\textbf{\emph{pesquisa empírica aplicada}}} (levantar dados
 1\textsuperscript{\ul{os}} e 2\textsuperscript{\ul{os}}) até aqui
 \textbf{\emph{empreendida neste programa}}, como, por exemplo:
 \textbf{\emph{testes de Hipótese}} em geral e da \textbf{\emph{qualidade
-do ajuste de Modelos}} (seleção), modelo de regressão logística, modelos
-lineares generalizados (glm), análise de sobrevivência, análise de
-fatores de risco, análise de relações (DAG's e inferência bayesiana),
-análise estatística da decisão por meio de árvore de decisão,
+do ajuste de Modelos}} (seleção), modelo de \emph{regressão logística},
+\emph{modelos lineares generalizados} (glm), \emph{análise de
+sobrevivência}, \emph{análise de fatores de risco (análise fatorial)},
+\emph{análise de relações} (DAG's e inferência bayesiana), \emph{análise
+estatística} da \emph{decisão} por meio de árvore de decisão,
 aprendizado de máquina (supervisionado e não supervisionado), modelos de
-reologia e escoamento para análise de fluxos processuais no sistema de
-justiça criminal e cível etc.
+reologia e escoamento para \emph{análise de fluxos processuais} no
+\emph{sistema de justiça criminal e cível} etc.
 
 Também servirá de modelo para aqueles que optarem por apresentar seus
-Relatórios de Pesquisa ou mesmo dissertações, relatórios de produção
-técnica, tese etc. em formato de \emph{e-book}, que pode ser hospedado
-em um domínio da web.
+\emph{Relatórios de Pesquisa} ou mesmo dissertações, relatórios de
+produção técnica, tese etc. em formato de \emph{e-book}, que pode ser
+hospedado em um domínio da web.
 
 Produzido em \texttt{Quarto}.\\
 Para saber mais sobre \texttt{Quarto} cf.: \url{https://quarto.org}.
@@ -526,7 +533,7 @@ caracterizado:
 \item
   Conduzida por: Cleuler Barbosa das NEVES. (\hyperref[0]{Lattes})
 \item
-  e: Gaspar Alexandre Machado de SOUSA.
+  e também: Gaspar Alexandre Machado de SOUSA.
   (\href{http://lattes.cnpq.br/6135605692550160}{Lattes})
 \end{itemize}
 
@@ -894,7 +901,7 @@ research 6. Process and Impact's analysis.}
 \markright{Epígrafe}
 
 \begin{quote}
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-tip-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-tip-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-tip-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tip}]
 
 \begin{quote}
 \section*{Procura da Pesquisa}\label{procura-da-pesquisa}
@@ -962,7 +969,7 @@ Drummond de Andrade})
 
 \markright{Dedicatória}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Tributos}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Tributos}]
 
 À \href{https://www.youtube.com/watch?v=_x9mNq-eB6w}{minha mãe} Abigair
 de Souza Neves.
@@ -1010,109 +1017,149 @@ cruzados.
 \chapter{Introdução}\label{sec-introducao}
 
 Segundo (HARARI, 2018 , p.~107-111) , dentro do horizonte de tempo deste
-Século XXI, a conexão dos indivíduos à \emph{web} será vital e ``À
-medida que, através de sensores biométricos, cada vez mais dados fluírem
-de seu corpo e seu cérebro para máquinas inteligentes, será fácil para
-corporações e agências do governo \emph{conhecer} você, \emph{manipular}
-você e \emph{tomar decisões} por você'' (destacou-se).
+Século XXI {[}\emph{mais 75 anos} até dez. 2099{]}, a conexão dos
+indivíduos à \emph{web} será \textbf{vital} e ``À medida que, através de
+\textbf{\emph{sensores biométricos}}, cada vez mais
+\ul{\textbf{\emph{dados}}} fluírem de seu corpo e seu cérebro para
+máquinas inteligentes, será \ul{\textbf{\emph{fácil}}} para
+\emph{corporações} e \ul{\textbf{agências do governo}}
+\ul{\textbf{\emph{conhecer}}} você, \ul{\textbf{\emph{manipular}}} você
+e \ul{\textbf{\emph{tomar decisões}}} por você'' (destacou-se).
 
-Não se pode imaginar risco maior para os modernos Estados Democráticos
-de Direito, pois nessa era digital em que já se vive revelou-se o poder
-daquelas instituições públicas ou privadas que detêm o poder dos dados
+Não se pode imaginar \ul{\textbf{risco}} maior para os
+\textbf{\emph{Modernos Estados Democráticos de Direito}}, pois nessa era
+digital, em que já se vive, revelou-se o \ul{\textbf{\emph{poder}}}
+daquelas \ul{\textbf{\emph{instituições públicas}}} ou
+\ul{\textbf{\emph{privada}}}s que detêm o \ul{\textbf{poder dos dados}}
 (HARARI, 2020, p.~1) (LOCK et al., 2017).
 
-Na interface do Direito e Políticas Públicas busca-se compreender o
-fenômeno da \textbf{\emph{baixa efetividade}} de inúmeras normas
-constitucionais, notadamente aquelas insertas na CF/1988 na condição de
-direitos fundamentais.
+Na \ul{\textbf{\emph{interface}}} do \ul{\textbf{\emph{Direito e
+Políticas Públicas}}} busca-se compreender o
+\ul{\textbf{\emph{fenômeno}}} da \textbf{\emph{baixa efetividade}} de
+inúmeras \textbf{\emph{normas constitucionais}}, notadamente aquelas
+insertas na CF/1988 na condição de \textbf{\emph{direitos
+fundamentais}}.
 
 Esta disciplina, CDE-a-DPP: \emph{Ciência de Dados e} \emph{Estatística
-Básica} {[}\emph{com R}{]} \emph{Aplicada ao Direito e Políticas
-Públicas}, foi concebida absolutamente apoiada no \emph{dogma} de que os
-\textbf{\emph{fenômenos jurídicos}} e, mais ainda, sua conjunção com as
-Políticas Públicas (prodiga no uso de \emph{indicadores}, de
-\emph{índices} e de \emph{rakeamentos} em suas abordagens para análise
-de processos e de resultados; ex.: AIR - Análise de Impacto
-Regulatório), \textbf{\emph{apresentam uma componente estocástica}}
-{[}BECKER (2015){]}(DIETZ; KALOF, Linda, 2015) e podem ser
-\textbf{\emph{objeto de medição}}, dado que a \textbf{\emph{mente humana
-é um instrumento de medição}} (KAHNEMAN, Daniel; SIBONY, Oliver;
-SUNSTEIN, Cass R., 2021) quando opera julgamentos sob incerteza
-(KAHNEMAN, Daniel; SLOVIC, Paul; TVERSKY, Amos, 1982).
+Básica} {[}Descritiva e Inferencial \emph{com R}{]}
+\emph{\textbf{Aplicada} ao Direito e Políticas Públicas}, foi concebida
+absolutamente apoiada no \textbf{\emph{dogma}} de que os
+\ul{\textbf{\emph{fenômenos}}} \textbf{\emph{jurídicos}} e, mais ainda,
+\textbf{\emph{sua conjunção}} com as \textbf{\emph{Políticas Públicas}}
+(prodiga no uso de \ul{\emph{indicadores}}, de \ul{\emph{índices}} e de
+\ul{\emph{rakeamentos}} em suas abordagens para análise de processos e
+de resultados; ex.: AIR - Análise de Impacto Regulatório),
+\textbf{\emph{apresentam uma componente estocástica}} {[}BECKER
+(2015){]}(DIETZ; KALOF, Linda, 2015) e podem ser \textbf{\emph{objeto de
+medição}}, dado que a \textbf{\emph{mente humana é um instrumento de
+medição}} (KAHNEMAN, Daniel; SIBONY, Oliver; SUNSTEIN, Cass R., 2021)
+quando opera \textbf{\emph{julgamentos sob incerteza}} (KAHNEMAN,
+Daniel; SLOVIC, Paul; TVERSKY, Amos, 1982).
 
-Parte-se do \emph{pressuposto} de que Direito é \emph{uma Ciência Social
-Aplicada} e, assim como a Demografia, a Biometria, a Psicologia, a
-Economia, a Ciência Política, a Epidemiologia, a Ciência Forense etc.,
-reclamam cada vez mais uma maior e melhor \emph{compreensão} do seu
-\emph{sujeito}-\emph{objeto} por meio de \emph{pesquisas empíricas}.
+Parte-se do \emph{pressuposto} de que \emph{Direito} é \emph{uma Ciência
+Social \ul{Aplicada}} e, assim como a Demografia, a Biometria, a
+Psicologia, a Economia, a \emph{Ciência Política}, a Epidemiologia, a
+Ciência Forense etc., reclamam cada vez mais uma maior e melhor
+\emph{compreensão} da \textbf{\emph{pretensão}} de \emph{superação} da
+\emph{antiga dicotomia} \textbf{\emph{sujeito}-\emph{objeto}} por meio
+de \emph{pesquisa empírica}: pura e, principalmente, \emph{aplicada}.
 
-O que impele seus atuais pesquisadores, quer em programas de
-pós-graduação acadêmicos ou profissionais, quer desde a graduação
+O que \textbf{\emph{impele}} seus atuais pesquisadores, quer em
+programas de pós-graduação \emph{acadêmicos} (pesquisa pura) ou
+\emph{profissionais} (pesquisa aplicada), quer desde a \emph{graduação}
 (iniciação científica, elaboração de TCCs e Núcleo Livre), a
-\emph{levantar dados} (1º\textsuperscript{s} e 2º\textsuperscript{s}),
-no curso de pesquisas \emph{quali-quantis}, para deles extrair
-\emph{informações} e \emph{padrões} perceptíveis, momento em que a
+\ul{\textbf{\emph{levantar dados}}} (1º\textsuperscript{s} e
+2º\textsuperscript{s}), no curso de pesquisas \emph{quali-quantis}, para
+deles \emph{extrair} \ul{\textbf{\emph{informações}}} e
+\ul{\textbf{\emph{padrões}}} perceptíveis, momento em que a
 \textbf{\emph{Estatística Descritiva}}, com suas \emph{consagradas
-técnicas} para \emph{coletar}, \emph{ordenar}, \emph{resumir} e
-\emph{apresentar} dados e informações torna-se imprescindível.
+técnicas} para \textbf{\emph{coletar}, \emph{ordenar}, \emph{resumir}} e
+\textbf{\emph{apresentar}} dados e informações torna-se imprescindível.
 
-A rigor, há de \emph{4 a 7 momentos} de \emph{síntese indutiva} em que
-um pesquisador empírico que colete dados na interface do Direito com as
-Políticas Públicas depara-se no curso de sua pesquisa:
+A rigor, há de \emph{4 a 7 momentos} de \ul{\textbf{\emph{síntese
+indutiva}}} em que um \ul{\textbf{\emph{pesquisador empírico}}} que
+\ul{\textbf{\emph{colete dados válidos, fidedignos e repoduzíveis}}} na
+\textbf{\emph{interface}} do \textbf{\emph{Direito com as Políticas
+Públicas}} depara-se no curso de sua pesquisa:
 
 \begin{enumerate}
 \def\labelenumi{\roman{enumi}.}
 \item
-  na apropriação e \emph{operacionalização de conceitos} e de
-  indicadores necessários e suficientes para abordar sua
-  \emph{situção}-\emph{problema} de pesquisa;
+  na \emph{apropriação} e \emph{operacionalização de
+  \ul{\textbf{conceitos}}} e de \ul{\textbf{\emph{indicadores}}}
+  necessários e suficientes para abordar sua
+  \ul{\textbf{\emph{situção}-\emph{problema}}} de pesquisa;
 \item
-  na escolha e coleta dos dados de campo, notadamente quando, ao invés
-  de censo, optar-se por colher \textbf{\emph{1 amostra}} (parte) de
-  tamanho adequado da população alvo, ou melhor, da população disponível
-  (todo) de tamanho finito; pois, não raro, pretende valer-se de algum
-  \emph{poder inferencial} para, \emph{a partir de uma parte, extrair
-  conclusões para o todo};
+  na escolha e \ul{\textbf{\emph{coleta}}} dos dados de campo,
+  notadamente quando, ao invés de censo, optar-se pela
+  \textbf{\emph{Teoria da Amostragem}} para colher \ul{\textbf{\emph{1
+  amostra}}} (parte) de \ul{\textbf{\emph{tamanho adequado}}} da
+  \ul{\textbf{\emph{população alvo}}}, ou melhor, da
+  \ul{\textbf{\emph{população disponível}}} (todo) \emph{de tamanho
+  finito}; pois, não raro, pretende valer-se de algum
+  \ul{\textbf{\emph{poder inferencial}}} para, \emph{a partir de uma
+  parte, extrair conclusões para o todo};
 \item
-  na distribuição aleatorizada dos elementos entre um Grupo de
-  Tratamento e um Grupo de Controle (que recebe um \emph{placebo} sob
-  \emph{duplo cego}), nos experimentos controlados; para \emph{extração
-  inferencial de conclusões causais} a respeito dos efeitos esperados do
-  tratamento (T) sobre toda uma \emph{População disponível} pesquisada;
+  na \ul{\textbf{\emph{distribuição aleatorizada}}} dos elementos entre
+  um \textbf{Grupo de Tratamento} e um \textbf{Grupo de Controle} (que
+  recebe um \emph{placebo} sob \emph{duplo cego}), nos Experimentos
+  Controlados Comparativos Aleatorizados (ECCA); para
+  \ul{\textbf{\emph{extração inferencial}}} \emph{de
+  \ul{\textbf{conclusões}} \textbf{causais}} a respeito dos
+  \textbf{\emph{efeitos}} esperados do \ul{\textbf{Tratamento}}
+  \textbf{(T)} sobre toda uma \emph{População disponível} pesquisada;
 \item
-  na construção de \emph{contrafactuais} (\emph{quasi-experimentos}),
-  quando, no caso das Ciências Sociais Aplicadas, não se pode dispor,
-  por razões éticas, de um Grupo de Controle para se pesquisar sobre
-  \emph{efeitos causais} de \emph{um Tratamento social} sobre toda uma
-  População disponível pesquisada;
+  na \ul{\textbf{construção de \emph{contrafactuais}}}
+  (\emph{quasi-experimentos}), quando, no caso das Ciências Sociais
+  Aplicadas, não se pode dispor, por razões éticas, de um Grupo de
+  Controle para se pesquisar sobre \emph{efeitos causais} de \emph{um
+  \ul{\textbf{Tratamento social}}} sobre toda uma População disponível
+  pesquisada;
 \item
-  na tomada de \emph{decisões político-administrativas baseadas em
-  evidências} (dados e informações);
+  na tomada de \ul{\textbf{\emph{decisões político-administrativas}}}
+  \emph{(public choices) \textbf{baseadas} em \ul{\textbf{evidências}}}
+  (dados e informações, TSHN - Testes de Significância contra a Hipótese
+  Nula);
 \item
-  na escolha das ações para implementação e monitoramento (diagnóstico,
-  avaliação e correção/controle) de indicadores e de metas assim
+  na escolha das \ul{\textbf{\emph{ações}}} para \emph{implementação} e
+  \ul{\textbf{\emph{monitoramento}}}: diagnóstico, avaliação e
+  \ul{\textbf{\emph{correção/controle}}} de
+  \ul{\textbf{\emph{indicadores}}} e de \ul{\textbf{\emph{metas}}}
+  adequadamente construídos, calibrados, testados e consensualmente
   colocados;
 \item
-  na \emph{prescrição} normativa de \emph{novas intervenções} para
-  melhoria na eficiência (orçamentária), na eficácia (jurídica) e na
-  \textbf{\emph{efetividade}} (social) dessas implementações metódicas,
-  com foco na \emph{melhoria da efetividade dos direitos fundamentais
-  prescritos na CF/1988 no decorrer do tempo}.
+  na \ul{\textbf{\emph{prescrição}} \textbf{normativa}} de
+  \ul{\textbf{\emph{novas intervenções}}} visando
+  \ul{\textbf{\emph{melhoria incrmental}}} na
+  \ul{\textbf{\emph{eficiência}}} (orçamentária), na
+  \ul{\textbf{\emph{eficácia}}} (jurídica) e na
+  \ul{\textbf{\emph{efetividade}}} (social) dessas implementações
+  metódicas, com foco na \emph{melhoria da efetividade dos direitos
+  fundamentais prescritos na CF/1988 no decorrer do tempo (análise de
+  séries temporais) dentro do espaço ou do território espacial do Brasil
+  (coleta de dados geoespacializados)}.
 \end{enumerate}
 
 Nessa ótica, é necessário e preciso \textbf{\emph{superar}} o
-\emph{preconceito dos juristas} com as Ciências Exatas, em especial com
-a Probabilidade e Estatística. Além do dogma da onipotência dos
-juristas, que realizam a defesa de suas hipóteses como se fossem
-permeados de uma certeza determinística. É preciso reposicionar a
-Doutrina, que não é mais fonte do Direito desde a Modernidade e que
-repousa exclusivamente sobre argumento de autoridade e que não desvela
-os interesses subalternados de seus autores (ausência de
-\emph{disclaimer}).
+\ul{\textbf{\emph{preconceito}}} \emph{dos \ul{\textbf{juristas}}} com
+as Ciências Exatas, em especial com a \textbf{\emph{Probabilidade e
+Estatística}}.
+
+Além do \textbf{\emph{dogma}} da \ul{\textbf{\emph{onipotência}}} dos
+\ul{\textbf{\emph{juristas}}}, que realizam a \ul{\textbf{\emph{defesa
+de suas hipóteses}}} como se fossem permeados de \textbf{\emph{uma
+certeza determinística}}.
+
+É preciso \ul{\textbf{\emph{reposicionar}}} a
+\ul{\textbf{\emph{Doutrina}}}, que \emph{não é mais fonte do Direito
+desde a Modernidade} e que \textbf{\emph{repousa exclusivamente}} sobre
+\ul{\textbf{\emph{argumento de autoridade}}} e que \ul{\textbf{\emph{não
+desvela}}} \textbf{\emph{os interesses subalternados de seus autores}}
+(ausência de \emph{disclaimer}).
 
 A \textbf{\emph{Estatística Indutiva}} ou \textbf{\emph{Inferencial}}
---- com sua \emph{Teoria da Amostragem}, desenvolvida a partir doe
-descobertas iniciadas no Séc. XVII:
+--- com sua \ul{\textbf{\emph{Teoria da Amostragem}}}, desenvolvida a
+partir doe descobertas iniciadas no Séc. XVII:
 
 \begin{itemize}
 \item
@@ -1122,66 +1169,86 @@ descobertas iniciadas no Séc. XVII:
   um jogo de pontos interrompido};
 \item
   1713 publica-se, postumamente, a obra \emph{Ars Conjecturandi}, de
-  Jaques Bernoulli, um \emph{jurista e matemático}) --- que possibilita
-  o emprego de \emph{desenhos de pesquisa} (\emph{D.o.E} - \emph{Design
-  of Experiment}) em que se pode \emph{validamente} operar essas
-  \emph{inferências indutivas} por meio do estudo, da descrição e da
-  comparação com os \emph{padrões} encontrados nos \emph{fenômenos
-  aleatórios} (\emph{alea} e Teoria das Medições, pelo estudo dos
+  Jaques Bernoulli, um \emph{jurista e matemático} --- que possibilita o
+  emprego de \ul{\textbf{\emph{desenhos de pesquisa}}} (\emph{D.o.E} -
+  \emph{Design of Experiment}) em que se pode
+  \ul{\textbf{\emph{validamente}}} operar essas
+  \ul{\textbf{\emph{inferências indutivas}}} (validade interna, da
+  amostra para toda população amostrada) por meio do estudo, da
+  descrição e da comparação com os \emph{padrões} encontrados nos
+  \textbf{\emph{fenômenos aleatórios}} (\emph{alea} e
+  \ul{\textbf{\emph{Teoria das Medições}}}, pelo estudo dos
   \emph{viéses} e \emph{ruídos}). É quem enuncia e prova pela primeira
   vez a Lei dos Grandes Números.
 \end{itemize}
 
-É, pois, preciso dar-se ao trabalho de \emph{refletir} sobre as
-possibilidades dos \emph{desenhos de pesquisa empírica}, explicitando-os
-em nossos \emph{projetos} e \emph{protocolos de pesquisa empírica}, a
-fim de conferir \textbf{\emph{replicabilidade}},
-\textbf{\emph{validade}} e \textbf{\emph{confiabilidade}} aos diversos
-\textbf{\emph{instrumentos de medição}} aplicáveis na interface do
-Direito e das Políticas Públicas, com uma \emph{DPP-metria} ainda por
-ser concebida, construída, testada e validada.
+É, pois, preciso dar-se ao trabalho de \ul{\textbf{\emph{refletir}}}
+sobre as \textbf{\emph{possibilidades}} dos \ul{\textbf{\emph{desenhos
+de pesquisa empírica}}}, \ul{\textbf{explicitando-os em nossos
+\emph{projetos} e \emph{protocolos de pesquisa empírica}}}, a fim de
+conferir \ul{\textbf{\emph{replicabilidade}}},
+\ul{\textbf{\emph{validade}}} e \ul{\textbf{\emph{confiabilidade}}} aos
+diversos \ul{\textbf{\emph{instrumentos de medição}}} aplicáveis na
+\ul{\textbf{\emph{interface}}} do \ul{\textbf{\emph{Direito e das
+Políticas Públicas}}}, com uma \textbf{\emph{DPP-metria ainda por ser
+concebida, construída, testada e validada}}.
 
-Como \emph{um resultado esperado} a partir dessa abordagem de pesquisa,
-aponta-se para \emph{um provável aumento da confiança no moderno Estado
-Democrático de Direito}, pela busca --- por meio de \emph{diagnósticos}
-e \emph{decisões} \emph{basedos em evidências empíricas} --- da
-\emph{redução} de \emph{viéses} e de \emph{ruídos} observáveis na
-atuação das suas instituições (KAHNEMAN, Daniel; SIBONY, Oliver;
-SUNSTEIN, Cass R., 2021) no trato com seus concidadãos (ex. no Sistema
-de Justiça Criminal e Cível brasileiro).
+Como \ul{\textbf{\emph{um resultado esperado}}} a partir dessa abordagem
+de pesquisa, aponta-se para \ul{\textbf{\emph{um provável aumento da
+confiança no Moderno Estado Democrático de Direito}}}, pela busca ---
+por meio de \ul{\textbf{\emph{diagnósticos}}} e
+\ul{\textbf{\emph{decisõesbasedos em evidências empíricas}}} --- da
+\textbf{\emph{redução}} \textbf{de \emph{viéses} e de \emph{ruídos}
+observáveis na atuação das suas \ul{instituições}} (KAHNEMAN, Daniel;
+SIBONY, Oliver; SUNSTEIN, Cass R., 2021) no \textbf{\emph{trato}} com
+\textbf{\emph{seus concidadãos}}, como, por exemplo, no
+\textbf{\emph{Sistema de Justiça Criminal e Cível brasileiro a partir da
+CF, de 5 de outubro de 1988}}.
 
-Ou seja, o grande desafio a ser enfrentado é construir uma Metodologia
-(\emph{D.o.E.}) nos protocolos de pesquisa empírica do Direito e das
-Políticas como um caminho \emph{ad-versus} ao da propalada \emph{defesa
-de hipóteses}, tão encontradiço na doutrina jurídica nacional e, não
-raro, mesmo em variegados programas de pós-graduação meramente acadêmica
-do Direito.
+Ou seja, o \ul{\textbf{\emph{grande desafio}}} a ser enfrentado é
+\ul{\textbf{\emph{construir uma Metodologia}}} (\emph{D.o.E.}) nos
+\ul{\textbf{\emph{protocolos de pesquisa empírica aplicada do Direito e
+das Políticas Publicas}}} como um caminho \textbf{\emph{ad-versus}} ao
+da propalada \ul{\textbf{\emph{defesa de hipóteses}}}, tão encontradiço
+na doutrina jurídica nacional e, não raro, mesmo em variegados programas
+de pós-graduação puramente acadêmica do Direito.
 
-Trata-se da expectativa de qualificar a pesquisa acadêmica brasileira ao
-ponto de romper e superar a \emph{dicotomia} entre \emph{pesquisa pura}
-ou meramente acadêmica e \emph{pesquisa aplicada} ou profissional no
-campo do Direito pela intrusão de uma ``impureza'' no seu susbtrato: o
-reconhecimento da importância da \textbf{\emph{modelagem}} da
-\emph{alea} em \emph{pesquisas empíricas} com emprego de \emph{modelos
-informacionais} (que apresentam uma parcela estocástica: sinal e ruído)
-ao tomar a \emph{mente humana no seu processo decisório como um
-instrumento de medição que opera sob incertezas}.
+Trata-se da \ul{\textbf{\emph{expectativa}}} de
+\ul{\textbf{\emph{qualificar a pesquisa acadêmica brasileira}}} ao ponto
+de \ul{\textbf{\emph{romper}}} e \ul{\textbf{\emph{superar}}} a
+\ul{\textbf{\emph{dicotomia}}}entre \textbf{\emph{pesquisa pura ou
+meramente acadêmica}} \ul{\textbf{e}} \ul{\textbf{\emph{pesquisa
+aplicada ou profissional}}} no campo da interface do Direito com as
+Políticas Públicas pela \ul{\textbf{\emph{intrusão}}} de uma
+\ul{\textbf{\emph{``impureza''}}} no seu susbtrato: o reconhecimento da
+importância da \textbf{\emph{modelagem}} da \ul{\textbf{\emph{alea}}} em
+\ul{\textbf{\emph{pesquisas empíricas aplicadas}}} com emprego de
+\ul{\textbf{\emph{modelos informacionais}}}: que apresentam
+\textbf{\emph{uma parcela estocástica}} (sinal e ruído) ao
+\ul{\textbf{\emph{tomar}}} a \ul{\textbf{\emph{mente humana no seu
+processo decisório}}} \emph{\ul{\textbf{como}} um
+\ul{\textbf{instrumento de medição}} que \ul{\textbf{opera}} sob
+\ul{\textbf{incertezas}}}.
 
 A proposta desta disciplina (CDE-a-DPP) é pretenciosa no sentido de dar
 um passo inicial junto à pós-graduação estrito senso exatamente nessa
-direção reflexiva, conjugando a compreensão e a sedimentação de uma
-Teoria Estatística Descritiva/Inferencial aprofundada combinada com
-Ciência de Dados voltadas para o emprego de \emph{ferramentas
-tecnológicas disponíveis gratuitamente na web} (ex.
+\textbf{\emph{direção reflexiva}}, conjugando a compreensão e a
+sedimentação de uma \ul{\textbf{Teoria Estatística
+Descritiva/Inferencial}} aprofundada combinada com \ul{\textbf{Ciência
+de Dados}} voltadas para a \ul{\textbf{\emph{aplicação}}} de
+\ul{\textbf{\emph{ferramentas tecnológicas disponíveis gratuitamente na
+web}}} (ex.
 \href{https://www.lock5stat.com/StatKey/index.html}{StatKey},
-\href{https://www.statdisk.com/}{statdisk} etc.), notadamente pelo
-domínio, desenvolvimento e aplicção do básico em
+\href{https://www.statdisk.com/}{statdisk}, IA's generativas de códigos
+etc.), considerados como \textbf{\emph{help-desck}}, notadamente pelo
+domínio, desenvolvimento e aplicação do básico em
 \href{https://www.r-project.org/}{Linguagem R}, por meio da
-\href{https://posit.co/download/rstudio-desktop/}{IDE R-Studio}; com o
-que se almeja \emph{uma ainda mais desafiadora pretensão} de iniciar
-\emph{uma formação interdisciplinar} de \emph{Cientistas de Dados} no
-seio de um curso de pós-graduação estrito senso em Direito e Políticas
-Públicas.
+\href{https://posit.co/download/rstudio-desktop/}{IDE R-Studio} ou da
+mais sofisticada \href{https://code.visualstudio.com/download}{IDE
+VS-Code}; com o que se almeja \emph{uma ainda mais desafiadora
+\ul{\textbf{pretensão}}} de \textbf{iniciar \emph{uma formação
+interdisciplinar} de \emph{Cientistas de Dados}} no seio de um curso de
+pós-graduação estrito senso em Direito e Políticas Públicas.
 
 \section{Objetivo Geral}\label{objetivo-geral}
 
@@ -1583,7 +1650,7 @@ serviu de base para a \emph{coleta e tabulação} dos \emph{dados
 primários} levantados, seja diretamente por ele (de preferência), ou por
 pessoa por ele para tanto bem treinada e testada.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-warning-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-warning-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-warning-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-warning-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}]
 
 Apenas quando \ul{\textbf{\emph{todos}}} esses
 \ul{\textbf{\emph{cuidados qualitativos}}} forem tomados para
@@ -7817,7 +7884,7 @@ Ou seja, para \textbf{diminuir 1 kg} na variável
 -0.0034 x = -1.0 \text{ kg} \Rightarrow x = \frac{1.0}{0.0034} \Rightarrow x = +294.2 \text{ cal}
 \]
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-warning-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-warning-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{inclinação da rela de regressão}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-warning-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-warning-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{inclinação da rela de regressão}]
 
 \textbf{\emph{Não}} se pode dizer \textbf{\emph{quão importante}} é
 \textbf{\emph{uma relação}} pelo \textbf{\emph{simples exame}} do
@@ -8443,7 +8510,7 @@ Tabela com totais marginais:
   Total 1041 1891  789  184  3905
 \end{verbatim}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Tabela de dupla entrada}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Tabela de dupla entrada}]
 
 Uma tabela de contagens usada para a \textbf{\emph{organização de dados
 sobre duas variáveis categóricas}}.
@@ -8476,7 +8543,7 @@ totais. As distribuições de sexo apenas e de grau conferido apenas são
 chamadas distribuições marginais, porque elas aparecem nas margens
 direita e inferior da tabela de dupla entrada.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Distribuições marginais}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Distribuições marginais}]
 
 A distribuição marginal de uma das variáveis categóricas em uma tabela
 de dupla entrada de contagens é a distribuição dos valores daquela
@@ -9074,7 +9141,7 @@ distribuição \textbf{\emph{descreve apenas estudantes que satisfazem a
 condição de serem mulheres}}. (MOORE; NOTZ; FLIGNER, 2023 , p.~132)
 \end{quote}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Distribuições condicionais}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Distribuições condicionais}]
 
 Uma distribuição condicional de uma variável é a
 \textbf{\emph{distribuição dos valores daquela variável apenas entre os
@@ -9281,7 +9348,7 @@ enquanto a porcentagem projetada de \texttt{homens} a \ul{receber outros
 graus diferentes} de \texttt{associado} é \ul{ligeiramente maior} do que
 a porcentagem de \texttt{mulheres}.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Erro de Arredondamento}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Erro de Arredondamento}]
 
 O erro de arredondamento é a \textbf{\emph{pequena diferença entre um
 número decimal arredondado e seu valor preciso antes do
@@ -9582,7 +9649,7 @@ Fica claro agora que, nos EUA, a categoria Mulher na variável
 
 No Brasil espera-se uma distribuição oposta a essa.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Gráfico de Barras Segmentadas}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Gráfico de Barras Segmentadas}]
 
 Um gráfico de barras segmentadas é \textbf{\emph{um gráfico de barras
 para a apresentação de dados sobre duas variáveis categóricas no qual
@@ -9667,7 +9734,7 @@ como a distribuição condicional de sexo, dado o grau conferido.
 
 \pandocbounded{\includegraphics[keepaspectratio]{cap6-moore-tab-dupla-entrada_files/figure-pdf/unnamed-chunk-17-1.pdf}}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Gráfico de mosaico}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Gráfico de mosaico}]
 
 \textbf{\emph{Um gráfico de barras segmentadas}} no qual a
 \textbf{\emph{largura de cada barra representa a proporção de todas as
@@ -9884,7 +9951,7 @@ Script R comentado para o gráfico mosaico anterior agora para o
 
 \pandocbounded{\includegraphics[keepaspectratio]{cap6-moore-tab-dupla-entrada_files/figure-pdf/unnamed-chunk-19-1.pdf}}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Gráficos!}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Gráficos!}]
 
 Nenhum gráfico único retrata a forma da relação entre variáveis
 categóricas (como um diagrama de dispersão faz para variáveis
@@ -12336,7 +12403,7 @@ partir dos dados amostrais}}, alguma \ul{\textbf{conclusão}} sobre a
 representa}}. (MOORE; NOTZ; FLIGNER, 2023 , cap. 16, p.~296)
 \end{quote}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Inferência estatística}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Inferência estatística}]
 
 A inferência estatística fornece \ul{\textbf{métodos}} para a
 \textbf{\emph{extração de conclusões sobre uma população a partir de
@@ -12361,7 +12428,7 @@ torná-la mais clara possível, começamos com um contexto que é muito
 simples para ser realista. Eis o contexto para nosso trabalho neste
 capítulo.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Condições simples para inferência sobre uma média}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Condições simples para inferência sobre uma média}]
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -12385,7 +12452,7 @@ A condição de que a população seja grande em relação ao tamanho da
 amostra será adequadamente satisfeita se a população for, digamos, pelo
 menos 20 vezes maior.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}]
 
 \emph{As condições de que temos uma AAS perfeita, de que a população é
 exatamente Normal e de que conhecemos o σ populacional são todas não
@@ -12991,7 +13058,7 @@ Essa \ul{\textbf{forma}} para um intervalo de confiança e
 \textbf{parâmetros}} que consideraremos neste livro, incluindo
 \ul{\textbf{médias}} e \ul{\textbf{proporções}}.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Margem de erro}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Margem de erro}]
 
 A margem de erro é um número que é acrescentado a, ou subtraído de uma
 estimativa estatística para definir o intervalo de confiança a dado
@@ -13003,7 +13070,7 @@ Os usuários podem escolher o nível de confiança, quase sempre 90\% ou
 mais, por quererem estar bastante seguros de suas conclusões. O nível de
 confiança mais comum é 95\%.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Intervalo de confiança}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Intervalo de confiança}]
 
 Um intervalo de confiança de nível C para um parâmetro tem \textbf{duas
 partes}:
@@ -13023,7 +13090,7 @@ taxa de sucesso do método}}.
 
 NC que tem de ser interpretado do seguinte modo.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Interpretação de um nível de confiança}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Interpretação de um nível de confiança}]
 
 O nível de confiança \ul{\textbf{é a taxa de sucesso do método que
 produz o intervalo}}. Não sabemos se o intervalo de confiança de 95\%
@@ -13229,7 +13296,7 @@ Hypothese Significant Test}}{]} (MOORE; NOTZ; FLIGNER, 2023 , cap. 17,
 p.~308-323)
 \end{quote}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Inferência estatística}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Inferência estatística}]
 
 A inferência estatística fornece \ul{\textbf{métodos}} para a
 \textbf{\emph{extração de conclusões sobre uma população a partir de
@@ -13240,7 +13307,7 @@ dados amostrais}}. (MOORE; NOTZ; FLIGNER, 2023 , cap. 16, p.~296)
 Recapitular as condições simples ou pressupostos para um TSHN de uma
 média populacional desconhecida.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Condições simples para inferência sobre uma média}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Condições simples para inferência sobre uma média}]
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -13270,7 +13337,7 @@ amostra será adequadamente satisfeita se a população for, digamos, pelo
 menos 20 vezes maior {[}N \textgreater{} 20 x n ou n \textless{} 5\% x
 N{]}.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Important}]
 
 {[}\ldots{]} \emph{As \textbf{condições} {[}ou pressupostos,
 \textbf{presunções relativas}{]} de que temos uma AAS perfeita, de que a
@@ -13709,7 +13776,7 @@ afirmativa anterior relativa a um parâmetro da população.
 
 A seguir, apresentamos sucintamente a lógica de testes estatísticos.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-note-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Exemplo 17.1 - Eu sou um grande atirador de lances livres}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Exemplo 17.1 - Eu sou um grande atirador de lances livres}]
 
 Eu afirmo que acerto 80\% de meus lances livres no jogo de basquete.
 Para testar minha afirmativa, você me pede para fazer 20 lances livres.
@@ -13747,17 +13814,19 @@ verdadeira.
 
 \end{tcolorbox}
 
-\section{A lógica dos testes de significância}\label{sec-logica}
+\section{A lógica dos testes de significância}\label{sec-logica-TSHN}
 
 A lógica dos testes estatísticos, assim como a dos intervalos de
-confiança, se baseia no questionamento do que ocorreria se repetíssemos
-a amostra ou experimento muitas vezes. Agiremos novamente como se as
-``condições simples'' listadas em ``Condições simples para inferência
-sobre uma média'', no Capítulo 16, fossem verdadeiras: temos uma AAS
-perfeita de uma população exatamente Normal com desvio-padrão \(\sigma\)
-conhecido por nós. Eis um exemplo que analisaremos.
+confiança, se baseia no \ul{\textbf{questionamento}} do \ul{\textbf{que
+ocorreria se repetíssemos a amostra ou experimento muitas vezes}}.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-note-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Exemplo 17.2 - Adoçantes de refrigerantes}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+Agiremos novamente como se as ``condições simples'' listadas em
+``Condições simples para inferência sobre uma média'', no Capítulo 16,
+fossem verdadeiras: temos uma AAS perfeita de uma população exatamente
+Normal com desvio-padrão \(\sigma\) conhecido por nós. Eis um exemplo
+que analisaremos.
+
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Exemplo 17.2 - Adoçantes de refrigerantes}]
 
 Refrigerantes dietéticos usam adoçantes artificiais para evitar o uso de
 açúcar. Esses adoçantes gradualmente perdem sua doçura ao longo do
@@ -13771,10 +13840,11 @@ refrigerante é, então, armazenado por um mês em alta temperatura para
 imitar o efeito do armazenamento por 4 meses em temperatura ambiente.
 
 Cada provador atribui um escore ao refrigerante novamente após o
-armazenamento. Esse é um experimento de dados emparelhados. Nossos dados
-são as diferenças (escore antes do armazenamento menos escore após o
-armazenamento) dos escores dos provadores. Quanto maior a diferença
-(diferença \textgreater{} 0), maior será a perda de doçura.
+armazenamento. Esse é \ul{\textbf{um experimento de dados
+emparelhados}}. Nossos dados são as diferenças (escore antes do
+armazenamento menos escore após o armazenamento) dos escores dos
+provadores. Quanto maior a diferença (diferença \textgreater{} 0), maior
+será a perda de doçura.
 
 Suponha sabermos que, para qualquer refrigerante, os escores de perda de
 doçura variem de provador para provador de acordo com uma distribuição
@@ -13818,7 +13888,7 @@ esse refrigerante perca doçura.
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-note-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Exemplo 17.3 - Adoçantes de refrigerantes, novamente}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Exemplo 17.3 - Adoçantes de refrigerantes, novamente}]
 
 A seguir, estão as perdas de doçura de um novo refrigerante, conforme
 medidas por 10 provadores treinados:
@@ -14103,7 +14173,7 @@ REFRIGERANTE 2:
 
 \subsection{Aplique seu conhecimento}\label{aplique-seu-conhecimento-2}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-tip-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Exercício 17.1 - GMAT}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-tip-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-tip-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Exercício 17.1 - GMAT}]
 
 O \emph{Graduate Management Admission Test} (GMAT) é feito por
 indivíduos interessados em seguir a educação na graduação em
@@ -14143,7 +14213,7 @@ que os escores GMAT são distribuídos Normalmente, com desvio-padrão
 
 \end{tcolorbox}
 
-\section{Estabelecimento de hipóteses}\label{sec-hipoteses}
+\section{Estabelecimento de hipóteses}\label{sec-hipoteses-TSHN}
 
 Um teste estatístico de significância começa com um enunciado cuidadoso
 das afirmativas que queremos comparar. No Exemplo 17.3, vimos que os
@@ -14155,7 +14225,7 @@ qual buscamos evidência, tal qual ``nenhuma perda de doçura''.
 \subsection{Hipóteses nula e
 alternativa}\label{hipuxf3teses-nula-e-alternativa}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Definições importantes}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Definições importantes}]
 
 A afirmativa testada por um teste estatístico de significância é chamada
 de \textbf{hipótese nula}. O teste é planejado para avaliar a força da
@@ -14192,7 +14262,7 @@ A \textbf{\emph{hipótese alternativa}} é \textbf{\emph{unilateral}}
 porque estamos interessados apenas em saber se o refrigerante perdeu
 doçura.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-note-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Exemplo 17.4 - Estudo da satisfação no emprego}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Exemplo 17.4 - Estudo da satisfação no emprego}]
 
 A satisfação no emprego de operários de montadoras difere quando seu
 trabalho é ritmado pelas máquinas em vez de autorritmado? Aloque
@@ -14221,7 +14291,7 @@ portanto, bilateral:
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-warning-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-warning-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Estatística no mundo real - Hipóteses honestas?}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-warning-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-warning-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Estatística no mundo real - Hipóteses honestas?}]
 
 Pessoas chinesas e japonesas, para as quais o número 4 é de má sorte,
 morrem mais frequentemente no quarto dia do mês do que em outros dias.
@@ -14236,54 +14306,65 @@ os autores replicaram, ``Não, nós tínhamos o dia 4 em mente antes, de
 modo que nosso teste é legítimo''.
 
 \textbf{As hipóteses devem expressar as expectativas ou suspeitas que
-temos antes de vermos os dados.} É \textbf{trapaça} olhar primeiro os
-dados e então estabelecer hipóteses que se ajustem ao que os dados
-mostram.
+temos \ul{antes} de vermos os dados.} É \ul{\textbf{trapaça}} olhar
+primeiro os dados e então estabelecer hipóteses que se ajustem ao que os
+dados mostram.
 
 \end{tcolorbox}
 
-\section{Valor P e significância estatística}\label{sec-valor-p}
+\section{Valor P e significância estatística}\label{sec-valor-p-TSHP}
 
 A ideia do estabelecimento de uma hipótese nula, contra a qual desejamos
-encontrar evidência, parece estranha no início. Pode ser útil pensar em
-um julgamento criminal. O acusado é ``inocente até que se prove o
-contrário''. É exatamente assim que funcionam os testes estatísticos de
-significância, embora, em estatística, lidemos com evidência fornecida
-por dados e usemos a probabilidade para dizer quão forte é a evidência.
+encontrar \ul{\textbf{evidência}}, parece estranha no início. Pode ser
+útil pensar em um julgamento criminal.
 
-A probabilidade que mede a força da evidência contra a hipótese nula é
-chamada de \textbf{valor P}.
+O acusado é ``inocente até que se prove o contrário''.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Estatística de teste e valor P}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+É exatamente assim que funcionam os testes estatísticos de
+significância, embora, em estatística, lidemos com
+\ul{\textbf{evidência}} fornecida por \ul{\textbf{dados}} e usemos a
+\ul{\textbf{probabilidade}} para dizer \ul{\textbf{quão}} forte ou
+\ul{\textbf{significante}} é a evidência.
+
+A \ul{\textbf{probabilidade}} que mede a força da evidência contra a
+hipótese nula é chamada de \ul{\textbf{valor P}}.
+
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Estatística de teste e valor P}]
 
 Uma \textbf{\emph{estatística de teste}} calculada a partir de dados
 amostrais \textbf{\emph{mede quanto os dados divergem do que
 esperaríamos}}, \textbf{\emph{se a hipótese}} \textbf{\emph{nula}}
 \(H_0\) fosse verdadeira.
 
-Valores não usualmente grandes da estatística mostram que os dados não
-são consistentes com \(H_0\).
+Valores \ul{\textbf{usualmente grandes}} da \ul{\textbf{estatística}}
+mostram que \ul{\textbf{os dados não são consistentes}} com \(H_0\).
 
-A probabilidade, calculada supondo \(H_0\) verdadeira, de que a
-estatística de teste assuma um valor tão ou mais extremo do que o valor
-realmente observado é chamada de \textbf{valor P} do teste.
+A \ul{\textbf{probabilidade}}, calculada \ul{\textbf{supondo}} \(H_0\)
+\ul{\textbf{verdadeira}}, de que a \ul{\textbf{estatística de teste}}
+assuma \ul{\textbf{\emph{um valor tão ou mais extremo}}} do que o
+\ul{\textbf{valor realmente observado}} é chamada de \ul{\textbf{valor
+P}} do \ul{\textbf{\emph{teste}}}.
 
-\textbf{Quanto menor o valor P, mais forte é a evidência contra} \(H_0\)
-fornecida pelos dados.
+\textbf{Quanto \ul{menor} o \ul{valor P}, \ul{mais} forte é a
+\ul{evidência} contra} \(H_0\) fornecida pelos \ul{\textbf{dados}}.
 
-\textbf{Valores P pequenos são evidência contra} \(H_0\), pois
-\textbf{\emph{afirmam}} \textbf{\emph{que o resultado observado tem
-ocorrência improvável se}} \(H_0\) for \textbf{\emph{verdadeira}}.
+\ul{\textbf{Valores P pequenos}} \textbf{são \ul{evidência} contra}
+\(H_0\), pois \textbf{\emph{afirmam}} \textbf{\emph{que o \ul{resultado
+observado} tem \ul{ocorrência improvável}}} \ul{\textbf{\emph{se}}}
+\(H_0\) for \ul{\textbf{\emph{verdadeira}}}.
 
-\textbf{Valores P grandes não fornecem evidência contra} \(H_0\).
+\ul{\textbf{Valores P grandes}} \textbf{\ul{nãofornecem evidência
+contra}} \(H_0\).
 
 \end{tcolorbox}
 
 Quão pequeno deve ser o valor P para ser evidência convincente contra
-\(H_0\)? Muitos usuários de estatística consideram valores menores do
-que 0,05 ou 0,01 como convincentes.
+\(H_0\)?
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-note-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Exemplo 17.5 - Adoçante de refrigerantes: valor P unilateral}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+Muitos usuários de estatística consideram valores menores do que 0,05 ou
+0,01 como \emph{convincentes}.
+
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Exemplo 17.5 - Adoçante de refrigerantes: valor P unilateral}]
 
 O estudo da perda de doçura nos Exemplos 17.2 e 17.3 testa as seguintes
 hipóteses:
@@ -14303,33 +14384,34 @@ segundo, os dados forneceram \(\bar{x} = 1,02\).
 O valor P para cada teste é a probabilidade de obter um \(\bar{x}\)
 desse tamanho quando a perda média de doçura é realmente \(\mu = 0\).
 
-A curva Normal é a distribuição amostral de \(\bar{x}\) quando a
-hipótese nula \(H_0: \mu = 0\) é verdadeira, usando o desvio-padrão
-populacional \(\sigma = 1\).
+A curva Normal \emph{descreve} a distribuição amostral de \(\bar{x}\)
+quando a hipótese nula \(H_0: \mu = 0\) é verdadeira, usando o
+desvio-padrão populacional \(\sigma = 1\).
 
 Um cálculo de probabilidade Normal mostra que o valor P é
 \(P(\bar{x} \geq 0,3) = 0,1714\).
 
 Um valor tão grande quanto \(\bar{x} = 0,3\) apareceria por acaso em
 17\% de todas as amostras, quando \(H_0: \mu = 0\) fosse verdadeira.
-Assim, a observação de \(\bar{x} = 0,3\) \textbf{não é evidência} forte
-contra \(H_0\).
+Assim, a observação de \(\bar{x} = 0,3\) \ul{\textbf{não}} \textbf{é
+evidência} forte \textbf{\emph{contra}} \(H_0\).
 
 Por outro lado, pode-se verificar que a probabilidade de que \(\bar{x}\)
 seja 1,02 ou maior, quando de fato \(\mu = 0\), é de apenas 0,0006. Ou
 seja, raramente observaríamos uma perda média de doçura de 1,02 ou maior
-se \(H_0\) fosse verdadeira. Esse \textbf{valor P pequeno} fornece forte
-\textbf{evidência contra} \(H_0\) e a favor da alternativa
+se \(H_0\) fosse verdadeira. Esse \ul{\textbf{valor P pequeno}} fornece
+forte \ul{\textbf{evidência contra}} \(H_0\) e a favor da alternativa
 \(H_a: \mu > 0\).
 
 \end{tcolorbox}
 
-A hipótese alternativa estabelece a direção que conta como evidência
-contra \(H_0\). No Exemplo 17.5, apenas valores grandes, positivos,
-contam, porque a alternativa é unilateral do lado mais alto. Se a
-alternativa for bilateral, ambas as direções contam.
+A \ul{\textbf{hipótese alternativa}} estabelece a \ul{\textbf{direção}}
+que \ul{\textbf{conta}} como \ul{\textbf{evidência}}
+\ul{\textbf{contra}} \(H_0\). No Exemplo 17.5, apenas valores grandes,
+positivos, contam, porque a alternativa é unilateral do lado mais alto.
+Se a alternativa for bilateral, ambas as direções contam.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-note-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Exemplo 17.6 - Satisfação no emprego: valor P bilateral}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Exemplo 17.6 - Satisfação no emprego: valor P bilateral}]
 
 O estudo sobre satisfação no emprego no Exemplo 17.4 requer que
 testemos:
@@ -14356,9 +14438,10 @@ verdadeira \textbf{não é} \textbf{boa evidência contra} \(H_0\).
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-warning-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-warning-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Importante sobre interpretação}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-warning-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-warning-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Importante sobre interpretação}]
 
-\textbf{A conclusão do Exemplo 17.6 não é que} \(H_0\) seja verdadeira.
+\textbf{A conclusão do Exemplo 17.6 \ul{não} é que} \(H_0\) seja
+verdadeira.
 
 O estudo procurou evidência contrária a \(H_0: \mu = 0\) e não conseguiu
 encontrar uma forte evidência. É tudo o que podemos dizer. Sem dúvida, a
@@ -14366,18 +14449,20 @@ média \(\mu\) para a população de todos os trabalhadores da montadora
 não é exatamente igual a 0. Uma amostra suficientemente grande
 forneceria evidência da diferença, mesmo que fosse muito pequena.
 
-Testes de significância avaliam a evidência contra \(H_0\). \textbf{Se}
-a \textbf{evidência} é forte, \textbf{podemos confiantemente rejeitar}
-\(H_0\) em \textbf{favor da alternativa}.
+\ul{\textbf{\emph{Testes de significância avaliam a evidência contra}}}
+\(H_0\).
+
+\textbf{Se} a \textbf{evidência} é forte, \textbf{podemos confiantemente
+rejeitar} \(H_0\) em \textbf{favor da alternativa}.
 
 O fato de não conseguir encontrar evidência contra \(H_0\) significa
 apenas que os \textbf{\emph{dados não são}} \textbf{\emph{inconsistentes
 com}} \(H_0\), e \textbf{\emph{não que tenhamos uma evidência clara de
 que}} \(H_0\) seja verdadeira.
 
-\textbf{Apenas dados que são inconsistentes com} \(H_0\) nos permitem
-fazer uma afirmativa positiva de que temos forte \textbf{evidência
-contra} \(H_0\).
+\ul{\textbf{Apenas}} \textbf{dados que são inconsistentes com} \(H_0\)
+nos permitem fazer uma afirmativa positiva de que temos forte
+\textbf{evidência contra} \(H_0\).
 
 \end{tcolorbox}
 
@@ -14388,33 +14473,45 @@ Nos Exemplos 17.5 e 17.6, decidimos que o valor P \textbf{P = 0,0006}
 era \textbf{evidência} forte contra a hipótese nula e que os
 \textbf{valores P = 0,1714 e P = 0,2293 não eram evidência convincente}.
 
-Não há uma regra sobre quão pequeno um valor P deva ser para que
-rejeitemos \(H_0\); é \textbf{\emph{uma questão de julgamento}} e
-depende das circunstâncias específicas.
+Não há uma regra sobre \ul{\textbf{\emph{quão pequeno um valor P deva
+ser}}} para que rejeitemos \(H_0\); é \textbf{\emph{uma questão de
+julgamento}} e depende das circunstâncias específicas.
 
 No entanto, podemos comparar um valor P com alguns valores fixos que
 comumente são utilizados como \textbf{padrões para evidência} contra
 \(H_0\).
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Significância estatística}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Significância estatística}]
 
-Se o valor P é tão pequeno quanto \(\alpha\), ou menor do que
-\(\alpha\), dizemos que os dados são \textbf{estatisticamente
-significantes} no nível \(\alpha\). A quantidade \(\alpha\) é chamada de
-\textbf{nível de significância}.
+\ul{\textbf{Se o valor P é tão pequeno quanto}} \(\alpha\),
+\ul{\textbf{ou}} \ul{\textbf{\emph{menor do que}}} \(\alpha\),
+\ul{\textbf{dizemos}} que os \ul{\textbf{dados}}
+\ul{\textbf{\emph{são}}} \ul{\textbf{estatisticamente significantes}} no
+\ul{\textbf{\emph{nível}}} \(\alpha\).
 
-``Significante'', em linguagem estatística, não tem o sentido de
-``importante''. \textbf{Significa} simplesmente \textbf{``improvável de
-acontecer apenas por acaso''}. O \textbf{nível de significância}
-\(\alpha\) torna ``improvável'' mais exato.
+A quantidade \(\alpha\) é chamada de \textbf{nível de significância}.
+
+``\ul{\textbf{\emph{Significante}}}'', em linguagem estatística, não tem
+o sentido de ``importante''.
+
+\ul{\textbf{Significa}} simplesmente \textbf{``\ul{\emph{improvável de
+acontecer apenas por acaso}}''}.
+
+O \textbf{nível de significância} \(\alpha\) torna ``improvável'' mais
+exato.
 
 \end{tcolorbox}
 
-Os valores fixos mais comuns são 0,05 e 0,01. Se P = 0,05, não há mais
-do que uma chance em 20 de que uma amostra dê evidência tão forte apenas
-por acaso, quando \(H_0\) é realmente verdadeira. Se P = 0,01, temos um
-resultado que, no longo prazo, aconteceria não mais do que uma vez em
-100 amostras, se \(H_0\) fosse verdadeira.
+Os valores fixos mais comuns são 0,05 e 0,01.
+
+Se P = 0,05, não há mais do que uma chance em 20 de que uma amostra dê
+evidência tão forte apenas por acaso, quando \(H_0\) é realmente
+verdadeira.
+
+Se \textbf{P = 0,01}, \ul{\textbf{\emph{temos um resultado}}} que, no
+\ul{\textbf{\emph{longo prazo}}}, \ul{\textbf{\emph{aconteceria não mais
+do que uma vez em 100 amostras}}}, \ul{\textbf{\emph{se}}} \(H_0\) fosse
+\ul{\textbf{\emph{verdadeira}}}.
 
 Para evitar confusão, usaremos \textbf{``estatisticamente
 significante''} em vez de ``significante'' neste capítulo. No entanto,
@@ -14422,11 +14519,11 @@ em artigos de pesquisa e publicações da mídia, você geralmente verá a
 palavra ``significante'' em vez da expressão ``estatisticamente
 significante''.
 
-É \textbf{boa prática interpretar as descobertas de significância}
-\textbf{estatística no contexto do problema} para o qual os dados foram
-coletados.
+É \textbf{boa prática \ul{interpretar} as descobertas de significância}
+\textbf{estatística \ul{\emph{no contexto do problema}}} para o qual os
+dados foram coletados.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-warning-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-warning-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Estatística no mundo real - Significância derruba um novo medicamento}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-warning-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-warning-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Estatística no mundo real - Significância derruba um novo medicamento}]
 
 A companhia farmacêutica Pfizer gastou US\$ 1 bilhão no desenvolvimento
 de uma nova droga contra o colesterol. A \textbf{verificação final} de
@@ -14454,7 +14551,7 @@ Na prática, os passos para a realização de um teste de significância
 refletem o processo geral de \textbf{quatro passos} para a
 \textbf{organização} \textbf{de problemas estatísticos realistas}.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Testes de significância: o processo de quatro passos}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Testes de significância: o processo de quatro passos}]
 
 \textbf{ESTABELEÇA}: qual é a questão prática que requer um teste
 estatístico?
@@ -14478,7 +14575,7 @@ condições para seu teste, você ou um programa de computador podem
 encontrar a estatística de teste e o valor P seguindo um roteiro. Esse é
 o roteiro para o teste que usamos em nossos exemplos.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Teste z de uma amostra para uma média populacional}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Teste z de uma amostra para uma média populacional}]
 
 Extraia uma AAS de tamanho n de uma população Normal que tenha média
 \(\mu\) desconhecida e desvio-padrão \(\sigma\) conhecido. Para testar a
@@ -14498,14 +14595,14 @@ calcule a \textbf{estatística de teste z de uma amostra}:
 \item
   \(H_a: \mu > \mu_0\) é \(P(Z \geq z)\)
 \item
-  \(H_a: \mu < \mu_0\) é \(P(Z \leq z)\)\\
+  \(H_a: \mu < \mu_0\) é \(P(Z \leq z)\)
 \item
   \(H_a: \mu \neq \mu_0\) é \(2P(Z \geq |z|)\)
 \end{itemize}
 
 \end{tcolorbox}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-note-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Exemplo 17.7 - Colesterol de executivos}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Exemplo 17.7 - Colesterol de executivos}]
 
 \textbf{ESTABELEÇA}: o \emph{National Center for Health Statistics}
 relata que o colesterol LDL para adultos tem média 130 e desvio-padrão
@@ -14560,10 +14657,10 @@ deve verificar essas condições}.
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
-  \textbf{AAS}: a condição mais importante é que os 72 executivos na
-  \textbf{amostra} sejam \textbf{uma AAS} da \textbf{população de todos
-  os executivos} \textbf{na empresa}. Devemos conferir essa exigência
-  questionando como os dados foram produzidos.
+  \textbf{AAS}: a \ul{\textbf{\emph{condição mais importante}}} é que os
+  72 executivos na \textbf{amostra} sejam \textbf{uma AAS} da
+  \textbf{população de todos os executivos} \textbf{na empresa}. Devemos
+  conferir essa exigência questionando como os dados foram produzidos.
 \item
   \textbf{Distribuição Normal}: devemos examinar, também, a
   \textbf{distribuição} \textbf{das 72 observações} à \textbf{procura}
@@ -14625,7 +14722,7 @@ conhecido.
 
 \section{Exercícios selecionados}\label{sec-exercicios}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-tip-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Para praticar}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-tip-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-tip-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Para praticar}]
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -14661,7 +14758,7 @@ Cleuler apud Oltramari (2024).
 
 A seguir, exemplificamos sucintamente a lógica de testes estatísticos.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-note-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Exemplo - Felipe Oltramari}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Exemplo - Felipe Oltramari}]
 
 Trata-se de pesquisa consistente na verificação da (in)existência de
 impacto da Resolução n.º 4, de 28 de março de 2022, do Colégio de
@@ -16977,7 +17074,7 @@ persecutória-investigativa no âmbito do Ministério Público. Goiânia:
 
 \chapter{Inferência na Prática}\label{sec-cap18-inferencia-pratica}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-note-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Capítulo 18 - Livro ``A Estatística Básica e sua prática'' (9ª ed.)}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Capítulo 18 - Livro ``A Estatística Básica e sua prática'' (9ª ed.)}]
 
 Este capítulo apresenta os conceitos fundamentais para aplicação prática
 da inferência estatística, abordando as condições necessárias para
@@ -17013,7 +17110,7 @@ prática. Introduziremos, também, procedimentos para intervalos de
 confiança e testes voltados para a maioria das situações que encontramos
 quando aprendemos a explorar dados.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Ditado Estatístico}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Ditado Estatístico}]
 
 Existe um ditado entre os estatísticos que diz que \textbf{``teoremas
 matemáticos são verdadeiros; métodos estatísticos são eficazes quando
@@ -17027,7 +17124,7 @@ estatísticos requer mais do que o conhecimento de tais fatos.
 \section{18.1 Condições para Inferência na
 Prática}\label{sec-condicoes-inferencia}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-warning-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-warning-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-warning-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-warning-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Warning}]
 
 Qualquer intervalo de confiança ou teste de significância só é confiável
 sob condições específicas. Cabe a você entender essas condições e julgar
@@ -17046,7 +17143,9 @@ Média}\label{condiuxe7uxf5es-simples-para-inferuxeancia-sobre-uma-muxe9dia-2}
 \item
   \textbf{Amostragem}: Temos uma amostra aleatória simples (AAS) da
   população de interesse. Não há não resposta ou outra dificuldade
-  prática. A população é grande em comparação com o tamanho da amostra.
+  prática. A população é grande em comparação com o tamanho da amostra
+  (N \textgreater{} 20 . n, para que 1 AAS\textsubscript{c} \(\sim\) 1
+  AAS\textsubscript{s}).
 \item
   \textbf{Normalidade}: A variável que medimos tem uma distribuição
   exatamente Normal N(μ, σ) na população.
@@ -17063,7 +17162,7 @@ condição ``σ conhecido''. O Capítulo 20 mostra como fazê-lo.
 \subsection{A Procedência dos Dados
 Importa}\label{a-proceduxeancia-dos-dados-importa}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-tip-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Pergunta Fundamental}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-tip-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-tip-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Pergunta Fundamental}]
 
 Ao planejar inferência, você deve sempre perguntar-se ``\textbf{De onde
 vieram os dados?}'' e também deve responder a outra questão,
@@ -17076,25 +17175,28 @@ sociólogo}\label{exemplo-18.1-o-psicuxf3logo-e-o-sociuxf3logo}
 
 \textbf{Psicóloga}: Uma psicóloga está interessada em saber como nossa
 percepção visual pode ser enganada por ilusões óticas. Seus sujeitos são
-alunos da disciplina de Psicologia 101 de sua universidade. A maioria
-dos psicólogos concordaria que é seguro tratar os alunos como uma AAS de
-todas as pessoas com visão normal. Não há nada incomum em ser estudante
-que mude a percepção visual.
+alunos da disciplina de Psicologia 101 de sua universidade. A
+\textbf{\emph{maioria dos psicólogos concordaria que é seguro tratar os
+alunos como uma AAS de todas as pessoas com visão normal}}. Não há nada
+incomum em ser estudante que mude a percepção visual.
 
 \textbf{Sociólogo}: Um sociólogo da mesma universidade usa os alunos da
-disciplina de Sociologia 101 para examinar as atitudes com relação a
-pessoas pobres e programas de combate à pobreza. Os alunos, como um
-grupo, são mais jovens do que a população adulta como um todo. Mesmo
-entre pessoas jovens, os alunos como um grupo provêm de lares mais
-educados e mais prósperos. O sociólogo não pode, razoavelmente, agir
-como se esses alunos fossem uma amostra aleatória de qualquer população
-de interesse.
+disciplina de Sociologia 101 para \textbf{\emph{examinar as atitudes com
+relação a pessoas pobres e programas de combate à pobreza}}. Os
+\ul{\textbf{alunos}}, como um grupo, \textbf{\emph{são mais jovens do
+que a população adulta como um todo}}. Mesmo entre pessoas jovens, os
+alunos como um grupo \textbf{\emph{provêm de lares mais educados}} e
+\textbf{\emph{mais prósperos}}. O \ul{\textbf{sociólogo não pode}},
+razoavelmente, \ul{\textbf{\emph{agir como se esses alunos fossem uma
+amostra aleatória de qualquer população de interesse}}}.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-note-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{De onde vieram os dados?}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{De onde vieram os dados?}]
 
 O requisito mais importante de qualquer procedimento de inferência é que
-os dados provenham de um processo ao qual se apliquem as leis de
-probabilidade. A inferência é mais confiável quando os dados resultam de
+os \ul{\textbf{\emph{dados provenham de um processo ao qual se apliquem
+as leis de probabilidade}}}.
+
+A \ul{\textbf{inferência}} é mais confiável quando os dados resultam de
 uma \textbf{amostra aleatória} ou de um \textbf{experimento comparativo
 aleatorizado}.
 
@@ -17103,14 +17205,15 @@ aleatorizado}.
 \subsection{A Procedência dos Dados
 Importa}\label{a-proceduxeancia-dos-dados-importa-1}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-warning-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-warning-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Princípio Fundamental}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-warning-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-warning-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Princípio Fundamental}]
 
-\textbf{Ao usar inferência estatística, você age como se seus dados
-fossem uma amostra aleatória ou provenientes de um experimento
-comparativo aleatorizado.}
+\textbf{Ao usar \ul{inferência estatística}, você \ul{\emph{age como
+se}} seus \ul{\emph{dados fossem uma amostra aleatória}} ou provenientes
+de um experimento comparativo aleatorizado.}
 
-Se seus dados não provêm de uma amostra aleatória ou de um experimento
-comparativo aleatorizado, suas conclusões podem ser questionadas.
+\ul{\textbf{Se}} seus dados \ul{\textbf{não}} provêm de uma amostra
+aleatória ou de um experimento comparativo aleatorizado,
+\ul{\textbf{\emph{suas conclusões podem ser questionadas}}}.
 
 \end{tcolorbox}
 
@@ -17133,20 +17236,22 @@ comparação com um experimento comparativo aleatorizado.
 
 \subsection{Cuidados Importantes}\label{cuidados-importantes}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-caution-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-caution-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Problemas Práticos}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-caution-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-caution-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{Problemas Práticos}]
 
 \begin{itemize}
 \item
-  \textbf{Problemas práticos}, como não resposta em amostras ou
-  desistências em um experimento, podem prejudicar a inferência, mesmo
-  em um estudo bem planejado.
+  \textbf{Problemas práticos}, como \ul{\textbf{\emph{não resposta}}} em
+  amostras ou \ul{\textbf{\emph{desistências}}} em um experimento, podem
+  \ul{\textbf{\emph{prejudicar}}} a \ul{\textbf{inferência}}, mesmo em
+  um estudo bem planejado.
 \item
   \textbf{Métodos diferentes} são necessários para planejamentos
-  diferentes. Os procedimentos z não são corretos para planejamentos
-  amostrais aleatórios mais complexos do que uma AAS.
+  diferentes. Os procedimentos z \ul{\textbf{não}} são corretos para
+  planejamentos amostrais aleatórios mais complexos do que uma AAS.
 \item
-  \textbf{Não há remédio} para falhas fundamentais, como resposta
-  voluntária ou experimentos não controlados.
+  \textbf{Não há remédio} para \ul{\textbf{falhas fundamentais}}, como
+  \ul{\textbf{\emph{resposta voluntária}}} ou
+  \ul{\textbf{\emph{experimentos não controlados}}}.
 \end{itemize}
 
 \end{tcolorbox}
@@ -17155,38 +17260,46 @@ comparação com um experimento comparativo aleatorizado.
 Populacional?}\label{qual-uxe9-a-forma-da-distribuiuxe7uxe3o-populacional}
 
 A maioria dos procedimentos de inferência estatística exige algumas
-condições sobre a forma da distribuição populacional. Muitos dos métodos
-mais básicos de inferência são planejados para populações Normais.
+\ul{\textbf{condições}} sobre a \ul{\textbf{\emph{forma}}} da
+\ul{\textbf{\emph{distribuição populacional}}}.
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-tip-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Teorema Limite Central na Prática}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+Muitos dos \ul{\textbf{métodos mais básicos}} de
+\ul{\textbf{inferência}} são \emph{planejados} para
+\ul{\textbf{populações Normais}}.
+
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-tip-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-tip-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Teorema Central do Limite na Prática}]
 
 Os procedimentos z e muitos outros procedimentos planejados para
-distribuições Normais se baseiam na \textbf{Normalidade da distribuição
-da média amostral} \(\bar{x}\), e não na Normalidade das observações
-individuais.
+distribuições Normais se baseiam na \ul{\textbf{Normalidade}} \textbf{da
+\ul{\emph{distribuição da média amostral}}} \(\bar{x}\), e não na
+Normalidade das observações individuais.
 
-O teorema limite central nos diz que: - A distribuição amostral de
-\(\bar{x}\) é mais Normal do que as observações individuais - A
-distribuição amostral de \(\bar{x}\) se torna mais Normal à medida que o
-tamanho da amostra aumenta
+O teorema do central limite (\ul{\textbf{TCL}}) nos diz que: - A
+distribuição amostral de \(\bar{x}\) é mais Normal do que as observações
+individuais - A \ul{\textbf{\emph{distribuição amostral}}} de
+\(\bar{x}\) \ul{\textbf{se torna}} \ul{\textbf{\emph{mais Normal à
+medida que o tamanho da amostra aumenta}}}.
 
 \end{tcolorbox}
 
 \subsection{Valores Atípicos e
 Robustez}\label{valores-atuxedpicos-e-robustez}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-warning-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-warning-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Exceção Importante}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-warning-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-warning-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Exceção Importante}]
 
-Há uma importante exceção ao princípio de que a forma da população seja
-menos crítica do que a procedência dos dados. \textbf{Valores atípicos
-podem distorcer os resultados da inferência.}
+Há uma \ul{\textbf{importante exceção}} ao princípio de que a forma da
+população seja menos crítica do que a procedência dos dados.
+
+\textbf{Valores atípicos podem distorcer os resultados da inferência.}
 
 \end{tcolorbox}
 
-Qualquer procedimento de inferência que se baseie em estatísticas
-amostrais, como a média amostral \(\bar{x}\), que não são resistentes a
-valores atípicos, pode ser fortemente influenciado por algumas poucas
-observações extremas.
+Qualquer procedimento de inferência que se baseie em
+\ul{\textbf{estatísticas amostrais}}, como a \ul{\textbf{média
+amostral}} \(\bar{x}\), que \ul{\textbf{\emph{não são resistentes a
+valores atípicos}}}, pode ser \ul{\textbf{\emph{fortemente
+influenciado}}} por algumas \ul{\textbf{\emph{poucas observações
+extremas}}}.
 
 \subsection{Diretrizes Práticas}\label{diretrizes-pruxe1ticas}
 
@@ -17199,13 +17312,13 @@ observações extremas.
   \textbf{Faça um diagrama} de ramo e folhas ou um histograma de seus
   dados
 \item
-  \textbf{Verifique} se a forma é razoavelmente Normal
+  \textbf{Verifique} se a \ul{\textbf{forma}} é razoavelmente Normal
 \item
-  \textbf{Procure sempre por valores atípicos} e tente corrigi-los ou
-  justificar sua remoção
+  \textbf{Procure sempre por \ul{valores atípicos}} e tente corrigi-los
+  ou justificar sua remoção
 \item
-  \textbf{Considere métodos alternativos} que não exijam a Normalidade
-  quando apropriado
+  \textbf{Considere \ul{métodos alternativos}} que não exijam a
+  Normalidade quando apropriado
 \end{enumerate}
 
 \section{18.2 Cuidados com os Intervalos de
@@ -17214,13 +17327,13 @@ Confiança}\label{sec-cuidados-intervalos}
 \subsection{A Margem de Erro Não Cobre Todos os
 Erros}\label{a-margem-de-erro-nuxe3o-cobre-todos-os-erros}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Limitação da Margem de Erro}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Limitação da Margem de Erro}]
 
 A margem de erro em um intervalo de confiança cobre apenas \textbf{erros
-de amostragem aleatória}. Dificuldades práticas, como subcobertura e não
-resposta, são, muitas vezes, mais sérias do que os erros de amostragem
-aleatória. \textbf{A margem de erro não leva em consideração essas
-dificuldades.}
+de amostragem aleatória}. Dificuldades práticas, como
+\ul{\textbf{subcobertura}} e \ul{\textbf{não resposta}}, são, muitas
+vezes, mais sérias do que os erros de amostragem aleatória. \textbf{A
+margem de erro não leva em consideração essas dificuldades.}
 
 \end{tcolorbox}
 
@@ -17245,8 +17358,9 @@ desvio-padrão \(\sigma = 35\).
 sendo de 95\% um intervalo de confiança para o peso médio de todos os
 homens adultos americanos?
 
-\textbf{Resposta}: Provavelmente não, porque as pessoas frequentemente
-mentem sobre seu peso, especialmente em pesquisas por telefone.
+\textbf{Resposta}: Provavelmente \ul{\textbf{não}}, porque as pessoas
+frequentemente \ul{\textbf{\emph{mentem}}} sobre seu peso, especialmente
+em pesquisas por telefone.
 
 \section{18.3 Cuidados com os Testes de
 Significância}\label{sec-cuidados-testes}
@@ -17267,7 +17381,7 @@ contra a hipótese nula?
 
 Isso depende principalmente de duas circunstâncias:
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-note-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Critérios para Avaliação do Valor P}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Critérios para Avaliação do Valor P}]
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -17287,9 +17401,11 @@ Isso depende principalmente de duas circunstâncias:
 \subsection{Significância Depende da Hipótese
 Alternativa}\label{significuxe2ncia-depende-da-hipuxf3tese-alternativa}
 
-Você deve ter notado que o valor P para o teste \textbf{unilateral} é
-\textbf{metade} do valor P para o teste \textbf{bilateral} da mesma
-hipótese nula e com base nos mesmos dados.
+Você deve ter notado que o \ul{\textbf{valor P}} para o
+\ul{\textbf{testeunilateral}} é \ul{\textbf{metade}} do
+\ul{\textbf{valor P}} para o \ul{\textbf{teste bilateral}} da
+\ul{\textbf{\emph{mesma hipótese nula}}} e \textbf{\emph{com base}} nos
+\ul{\textbf{mesmos dados}}.
 
 \begin{itemize}
 \tightlist
@@ -17304,7 +17420,7 @@ hipótese nula e com base nos mesmos dados.
 \subsection{Significância Depende do Tamanho
 Amostral}\label{significuxe2ncia-depende-do-tamanho-amostral}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-warning-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-warning-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Relação entre Significância e Tamanho da Amostra}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-warning-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-warning-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Relação entre Significância e Tamanho da Amostra}]
 
 \textbf{Como grandes amostras aleatórias têm pequena variação do acaso,
 os efeitos populacionais muito pequenos podem ser altamente
@@ -17334,7 +17450,7 @@ A estatística de teste z é:
   aumenta
 \end{itemize}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Significância ≠ Importância Prática}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Significância ≠ Importância Prática}]
 
 \textbf{Significância estatística não nos diz se um efeito é grande o
 bastante para ser importante. Isto é, significância estatística não é a
@@ -17362,7 +17478,7 @@ correlação é positiva.
 \subsection{Cuidado com as Análises
 Múltiplas}\label{cuidado-com-as-anuxe1lises-muxfaltiplas}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-caution-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-caution-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{O Problema das Múltiplas Comparações}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-caution-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-caution-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-caution-color}{\faFire}\hspace{0.5em}{O Problema das Múltiplas Comparações}]
 
 Significância estatística deve indicar que você encontrou um efeito que
 estava procurando. O raciocínio que fundamenta a significância
@@ -17372,11 +17488,16 @@ ponderar a evidência obtida.
 
 \end{tcolorbox}
 
-Suponha que as 20 hipóteses nulas (nenhuma associação) para 20 testes de
-significância sejam todas verdadeiras. Então, cada teste tem uma chance
-de 5\% de ser significante no nível 5\%. Como 5\% são 1/20, esperamos
-que cerca de 1, entre 20 testes, forneça, apenas devido ao acaso, um
-resultado significante.
+\ul{\textbf{Suponha}} que as 20 hipóteses nulas (nenhuma associação)
+para 20 testes de significância sejam \textbf{\emph{todas verdadeiras}}.
+
+Então, \ul{\textbf{cada teste tem uma chance de 5\% de ser significante
+no nível 5\%}}.
+
+Como 5\% são 1/20, \ul{\textbf{esperamos}} que \ul{\textbf{cerca de 1}},
+\ul{\textbf{\emph{entre 20 testes}}}, \ul{\textbf{forneça}},
+\ul{\textbf{\emph{apenas devido ao acaso}}}, \ul{\textbf{\emph{um
+resultado significante}}}.
 
 \subsubsection{EXEMPLO 18.4: Telefones celulares e câncer no
 cérebro}\label{exemplo-18.4-telefones-celulares-e-cuxe2ncer-no-cuxe9rebro}
@@ -17396,17 +17517,31 @@ evidência.}
 \subsubsection{EXEMPLO 18.5: Viés de
 publicação}\label{exemplo-18.5-viuxe9s-de-publicauxe7uxe3o}
 
-Um exemplo sutil de análises múltiplas é o \textbf{viés de publicação}.
-Suponha que 20 pesquisadores estejam, independentemente, estudando a
-eficácia de uma nova terapia para o tratamento de uma doença. Para
-publicar suas descobertas, os pesquisadores devem demonstrar que a nova
-terapia é eficaz no nível de significância de 0,05.
+Um \ul{\textbf{\emph{exemplo sutil de análises múltiplas}}} é o
+\textbf{viés de publicação}.
 
-Um dos pesquisadores obtém resultados estatisticamente significantes,
-mas os outros 19 não. O único pesquisador que obteve resultados
-estatisticamente significantes publica suas descobertas. Nada ficamos
-sabendo sobre os 19 pesquisadores que deixaram de encontrar
-significância estatística.
+Suponha que 20 pesquisadores estejam, independentemente, estudando a
+eficácia de uma nova terapia para o tratamento de uma doença.
+
+Para publicar suas descobertas, os pesquisadores devem demonstrar que a
+nova terapia é \ul{\textbf{\emph{eficaz}}} no nível de significância de
+0,05.
+
+\ul{\textbf{\emph{Um dos pesquisadores obtém resultados estatisticamente
+significantes}}}, mas os \ul{\textbf{\emph{outros 19 não}}}.
+
+O \ul{\textbf{único pesquisador}} que obteve resultados estatisticamente
+significantes \ul{\textbf{\emph{publica}}} suas descobertas.
+
+\ul{\textbf{\emph{Nada ficamos sabendo sobre os 19 pesquisadores que
+deixaram de encontrar significância estatística}}}.
+
+Isso também pode ser visto como \ul{\textbf{\emph{um viés de não
+resposta}}} (NA) por parte dos 19 que deixaram de enviar seus estudos
+para publicação.
+
+OU também \ul{\textbf{\emph{um viés de resposta voluntária}}}, por parte
+do único que enviou sua pesquisa paea publicação.
 
 \section{18.4 Planejamento de Estudos: Tamanho Amostral para Intervalos
 de Confiança}\label{sec-tamanho-amostral}
@@ -17427,7 +17562,7 @@ Para obter uma margem de erro desejada, m, substitua o valor de z* para
 seu nível de confiança desejado e resolva em relação ao tamanho amostral
 n:
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-tip-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tamanho da Amostra para uma Margem de Erro Desejada}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-tip-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-tip-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Tamanho da Amostra para uma Margem de Erro Desejada}]
 
 Para estimar a média de uma população Normal usando um intervalo de
 confiança z com dada margem de erro m e um nível de confiança
@@ -17452,19 +17587,19 @@ percentual média μ para clientes desse restaurante que recebem essa
 mensagem em suas contas, dentro de ±0,5, com 90\% de confiança. Quantos
 clientes devem ser observados?
 
-\textbf{Solução}: A margem de erro desejada é m = 0,5. Para 90\% de
-confiança, a Tabela C fornece z* = 1,645. Portanto:
+\textbf{Solução}: A margem de erro desejada é m = 0,5. Para 95\% de
+confiança, a Tabela C fornece z* = 1,960. Portanto:
 
-\[n = \left(\frac{1,645 \times 2}{0,5}\right)^2 = (6,58)^2 = 43,3\]
+\[n = \left(\frac{1.960 \times 2}{0.5}\right)^2 = (7.84)^2 = 61.4656\]
 
-Como 43 clientes dão uma margem de erro ligeiramente maior do que a
-desejada, e 44 clientes, uma margem de erro ligeiramente menor, devemos
-observar \textbf{44 clientes}.
+Como 61 clientes dão uma margem de erro ligeiramente maior do que a
+desejada, e 62 clientes, uma margem de erro ligeiramente menor, devemos
+observar \textbf{62 clientes}.
 
 \section{18.5 Planejamento de Estudos: O Poder de um Teste Estatístico
 de Significância*}\label{sec-poder-teste}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-note-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Note}]
 
 *Cálculos de poder são importantes no planejamento de estudos, mas este
 material mais avançado não é necessário para a leitura do restante do
@@ -17494,7 +17629,7 @@ Amostral}\label{questuxf5es-para-decidir-o-tamanho-amostral}
   detectará um efeito do tamanho que consideramos importante?
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-tip-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Definições Importantes}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-tip-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-tip-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Definições Importantes}]
 
 \textbf{Tamanho do efeito}: A magnitude do efeito na população.
 
@@ -17539,7 +17674,7 @@ refrigerante realmente perde doçura, testaremos:
   provadores.
 \end{enumerate}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Erros Tipo I e Tipo II}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Erros Tipo I e Tipo II}]
 
 \textbf{Erro Tipo I}: Se rejeitamos H₀ quando, de fato, H₀ é verdadeira,
 esse é um erro Tipo I.
@@ -17581,7 +17716,7 @@ Nas colunas a vida da População como ela é.
 \subsection{Fatores que Influenciam o Tamanho da
 Amostra}\label{fatores-que-influenciam-o-tamanho-da-amostra}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-tip-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Influências sobre ``Qual o tamanho da amostra de que preciso?''}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-tip-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-tip-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Influências sobre ``Qual o tamanho da amostra de que preciso?''}]
 
 \begin{itemize}
 \item
@@ -17665,7 +17800,7 @@ desvio-padrão s = 1,83.
 
 \section{Resumo do Capítulo}\label{sec-resumo}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-note-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-note-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Pontos Principais}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-note-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-note-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Pontos Principais}]
 
 \begin{itemize}
 \item
@@ -17718,12 +17853,14 @@ quando Hₐ é verdadeira.
 (probabilidade = α) - Tipo II: Não rejeitar H₀ quando Hₐ é verdadeira
 (probabilidade = β) - Poder = 1 - β
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-important-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-important-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Lição Principal}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-important-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-important-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-important-color}{\faExclamation}\hspace{0.5em}{Lição Principal}]
 
 A \textbf{qualidade dos dados} é mais importante do que a
-\textbf{sofisticação dos métodos}. Métodos estatísticos são ferramentas
-poderosas, mas só são eficazes quando aplicados a dados de boa
-qualidade, coletados de forma apropriada.
+\textbf{sofisticação dos métodos}.
+
+Métodos estatísticos são ferramentas poderosas, mas só são
+\ul{\textbf{eficazes}} quando aplicados a dados de boa qualidade,
+coletados de forma apropriada.
 
 \end{tcolorbox}
 
@@ -17731,28 +17868,98 @@ qualidade, coletados de forma apropriada.
 
 \chapter{Conclusão}\label{sec-conclusao}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-tip-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{O poder dos dados}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-tip-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-tip-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{O poder dos dados}]
 
-Iniciar AED com a análise de uma variável de cada vez.
+Iniciar com uma AED - Análise Exploratória Descritiva pela a análise de
+\ul{\textbf{\emph{uma variável de cada vez}}}.
 
-Capturar padrões por meio de gráficos adequados para cada tipo de
-variável.
+Capturar \ul{\textbf{\emph{padrões}}} por meio de
+\ul{\textbf{\emph{gráficos adequados}}} para \ul{\textbf{\emph{cada tipo
+de variável}}}.
 
-Resumir os dados por meio de um único número; que pode ser uma medida de
-tendência central (média, mediana ou moda) ou uma medida da
-variabilidade presente no conjunto de dados daquela variável (Amplitude,
-desvio, variância, desvio padrão; quartis e AIQ - Amplitude
-Interquartil).
+\ul{\textbf{\emph{Resumir}}} os dados por meio de um único número; que
+pode ser \textbf{\emph{uma medida de tendência central}} (média, mediana
+ou moda) ou \textbf{\emph{uma medida da variabilidade}} presente no
+conjunto de dados daquela variável (Amplitude, desvio, variância, desvio
+padrão; quartis e AIQ - Amplitude Interquartil).
 
-Somente depois dessa análise univariada que se deve proceder uma análise
-bivariada. Novamente por meio de gráficos e resumos numéricos adequados.
+\ul{\textbf{\emph{Somente depois}}} dessa \ul{\textbf{\emph{análise
+univariada}}} que se deve proceder \ul{\textbf{\emph{uma análise
+bivariada}}}. Novamente por meio de \textbf{\emph{gráficos}} e
+\textbf{\emph{resumos numéricos}} \ul{\textbf{\emph{adequados}}}.
 
-E somente depois de uma AED - Análise Exploratória de Dados, primeiro
-descritiva (AED) e depois inferencial (AEI), que se busca modelar os
-dados, ou seja, propor, testar e escolher modelos que melhor se ajustem
-aos dados empíricos colhidos.
+Aplicar TSHN - Teste de Significância contra a Hipótese Nula adequado
+para cada tipo específico de relações entre variáveis:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Uma só variável Quantitativa: teste-Z ou teste-T;
+\item
+  Uma só variável Qualitativa: teste-\emph{X}\textsuperscript{2} da
+  qualidade do ajuste (homogeneidade);
+\item
+  Quantitativa x Quantitativa: teste do coeficiente de regressão linear
+  r de Pearson;
+\item
+  Quantitativa x Qualitativa: teste de ANOVA;
+\item
+  Qualitativa x Qualitativa: teste-\emph{X}\textsuperscript{2} para
+  associação.
+\end{enumerate}
+
+É necesário compreender a \ul{\textbf{lógica}} de um
+TSH\textsubscript{0} através da conceituação de \ul{\textbf{evidência
+empírica}} como a \ul{\textbf{verossimilhança}} dos \ul{\textbf{dados}}
+colhidos, \ul{\textbf{medida}} como igual à \ul{\textbf{probabilidade}},
+\ul{\textbf{valor P}} (área sob a curva de densidade de probabilidade da
+distribuição amostral da estatística amostral adequadamente escolhida)
+de \ul{\textbf{\emph{encontra um valor tão extremo}}} ou igual à
+\ul{\textbf{\emph{estatística de teste observada}}} nos
+\ul{\textbf{\emph{dados amostrais coletados}}}.
+
+E somente depois de uma AED - Análise Exploratória de Dados,
+\ul{\textbf{\emph{primeiro descritiva}}} (AED) e depois
+\ul{\textbf{\emph{inferencial}}} (AEI), que se busca
+\ul{\textbf{\emph{modelar}}} os \ul{\textbf{\emph{dados}}}, ou seja,
+\ul{\textbf{\emph{propor}}}, \ul{\textbf{\emph{testar}}} e
+\ul{\textbf{\emph{escolher}}}, por meio da \emph{análise e comparação}
+de seus \emph{resíduos}, os \ul{\textbf{\emph{Modelos}}} que
+\ul{\textbf{\emph{melhor se ajustem aos dados}}} empíricos colhidos (sem
+\emph{sobreajustes} nem \emph{subajustes}) para fins de realizar testes
+paramétricos de significância contra a Hipótese Nula mais precisos ou
+mesmo para fins de \textbf{\emph{predição}}.
+
+Todavia, nenhuma análise estatística, por mais sofisticada que seja,
+seria capaz de afastar ou corrigir os \ul{\textbf{\emph{viéses
+decorrentes dos erros não amostrais}}} que podem ser cometidos no
+\ul{\textbf{\emph{processo de amostragem}}} e de
+\ul{\textbf{\emph{coletadas dos dados}}}.
+
+Ou seja, é o \ul{\textbf{\emph{cuidado qualitativo}}} na
+\ul{\textbf{\emph{coleta de dados empíricos}}} \ul{\textbf{válidos,
+fidedignos e reproduzíveis}} que \ul{\textbf{garante}} os
+\ul{\textbf{\emph{resultados alcançados}}} e a
+\ul{\textbf{\emph{replicabilidade}}} de uma \ul{\textbf{\emph{pesquisa
+empírica aplicada generalizável e confiável}}}.
+
+\begin{quote}
+\textbf{Ou seja:}
+
+\textbf{Se entra lixo! Sai lixo!}
+\end{quote}
 
 \end{tcolorbox}
+
+É necessário desenvolver um \ul{\textbf{\emph{espírito crítico}}} tanto
+para saber planejar, executar e apresentar os resultados válidos e
+confiáveis de uma pesquisa empírica aplicada reproduzível como também
+para defender-se dos argumentos daqueles que rompem com a ética e a
+integridade na pesquisa, seja por valer-se de mentiras contadas com
+apoio da Estatística seja por valer-se apenas de argumentos de
+autoridade sem qualquer apoio em evidências suportadas pela coleta
+adequada de dados empíricos.
 
 \bookmarksetup{startatroot}
 
@@ -18156,7 +18363,7 @@ uma \textbf{tabela} ou de um \textbf{gráfico de barras}.
 
 \markboth{Referências}{Referências}
 
-\begin{tcolorbox}[enhanced jigsaw, arc=.35mm, opacitybacktitle=0.6, colframe=quarto-callout-tip-color-frame, titlerule=0mm, leftrule=.75mm, left=2mm, colbacktitle=quarto-callout-tip-color!10!white, breakable, toprule=.15mm, bottomtitle=1mm, opacityback=0, coltitle=black, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Oh! Bendito\ldots{}}, rightrule=.15mm, bottomrule=.15mm, toptitle=1mm, colback=white]
+\begin{tcolorbox}[enhanced jigsaw, titlerule=0mm, toprule=.15mm, coltitle=black, rightrule=.15mm, left=2mm, colframe=quarto-callout-tip-color-frame, bottomtitle=1mm, leftrule=.75mm, colbacktitle=quarto-callout-tip-color!10!white, opacityback=0, opacitybacktitle=0.6, bottomrule=.15mm, breakable, colback=white, arc=.35mm, toptitle=1mm, title=\textcolor{quarto-callout-tip-color}{\faLightbulb}\hspace{0.5em}{Oh! Bendito\ldots{}}]
 
 \textbf{\ldots{} \emph{o que semeia}}
 
