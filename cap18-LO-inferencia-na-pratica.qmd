@@ -130,7 +130,7 @@ Qualquer procedimento de inferência que se baseie em [**estatísticas amostrais
 4.  **Procure sempre por [valores atípicos]{.underline}** e tente corrigi-los ou justificar sua remoção
 5.  **Considere [métodos alternativos]{.underline}** que não exijam a Normalidade quando apropriado
 
-## 18.2 Cuidados com os Intervalos de Confiança {#sec-cuidados-intervalos}
+## 18.2 Cuidados com os Intervalos de Confiança {#sec-cuidados-intervalos-IC}
 
 ### A Margem de Erro Não Cobre Todos os Erros
 
@@ -152,7 +152,7 @@ Uma pesquisa Gallup de 2019 pediu a uma amostra aleatória nacional de 507 homen
 
 **Resposta**: Provavelmente [**não**]{.underline}, porque as pessoas frequentemente [***mentem***]{.underline} sobre seu peso, especialmente em pesquisas por telefone.
 
-## 18.3 Cuidados com os Testes de Significância {#sec-cuidados-testes}
+## 18.3 Cuidados com os Testes de Significância {#sec-cuidados-testes-TSHo}
 
 Testes de significância são amplamente utilizados na maioria das áreas do trabalho estatístico. Novos produtos farmacêuticos exigem evidência significante de eficácia e segurança. Tribunais inquirem sobre a significância estatística nas audiências de casos de discriminação em ações de classe.
 
@@ -354,7 +354,7 @@ Nas colunas a vida da População como ela é.
 -   Para qualquer nível de significância e poder desejados, a **detecção de um pequeno efeito** requer uma **amostra maior** do que a detecção de um grande efeito
 :::
 
-## Exercícios de Aplicação {#sec-exercicios}
+## Exercícios de Aplicação {#sec-exercicios-Inferencia-pratica}
 
 ### APLIQUE SEU CONHECIMENTO
 
@@ -374,7 +374,7 @@ Nas colunas a vida da População como ela é.
 (b) A distribuição das respostas é assimétrica à direita, em vez de Normal. Isso não afetará intensamente o intervalo de confiança z para essa amostra. Por que não?
 (c) Os 880 respondentes são uma AAS das ligações completadas entre 45.956 ligações para telefones residenciais selecionados aleatoriamente no catálogo telefônico. Apenas 5.029 das chamadas foram completadas. Essa informação fornece duas razões para suspeitar que a amostra, talvez, não represente todos os motoristas habilitados. Quais são essas razões?
 
-## Resumo do Capítulo {#sec-resumo}
+## Resumo do Capítulo {#sec-resumo-Inferencia-pratica}
 
 ::: callout-note
 ## Pontos Principais

@@ -476,7 +476,7 @@ Para evitar confusão, usaremos **"estatisticamente significante"** em vez de "s
 A companhia farmacêutica Pfizer gastou US\$ 1 bilhão no desenvolvimento de uma nova droga contra o colesterol. A **verificação final** de sua **eficácia** foi um teste clínico com 15 mil sujeitos. Para reforçar o estudo duplo-cego, apenas um grupo independente de especialistas viu os dados durante o teste. Após 3 anos de testes, os **monitores declararam que houve um número excessivo,** **estatisticamente significante, de mortes e de problemas cardíacos no grupo** **alocado à nova droga**. A Pfizer encerrou o teste.
 :::
 
-## Testes para uma média populacional {#sec-testes-media}
+## Testes para uma média populacional {#sec-testes-media-TSHO}
 
 Usamos testes para hipóteses sobre a média $\mu$ de uma população, sob as "condições simples", para introduzir os testes de significância. O importante é a lógica de um teste: dados amostrais que ocorreriam raramente se a hipótese nula $H_0$ fosse verdadeira fornecem evidência de que $H_0$ não é verdadeira.
 
@@ -548,7 +548,7 @@ Neste capítulo, estamos agindo como se as "condições simples" estabelecidas e
 
 3.  $\sigma$ conhecido: é, de fato, **não realista** supor que saibamos que $\sigma = 40$. Veremos, no Capítulo 20, que é **fácil** nos **livrarmos** da **necessidade** de **conhecer** $\sigma$.
 
-## Resumo {#sec-resumo}
+## Resumo {#sec-resumo-TSHO}
 
 -   **Um teste de significância avalia a evidência fornecida pelos dados contra uma hipótese nula** $H_0$ em favor de uma hipótese alternativa $H_a$.
 
@@ -568,7 +568,7 @@ $$z = \frac{\bar{x} - \mu_0}{\sigma / \sqrt{n}}$$
 
 O teste z **pressupõe** uma **AAS** de tamanho **n** de uma **população Normal** com desvio-padrão populacional $\sigma$ conhecido.
 
-## Exercícios selecionados {#sec-exercicios}
+## Exercícios selecionados {#sec-exercicios-TSHO}
 
 ```{r}
 #| echo: false

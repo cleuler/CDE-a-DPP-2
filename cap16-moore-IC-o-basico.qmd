@@ -569,7 +569,7 @@ Dizer que temos 95% de confiança em que o parâmetro desconhecido µ esteja ent
 
 ### EXEMPLO 16.2 Estimação estatística em figuras
 
-Um srcipt R que simula 20 IC-NC95% para o `BMI` do data set `NHANES`.
+Um srcipt R que simula 20 diferentes IC-NC95% para o `BMI` do data set `NHANES`.
 
 ```{r}
 
@@ -676,4 +676,6 @@ simular_20_ic_bmi_nhanes()
 simular_20_ic_bmi_nhanes(nsims = 20, n = 50, seed = 123, replace = TRUE, save_csv = FALSE, out_file = "ic20_bmi.csv")
 ```
 
-mmm
+Como é esperado em Erro Tipo 1 = 5%, então é esperado, no longo prazo, isto é, ao longo de muita replicações desses 20 experimentos, que em 5%x20 = 1 deles o respectivo Intervalo de confiança poderá não capturar o verdadeiro valor do parâmetro populacional que foi objeto dessa estimativa intervalar oferecida pela técnica do Intervalo de confiança.
+
+Todavia, na simulação acima, todos os 20 IC-95% caputaram o verdadeiro parâmetro populacional estimado.

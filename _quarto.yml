@@ -74,6 +74,7 @@ book:
     - AEID-cap18-Reproduzivel.qmd
     - cap3-DistNorm.qmd
     - cap5-pldr-modelos-dados.qmd
+    - Replicar-MPE-dados -correlacao.qmd
     - cap13-pldr-model-rel-contin.qmd
     - cap16-pldr-EstMultiv.qmd
     - cap6-moore-tab-dupla-entrada.qmd
