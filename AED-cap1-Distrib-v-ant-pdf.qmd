@@ -79,7 +79,7 @@ Trata-se de uma *lista meramente enumerativa*, que não afasta a ***necessidade*
 Apenas quando [***todos***]{.underline} esses [***cuidados qualitativos***]{.underline} forem tomados para [***prevenção***]{.underline} contra a presença de [***vieses não amostrais***]{.underline} é que se poderá [***validar***]{.underline} uma *coleta probabílistica* de *dados amostrais* [***fidedignos***]{.underline}.
 :::
 
-A seguir a ideia de Ciclo da **Estatística Básica Inferencial**, que, após uma boa Análise Estatística Descritiva (AED) e Exploratória (AEE) dos dados, busca *chegar*, por meio do [***método indutivo***]{.underline}, a [***conclusões***]{.underline} *[**válidas**]{.underline} **e [confiáveis]{.underline}*** para ***toda*** a [***população amostrada***]{.underline} a partir de [***uma***]{.underline} *[**amostra probabilística**]{.underline}* [***válida***]{.underline} *e [**fidedígna**]{.underline}* daquela coletada.
+A seguir a ideia de Ciclo da **Estatística Básica Inferencial**, que, após uma boa Análise Estatística Descritiva (AED) e Exploratória (AEE) dos dados, busca *chegar*, por meio do [***método indutivo***]{.underline}, a [***conclusões***]{.underline} [***válidas***]{.underline} ***e [confiáveis]{.underline}*** para ***toda*** a [***população amostrada***]{.underline} a partir de [***uma***]{.underline} [***amostra probabilística***]{.underline} [***válida***]{.underline} *e [**fidedígna**]{.underline}* daquela coletada.
 
 ![Ciclo da Inferência ou indução Estatística.](fig/inferencia.png){fig-align="center"}
 
