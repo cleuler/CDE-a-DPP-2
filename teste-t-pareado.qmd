@@ -1,0 +1,731 @@
+# Procedimentos t para Dados Emparelhados {#sec-teste-t-pareado}
+
+::: callout-note
+## Teste t para Dados Emparelhados
+
+Este capítulo apresenta os métodos estatísticos para análise de dados emparelhados, uma das técnicas mais poderosas em inferência estatística quando temos medições repetidas ou pares relacionados.
+:::
+
+## Conceitos Fundamentais
+
+Dados emparelhados ocorrem quando temos **duas medições na mesma unidade experimental** ou **unidades experimentais muito similares**. A análise de dados emparelhados é mais poderosa que a comparação de duas amostras independentes porque:
+
+1.  **Controla a variabilidade entre unidades**
+2.  **Foca na diferença dentro de cada par**
+3.  **Reduz o erro padrão das estimativas**
+
+```{r}
+#| label: setup-emparelhados
+#| message: false
+#| warning: false
+
+# Carregando bibliotecas necessárias
+library(tidyverse)
+library(ggplot2)
+library(knitr)
+library(kableExtra)
+library(patchwork)
+
+# Configurações globais
+options(digits = 4)
+set.seed(2023)
+theme_set(theme_minimal())
+```
+
+### Quando Usar Dados Emparelhados
+
+::: callout-tip
+## Situações Típicas para Dados Emparelhados
+
+1.  **Estudos antes-depois**: Medições na mesma pessoa/unidade em momentos diferentes
+2.  **Pares naturais**: Irmãos gêmeos, cônjuges, vizinhos
+3.  **Matching experimental**: Unidades pareadas por características similares
+4.  **Medições duplas**: Dois métodos aplicados na mesma unidade
+:::
+
+## Exemplo 20.4: Eficácia de Programa de Capacitação Jurídica
+
+**Contexto**: Um programa de capacitação para promotores foi implementado. Queremos avaliar se houve melhora no desempenho após o treinamento.
+
+```{r}
+#| label: dados-capacitacao
+#| echo: true
+
+# Dados do Exemplo 20.4 - Pontuação em avaliações (0-100)
+# Mesmo promotor avaliado antes e depois do treinamento
+
+dados_capacitacao <- data.frame(
+  Promotor = paste("Promotor", LETTERS[1:12]),
+  Antes = c(72, 68, 75, 71, 69, 73, 70, 74, 67, 76, 72, 68),
+  Depois = c(78, 73, 82, 76, 74, 79, 75, 80, 72, 83, 77, 74),
+  stringsAsFactors = FALSE
+)
+
+# Calculando as diferenças (Depois - Antes)
+dados_capacitacao <- dados_capacitacao %>%
+  mutate(
+    Diferença = Depois - Antes,
+    Melhora = ifelse(Diferença > 0, "Sim", "Não")
+  )
+
+# Exibindo os dados
+kable(dados_capacitacao, 
+      caption = "Pontuações antes e depois do treinamento",
+      col.names = c("Promotor", "Antes", "Depois", "Diferença", "Melhorou?")) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+## Análise Exploratória dos Dados Emparelhados
+
+```{r}
+#| label: exploracao-emparelhados
+#| fig-width: 12
+#| fig-height: 8
+
+# Estatísticas descritivas das diferenças
+diferenças <- dados_capacitacao$Diferença
+
+cat("ESTATÍSTICAS DESCRITIVAS DAS DIFERENÇAS:\n")
+cat("==========================================\n")
+cat("n =", length(diferenças), "\n")
+cat("Média =", round(mean(diferenças), 3), "\n")
+cat("Desvio padrão =", round(sd(diferenças), 3), "\n")
+cat("Mediana =", round(median(diferenças), 3), "\n")
+cat("Mínimo =", min(diferenças), "\n")
+cat("Máximo =", max(diferenças), "\n")
+cat("Diferenças positivas:", sum(diferenças > 0), "de", length(diferenças), "\n\n")
+
+# Gráficos exploratórios
+p1 <- ggplot(dados_capacitacao, aes(x = Antes, y = Depois)) +
+  geom_point(size = 3, alpha = 0.7, color = "blue") +
+  geom_abline(slope = 1, intercept = 0, linetype = "dashed", color = "red", size = 1) +
+  geom_smooth(method = "lm", se = TRUE, alpha = 0.3) +
+  labs(
+    title = "Pontuações: Antes vs Depois",
+    subtitle = "Linha vermelha = sem mudança",
+    x = "Pontuação Antes",
+    y = "Pontuação Depois"
+  ) +
+  theme_minimal()
+
+p2 <- ggplot(dados_capacitacao, aes(x = factor(1), y = Diferença)) +
+  geom_boxplot(alpha = 0.7, fill = "lightblue") +
+  geom_jitter(width = 0.1, size = 2, alpha = 0.7) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "red", size = 1) +
+  labs(
+    title = "Distribuição das Diferenças",
+    subtitle = "Diferença = Depois - Antes",
+    x = "",
+    y = "Diferença na Pontuação"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_blank())
+
+p3 <- ggplot(dados_capacitacao, aes(x = Diferença)) +
+  geom_histogram(binwidth = 1, fill = "lightgreen", alpha = 0.7, color = "black") +
+  geom_vline(xintercept = mean(diferenças), color = "red", linetype = "dashed", size = 1) +
+  labs(
+    title = "Histograma das Diferenças",
+    subtitle = paste("Média =", round(mean(diferenças), 2)),
+    x = "Diferença na Pontuação",
+    y = "Frequência"
+  ) +
+  theme_minimal()
+
+p4 <- ggplot(dados_capacitacao, aes(sample = Diferença)) +
+  geom_qq() +
+  geom_qq_line(color = "red") +
+  labs(
+    title = "Q-Q Plot das Diferenças",
+    subtitle = "Verificação de normalidade",
+    x = "Quantis Teóricos",
+    y = "Quantis Amostrais"
+  ) +
+  theme_minimal()
+
+# Combinando os gráficos
+(p1 + p2) / (p3 + p4)
+```
+
+## Teste t para Dados Emparelhados
+
+### Fundamentos Teóricos
+
+Para dados emparelhados, analisamos as **diferenças** $d_i = x_{2i} - x_{1i}$ onde:
+
+-   $x_{1i}$ e $x_{2i}$ são as duas medições do par $i$
+-   As diferenças $d_i$ seguem uma distribuição Normal
+-   Testamos hipóteses sobre $\mu_d$ (média populacional das diferenças)
+
+**Estatística de teste:** $$t = \frac{\bar{d} - \mu_{d0}}{s_d/\sqrt{n}}$$
+
+onde $\bar{d}$ é a média das diferenças amostrais e $s_d$ é o desvio-padrão das diferenças.
+
+```{r}
+#| label: teste-t-emparelhado
+
+# Configurando o teste de hipóteses
+# H₀: μ_d = 0 (não há melhora média)
+# H₁: μ_d > 0 (há melhora média) - teste unilateral à direita
+
+cat("TESTE T PARA DADOS EMPARELHADOS\n")
+cat("===============================\n\n")
+
+cat("Hipóteses:\n")
+cat("H₀: μ_d = 0 (não há melhora no desempenho)\n")
+cat("H₁: μ_d > 0 (há melhora no desempenho)\n")
+cat("α = 0.05\n\n")
+
+# Realizando o teste t pareado
+teste_pareado <- t.test(dados_capacitacao$Depois, 
+                       dados_capacitacao$Antes,
+                       paired = TRUE,
+                       alternative = "greater",  # teste unilateral
+                       conf.level = 0.95)
+
+# Exibindo resultados detalhados
+cat("RESULTADOS DO TESTE:\n")
+cat("===================\n")
+cat("Estatística t =", round(teste_pareado$statistic, 4), "\n")
+cat("Graus de liberdade =", teste_pareado$parameter, "\n")
+cat("p-valor =", round(teste_pareado$p.value, 6), "\n")
+cat("Intervalo de confiança 95% para μ_d: [", 
+    round(teste_pareado$conf.int[1], 3), ", ∞)\n")
+cat("Diferença média estimada =", round(teste_pareado$estimate, 3), "\n\n")
+
+# Interpretação do resultado
+if(teste_pareado$p.value < 0.05) {
+  cat("CONCLUSÃO: Rejeitamos H₀ (p < 0.05)\n")
+  cat("Há evidência estatística de melhora no desempenho após o treinamento.\n\n")
+} else {
+  cat("CONCLUSÃO: Não rejeitamos H₀ (p ≥ 0.05)\n")
+  cat("Não há evidência estatística suficiente de melhora no desempenho.\n\n")
+}
+
+# Cálculos manuais para verificação
+n <- length(diferenças)
+media_d <- mean(diferenças)
+dp_d <- sd(diferenças)
+erro_padrao <- dp_d / sqrt(n)
+
+cat("CÁLCULOS DETALHADOS:\n")
+cat("===================\n")
+cat("n =", n, "\n")
+cat("x̄_d =", round(media_d, 4), "\n")
+cat("s_d =", round(dp_d, 4), "\n")
+cat("EP(x̄_d) = s_d/√n =", round(erro_padrao, 4), "\n")
+cat("t = x̄_d / EP(x̄_d) =", round(media_d/erro_padrao, 4), "\n")
+
+# Valor crítico
+valor_critico <- qt(0.95, df = n-1)
+cat("Valor crítico t₀.₀₅,₁₁ =", round(valor_critico, 4), "\n")
+cat("Decisão:", ifelse(teste_pareado$statistic > valor_critico, 
+                      "t > t_crítico → Rejeitar H₀", 
+                      "t ≤ t_crítico → Não rejeitar H₀"), "\n")
+```
+
+## Intervalo de Confiança para a Diferença Média
+
+```{r}
+#| label: ic-diferenca-media
+
+cat("INTERVALO DE CONFIANÇA BILATERAL\n")
+cat("================================\n\n")
+
+# IC bilateral de 95% para μ_d
+ic_bilateral <- t.test(dados_capacitacao$Depois, 
+                      dados_capacitacao$Antes,
+                      paired = TRUE,
+                      alternative = "two.sided",
+                      conf.level = 0.95)
+
+cat("Intervalo de Confiança 95% para μ_d:\n")
+cat("[", round(ic_bilateral$conf.int[1], 3), " ; ", 
+    round(ic_bilateral$conf.int[2], 3), "]\n\n")
+
+cat("INTERPRETAÇÃO:\n")
+cat("Com 95% de confiança, a melhora média verdadeira na pontuação\n")
+cat("está entre", round(ic_bilateral$conf.int[1], 2), "e", 
+    round(ic_bilateral$conf.int[2], 2), "pontos.\n\n")
+
+# Diferentes níveis de confiança
+niveis_conf <- c(0.90, 0.95, 0.99)
+cat("INTERVALOS DE CONFIANÇA EM DIFERENTES NÍVEIS:\n")
+cat("============================================\n")
+
+resultados_ic <- data.frame(
+  Nível = paste0(niveis_conf * 100, "%"),
+  Inferior = NA,
+  Superior = NA,
+  Amplitude = NA
+)
+
+for(i in 1:length(niveis_conf)) {
+  ic_temp <- t.test(dados_capacitacao$Depois, 
+                   dados_capacitacao$Antes,
+                   paired = TRUE,
+                   conf.level = niveis_conf[i])
+  
+  resultados_ic$Inferior[i] <- round(ic_temp$conf.int[1], 3)
+  resultados_ic$Superior[i] <- round(ic_temp$conf.int[2], 3)
+  resultados_ic$Amplitude[i] <- round(ic_temp$conf.int[2] - ic_temp$conf.int[1], 3)
+}
+
+kable(resultados_ic, caption = "Intervalos de confiança para μ_d") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+## Visualização do Teste e Intervalo de Confiança
+
+```{r}
+#| label: viz-teste-pareado
+#| fig-width: 12
+#| fig-height: 8
+
+# Visualização da distribuição t e região crítica
+df_grafico <- n - 1
+x_vals <- seq(-4, 6, length.out = 1000)
+y_vals <- dt(x_vals, df = df_grafico)
+
+dados_dist <- data.frame(x = x_vals, y = y_vals)
+
+# Valor da estatística t calculada
+t_calc <- as.numeric(teste_pareado$statistic)
+
+p_dist <- ggplot(dados_dist, aes(x = x, y = y)) +
+  geom_line(size = 1, color = "blue") +
+  
+  # Região crítica (teste unilateral à direita)
+  geom_area(data = subset(dados_dist, x >= valor_critico), 
+            aes(x = x, y = y), fill = "red", alpha = 0.3) +
+  
+  # Linha da estatística t calculada
+  geom_vline(xintercept = t_calc, color = "darkgreen", 
+             linetype = "solid", size = 1.5) +
+  
+  # Linha do valor crítico
+  geom_vline(xintercept = valor_critico, color = "red", 
+             linetype = "dashed", size = 1) +
+  
+  # Anotações
+  annotate("text", x = t_calc, y = max(y_vals)*0.8, 
+           label = paste("t =", round(t_calc, 3)), 
+           color = "darkgreen", size = 4, hjust = -0.1) +
+  
+  annotate("text", x = valor_critico, y = max(y_vals)*0.6, 
+           label = paste("t crítico =", round(valor_critico, 3)), 
+           color = "red", size = 4, hjust = 1.1) +
+  
+  annotate("text", x = valor_critico + 0.5, y = max(y_vals)*0.2, 
+           label = "Região de\nRejeição", color = "red", size = 3) +
+  
+  labs(
+    title = paste("Distribuição t com", df_grafico, "graus de liberdade"),
+    subtitle = paste("Teste unilateral: H₁: μ_d > 0, p-valor =", 
+                     round(teste_pareado$p.value, 4)),
+    x = "Valores de t",
+    y = "Densidade"
+  ) +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5),
+        plot.subtitle = element_text(hjust = 0.5))
+
+# Gráfico antes-depois com linhas conectando os pares
+dados_long <- dados_capacitacao %>%
+  select(Promotor, Antes, Depois) %>%
+  pivot_longer(cols = c(Antes, Depois), 
+               names_to = "Momento", 
+               values_to = "Pontuação") %>%
+  mutate(Momento = factor(Momento, levels = c("Antes", "Depois")))
+
+p_pares <- ggplot(dados_long, aes(x = Momento, y = Pontuação)) +
+  geom_line(aes(group = Promotor), alpha = 0.5, color = "gray") +
+  geom_point(aes(color = Momento), size = 3, alpha = 0.8) +
+  geom_point(data = dados_long %>% 
+             group_by(Momento) %>% 
+             summarise(Pontuação = mean(Pontuação), .groups = "drop"),
+             aes(color = Momento), size = 5, shape = 18) +
+  scale_color_manual(values = c("Antes" = "red", "Depois" = "blue")) +
+  labs(
+    title = "Mudanças Individuais na Pontuação",
+    subtitle = "Diamantes = médias; linhas conectam o mesmo promotor",
+    x = "Momento da Avaliação",
+    y = "Pontuação",
+    color = "Momento"
+  ) +
+  theme_minimal() +
+  theme(legend.position = "bottom")
+
+# Combinando os gráficos
+p_dist / p_pares
+```
+
+## Verificação de Pressupostos
+
+```{r}
+#| label: pressupostos-emparelhados
+
+cat("VERIFICAÇÃO DE PRESSUPOSTOS\n")
+cat("===========================\n\n")
+
+# 1. Teste de normalidade das diferenças
+shapiro_test <- shapiro.test(diferenças)
+
+cat("1. NORMALIDADE DAS DIFERENÇAS:\n")
+cat("   Teste de Shapiro-Wilk:\n")
+cat("   W =", round(shapiro_test$statistic, 4), "\n")
+cat("   p-valor =", round(shapiro_test$p.value, 4), "\n")
+cat("   Conclusão:", 
+    ifelse(shapiro_test$p.value > 0.05, 
+           "Não rejeitamos normalidade (p > 0.05)",
+           "Rejeitamos normalidade (p ≤ 0.05)"), "\n\n")
+
+# 2. Teste de outliers
+Q1 <- quantile(diferenças, 0.25)
+Q3 <- quantile(diferenças, 0.75)
+IQR_val <- Q3 - Q1
+limite_inf <- Q1 - 1.5 * IQR_val
+limite_sup <- Q3 + 1.5 * IQR_val
+
+outliers <- diferenças[diferenças < limite_inf | diferenças > limite_sup]
+
+cat("2. DETECÇÃO DE OUTLIERS:\n")
+cat("   Método: Regra 1.5×IQR\n")
+cat("   Limite inferior:", round(limite_inf, 2), "\n")
+cat("   Limite superior:", round(limite_sup, 2), "\n")
+cat("   Outliers detectados:", length(outliers), "\n")
+if(length(outliers) > 0) {
+  cat("   Valores:", paste(outliers, collapse = ", "), "\n")
+}
+cat("\n")
+
+# 3. Independência (teórica - depende do delineamento)
+cat("3. INDEPENDÊNCIA:\n")
+cat("   Este pressuposto deve ser avaliado pelo delineamento experimental.\n")
+cat("   No exemplo: cada promotor é uma unidade independente.\n\n")
+
+# 4. Resumo dos pressupostos
+cat("RESUMO DOS PRESSUPOSTOS:\n")
+cat("========================\n")
+cat("✓ Dados emparelhados: SIM (mesmo promotor antes/depois)\n")
+cat("✓ Normalidade:", 
+    ifelse(shapiro_test$p.value > 0.05, "ATENDIDA", "QUESTIONÁVEL"), "\n")
+cat("✓ Independência: ASSUMIDA (pelo delineamento)\n")
+cat("✓ Outliers:", ifelse(length(outliers) == 0, "NENHUM", "PRESENTES"), "\n")
+```
+
+### Análise Gráfica dos Pressupostos
+
+```{r}
+#| label: graficos-pressupostos
+#| fig-width: 10
+#| fig-height: 6
+
+# Gráficos para verificação de pressupostos
+p_hist_diff <- ggplot(data.frame(diff = diferenças), aes(x = diff)) +
+  geom_histogram(aes(y = ..density..), bins = 6, fill = "lightblue", 
+                 alpha = 0.7, color = "black") +
+  geom_density(color = "red", size = 1.2) +
+  geom_vline(xintercept = mean(diferenças), color = "blue", 
+             linetype = "dashed", size = 1) +
+  labs(title = "Distribuição das Diferenças",
+       subtitle = "Verificação visual de normalidade",
+       x = "Diferença", y = "Densidade") +
+  theme_minimal()
+
+p_qq_diff <- ggplot(data.frame(diff = diferenças), aes(sample = diff)) +
+  stat_qq() +
+  stat_qq_line(color = "red", size = 1.2) +
+  labs(title = "Q-Q Plot das Diferenças",
+       subtitle = paste("Shapiro-Wilk p =", round(shapiro_test$p.value, 4)),
+       x = "Quantis Teóricos", y = "Quantis Amostrais") +
+  theme_minimal()
+
+p_hist_diff + p_qq_diff
+```
+
+## Exemplo 20.5: Comparação de Métodos de Ensino
+
+```{r}
+#| label: exemplo-metodos-ensino
+
+cat("EXEMPLO 20.5: COMPARAÇÃO DE MÉTODOS DE ENSINO\n")
+cat("=============================================\n\n")
+
+# Dados simulados baseados em cenário realista
+# Estudantes de direito avaliados com dois métodos diferentes
+# (cada estudante experimenta ambos os métodos)
+
+set.seed(2024)
+n_estudantes <- 15
+
+# Simulando dados com correlação positiva entre métodos
+notas_tradicional <- round(rnorm(n_estudantes, mean = 7.2, sd = 1.1), 1)
+# Método ativo tem correlação com tradicional + efeito positivo
+notas_ativo <- round(notas_tradicional + rnorm(n_estudantes, mean = 0.6, sd = 0.8), 1)
+notas_ativo <- pmax(0, pmin(10, notas_ativo))  # Limitando entre 0-10
+
+dados_ensino <- data.frame(
+  Estudante = paste("Est", sprintf("%02d", 1:n_estudantes)),
+  Método_Tradicional = notas_tradicional,
+  Método_Ativo = notas_ativo
+) %>%
+  mutate(Diferença = Método_Ativo - Método_Tradicional)
+
+# Exibindo os dados
+kable(dados_ensino, 
+      caption = "Notas com diferentes métodos de ensino (escala 0-10)",
+      col.names = c("Estudante", "Tradicional", "Ativo", "Diferença")) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+
+# Teste bilateral (pode haver diferença em qualquer direção)
+teste_ensino <- t.test(dados_ensino$Método_Ativo, 
+                      dados_ensino$Método_Tradicional,
+                      paired = TRUE,
+                      alternative = "two.sided",
+                      conf.level = 0.95)
+
+cat("\nTESTE DE HIPÓTESES:\n")
+cat("H₀: μ_d = 0 (métodos são equivalentes)\n")
+cat("H₁: μ_d ≠ 0 (métodos diferem)\n")
+cat("α = 0.05\n\n")
+
+cat("RESULTADOS:\n")
+cat("t =", round(teste_ensino$statistic, 4), "\n")
+cat("gl =", teste_ensino$parameter, "\n")
+cat("p-valor =", round(teste_ensino$p.value, 4), "\n")
+cat("IC 95%: [", round(teste_ensino$conf.int[1], 3), " ; ", 
+    round(teste_ensino$conf.int[2], 3), "]\n\n")
+
+cat("CONCLUSÃO:", 
+    ifelse(teste_ensino$p.value < 0.05,
+           "Há diferença significativa entre os métodos",
+           "Não há diferença significativa entre os métodos"), "\n")
+```
+
+## Tamanho do Efeito e Poder do Teste
+
+```{r}
+#| label: tamanho-efeito-poder
+
+# Calculando o tamanho do efeito (d de Cohen para amostras pareadas)
+d_cohen <- mean(diferenças) / sd(diferenças)
+
+cat("TAMANHO DO EFEITO\n")
+cat("=================\n")
+cat("d de Cohen =", round(d_cohen, 3), "\n")
+cat("Interpretação:", 
+    ifelse(abs(d_cohen) < 0.2, "Efeito pequeno",
+           ifelse(abs(d_cohen) < 0.5, "Efeito pequeno a médio",
+                  ifelse(abs(d_cohen) < 0.8, "Efeito médio",
+                         "Efeito grande"))), "\n\n")
+
+# Análise de poder (cálculo aproximado)
+cat("ANÁLISE DE PODER (aproximada):\n")
+cat("==============================\n")
+
+# Calculando poder para diferentes tamanhos amostrais
+tamanhos_n <- c(5, 10, 15, 20, 30, 50)
+niveis_alfa <- c(0.01, 0.05, 0.10)
+
+poder_matrix <- matrix(NA, nrow = length(tamanhos_n), ncol = length(niveis_alfa))
+rownames(poder_matrix) <- paste("n =", tamanhos_n)
+colnames(poder_matrix) <- paste("α =", niveis_alfa)
+
+# Simulação aproximada do poder
+for(i in 1:length(tamanhos_n)) {
+  for(j in 1:length(niveis_alfa)) {
+    # Valor não-centrality parameter
+    ncp <- abs(d_cohen) * sqrt(tamanhos_n[i])
+    # Valor crítico
+    t_crit <- qt(1 - niveis_alfa[j]/2, df = tamanhos_n[i] - 1)
+    # Poder aproximado
+    poder_matrix[i, j] <- round(1 - pt(t_crit, df = tamanhos_n[i] - 1, ncp = ncp) + 
+                               pt(-t_crit, df = tamanhos_n[i] - 1, ncp = ncp), 3)
+  }
+}
+
+cat("TABELA DE PODER (para d =", round(d_cohen, 3), "):\n")
+print(poder_matrix)
+```
+
+## Comparação: Dados Emparelhados vs Independentes
+
+```{r}
+#| label: comparacao-emparelhados-independentes
+
+cat("COMPARAÇÃO: ANÁLISE PAREADA vs INDEPENDENTE\n")
+cat("===========================================\n\n")
+
+# Teste como se fossem amostras independentes (INCORRETO para esses dados)
+teste_independente <- t.test(dados_capacitacao$Depois, 
+                            dados_capacitacao$Antes,
+                            paired = FALSE,  # Tratando como independentes
+                            var.equal = TRUE,
+                            alternative = "two.sided")
+
+# Comparando os resultados
+cat("RESULTADOS COMPARATIVOS:\n")
+cat("========================\n\n")
+
+cat("ANÁLISE PAREADA (CORRETA):\n")
+cat("t =", round(ic_bilateral$statistic, 4), "\n")
+cat("gl =", ic_bilateral$parameter, "\n") 
+cat("p-valor =", round(ic_bilateral$p.value, 4), "\n")
+cat("IC 95%: [", round(ic_bilateral$conf.int[1], 3), " ; ", 
+    round(ic_bilateral$conf.int[2], 3), "]\n\n")
+
+cat("ANÁLISE INDEPENDENTE (INCORRETA):\n")
+cat("t =", round(teste_independente$statistic, 4), "\n")
+cat("gl =", teste_independente$parameter, "\n")
+cat("p-valor =", round(teste_independente$p.value, 4), "\n")
+cat("IC 95%: [", round(teste_independente$conf.int[1], 3), " ; ", 
+    round(teste_independente$conf.int[2], 3), "]\n\n")
+
+cat("OBSERVAÇÕES:\n")
+cat("- Análise pareada tem menor erro padrão\n")
+cat("- Maior poder estatístico (p-valor menor)\n")
+cat("- Intervalo de confiança mais estreito\n")
+cat("- Controla variabilidade individual\n")
+```
+
+## Aplicações Práticas e Casos de Uso
+
+### Exemplo Adicional: Avaliação de Sistema Judicial
+
+```{r}
+#| label: exemplo-sistema-judicial
+
+cat("EXEMPLO PRÁTICO: TEMPO DE PROCESSAMENTO DE CASOS\n")
+cat("================================================\n\n")
+
+# Dados simulados: tempo de processamento antes e depois de reforma no sistema
+set.seed(456)
+dados_reforma <- data.frame(
+  Vara = paste("Vara", 1:10),
+  Antes_Reforma = round(rnorm(10, mean = 180, sd = 25)),  # dias
+  Depois_Reforma = round(rnorm(10, mean = 165, sd = 20))  # dias
+) %>%
+  mutate(
+    # Ajustando para correlação positiva
+    Depois_Reforma = round(0.7 * Antes_Reforma + 0.3 * Depois_Reforma),
+    Diferença = Depois_Reforma - Antes_Reforma,
+    Melhoria_Dias = -Diferença  # Negativo da diferença (redução é positiva)
+  )
+
+kable(dados_reforma, 
+      caption = "Tempo de processamento antes e depois da reforma (dias)") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+
+# Teste: A reforma reduziu significativamente o tempo de processamento?
+teste_reforma <- t.test(dados_reforma$Antes_Reforma,
+                       dados_reforma$Depois_Reforma,
+                       paired = TRUE,
+                       alternative = "greater",  # Esperamos Antes > Depois
+                       conf.level = 0.95)
+
+cat("\nTESTE: A reforma reduziu o tempo de processamento?\n")
+cat("H₀: μ_antes ≤ μ_depois (sem redução)\n")
+cat("H₁: μ_antes > μ_depois (há redução)\n\n")
+
+cat("RESULTADOS:\n")
+cat("Redução média:", round(teste_reforma$estimate, 2), "dias\n")
+cat("t =", round(teste_reforma$statistic, 4), "\n")
+cat("p-valor =", round(teste_reforma$p.value, 4), "\n")
+cat("Conclusão:", 
+    ifelse(teste_reforma$p.value < 0.05, 
+           "A reforma foi eficaz em reduzir o tempo",
+           "Não há evidência de redução significativa"), "\n")
+```
+
+## Resumo e Interpretação Prática
+
+```{r}
+#| label: resumo-dados-emparelhados
+
+cat("RESUMO: PROCEDIMENTOS t PARA DADOS EMPARELHADOS\n")
+cat("===============================================\n\n")
+
+cat("QUANDO USAR:\n")
+cat("- Medições antes/depois na mesma unidade\n")
+cat("- Pares de unidades muito similares\n")
+cat("- Queremos controlar a variabilidade entre unidades\n")
+cat("- Estudos longitudinais\n")
+cat("- Comparação de métodos na mesma amostra\n\n")
+
+cat("VANTAGENS:\n")
+cat("- Maior poder estatístico\n")
+cat("- Controla variabilidade individual\n")
+cat("- Menor tamanho amostral necessário\n")
+cat("- Intervalos de confiança mais precisos\n")
+cat("- Reduz confundimento\n\n")
+
+cat("PRESSUPOSTOS:\n")
+cat("- Diferenças seguem distribuição normal\n")
+cat("- Pares são independentes entre si\n")
+cat("- Ausência de outliers extremos\n")
+cat("- Amostra aleatória de pares\n\n")
+
+cat("ALTERNATIVAS QUANDO PRESSUPOSTOS FALHAM:\n")
+cat("- Transformação dos dados (log, raiz, etc.)\n")
+cat("- Teste de Wilcoxon para amostras pareadas\n")
+cat("- Bootstrap para intervalos de confiança\n")
+cat("- Métodos robustos\n\n")
+
+cat("INTERPRETAÇÃO DOS RESULTADOS:\n")
+cat("=============================\n")
+cat("Exemplo - Capacitação de Promotores:\n")
+cat("- Melhora média:", round(mean(diferenças), 2), "pontos\n")
+cat("- IC 95%: [", round(ic_bilateral$conf.int[1], 2), " ; ", 
+    round(ic_bilateral$conf.int[2], 2), "]\n")
+cat("- Tamanho do efeito:", 
+    ifelse(abs(d_cohen) < 0.5, "Pequeno a médio", 
+           ifelse(abs(d_cohen) < 0.8, "Médio", "Grande")), "\n")
+cat("- Conclusão prática:", 
+    ifelse(teste_pareado$p.value < 0.05,
+           "O programa de capacitação foi estatisticamente efetivo",
+           "Não há evidência estatística de efetividade do programa"), "\n\n")
+
+cat("RECOMENDAÇÕES PRÁTICAS:\n")
+cat("======================\n")
+cat("1. Sempre verificar pressupostos graficamente\n")
+cat("2. Reportar tamanho do efeito além da significância\n")
+cat("3. Considerar significância prática, não apenas estatística\n")
+cat("4. Usar intervalos de confiança para interpretação\n")
+cat("5. Planejar tamanho amostral adequado antecipadamente\n")
+```
+
+## Exercícios de Aplicação {#sec-exercicios-t-pareado}
+
+### Exercício 1: Eficácia de Treinamento Online
+
+::: callout-tip
+## Problema Proposto
+
+Uma instituição jurídica implementou um sistema de treinamento online. Para avaliar sua eficácia, 8 funcionários fizeram uma avaliação antes e depois do treinamento:
+
+**Dados (pontuação 0-20)**: - Antes: 12, 14, 11, 16, 13, 15, 10, 17\
+- Depois: 16, 18, 14, 19, 17, 18, 13, 20
+
+**Questões**: 1. O treinamento foi eficaz? (α = 0.05) 2. Calcule um IC 95% para a melhora média 3. Verifique os pressupostos do teste 4. Qual o tamanho do efeito?
+:::
+
+### Exercício 2: Comparação de Sistemas de Gestão
+
+::: callout-tip
+## Problema Proposto
+
+Dez varas judiciais testaram dois sistemas de gestão de processos, medindo o número de processos concluídos por mês com cada sistema:
+
+**Questões**: 1. Há diferença significativa entre os sistemas? 2. Que sistema é superior (se houver diferença)? 3. Construa gráficos apropriados para a análise 4. Discuta as implicações práticas dos resultados
+:::
+
+------------------------------------------------------------------------
+
+::: callout-note
+## Conclusão do Capítulo
+
+O teste t para dados emparelhados é uma ferramenta fundamental quando temos medições repetidas ou pares relacionados. Sua principal vantagem é o **controle da variabilidade individual**, resultando em **maior poder estatístico** e **conclusões mais precisas**.
+
+A escolha entre análise pareada e independente deve ser baseada no **delineamento experimental** e na **natureza dos dados**, sempre verificando os pressupostos necessários para garantir a validade das conclusões.
+:::

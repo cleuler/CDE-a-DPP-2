@@ -1,0 +1,665 @@
+# Inferência sobre uma Média Populacional {#sec-cap20-inferencia-media}
+
+::: callout-note
+## Capítulo 20 - Inferência sobre uma Média Populacional
+
+Este capítulo apresenta métodos práticos para inferência estatística sobre a média de uma população quando o desvio-padrão populacional é desconhecido, usando a distribuição t de Student.
+:::
+
+## Introdução
+
+No Capítulo 17, aprendemos os fundamentos dos testes de significância usando a distribuição Normal padrão (procedimentos z). No entanto, esses métodos exigem conhecimento do desvio-padrão populacional σ, o que raramente ocorre na prática.
+
+Neste capítulo, desenvolveremos métodos mais realistas que:
+
+1.  **Não exigem** conhecimento de σ
+2.  **Usam** o desvio-padrão amostral s como estimativa
+3.  **Aplicam** a distribuição t de Student
+4.  **Fornecem** intervalos de confiança e testes práticos
+
+```{r setup, message=FALSE, warning=FALSE}
+# Carregando bibliotecas necessárias
+library(tidyverse)
+library(ggplot2)
+library(scales)
+library(knitr)
+library(kableExtra)
+library(gridExtra)
+
+# Configurações
+theme_set(theme_minimal(base_size = 12))
+set.seed(123)
+```
+
+## 20.1 A Distribuição t {#sec-distribuicao-t}
+
+### O Problema com σ Desconhecido
+
+Quando σ é desconhecido, substituímos pela estimativa amostral s. No entanto, a estatística:
+
+$$\frac{\bar{x} - \mu}{s/\sqrt{n}}$$
+
+**NÃO** tem distribuição Normal padrão, mas sim distribuição **t de Student**.
+
+### Propriedades da Distribuição t
+
+```{r distribuicao-t}
+# Comparando distribuições Normal e t
+x_vals <- seq(-4, 4, length.out = 1000)
+
+# Distribuições
+normal_vals <- dnorm(x_vals)
+t1_vals <- dt(x_vals, df = 1)
+t5_vals <- dt(x_vals, df = 5)
+t10_vals <- dt(x_vals, df = 10)
+
+# DataFrame para ggplot
+df_dist <- data.frame(
+  x = rep(x_vals, 4),
+  densidade = c(normal_vals, t1_vals, t5_vals, t10_vals),
+  distribuicao = rep(c("Normal(0,1)", "t(gl=1)", "t(gl=5)", "t(gl=10)"), 
+                    each = length(x_vals))
+)
+
+# Gráfico comparativo
+ggplot(df_dist, aes(x = x, y = densidade, color = distribuicao)) +
+  geom_line(size = 1.2) +
+  scale_color_manual(values = c("Normal(0,1)" = "black", "t(gl=1)" = "red", 
+                               "t(gl=5)" = "blue", "t(gl=10)" = "green")) +
+  labs(
+    title = "Comparação: Distribuição Normal vs t de Student",
+    subtitle = "Efeito dos graus de liberdade na forma da distribuição",
+    x = "Valores",
+    y = "Densidade de Probabilidade",
+    color = "Distribuição"
+  ) +
+  theme(legend.position = "bottom")
+```
+
+::: callout-important
+## Características da Distribuição t
+
+1.  **Simétrica** em torno de zero (como a Normal)
+2.  **Mais dispersa** que a Normal padrão (caudas mais pesadas)
+3.  **Converge** para Normal padrão quando gl → ∞
+4.  **Forma** determinada pelos graus de liberdade (gl = n - 1)
+:::
+
+### Graus de Liberdade
+
+```{r graus-liberdade-conceito}
+# Demonstrando o conceito de graus de liberdade
+cat("CONCEITO DE GRAUS DE LIBERDADE\n")
+cat("==============================\n\n")
+
+# Exemplo com amostra pequena
+amostra_exemplo <- c(2, 4, 6, 8, 10)
+n <- length(amostra_exemplo)
+media <- mean(amostra_exemplo)
+
+cat("Amostra:", paste(amostra_exemplo, collapse = ", "), "\n")
+cat("Tamanho da amostra (n):", n, "\n")
+cat("Média amostral:", media, "\n")
+cat("Graus de liberdade (gl = n - 1):", n - 1, "\n\n")
+
+cat("Por que gl = n - 1?\n")
+cat("- Temos n observações independentes\n")
+cat("- Mas conhecemos 1 restrição (a média)\n")
+cat("- Logo, apenas (n-1) observações são 'livres'\n")
+```
+
+## 20.2 Intervalos de Confiança para μ {#sec-ic-media-t}
+
+### Fórmula do Intervalo de Confiança t
+
+Quando σ é desconhecido, o intervalo de confiança para μ é:
+
+$$\bar{x} \pm t^* \frac{s}{\sqrt{n}}$$
+
+onde $t^*$ é o valor crítico da distribuição t com gl = n - 1.
+
+### EXEMPLO 20.1: Tempo de Processamento de AJCMs
+
+```{r exemplo-ajcm-tempo}
+# Simulando dados de tempo de processamento de AJCMs (em dias)
+set.seed(456)
+tempos_ajcm <- c(15, 18, 12, 25, 20, 16, 14, 22, 19, 17, 21, 13, 24, 16, 18)
+
+# Estatísticas descritivas
+n <- length(tempos_ajcm)
+media_amostral <- mean(tempos_ajcm)
+desvio_amostral <- sd(tempos_ajcm)
+erro_padrao <- desvio_amostral / sqrt(n)
+gl <- n - 1
+
+# Exibindo dados
+cat("EXEMPLO 20.1: Tempo de Processamento de AJCMs\n")
+cat("=============================================\n\n")
+cat("Dados (dias):", paste(tempos_ajcm, collapse = ", "), "\n")
+cat("Tamanho da amostra (n):", n, "\n")
+cat("Média amostral (x̄):", round(media_amostral, 2), "dias\n")
+cat("Desvio-padrão amostral (s):", round(desvio_amostral, 2), "dias\n")
+cat("Erro padrão (s/√n):", round(erro_padrao, 2), "dias\n")
+cat("Graus de liberdade:", gl, "\n\n")
+
+# Intervalo de confiança 95%
+confianca <- 0.95
+alpha <- 1 - confianca
+t_critico <- qt(1 - alpha/2, gl)
+
+ic_inferior <- media_amostral - t_critico * erro_padrao
+ic_superior <- media_amostral + t_critico * erro_padrao
+
+cat("INTERVALO DE CONFIANÇA 95%:\n")
+cat("Valor t* (gl =", gl, "):", round(t_critico, 3), "\n")
+cat("Margem de erro:", round(t_critico * erro_padrao, 2), "dias\n")
+cat("IC 95%: [", round(ic_inferior, 2), ",", round(ic_superior, 2), "] dias\n\n")
+
+cat("INTERPRETAÇÃO:\n")
+cat("Com 95% de confiança, o tempo médio de processamento\n")
+cat("de AJCMs está entre", round(ic_inferior, 1), "e", round(ic_superior, 1), "dias.\n")
+```
+
+### Visualização do Intervalo de Confiança
+
+```{r viz-ic-t}
+# Gráfico da distribuição t com intervalo de confiança
+x_seq <- seq(-4, 4, length.out = 1000)
+y_seq <- dt(x_seq, gl)
+
+# Região de confiança
+x_conf <- seq(-t_critico, t_critico, length.out = 100)
+y_conf <- dt(x_conf, gl)
+
+# DataFrame para plotagem
+df_t <- data.frame(x = x_seq, y = y_seq)
+df_conf <- data.frame(x = x_conf, y = y_conf)
+
+ggplot(df_t, aes(x = x, y = y)) +
+  geom_line(size = 1.2, color = "blue") +
+  geom_area(data = df_conf, aes(x = x, y = y), fill = "lightblue", alpha = 0.7) +
+  geom_vline(xintercept = c(-t_critico, t_critico), color = "red", 
+             linetype = "dashed", size = 1) +
+  annotate("text", x = 0, y = max(y_seq) * 0.5, 
+           label = paste0("Área = ", confianca), size = 4, fontface = "bold") +
+  annotate("text", x = t_critico, y = 0.02, 
+           label = paste0("t* = ", round(t_critico, 3)), 
+           hjust = 0, color = "red") +
+  labs(
+    title = paste0("Distribuição t com ", gl, " graus de liberdade"),
+    subtitle = paste0("Intervalo de confiança ", confianca * 100, "%"),
+    x = "Valores t",
+    y = "Densidade"
+  )
+```
+
+### Comparação com Diferentes Níveis de Confiança
+
+```{r ic-multiplos-niveis}
+# Calculando ICs para diferentes níveis de confiança
+niveis_conf <- c(0.90, 0.95, 0.99)
+resultados_ic <- data.frame(
+  NC = paste0(niveis_conf * 100, "%"),
+  t_critico = sapply(niveis_conf, function(conf) qt(1 - (1-conf)/2, gl)),
+  Margem_Erro = NA,
+  IC_Inferior = NA,
+  IC_Superior = NA,
+  Amplitude = NA
+)
+
+for(i in 1:length(niveis_conf)) {
+  t_crit <- resultados_ic$t_critico[i]
+  margem <- t_crit * erro_padrao
+  ic_inf <- media_amostral - margem
+  ic_sup <- media_amostral + margem
+  
+  resultados_ic$Margem_Erro[i] <- round(margem, 2)
+  resultados_ic$IC_Inferior[i] <- round(ic_inf, 2)
+  resultados_ic$IC_Superior[i] <- round(ic_sup, 2)
+  resultados_ic$Amplitude[i] <- round(ic_sup - ic_inf, 2)
+}
+
+cat("COMPARAÇÃO DE INTERVALOS DE CONFIANÇA:\n")
+print(kable(resultados_ic, digits = 3, align = "c"))
+
+cat("\nOBSERVAÇÕES:\n")
+cat("- Maior confiança → Maior amplitude do intervalo\n")
+cat("- Trade-off entre precisão e confiança\n")
+```
+
+## 20.3 Testes de Significância para μ {#sec-testes-t}
+
+### Teste t de Uma Amostra
+
+**Hipóteses:**
+
+\- H₀: μ = μ₀ (valor especificado)\
+- H₁: μ ≠ μ₀ (bilateral) ou μ \> μ₀ ou μ \< μ₀ (unilateral)
+
+**Estatística de teste:** $$t = \frac{\bar{x} - \mu_0}{s/\sqrt{n}}$$
+
+### EXEMPLO 20.2: Teste para Tempo Padrão de Processamento
+
+```{r exemplo-teste-t}
+# Testando se o tempo médio é diferente de 20 dias (padrão estabelecido)
+mu_0 <- 20  # Valor sob H₀
+
+cat("EXEMPLO 20.2: Teste t para Tempo de Processamento\n")
+cat("===============================================\n\n")
+
+# Configurando o teste
+cat("HIPÓTESES:\n")
+cat("H₀: μ = 20 dias (tempo padrão)\n")
+cat("H₁: μ ≠ 20 dias (bilateral)\n\n")
+
+# Calculando estatística t
+t_calculado <- (media_amostral - mu_0) / erro_padrao
+
+cat("CÁLCULOS:\n")
+cat("Estatística t = (x̄ - μ₀) / (s/√n)\n")
+cat("t =", paste0("(", round(media_amostral, 2), " - ", mu_0, ") / ", 
+                  round(erro_padrao, 2)), "\n")
+cat("t =", round(t_calculado, 3), "\n\n")
+
+# Valor P bilateral
+p_valor <- 2 * pt(-abs(t_calculado), gl)
+
+cat("RESULTADOS:\n")
+cat("Estatística t:", round(t_calculado, 3), "\n")
+cat("Graus de liberdade:", gl, "\n")
+cat("Valor P (bilateral):", round(p_valor, 4), "\n")
+
+# Decisão
+alpha <- 0.05
+decisao <- ifelse(p_valor < alpha, "REJEITA H₀", "NÃO REJEITA H₀")
+cat("Decisão (α = 0.05):", decisao, "\n\n")
+
+# Interpretação
+cat("INTERPRETAÇÃO:\n")
+if(p_valor < alpha) {
+  cat("Há evidência significativa de que o tempo médio de\n")
+  cat("processamento é diferente do padrão de 20 dias.\n")
+} else {
+  cat("Não há evidência suficiente para concluir que o\n")
+  cat("tempo médio difere significativamente de 20 dias.\n")
+}
+```
+
+### Visualização do Teste t
+
+```{r viz-teste-t}
+# Gráfico da distribuição t com região crítica
+x_seq <- seq(-4, 4, length.out = 1000)
+y_seq <- dt(x_seq, gl)
+
+# Valores críticos para α = 0.05 bilateral
+t_crit_bilateral <- qt(0.975, gl)
+
+# Regiões críticas
+x_crit_esq <- seq(-4, -t_crit_bilateral, length.out = 100)
+y_crit_esq <- dt(x_crit_esq, gl)
+x_crit_dir <- seq(t_crit_bilateral, 4, length.out = 100)
+y_crit_dir <- dt(x_crit_dir, gl)
+
+# DataFrame
+df_teste <- data.frame(x = x_seq, y = y_seq)
+
+ggplot(df_teste, aes(x = x, y = y)) +
+  geom_line(size = 1.2, color = "blue") +
+  geom_area(data = data.frame(x = x_crit_esq, y = y_crit_esq), 
+            aes(x = x, y = y), fill = "red", alpha = 0.5) +
+  geom_area(data = data.frame(x = x_crit_dir, y = y_crit_dir), 
+            aes(x = x, y = y), fill = "red", alpha = 0.5) +
+  geom_vline(xintercept = t_calculado, color = "darkgreen", 
+             size = 2, linetype = "dashed") +
+  geom_vline(xintercept = c(-t_crit_bilateral, t_crit_bilateral), 
+             color = "red", linetype = "dotted") +
+  annotate("text", x = t_calculado, y = max(y_seq) * 0.8, 
+           label = paste0("t = ", round(t_calculado, 3)), 
+           color = "darkgreen", fontface = "bold") +
+  annotate("text", x = 0, y = max(y_seq) * 0.6, 
+           label = paste0("p = ", round(p_valor, 4)), 
+           fontface = "bold") +
+  labs(
+    title = "Teste t: Tempo de Processamento vs Padrão",
+    subtitle = paste0("H₀: μ = ", mu_0, " dias | α = 0.05 bilateral"),
+    x = "Estatística t",
+    y = "Densidade"
+  )
+```
+
+## 20.4 Condições para Inferência t {#sec-condicoes-t}
+
+### Verificação de Pressupostos
+
+```{r verificacao-pressupostos}
+cat("VERIFICAÇÃO DE PRESSUPOSTOS PARA INFERÊNCIA t\n")
+cat("============================================\n\n")
+
+# 1. Normalidade dos dados
+cat("1. NORMALIDADE DOS DADOS:\n")
+
+# Teste de Shapiro-Wilk
+shapiro_test <- shapiro.test(tempos_ajcm)
+cat("Teste de Shapiro-Wilk:\n")
+cat("W =", round(shapiro_test$statistic, 4), "\n")
+cat("p-valor =", round(shapiro_test$p.value, 4), "\n")
+cat("Conclusão:", ifelse(shapiro_test$p.value > 0.05, 
+                        "Não rejeitamos normalidade", 
+                        "Rejeitamos normalidade"), "\n\n")
+
+# 2. Análise gráfica
+# Histograma
+p_hist <- ggplot(data.frame(tempo = tempos_ajcm), aes(x = tempo)) +
+  geom_histogram(aes(y = ..density..), bins = 8, fill = "lightblue", 
+                 alpha = 0.7, color = "black") +
+  geom_density(color = "red", size = 1.2) +
+  labs(title = "Histograma dos Tempos de Processamento",
+       x = "Tempo (dias)", y = "Densidade")
+
+# Q-Q plot
+p_qq <- ggplot(data.frame(tempo = tempos_ajcm), aes(sample = tempo)) +
+  stat_qq() +
+  stat_qq_line(color = "red", size = 1.2) +
+  labs(title = "Q-Q Plot Normal",
+       x = "Quantis Teóricos", y = "Quantis Amostrais")
+
+# Exibindo gráficos
+grid.arrange(p_hist, p_qq, ncol = 2)
+
+cat("2. TAMANHO DA AMOSTRA:\n")
+cat("n =", n, "\n")
+cat("Adequação:", ifelse(n >= 15, "Adequado para inferência t", 
+                         "Pequeno - cuidado com normalidade"), "\n\n")
+
+cat("3. AUSÊNCIA DE VALORES ATÍPICOS:\n")
+# Boxplot para identificar outliers
+p_box <- ggplot(data.frame(tempo = tempos_ajcm), aes(y = tempo)) +
+  geom_boxplot(fill = "lightgreen", alpha = 0.7) +
+  geom_point(aes(x = 0), position = position_jitter(width = 0.1), 
+             size = 2, alpha = 0.7) +
+  labs(title = "Boxplot: Identificação de Valores Atípicos",
+       y = "Tempo (dias)") +
+  theme(axis.text.x = element_blank(), axis.ticks.x = element_blank())
+
+print(p_box)
+
+# Identificando outliers numericamente
+Q1 <- quantile(tempos_ajcm, 0.25)
+Q3 <- quantile(tempos_ajcm, 0.75)
+IQR <- Q3 - Q1
+limite_inf <- Q1 - 1.5 * IQR
+limite_sup <- Q3 + 1.5 * IQR
+
+outliers <- tempos_ajcm[tempos_ajcm < limite_inf | tempos_ajcm > limite_sup]
+cat("Outliers identificados:", ifelse(length(outliers) == 0, "Nenhum", 
+                                     paste(outliers, collapse = ", ")), "\n")
+```
+
+### Robustez do Teste t
+
+```{r robustez-t}
+cat("ROBUSTEZ DA INFERÊNCIA t\n")
+cat("=======================\n\n")
+
+cat("O teste t é robusto (resistente) a:\n")
+cat("1. Pequenos desvios da normalidade\n")
+cat("2. Observações atípicas moderadas\n")
+cat("3. Tamanhos amostrais pequenos (n ≥ 15)\n\n")
+
+cat("DIRETRIZES PRÁTICAS:\n")
+cat("- n < 15: Exige normalidade aproximada\n")
+cat("- 15 ≤ n < 40: Robusto a desvios moderados\n")
+cat("- n ≥ 40: Muito robusto (Teorema Limite Central)\n\n")
+
+cat("ALTERNATIVAS quando pressupostos falham:\n")
+cat("- Transformação de dados (log, √x, etc.)\n")
+cat("- Testes não-paramétricos (Wilcoxon)\n")
+cat("- Bootstrap\n")
+```
+
+## 20.5 Comparação: Inferência z vs t {#sec-comparacao-z-t}
+
+### Diferenças Práticas
+
+```{r comparacao-z-t}
+# Comparando intervalos de confiança z e t
+n_vals <- c(5, 10, 15, 30, 50, 100)
+confianca <- 0.95
+
+resultados_comp <- data.frame(
+  n = n_vals,
+  gl = n_vals - 1,
+  z_critico = qnorm(0.975),
+  t_critico = sapply(n_vals - 1, function(df) qt(0.975, df)),
+  diferenca_perc = NA
+)
+
+resultados_comp$diferenca_perc <- round(
+  (resultados_comp$t_critico - resultados_comp$z_critico) / 
+  resultados_comp$z_critico * 100, 1)
+
+cat("COMPARAÇÃO: VALORES CRÍTICOS z vs t\n")
+cat("===================================\n\n")
+print(kable(resultados_comp, digits = 3, align = "c"))
+
+cat("\nOBSERVAÇÕES:\n")
+cat("- Para n pequeno: t* >> z* (ICs mais amplos)\n")
+cat("- Para n grande: t* ≈ z* (convergência)\n")
+cat("- Diferença negligível quando n ≥ 30\n")
+```
+
+### Visualização da Convergência
+
+```{r viz-convergencia}
+# Gráfico da convergência t → Normal
+gl_vals <- c(1, 2, 5, 10, 30, 100)
+x_seq <- seq(-3, 3, length.out = 200)
+
+# DataFrame para múltiplas curvas
+df_conv <- data.frame()
+for(gl in gl_vals) {
+  temp_df <- data.frame(
+    x = x_seq,
+    densidade = dt(x_seq, gl),
+    gl = paste0("gl = ", gl)
+  )
+  df_conv <- rbind(df_conv, temp_df)
+}
+
+# Adicionando Normal padrão
+normal_df <- data.frame(
+  x = x_seq,
+  densidade = dnorm(x_seq),
+  gl = "Normal(0,1)"
+)
+df_conv <- rbind(df_conv, normal_df)
+
+ggplot(df_conv, aes(x = x, y = densidade, color = gl)) +
+  geom_line(size = 1.1) +
+  scale_color_viridis_d(name = "Distribuição") +
+  labs(
+    title = "Convergência da Distribuição t para Normal",
+    subtitle = "Efeito do aumento dos graus de liberdade",
+    x = "Valores",
+    y = "Densidade"
+  ) +
+  theme(legend.position = "bottom")
+```
+
+## 20.6 Aplicações Práticas {#sec-aplicacoes-praticas}
+
+### EXEMPLO 20.3: Análise de Satisfação de Usuários
+
+```{r exemplo-satisfacao}
+# Simulando dados de satisfação (escala 1-10)
+set.seed(789)
+satisfacao <- c(7.2, 8.1, 6.5, 7.8, 8.3, 7.0, 6.8, 7.9, 8.0, 7.3, 
+                6.9, 7.7, 8.2, 7.4, 6.7, 7.6, 8.1, 7.5, 6.6, 7.8)
+
+cat("EXEMPLO 20.3: Satisfação de Usuários do Sistema\n")
+cat("==============================================\n\n")
+
+# Análise descritiva
+n_sat <- length(satisfacao)
+media_sat <- mean(satisfacao)
+desvio_sat <- sd(satisfacao)
+ep_sat <- desvio_sat / sqrt(n_sat)
+
+cat("DADOS DE SATISFAÇÃO (escala 1-10):\n")
+cat("Amostra:", paste(round(satisfacao, 1), collapse = ", "), "\n")
+cat("n =", n_sat, "\n")
+cat("Média =", round(media_sat, 2), "\n")
+cat("Desvio-padrão =", round(desvio_sat, 2), "\n\n")
+
+# Teste: A satisfação média é superior a 7.0?
+mu_0_sat <- 7.0
+
+cat("TESTE DE HIPÓTESE:\n")
+cat("H₀: μ ≤ 7.0 (satisfação não superior ao neutro)\n")
+cat("H₁: μ > 7.0 (satisfação superior - teste unilateral)\n\n")
+
+t_sat <- (media_sat - mu_0_sat) / ep_sat
+p_sat <- 1 - pt(t_sat, n_sat - 1)  # Unilateral direita
+
+cat("Estatística t =", round(t_sat, 3), "\n")
+cat("Valor P (unilateral) =", round(p_sat, 4), "\n")
+cat("Decisão:", ifelse(p_sat < 0.05, "REJEITA H₀", "NÃO REJEITA H₀"), "\n\n")
+
+# Intervalo de confiança 95%
+t_crit_sat <- qt(0.975, n_sat - 1)
+ic_inf_sat <- media_sat - t_crit_sat * ep_sat
+ic_sup_sat <- media_sat + t_crit_sat * ep_sat
+
+cat("INTERVALO DE CONFIANÇA 95%:\n")
+cat("IC: [", round(ic_inf_sat, 2), ",", round(ic_sup_sat, 2), "]\n\n")
+
+cat("CONCLUSÃO PRÁTICA:\n")
+if(p_sat < 0.05) {
+  cat("Há evidência estatística de que a satisfação média\n")
+  cat("dos usuários é significativamente superior a 7.0.\n")
+} else {
+  cat("Não há evidência suficiente para afirmar que a\n")
+  cat("satisfação média supera significativamente 7.0.\n")
+}
+```
+
+### Cálculo de Tamanho Amostral para Teste t
+
+```{r tamanho-amostral-t}
+# Função para calcular tamanho amostral para teste t
+calcular_n_teste_t <- function(delta, sigma, alpha = 0.05, power = 0.8) {
+  # delta: diferença mínima detectável
+  # sigma: desvio-padrão estimado
+  # alpha: nível de significância
+  # power: poder desejado
+  
+  z_alpha <- qnorm(1 - alpha/2)
+  z_beta <- qnorm(power)
+  
+  n_aprox <- 2 * ((z_alpha + z_beta) * sigma / delta)^2
+  
+  return(ceiling(n_aprox))
+}
+
+cat("CÁLCULO DE TAMANHO AMOSTRAL\n")
+cat("===========================\n\n")
+
+# Cenário: Detectar diferença de 0.5 pontos na satisfação
+delta_desejado <- 0.5
+sigma_estimado <- desvio_sat
+
+n_necessario <- calcular_n_teste_t(delta_desejado, sigma_estimado)
+
+cat("Para detectar diferença de", delta_desejado, "pontos\n")
+cat("Com σ estimado =", round(sigma_estimado, 2), "\n")
+cat("Poder = 80%, α = 5%\n")
+cat("Tamanho amostral necessário:", n_necessario, "\n\n")
+
+cat("Tamanho atual:", n_sat, "\n")
+cat("Adequação:", ifelse(n_sat >= n_necessario, "ADEQUADO", "INSUFICIENTE"), "\n")
+```
+
+## Exercícios de Aplicação {#sec-exercicios-cap20}
+
+### Exercício 1: Tempo de Resposta de Sistema
+
+```{r exercicio-1}
+cat("EXERCÍCIO 1: Tempo de Resposta de Sistema\n")
+cat("========================================\n\n")
+
+# Dados simulados de tempo de resposta (milissegundos)
+tempo_resposta <- c(120, 135, 118, 142, 125, 138, 129, 144, 132, 127,
+                    140, 122, 136, 130, 145, 124, 133, 141, 128, 139)
+
+cat("Dados: tempos de resposta em milissegundos\n")
+cat("Objetivo: Testar se o tempo médio é diferente de 130 ms\n\n")
+
+# Seu código aqui...
+n_tr <- length(tempo_resposta)
+media_tr <- mean(tempo_resposta)
+desvio_tr <- sd(tempo_resposta)
+
+cat("QUESTÕES:\n")
+cat("a) Calcule um IC 95% para o tempo médio de resposta\n")
+cat("b) Teste H₀: μ = 130 vs H₁: μ ≠ 130\n")
+cat("c) Interprete os resultados\n\n")
+
+cat("SOLUÇÃO:\n")
+cat("n =", n_tr, ", x̄ =", round(media_tr, 1), ", s =", round(desvio_tr, 1), "\n")
+```
+
+## Resumo do Capítulo {#sec-resumo-cap20}
+
+::: callout-note
+## Pontos Principais
+
+### **Distribuição t de Student**
+
+-   Usada quando σ é desconhecido
+-   Mais dispersa que a Normal padrão
+-   Forma determinada por gl = n - 1
+-   Converge para Normal quando n → ∞
+
+### **Intervalo de Confiança t**
+
+$$\bar{x} \pm t^* \frac{s}{\sqrt{n}}$$
+
+### **Teste t de Uma Amostra**
+
+$$t = \frac{\bar{x} - \mu_0}{s/\sqrt{n}}$$
+
+### **Condições para Uso**
+
+1.  Amostra Aleatória Simples (sem rposição): AAS~s~ (supõe N \> 20 . n para que AAS~s~ ≅ AAS~c~)
+2.  População amostrada aproximadamente Normal
+3.  Observações da amostra são independentes (AAS~s~ ≅ AAS~c~)
+4.  Ausência de *outliers* extremos
+
+### **Robustez**
+
+-   O teste t é robusto a pequenos desvios da normalidade
+-   Especialmente para n ≥ 15
+-   Muito robusto para n ≥ 30 (TLC) [@poldrack_pensamento_est_2025 , p. 86]; alguns autores reportam n ≥ 40 [@Moore2023 , p. 365] ou n ≥ 50 [@poldrack_pensamento_est_2025, p. 125-128, gráfico da fig. 10.5], com poder de 80% para detectar um efeito grande d~Cohen~ = 0,8 para um Nível de Significância 𝛼 = 0,005 = 0,5%.
+:::
+
+### Fórmulas Importantes
+
+| **Estatística** | **Fórmula** | **Uso** |
+|------------------------|------------------|------------------------------|
+| IC para μ | $\bar{x} \pm t^* \frac{s}{\sqrt{n}}$ | Estimar μ |
+| Teste t | $t = \frac{\bar{x} - \mu_0}{s/\sqrt{n}}$ | Testar hipóteses sobre μ |
+| Erro padrão | $EP = \frac{s}{\sqrt{n}}$ | Variabilidade de $\bar{x}$ |
+| Graus de liberdade | $gl = n - 1$ | Parâmetro da distribuição t |
+
+### Interpretação Prática
+
+A inferência t permite análises estatísticas **realistas** em situações práticas onde:
+
+\- O desvio-padrão populacional é desconhecido
+
+\- Temos apenas uma amostra aleatória simples sem reposição dos dados: uma AAS~s~ (N \> 20 . n)
+
+\- Precisamos de conclusões confiáveis sobre a população amostrada
+
+Esta é a **base fundamental** da maioria das análises estatísticas aplicadas em pesquisa científica e tomada de decisões baseadas em dados.

@@ -1,0 +1,1643 @@
+﻿
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Capítulo 15 Comparando m
+edias
+
+
+Já nos deparamos com diversos casos em que desejávamos fazer perguntas sobre a média de uma amostra. Neste capítulo, vamos explorar mais a fundo as várias maneiras de comparar médias entre grupos.
+
+
+15.1 Testando o valor de uma única média
+
+A pergunta mais simples que podemos fazer sobre uma média é se ela possui um valor específico. Digamos que queremos testar se o valor médio da pressão arterial diastólica em adultos, com base nos dados do NHANES, é superior a 80, que é o limite para hipertensão de acordo com o Colégio Americano de Cardiologia. Para isso, selecionamos uma amostra de 200 adultos; a pressão arterial de cada adulto foi medida três vezes, e utilizamos a média dessas medições para o teste.
+
+Uma maneira simples de testar essa diferença é usando um teste chamado 
+teste de sinais
+ , que pergunta se a proporção de diferenças positivas entre o valor real e o valor hipotético é diferente do que esperaríamos por acaso. Para isso, calculamos as diferenças entre cada ponto de dados e o valor médio hipotético e determinamos o sinal de cada diferença. Se os dados seguirem uma distribuição normal e a média real for igual à média hipotética, então a proporção de valores acima (ou abaixo) da média hipotética deve ser 0,5, de modo que a proporção de diferenças positivas também deve ser 0,5. Em nossa amostra, observamos que 19,0% dos indivíduos têm pressão arterial diastólica acima de 80. Podemos então usar um teste binomial para verificar se essa proporção de diferenças positivas é maior que 0,5, utilizando a função de teste binomial em nosso software estatístico.
+
+
+## 
+
+
+
+## 
+Exact binomial test
+
+
+
+## 
+
+
+
+## data: 
+npos and nrow(NHANES_sample)
+
+
+
+## number of successes = 38, number of trials = 200, p-value = 1
+
+
+
+## alternative hypothesis: true probability of success is greater than 0.5
+
+
+
+## 95 percent confidence interval:
+
+
+
+## 
+0.15 1.00
+
+
+
+## sample estimates:
+
+
+
+## probability of success 
+
+
+
+## 
+0.19
+
+
+Aqui vemos que a proporção de indivíduos com sinais positivos não é muito surpreendente sob a hipótese nula d
+e
+ p
+≤
+0,5, o que não deve nos surpreender, visto que o valor observado é, na verdade, menor qu
+e 
+
+
+
+
+0,5.
+
+Também podemos fazer essa pergunta usando o teste t de Student, que você já viu anteriormente neste livro. Vamos nos referir à média com
+o 
+
+
+
+
+
+
+
+¯
+X 
+
+e a 
+média populacional hipotética com
+o 
+
+
+
+
+μ 
+Então, o teste t para uma única média é:
+
+
+
+
+
+t
+=
+
+
+
+
+
+
+(
+¯
+X
+−
+μ
+
+
+)
+ / S
+E
+M
+
+onde SEM (como você deve se lembrar do capítulo sobre amostragem) é definido como:
+
+
+
+
+
+S
+E
+M
+=
+
+
+
+
+^
+σ
+ / √
+
+n
+
+Em essência, a estatística t pergunta qual é a magnitude do desvio da média da amostra em relação à quantidade hipotética, considerando a variabilidade amostral da média.
+
+
+Podemos calcular isso para o conjunto de dados NHANES usando nosso software estatístico:
+
+
+## 
+
+
+
+## 
+One Sample t-test
+
+
+
+## 
+
+
+
+## data: 
+NHANES_adult$BPDiaAve
+
+
+
+## t = -55, df = 4593, p-value = 1
+
+
+
+## alternative hypothesis: true mean is greater than 80
+
+
+
+## 95 percent confidence interval:
+
+
+
+## 
+69 Inf
+
+
+
+## sample estimates:
+
+
+
+## mean of x 
+
+
+
+## 
+70
+
+
+Isso nos mostra que a pressão arterial diastólica média no conjunto de dados (69,5) é, na verdade, muito menor que 80, portanto, nosso teste para verificar se ela é superior a 80 está muito longe de ser significativo.
+
+Lembre-se de que um valor p elevado não nos fornece evidências a favor da hipótese nula, visto que já assumimos que a hipótese nula é verdadeira desde o início. No entanto, como discutimos no capítulo sobre análise Bayesiana, podemos usar o fator de Bayes para quantificar a evidência a favor ou contra a hipótese nula:
+
+
+
+
+ttestBF(NHANES_sample$BPDiaAve, mu=80, nullInterval=c(-Inf, 80))
+
+
+
+
+## Bayes factor analysis
+
+
+
+## --------------
+
+
+
+## [1] Alt., r=0.707 -Inf&lt;d&lt;80 
+: 2.7e+16 
+±NA%
+
+
+
+## [2] Alt., r=0.707 !(-Inf&lt;d&lt;80) : NaNe-Inf ±NA%
+
+
+
+## 
+
+
+
+## Against denominator:
+
+
+
+## 
+Null, mu = 80 
+
+
+
+## ---
+
+
+
+## Bayes factor type: BFoneSample, JZS
+
+
+O primeiro fator de Bayes listado aqui (
+
+
+
+2,73
+∗
+
+10
+
+
+16) denota o fato de haver evidências extremamente fortes a favor da hipótese nula em relação à alternativa.
+
+
+
+15.2 Comparando duas médias
+
+Uma questão mais comum que surge frequentemente em estatística é se existe diferença entre as médias de dois grupos diferentes. Digamos que gostaríamos de saber se os usuários regulares de maconha assistem mais televisão, o que também podemos investigar usando o conjunto de dados NHANES. Selecionamos uma amostra de 200 indivíduos do conjunto de dados e testamos se o número de horas assistidas de televisão por dia está relacionado ao uso regular de maconha. O painel esquerdo da Figura 
+15.1
+ mostra esses dados em um gráfico de violino.
+
+
+
+
+
+
+
+À esquerda: gráfico de violino mostrando a distribuição do tempo gasto assistindo à TV, separada pelo uso regular de maconha. À direita: gráficos de violino mostrando os dados para cada grupo, com uma linha pontilhada conectando os valores previstos para cada grupo, calculados com base nos resultados do modelo linear.
+
+
+
+Figura 15.1: Esquerda: Gráfico de violino mostrando a distribuição do tempo gasto assistindo à TV, separada pelo uso regular de maconha. Direita: Gráficos de violino mostrando os dados para cada grupo, com uma linha pontilhada conectando os valores previstos para cada grupo, calculados com base nos resultados do modelo linear.
+
+
+Também podemos usar o teste t de Student para verificar diferenças entre dois grupos de observações independentes (como vimos em um capítulo anterior); mais adiante neste capítulo, abordaremos os casos em que as observações não são independentes. Relembrando, a estatística t para comparação de dois grupos independentes é calculada da seguinte forma:
+
+
+
+
+
+t
+=
+
+
+
+
+
+¯
+
+X
+1
+−
+
+
+
+¯
+
+X
+2
+√
+
+
+
+S
+2
+1
+
+n
+1
++
+
+
+S
+2
+2
+
+n
+2
+
+onde
+
+
+
+
+
+
+
+¯
+X
+1e
+
+
+
+
+
+
+
+¯
+X
+2são os meios dos dois grupos,
+
+
+
+
+S
+2
+1e
+
+
+
+
+S
+2
+2são as variâncias para cada um dos grupos, e
+
+
+
+
+n
+1e
+
+
+
+
+n
+2são os tamanhos dos dois grupos. Sob a hipótese nula de que não há diferença entre as médias, essa estatística segue uma distribuição normal, com graus de liberdade calculados pelo teste de Welch (como discutido anteriormente), visto que o número de indivíduos difere entre os dois grupos. Neste caso, partimos da hipótese específica de que fumar maconha está associado a um maior tempo assistindo à televisão, portanto, utilizaremos um teste unilateral. Seguem os resultados do nosso software estatístico:
+
+
+## 
+
+
+
+## 
+Welch Two Sample t-test
+
+
+
+## 
+
+
+
+## data: 
+TVHrsNum by RegularMarij
+
+
+
+## t = -3, df = 85, p-value = 6e-04
+
+
+
+## alternative hypothesis: true difference in means between group No and group Yes is less than 0
+
+
+
+## 95 percent confidence interval:
+
+
+
+## 
+-Inf -0.39
+
+
+
+## sample estimates:
+
+
+
+## 
+mean in group No mean in group Yes 
+
+
+
+## 
+2.0 
+2.8
+
+
+Neste caso, vemos que existe uma diferença estatisticamente significativa entre os grupos, na direção esperada: os consumidores regulares de maconha assistem mais televisão.
+
+
+
+
+15.3 O teste t como um modelo linear
+
+O teste t é frequentemente apresentado como uma ferramenta especializada para comparar médias, mas também pode ser visto como uma aplicação do modelo linear geral. Nesse caso, o modelo seria assim:
+
+
+
+
+
+
+
+
+^
+
+T
+V
+=
+
+
+
+^
+
+β
+1
+∗
+M
+um
+r
+eu
+j
+u
+um
+n
+um
++
+
+
+
+^
+
+β
+0Como o tabagismo é uma variável binária, tratamo-la como uma 
+variável fictícia,
+ conforme discutido no capítulo anterior, atribuindo-lhe o valor 1 para fumantes e zero para não fumantes. Nesse caso,
+
+
+
+
+
+
+^
+
+β
+1é simplesmente a diferença entre as médias dos dois grupos, e
+
+
+
+
+
+
+^
+
+β
+0é a média do grupo que foi codificado como zero. Podemos ajustar esse modelo usando a função de modelo linear geral em nosso software estatístico e observar que ele fornece a mesma estatística t que o teste t acima, exceto que, neste caso, é positiva devido à forma como nosso software organiza os grupos:
+
+
+## 
+
+
+
+## Call:
+
+
+
+## lm(formula = TVHrsNum ~ RegularMarij, data = NHANES_sample)
+
+
+
+## 
+
+
+
+## Residuals:
+
+
+
+## 
+Min 
+1Q 
+Median 
+3Q 
+Max 
+
+
+
+## -2.2843 -1.0067 -0.0067 
+0.9933 
+2.9933 
+
+
+
+## 
+
+
+
+## Coefficients:
+
+
+
+## 
+Estimate Std. Error t value Pr(&gt;|t|) 
+
+
+
+
+## (Intercept) 
+2.007 
+0.116 
+17.27 
+&lt; 2e-16 ***
+
+
+
+## RegularMarijYes 
+0.778 
+0.230 
+3.38 
+0.00087 ***
+
+
+
+## ---
+
+
+
+## Signif. codes: 
+0 &apos;***&apos; 0.001 &apos;**&apos; 0.01 &apos;*&apos; 0.05 &apos;.&apos; 0.1 &apos; &apos; 1
+
+
+
+## 
+
+
+
+## Residual standard error: 1.4 on 198 degrees of freedom
+
+
+
+## Multiple R-squared: 
+0.0546, Adjusted R-squared: 
+0.0498 
+
+
+
+## F-statistic: 11.4 on 1 and 198 DF, 
+p-value: 0.000872
+
+
+Também podemos visualizar os resultados do modelo linear graficamente (veja o painel direito da Figura 
+15.1
+ ). Nesse caso, o valor previsto para não fumantes é
+
+
+
+
+
+
+^
+
+β
+0(2.0) e o valor previsto para fumantes é
+
+
+
+
+
+
+^
+
+β
+0
++
+
+
+
+^
+
+β
+1(2.8).
+
+Para calcular os erros padrão desta análise, podemos usar exatamente as mesmas equações que usamos para a regressão linear – já que este é, na verdade, apenas mais um exemplo de regressão linear. De fato, se você comparar o valor p do teste t acima com o valor p na análise de regressão linear para a variável de uso de maconha, verá que o da análise de regressão linear é exatamente o dobro do do teste t, porque a análise de regressão linear realiza um teste bicaudal.
+
+
+15.3.1 Tamanhos de efeito para comparação de duas médias
+
+A medida de efeito mais comumente usada para comparar duas médias é o d de Cohen, que (como você deve se lembrar do Capítulo 
+10
+ ) expressa o tamanho do efeito em unidades de desvio padrão. Para o teste t estimado usando o modelo linear geral descrito acima (ou seja, com uma única variável dummy), isso é expresso como:
+
+
+
+
+
+d
+=
+
+
+
+
+^
+
+β
+1
+
+σ
+
+
+r
+e
+s
+eu
+d
+u
+um
+lPodemos obter esses valores a partir da análise acima, resultando em ad = 0,55, que geralmente interpretamos como um efeito de tamanho médio.
+
+Também podemos calcular
+
+
+
+
+R
+2Para esta análise, que nos indica qual a proporção da variação no tempo gasto assistindo à TV que é explicada pelo consumo de maconha, o valor (apresentado na 
+parte inferior do resumo da análise do modelo linear acima) é de 0,05. Isso significa que, embora o efeito possa ser estatisticamente significativo, ele explica uma parcela relativamente pequena da variação no tempo gasto assistindo à TV.
+
+
+
+
+15,4 Fator de Bayes para diferenças médias
+
+Como discutimos no capítulo sobre análise Bayesiana, os fatores de Bayes fornecem uma maneira de quantificar melhor as evidências a favor ou contra a hipótese nula de nenhuma diferença. Podemos realizar essa análise com os mesmos dados:
+
+
+## Bayes factor analysis
+
+
+
+## --------------
+
+
+
+## [1] Alt., r=0.707 0&lt;d&lt;Inf 
+: 0.041 ±0%
+
+
+
+## [2] Alt., r=0.707 !(0&lt;d&lt;Inf) : 61 
+±0%
+
+
+
+## 
+
+
+
+## Against denominator:
+
+
+
+## 
+Null, mu1-mu2 = 0 
+
+
+
+## ---
+
+
+
+## Bayes factor type: BFindepSample, JZS
+
+
+Devido à forma como os dados estão organizados, a segunda linha mostra o fator de Bayes relevante para esta análise, que é 61,4. Isso demonstra que a evidência contra a hipótese nula é bastante forte.
+
+
+
+15.5 Comparando observações pareadas
+
+Em pesquisas experimentais, frequentemente utilizamos delineamentos 
+intra-sujeitos
+ , nos quais comparamos a mesma pessoa em múltiplas medições. As medições resultantes desse tipo de delineamento são geralmente chamadas de 
+medidas repetidas
+ . Por exemplo, no conjunto de dados NHANES, a pressão arterial foi medida três vezes. Digamos que estejamos interessados ​​em testar se há diferença na pressão arterial sistólica média entre a primeira e a segunda medição entre os indivíduos da nossa amostra (Figura 
+15.2
+ ).
+
+
+
+
+
+À esquerda: gráfico de violino da pressão arterial sistólica na primeira e na segunda medição, do NHANES. À direita: o mesmo gráfico de violino com linhas conectando os dois pontos de dados para cada indivíduo.
+
+
+
+Figura 15.2: Esquerda: Gráfico de violino da pressão arterial sistólica na primeira e na segunda medição, do NHANES. Direita: Mesmo gráfico de violino com linhas conectando os dois pontos de dados para cada indivíduo.
+
+
+Observamos que não parece haver muita diferença na pressão arterial média (cerca de um ponto) entre a primeira e a segunda medição. Primeiro, vamos testar a existência de uma diferença usando um teste t de amostras independentes, que ignora o fato de que os pares de pontos de dados provêm dos mesmos indivíduos.
+
+
+## 
+
+
+
+## 
+Two Sample t-test
+
+
+
+## 
+
+
+
+## data: 
+BPsys by timepoint
+
+
+
+## t = 0.6, df = 398, p-value = 0.5
+
+
+
+## alternative hypothesis: true difference in means between group BPSys1 and group BPSys2 is not equal to 0
+
+
+
+## 95 percent confidence interval:
+
+
+
+## 
+-2.1 
+4.1
+
+
+
+## sample estimates:
+
+
+
+## mean in group BPSys1 mean in group BPSys2 
+
+
+
+## 
+121 
+120
+
+
+Esta análise não mostra diferença significativa. No entanto, esta análise é inadequada, pois pressupõe que as duas amostras sejam independentes, quando na verdade não são, uma vez que os dados provêm dos mesmos indivíduos. Podemos representar os dados graficamente com uma linha para cada indivíduo para mostrar isso (ver o painel direito na Figura 
+15.2
+ ).
+
+Nesta análise, o que realmente nos interessa é se a pressão arterial de cada pessoa mudou de forma sistemática entre as duas medições. Portanto, outra maneira de representar os dados é calcular a diferença entre os dois momentos para cada indivíduo e, em seguida, analisar esses valores de diferença em vez de analisar as medições individuais. Na Figura 
+15.3
+ , mostramos um histograma desses valores de diferença, com uma linha azul indicando a diferença média.
+
+
+
+
+
+Histograma das diferenças entre a primeira e a segunda medição da pressão arterial. A linha vertical representa a diferença média na amostra.
+
+
+
+Figura 15.3: Histograma das diferenças entre a primeira e a segunda medição da pressão arterial. A linha vertical representa a diferença média na amostra.
+
+
+
+15.5.1 Teste de sinais
+
+Uma maneira simples de testar diferenças é usando o 
+teste de sinais
+ . Para isso, calculamos as diferenças, determinamos seus sinais e, em seguida, usamos um teste binomial para verificar se a proporção de sinais positivos difere de 0,5.
+
+
+## 
+
+
+
+## 
+Exact binomial test
+
+
+
+## 
+
+
+
+## data: 
+npos and nrow(NHANES_sample)
+
+
+
+## number of successes = 96, number of trials = 200, p-value = 0.6
+
+
+
+## alternative hypothesis: true probability of success is not equal to 0.5
+
+
+
+## 95 percent confidence interval:
+
+
+
+## 
+0.41 0.55
+
+
+
+## sample estimates:
+
+
+
+## probability of success 
+
+
+
+## 
+0.48
+
+
+Aqui vemos que a proporção de indivíduos com sinais positivos (0,48) não é grande o suficiente para ser surpreendente sob a hipótese nula de
+
+
+
+p
+=
+0,5No entanto, um problema com o teste de sinais é que ele descarta informações sobre a magnitude das diferenças e, portanto, pode estar deixando passar algo importante.
+
+
+
+15.5.2 Teste t pareado
+
+Uma estratégia mais comum é usar um 
+teste t pareado
+ , que é equivalente a um teste t de uma amostra para verificar se a diferença média entre as medições de cada pessoa é zero. Podemos calcular isso usando nosso software estatístico, informando que os pontos de dados são pareados:
+
+
+## 
+
+
+
+## 
+Paired t-test
+
+
+
+## 
+
+
+
+## data: 
+BPsys by timepoint
+
+
+
+## t = 3, df = 199, p-value = 0.007
+
+
+
+## alternative hypothesis: true mean difference is not equal to 0
+
+
+
+## 95 percent confidence interval:
+
+
+
+## 
+0.29 1.75
+
+
+
+## sample estimates:
+
+
+
+## mean difference 
+
+
+
+## 
+1
+
+
+Com essas análises, vemos que, de fato, existe uma diferença significativa entre as duas medições. Vamos calcular o fator de Bayes para verificar quanta evidência o resultado fornece:
+
+
+## Bayes factor analysis
+
+
+
+## --------------
+
+
+
+## [1] Alt., r=0.707 : 3 ±0.01%
+
+
+
+## 
+
+
+
+## Against denominator:
+
+
+
+## 
+Null, mu = 0 
+
+
+
+## ---
+
+
+
+## Bayes factor type: BFoneSample, JZS
+
+
+O fator de Bayes observado de 2,97 indica que, embora o efeito tenha sido significativo no teste t pareado, ele fornece, na verdade, evidências muito fracas em favor da hipótese alternativa.
+
+O teste t pareado também pode ser definido em termos de um modelo linear; consulte o Apêndice para obter mais detalhes sobre isso.
+
+
+
+
+
+15.6 Comparando mais de duas médias
+
+Frequentemente, desejamos comparar mais de duas médias para determinar se alguma delas difere das demais. Digamos que estejamos analisando dados de um ensaio clínico para o tratamento da hipertensão. No estudo, os voluntários são aleatoriamente alocados a uma de três condições: Medicamento 1, Medicamento 2 ou placebo. Vamos gerar alguns dados e representá-los graficamente (ver Figura 
+15.4
+ ).
+
+
+
+
+
+Gráficos de caixa mostrando a pressão arterial em três grupos diferentes em nosso ensaio clínico.
+
+
+
+Figura 15.4: Gráficos de caixa mostrando a pressão arterial para três grupos diferentes em nosso ensaio clínico.
+
+
+15.6.1 Análise de variância
+
+Primeiramente, gostaríamos de testar a hipótese nula de que as médias de todos os grupos são iguais – ou seja, nenhum dos tratamentos teve qualquer efeito em comparação com o placebo. Podemos fazer isso usando um método chamado 
+análise de variância
+ (ANOVA). Este é um dos métodos mais comumente usados ​​em estatística psicológica, e aqui abordaremos apenas superficialmente seus princípios. A ideia básica por trás da ANOVA é aquela que já discutimos no capítulo sobre o modelo linear geral, e, na verdade, ANOVA é apenas o nome de uma versão específica desse modelo.
+
+Lembre-se do capítulo anterior que podemos particionar a variância total nos dados (
+
+
+
+S
+
+S
+
+
+t
+o
+t
+um
+l) na variância que é explicada pelo modelo (
+
+
+
+S
+
+S
+
+
+m
+o
+d
+e
+l) e a variância que não é (
+
+
+
+S
+
+S
+
+
+e
+r
+r
+o
+rPodemos então calcular o 
+quadrado médio
+ para cada um deles dividindo-os pelos seus graus de liberdade; para o erro, este valor é
+
+
+
+N
+−
+p(onde
+
+
+
+pé o número de médias que calculamos), e para o modelo isso é
+
+
+
+p
+−
+1:
+
+
+
+
+
+M
+
+S
+
+
+m
+o
+d
+e
+l
+=
+
+
+S
+
+S
+
+
+m
+o
+d
+e
+l
+
+d
+
+f
+
+
+m
+o
+d
+e
+l
+=
+
+
+S
+
+S
+
+
+m
+o
+d
+e
+l
+
+p
+−
+1
+
+
+
+
+
+
+M
+
+S
+
+
+e
+r
+r
+o
+r
+=
+
+
+S
+
+S
+
+
+e
+r
+r
+o
+r
+
+d
+
+f
+
+
+e
+r
+r
+o
+r
+=
+
+
+S
+
+S
+
+
+e
+r
+r
+o
+r
+
+N
+−
+p
+
+Com a ANOVA, queremos testar se a variância explicada pelo modelo é maior do que a esperada pelo acaso, sob a hipótese nula de que não há diferenças entre as médias. Enquanto para a distribuição t o valor esperado é zero sob a hipótese nula, esse não é o caso aqui, já que as somas dos quadrados são sempre números positivos. Felizmente, existe outra distribuição teórica que descreve como as razões das somas dos quadrados se distribuem sob a hipótese nula: a distribuição 
+F
+ (ver figura 
+15.5
+ ). Essa distribuição tem dois graus de liberdade, que correspondem aos graus de liberdade do numerador (que neste caso é o modelo) e do denominador (que neste caso é o erro).
+
+
+
+
+
+Distribuições F sob a hipótese nula, para diferentes valores de graus de liberdade.
+
+
+
+Figura 15.5: Distribuições F sob a hipótese nula, para diferentes valores de graus de liberdade.
+
+Para criar um modelo ANOVA, ampliamos a ideia de 
+codificação dummy
+ que você viu no capítulo anterior. Lembre-se de que, para o teste t comparando duas médias, criamos uma única variável dummy que assumia o valor 1 para uma das condições e zero para as outras. Aqui, ampliamos essa ideia criando duas variáveis ​​dummy, uma que codifica a condição do Medicamento 1 e a outra que codifica a condição do Medicamento 2. Assim como no teste t, teremos uma condição (neste caso, placebo) que não possui uma variável dummy e, portanto, representa a linha de base com a qual as outras são comparadas; sua média define o intercepto do modelo. Usando a codificação dummy para os medicamentos 1 e 2, podemos ajustar um modelo usando a mesma abordagem que usamos no capítulo anterior:
+
+
+## 
+
+
+
+## Call:
+
+
+
+## lm(formula = sysBP ~ d1 + d2, data = df)
+
+
+
+## 
+
+
+
+## Residuals:
+
+
+
+## 
+Min 
+1Q 
+Median 
+3Q 
+Max 
+
+
+
+## -29.084 
+-7.745 
+-0.098 
+7.687 
+23.431 
+
+
+
+## 
+
+
+
+
+## Coefficients:
+
+
+
+## 
+Estimate Std. Error t value Pr(&gt;|t|) 
+
+
+
+
+## (Intercept) 
+141.60 
+1.66 
+85.50 
+&lt; 2e-16 ***
+
+
+
+## d1 
+-10.24 
+2.34 
+-4.37 
+2.9e-05 ***
+
+
+
+## d2 
+-2.03 
+2.34 
+-0.87 
+0.39 
+
+
+
+
+## ---
+
+
+
+## Signif. codes: 
+0 &apos;***&apos; 0.001 &apos;**&apos; 0.01 &apos;*&apos; 0.05 &apos;.&apos; 0.1 &apos; &apos; 1
+
+
+
+## 
+
+
+
+## Residual standard error: 9.9 on 105 degrees of freedom
+
+
+
+## Multiple R-squared: 
+0.169, 
+Adjusted R-squared: 
+0.154 
+
+
+
+## F-statistic: 10.7 on 2 and 105 DF, 
+p-value: 5.83e-05
+
+
+O resultado deste comando nos fornece duas informações. Primeiro, mostra o resultado de um teste t para cada uma das variáveis ​​dummy, o que basicamente nos indica se cada uma das condições, separadamente, difere do placebo; parece que o Medicamento 1 difere, enquanto o Medicamento 2 não. No entanto, lembre-se de que, se quisermos interpretar esses testes, precisaremos corrigir os valores p para levar em conta o fato de termos realizado múltiplos testes de hipóteses; veremos um exemplo de como fazer isso no próximo capítulo.
+
+Lembre-se de que a hipótese inicial que queríamos testar era se havia alguma diferença entre as condições; chamamos isso de teste de hipótese 
+geral
+ , e é o teste fornecido pela estatística F. A estatística F basicamente nos diz se nosso modelo é melhor do que um modelo simples que inclui apenas uma constante. Neste caso, vemos que o teste F é altamente significativo, o que está de acordo com nossa impressão de que parecia haver diferenças entre os grupos (o que, de fato, sabemos que havia, pois criamos os dados).
+
+
+
+
+15.7 Objetivos de aprendizagem
+
+Após a leitura deste capítulo, você deverá ser capaz de:
+
+
+
+Descreva a lógica por trás do teste de sinais.
+
+
+
+Descreva como o teste t pode ser usado para comparar uma única média a um valor hipotético.
+
+
+
+Compare as médias de dois grupos pareados ou não pareados usando um teste t de duas amostras.
+
+
+
+Descreva como a análise de variância pode ser usada para testar diferenças entre mais de duas médias.
+
+
+
+
+
+15.8 Apêndice
+
+
+15.8.1 O teste t pareado como um modelo linear
+
+Também podemos definir o teste t pareado em termos de um modelo linear geral. Para isso, incluímos todas as medições de cada sujeito como pontos de dados (dentro de um dataframe organizado). Em seguida, incluímos no modelo uma variável que codifica a identidade de cada indivíduo (neste caso, a variável ID que contém um ID de sujeito para cada pessoa). Isso é conhecido como 
+modelo misto
+ , pois inclui os efeitos das variáveis ​​independentes, bem como os efeitos dos indivíduos. O procedimento padrão de ajuste de modelos 
+lm()
+não consegue fazer isso, mas podemos fazê-lo usando a 
+lmer()
+função de um pacote popular do R chamado 
+lme4
+ , que é especializado na estimação de modelos mistos. O ` i` 
+(1|ID)
+na fórmula indica 
+lmer()
+que o `i` 
+deve estimar um intercepto separado (que é o que o `i` 
+1
+representa) para cada valor da 
+ID
+variável (ou seja, para cada indivíduo no conjunto de dados) e, em seguida, estimar uma inclinação comum que relaciona o ponto no tempo à pressão arterial.
+
+
+
+
+# compute mixed model for paired test
+
+
+
+
+
+
+
+lmrResult &lt;- lmer(BPsys ~ timepoint + (1 | ID), 
+
+
+
+
+
+data = NHANES_sample_tidy)
+
+
+
+
+summary(lmrResult)
+
+
+
+
+## Linear mixed model fit by REML. t-tests use Satterthwaite&apos;s method [
+
+
+
+## lmerModLmerTest]
+
+
+
+## Formula: BPsys ~ timepoint + (1 | ID)
+
+
+
+## 
+Data: NHANES_sample_tidy
+
+
+
+## 
+
+
+
+## REML criterion at convergence: 2895
+
+
+
+## 
+
+
+
+## Scaled residuals: 
+
+
+
+## 
+Min 
+1Q 
+Median 
+3Q 
+Max 
+
+
+
+## -2.3843 -0.4808 
+0.0076 
+0.4221 
+2.1718 
+
+
+
+## 
+
+
+
+## Random effects:
+
+
+
+## 
+Groups 
+Name 
+Variance Std.Dev.
+
+
+
+## 
+ID 
+(Intercept) 236.1 
+15.37 
+
+
+
+
+## 
+Residual 
+13.9 
+3.73 
+
+
+
+
+## Number of obs: 400, groups: 
+ID, 200
+
+
+
+## 
+
+
+
+## Fixed effects:
+
+
+
+## 
+Estimate Std. Error 
+df t value Pr(&gt;|t|) 
+
+
+
+
+## (Intercept) 
+121.370 
+1.118 210.361 
+108.55 
+&lt;2e-16 ***
+
+
+
+## timepointBPSys2 
+-1.020 
+0.373 199.000 
+-2.74 
+0.0068 ** 
+
+
+
+## ---
+
+
+
+## Signif. codes: 
+0 &apos;***&apos; 0.001 &apos;**&apos; 0.01 &apos;*&apos; 0.05 &apos;.&apos; 0.1 &apos; &apos; 1
+
+
+
+## 
+
+
+
+## Correlation of Fixed Effects:
+
+
+
+## 
+(Intr)
+
+
+
+## tmpntBPSys2 -0.167
+
+
+Você pode ver que isso nos mostra um valor p muito próximo do resultado do teste t pareado calculado usando a 
+t.test()
+função.
+
+
+
+
+
+
+

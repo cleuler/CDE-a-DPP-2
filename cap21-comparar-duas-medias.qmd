@@ -1,0 +1,952 @@
+# Comparação de Duas Médias {#sec-cap21-comparacao-duas-medias}
+
+::: callout-note
+## Capítulo 21 - Comparação de Duas Médias
+
+Este capítulo apresenta métodos estatísticos para comparar médias de dois grupos independentes, incluindo procedimentos t de duas amostras, testes de Welch e análise da igualdade de variâncias.
+:::
+
+## Introdução
+
+A comparação de duas médias populacionais é um dos problemas mais comuns em estatística aplicada. Frequentemente, precisamos determinar se:
+
+-   Dois tratamentos produzem resultados diferentes
+-   Dois grupos têm características diferentes
+-   Uma mudança de política teve efeito significativo
+-   Dois métodos de ensino são igualmente eficazes
+
+```{r setup-duas-medias, message=FALSE, warning=FALSE}
+# Carregando bibliotecas necessárias
+library(tidyverse)
+library(ggplot2)
+library(scales)
+library(knitr)
+library(kableExtra)
+library(gridExtra)
+library(patchwork)
+library(broom)
+library(car)
+
+# Configurações globais
+theme_set(theme_minimal(base_size = 12))
+options(digits = 4)
+set.seed(2023)
+```
+
+## 21.1 Configuração do Problema {#sec-configuracao-problema}
+
+### Parâmetros e Estatísticas
+
+Sejam duas populações com:
+
+-   **População 1**: média μ₁ e desvio-padrão σ₁
+-   **População 2**: média μ₂ e desvio-padrão σ₂
+
+**Amostras independentes**: - Amostra 1: x̄₁, s₁, n₁ - Amostra 2: x̄₂, s₂, n₂
+
+**Objetivo**: Fazer inferência sobre μ₁ - μ₂
+
+### Condições para Procedimentos t de Duas Amostras
+
+::: callout-important
+## Condições de Aplicação
+
+1.  **Dados**: Duas amostras de observações quantitativas
+2.  **Independência**: As observações em cada amostra são independentes
+3.  **Amostras independentes**: As duas amostras são independentes entre si
+4.  **Normalidade**: Cada população tem distribuição aproximadamente Normal, ou amostras grandes (n \> 30)
+:::
+
+```{r condicoes-visualizacao}
+# Simulando dados para demonstrar as condições
+set.seed(123)
+
+# Duas amostras independentes com distribuições normais
+amostra1 <- rnorm(25, mean = 75, sd = 8)
+amostra2 <- rnorm(30, mean = 70, sd = 10)
+
+# Criando dataset
+dados_exemplo <- data.frame(
+  valor = c(amostra1, amostra2),
+  grupo = factor(rep(c("Grupo 1", "Grupo 2"), c(25, 30)))
+)
+
+# Verificando normalidade visualmente
+p1 <- ggplot(dados_exemplo, aes(sample = valor)) +
+  stat_qq() +
+  stat_qq_line() +
+  facet_wrap(~ grupo) +
+  labs(title = "Q-Q Plot para Verificação de Normalidade",
+       x = "Quantis Teóricos", y = "Quantis Amostrais")
+
+# Histogramas
+p2 <- ggplot(dados_exemplo, aes(x = valor, fill = grupo)) +
+  geom_histogram(alpha = 0.7, bins = 12, position = "identity") +
+  facet_wrap(~ grupo) +
+  labs(title = "Distribuição dos Dados por Grupo",
+       x = "Valores", y = "Frequência") +
+  scale_fill_manual(values = c("steelblue", "orange")) +
+  theme(legend.position = "none")
+
+# Boxplots comparativos
+p3 <- ggplot(dados_exemplo, aes(x = grupo, y = valor, fill = grupo)) +
+  geom_boxplot(alpha = 0.7) +
+  geom_jitter(width = 0.2, alpha = 0.5) +
+  labs(title = "Comparação dos Grupos",
+       x = "Grupo", y = "Valores") +
+  scale_fill_manual(values = c("steelblue", "orange")) +
+  theme(legend.position = "none")
+
+# Estatísticas descritivas
+estat_descr <- dados_exemplo %>%
+  group_by(grupo) %>%
+  summarise(
+    n = n(),
+    media = mean(valor),
+    mediana = median(valor),
+    desvio_padrao = sd(valor),
+    variancia = var(valor),
+    .groups = "drop"
+  )
+
+print("Estatísticas Descritivas por Grupo:")
+kable(estat_descr, 
+      caption = "Estatísticas Descritivas",
+      col.names = c("Grupo", "n", "Média", "Mediana", "Desvio-Padrão", "Variância"),
+      digits = 2) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+
+# Exibindo gráficos
+(p1 | p2) / p3
+```
+
+## 21.2 Teste t de Duas Amostras {#sec-teste-t-duas-amostras}
+
+### Caso 1: Variâncias Populacionais Iguais (Teste t Pooled)
+
+Quando σ₁ = σ₂ = σ (desconhecido), usamos o **teste t pooled**.
+
+**Estatística de teste**: $$t = \frac{(\bar{x_1} - \bar{x_2}) - (\mu_1 - \mu_2)}{s_p \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}}$$
+
+onde o **desvio-padrão pooled** é: $$s_p = \sqrt{\frac{(n_1-1)s_1^2 + (n_2-1)s_2^2}{n_1 + n_2 - 2}}$$
+
+**Graus de liberdade**: df = n₁ + n₂ - 2
+
+```{r teste-t-pooled}
+# Exemplo prático: Eficácia de dois métodos de ensino jurídico
+
+# Simulando dados realistas
+set.seed(456)
+
+# Método tradicional (aulas expositivas)
+metodo_tradicional <- rnorm(20, mean = 72, sd = 12)
+
+# Método inovador (aprendizagem ativa)
+metodo_inovador <- rnorm(18, mean = 78, sd = 11)
+
+# Criando dataset
+ensino_juridico <- data.frame(
+  nota = c(metodo_tradicional, metodo_inovador),
+  metodo = factor(rep(c("Tradicional", "Inovador"), c(20, 18)))
+)
+
+# Estatísticas descritivas
+stats_ensino <- ensino_juridico %>%
+  group_by(metodo) %>%
+  summarise(
+    n = n(),
+    media = mean(nota),
+    dp = sd(nota),
+    variancia = var(nota),
+    .groups = "drop"
+  )
+
+print("Estatísticas por Método de Ensino:")
+kable(stats_ensino,
+      digits = 2,
+      col.names = c("Método", "n", "Média", "Desvio-Padrão", "Variância")) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+
+# Verificando igualdade de variâncias (Teste F)
+var_test <- var.test(nota ~ metodo, data = ensino_juridico)
+print("Teste F para Igualdade de Variâncias:")
+print(var_test)
+
+# Teste t pooled (assumindo variâncias iguais)
+t_test_pooled <- t.test(nota ~ metodo, 
+                       data = ensino_juridico, 
+                       var.equal = TRUE,
+                       alternative = "two.sided")
+
+print("Teste t Pooled (Variâncias Iguais):")
+print(t_test_pooled)
+
+# Cálculos manuais para demonstração
+n1 <- stats_ensino$n[2]  # Inovador
+n2 <- stats_ensino$n[1]  # Tradicional
+x1_bar <- stats_ensino$media[2]
+x2_bar <- stats_ensino$media[1]
+s1 <- stats_ensino$dp[2]
+s2 <- stats_ensino$dp[1]
+
+# Desvio-padrão pooled
+sp <- sqrt(((n1-1)*s1^2 + (n2-1)*s2^2) / (n1 + n2 - 2))
+cat("Desvio-padrão pooled (sp):", round(sp, 3), "\n")
+
+# Erro padrão da diferença
+se_diff <- sp * sqrt(1/n1 + 1/n2)
+cat("Erro padrão da diferença:", round(se_diff, 3), "\n")
+
+# Estatística t
+t_stat <- (x1_bar - x2_bar) / se_diff
+cat("Estatística t:", round(t_stat, 3), "\n")
+
+# Graus de liberdade
+df <- n1 + n2 - 2
+cat("Graus de liberdade:", df, "\n")
+
+# Valor p (bilateral)
+p_valor <- 2 * pt(abs(t_stat), df, lower.tail = FALSE)
+cat("Valor p:", round(p_valor, 4), "\n")
+
+# Visualização
+p_ensino <- ggplot(ensino_juridico, aes(x = metodo, y = nota, fill = metodo)) +
+  geom_boxplot(alpha = 0.7, width = 0.6) +
+  geom_jitter(width = 0.2, alpha = 0.6, size = 2) +
+  stat_summary(fun = mean, geom = "point", 
+               shape = 23, size = 4, fill = "white", stroke = 1.5) +
+  labs(title = "Comparação das Notas por Método de Ensino",
+       subtitle = paste("Teste t pooled: t =", round(t_stat, 2), 
+                       ", p-valor =", round(p_valor, 4)),
+       x = "Método de Ensino", 
+       y = "Nota Final",
+       caption = "Losango branco = média") +
+  scale_fill_manual(values = c("lightcoral", "lightblue")) +
+  theme(legend.position = "none")
+
+print(p_ensino)
+```
+
+### Caso 2: Variâncias Populacionais Diferentes (Teste de Welch)
+
+Quando σ₁ ≠ σ₂, usamos o **teste t de Welch** (mais robusto):
+
+**Estatística de teste**: $$t = \frac{(\bar{x_1} - \bar{x_2}) - (\mu_1 - \mu_2)}{\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}}$$
+
+**Graus de liberdade** (fórmula de Welch-Satterthwaite): $$df = \frac{\left(\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}\right)^2}{\frac{(s_1^2/n_1)^2}{n_1-1} + \frac{(s_2^2/n_2)^2}{n_2-1}}$$
+
+```{r teste-welch}
+# Exemplo: Tempo de processamento de dois tribunais
+
+set.seed(789)
+
+# Tribunal A (mais consistente)
+tribunal_a <- rnorm(25, mean = 45, sd = 8)
+
+# Tribunal B (mais variável) 
+tribunal_b <- rnorm(22, mean = 40, sd = 18)
+
+# Dataset
+processamento <- data.frame(
+  tempo = c(tribunal_a, tribunal_b),
+  tribunal = factor(rep(c("Tribunal A", "Tribunal B"), c(25, 22)))
+)
+
+# Estatísticas descritivas
+stats_tribunal <- processamento %>%
+  group_by(tribunal) %>%
+  summarise(
+    n = n(),
+    media = mean(tempo),
+    dp = sd(tempo),
+    variancia = var(tempo),
+    cv = sd(tempo)/mean(tempo),  # Coeficiente de variação
+    .groups = "drop"
+  )
+
+print("Estatísticas por Tribunal:")
+kable(stats_tribunal,
+      digits = 2,
+      col.names = c("Tribunal", "n", "Média", "Desvio-Padrão", 
+                   "Variância", "CV")) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+
+# Teste F para igualdade de variâncias
+var_test_tribunal <- var.test(tempo ~ tribunal, data = processamento)
+print("Teste F para Igualdade de Variâncias:")
+print(var_test_tribunal)
+
+# Teste de Welch (variâncias diferentes)
+t_test_welch <- t.test(tempo ~ tribunal, 
+                      data = processamento, 
+                      var.equal = FALSE,  # Welch
+                      alternative = "two.sided")
+
+print("Teste t de Welch (Variâncias Diferentes):")
+print(t_test_welch)
+
+# Comparando os dois testes
+t_test_pooled_trib <- t.test(tempo ~ tribunal, 
+                           data = processamento, 
+                           var.equal = TRUE)
+
+comparacao <- data.frame(
+  Teste = c("Pooled", "Welch"),
+  Estatistica_t = c(t_test_pooled_trib$statistic, t_test_welch$statistic),
+  GL = c(t_test_pooled_trib$parameter, t_test_welch$parameter),
+  Valor_p = c(t_test_pooled_trib$p.value, t_test_welch$p.value)
+)
+
+print("Comparação dos Testes:")
+kable(comparacao, digits = 4) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+
+# Visualização com foco na variabilidade
+p_tribunais <- processamento %>%
+  ggplot(aes(x = tribunal, y = tempo, fill = tribunal)) +
+  geom_violin(alpha = 0.7, draw_quantiles = c(0.25, 0.5, 0.75)) +
+  geom_jitter(width = 0.2, alpha = 0.5) +
+  stat_summary(fun = mean, geom = "point", 
+               shape = 23, size = 4, fill = "white", stroke = 1.5) +
+  labs(title = "Tempo de Processamento por Tribunal",
+       subtitle = paste("Welch t-test: t =", round(t_test_welch$statistic, 2),
+                       ", df =", round(t_test_welch$parameter, 1),
+                       ", p =", round(t_test_welch$p.value, 4)),
+       x = "Tribunal", 
+       y = "Tempo (dias)",
+       caption = "Violin plot mostra densidade; losango = média") +
+  scale_fill_manual(values = c("lightgreen", "lightpink")) +
+  theme(legend.position = "none")
+
+print(p_tribunais)
+```
+
+## 21.3 Intervalos de Confiança para a Diferença de Médias {#sec-ic-diferenca-medias}
+
+### Intervalo de Confiança (Variâncias Iguais)
+
+$$(\bar{x_1} - \bar{x_2}) \pm t^*_{df} \cdot s_p \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}$$
+
+### Intervalo de Confiança (Variâncias Diferentes)
+
+$$(\bar{x_1} - \bar{x_2}) \pm t^*_{df} \cdot \sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}$$
+
+```{r intervalos-confianca}
+# Exemplo: Efetividade de dois programas de reabilitação criminal
+
+set.seed(101)
+
+# Programa A: Terapia cognitivo-comportamental
+programa_a <- rnorm(30, mean = 12.5, sd = 4.2)  # meses sem reincidência
+
+# Programa B: Programa tradicional
+programa_b <- rnorm(28, mean = 9.8, sd = 3.8)
+
+# Dataset
+reabilitacao <- data.frame(
+  meses_sem_reincidencia = c(programa_a, programa_b),
+  programa = factor(rep(c("TCC", "Tradicional"), c(30, 28)))
+)
+
+# Análise exploratória
+stats_reab <- reabilitacao %>%
+  group_by(programa) %>%
+  summarise(
+    n = n(),
+    media = mean(meses_sem_reincidencia),
+    dp = sd(meses_sem_reincidencia),
+    mediana = median(meses_sem_reincidencia),
+    q1 = quantile(meses_sem_reincidencia, 0.25),
+    q3 = quantile(meses_sem_reincidencia, 0.75),
+    .groups = "drop"
+  )
+
+kable(stats_reab, digits = 2, 
+      caption = "Estatísticas dos Programas de Reabilitação") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+
+# Teste de igualdade de variâncias
+var_test_reab <- var.test(meses_sem_reincidencia ~ programa, data = reabilitacao)
+print(paste("Teste F - valor p:", round(var_test_reab$p.value, 4)))
+
+# Como p > 0.05, assumimos variâncias iguais
+# Teste t pooled com IC
+t_test_reab <- t.test(meses_sem_reincidencia ~ programa, 
+                     data = reabilitacao, 
+                     var.equal = TRUE,
+                     conf.level = 0.95)
+
+print("Teste t Pooled com Intervalo de Confiança (95%):")
+print(t_test_reab)
+
+# Extraindo informações do IC
+ic_lower <- t_test_reab$conf.int[1]
+ic_upper <- t_test_reab$conf.int[2]
+diferenca <- t_test_reab$estimate[1] - t_test_reab$estimate[2]
+
+cat("\nInterpretação do Intervalo de Confiança:\n")
+cat("Diferença estimada (TCC - Tradicional):", round(diferenca, 2), "meses\n")
+cat("IC 95%: [", round(ic_lower, 2), ";", round(ic_upper, 2), "] meses\n")
+cat("Como o IC não contém 0, há evidência de diferença significativa.\n")
+
+# Diferentes níveis de confiança
+niveis_conf <- c(0.90, 0.95, 0.99)
+resultados_ic <- map_dfr(niveis_conf, function(nivel) {
+  test_temp <- t.test(meses_sem_reincidencia ~ programa, 
+                     data = reabilitacao, 
+                     var.equal = TRUE,
+                     conf.level = nivel)
+  
+  tibble(
+    Confianca = paste0(nivel * 100, "%"),
+    Limite_Inferior = test_temp$conf.int[1],
+    Limite_Superior = test_temp$conf.int[2],
+    Largura = test_temp$conf.int[2] - test_temp$conf.int[1]
+  )
+})
+
+print("Intervalos de Confiança para Diferentes Níveis:")
+kable(resultados_ic, digits = 3) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+
+# Visualização dos resultados
+p_reab1 <- ggplot(reabilitacao, aes(x = programa, y = meses_sem_reincidencia, 
+                                   fill = programa)) +
+  geom_boxplot(alpha = 0.7, width = 0.6) +
+  geom_jitter(width = 0.2, alpha = 0.6, size = 2) +
+  stat_summary(fun = mean, geom = "point", 
+               shape = 23, size = 4, fill = "white", stroke = 1.5) +
+  labs(title = "Meses sem Reincidência por Programa",
+       x = "Programa de Reabilitação", 
+       y = "Meses sem Reincidência") +
+  scale_fill_manual(values = c("lightblue", "lightcoral")) +
+  theme(legend.position = "none")
+
+# Gráfico do intervalo de confiança
+p_reab2 <- ggplot(resultados_ic, aes(x = Confianca, y = (Limite_Inferior + Limite_Superior)/2)) +
+  geom_point(size = 3) +
+  geom_errorbar(aes(ymin = Limite_Inferior, ymax = Limite_Superior), 
+                width = 0.2, size = 1) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "red") +
+  labs(title = "Intervalos de Confiança para a Diferença de Médias",
+       subtitle = "TCC - Tradicional",
+       x = "Nível de Confiança", 
+       y = "Diferença (meses)") +
+  theme(axis.text.x = element_text(angle = 0))
+
+p_reab1 | p_reab2
+```
+
+## 21.4 Robustez e Diagnósticos {#sec-robustez-diagnosticos}
+
+### Verificação das Suposições
+
+```{r diagnosticos}
+# Função para diagnósticos completos
+diagnosticar_teste_t <- function(dados, variavel, grupo) {
+  
+  # Separando os grupos
+  grupo1 <- dados[dados[[grupo]] == unique(dados[[grupo]])[1], variavel]
+  grupo2 <- dados[dados[[grupo]] == unique(dados[[grupo]])[2], variavel]
+  
+  # 1. Testes de normalidade
+  shapiro1 <- shapiro.test(grupo1)
+  shapiro2 <- shapiro.test(grupo2)
+  
+  # 2. Teste de igualdade de variâncias
+  var_test <- var.test(dados[[variavel]] ~ dados[[grupo]])
+  
+  # 3. Teste de Levene (mais robusto)
+  levene_test <- car::leveneTest(dados[[variavel]] ~ dados[[grupo]])
+  
+  # Resultados
+  list(
+    normalidade_grupo1 = shapiro1,
+    normalidade_grupo2 = shapiro2,
+    var_test_f = var_test,
+    levene_test = levene_test
+  )
+}
+
+# Aplicando diagnósticos ao exemplo de reabilitação
+diagnosticos_reab <- diagnosticar_teste_t(reabilitacao, 
+                                         "meses_sem_reincidencia", 
+                                         "programa")
+
+print("=== DIAGNÓSTICOS DAS SUPOSIÇÕES ===")
+print("\n1. Teste de Normalidade - Programa TCC:")
+print(diagnosticos_reab$normalidade_grupo1)
+
+print("\n2. Teste de Normalidade - Programa Tradicional:")
+print(diagnosticos_reab$normalidade_grupo2)
+
+print("\n3. Teste F para Igualdade de Variâncias:")
+print(diagnosticos_reab$var_test_f)
+
+print("\n4. Teste de Levene para Igualdade de Variâncias:")
+print(diagnosticos_reab$levene_test)
+
+# Gráficos diagnósticos
+p_diag1 <- reabilitacao %>%
+  ggplot(aes(sample = meses_sem_reincidencia)) +
+  stat_qq() +
+  stat_qq_line(color = "red") +
+  facet_wrap(~ programa) +
+  labs(title = "Q-Q Plots para Verificação de Normalidade",
+       x = "Quantis Teóricos", y = "Quantis Observados")
+
+p_diag2 <- reabilitacao %>%
+  ggplot(aes(x = meses_sem_reincidencia, fill = programa)) +
+  geom_histogram(alpha = 0.7, bins = 12) +
+  facet_wrap(~ programa) +
+  labs(title = "Histogramas por Grupo",
+       x = "Meses sem Reincidência", y = "Frequência") +
+  theme(legend.position = "none")
+
+p_diag3 <- reabilitacao %>%
+  group_by(programa) %>%
+  mutate(residuos = scale(meses_sem_reincidencia)[,1]) %>%
+  ggplot(aes(x = programa, y = residuos, fill = programa)) +
+  geom_boxplot(alpha = 0.7) +
+  geom_jitter(width = 0.2, alpha = 0.5) +
+  labs(title = "Resíduos Padronizados por Grupo",
+       x = "Programa", y = "Resíduos Padronizados") +
+  theme(legend.position = "none")
+
+(p_diag1 | p_diag2) / p_diag3
+```
+
+### Alternativas Não-Paramétricas
+
+Quando as suposições não são atendidas:
+
+```{r alternativas-nao-parametricas}
+# Teste de Mann-Whitney (Wilcoxon de duas amostras)
+# Não assume normalidade, apenas que as distribuições têm a mesma forma
+
+mann_whitney <- wilcox.test(meses_sem_reincidencia ~ programa, 
+                           data = reabilitacao,
+                           alternative = "two.sided",
+                           exact = FALSE)
+
+print("Teste de Mann-Whitney (Wilcoxon):")
+print(mann_whitney)
+
+# Bootstrap para intervalos de confiança robustos
+library(boot)
+
+# Função para bootstrap da diferença de médias
+boot_diff_means <- function(data, indices) {
+  sample_data <- data[indices, ]
+  group1 <- sample_data[sample_data$programa == "TCC", "meses_sem_reincidencia"]
+  group2 <- sample_data[sample_data$programa == "Tradicional", "meses_sem_reincidencia"]
+  return(mean(group1) - mean(group2))
+}
+
+# Bootstrap
+set.seed(123)
+boot_results <- boot(reabilitacao, boot_diff_means, R = 2000)
+
+# IC bootstrap
+boot_ci <- boot.ci(boot_results, type = "perc")
+
+print("Intervalo de Confiança Bootstrap (95%):")
+print(boot_ci)
+
+# Visualização dos resultados bootstrap
+boot_df <- data.frame(diferenca = boot_results$t)
+
+p_boot <- ggplot(boot_df, aes(x = diferenca)) +
+  geom_histogram(aes(y = ..density..), bins = 50, alpha = 0.7, fill = "steelblue") +
+  geom_density(color = "red", size = 1) +
+  geom_vline(xintercept = boot_results$t0, color = "orange", size = 1, linetype = "dashed") +
+  geom_vline(xintercept = boot_ci$percent[4], color = "green", linetype = "dotted") +
+  geom_vline(xintercept = boot_ci$percent[5], color = "green", linetype = "dotted") +
+  labs(title = "Distribuição Bootstrap da Diferença de Médias",
+       subtitle = "Laranja: estimativa original; Verde: IC 95%",
+       x = "Diferença de Médias (TCC - Tradicional)", 
+       y = "Densidade")
+
+print(p_boot)
+
+# Resumo comparativo de todos os métodos
+metodos_comparacao <- data.frame(
+  Metodo = c("t pooled", "t Welch", "Mann-Whitney", "Bootstrap IC"),
+  Estatistica = c(
+    paste("t =", round(t_test_reab$statistic, 3)),
+    paste("t =", round(t_test_welch$statistic, 3)),
+    paste("W =", round(mann_whitney$statistic, 0)),
+    paste("diff =", round(boot_results$t0, 3))
+  ),
+  Valor_p = c(
+    round(t_test_reab$p.value, 4),
+    "N/A", 
+    round(mann_whitney$p.value, 4),
+    "N/A"
+  ),
+  IC_Inferior = c(
+    round(t_test_reab$conf.int[1], 3),
+    "N/A",
+    "N/A",
+    round(boot_ci$percent[4], 3)
+  ),
+  IC_Superior = c(
+    round(t_test_reab$conf.int[2], 3),
+    "N/A", 
+    "N/A",
+    round(boot_ci$percent[5], 3)
+  )
+)
+
+print("Comparação de Métodos:")
+kable(metodos_comparacao, 
+      col.names = c("Método", "Estatística", "Valor-p", "IC Inf.", "IC Sup.")) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+## 21.5 Tamanho do Efeito e Poder Estatístico {#sec-tamanho-efeito-poder}
+
+### Tamanho do Efeito (d de Cohen)
+
+O **d de Cohen** mede a magnitude da diferença em termos de desvios-padrão:
+
+$$d = \frac{\mu_1 - \mu_2}{\sigma_{pooled}}$$
+
+Interpretação: - d = 0.2: efeito pequeno - d = 0.5: efeito médio\
+- d = 0.8: efeito grande
+
+```{r tamanho-efeito}
+# Calculando d de Cohen para o exemplo de reabilitação
+library(effsize)
+
+# d de Cohen
+cohen_d <- cohen.d(meses_sem_reincidencia ~ programa, data = reabilitacao)
+print("d de Cohen:")
+print(cohen_d)
+
+# Cálculo manual
+media_tcc <- mean(reabilitacao$meses_sem_reincidencia[reabilitacao$programa == "TCC"])
+media_trad <- mean(reabilitacao$meses_sem_reincidencia[reabilitacao$programa == "Tradicional"])
+dp_tcc <- sd(reabilitacao$meses_sem_reincidencia[reabilitacao$programa == "TCC"])
+dp_trad <- sd(reabilitacao$meses_sem_reincidencia[reabilitacao$programa == "Tradicional"])
+
+# Desvio-padrão pooled
+n_tcc <- sum(reabilitacao$programa == "TCC")
+n_trad <- sum(reabilitacao$programa == "Tradicional")
+dp_pooled <- sqrt(((n_tcc-1)*dp_tcc^2 + (n_trad-1)*dp_trad^2) / (n_tcc + n_trad - 2))
+
+d_manual <- (media_tcc - media_trad) / dp_pooled
+
+cat("\nCálculo Manual do d de Cohen:\n")
+cat("Média TCC:", round(media_tcc, 2), "\n")
+cat("Média Tradicional:", round(media_trad, 2), "\n")
+cat("Desvio-padrão pooled:", round(dp_pooled, 2), "\n")
+cat("d de Cohen:", round(d_manual, 3), "\n")
+
+# Interpretação
+interpretar_cohen_d <- function(d) {
+  if (abs(d) < 0.2) return("Efeito trivial")
+  else if (abs(d) < 0.5) return("Efeito pequeno")
+  else if (abs(d) < 0.8) return("Efeito médio")
+  else return("Efeito grande")
+}
+
+cat("Interpretação:", interpretar_cohen_d(d_manual), "\n")
+```
+
+### Análise de Poder Estatístico
+
+```{r poder-estatistico}
+library(pwr)
+
+# Poder observado (post-hoc)
+poder_obs <- pwr.t2n.test(n1 = n_tcc, n2 = n_trad, d = abs(d_manual), 
+                         sig.level = 0.05, power = NULL)
+print("Poder Estatístico Observado:")
+print(poder_obs)
+
+# Tamanho de amostra necessário para diferentes poderes
+poderes <- c(0.80, 0.85, 0.90, 0.95)
+tamanhos_amostra <- map_dfr(poderes, function(poder) {
+  n_calc <- pwr.t.test(d = abs(d_manual), sig.level = 0.05, 
+                      power = poder, type = "two.sample")
+  tibble(
+    Poder = paste0(poder * 100, "%"),
+    n_por_grupo = ceiling(n_calc$n),
+    n_total = ceiling(n_calc$n) * 2
+  )
+})
+
+print("Tamanho de Amostra Necessário:")
+kable(tamanhos_amostra) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+
+# Curva de poder
+efeitos <- seq(0.1, 1.5, 0.1)
+poder_curva <- map_dbl(efeitos, function(d) {
+  pwr.t2n.test(n1 = n_tcc, n2 = n_trad, d = d, sig.level = 0.05)$power
+})
+
+poder_df <- data.frame(
+  d_cohen = efeitos,
+  poder = poder_curva
+)
+
+p_poder <- ggplot(poder_df, aes(x = d_cohen, y = poder)) +
+  geom_line(size = 1.2, color = "steelblue") +
+  geom_hline(yintercept = 0.8, linetype = "dashed", color = "red") +
+  geom_vline(xintercept = abs(d_manual), linetype = "dotted", color = "orange") +
+  geom_point(x = abs(d_manual), y = poder_obs$power, 
+             size = 4, color = "orange") +
+  labs(title = "Curva de Poder Estatístico",
+       subtitle = paste("n₁ =", n_tcc, ", n₂ =", n_trad, ", α = 0.05"),
+       x = "Tamanho do Efeito (d de Cohen)",
+       y = "Poder Estatístico",
+       caption = "Linha vermelha: poder = 0.8; Ponto laranja: efeito observado") +
+  scale_y_continuous(labels = scales::percent_format()) +
+  theme_minimal()
+
+print(p_poder)
+```
+
+## 21.6 Exemplo Completo: Análise de Salários por Gênero {#sec-exemplo-salarios}
+
+```{r exemplo-salarios}
+# Simulando dados realistas de salários
+set.seed(2023)
+
+# Dados baseados em estudos reais (com viés salarial)
+salarios_homens <- rlnorm(45, meanlog = log(85000), sdlog = 0.35)
+salarios_mulheres <- rlnorm(52, meanlog = log(78000), sdlog = 0.32)
+
+# Dataset
+salarios <- data.frame(
+  salario = c(salarios_homens, salarios_mulheres),
+  genero = factor(rep(c("Masculino", "Feminino"), c(45, 52)))
+)
+
+# Análise exploratória
+print("=== ANÁLISE EXPLORATÓRIA ===")
+stats_salarios <- salarios %>%
+  group_by(genero) %>%
+  summarise(
+    n = n(),
+    media = mean(salario),
+    mediana = median(salario),
+    dp = sd(salario),
+    cv = sd(salario)/mean(salario),
+    q1 = quantile(salario, 0.25),
+    q3 = quantile(salario, 0.75),
+    .groups = "drop"
+  )
+
+kable(stats_salarios, digits = 0, 
+      caption = "Estatísticas Salariais por Gênero",
+      format.args = list(big.mark = ".")) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+
+# Visualização inicial
+p_sal1 <- ggplot(salarios, aes(x = genero, y = salario, fill = genero)) +
+  geom_boxplot(alpha = 0.7, width = 0.6) +
+  geom_jitter(width = 0.2, alpha = 0.5) +
+  scale_y_continuous(labels = scales::dollar_format(prefix = "R$ ")) +
+  labs(title = "Distribuição Salarial por Gênero",
+       x = "Gênero", y = "Salário Anual") +
+  scale_fill_manual(values = c("lightpink", "lightblue")) +
+  theme(legend.position = "none")
+
+p_sal2 <- ggplot(salarios, aes(x = salario, fill = genero)) +
+  geom_histogram(alpha = 0.7, bins = 20, position = "identity") +
+  scale_x_continuous(labels = scales::dollar_format(prefix = "R$ ")) +
+  labs(title = "Histograma dos Salários",
+       x = "Salário Anual", y = "Frequência") +
+  scale_fill_manual(values = c("lightpink", "lightblue"))
+
+p_sal1 | p_sal2
+
+# Diagnósticos
+print("\n=== VERIFICAÇÃO DAS SUPOSIÇÕES ===")
+
+# Como são salários, dados podem ser assimétricos - verificar com log
+salarios$log_salario <- log(salarios$salario)
+
+# Teste de normalidade nos dados originais
+shapiro_masc_orig <- shapiro.test(salarios$salario[salarios$genero == "Masculino"])
+shapiro_fem_orig <- shapiro.test(salarios$salario[salarios$genero == "Feminino"])
+
+print("Normalidade - Dados Originais:")
+print(paste("Masculino p-valor:", round(shapiro_masc_orig$p.value, 4)))
+print(paste("Feminino p-valor:", round(shapiro_fem_orig$p.value, 4)))
+
+# Teste de normalidade nos dados log-transformados
+shapiro_masc_log <- shapiro.test(salarios$log_salario[salarios$genero == "Masculino"])
+shapiro_fem_log <- shapiro.test(salarios$log_salario[salarios$genero == "Feminino"])
+
+print("Normalidade - Dados Log-transformados:")
+print(paste("Masculino p-valor:", round(shapiro_masc_log$p.value, 4)))
+print(paste("Feminino p-valor:", round(shapiro_fem_log$p.value, 4)))
+
+# Teste de igualdade de variâncias
+var_test_sal <- var.test(salario ~ genero, data = salarios)
+var_test_log <- var.test(log_salario ~ genero, data = salarios)
+
+print("Igualdade de Variâncias:")
+print(paste("Dados originais p-valor:", round(var_test_sal$p.value, 4)))
+print(paste("Dados log p-valor:", round(var_test_log$p.value, 4)))
+
+# Análise nos dados originais (Welch devido à heterocedasticidade)
+print("\n=== ANÁLISE NOS DADOS ORIGINAIS ===")
+t_test_sal <- t.test(salario ~ genero, data = salarios, var.equal = FALSE)
+print(t_test_sal)
+
+# Análise nos dados log-transformados
+print("\n=== ANÁLISE NOS DADOS LOG-TRANSFORMADOS ===")
+t_test_log <- t.test(log_salario ~ genero, data = salarios, var.equal = TRUE)
+print(t_test_log)
+
+# Convertendo resultado log para escala original
+diff_log <- t_test_log$estimate[2] - t_test_log$estimate[1] # Fem - Masc
+diff_percent <- (exp(diff_log) - 1) * 100
+ic_log <- t_test_log$conf.int
+ic_percent <- (exp(ic_log) - 1) * 100
+
+cat("\nInterpretação na Escala Original:\n")
+cat("Diferença percentual estimada:", round(diff_percent, 1), "%\n")
+cat("IC 95% para a diferença percentual: [", 
+    round(ic_percent[1], 1), "%; ", round(ic_percent[2], 1), "%]\n")
+
+# Teste não-paramétrico
+mann_whitney_sal <- wilcox.test(salario ~ genero, data = salarios)
+print("\n=== TESTE NÃO-PARAMÉTRICO ===")
+print(mann_whitney_sal)
+
+# Tamanho do efeito
+cohen_d_sal <- cohen.d(salario ~ genero, data = salarios)
+cohen_d_log <- cohen.d(log_salario ~ genero, data = salarios)
+
+print("\n=== TAMANHO DO EFEITO ===")
+print("Dados originais:")
+print(cohen_d_sal)
+print("Dados log-transformados:")
+print(cohen_d_log)
+
+# Resumo final
+cat("\n=== RESUMO EXECUTIVO ===\n")
+cat("1. Diferença de médias (dados originais):\n")
+cat("   Masculino: R$", format(round(mean(salarios_homens), 0), big.mark = "."), "\n")
+cat("   Feminino: R$", format(round(mean(salarios_mulheres), 0), big.mark = "."), "\n")
+cat("   Diferença: R$", format(round(mean(salarios_homens) - mean(salarios_mulheres), 0), big.mark = "."), "\n")
+
+cat("\n2. Testes estatísticos:\n")
+cat("   Welch t-test p-valor:", round(t_test_sal$p.value, 4), "\n")
+cat("   Mann-Whitney p-valor:", round(mann_whitney_sal$p.value, 4), "\n")
+
+cat("\n3. Conclusão:\n")
+if (t_test_sal$p.value < 0.05) {
+  cat("   Há evidência estatística significativa de diferença salarial por gênero.\n")
+} else {
+  cat("   Não há evidência estatística significativa de diferença salarial por gênero.\n")
+}
+
+cat("   Tamanho do efeito:", interpretar_cohen_d(abs(cohen_d_sal$estimate)), "\n")
+```
+
+## 21.7 Resumo e Diretrizes Práticas {#sec-resumo-diretrizes}
+
+### Fluxograma de Decisão
+
+```{r fluxograma, echo=FALSE, fig.cap="Fluxograma para Escolha do Teste"}
+# Criar um diagrama conceitual em texto
+cat("
+=== FLUXOGRAMA PARA COMPARAÇÃO DE DUAS MÉDIAS ===
+
+1. VERIFICAR PRESSUPOSTOS
+   ├─ Normalidade (Shapiro-Wilk, Q-Q plots)
+   ├─ Independência (design do estudo)
+   └─ Igualdade de variâncias (Teste F, Levene)
+
+2. ESCOLHER TESTE
+   ├─ Se NORMAL + VARIÂNCIAS IGUAIS → t pooled
+   ├─ Se NORMAL + VARIÂNCIAS DIFERENTES → Welch t-test  
+   ├─ Se NÃO NORMAL → Mann-Whitney
+   └─ Se INCERTO → Bootstrap
+
+3. INTERPRETAR RESULTADOS
+   ├─ Valor-p < α → Diferença significativa
+   ├─ Intervalo de confiança
+   ├─ Tamanho do efeito (d de Cohen)
+   └─ Relevância prática
+
+4. RELATAR RESULTADOS
+   ├─ Estatísticas descritivas
+   ├─ Teste utilizado e justificativa
+   ├─ Resultados (estatística, p-valor, IC)
+   └─ Conclusão em contexto
+")
+```
+
+### Checklist para Análise Completa
+
+::: callout-tip
+## Checklist - Comparação de Duas Médias
+
+**Antes da Análise:** - \[ \] Definir hipóteses (H₀ e H₁) - \[ \] Verificar independência das observações - \[ \] Calcular estatísticas descritivas - \[ \] Criar visualizações exploratórias
+
+**Verificação de Pressupostos:** - \[ \] Testar normalidade (Shapiro-Wilk, Q-Q plots) - \[ \] Testar igualdade de variâncias (F-test, Levene) - \[ \] Considerar transformações se necessário
+
+**Análise Principal:** - \[ \] Escolher teste apropriado (pooled, Welch, não-paramétrico) - \[ \] Calcular estatística de teste - \[ \] Determinar valor-p - \[ \] Construir intervalo de confiança
+
+**Análise Complementar:** - \[ \] Calcular tamanho do efeito - \[ \] Analisar poder estatístico - \[ \] Considerar relevância prática - \[ \] Verificar robustez dos resultados
+
+**Comunicação:** - \[ \] Reportar métodos utilizados - \[ \] Apresentar resultados claramente - \[ \] Discutir limitações - \[ \] Dar recomendações práticas
+:::
+
+### Interpretação de Resultados
+
+```{r interpretacao-resultados}
+# Função para interpretação automatizada
+interpretar_teste_duas_medias <- function(teste_resultado, alpha = 0.05, contexto = "") {
+  
+  p_valor <- teste_resultado$p.value
+  ic <- teste_resultado$conf.int
+  
+  cat("=== INTERPRETAÇÃO DOS RESULTADOS ===\n")
+  cat("Contexto:", contexto, "\n\n")
+  
+  # Decisão estatística
+  if (p_valor < alpha) {
+    cat("DECISÃO: Rejeitar H₀ (p-valor =", round(p_valor, 4), "< α =", alpha, ")\n")
+    cat("CONCLUSÃO ESTATÍSTICA: Há evidência de diferença significativa entre os grupos.\n")
+  } else {
+    cat("DECISÃO: Não rejeitar H₀ (p-valor =", round(p_valor, 4), "≥ α =", alpha, ")\n")
+    cat("CONCLUSÃO ESTATÍSTICA: Não há evidência suficiente de diferença entre os grupos.\n")
+  }
+  
+  # Intervalo de confiança
+  cat("\nINTERVALO DE CONFIANÇA", paste0((1-alpha)*100, "%"), "para a diferença:\n")
+  cat("[", round(ic[1], 3), ";", round(ic[2], 3), "]\n")
+  
+  if (0 >= ic[1] && 0 <= ic[2]) {
+    cat("O IC contém 0, consistente com não rejeição de H₀.\n")
+  } else {
+    cat("O IC não contém 0, consistente com rejeição de H₀.\n")
+  }
+  
+  cat("\nIMPLICAÇÕES PRÁTICAS:\n")
+  cat("A diferença estimada entre os grupos é de", round(teste_resultado$estimate[1] - teste_resultado$estimate[2], 3), "unidades.\n")
+}
+
+# Aplicando ao exemplo de salários
+cat("Exemplo: Análise Salarial por Gênero\n")
+interpretar_teste_duas_medias(t_test_sal, contexto = "Diferença salarial entre gêneros")
+```
+
+------------------------------------------------------------------------
+
+::: callout-note
+## Considerações Finais
+
+A comparação de duas médias é uma ferramenta fundamental em estatística aplicada ao direito e políticas públicas. A escolha adequada do método estatístico, verificação cuidadosa dos pressupostos e interpretação contextualizada dos resultados são essenciais para conclusões válidas e úteis.
+
+**Pontos-chave:** - Sempre verificar pressupostos antes de aplicar o teste - O teste de Welch é mais robusto quando há dúvida sobre igualdade de variâncias - Reportar tanto significância estatística quanto relevância prática - Considerar métodos alternativos quando pressupostos são violados
+:::

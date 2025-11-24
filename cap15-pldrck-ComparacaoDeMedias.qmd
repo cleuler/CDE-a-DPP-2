@@ -1,0 +1,845 @@
+# Comparação de Médias {#sec-cap15-comparacao-medias}
+
+::: callout-note
+## Capítulo 15 - Comparação de Médias
+
+Este capítulo explora as diversas maneiras de ***comparar médias*** ***entre grupos***, desde ***comparações simples*** de ***uma média com um valor hipotético*** até ***comparações de múltiplas médias*** usando **ANOVA**.
+:::
+
+```{r setup-cap15, message=FALSE, warning=FALSE}
+# Carregando bibliotecas necessárias
+library(tidyverse)
+library(ggplot2)
+library(knitr)
+library(kableExtra)
+library(patchwork)
+library(broom)
+library(lme4)
+library(lmerTest)
+library(effsize)
+library(BayesFactor)
+
+# Configurações globais
+theme_set(theme_minimal(base_size = 12))
+options(digits = 4)
+# set.seed(2023)
+set.seed(123) # set random seed to exactly replicate results
+```
+
+## 15.7 Objetivos de Aprendizagem {#sec-objetivos-aprendizagem}
+
+Após a leitura deste capítulo, você deverá ser capaz de:
+
+::: callout-tip
+## Objetivos
+
+1.  ▶ **Descrever** a lógica por trás do teste de sinais
+2.  ▶ **Aplicar** o teste t para comparar uma única média com um valor hipotético
+3.  ▶ **Comparar** as médias de dois grupos pareados ou não pareados usando teste t de duas amostras
+4.  ▶ **Explicar** como o teste t pode ser visto como um modelo linear
+5.  ▶ **Interpretar** Fator de Bayes para comparações de médias
+6.  ▶ **Aplicar** ANOVA para testar diferenças entre mais de duas médias
+7.  ▶ **Realizar** comparações *post-hoc* adequadas após ANOVA significativa
+:::
+
+## Introdução
+
+Já nos deparamos com diversos casos em que desejávamos fazer perguntas sobre a média de uma amostra.
+
+Neste capítulo, vamos explorar mais a fundo as várias maneiras de comparar médias entre grupos.
+
+## 15.1 Testando o Valor de uma Única Média {#sec-teste-uma-media}
+
+A pergunta mais simples que podemos fazer sobre uma média é se ela apresenta um valor específico. Digamos que queremos testar se o valor médio da pressão arterial diastólica em adultos é superior a 80, que é o limite para ***hipertensão*** de acordo com o Colégio Americano de Cardiologia (*American College of Cardiology*).
+
+Suponha que queremos testar se a média da pressão arterial diastólica em adultos do conjunto de dados do NHANES está acima de 80, o *cutoff* para a ***hipertensão*** segundo a *American College of Cardiology*.
+
+### Dados de Pressão Arterial
+
+```{r dados-pressao-arterial}
+# Seria possível simular dados de pressão arterial diastólica
+# Baseado em distribuições realistas da população adulta
+# Utilizar o data set NHANES disponível no R
+# load the NHANES data library
+library(NHANES)
+
+# drop duplicated IDs within the NHANES dataset
+NHANES <-
+  NHANES %>%
+  dplyr::distinct(ID,.keep_all=TRUE)
+
+NHANES_adult <-
+  NHANES %>%
+  subset(Age>=18) # %>%
+  # drop_na(BMI)
+
+n_individuos <- 200 # tamanho da mostra
+
+NHANES_sample <-
+  NHANES_adult %>%
+  drop_na(BPDiaAve) %>%
+  mutate(Hypertensive = BPDiaAve > 80) %>%
+  sample_n(n_individuos)
+
+# Pressão arterial diastólica média (mmHg)
+# cada indivíduo observado teve sua pressão medida 3 vezes
+# a média dessas medidas foi registrada na coluna BPDiaAve
+# Distribuição normal com média ~69.5 e desvio-padrão ~13.94
+dados_pa <- data.frame(
+  ID = 1:n_individuos,
+  # BPDiaAve = rnorm(n_individuos, mean = 70, sd = 12)
+  BPDiaAve = NHANES_sample$BPDiaAve
+)
+
+# Estatísticas descritivas
+cat("Estatísticas Descritivas da Pressão Arterial Diastólica:\n")
+cat("Média:", round(mean(dados_pa$BPDiaAve), 2), "mmHg\n")
+cat("Mediana:", round(median(dados_pa$BPDiaAve), 2), "mmHg\n")
+cat("Desvio-padrão:", round(sd(dados_pa$BPDiaAve), 2), "mmHg\n")
+cat("N:", nrow(dados_pa), "\n")
+
+# Visualização
+ggplot(dados_pa, aes(x = BPDiaAve)) +
+  geom_histogram(aes(y = ..density..), bins = 25, fill = "steelblue", alpha = 0.7) +
+  geom_density(color = "red", size = 1) +
+  geom_vline(xintercept = 80, color = "darkred", linetype = "dashed", size = 1) +
+  geom_vline(xintercept = mean(dados_pa$BPDiaAve), color = "blue", 
+             linetype = "dashed", size = 1) +
+  labs(title = "Distribuição da Pressão Arterial Diastólica",
+       subtitle = "Linha vermelha: limite de hipertensão (80); Linha azul: média observada",
+       x = "Pressão Arterial Diastólica (mmHg)",
+       y = "Densidade") +
+  annotate("text", x = 80, y = 0.03, label = "Limite = 80", angle = 90, 
+           vjust = -0.5, color = "darkred")
+```
+
+### Teste de Sinais
+
+Uma maneira simples de testar essa diferença é usando um **teste de sinais**, que pergunta se a **proporção** de ***diferenças positivas*** entre o ***valor real e o valor hipotético*** é ***diferente*** do que ***esperaríamos por acaso***.
+
+```{r teste-sinais-pa}
+# Teste de sinais
+# Contando quantos valores estão acima de 80
+valor_hipotetico <- 80
+npos <- sum(dados_pa$BPDiaAve > valor_hipotetico)
+ntotal <- nrow(dados_pa)
+
+cat("Número de valores acima de 80:", npos, "\n")
+cat("Proporção acima de 80:", round(npos/ntotal, 3), "\n")
+
+# Teste binomial
+# H0: p ≤ 0.5 (proporção de valores acima de 80 é menor ou = 0.5)
+# H1: p > 0.5 (proporção é maior que 0.5)
+teste_binomial <- binom.test(npos, ntotal, p = 0.5, alternative = "greater")
+print(teste_binomial)
+```
+
+Aqui vemos que a proporção de indivíduos com sinais positivos (17,5%) não é muito surpreendente sob a hipótese nula de p ≤ 0,5, o que não deve nos surpreender, visto que o valor observado (0,175) é, na verdade, menor que 0,5.
+
+### Teste t para uma Média
+
+Também podemos fazer essa pergunta usando o **teste t de Student**. Vamos nos referir à média com $\bar{X}$ e a média populacional hipotética como $\mu$. O teste t para uma única média é:
+
+$$t = \frac{(\bar{X} - \mu)}{SEM}$$
+
+onde SEM (erro padrão da média amostral - *Standar Error of the Mean*) é definido como:
+
+$$SEM = \frac{\hat{\sigma}}{\sqrt{n}}$$
+
+Em essência, a estatística t pergunta qual é a magnitude do desvio da média da amostra em relação à quantidade hipotética, considerando a variabilidade amostral da média amostral.
+
+```{r teste-t-uma-media}
+# Teste t para verificar se a média é superior a 80
+teste_t_pa <- t.test(dados_pa$BPDiaAve,
+                     mu = 80,
+                     alternative = "greater")
+print(teste_t_pa)
+
+# Cálculo manual para demonstração
+media_obs <- mean(dados_pa$BPDiaAve)
+dp_obs <- sd(dados_pa$BPDiaAve)
+n <- nrow(dados_pa)
+sem <- dp_obs / sqrt(n)
+t_stat <- (media_obs - 80) / sem
+
+cat("\n=== Cálculos Manuais ===\n")
+cat("Média observada:", round(media_obs, 2), "\n")
+cat("Desvio-padrão:", round(dp_obs, 2), "\n")
+cat("SEM:", round(sem, 3), "\n")
+cat("Estatística t:", round(t_stat, 3), "\n")
+cat("Graus de liberdade:", n - 1, "\n")
+
+# Fator de Bayes
+bf_pa <- ttestBF(dados_pa$BPDiaAve,
+                 mu = 80,
+                 nullInterval = c(-Inf, 80))
+print(bf_pa)
+
+cat("\nInterpretação: O fator de Bayes indica evidência",
+    ifelse(extractBF(bf_pa)$bf[1] > 3,
+           "a favor da", "muito fraca para a"),
+    "hipótese alternativa.\n")
+```
+
+## 15.2 Comparando Duas Médias {#sec-comparar-duas-medias}
+
+Uma questão mais comum que surge frequentemente em estatística é ***se existe diferença entre as médias de dois grupos diferentes***.
+
+Digamos que gostaríamos de saber se os usuários regulares de maconha assistem mais televisão.
+
+### Dados do NHANES
+
+```{r dados-tv-maconha}
+# Em vez de simular dados de horas de TV por uso de maconha
+# create sample with tv watching and marijuana use
+NHANES_sample_tvmj <-
+  NHANES_adult %>%
+  drop_na(TVHrsDay, RegularMarij) %>%
+  mutate(
+    TVHrsNum = recode( # recode character values into numerical values
+      TVHrsDay,
+      "More_4_hr" = 5,
+      "4_hr" = 4,
+      "2_hr" = 2,
+      "1_hr" = 1,
+      "3_hr" = 3,
+      "0_to_1_hr" = 0.5,
+      "0_hrs" = 0
+    )
+  ) %>%
+  sample_n(200)
+
+n_nao_usuarios <- sum(NHANES_sample_tvmj$RegularMarij == "No")
+n_usuarios <- sum(NHANES_sample_tvmj$RegularMarij == "Yes")
+
+# SCRIPT R: RECODIFICAR VARIÁVEL FACTOR RegularMarij
+# Recodificando "Yes" para "sim" e "No" para "não"
+#================================================================
+# SCRIPT COMPACTO RECOMENDADO
+#================================================================
+# A forma mais simples e direta:
+library(forcats)
+NHANES_sample_tvmj$RegularMarij <- fct_recode(
+  NHANES_sample_tvmj$RegularMarij,
+  "sim" = "Yes",
+  "não" = "No"
+)
+# Após a recodificação, verifique:
+table(NHANES_sample_tvmj$RegularMarij)
+
+dados_tv <- data.frame(
+  RegularMarij = NHANES_sample_tvmj$RegularMarij,
+  TVHrsNum = NHANES_sample_tvmj$TVHrsNum
+)
+
+# Garantir valores não negativos
+dados_tv$TVHrsNum <- pmax(dados_tv$TVHrsNum, 0)
+
+# Estatísticas descritivas
+stats_tv <- dados_tv %>%
+  group_by(RegularMarij) %>%
+  summarise(
+    n = n(),
+    media = mean(TVHrsNum),
+    mediana = median(TVHrsNum),
+    dp = sd(TVHrsNum),
+    .groups = "drop"
+  )
+
+kable(stats_tv, 
+      caption = "Estatísticas de Horas de TV por Uso de Maconha",
+      col.names = c("Uso Regular de Maconha", "n", "Média", "Mediana", "DP"),
+      digits = 2) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+### Visualização dos Dados
+
+```{r visualizacao-tv-maconha, fig.width=10, fig.height=5}
+# Gráfico de violino
+p1 <- ggplot(dados_tv, aes(x = RegularMarij, y = TVHrsNum, fill = RegularMarij)) +
+  geom_violin(alpha = 0.7, draw_quantiles = c(0.25, 0.5, 0.75)) +
+  geom_jitter(width = 0.1, alpha = 0.3, size = 1) +
+  stat_summary(fun = mean, geom = "point", shape = 23, 
+               size = 4, fill = "white", stroke = 1.5) +
+  labs(title = "Distribuição do Tempo Assistindo TV",
+       subtitle = "Separada pelo Uso Regular de Maconha",
+       x = "Uso Regular de Maconha",
+       y = "Horas de TV por Dia") +
+  scale_fill_manual(values = c("lightblue", "lightcoral")) +
+  theme(legend.position = "none")
+
+# Modelo linear ajustado
+modelo_tv <- lm(TVHrsNum ~ RegularMarij, data = dados_tv)
+dados_tv$predicao <- predict(modelo_tv)
+
+p2 <- ggplot(dados_tv, aes(x = RegularMarij, y = TVHrsNum, fill = RegularMarij)) +
+  geom_violin(alpha = 0.5, draw_quantiles = c(0.5)) +
+  geom_jitter(width = 0.1, alpha = 0.3, size = 1) +
+  geom_point(aes(y = predicao), size = 4, shape = 23, 
+             fill = "white", stroke = 1.5) +
+  geom_line(aes(y = predicao, group = 1), linetype = "dashed", size = 1) +
+  labs(title = "Valores Preditos para cada Grupo",
+       x = "Uso Regular de Maconha",
+       y = "Horas de TV por Dia") +
+  scale_fill_manual(values = c("lightblue", "lightcoral")) +
+  theme(legend.position = "none")
+
+p1 | p2
+```
+
+### Teste t de Duas Amostras Independentes
+
+Também podemos usar o teste t de Student para verificar diferenças entre dois grupos de observações independentes (como vimos em um capítulo anterior); mais adiante neste capítulo, abordaremos os casos em que as observações não são independentes. Relembrando, a estatística t para comparação de dois grupos independentes é calculada da seguinte forma:
+
+$$
+t = \frac{\bar{X_1}-\bar{X_2}}{\sqrt{\frac{S_1^2}{n_1} + \frac{S_2^2}{n_2} }}
+$$
+
+onde:
+
+$\bar{X_1}$ e $\bar{X_2}$ são as ***médias*** dos dois grupos.
+
+$S_1^2$ e $S_2^2$ são as ***variâncias*** para cada um dos grupos.
+
+E $n_1$ e $n_2$ são os ***tamanhos amostrais*** dos dois grupos.
+
+Sob a hipótese nula de que não há diferença entre as médias, essa estatística segue uma distribuição normal, com graus de liberdade calculados pelo teste de Welch (*gl* equivalente), visto que o número de indivíduos difere entre os dois grupos.
+
+Neste caso, partimos da hipótese específica de que fumar maconha está associado a um maior tempo assistindo à televisão.
+
+Logo, utilizaremos um ***teste unilateral***.
+
+Seguem os resultados do nosso software estatístico R.
+
+```{r teste-t-duas-amostras}
+# Teste t de Welch (não assume variâncias iguais)
+# Hipótese: usuários de maconha assistem MAIS TV (teste unilateral)
+teste_t_tv <- t.test(TVHrsNum ~ RegularMarij, 
+                     data = dados_tv,
+                     alternative = "less")  # "Não" < "Sim" (ordem alfabética)
+
+print(teste_t_tv)
+
+# Interpretação
+cat("\n=== Interpretação ===\n")
+cat("Diferença de médias:", 
+    round(diff(teste_t_tv$estimate), 2), "horas\n")
+cat("Valor-p:", format.pval(teste_t_tv$p.value, digits = 3), "\n")
+cat("Conclusão:", 
+    ifelse(teste_t_tv$p.value < 0.05, 
+           "Existe diferença estatisticamente significativa.",
+           "Não há evidência suficiente de diferença."), "\n")
+```
+
+## 15.3 O Teste t como um Modelo Linear {#sec-teste-t-modelo-linear}
+
+O teste t é frequentemente apresentado como uma ferramenta especializada para comparar médias, mas também pode ser visto como uma aplicação do **modelo linear geral**.
+
+Nesse caso, o modelo seria:
+
+$$\hat{TV} = \hat{\beta}_1 \cdot Maconha + \hat{\beta}_0$$
+
+Como o uso de maconha é uma variável binária, tratamo-la como uma **variável dummy**, atribuindo-lhe o valor 1 para usuários e zero para não usuários.
+
+```{r modelo-linear-tv}
+# Ajustando modelo linear
+modelo_lm_tv <- lm(TVHrsNum ~ RegularMarij, data = dados_tv)
+summary(modelo_lm_tv)
+
+# Extraindo coeficientes
+coefs <- coef(modelo_lm_tv)
+
+cat("\n=== Interpretação dos Coeficientes ===\n")
+cat("β₀ (Intercepto):", round(coefs[1], 3), 
+    "- Média para não usuários\n")
+cat("β₁ (RegularMarijSim):", round(coefs[2], 3), 
+    "- Diferença entre usuários e não usuários\n")
+cat("Média prevista para usuários:", 
+    round(coefs[1] + coefs[2], 3), "horas\n")
+
+# Comparação de valores p
+cat("\n=== Comparação de Valores-p ===\n")
+cat("Teste t (unilateral):", format.pval(teste_t_tv$p.value, digits = 4), "\n")
+cat("Modelo linear (bilateral):", 
+    format.pval(summary(modelo_lm_tv)$coefficients[2, 4], digits = 4), "\n")
+cat("Nota: O valor-p do modelo linear é exatamente o dobro do teste t,\n")
+cat("      porque o modelo linear realiza um teste bicaudal.\n")
+```
+
+### Tamanhos de Efeito para Comparação de Duas Médias
+
+A medida de efeito mais comumente usada para comparar duas médias é o **d de Cohen**, que expressa o tamanho do efeito em unidades de desvio padrão.
+
+```{r tamanho-efeito-cohen}
+# Calculando d de Cohen
+cohen_d_tv <- cohen.d(dados_tv$TVHrsNum, dados_tv$RegularMarij)
+print(cohen_d_tv)
+
+# Interpretação
+interpretar_cohen <- function(d) {
+  abs_d <- abs(d)
+  if (abs_d < 0.2) return("trivial")
+  else if (abs_d < 0.5) return("pequeno")
+  else if (abs_d < 0.8) return("médio")
+  else return("grande")
+}
+
+cat("\nTamanho do efeito:", interpretar_cohen(cohen_d_tv$estimate), "\n")
+
+# R² do modelo
+r_squared <- summary(modelo_lm_tv)$r.squared
+cat("R² =", round(r_squared, 4), "\n")
+cat("Interpretação: O uso de maconha explica", 
+    round(r_squared * 100, 2), "% da variação no tempo de TV.\n")
+```
+
+## 15.4 Fator de Bayes para Diferenças de Médias {#sec-fator-bayes-duas-medias}
+
+Os fatores de Bayes fornecem uma maneira de quantificar melhor as evidências a favor ou contra a hipótese nula de nenhuma diferença.
+
+```{r fator-bayes-tv}
+# Fator de Bayes para comparação de duas médias
+bf_tv <- ttestBF(formula = TVHrsNum ~ RegularMarij, data = dados_tv)
+print(bf_tv)
+
+# Interpretação
+bf_valor <- extractBF(bf_tv)$bf[1]
+cat("\n=== Interpretação do Fator de Bayes ===\n")
+cat("BF₁₀ =", round(bf_valor, 2), "\n")
+
+if (bf_valor > 100) {
+  cat("Evidência extrema a favor da hipótese alternativa.\n")
+} else if (bf_valor > 30) {
+  cat("Evidência muito forte a favor da hipótese alternativa.\n")
+} else if (bf_valor > 10) {
+  cat("Evidência forte a favor da hipótese alternativa.\n")
+} else if (bf_valor > 3) {
+  cat("Evidência moderada a favor da hipótese alternativa.\n")
+} else if (bf_valor > 1) {
+  cat("Evidência fraca a favor da hipótese alternativa.\n")
+} else {
+  cat("Evidência a favor da hipótese nula.\n")
+}
+```
+
+## 15.5 Comparando Observações Pareadas {#sec-observacoes-pareadas}
+
+Em pesquisas experimentais, frequentemente utilizamos delineamentos **intra-sujeitos**, nos quais comparamos a mesma pessoa em múltiplas medições. As medições resultantes desse tipo de delineamento são geralmente chamadas de **medidas repetidas**.
+
+### Simulando Dados de Pressão Arterial Repetida
+
+```{r dados-pa-pareados}
+# Simulando medições repetidas de pressão arterial sistólica
+set.seed(789)
+
+n_pessoas <- 200
+
+# Criando efeito individual (cada pessoa tem sua própria "baseline")
+efeito_individual <- rnorm(n_pessoas, mean = 120, sd = 15)
+
+# Primeira medição
+BPSys1 <- efeito_individual + rnorm(n_pessoas, mean = 0, sd = 4)
+
+# Segunda medição (ligeiramente menor devido à familiarização)
+BPSys2 <- efeito_individual + rnorm(n_pessoas, mean = -1, sd = 4)
+
+# Criando dataset no formato longo
+dados_pa_pareado <- data.frame(
+  ID = rep(1:n_pessoas, 2),
+  timepoint = factor(rep(c("BPSys1", "BPSys2"), each = n_pessoas)),
+  BPsys = c(BPSys1, BPSys2)
+)
+
+# Dataset no formato largo para análise pareada
+dados_pa_largo <- data.frame(
+  ID = 1:n_pessoas,
+  BPSys1 = BPSys1,
+  BPSys2 = BPSys2,
+  diferenca = BPSys1 - BPSys2
+)
+
+# Estatísticas
+cat("=== Estatísticas Descritivas ===\n")
+cat("Média BPSys1:", round(mean(BPSys1), 2), "mmHg\n")
+cat("Média BPSys2:", round(mean(BPSys2), 2), "mmHg\n")
+cat("Diferença média:", round(mean(dados_pa_largo$diferenca), 2), "mmHg\n")
+cat("DP das diferenças:", round(sd(dados_pa_largo$diferenca), 2), "mmHg\n")
+```
+
+### Visualização dos Dados Pareados
+
+```{r visualizacao-pareados, fig.width=10, fig.height=5}
+# Gráfico de violino sem conexões
+p1_pareado <- ggplot(dados_pa_pareado, aes(x = timepoint, y = BPsys, fill = timepoint)) +
+  geom_violin(alpha = 0.7, draw_quantiles = c(0.25, 0.5, 0.75)) +
+  geom_jitter(width = 0.1, alpha = 0.2, size = 1) +
+  stat_summary(fun = mean, geom = "point", shape = 23, 
+               size = 4, fill = "white", stroke = 1.5) +
+  labs(title = "Pressão Arterial Sistólica",
+       subtitle = "Primeira e Segunda Medição",
+       x = "Momento da Medição",
+       y = "Pressão Arterial Sistólica (mmHg)") +
+  scale_fill_manual(values = c("lightblue", "lightcoral")) +
+  theme(legend.position = "none")
+
+# Gráfico com linhas conectando os pares
+# Amostrando apenas 50 indivíduos para melhor visualização
+amostra_ids <- sample(unique(dados_pa_pareado$ID), 50)
+dados_amostra <- dados_pa_pareado %>% filter(ID %in% amostra_ids)
+
+p2_pareado <- ggplot(dados_amostra, aes(x = timepoint, y = BPsys)) +
+  geom_violin(aes(fill = timepoint), alpha = 0.3, draw_quantiles = c(0.5)) +
+  geom_line(aes(group = ID), alpha = 0.3, color = "gray50") +
+  geom_point(aes(color = timepoint), alpha = 0.6, size = 2) +
+  stat_summary(fun = mean, geom = "point", shape = 23, 
+               size = 4, fill = "white", stroke = 1.5) +
+  labs(title = "Dados Pareados (amostra de 50 indivíduos)",
+       subtitle = "Linhas conectam medições do mesmo indivíduo",
+       x = "Momento da Medição",
+       y = "Pressão Arterial Sistólica (mmHg)") +
+  scale_fill_manual(values = c("lightblue", "lightcoral")) +
+  scale_color_manual(values = c("steelblue", "coral")) +
+  theme(legend.position = "none")
+
+p1_pareado | p2_pareado
+```
+
+### Teste t de Amostras Independentes (Inadequado)
+
+```{r teste-independente-inadequado}
+# Teste INADEQUADO tratando como amostras independentes
+teste_independente <- t.test(BPsys ~ timepoint, data = dados_pa_pareado)
+print(teste_independente)
+
+cat("\n⚠️ ATENÇÃO: Esta análise é INADEQUADA porque assume independência\n")
+cat("entre as amostras, quando na verdade são medições da mesma pessoa.\n")
+```
+
+### Histograma das Diferenças
+
+```{r histograma-diferencas}
+# Visualizando as diferenças
+ggplot(dados_pa_largo, aes(x = diferenca)) +
+  geom_histogram(aes(y = ..density..), bins = 25, fill = "steelblue", alpha = 0.7) +
+  geom_density(color = "red", size = 1) +
+  geom_vline(xintercept = mean(dados_pa_largo$diferenca), 
+             color = "blue", linetype = "dashed", size = 1) +
+  geom_vline(xintercept = 0, color = "black", linetype = "dotted", size = 0.8) +
+  labs(title = "Diferenças entre Primeira e Segunda Medição",
+       subtitle = "Linha azul: diferença média; Linha preta: zero",
+       x = "Diferença (BPSys1 - BPSys2) em mmHg",
+       y = "Densidade") +
+  annotate("text", x = mean(dados_pa_largo$diferenca), y = 0.08,
+           label = paste("Média =", round(mean(dados_pa_largo$diferenca), 2)),
+           hjust = -0.1, color = "blue")
+```
+
+### Teste de Sinais para Dados Pareados
+
+```{r teste-sinais-pareado}
+# Teste de sinais
+npos_pareado <- sum(dados_pa_largo$diferenca > 0)
+ntotal_pareado <- nrow(dados_pa_largo)
+
+cat("Número de diferenças positivas:", npos_pareado, "\n")
+cat("Proporção de diferenças positivas:", 
+    round(npos_pareado / ntotal_pareado, 3), "\n")
+
+# Teste binomial
+teste_sinais_pareado <- binom.test(npos_pareado, ntotal_pareado, p = 0.5)
+print(teste_sinais_pareado)
+
+cat("\nInterpretação: O teste de sinais", 
+    ifelse(teste_sinais_pareado$p.value < 0.05, "indica", "não indica"),
+    "diferença significativa.\n")
+cat("Problema: Este teste descarta informações sobre a magnitude das diferenças.\n")
+```
+
+### Teste t Pareado
+
+```{r teste-t-pareado}
+# Teste t pareado (CORRETO)
+teste_pareado <- t.test(dados_pa_largo$BPSys1, dados_pa_largo$BPSys2, 
+                       paired = TRUE)
+print(teste_pareado)
+
+# Equivalente: teste t de uma amostra nas diferenças
+teste_diferencas <- t.test(dados_pa_largo$diferenca, mu = 0)
+cat("\n=== Verificação: Teste t nas diferenças ===\n")
+cat("Estatística t:", round(teste_diferencas$statistic, 4), "\n")
+cat("Valor-p:", format.pval(teste_diferencas$p.value, digits = 4), "\n")
+cat("(Deve ser idêntico ao teste pareado acima)\n")
+
+# Fator de Bayes
+bf_pareado <- ttestBF(x = dados_pa_largo$diferenca, mu = 0)
+print(bf_pareado)
+
+bf_valor_pareado <- extractBF(bf_pareado)$bf[1]
+cat("\n=== Interpretação ===\n")
+cat("O teste t pareado", 
+    ifelse(teste_pareado$p.value < 0.05, "mostra", "não mostra"),
+    "diferença significativa.\n")
+cat("Fator de Bayes:", round(bf_valor_pareado, 2), "\n")
+
+if (bf_valor_pareado > 3) {
+  cat("Há evidência moderada ou maior a favor da hipótese alternativa.\n")
+} else if (bf_valor_pareado > 1) {
+  cat("Há evidência fraca a favor da hipótese alternativa.\n")
+} else {
+  cat("A evidência favorece a hipótese nula.\n")
+}
+```
+
+## 15.6 Comparando Mais de Duas Médias {#sec-anova}
+
+Frequentemente, desejamos comparar mais de duas médias para determinar se alguma delas difere das demais. Por exemplo, em um ensaio clínico para tratamento da hipertensão com voluntários alocados aleatoriamente a uma de três condições: Medicamento 1, Medicamento 2 ou placebo.
+
+### Simulando Dados de Ensaio Clínico
+
+```{r dados-ensaio-clinico}
+# Simulando dados de um ensaio clínico
+set.seed(2023)
+
+n_por_grupo <- 36
+
+# Criando dados com diferentes efeitos de tratamento
+dados_ensaio <- data.frame(
+  tratamento = factor(rep(c("Placebo", "Medicamento 1", "Medicamento 2"), 
+                         each = n_por_grupo)),
+  sysBP = c(
+    rnorm(n_por_grupo, mean = 141.6, sd = 10),   # Placebo
+    rnorm(n_por_grupo, mean = 131.4, sd = 10),   # Medicamento 1 (reduz 10 mmHg)
+    rnorm(n_por_grupo, mean = 139.6, sd = 10)    # Medicamento 2 (reduz 2 mmHg)
+  )
+)
+
+# Estatísticas por grupo
+stats_ensaio <- dados_ensaio %>%
+  group_by(tratamento) %>%
+  summarise(
+    n = n(),
+    media = mean(sysBP),
+    dp = sd(sysBP),
+    .groups = "drop"
+  )
+
+kable(stats_ensaio,
+      caption = "Pressão Arterial Sistólica por Grupo de Tratamento",
+      col.names = c("Tratamento", "n", "Média (mmHg)", "DP"),
+      digits = 2) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+
+# Visualização
+ggplot(dados_ensaio, aes(x = tratamento, y = sysBP, fill = tratamento)) +
+  geom_boxplot(alpha = 0.7, width = 0.6) +
+  geom_jitter(width = 0.2, alpha = 0.3, size = 2) +
+  stat_summary(fun = mean, geom = "point", shape = 23, 
+               size = 4, fill = "white", stroke = 1.5) +
+  labs(title = "Pressão Arterial Sistólica por Grupo de Tratamento",
+       subtitle = "Losango branco representa a média",
+       x = "Grupo de Tratamento",
+       y = "Pressão Arterial Sistólica (mmHg)") +
+  scale_fill_manual(values = c("lightgray", "lightblue", "lightcoral")) +
+  theme(legend.position = "none")
+```
+
+### Análise de Variância (ANOVA)
+
+A **Análise de Variância (ANOVA)** testa a hipótese nula de que as médias de todos os grupos são iguais. A ideia básica é particionar a variância total nos dados:
+
+-   $SS_{total}$: Soma dos quadrados total
+-   $SS_{modelo}$: Soma dos quadrados explicada pelo modelo\
+-   $SS_{erro}$: Soma dos quadrados não explicada (erro)
+
+O **quadrado médio** é calculado dividindo pela quantidade de graus de liberdade:
+
+$$MS_{modelo} = \frac{SS_{modelo}}{df_{modelo}} = \frac{SS_{modelo}}{p-1}$$
+
+$$MS_{erro} = \frac{SS_{erro}}{df_{erro}} = \frac{SS_{erro}}{N-p}$$
+
+onde $p$ é o número de grupos e $N$ é o número total de observações.
+
+A **estatística F** é a razão dos quadrados médios:
+
+$$F = \frac{MS_{modelo}}{MS_{erro}}$$
+
+```{r anova-ensaio}
+# Análise de Variância (ANOVA)
+modelo_anova <- aov(sysBP ~ tratamento, data = dados_ensaio)
+summary(modelo_anova)
+
+# Modelo linear equivalente
+modelo_lm_ensaio <- lm(sysBP ~ tratamento, data = dados_ensaio)
+summary(modelo_lm_ensaio)
+
+# ANOVA do modelo linear
+anova_lm <- anova(modelo_lm_ensaio)
+print(anova_lm)
+
+cat("\n=== Interpretação da ANOVA ===\n")
+cat("Estatística F:", round(anova_lm$`F value`[1], 2), "\n")
+cat("Valor-p:", format.pval(anova_lm$`Pr(>F)`[1], digits = 4), "\n")
+cat("Conclusão:", 
+    ifelse(anova_lm$`Pr(>F)`[1] < 0.05,
+           "Há diferença significativa entre pelo menos dois grupos.",
+           "Não há evidência de diferença entre os grupos."), "\n")
+```
+
+### Codificação Dummy para ANOVA
+
+```{r codificacao-dummy-anova}
+# Criando variáveis dummy manualmente
+# Placebo é a categoria de referência (baseline)
+dados_ensaio <- dados_ensaio %>%
+  mutate(
+    d1 = ifelse(tratamento == "Medicamento 1", 1, 0),
+    d2 = ifelse(tratamento == "Medicamento 2", 1, 0)
+  )
+
+# Modelo com dummies explícitas
+modelo_dummy <- lm(sysBP ~ d1 + d2, data = dados_ensaio)
+summary(modelo_dummy)
+
+cat("\n=== Interpretação dos Coeficientes ===\n")
+coefs_dummy <- coef(modelo_dummy)
+cat("Intercepto (β₀):", round(coefs_dummy[1], 2), "- Média do Placebo\n")
+cat("d1 (β₁):", round(coefs_dummy[2], 2), "- Efeito do Medicamento 1 vs Placebo\n")
+cat("d2 (β₂):", round(coefs_dummy[3], 2), "- Efeito do Medicamento 2 vs Placebo\n")
+
+# Verificando as médias previstas
+cat("\nMédias previstas:\n")
+cat("Placebo:", round(coefs_dummy[1], 2), "\n")
+cat("Medicamento 1:", round(coefs_dummy[1] + coefs_dummy[2], 2), "\n")
+cat("Medicamento 2:", round(coefs_dummy[1] + coefs_dummy[3], 2), "\n")
+```
+
+### Visualização da Distribuição F
+
+```{r distribuicao-f, fig.width=10, fig.height=6}
+# Visualizando a distribuição F
+df1 <- 2  # graus de liberdade do numerador (p - 1)
+df2 <- 105  # graus de liberdade do denominador (N - p)
+
+x_vals <- seq(0, 6, length.out = 500)
+f_vals <- df(x_vals, df1, df2)
+
+# Valor crítico para α = 0.05
+f_critico <- qf(0.95, df1, df2)
+f_observado <- anova_lm$`F value`[1]
+
+dados_f <- data.frame(x = x_vals, y = f_vals)
+
+ggplot(dados_f, aes(x = x, y = y)) +
+  geom_line(size = 1, color = "steelblue") +
+  geom_area(data = subset(dados_f, x >= f_critico), 
+            aes(x = x, y = y), fill = "red", alpha = 0.3) +
+  geom_vline(xintercept = f_critico, color = "red", 
+             linetype = "dashed", size = 1) +
+  geom_vline(xintercept = f_observado, color = "darkgreen", 
+             linetype = "solid", size = 1.2) +
+  labs(title = "Distribuição F sob a Hipótese Nula",
+       subtitle = paste("df1 =", df1, ", df2 =", df2),
+       x = "Valor F",
+       y = "Densidade",
+       caption = "Linha vermelha: valor crítico (α=0.05); Linha verde: F observado") +
+  annotate("text", x = f_critico, y = 0.5, 
+           label = paste("F crítico =", round(f_critico, 2)),
+           hjust = -0.1, color = "red") +
+  annotate("text", x = f_observado, y = 0.6,
+           label = paste("F obs =", round(f_observado, 2)),
+           hjust = -0.1, color = "darkgreen")
+```
+
+### Comparações Post-Hoc
+
+```{r comparacoes-post-hoc}
+# Quando a ANOVA é significativa, queremos saber QUAIS grupos diferem
+# Teste de Tukey HSD (Honest Significant Difference)
+tukey_result <- TukeyHSD(modelo_anova)
+print(tukey_result)
+
+# Visualização das comparações
+par(mar = c(5, 10, 4, 2))
+plot(tukey_result, las = 1, cex.axis = 0.8)
+
+# Formatando resultados
+tukey_df <- as.data.frame(tukey_result$tratamento)
+tukey_df$comparacao <- rownames(tukey_df)
+
+kable(tukey_df[, c("comparacao", "diff", "lwr", "upr", "p adj")],
+      caption = "Teste de Tukey HSD - Comparações Múltiplas",
+      col.names = c("Comparação", "Diferença", "IC Inf", "IC Sup", "p-valor ajustado"),
+      digits = 3,
+      row.names = FALSE) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+## 15.8 Apêndice
+
+### Teste t Pareado como Modelo Linear Misto
+
+O teste t pareado também pode ser definido em termos de um modelo linear geral. Para isso, incluímos todas as medições de cada sujeito como pontos de dados e incluímos no modelo uma variável que codifica a identidade de cada indivíduo.
+
+Isso é conhecido como **modelo misto**, pois inclui os efeitos das variáveis independentes (efeitos fixos), bem como os efeitos dos indivíduos (efeitos aleatórios).
+
+```{r modelo-misto-pareado}
+# Modelo misto usando lmer()
+# (1|ID) indica um intercepto aleatório para cada indivíduo
+modelo_misto <- lmer(BPsys ~ timepoint + (1 | ID), 
+                    data = dados_pa_pareado)
+
+summary(modelo_misto)
+
+cat("\n=== Comparação de Resultados ===\n")
+cat("Teste t pareado - estatística t:", 
+    round(teste_pareado$statistic, 3), "\n")
+cat("Teste t pareado - valor-p:", 
+    format.pval(teste_pareado$p.value, digits = 4), "\n")
+
+# Extraindo coeficiente do modelo misto
+coef_misto <- summary(modelo_misto)$coefficients
+cat("\nModelo misto - estatística t:", 
+    round(coef_misto[2, "t value"], 3), "\n")
+cat("Modelo misto - valor-p:", 
+    format.pval(coef_misto[2, "Pr(>|t|)"], digits = 4), "\n")
+
+cat("\nNota: Os valores p são muito próximos, confirmando a equivalência.\n")
+```
+
+### Visualização dos Efeitos Aleatórios
+
+```{r efeitos-aleatorios, fig.width=10, fig.height=6}
+# Extraindo efeitos aleatórios (interceptos por indivíduo)
+ranef_valores <- ranef(modelo_misto)$ID
+ranef_df <- data.frame(
+  ID = rownames(ranef_valores),
+  intercepto_aleatorio = ranef_valores[, 1]
+)
+
+# Visualização
+ggplot(ranef_df, aes(x = intercepto_aleatorio)) +
+  geom_histogram(bins = 30, fill = "steelblue", alpha = 0.7) +
+  geom_vline(xintercept = 0, color = "red", linetype = "dashed", size = 1) +
+  labs(title = "Distribuição dos Efeitos Aleatórios (Interceptos por Indivíduo)",
+       subtitle = "Modelo Misto para Dados Pareados",
+       x = "Desvio do Intercepto Médio",
+       y = "Frequência") +
+  theme_minimal()
+```
+
+------------------------------------------------------------------------
+
+::: callout-note
+## Resumo do Capítulo
+
+Este capítulo apresentou diversos métodos para comparar médias:
+
+-   **Teste t de uma amostra**: comparar média com valor hipotético
+-   **Teste t de duas amostras**: comparar médias de dois grupos independentes
+-   **Teste t pareado**: comparar médias de observações relacionadas
+-   **ANOVA**: comparar médias de três ou mais grupos
+-   **Modelo linear**: framework unificado para todos os testes acima
+
+Também discutimos: - Fatores de Bayes para quantificar evidências - Tamanhos de efeito (d de Cohen, R²) - Comparações post-hoc após ANOVA - Modelos mistos para dados com estrutura hierárquica
+:::
