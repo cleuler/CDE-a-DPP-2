@@ -23,7 +23,7 @@ library(BayesFactor)
 theme_set(theme_minimal(base_size = 12))
 options(digits = 4)
 # set.seed(2023)
-set.seed(123) # set random seed to exactly replicate results
+set.seed(123456) # set random seed to exactly replicate results
 ```
 
 ## 15.7 Objetivos de Aprendizagem {#sec-objetivos-aprendizagem}
@@ -70,8 +70,8 @@ NHANES <-
 
 NHANES_adult <-
   NHANES %>%
-  subset(Age>=18) # %>%
-  # drop_na(BMI)
+  subset(Age>=18) %>%
+  drop_na(BMI)
 
 n_individuos <- 200 # tamanho da mostra
 
@@ -192,6 +192,8 @@ Digamos que gostaríamos de saber se os usuários regulares de maconha assistem 
 ```{r dados-tv-maconha}
 # Em vez de simular dados de horas de TV por uso de maconha
 # create sample with tv watching and marijuana use
+# coletar uma amostra de dados de horas de TV e uso regular de maconha: n = 200
+set.seed(123456)
 NHANES_sample_tvmj <-
   NHANES_adult %>%
   drop_na(TVHrsDay, RegularMarij) %>%
@@ -302,9 +304,9 @@ $\bar{X_1}$ e $\bar{X_2}$ são as ***médias*** dos dois grupos.
 
 $S_1^2$ e $S_2^2$ são as ***variâncias*** para cada um dos grupos.
 
-E $n_1$ e $n_2$ são os ***tamanhos amostrais*** dos dois grupos.
+$n_1$ e $n_2$ são os ***tamanhos amostrais*** dos dois grupos.
 
-Sob a hipótese nula de que não há diferença entre as médias, essa estatística segue uma distribuição normal, com graus de liberdade calculados pelo teste de Welch (*gl* equivalente), visto que o número de indivíduos difere entre os dois grupos.
+Sob a hipótese nula de que não há diferença entre as médias, essa estatística segue uma distribuição normal, com ***graus de liberdade*** (*gl*) calculados pelo teste de Welch (*gl* equivalente), visto que o número de indivíduos difere entre os dois grupos.
 
 Neste caso, partimos da hipótese específica de que fumar maconha está associado a um maior tempo assistindo à televisão.
 
