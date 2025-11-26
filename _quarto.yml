@@ -84,6 +84,7 @@ book:
     - cap17-LO-testes-significancia-basico.qmd
     - cap17-TSHo-Oltramari.qmd
     - cap18-LO-inferencia-na-pratica.qmd
+    - cap20-InferenciaSobreUmaMediaPop.qmd
     - conclusao.qmd
     - apendiceA.qmd
     - apendiceB-quadroVar.qmd

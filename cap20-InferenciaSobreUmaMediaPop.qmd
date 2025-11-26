@@ -3,19 +3,21 @@
 ::: callout-note
 ## Capítulo 20 - Inferência sobre uma Média Populacional
 
-Este capítulo apresenta métodos práticos para inferência estatística sobre a média de uma população quando o desvio-padrão populacional é desconhecido, usando a distribuição t de Student.
+Este capítulo apresenta métodos práticos para ***inferência*** estatística sobre a ***média*** de [***uma população***]{.underline} quando o [***desvio-padrão populacional***]{.underline} é [**desconhecido**]{.underline}, *usando* a [**distribuição t de Student**]{.underline}.
 :::
 
 ## Introdução
 
-No Capítulo 17, aprendemos os fundamentos dos testes de significância usando a distribuição Normal padrão (procedimentos z). No entanto, esses métodos exigem conhecimento do desvio-padrão populacional σ, o que raramente ocorre na prática.
+No Capítulo 17, aprendemos os fundamentos dos **Testes de Significância contra uma Hipótese Nula** (TSHo) usando a distribuição **Normal padrão** (**procedimentos z**).
 
-Neste capítulo, desenvolveremos métodos mais realistas que:
+No entanto, esses métodos exigem conhecimento do desvio-padrão populacional σ, o que raramente ocorre na prática.
+
+Neste capítulo, desenvolveremos [**métodos mais realistas**]{.underline} que:
 
 1.  **Não exigem** conhecimento de σ
-2.  **Usam** o desvio-padrão amostral s como estimativa
-3.  **Aplicam** a distribuição t de Student
-4.  **Fornecem** intervalos de confiança e testes práticos
+2.  **Usam** o desvio-padrão amostral s como [**estimativa**]{.underline} de σ
+3.  **Aplicam** a **distribuição t** de Student
+4.  **Fornecem** [**intervalos de confiança**]{.underline} e [**testes**]{.underline} práticos (TSHo)
 
 ```{r setup, message=FALSE, warning=FALSE}
 # Carregando bibliotecas necessárias
@@ -35,11 +37,13 @@ set.seed(123)
 
 ### O Problema com σ Desconhecido
 
-Quando σ é desconhecido, substituímos pela estimativa amostral s. No entanto, a estatística:
+Quando σ é ***desconhecido***, **substituímos** pela **estimativa amostral** s.
+
+No entanto, a [**estatística**]{.underline}:
 
 $$\frac{\bar{x} - \mu}{s/\sqrt{n}}$$
 
-**NÃO** tem distribuição Normal padrão, mas sim distribuição **t de Student**.
+**NÃO** tem distribuição Normal padrão, mas sim **distribuição** **t de Student**.
 
 ### Propriedades da Distribuição t
 
@@ -76,16 +80,46 @@ ggplot(df_dist, aes(x = x, y = densidade, color = distribuicao)) +
   theme(legend.position = "bottom")
 ```
 
-::: callout-important
 ## Características da Distribuição t
 
-1.  **Simétrica** em torno de zero (como a Normal)
-2.  **Mais dispersa** que a Normal padrão (caudas mais pesadas)
+1.  **Simétrica** em torno de zero (como a Normal)? forma de sino
+2.  **Mais dispersa** que a Normal padrão (caudas mais espessas ou pesadas)
 3.  **Converge** para Normal padrão quando gl → ∞
-4.  **Forma** determinada pelos graus de liberdade (gl = n - 1)
-:::
+4.  **Forma** determinada pelos graus de liberdade (gl = n - 1): uma família distribuição-t
+
+A distribuição t tem caudas mais expessas que a distribuição normal para graus de liberdade pequenos (amostras pequenas).
+
+Ela se aproxima da distribuição Normal à medida que os graus de liberdade aumentam, ou seja, para amostras grandes, assim consideradas aquelas com: n ≥ 30 [@poldrack_pensamento_est_2025 , p. 86] ou n ≥ 40 [@Moore2023 , p. 365].
+
+Quando o poder de um teste é considerado, ex. (1 - 𝛽) ≥ 80%, então o ideal seria n ≥ 50 [@poldrack_pensamento_est_2025 , p. 85, p. 126, fig. 10.5] se desejamos detectar um tamanho de efeito d *padronizado* de Jacob Cohen (1994) intermediário (d = 0,5 a 0,8).
+
+$$
+d = \frac{\bar{X_1} - \bar{X_2}}{s}
+$$
+
+Essa **medida** quantifica a diferença (o efeito que se pretende capturar) entre duas médias em termos de seu ***desvio padrão combinado***.
+
+$$
+s = \sqrt{ \frac{(n_1-1)s_1^2 + (n_2-1)s_2^2}{n_1+n_2-2} }
+$$
+
+A tabela a seguir apresenta um padrão de interpretação para classes de valores do d de Cohen [@poldrack_pensamento_est_2025 , p. 123, tab. 10.1].
+
+![Interpretação de quatro classes do coeficiente d de Cohen](fig/d-Cohen-pldrck-10-1.png){fig-align="center"}
+
+Os conceitos de ***graus de liberdade*** aparecem no *numerador* e no *denominador* do **desvio padrão combinado** de duas amostras de tamanhos diferentes.
 
 ### Graus de Liberdade
+
+Os graus de liberdade para uma amostra de tamanho n são determinados pela expressão:
+
+$$
+gl = n -1
+$$
+
+Isso porque, ao calcularmos uma média amostral, perdemos um grau de liberdade.
+
+Ou seja, se você conhece a média de ***uma amostra independente*** de tamanho n, então será capaz de determinar o valor de 1 ponto amostral se lhe forem informados os demais n-1 pontos amostrais.
 
 ```{r graus-liberdade-conceito}
 # Demonstrando o conceito de graus de liberdade
@@ -108,20 +142,31 @@ cat("- Mas conhecemos 1 restrição (a média)\n")
 cat("- Logo, apenas (n-1) observações são 'livres'\n")
 ```
 
+Se temos n observações independentes e [***conhecemos***]{.underline} sua [**média**]{.underline} (1 restrição) então *apenas n-1 observações são livres*, pois podemos calcular o valor de 1 dessas observações amostrais: 1 delas é restrita, ou seja, não é livre; as demais n-1 são livres.
+
+E dizemos, assim, que perdemos 1 grau de liberdade quando calculamos uma média de uma amostra de tamanho n e que: gl = n -1.
+
 ## 20.2 Intervalos de Confiança para μ {#sec-ic-media-t}
 
 ### Fórmula do Intervalo de Confiança t
 
-Quando σ é desconhecido, o intervalo de confiança para μ é:
+Quando σ é **desconhecido**, o intervalo de confiança para μ é:
 
 $$\bar{x} \pm t^* \frac{s}{\sqrt{n}}$$
 
 onde $t^*$ é o valor crítico da distribuição t com gl = n - 1.
 
+A **média amostral** continua sendo a [***melhor estimativa***]{.underline} para a **média populacional** (TCL).
+
+Mas, para **compensar** o uso do desvio-padrão amostral (s) para ***estimar*** o desvio-padrão populacional (σ), é necessário susbtituir o valor do Z-escore crítico ($z^*$) pelo valro do t-escore crítico ($t^*$). De modo que o Erro Padrão da amostra (TCL) passa a ser : $EP_{\bar{X}} = s / \sqrt{n}$.
+
 ### EXEMPLO 20.1: Tempo de Processamento de AJCMs
+
+Simulando dados de tempo de processamento de AJCMs (em dias) até um suposto *despacho inicial* que aprecia o recebimento da denúncia e geralmente a recebe.
 
 ```{r exemplo-ajcm-tempo}
 # Simulando dados de tempo de processamento de AJCMs (em dias)
+# até o despacho inicial
 set.seed(456)
 tempos_ajcm <- c(15, 18, 12, 25, 20, 16, 14, 22, 19, 17, 21, 13, 24, 16, 18)
 
@@ -139,7 +184,7 @@ cat("Dados (dias):", paste(tempos_ajcm, collapse = ", "), "\n")
 cat("Tamanho da amostra (n):", n, "\n")
 cat("Média amostral (x̄):", round(media_amostral, 2), "dias\n")
 cat("Desvio-padrão amostral (s):", round(desvio_amostral, 2), "dias\n")
-cat("Erro padrão (s/√n):", round(erro_padrao, 2), "dias\n")
+cat("Erro padrão da amostra (s/√n):", round(erro_padrao, 2), "dias\n")
 cat("Graus de liberdade:", gl, "\n\n")
 
 # Intervalo de confiança 95%
@@ -160,7 +205,15 @@ cat("Com 95% de confiança, o tempo médio de processamento\n")
 cat("de AJCMs está entre", round(ic_inferior, 1), "e", round(ic_superior, 1), "dias.\n")
 ```
 
-### Visualização do Intervalo de Confiança
+Como a amostra acima é pequena (n=15), só podemos considerar esse IC-95% válido se as seguintes condições forem satisfeitas [@Moore2023 , p. 365]:
+
+1.  Os dados parecerem aproximadamente Normal;
+2.  razoavelmente simétricos,
+3.  com um único pico e
+4.  sem valores atípicos (*outliers*);
+5.  Se os dados forem claramente assimétricos ou se há ouliers não use procedimento-t.
+
+### Visualização do Intervalo de Confiança 95%
 
 ```{r viz-ic-t}
 # Gráfico da distribuição t com intervalo de confiança
@@ -182,7 +235,7 @@ ggplot(df_t, aes(x = x, y = y)) +
              linetype = "dashed", size = 1) +
   annotate("text", x = 0, y = max(y_seq) * 0.5, 
            label = paste0("Área = ", confianca), size = 4, fontface = "bold") +
-  annotate("text", x = t_critico, y = 0.02, 
+  annotate("text", x = t_critico+0.03, y = 0.01, 
            label = paste0("t* = ", round(t_critico, 3)), 
            hjust = 0, color = "red") +
   labs(
@@ -193,7 +246,13 @@ ggplot(df_t, aes(x = x, y = y)) +
   )
 ```
 
+A figura acima representa a curva suave da distribuição-t com gl = 15-1=14 graus de liberdade.
+
+Lembrar que o procedimento-t [***náo é robusto***]{.underline} a desvios da normalidade para pequenas amostras.
+
 ### Comparação com Diferentes Níveis de Confiança
+
+Quanto maior o Nível de Confiança maior a amplitude do respectivo Intervalo de Confiança, mantidas todas as demais características amostrais: mesmo tamanho de amostra (n) e mesmo desvio-padrão populacional (σ).
 
 ```{r ic-multiplos-niveis}
 # Calculando ICs para diferentes níveis de confiança
@@ -227,6 +286,109 @@ cat("- Maior confiança → Maior amplitude do intervalo\n")
 cat("- Trade-off entre precisão e confiança\n")
 ```
 
+O gráfico a seguir ilustra o efeito do aumento do Nível de Significância na amplitude dos Intervalos de Confiança.
+
+```{r}
+# ============================================================================
+# GRÁFICO 1: INTERVALOS DE CONFIANÇA COMPARATIVOS
+# ============================================================================
+
+# Preparando dados para visualização
+dados_grafico <- resultados_ic %>%
+  mutate(
+    Media = media_amostral,
+    Ordem = factor(NC, levels = rev(NC))  # Invertendo ordem para melhor visualização
+  )
+
+# Criando gráfico de intervalos de confiança
+p1 <- ggplot(dados_grafico, aes(y = Ordem)) +
+  # Intervalos de confiança
+  geom_segment(aes(x = IC_Inferior, xend = IC_Superior, 
+                   y = Ordem, yend = Ordem, color = Ordem),
+               size = 2, alpha = 0.7) +
+  
+  # Pontos nas extremidades
+  geom_point(aes(x = IC_Inferior, color = Ordem), size = 3) +
+  geom_point(aes(x = IC_Superior, color = Ordem), size = 3) +
+  
+  # Média amostral
+  geom_point(aes(x = Media), size = 4, shape = 18, color = "black") +
+  geom_vline(xintercept = media_amostral, linetype = "dashed", 
+             color = "black", alpha = 0.5) +
+  
+  # Anotações
+  geom_text(aes(x = IC_Superior + 0.1, label = paste0("Amp: ", Amplitude, " dias")),
+            hjust = 0, size = 3.5, fontface = "bold") +
+  
+  scale_color_manual(values = c("99%" = "#e74c3c", 
+                                "95%" = "#3498db", 
+                                "90%" = "#2ecc71")) +
+  
+  labs(
+    title = "Comparação de Intervalos de Confiança em Diferentes Níveis",
+    subtitle = paste0("Média amostral = ", round(media_amostral, 2), 
+                     " dias | n = ", n, " | EP = ", round(erro_padrao, 2)),
+    x = "Tempo de Processamento (dias)",
+    y = "Nível de Confiança",
+    caption = "Diamante preto = média amostral | Quanto maior a confiança, maior a amplitude"
+  ) +
+  
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 14, face = "bold"),
+    plot.subtitle = element_text(hjust = 0.5, size = 11),
+    legend.position = "none",
+    axis.text.y = element_text(size = 12, face = "bold"),
+    panel.grid.major.y = element_blank()
+  ) +
+  scale_x_continuous(
+    limits = c(14, 22) # impõe limites inicial e final ao eixo x
+  )
+
+print(p1)
+```
+
+O gráfico a seguir ilustra agora o efeito do aumento do tamanho da amostra (n) na amplitude dos Intervalos de Confiança para um mesmo Nível de Significância para o peso médio do data set NHANES.
+
+```{r}
+# load the NHANES data library
+library(NHANES)
+
+# drop duplicated IDs within the NHANES dataset
+NHANES <-
+  NHANES %>%
+  dplyr::distinct(ID,.keep_all=TRUE)
+
+NHANES_adult <-
+  NHANES %>%
+  drop_na(Weight) %>%
+  subset(Age>=18)
+
+# take a sample from adults in NHANES and summarize their mean Weight
+sampSize <- 250
+NHANES_sample <- sample_n(NHANES_adult, sampSize)
+
+# Um exemplo do efeito do tamanho da mostra na largura do intervalo de confiança para
+# o peso médio no NHANES com AAS's de vários tamanhos
+ssDf <-
+  tibble(sampSize=c(10,20,30,40,50,75,100,200,300,400,500)) %>%
+  mutate(
+    meanWeight = mean(NHANES_sample$Weight),
+    ci.lower = meanWeight + qt(0.025,sampSize)*sd(NHANES_adult$Weight)/sqrt(sampSize),
+    ci.upper = meanWeight + qt(0.975,sampSize)*sd(NHANES_adult$Weight)/sqrt(sampSize)
+  )
+
+ggplot(ssDf, aes(sampSize, meanWeight)) +
+  geom_point(size = 3) +
+  geom_errorbar(aes(ymin = ci.lower, ymax = ci.upper), width = 0, linewidth = 1) +
+  labs(
+    x = "Tamanho da Amostra (n)",
+    y = "Peso médio (kg))"
+  )
+```
+
+Pelo gráfico acima vê-se que, se pretende um IC-95% com amplitude menor ou igual a 5 Kg então o tamanho amostral n ≥ 300 para a variável peso no data set NHANES (americanos adultos, descartados os NA's e as duplicidades).
+
 ## 20.3 Testes de Significância para μ {#sec-testes-t}
 
 ### Teste t de Uma Amostra
@@ -238,56 +400,566 @@ cat("- Trade-off entre precisão e confiança\n")
 
 **Estatística de teste:** $$t = \frac{\bar{x} - \mu_0}{s/\sqrt{n}}$$
 
-### EXEMPLO 20.2: Teste para Tempo Padrão de Processamento
+### EXEMPLO 20.2: Bom tempo, boas gorjetas?
 
-```{r exemplo-teste-t}
-# Testando se o tempo médio é diferente de 20 dias (padrão estabelecido)
-mu_0 <- 20  # Valor sob H₀
+Esse exemplo foi obtido com o seguinte prompt para o copilot: "R script comentado para exibir diagrama de ramo e folha, histograma com curva suave de densidade, boxplot, gráfico quantil-quantil e teste shapiro para verificar normalidade so seguinte exemplo: ...".
 
-cat("EXEMPLO 20.2: Teste t para Tempo de Processamento\n")
-cat("===============================================\n\n")
+```{r}
+# ============================================================================
+# EXEMPLO 20.2: BOM TEMPO, BOAS GORJETAS?
+# Análise Exploratória e Verificação de Normalidade
+# ============================================================================
 
-# Configurando o teste
-cat("HIPÓTESES:\n")
-cat("H₀: μ = 20 dias (tempo padrão)\n")
-cat("H₁: μ ≠ 20 dias (bilateral)\n\n")
+library(tidyverse)
+library(ggplot2)
+library(patchwork)
+library(qqplotr)
 
-# Calculando estatística t
-t_calculado <- (media_amostral - mu_0) / erro_padrao
+# ============================================================================
+# DADOS: GORJETAS PERCENTUAIS COM MENSAGEM DE BOM TEMPO
+# ============================================================================
 
-cat("CÁLCULOS:\n")
-cat("Estatística t = (x̄ - μ₀) / (s/√n)\n")
-cat("t =", paste0("(", round(media_amostral, 2), " - ", mu_0, ") / ", 
-                  round(erro_padrao, 2)), "\n")
-cat("t =", round(t_calculado, 3), "\n\n")
+cat("EXEMPLO 20.2: BOM TEMPO, BOAS GORJETAS?\n")
+cat("========================================\n\n")
 
-# Valor P bilateral
-p_valor <- 2 * pt(-abs(t_calculado), gl)
+cat("DADOS COLETADOS:\n")
+cat("Gorjetas em percentual do total da conta (20 clientes)\n")
+cat("quando receberam mensagem de BOM TEMPO na conta:\n\n")
 
-cat("RESULTADOS:\n")
-cat("Estatística t:", round(t_calculado, 3), "\n")
-cat("Graus de liberdade:", gl, "\n")
-cat("Valor P (bilateral):", round(p_valor, 4), "\n")
+# Gorjetas em percentual do total da conta (20 clientes)
+gorjetas <- c(20.8, 18.7, 19.9, 20.6, 21.9, 23.4, 22.8, 24.9, 22.2, 20.3,
+              24.9, 22.3, 27.0, 20.4, 22.2, 24.0, 21.1, 22.1, 22.0, 22.7)
 
-# Decisão
-alpha <- 0.05
-decisao <- ifelse(p_valor < alpha, "REJEITA H₀", "NÃO REJEITA H₀")
-cat("Decisão (α = 0.05):", decisao, "\n\n")
+# Exibindo os dados
+cat("Primeira metade:  ", paste(gorjetas[1:10], collapse = ", "), "\n")
+cat("Segunda metade:   ", paste(gorjetas[11:20], collapse = ", "), "\n\n")
 
-# Interpretação
+# Criando data frame
+dados_gorjetas <- data.frame(
+  Cliente = 1:length(gorjetas),
+  Gorjeta_Pct = gorjetas
+)
+
+# ============================================================================
+# 1. DIAGRAMA DE RAMO E FOLHAS (STEM-AND-LEAF PLOT)
+# ============================================================================
+
+cat("═══════════════════════════════════════════════════════════════════════\n")
+cat("1. DIAGRAMA DE RAMO E FOLHAS (Figura 20.2)\n")
+cat("═══════════════════════════════════════════════════════════════════════\n\n")
+
+cat("O diagrama de ramo e folhas é uma ferramenta clássica para visualizar\n")
+cat("a distribuição dos dados mantendo os valores individuais visíveis.\n\n")
+
+# Criando diagrama de ramo e folhas
+stem(gorjetas, scale = 2)
+
+cat("\n")
 cat("INTERPRETAÇÃO:\n")
-if(p_valor < alpha) {
-  cat("Há evidência significativa de que o tempo médio de\n")
-  cat("processamento é diferente do padrão de 20 dias.\n")
-} else {
-  cat("Não há evidência suficiente para concluir que o\n")
-  cat("tempo médio difere significativamente de 20 dias.\n")
+cat("• Ramo (stem): dígito das dezenas\n")
+cat("• Folha (leaf): dígito das unidades e primeiro decimal\n")
+cat("• Exemplo: '20 | 3 4 6 8' representa os valores 20.3, 20.4, 20.6, 20.8\n\n")
+
+cat("OBSERVAÇÕES:\n")
+cat("✓ A distribuição parece aproximadamente simétrica\n")
+cat("✓ A maioria dos valores concentra-se entre 20% e 24%\n")
+cat("✓ Há um valor relativamente alto (27.0%)\n")
+cat("✓ Não há evidência de forte assimetria ou multimodalidade\n\n")
+
+# ============================================================================
+# 2. ESTATÍSTICAS DESCRITIVAS
+# ============================================================================
+
+cat("═══════════════════════════════════════════════════════════════════════\n")
+cat("2. ESTATÍSTICAS DESCRITIVAS\n")
+cat("═══════════════════════════════════════════════════════════════════════\n\n")
+
+n <- length(gorjetas)
+media <- mean(gorjetas)
+mediana <- median(gorjetas)
+dp <- sd(gorjetas)
+var <- var(gorjetas)
+cv <- (dp / media) * 100
+q1 <- quantile(gorjetas, 0.25)
+q3 <- quantile(gorjetas, 0.75)
+iqr <- IQR(gorjetas)
+minimo <- min(gorjetas)
+maximo <- max(gorjetas)
+amplitude <- maximo - minimo
+
+cat("MEDIDAS DE POSIÇÃO:\n")
+cat("-------------------\n")
+cat("Tamanho da amostra (n):     ", n, "\n")
+cat("Mínimo:                     ", round(minimo, 2), "%\n")
+cat("Q1 (1º quartil):            ", round(q1, 2), "%\n")
+cat("Mediana (Q2):               ", round(mediana, 2), "%\n")
+cat("Média:                      ", round(media, 2), "%\n")
+cat("Q3 (3º quartil):            ", round(q3, 2), "%\n")
+cat("Máximo:                     ", round(maximo, 2), "%\n\n")
+
+cat("MEDIDAS DE DISPERSÃO:\n")
+cat("---------------------\n")
+cat("Amplitude total:            ", round(amplitude, 2), "%\n")
+cat("Intervalo interquartil:     ", round(iqr, 2), "%\n")
+cat("Variância:                  ", round(var, 3), "\n")
+cat("Desvio-padrão:              ", round(dp, 3), "%\n")
+cat("Coeficiente de variação:    ", round(cv, 2), "%\n\n")
+
+cat("OBSERVAÇÃO:\n")
+cat("A média (", round(media, 2), "%) está próxima da mediana (", 
+    round(mediana, 2), "%),\n", sep = "")
+cat("sugerindo uma distribuição aproximadamente simétrica.\n\n")
+
+# ============================================================================
+# 3. HISTOGRAMA COM CURVA SUAVE DE DENSIDADE
+# ============================================================================
+
+cat("═══════════════════════════════════════════════════════════════════════\n")
+cat("3. HISTOGRAMA COM CURVA DE DENSIDADE\n")
+cat("═══════════════════════════════════════════════════════════════════════\n\n")
+
+p1 <- ggplot(dados_gorjetas, aes(x = Gorjeta_Pct)) +
+  # Histograma
+  geom_histogram(aes(y = after_stat(density)), 
+                 bins = 8, 
+                 fill = "lightblue", 
+                 color = "black", 
+                 alpha = 0.7) +
+  
+  # Curva de densidade suavizada (kernel density)
+  geom_density(color = "darkblue", 
+               size = 1.5, 
+               linetype = "solid",
+               adjust = 1.5) +
+  
+  # Curva normal teórica
+  stat_function(fun = dnorm, 
+                args = list(mean = media, sd = dp),
+                color = "red", 
+                size = 1.2, 
+                linetype = "dashed") +
+  
+  # Linhas de referência
+  geom_vline(xintercept = media, 
+             color = "darkgreen", 
+             size = 1.2, 
+             linetype = "solid") +
+  geom_vline(xintercept = mediana, 
+             color = "purple", 
+             size = 1, 
+             linetype = "dotted") +
+  
+  # Anotações
+  annotate("text", x = media + 1, y = Inf, 
+           label = paste0("Média = ", round(media, 2), "%"), 
+           vjust = 1.5, 
+           color = "darkgreen", 
+           fontface = "bold",
+           size = 4) +
+  
+  annotate("text", x = 26, y = 0.15, 
+           label = "Densidade suavizada", 
+           color = "darkblue", 
+           fontface = "bold",
+           size = 3.5) +
+  
+  annotate("text", x = 26, y = 0.13, 
+           label = "Normal teórica", 
+           color = "red", 
+           fontface = "bold",
+           size = 3.5) +
+  
+  labs(
+    title = "Histograma com Curva de Densidade Suavizada",
+    subtitle = "Distribuição das gorjetas com mensagem de bom tempo",
+    x = "Gorjeta (% do total da conta)",
+    y = "Densidade",
+    caption = paste0("n = ", n, " | Média = ", round(media, 2), 
+                    "% | DP = ", round(dp, 2), "%\n",
+                    "Linha verde = média | Linha roxa = mediana | ",
+                    "Linha azul = densidade suavizada | Linha vermelha = normal teórica")
+  ) +
+  
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 14, face = "bold"),
+    plot.subtitle = element_text(hjust = 0.5, size = 11),
+    plot.caption = element_text(hjust = 0.5, size = 9)
+  )
+
+print(p1)
+
+cat("\nINTERPRETAÇÃO DO HISTOGRAMA:\n")
+cat("• A curva de densidade suavizada (azul) mostra o formato geral da distribuição\n")
+cat("• A curva normal teórica (vermelha tracejada) está bem ajustada aos dados\n")
+cat("• A distribuição parece aproximadamente simétrica e unimodal\n")
+cat("• Não há evidência visual clara de desvio da normalidade\n\n")
+
+# ============================================================================
+# 4. BOXPLOT (DIAGRAMA DE CAIXA)
+# ============================================================================
+
+cat("═══════════════════════════════════════════════════════════════════════\n")
+cat("4. BOXPLOT (DIAGRAMA DE CAIXA)\n")
+cat("═══════════════════════════════════════════════════════════════════════\n\n")
+
+# Identificando outliers
+limite_inf <- q1 - 1.5 * iqr
+limite_sup <- q3 + 1.5 * iqr
+outliers <- gorjetas[gorjetas < limite_inf | gorjetas > limite_sup]
+
+cat("LIMITES PARA DETECÇÃO DE OUTLIERS:\n")
+cat("Limite inferior (Q1 - 1.5×IQR): ", round(limite_inf, 2), "%\n", sep = "")
+cat("Limite superior (Q3 + 1.5×IQR): ", round(limite_sup, 2), "%\n", sep = "")
+cat("Outliers detectados:            ", length(outliers), "\n")
+if(length(outliers) > 0) {
+  cat("Valores outliers:               ", paste(outliers, collapse = ", "), "%\n")
 }
+cat("\n")
+
+p2 <- ggplot(dados_gorjetas, aes(x = "", y = Gorjeta_Pct)) +
+  # Boxplot
+  geom_boxplot(fill = "lightgreen", 
+               alpha = 0.7, 
+               outlier.color = "red", 
+               outlier.size = 4,
+               width = 0.5) +
+  
+  # Pontos individuais
+  geom_jitter(width = 0.15, 
+              alpha = 0.5, 
+              size = 3,
+              color = "gray40") +
+  
+  # Média
+  stat_summary(fun = mean, 
+               geom = "point", 
+               shape = 18, 
+               size = 6, 
+               color = "darkblue") +
+  
+  # Linhas de referência dos quartis
+  geom_hline(yintercept = q1, 
+             linetype = "dashed", 
+             color = "blue", 
+             alpha = 0.5) +
+  geom_hline(yintercept = mediana, 
+             linetype = "solid", 
+             color = "darkgreen", 
+             alpha = 0.7,
+             size = 1) +
+  geom_hline(yintercept = q3, 
+             linetype = "dashed", 
+             color = "blue", 
+             alpha = 0.5) +
+  
+  # Anotações
+  annotate("text", x = 1.4, y = q1, 
+           label = paste0("Q1 = ", round(q1, 2), "%"), 
+           hjust = 0, color = "blue", size = 3.5) +
+  annotate("text", x = 1.4, y = mediana, 
+           label = paste0("Mediana = ", round(mediana, 2), "%"), 
+           hjust = 0, color = "darkgreen", size = 3.5, fontface = "bold") +
+  annotate("text", x = 1.4, y = q3, 
+           label = paste0("Q3 = ", round(q3, 2), "%"), 
+           hjust = 0, color = "blue", size = 3.5) +
+  annotate("text", x = 1.4, y = media, 
+           label = paste0("Média = ", round(media, 2), "%"), 
+           hjust = 0, color = "darkblue", size = 3.5, fontface = "bold") +
+  
+  scale_y_continuous(breaks = seq(18, 28, by = 1)) +
+  
+  labs(
+    title = "Boxplot das Gorjetas",
+    subtitle = "Diamante azul = média | Linha verde = mediana",
+    x = "",
+    y = "Gorjeta (% do total da conta)",
+    caption = paste0("Q1 = ", round(q1, 2), "% | Mediana = ", round(mediana, 2), 
+                    "% | Q3 = ", round(q3, 2), "%\n",
+                    "IQR = ", round(iqr, 2), "% | Outliers destacados em vermelho")
+  ) +
+  
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 14, face = "bold"),
+    plot.subtitle = element_text(hjust = 0.5, size = 11),
+    plot.caption = element_text(hjust = 0.5, size = 9),
+    axis.text.x = element_blank()
+  )
+
+print(p2)
+
+cat("\nINTERPRETAÇÃO DO BOXPLOT:\n")
+cat("• A caixa representa 50% dos dados centrais (entre Q1 e Q3)\n")
+cat("• A linha verde dentro da caixa é a mediana\n")
+cat("• O diamante azul representa a média\n")
+cat("• Média e mediana estão próximas → sugere simetria\n")
+cat("• As whiskers (bigodes) mostram a variabilidade dos dados\n")
+if(length(outliers) > 0) {
+  cat("• Há", length(outliers), "outlier(s) detectado(s)\n")
+} else {
+  cat("• Não há outliers detectados\n")
+}
+cat("\n")
+
+# ============================================================================
+# 5. GRÁFICO QUANTIL-QUANTIL (Q-Q PLOT)
+# ============================================================================
+
+cat("═══════════════════════════════════════════════════════════════════════\n")
+cat("5. GRÁFICO QUANTIL-QUANTIL (Q-Q PLOT)\n")
+cat("═══════════════════════════════════════════════════════════════════════\n\n")
+
+cat("O Q-Q plot compara os quantis dos dados observados com os quantis\n")
+cat("teóricos de uma distribuição normal. Se os dados forem normais,\n")
+cat("os pontos devem estar próximos à linha de referência.\n\n")
+
+# Calculando quantis teóricos e observados para anotações
+quantis_teoricos <- qnorm(ppoints(n))
+quantis_observados <- sort(gorjetas)
+correlacao_qq <- cor(quantis_teoricos, quantis_observados)
+
+cat("CORRELAÇÃO Q-Q:\n")
+cat("Correlação entre quantis teóricos e observados: ", 
+    round(correlacao_qq, 4), "\n", sep = "")
+cat("(Valores > 0.95 indicam boa aderência à normalidade)\n\n")
+
+# Q-Q Plot simples e efetivo
+p3 <- ggplot(dados_gorjetas, aes(sample = Gorjeta_Pct)) +
+  geom_qq(color = "steelblue", size = 3, alpha = 0.7) +
+  geom_qq_line(color = "red", size = 1, linetype = "dashed") +
+  labs(
+    title = "Q-Q Plot: Verificação de Normalidade",
+    x = "Quantis Teóricos",
+    y = "Quantis Amostrais",
+    caption = "Pontos próximos à linha vermelha indicam normalidade"
+  ) +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5, face = "bold"))
+
+print(p3)
+
+cat("\nINTERPRETAÇÃO DO Q-Q PLOT:\n")
+cat("CRITÉRIOS DE AVALIAÇÃO:\n")
+cat("• Pontos próximos à linha vermelha → dados normais\n")
+cat("• Pontos dentro da banda azul → aceitável\n")
+cat("• Curvatura no início → assimetria à esquerda\n")
+cat("• Curvatura no fim → assimetria à direita\n")
+cat("• Forma de S → caudas pesadas\n\n")
+
+cat("AVALIAÇÃO DOS DADOS:\n")
+if(correlacao_qq > 0.98) {
+  cat("✓ Excelente aderência à normalidade (r > 0.98)\n")
+} else if(correlacao_qq > 0.95) {
+  cat("✓ Boa aderência à normalidade (r > 0.95)\n")
+} else if(correlacao_qq > 0.90) {
+  cat("⚠ Aderência moderada à normalidade (r > 0.90)\n")
+} else {
+  cat("✗ Possível desvio da normalidade (r < 0.90)\n")
+}
+cat("• A maioria dos pontos está próxima à linha de referência\n")
+cat("• Não há padrão sistemático de desvio\n")
+cat("• Os dados parecem aproximadamente normais\n\n")
+
+# ============================================================================
+# 6. TESTE DE SHAPIRO-WILK PARA NORMALIDADE
+# ============================================================================
+
+cat("═══════════════════════════════════════════════════════════════════════\n")
+cat("6. TESTE DE SHAPIRO-WILK PARA NORMALIDADE\n")
+cat("═══════════════════════════════════════════════════════════════════════\n\n")
+
+cat("O teste de Shapiro-Wilk é um teste formal de hipótese que avalia\n")
+cat("se os dados provêm de uma distribuição normal.\n\n")
+
+cat("HIPÓTESES:\n")
+cat("H₀: Os dados seguem uma distribuição normal\n")
+cat("H₁: Os dados NÃO seguem uma distribuição normal\n")
+cat("α = 0.05 (nível de significância)\n\n")
+
+# Realizando teste de Shapiro-Wilk
+shapiro_test <- shapiro.test(gorjetas)
+
+cat("RESULTADOS DO TESTE:\n")
+cat("====================\n")
+cat("Estatística W:  ", round(shapiro_test$statistic, 5), "\n", sep = "")
+cat("p-valor:        ", round(shapiro_test$p.value, 5), "\n", sep = "")
+cat("\n")
+
+cat("INTERPRETAÇÃO:\n")
+cat("--------------\n")
+if(shapiro_test$p.value > 0.10) {
+  cat("✓ p-valor > 0.10: NÃO HÁ evidência contra a normalidade\n")
+  cat("  Conclusão: NÃO REJEITAMOS H₀\n")
+  cat("  Os dados são consistentes com uma distribuição normal.\n")
+} else if(shapiro_test$p.value > 0.05) {
+  cat("⚠ 0.05 < p-valor ≤ 0.10: Evidência FRACA contra a normalidade\n")
+  cat("  Conclusão: NÃO REJEITAMOS H₀ (marginalmente)\n")
+  cat("  Os dados são razoavelmente consistentes com normalidade.\n")
+} else {
+  cat("✗ p-valor ≤ 0.05: HÁ evidência contra a normalidade\n")
+  cat("  Conclusão: REJEITAMOS H₀\n")
+  cat("  Os dados sugerem desvio da normalidade.\n")
+}
+
+cat("\n")
+cat("NOTAS IMPORTANTES:\n")
+cat("• O teste de Shapiro-Wilk é sensível ao tamanho da amostra\n")
+cat("• Com n pequeno (n < 30), o teste tem baixo poder\n")
+cat("• Com n grande, até pequenos desvios são detectados\n")
+cat("• A análise gráfica (Q-Q plot) é tão importante quanto o teste\n")
+cat("• Para n =", n, ", o teste é adequado mas não definitivo\n\n")
+
+# Estatística W interpretada
+cat("SOBRE A ESTATÍSTICA W:\n")
+cat("• W varia entre 0 e 1\n")
+cat("• W próximo de 1 → boa aderência à normalidade\n")
+cat("• W observado = ", round(shapiro_test$statistic, 5), "\n", sep = "")
+if(shapiro_test$statistic > 0.95) {
+  cat("• Interpretação: EXCELENTE aderência (W > 0.95)\n")
+} else if(shapiro_test$statistic > 0.90) {
+  cat("• Interpretação: BOA aderência (W > 0.90)\n")
+} else {
+  cat("• Interpretação: Aderência MODERADA\n")
+}
+cat("\n")
+
+# ============================================================================
+# 7. PAINEL INTEGRADO COM TODOS OS GRÁFICOS
+# ============================================================================
+
+cat("═══════════════════════════════════════════════════════════════════════\n")
+cat("7. PAINEL INTEGRADO - VISUALIZAÇÃO COMPLETA\n")
+cat("═══════════════════════════════════════════════════════════════════════\n\n")
+
+# Combinando todos os gráficos
+layout_completo <- (p1 | p2) / p3
+
+painel_final <- layout_completo + 
+  plot_annotation(
+    title = "Análise Completa de Normalidade: Exemplo 20.2",
+    subtitle = paste0("Gorjetas com mensagem de bom tempo (n = ", n, 
+                     " | média = ", round(media, 2), 
+                     "% | DP = ", round(dp, 2), "%)"),
+    caption = paste0("Teste de Shapiro-Wilk: W = ", round(shapiro_test$statistic, 4),
+                    " | p-valor = ", round(shapiro_test$p.value, 4),
+                    " | Conclusão: ", 
+                    ifelse(shapiro_test$p.value > 0.05, 
+                          "Dados consistentes com normalidade ✓",
+                          "Possível desvio da normalidade")),
+    theme = theme(
+      plot.title = element_text(size = 16, face = "bold", hjust = 0.5),
+      plot.subtitle = element_text(size = 12, hjust = 0.5),
+      plot.caption = element_text(size = 10, hjust = 0.5, face = "italic")
+    )
+  )
+
+print(painel_final)
+
+# ============================================================================
+# 8. CONCLUSÃO GERAL SOBRE NORMALIDADE
+# ============================================================================
+
+cat("\n")
+cat("═══════════════════════════════════════════════════════════════════════\n")
+cat("CONCLUSÃO GERAL SOBRE NORMALIDADE\n")
+cat("═══════════════════════════════════════════════════════════════════════\n\n")
+
+cat("RESUMO DAS EVIDÊNCIAS:\n")
+cat("======================\n\n")
+
+cat("1. DIAGRAMA DE RAMO E FOLHAS:\n")
+cat("   ✓ Distribuição aproximadamente simétrica\n")
+cat("   ✓ Sem evidência de forte assimetria ou multimodalidade\n\n")
+
+cat("2. HISTOGRAMA COM DENSIDADE:\n")
+cat("   ✓ Curva de densidade suavizada próxima da normal teórica\n")
+cat("   ✓ Distribuição unimodal e aproximadamente simétrica\n\n")
+
+cat("3. BOXPLOT:\n")
+cat("   ✓ Média e mediana próximas (", round(media, 2), "% vs ", 
+    round(mediana, 2), "%)\n", sep = "")
+if(length(outliers) == 0) {
+  cat("   ✓ Sem outliers detectados\n")
+} else {
+  cat("   ⚠ ", length(outliers), " outlier(s) detectado(s)\n", sep = "")
+}
+cat("   ✓ Distribuição simétrica\n\n")
+
+cat("4. Q-Q PLOT:\n")
+cat("   ✓ Pontos próximos à linha de referência\n")
+cat("   ✓ Correlação Q-Q =", round(correlacao_qq, 4), "\n")
+cat("   ✓ Aderência ", 
+    ifelse(correlacao_qq > 0.98, "EXCELENTE",
+           ifelse(correlacao_qq > 0.95, "BOA", "MODERADA")), 
+    " à normalidade\n\n", sep = "")
+
+cat("5. TESTE DE SHAPIRO-WILK:\n")
+cat("   W =", round(shapiro_test$statistic, 5), 
+    "| p-valor =", round(shapiro_test$p.value, 5), "\n")
+cat("   Conclusão:", 
+    ifelse(shapiro_test$p.value > 0.05,
+           "NÃO rejeitar H₀ (dados normais) ✓",
+           "Rejeitar H₀ (possível desvio)"), "\n\n")
+
+cat("DECISÃO FINAL:\n")
+cat("==============\n")
+if(shapiro_test$p.value > 0.05 & correlacao_qq > 0.95) {
+  cat("✓✓✓ NORMALIDADE VERIFICADA ✓✓✓\n\n")
+  cat("TODAS as evidências (gráficas e estatísticas) indicam que os dados\n")
+  cat("seguem uma distribuição aproximadamente normal.\n\n")
+  cat("PODEMOS PROSSEGUIR com segurança para:\n")
+  cat("• Cálculo de intervalos de confiança usando distribuição t\n")
+  cat("• Testes de hipótese paramétricos\n")
+  cat("• Inferência baseada na teoria normal\n")
+} else if(shapiro_test$p.value > 0.05 | correlacao_qq > 0.90) {
+  cat("✓ NORMALIDADE RAZOÁVEL ✓\n\n")
+  cat("A maioria das evidências sugere normalidade, com pequenos desvios.\n")
+  cat("Dado que n =", n, ", os métodos baseados em t são ROBUSTOS.\n\n")
+  cat("PODEMOS PROSSEGUIR, mas considerar:\n")
+  cat("• Os métodos t são razoavelmente robustos a pequenos desvios\n")
+  cat("• Para n ≥ 15-20, o Teorema do Limite Central ajuda\n")
+  cat("• Métodos bootstrap podem ser usados como alternativa\n")
+} else {
+  cat("⚠ NORMALIDADE QUESTIONÁVEL ⚠\n\n")
+  cat("Há evidências de desvio da normalidade.\n\n")
+  cat("RECOMENDAÇÕES:\n")
+  cat("• Usar métodos não-paramétricos (ex: teste de Wilcoxon)\n")
+  cat("• Considerar transformação dos dados\n")
+  cat("• Usar métodos bootstrap para intervalos de confiança\n")
+  cat("• Aumentar tamanho da amostra se possível\n")
+}
+
+cat("\n")
+cat("═══════════════════════════════════════════════════════════════════════\n")
+cat("FIM DA ANÁLISE EXPLORATÓRIA\n")
+cat("═══════════════════════════════════════════════════════════════════════\n")
 ```
+
+mmm
 
 ### Visualização do Teste t
 
 ```{r viz-teste-t}
+# Definir seus dados e hipótese
+# tempo de processamento
+tempos <- c(115, 130, 125, 140, 118, 135, 122, 128, 132, 119)
+mu_0 <- 120  # Valor da hipótese nula
+
+# Cálculos do teste-t
+# hipótese alternativa bilateral
+n <- length(tempos)
+media_amostral <- mean(tempos)
+dp_amostral <- sd(tempos)
+gl <- n - 1
+erro_padrao <- dp_amostral / sqrt(n)
+t_calculado <- (media_amostral - mu_0) / erro_padrao
+p_valor <- 2 * pt(-abs(t_calculado), df = gl)
+
+# Valores críticos
+alpha <- 0.05
+t_crit_bilateral <- qt(1 - alpha/2, gl)
+
 # Gráfico da distribuição t com região crítica
 x_seq <- seq(-4, 4, length.out = 1000)
 y_seq <- dt(x_seq, gl)
@@ -646,7 +1318,7 @@ $$t = \frac{\bar{x} - \mu_0}{s/\sqrt{n}}$$
 ### Fórmulas Importantes
 
 | **Estatística** | **Fórmula** | **Uso** |
-|------------------------|------------------|------------------------------|
+|------------------------|------------------------|------------------------|
 | IC para μ | $\bar{x} \pm t^* \frac{s}{\sqrt{n}}$ | Estimar μ |
 | Teste t | $t = \frac{\bar{x} - \mu_0}{s/\sqrt{n}}$ | Testar hipóteses sobre μ |
 | Erro padrão | $EP = \frac{s}{\sqrt{n}}$ | Variabilidade de $\bar{x}$ |
