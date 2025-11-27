@@ -3,7 +3,7 @@
 ::: callout-note
 ## Capítulo 21 - Comparação de Duas Médias
 
-Este capítulo apresenta métodos estatísticos para comparar médias de dois grupos independentes, incluindo procedimentos t de duas amostras, testes de Welch e análise da igualdade de variâncias.
+Este capítulo apresenta ***métodos estatísticos*** para ***comparar médias*** de ***dois grupos independentes***, incluindo ***procedimentos t de duas amostras***, *testes de Welch* e ***análise da igualdade de variâncias (ANOVA)***.
 :::
 
 ## Introdução
@@ -12,7 +12,7 @@ A comparação de duas médias populacionais é um dos problemas mais comuns em 
 
 -   Dois tratamentos produzem resultados diferentes
 -   Dois grupos têm características diferentes
--   Uma mudança de política teve efeito significativo
+-   Uma [***mudança de política***]{.underline} teve [***efeito significativo***]{.underline}
 -   Dois métodos de ensino são igualmente eficazes
 
 ```{r setup-duas-medias, message=FALSE, warning=FALSE}
@@ -52,9 +52,9 @@ Sejam duas populações com:
 ## Condições de Aplicação
 
 1.  **Dados**: Duas amostras de observações quantitativas
-2.  **Independência**: As observações em cada amostra são independentes
-3.  **Amostras independentes**: As duas amostras são independentes entre si
-4.  **Normalidade**: Cada população tem distribuição aproximadamente Normal, ou amostras grandes (n \> 30)
+2.  **Independência**: As [***observações***]{.underline} em cada amostra [***são independentes***]{.underline}
+3.  **Amostras independentes**: As [***duas amostras***]{.underline} [***são independentes entre si***]{.underline}
+4.  **Normalidade**: Cada população tem distribuição [**aproximadamente Normal**]{.underline}, [**ou**]{.underline} **amostras grandes (n \> 30 ou n \> 40)**
 :::
 
 ```{r condicoes-visualizacao}
@@ -128,7 +128,7 @@ Quando σ₁ = σ₂ = σ (desconhecido), usamos o **teste t pooled**.
 
 **Estatística de teste**: $$t = \frac{(\bar{x_1} - \bar{x_2}) - (\mu_1 - \mu_2)}{s_p \sqrt{\frac{1}{n_1} + \frac{1}{n_2}}}$$
 
-onde o **desvio-padrão pooled** é: $$s_p = \sqrt{\frac{(n_1-1)s_1^2 + (n_2-1)s_2^2}{n_1 + n_2 - 2}}$$
+onde o **desvio-padrão pooled** é o [***desvio-padrão combinado***]{.underline}: $$s_p = \sqrt{\frac{(n_1-1)s_1^2 + (n_2-1)s_2^2}{n_1 + n_2 - 2}}$$
 
 **Graus de liberdade**: df = n₁ + n₂ - 2
 
@@ -229,11 +229,11 @@ print(p_ensino)
 
 ### Caso 2: Variâncias Populacionais Diferentes (Teste de Welch)
 
-Quando σ₁ ≠ σ₂, usamos o **teste t de Welch** (mais robusto):
+Quando σ₁ ≠ σ₂, usamos o **teste t de Welch** (***mais robusto***):
 
 **Estatística de teste**: $$t = \frac{(\bar{x_1} - \bar{x_2}) - (\mu_1 - \mu_2)}{\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}}$$
 
-**Graus de liberdade** (fórmula de Welch-Satterthwaite): $$df = \frac{\left(\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}\right)^2}{\frac{(s_1^2/n_1)^2}{n_1-1} + \frac{(s_2^2/n_2)^2}{n_2-1}}$$
+**Graus de liberdade combinado** (fórmula de Welch-Satterthwaite): $$df = \frac{\left(\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}\right)^2}{\frac{(s_1^2/n_1)^2}{n_1-1} + \frac{(s_2^2/n_2)^2}{n_2-1}}$$
 
 ```{r teste-welch}
 # Exemplo: Tempo de processamento de dois tribunais
@@ -518,7 +518,7 @@ p_diag3 <- reabilitacao %>%
 
 ### Alternativas Não-Paramétricas
 
-Quando as suposições não são atendidas:
+[**Quando**]{.underline} as [***suposições não são atendidas***]{.underline}:
 
 ```{r alternativas-nao-parametricas}
 # Teste de Mann-Whitney (Wilcoxon de duas amostras)
@@ -612,8 +612,11 @@ O **d de Cohen** mede a magnitude da diferença em termos de desvios-padrão:
 
 $$d = \frac{\mu_1 - \mu_2}{\sigma_{pooled}}$$
 
-Interpretação: - d = 0.2: efeito pequeno - d = 0.5: efeito médio\
-- d = 0.8: efeito grande
+Interpretação:
+
+-   d = 0.2: efeito pequeno
+-   d = 0.5: efeito médio
+-   d = 0.8: efeito grande
 
 ```{r tamanho-efeito}
 # Calculando d de Cohen para o exemplo de reabilitação
@@ -710,6 +713,8 @@ print(p_poder)
 ```
 
 ## 21.6 Exemplo Completo: Análise de Salários por Gênero {#sec-exemplo-salarios}
+
+Construído com dados simulados.
 
 ```{r exemplo-salarios}
 # Simulando dados realistas de salários
@@ -855,6 +860,12 @@ cat("   Tamanho do efeito:", interpretar_cohen_d(abs(cohen_d_sal$estimate)), "\n
 
 ### Fluxograma de Decisão
 
+::: callout-important
+## Escolha do teste adequado
+
+O pesquisador é o responsável pela escolha adequada dos testes de significância: TScontraHo!
+:::
+
 ```{r fluxograma, echo=FALSE, fig.cap="Fluxograma para Escolha do Teste"}
 # Criar um diagrama conceitual em texto
 cat("
@@ -890,16 +901,64 @@ cat("
 ::: callout-tip
 ## Checklist - Comparação de Duas Médias
 
-**Antes da Análise:** - \[ \] Definir hipóteses (H₀ e H₁) - \[ \] Verificar independência das observações - \[ \] Calcular estatísticas descritivas - \[ \] Criar visualizações exploratórias
+**Antes da Análise:**
 
-**Verificação de Pressupostos:** - \[ \] Testar normalidade (Shapiro-Wilk, Q-Q plots) - \[ \] Testar igualdade de variâncias (F-test, Levene) - \[ \] Considerar transformações se necessário
+\- \[ \] Definir hipóteses (H₀ e H₁)
 
-**Análise Principal:** - \[ \] Escolher teste apropriado (pooled, Welch, não-paramétrico) - \[ \] Calcular estatística de teste - \[ \] Determinar valor-p - \[ \] Construir intervalo de confiança
+\- \[ \] Verificar independência das observações
 
-**Análise Complementar:** - \[ \] Calcular tamanho do efeito - \[ \] Analisar poder estatístico - \[ \] Considerar relevância prática - \[ \] Verificar robustez dos resultados
+\- \[ \] Calcular estatísticas descritivas
 
-**Comunicação:** - \[ \] Reportar métodos utilizados - \[ \] Apresentar resultados claramente - \[ \] Discutir limitações - \[ \] Dar recomendações práticas
+\- \[ \] Criar visualizações exploratórias
+
+**Verificação de Pressupostos:**
+
+\- \[ \] Testar normalidade (Shapiro-Wilk, Q-Q plots)
+
+\- \[ \] Testar igualdade de variâncias (F-test, Levene)
+
+\- \[ \] Considerar transformações se necessário
+
+**Análise Principal:**
+
+\- \[ \] Escolher teste apropriado (pooled, Welch, não-paramétrico)
+
+\- \[ \] Calcular estatística de teste
+
+\- \[ \] Determinar valor-p
+
+\- \[ \] Construir intervalo de confiança
+
+**Análise Complementar:**
+
+\- \[ \] Calcular tamanho do efeito
+
+\- \[ \] Analisar poder estatístico
+
+\- \[ \] Considerar relevância prática
+
+\- \[ \] Verificar robustez dos resultados
+
+**Comunicação:**
+
+\- \[ \] Reportar métodos utilizados
+
+\- \[ \] Apresentar resultados claramente
+
+\- \[ \] Discutir limitações
+
+\- \[ \] Dar recomendações práticas
 :::
+
+O fluxograma a seguir ilustra uma árvore de decisão para escolha entre testes de significância e Intervalos de Confiança adequados para cada situação de pesquisa.
+
+![Fluxograma de caminhos para escolha adequada de testes e IC's](fig/TScontaHo-Parametricos-IC-Fluxograma-Port.png){fig-align="center"}
+
+Na figura acima há um pequeno erro de grafia: onde se vê s = leia-se s /
+
+A figura do original em inglês está correta.
+
+![Fluxograma de caminho para escolha adequada de TScontraHo e IC's](fig/TScontaHo-Parametricos-IC-Fluxograma-Ingl.png){fig-align="center"}
 
 ### Interpretação de Resultados
 

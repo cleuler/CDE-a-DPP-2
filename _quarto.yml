@@ -85,6 +85,8 @@ book:
     - cap17-TSHo-Oltramari.qmd
     - cap18-LO-inferencia-na-pratica.qmd
     - cap20-InferenciaSobreUmaMediaPop.qmd
+    - teste-t-pareado.qmd
+    - cap21-comparar-duas-medias.qmd
     - conclusao.qmd
     - apendiceA.qmd
     - apendiceB-quadroVar.qmd

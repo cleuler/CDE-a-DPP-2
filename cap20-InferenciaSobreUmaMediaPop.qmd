@@ -1171,7 +1171,7 @@ ggplot(df_conv, aes(x = x, y = densidade, color = gl)) +
 
 Quando se apresentam gravações de um par de pessoas do mesmo sexo falando a mesma frase, um ouvinte pode determinar qual das pessoas que falam é mais alta, simplesmente pelo som da voz? Vinte e quatro adultos jovens na Washington University ouviram 100 pares de pessoas falando e, em cada par, deveriam indicar qual dos dois falantes soava mais alto. Eis os números corretos (em 100) para cada um dos 24 participantes:[^cap20-inferenciasobreumamediapop-1]
 
-[^cap20-inferenciasobreumamediapop-1]: John Morton, et al., “Acoustic features mediating height estimation from human speech,” Resumo do 166º encontro da Accoustical Society of America. Gostaríamos de agradecer aos autores pelo fornecimento dos dados e detalhes adicionais do estudo.
+[^cap20-inferenciasobreumamediapop-1]: John Morton, et al., “[Acoustic features mediating height estimation from human speech](https://pubs.aip.org/asa/jasa/article/134/5_Supplement/4072/707244/Acoustic-features-mediating-height-estimation-from)”, Resumo do 166º encontro da Accoustical Society of America apud [@Moore2023 , p. 358, 360].
 
 65 61 67 59 58 62 56 67 61 67 63 53
 
