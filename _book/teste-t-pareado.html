@@ -340,7 +340,7 @@ window.Quarto = {
   <li>
 <a href="#sec-exercicios-t-pareado" id="toc-sec-exercicios-t-pareado" class="nav-link" data-scroll-target="#sec-exercicios-t-pareado"><span class="header-section-number">16.13</span> Exercícios de Aplicação</a>
   <ul>
-<li><a href="#exerc%C3%ADcio-1-efic%C3%A1cia-de-treinamento-online" id="toc-exercício-1-eficácia-de-treinamento-online" class="nav-link" data-scroll-target="#exerc%C3%ADcio-1-efic%C3%A1cia-de-treinamento-online"><span class="header-section-number">16.13.1</span> Exercício 1: Eficácia de Treinamento Online</a></li>
+<li><a href="#exerc%C3%ADcio-1-efic%C3%A1cia-de-treinamento-online" id="toc-exercício-1-eficácia-de-treinamento-online" class="nav-link" data-scroll-target="#exerc%C3%ADcio-1-efic%C3%A1cia-de-treinamento-online"><span class="header-section-number">16.13.1</span> Exercício 1: Eficácia de Treinamento <em>Online</em></a></li>
   <li><a href="#exerc%C3%ADcio-2-compara%C3%A7%C3%A3o-de-sistemas-de-gest%C3%A3o" id="toc-exercício-2-comparação-de-sistemas-de-gestão" class="nav-link" data-scroll-target="#exerc%C3%ADcio-2-compara%C3%A7%C3%A3o-de-sistemas-de-gest%C3%A3o"><span class="header-section-number">16.13.2</span> Exercício 2: Comparação de Sistemas de Gestão</a></li>
   </ul>
 </li>
@@ -372,7 +372,7 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Este capítulo apresenta os métodos estatísticos para análise de dados emparelhados, uma das técnicas mais poderosas em inferência estatística quando temos medições repetidas ou pares relacionados.</p>
+<p>Este capítulo apresenta os <strong><em>métodos estatísticos</em></strong> para <u><strong>análise de dados emparelhados</strong></u>, uma das técnicas mais poderosas em inferência estatística quando temos <u><strong><em>medições repetidas</em></strong></u> ou <u><strong><em>pares relacionados</em></strong></u>.</p>
 </div>
 </div>
 <section id="conceitos-fundamentais" class="level2" data-number="16.1"><h2 data-number="16.1" class="anchored" data-anchor-id="conceitos-fundamentais">
@@ -421,7 +421,7 @@ window.Quarto = {
 <li>
 <strong>Pares naturais</strong>: Irmãos gêmeos, cônjuges, vizinhos</li>
 <li>
-<strong>Matching experimental</strong>: Unidades pareadas por características similares</li>
+<strong><em>Matching</em></strong> <strong>experimental</strong>: Unidades pareadas por características similares</li>
 <li>
 <strong>Medições duplas</strong>: Dois métodos aplicados na mesma unidade</li>
 </ol>
@@ -649,13 +649,14 @@ Diferenças positivas: 12 de 12 </code></pre>
 <p>Para dados emparelhados, analisamos as <strong>diferenças</strong> <span class="math inline">\(d_i = x_{2i} - x_{1i}\)</span> onde:</p>
 <ul>
 <li>
-<span class="math inline">\(x_{1i}\)</span> e <span class="math inline">\(x_{2i}\)</span> são as duas medições do par <span class="math inline">\(i\)</span>
+<span class="math inline">\(x_{1i}\)</span> e <span class="math inline">\(x_{2i}\)</span> são as <strong><em>duas medições</em></strong> do <strong><em>par</em></strong> <span class="math inline">\(i\)</span>
 </li>
-<li>As diferenças <span class="math inline">\(d_i\)</span> seguem uma distribuição Normal</li>
+<li>As diferenças <span class="math inline">\(d_i\)</span> seguem uma <strong><em>distribuição aproximadamente Normal</em></strong>
+</li>
 <li>Testamos hipóteses sobre <span class="math inline">\(\mu_d\)</span> (média populacional das diferenças)</li>
 </ul>
 <p><strong>Estatística de teste:</strong> <span class="math display">\[t = \frac{\bar{d} - \mu_{d0}}{s_d/\sqrt{n}}\]</span></p>
-<p>onde <span class="math inline">\(\bar{d}\)</span> é a média das diferenças amostrais e <span class="math inline">\(s_d\)</span> é o desvio-padrão das diferenças.</p>
+<p>onde <span class="math inline">\(\bar{d}\)</span> é a <u><strong><em>média das diferenças amostrais</em></strong></u> e <span class="math inline">\(s_d\)</span> é o <u><strong><em>desvio-padrão das diferenças amostrais</em></strong></u>.</p>
 <div class="cell">
 <details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: teste-t-emparelhado</span></span>
@@ -1627,7 +1628,8 @@ RECOMENDAÇÕES PRÁTICAS:
 </section><section id="sec-exercicios-t-pareado" class="level2" data-number="16.13"><h2 data-number="16.13" class="anchored" data-anchor-id="sec-exercicios-t-pareado">
 <span class="header-section-number">16.13</span> Exercícios de Aplicação</h2>
 <section id="exercício-1-eficácia-de-treinamento-online" class="level3" data-number="16.13.1"><h3 data-number="16.13.1" class="anchored" data-anchor-id="exercício-1-eficácia-de-treinamento-online">
-<span class="header-section-number">16.13.1</span> Exercício 1: Eficácia de Treinamento Online</h3>
+<span class="header-section-number">16.13.1</span> Exercício 1: Eficácia de Treinamento <em>Online</em>
+</h3>
 <div class="callout callout-style-simple callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1638,10 +1640,15 @@ RECOMENDAÇÕES PRÁTICAS:
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Uma instituição jurídica implementou um sistema de treinamento online. Para avaliar sua eficácia, 8 funcionários fizeram uma avaliação antes e depois do treinamento:</p>
-<p><strong>Dados (pontuação 0-20)</strong>: - Antes: 12, 14, 11, 16, 13, 15, 10, 17<br>
+<p>Uma instituição jurídica implementou um sistema de treinamento <em>online</em>. Para avaliar sua eficácia, 8 funcionários fizeram uma avaliação antes e depois do treinamento:</p>
+<p><strong>Dados (pontuação 0-20)</strong>:</p>
+<p>- Antes: 12, 14, 11, 16, 13, 15, 10, 17<br>
 - Depois: 16, 18, 14, 19, 17, 18, 13, 20</p>
-<p><strong>Questões</strong>: 1. O treinamento foi eficaz? (α = 0.05) 2. Calcule um IC 95% para a melhora média 3. Verifique os pressupostos do teste 4. Qual o tamanho do efeito?</p>
+<p><strong>Questões</strong>:</p>
+<p>1. O treinamento foi eficaz? (α = 0.05)</p>
+<p>2. Calcule um IC 95% para a melhora média</p>
+<p>3. Verifique os pressupostos do teste</p>
+<p>4. Qual o tamanho do efeito?</p>
 </div>
 </div>
 </section><section id="exercício-2-comparação-de-sistemas-de-gestão" class="level3" data-number="16.13.2"><h3 data-number="16.13.2" class="anchored" data-anchor-id="exercício-2-comparação-de-sistemas-de-gestão">
@@ -1657,7 +1664,11 @@ RECOMENDAÇÕES PRÁTICAS:
 </div>
 <div class="callout-body-container callout-body">
 <p>Dez varas judiciais testaram dois sistemas de gestão de processos, medindo o número de processos concluídos por mês com cada sistema:</p>
-<p><strong>Questões</strong>: 1. Há diferença significativa entre os sistemas? 2. Que sistema é superior (se houver diferença)? 3. Construa gráficos apropriados para a análise 4. Discuta as implicações práticas dos resultados</p>
+<p><strong>Questões</strong>:</p>
+<p>1. Há diferença significativa entre os sistemas?</p>
+<p>2. Que sistema é superior (se houver diferença)?</p>
+<p>3. Construa gráficos apropriados para a análise.</p>
+<p>4. Discuta as implicações práticas dos resultados.</p>
 </div>
 </div>
 <hr>
@@ -1671,8 +1682,9 @@ RECOMENDAÇÕES PRÁTICAS:
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>O teste t para dados emparelhados é uma ferramenta fundamental quando temos medições repetidas ou pares relacionados. Sua principal vantagem é o <strong>controle da variabilidade individual</strong>, resultando em <strong>maior poder estatístico</strong> e <strong>conclusões mais precisas</strong>.</p>
-<p>A escolha entre análise pareada e independente deve ser baseada no <strong>delineamento experimental</strong> e na <strong>natureza dos dados</strong>, sempre verificando os pressupostos necessários para garantir a validade das conclusões.</p>
+<p>O <u><strong><em>teste t</em></strong></u> para <u><strong><em>dados emparelhados</em></strong></u> é uma ferramenta fundamental quando temos <strong><em>medições repetidas</em></strong> ou <strong><em>pares relacionados</em></strong>.</p>
+<p>Sua principal vantagem é o <strong>controle da variabilidade individual</strong>, resultando em <strong>maior poder estatístico</strong> e <strong>conclusões mais precisas</strong>.</p>
+<p>A escolha entre análise pareada e independente deve ser baseada no <strong>delineamento experimental</strong> e na <strong>natureza dos dados</strong>, sempre <strong><em>verificando os pressupostos necessários</em></strong> para <strong><em>garantir</em></strong> a <strong><em>validade</em></strong> das <strong><em>conclusões</em></strong>.</p>
 </div>
 </div>
 

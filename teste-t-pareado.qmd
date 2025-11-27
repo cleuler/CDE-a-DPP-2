@@ -3,7 +3,7 @@
 ::: callout-note
 ## Teste t para Dados Emparelhados
 
-Este capítulo apresenta os métodos estatísticos para análise de dados emparelhados, uma das técnicas mais poderosas em inferência estatística quando temos medições repetidas ou pares relacionados.
+Este capítulo apresenta os ***métodos estatísticos*** para [**análise de dados emparelhados**]{.underline}, uma das técnicas mais poderosas em inferência estatística quando temos [***medições repetidas***]{.underline} ou [***pares relacionados***]{.underline}.
 :::
 
 ## Conceitos Fundamentais
@@ -39,7 +39,7 @@ theme_set(theme_minimal())
 
 1.  **Estudos antes-depois**: Medições na mesma pessoa/unidade em momentos diferentes
 2.  **Pares naturais**: Irmãos gêmeos, cônjuges, vizinhos
-3.  **Matching experimental**: Unidades pareadas por características similares
+3.  ***Matching*** **experimental**: Unidades pareadas por características similares
 4.  **Medições duplas**: Dois métodos aplicados na mesma unidade
 :::
 
@@ -153,13 +153,13 @@ p4 <- ggplot(dados_capacitacao, aes(sample = Diferença)) +
 
 Para dados emparelhados, analisamos as **diferenças** $d_i = x_{2i} - x_{1i}$ onde:
 
--   $x_{1i}$ e $x_{2i}$ são as duas medições do par $i$
--   As diferenças $d_i$ seguem uma distribuição Normal
+-   $x_{1i}$ e $x_{2i}$ são as ***duas medições*** do ***par*** $i$
+-   As diferenças $d_i$ seguem uma ***distribuição aproximadamente Normal***
 -   Testamos hipóteses sobre $\mu_d$ (média populacional das diferenças)
 
 **Estatística de teste:** $$t = \frac{\bar{d} - \mu_{d0}}{s_d/\sqrt{n}}$$
 
-onde $\bar{d}$ é a média das diferenças amostrais e $s_d$ é o desvio-padrão das diferenças.
+onde $\bar{d}$ é a [***média das diferenças amostrais***]{.underline} e $s_d$ é o [***desvio-padrão das diferenças amostrais***]{.underline}.
 
 ```{r}
 #| label: teste-t-emparelhado
@@ -697,17 +697,27 @@ cat("5. Planejar tamanho amostral adequado antecipadamente\n")
 
 ## Exercícios de Aplicação {#sec-exercicios-t-pareado}
 
-### Exercício 1: Eficácia de Treinamento Online
+### Exercício 1: Eficácia de Treinamento *Online*
 
 ::: callout-tip
 ## Problema Proposto
 
-Uma instituição jurídica implementou um sistema de treinamento online. Para avaliar sua eficácia, 8 funcionários fizeram uma avaliação antes e depois do treinamento:
+Uma instituição jurídica implementou um sistema de treinamento *online*. Para avaliar sua eficácia, 8 funcionários fizeram uma avaliação antes e depois do treinamento:
 
-**Dados (pontuação 0-20)**: - Antes: 12, 14, 11, 16, 13, 15, 10, 17\
+**Dados (pontuação 0-20)**:
+
+\- Antes: 12, 14, 11, 16, 13, 15, 10, 17\
 - Depois: 16, 18, 14, 19, 17, 18, 13, 20
 
-**Questões**: 1. O treinamento foi eficaz? (α = 0.05) 2. Calcule um IC 95% para a melhora média 3. Verifique os pressupostos do teste 4. Qual o tamanho do efeito?
+**Questões**:
+
+1\. O treinamento foi eficaz? (α = 0.05)
+
+2\. Calcule um IC 95% para a melhora média
+
+3\. Verifique os pressupostos do teste
+
+4\. Qual o tamanho do efeito?
 :::
 
 ### Exercício 2: Comparação de Sistemas de Gestão
@@ -717,7 +727,15 @@ Uma instituição jurídica implementou um sistema de treinamento online. Para a
 
 Dez varas judiciais testaram dois sistemas de gestão de processos, medindo o número de processos concluídos por mês com cada sistema:
 
-**Questões**: 1. Há diferença significativa entre os sistemas? 2. Que sistema é superior (se houver diferença)? 3. Construa gráficos apropriados para a análise 4. Discuta as implicações práticas dos resultados
+**Questões**:
+
+1\. Há diferença significativa entre os sistemas?
+
+2\. Que sistema é superior (se houver diferença)?
+
+3\. Construa gráficos apropriados para a análise.
+
+4\. Discuta as implicações práticas dos resultados.
 :::
 
 ------------------------------------------------------------------------
@@ -725,7 +743,9 @@ Dez varas judiciais testaram dois sistemas de gestão de processos, medindo o n�
 ::: callout-note
 ## Conclusão do Capítulo
 
-O teste t para dados emparelhados é uma ferramenta fundamental quando temos medições repetidas ou pares relacionados. Sua principal vantagem é o **controle da variabilidade individual**, resultando em **maior poder estatístico** e **conclusões mais precisas**.
+O [***teste t***]{.underline} para [***dados emparelhados***]{.underline} é uma ferramenta fundamental quando temos ***medições repetidas*** ou ***pares relacionados***.
 
-A escolha entre análise pareada e independente deve ser baseada no **delineamento experimental** e na **natureza dos dados**, sempre verificando os pressupostos necessários para garantir a validade das conclusões.
+Sua principal vantagem é o **controle da variabilidade individual**, resultando em **maior poder estatístico** e **conclusões mais precisas**.
+
+A escolha entre análise pareada e independente deve ser baseada no **delineamento experimental** e na **natureza dos dados**, sempre ***verificando os pressupostos necessários*** para ***garantir*** a ***validade*** das ***conclusões***.
 :::
