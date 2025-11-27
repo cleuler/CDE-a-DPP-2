@@ -91,7 +91,7 @@ A distribuição t tem caudas mais expessas que a distribuição normal para gra
 
 Ela se aproxima da distribuição Normal à medida que os graus de liberdade aumentam, ou seja, para amostras grandes, assim consideradas aquelas com: n ≥ 30 [@poldrack_pensamento_est_2025 , p. 86] ou n ≥ 40 [@Moore2023 , p. 365].
 
-Quando o poder de um teste é considerado, ex. (1 - 𝛽) ≥ 80%, então o ideal seria n ≥ 50 [@poldrack_pensamento_est_2025 , p. 85, p. 126, fig. 10.5] se desejamos detectar um tamanho de efeito d *padronizado* de Jacob Cohen (1994) intermediário (d = 0,5 a 0,8).
+Quando o **poder** de um teste é considerado, ex. (1 - 𝛽) ≥ 80%, então o ideal seria n ≥ 50 [@poldrack_pensamento_est_2025 , p. 85, p. 126, fig. 10.5] se desejamos detectar um tamanho de efeito d *padronizado* de Jacob Cohen (1994) intermediário (d = 0,5 a 0,8).
 
 $$
 d = \frac{\bar{X_1} - \bar{X_2}}{s}
@@ -936,9 +936,15 @@ cat("FIM DA ANÁLISE EXPLORATÓRIA\n")
 cat("═══════════════════════════════════════════════════════════════════════\n")
 ```
 
-mmm
-
 ### Visualização do Teste t
+
+Vamos simular dados para uma amostra n = 10 tempos processuais em dias.
+
+Para um TScontraHo: média populacional μ = 120 dias.
+
+Com Hipótese alternativa bilateral: μ ≠ 120 dias.
+
+NC = 95%, logo: ⍺ = 5%.
 
 ```{r viz-teste-t}
 # Definir seus dados e hipótese
@@ -1159,9 +1165,628 @@ ggplot(df_conv, aes(x = x, y = densidade, color = gl)) +
   theme(legend.position = "bottom")
 ```
 
-## 20.6 Aplicações Práticas {#sec-aplicacoes-praticas}
+## Aplicações Práticas {#sec-aplicacoes-praticas}
 
-### EXEMPLO 20.3: Análise de Satisfação de Usuários
+### Exerc. 20.7 Ela soa alta!
+
+Quando se apresentam gravações de um par de pessoas do mesmo sexo falando a mesma frase, um ouvinte pode determinar qual das pessoas que falam é mais alta, simplesmente pelo som da voz? Vinte e quatro adultos jovens na Washington University ouviram 100 pares de pessoas falando e, em cada par, deveriam indicar qual dos dois falantes soava mais alto. Eis os números corretos (em 100) para cada um dos 24 participantes:[^cap20-inferenciasobreumamediapop-1]
+
+[^cap20-inferenciasobreumamediapop-1]: John Morton, et al., “Acoustic features mediating height estimation from human speech,” Resumo do 166º encontro da Accoustical Society of America. Gostaríamos de agradecer aos autores pelo fornecimento dos dados e detalhes adicionais do estudo.
+
+65 61 67 59 58 62 56 67 61 67 63 53
+
+68 49 66 58 69 70 65 56 68 56 58 70
+
+Suponha que esses adultos jovens possam ser considerados como **uma AAS de todos os adultos jovens nos Estados Unidos**.
+
+Use um intervalo de confiança de 95% para **estimar** o número correto médio **na população de todos os adultos jovens nos Estados Unidos**.
+
+Siga o processo dos quatro passos como ilustrado no Exemplo 20.2.
+
+### Exerc. 20.7 Ela soa alta (continuação).
+
+Os dados do Exercício 20.7 dão boa razão para se pensar que o **número médio de identificações corretas na população de adultos jovens nos Estados Unidos** seja **maior do que 50** (o *número esperado se alguém está apenas adivinhando*)? Realize [**um teste de significância**]{.underline}, seguindo o processo dos quatro passos, como ilustrado no Exemplo 20.3.
+
+Será um Teste de Significância [**contra**]{.underline} a Hipótese Nula:
+
+$$
+H_0: \mu_{Acerto} \le 50
+$$
+
+É um **teste unilateral à direita** para [***verificar se***]{.underline} os **dados** coletados são [***evidência significativa***]{.underline} a favor da seguinte Hipótese Alternativa:
+
+$$
+H_1: \mu_{Acerto} > 50
+$$
+
+Não se pode esquecer de [***verificar***]{.underline} se as [***condições***]{.underline} para [**um teste-t**]{.underline} para [**média de uma amostra aleatória simples**]{.underline} extraida de uma População são [**satisfeitas**]{.underline} no presente caso concreto.
+
+::: callout-note
+## Prompt *Copilot*
+
+A seguinte solução foi produzida pelo copilot em conexão com o github como resposta para o *prompt*:
+
+"R script comentado para resolver o exercício: Quando se apresentam gravações de um par de pessoas do mesmo sexo falando a mesma frase, um ouvinte pode determinar qual das pessoas que falam é mais alta, simplesmente pelo som da voz? Vinte e quatro adultos jovens na Washington University ouviram 100 pares de pessoas falando e, em cada par, deveriam indicar qual dos dois falantes soava mais alto. Eis os números corretos (em 100) para cada um dos 24 participantes: \[...\]".
+:::
+
+```{r}
+# ============================================================================
+# EXERCÍCIO: IDENTIFICAÇÃO DE ALTURA PELA VOZ
+# Intervalo de Confiança 95% para a Média Populacional
+# ============================================================================
+
+library(tidyverse)
+library(ggplot2)
+library(knitr)
+library(kableExtra)
+library(patchwork)
+
+# ============================================================================
+# CONTEXTO DO PROBLEMA
+# ============================================================================
+
+cat("═══════════════════════════════════════════════════════════════════════\n")
+cat("EXERCÍCIO: IDENTIFICAÇÃO DE ALTURA PELA VOZ\n")
+cat("═══════════════════════════════════════════════════════════════════════\n\n")
+
+cat("CONTEXTO:\n")
+cat("---------\n")
+cat("Quando se apresentam gravações de um par de pessoas do mesmo sexo\n")
+cat("falando a mesma frase, um ouvinte pode determinar qual das pessoas\n")
+cat("é mais alta, simplesmente pelo som da voz?\n\n")
+
+cat("EXPERIMENTO:\n")
+cat("------------\n")
+cat("• 24 adultos jovens na Washington University\n")
+cat("• Ouviram 100 pares de pessoas falando\n")
+cat("• Em cada par, indicaram qual falante soava mais alto\n")
+cat("• Dados: número de respostas corretas (em 100) para cada participante\n\n")
+
+# ============================================================================
+# PASSO 1: ESTABELEÇA (STATE)
+# ============================================================================
+
+cat("═══════════════════════════════════════════════════════════════════════\n")
+cat("PASSO 1: ESTABELEÇA\n")
+cat("═══════════════════════════════════════════════════════════════════════\n\n")
+
+cat("QUESTÃO DE PESQUISA:\n")
+cat("Os adultos jovens conseguem identificar corretamente a altura de uma\n")
+cat("pessoa pelo som da voz melhor do que o acaso (50%)?\n\n")
+
+cat("OBJETIVO:\n")
+cat("Estimar o número correto médio na população de todos os adultos jovens\n")
+cat("nos Estados Unidos usando um intervalo de confiança de 95%.\n\n")
+
+cat("PARÂMETRO DE INTERESSE:\n")
+cat("μ = número médio de identificações corretas (em 100 tentativas)\n")
+cat("    para todos os adultos jovens nos Estados Unidos\n\n")
+
+# ============================================================================
+# PASSO 2: PLANEJE (PLAN)
+# ============================================================================
+
+cat("═══════════════════════════════════════════════════════════════════════\n")
+cat("PASSO 2: PLANEJE\n")
+cat("═══════════════════════════════════════════════════════════════════════\n\n")
+
+cat("MÉTODO ESTATÍSTICO:\n")
+cat("Intervalo de Confiança t para uma média populacional\n\n")
+
+cat("CONDIÇÕES A VERIFICAR:\n")
+cat("1. ALEATORIEDADE: Os 24 participantes são uma AAS de todos os adultos\n")
+cat("                  jovens nos Estados Unidos (dado no problema)\n")
+cat("2. NORMALIDADE:   Com n = 24, precisamos verificar se os dados não\n")
+cat("                  apresentam forte assimetria ou outliers extremos\n\n")
+
+cat("NÍVEL DE CONFIANÇA: 95%\n")
+cat("FÓRMULA: IC = x̄ ± t* × (s/√n)\n\n")
+
+# ============================================================================
+# DADOS
+# ============================================================================
+
+# Dados: número de respostas corretas (em 100) para cada participante
+dados <- c(
+  65, 61, 67, 59, 58, 62, 56, 67, 61, 67, 63, 53,  # Primeira linha
+  68, 49, 66, 58, 69, 70, 65, 56, 68, 56, 58, 70   # Segunda linha
+)
+
+# Criando data frame
+df_dados <- data.frame(
+  Participante = 1:length(dados),
+  Acertos = dados
+)
+
+cat("DADOS COLETADOS:\n")
+cat("================\n\n")
+
+# Exibir dados em formato de tabela
+dados_matriz <- matrix(dados, nrow = 2, byrow = TRUE)
+colnames(dados_matriz) <- paste0("P", 1:12)
+rownames(dados_matriz) <- c("Part. 1-12", "Part. 13-24")
+
+print(kable(dados_matriz, 
+            align = "c",
+            caption = "Número de acertos (em 100) por participante") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"),
+                full_width = FALSE))
+
+cat("\n")
+
+# ============================================================================
+# PASSO 3: RESOLVA (SOLVE)
+# ============================================================================
+
+cat("═══════════════════════════════════════════════════════════════════════\n")
+cat("PASSO 3: RESOLVA\n")
+cat("═══════════════════════════════════════════════════════════════════════\n\n")
+
+# --- 3.1 ESTATÍSTICAS DESCRITIVAS ---
+cat("3.1 ESTATÍSTICAS DESCRITIVAS\n")
+cat("----------------------------\n\n")
+
+n <- length(dados)
+media <- mean(dados)
+mediana <- median(dados)
+dp <- sd(dados)
+variancia <- var(dados)
+cv <- (dp / media) * 100
+q1 <- quantile(dados, 0.25)
+q3 <- quantile(dados, 0.75)
+iqr <- IQR(dados)
+minimo <- min(dados)
+maximo <- max(dados)
+amplitude <- maximo - minimo
+erro_padrao <- dp / sqrt(n)
+
+cat("MEDIDAS DE POSIÇÃO:\n")
+cat("  Tamanho da amostra (n):    ", n, "\n")
+cat("  Mínimo:                    ", minimo, " acertos\n")
+cat("  Q1 (1º quartil):           ", q1, " acertos\n")
+cat("  Mediana (Q2):              ", mediana, " acertos\n")
+cat("  Média amostral (x̄):        ", round(media, 2), " acertos\n")
+cat("  Q3 (3º quartil):           ", q3, " acertos\n")
+cat("  Máximo:                    ", maximo, " acertos\n\n")
+
+cat("MEDIDAS DE DISPERSÃO:\n")
+cat("  Amplitude total:           ", amplitude, " acertos\n")
+cat("  Intervalo interquartil:    ", iqr, " acertos\n")
+cat("  Variância:                 ", round(variancia, 2), "\n")
+cat("  Desvio-padrão (s):         ", round(dp, 3), " acertos\n")
+cat("  Erro padrão (EP):          ", round(erro_padrao, 3), " acertos\n")
+cat("  Coeficiente de variação:   ", round(cv, 2), "%\n\n")
+
+# --- 3.2 VERIFICAÇÃO DE CONDIÇÕES ---
+cat("3.2 VERIFICAÇÃO DE CONDIÇÕES PARA INFERÊNCIA\n")
+cat("---------------------------------------------\n\n")
+
+cat("✓ CONDIÇÃO 1 - ALEATORIEDADE:\n")
+cat("  Os 24 adultos jovens são considerados uma AAS de todos os adultos\n")
+cat("  jovens nos Estados Unidos (dado no problema).\n\n")
+
+cat("✓ CONDIÇÃO 2 - NORMALIDADE:\n")
+cat("  Verificaremos através de:\n")
+cat("  • Análise gráfica (histograma, boxplot, Q-Q plot)\n")
+cat("  • Teste de Shapiro-Wilk\n")
+cat("  • Avaliação de simetria (média vs mediana)\n\n")
+
+# Teste de Shapiro-Wilk
+shapiro_test <- shapiro.test(dados)
+
+cat("  TESTE DE SHAPIRO-WILK:\n")
+cat("  • W =", round(shapiro_test$statistic, 4), "\n")
+cat("  • p-valor =", round(shapiro_test$p.value, 4), "\n")
+cat("  • Conclusão:", 
+    ifelse(shapiro_test$p.value > 0.05, 
+           "Não rejeitar H₀ → dados consistentes com normalidade",
+           "Possível desvio da normalidade"), "\n\n")
+
+cat("  AVALIAÇÃO DE SIMETRIA:\n")
+cat("  • Média =", round(media, 2), "| Mediana =", mediana, "\n")
+cat("  • Diferença =", round(abs(media - mediana), 2), "\n")
+cat("  • Interpretação:", 
+    ifelse(abs(media - mediana) < 2, 
+           "Distribuição aproximadamente simétrica",
+           "Possível assimetria"), "\n\n")
+
+# --- 3.3 ANÁLISE GRÁFICA ---
+cat("3.3 ANÁLISE GRÁFICA DOS DADOS\n")
+cat("-----------------------------\n\n")
+
+# Gráfico 1: Histograma com densidade
+p1 <- ggplot(df_dados, aes(x = Acertos)) +
+  geom_histogram(aes(y = after_stat(density)), 
+                 bins = 8, 
+                 fill = "lightblue", 
+                 color = "black", 
+                 alpha = 0.7) +
+  geom_density(color = "darkblue", size = 1.2, linetype = "solid") +
+  stat_function(fun = dnorm, 
+                args = list(mean = media, sd = dp),
+                color = "red", size = 1, linetype = "dashed") +
+  geom_vline(xintercept = media, color = "darkgreen", 
+             size = 1.2, linetype = "solid") +
+  geom_vline(xintercept = 50, color = "orange", 
+             size = 1, linetype = "dotted") +
+  annotate("text", x = media + 2, y = Inf, 
+           label = paste0("x̄ = ", round(media, 1)), 
+           vjust = 1.5, color = "darkgreen", fontface = "bold", size = 4) +
+  annotate("text", x = 50 - 2, y = Inf, 
+           label = "Acaso = 50", 
+           vjust = 1.5, color = "orange", fontface = "bold", size = 3.5) +
+  labs(
+    title = "Distribuição dos Acertos",
+    subtitle = "Histograma com curva de densidade",
+    x = "Número de Acertos (em 100)",
+    y = "Densidade",
+    caption = paste0("n = ", n, " | Média = ", round(media, 2), 
+                    " | DP = ", round(dp, 2))
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 13, face = "bold"),
+    plot.subtitle = element_text(hjust = 0.5, size = 10)
+  )
+
+# Gráfico 2: Boxplot
+p2 <- ggplot(df_dados, aes(x = "", y = Acertos)) +
+  geom_boxplot(fill = "lightgreen", alpha = 0.7, 
+               outlier.color = "red", outlier.size = 3) +
+  geom_jitter(width = 0.15, alpha = 0.5, size = 2.5) +
+  stat_summary(fun = mean, geom = "point", 
+               shape = 18, size = 5, color = "darkblue") +
+  geom_hline(yintercept = 50, color = "orange", 
+             linetype = "dashed", size = 1) +
+  annotate("text", x = 1.3, y = 50, 
+           label = "Acaso (50%)", color = "orange", 
+           fontface = "bold", size = 3.5) +
+  labs(
+    title = "Boxplot dos Acertos",
+    subtitle = "Diamante azul = média",
+    x = "",
+    y = "Número de Acertos (em 100)"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 13, face = "bold"),
+    plot.subtitle = element_text(hjust = 0.5, size = 10),
+    axis.text.x = element_blank()
+  )
+
+# Gráfico 3: Q-Q Plot
+quantis_teoricos <- qnorm(ppoints(n))
+quantis_observados <- sort(dados)
+correlacao_qq <- cor(quantis_teoricos, quantis_observados)
+
+p3 <- ggplot(df_dados, aes(sample = Acertos)) +
+  geom_qq(size = 3, alpha = 0.7, color = "blue") +
+  geom_qq_line(color = "red", size = 1.2, linetype = "dashed") +
+  labs(
+    title = "Q-Q Plot Normal",
+    subtitle = paste0("Correlação = ", round(correlacao_qq, 4)),
+    x = "Quantis Teóricos",
+    y = "Quantis Observados"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 13, face = "bold"),
+    plot.subtitle = element_text(hjust = 0.5, size = 10)
+  )
+
+# Gráfico 4: Gráfico de pontos individuais
+p4 <- ggplot(df_dados, aes(x = Participante, y = Acertos)) +
+  geom_hline(yintercept = 50, color = "orange", 
+             linetype = "dashed", size = 1, alpha = 0.7) +
+  geom_hline(yintercept = media, color = "darkgreen", 
+             linetype = "solid", size = 1, alpha = 0.7) +
+  geom_point(size = 3, alpha = 0.6, color = "steelblue") +
+  geom_line(alpha = 0.3, color = "steelblue") +
+  annotate("text", x = 2, y = 50, label = "Acaso (50%)", 
+           color = "orange", hjust = 0, vjust = -0.5, fontface = "bold") +
+  annotate("text", x = 2, y = media, 
+           label = paste0("Média = ", round(media, 1)), 
+           color = "darkgreen", hjust = 0, vjust = 1.5, fontface = "bold") +
+  scale_x_continuous(breaks = seq(0, 24, 2)) +
+  labs(
+    title = "Desempenho Individual dos Participantes",
+    x = "Participante",
+    y = "Número de Acertos (em 100)"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 13, face = "bold")
+  )
+
+# Painel com todos os gráficos
+painel_exploratorio <- (p1 | p2) / (p3 | p4)
+
+print(painel_exploratorio + 
+  plot_annotation(
+    title = "Análise Exploratória: Identificação de Altura pela Voz",
+    subtitle = paste0("n = ", n, " participantes | ", n, " × 100 tentativas"),
+    theme = theme(
+      plot.title = element_text(size = 15, face = "bold", hjust = 0.5),
+      plot.subtitle = element_text(size = 11, hjust = 0.5)
+    )
+  ))
+
+cat("Gráficos gerados. Interpretação:\n")
+cat("• Histograma: Distribuição aproximadamente simétrica\n")
+cat("• Boxplot: Sem outliers extremos\n")
+cat("• Q-Q Plot: Pontos próximos à linha de referência\n")
+cat("• Gráfico individual: Variabilidade entre participantes\n\n")
+
+# --- 3.4 CÁLCULO DO INTERVALO DE CONFIANÇA ---
+cat("3.4 CÁLCULO DO INTERVALO DE CONFIANÇA 95%\n")
+cat("------------------------------------------\n\n")
+
+# Graus de liberdade
+gl <- n - 1
+
+cat("PARÂMETROS:\n")
+cat("  n =", n, "participantes\n")
+cat("  x̄ =", round(media, 3), "acertos\n")
+cat("  s =", round(dp, 3), "acertos\n")
+cat("  EP = s/√n =", round(erro_padrao, 3), "acertos\n")
+cat("  gl = n - 1 =", gl, "\n\n")
+
+# Valor crítico t
+nivel_conf <- 0.95
+alpha <- 1 - nivel_conf
+t_critico <- qt(1 - alpha/2, df = gl)
+
+cat("VALOR CRÍTICO t:\n")
+cat("  Nível de confiança:", nivel_conf * 100, "%\n")
+cat("  α =", alpha, "\n")
+cat("  α/2 =", alpha/2, "\n")
+cat("  t* = t₀.₀₂₅,₂₃ =", round(t_critico, 4), "\n\n")
+
+# Margem de erro
+margem_erro <- t_critico * erro_padrao
+
+cat("MARGEM DE ERRO:\n")
+cat("  ME = t* × EP\n")
+cat("  ME =", round(t_critico, 4), "×", round(erro_padrao, 3), "\n")
+cat("  ME =", round(margem_erro, 3), "acertos\n\n")
+
+# Intervalo de confiança
+ic_inferior <- media - margem_erro
+ic_superior <- media + margem_erro
+
+cat("INTERVALO DE CONFIANÇA 95%:\n")
+cat("===========================\n")
+cat("IC = x̄ ± ME\n")
+cat("IC =", round(media, 3), "±", round(margem_erro, 3), "\n")
+cat("IC = [", round(ic_inferior, 2), " ; ", round(ic_superior, 2), "]\n\n", sep = "")
+
+# Verificação com t.test()
+teste_t <- t.test(dados, conf.level = 0.95)
+
+cat("VERIFICAÇÃO COM t.test():\n")
+cat("  IC 95%: [", round(teste_t$conf.int[1], 2), " ; ", 
+    round(teste_t$conf.int[2], 2), "]\n", sep = "")
+cat("  Diferença:", round(abs(ic_inferior - teste_t$conf.int[1]), 4), "\n\n")
+
+# --- 3.5 VISUALIZAÇÃO DO INTERVALO DE CONFIANÇA ---
+cat("3.5 VISUALIZAÇÃO DO INTERVALO DE CONFIANÇA\n")
+cat("-------------------------------------------\n\n")
+
+# Gráfico do IC
+p_ic <- ggplot() +
+  # Pontos individuais
+  geom_point(data = df_dados, aes(x = Acertos, y = 0), 
+             alpha = 0.4, size = 2.5, color = "gray50") +
+  
+  # Linha do acaso
+  geom_vline(xintercept = 50, color = "orange", 
+             linetype = "dotted", size = 1.2, alpha = 0.7) +
+  
+  # Média amostral
+  geom_point(aes(x = media, y = 0), 
+             size = 7, shape = 18, color = "darkblue") +
+  
+  # Intervalo de confiança
+  geom_segment(aes(x = ic_inferior, xend = ic_superior, y = 0, yend = 0),
+               color = "red", size = 2.5, alpha = 0.7) +
+  geom_point(aes(x = ic_inferior, y = 0), size = 5, color = "red") +
+  geom_point(aes(x = ic_superior, y = 0), size = 5, color = "red") +
+  
+  # Anotações
+  annotate("text", x = media, y = 0.15, 
+           label = paste0("x̄ = ", round(media, 2)), 
+           color = "darkblue", size = 5, fontface = "bold") +
+  annotate("text", x = ic_inferior, y = -0.12, 
+           label = round(ic_inferior, 2), 
+           color = "red", size = 4, fontface = "bold") +
+  annotate("text", x = ic_superior, y = -0.12, 
+           label = round(ic_superior, 2), 
+           color = "red", size = 4, fontface = "bold") +
+  annotate("text", x = media, y = -0.25, 
+           label = paste0("IC 95%: [", round(ic_inferior, 2), " ; ", 
+                         round(ic_superior, 2), "]"), 
+           color = "red", size = 4.5, fontface = "bold") +
+  annotate("text", x = 50, y = 0.15, 
+           label = "Acaso\n(50%)", 
+           color = "orange", size = 4, fontface = "bold") +
+  
+  scale_y_continuous(limits = c(-0.35, 0.2)) +
+  
+  labs(
+    title = "Intervalo de Confiança 95% para Número Médio de Acertos",
+    subtitle = "Estimativa para população de adultos jovens nos EUA",
+    x = "Número de Acertos (em 100)",
+    y = "",
+    caption = paste0("Diamante azul = média amostral | Linha vermelha = IC 95% | ",
+                    "Linha laranja = desempenho ao acaso\n",
+                    "ME = ±", round(margem_erro, 2), " | n = ", n)
+  ) +
+  
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, size = 14, face = "bold"),
+    plot.subtitle = element_text(hjust = 0.5, size = 11),
+    plot.caption = element_text(hjust = 0.5, size = 9),
+    axis.text.y = element_blank(),
+    axis.ticks.y = element_blank(),
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor.y = element_blank()
+  )
+
+print(p_ic)
+
+# ============================================================================
+# PASSO 4: CONCLUA (CONCLUDE)
+# ============================================================================
+
+cat("\n")
+cat("═══════════════════════════════════════════════════════════════════════\n")
+cat("PASSO 4: CONCLUA\n")
+cat("═══════════════════════════════════════════════════════════════════════\n\n")
+
+cat("INTERPRETAÇÃO DO INTERVALO DE CONFIANÇA:\n")
+cat("========================================\n\n")
+
+cat("Estamos 95% confiantes de que o número médio de identificações\n")
+cat("corretas de altura pela voz, para TODOS os adultos jovens nos\n")
+cat("Estados Unidos, está entre:\n\n")
+cat("           ", round(ic_inferior, 2), " e ", round(ic_superior, 2), " acertos (em 100)\n\n", sep = "")
+
+cat("SIGNIFICADO PRÁTICO:\n")
+cat("--------------------\n\n")
+
+cat("1. COMPARAÇÃO COM O ACASO:\n")
+if(ic_inferior > 50) {
+  cat("   ✓ TODO o intervalo está ACIMA de 50 (acaso)\n")
+  cat("   ✓ Há forte evidência de que as pessoas conseguem identificar\n")
+  cat("     a altura pelo som da voz melhor do que o acaso\n")
+  cat("   ✓ A diferença é tanto ESTATISTICAMENTE quanto PRATICAMENTE significativa\n")
+} else if(ic_superior < 50) {
+  cat("   ✗ TODO o intervalo está ABAIXO de 50 (acaso)\n")
+  cat("   ✗ As pessoas têm desempenho pior que o acaso (improvável neste contexto)\n")
+} else {
+  cat("   ⚠ O intervalo INCLUI 50 (acaso)\n")
+  cat("   ⚠ Não podemos afirmar com 95% de confiança que o desempenho\n")
+  cat("     difere do acaso\n")
+}
+
+cat("\n2. MAGNITUDE DO EFEITO:\n")
+cat("   • Taxa de acerto média estimada:", round(media, 1), "%\n")
+cat("   • Diferença do acaso:", round(media - 50, 1), "pontos percentuais\n")
+cat("   • Melhoria relativa:", round((media - 50) / 50 * 100, 1), "%\n")
+
+cat("\n3. PRECISÃO DA ESTIMATIVA:\n")
+cat("   • Margem de erro: ±", round(margem_erro, 2), "acertos\n")
+cat("   • Erro relativo:", round(margem_erro / media * 100, 1), "%\n")
+if(margem_erro / media < 0.10) {
+  cat("   ✓ Estimativa PRECISA (erro relativo < 10%)\n")
+} else if(margem_erro / media < 0.15) {
+  cat("   ⚠ Estimativa MODERADAMENTE precisa (erro relativo < 15%)\n")
+} else {
+  cat("   ✗ Estimativa pouco precisa (considerar aumentar amostra)\n")
+}
+
+cat("\n4. REPETIBILIDADE:\n")
+cat("   • Se repetíssemos este estudo muitas vezes com diferentes\n")
+cat("     amostras de 24 adultos jovens, cerca de 95% dos intervalos\n")
+cat("     calculados conteriam o verdadeiro valor de μ\n")
+
+cat("\n5. LIMITAÇÕES E CONSIDERAÇÕES:\n")
+cat("   • A inferência assume que os 24 participantes são representativos\n")
+cat("     de TODOS os adultos jovens nos EUA\n")
+cat("   • O estudo foi conduzido na Washington University (viés geográfico?)\n")
+cat("   • Adultos jovens podem ter habilidades diferentes de outras faixas etárias\n")
+cat("   • O desempenho pode variar com treinamento ou familiaridade com as vozes\n")
+
+cat("\n")
+cat("═══════════════════════════════════════════════════════════════════════\n")
+cat("RESUMO EXECUTIVO\n")
+cat("═══════════════════════════════════════════════════════════════════════\n\n")
+
+cat("DADOS:\n")
+cat("  • n = 24 adultos jovens\n")
+cat("  • Cada um ouviu 100 pares de vozes\n")
+cat("  • Média de acertos: ", round(media, 2), " (", round(media, 1), "%)\n", sep = "")
+cat("  • Desvio-padrão:", round(dp, 2), "\n\n")
+
+cat("INTERVALO DE CONFIANÇA 95%:\n")
+cat("  μ ∈ [", round(ic_inferior, 2), " ; ", round(ic_superior, 2), "]\n", sep = "")
+cat("  (", round(ic_inferior, 1), "% a ", round(ic_superior, 1), "% de acerto)\n\n", sep = "")
+
+cat("CONCLUSÃO:\n")
+cat("  Com 95% de confiança, adultos jovens nos EUA acertam entre\n")
+cat("  ", round(ic_inferior, 1), "% e ", round(ic_superior, 1), "% das identificações de altura pela voz.\n", sep = "")
+cat("  Como o intervalo está ", ifelse(ic_inferior > 50, "TOTALMENTE ACIMA", "incluindo"), " de 50%,\n", sep = "")
+if(ic_inferior > 50) {
+  cat("  há FORTE EVIDÊNCIA de habilidade real de identificação.\n")
+} else {
+  cat("  NÃO há evidência conclusiva de habilidade além do acaso.\n")
+}
+
+cat("\n")
+cat("═══════════════════════════════════════════════════════════════════════\n")
+cat("FIM DA ANÁLISE\n")
+cat("═══════════════════════════════════════════════════════════════════════\n")
+
+# ============================================================================
+# ANÁLISE COMPLEMENTAR: TESTE DE HIPÓTESE
+# ============================================================================
+
+cat("\n\n")
+cat("═══════════════════════════════════════════════════════════════════════\n")
+cat("ANÁLISE COMPLEMENTAR: TESTE DE HIPÓTESE\n")
+cat("═══════════════════════════════════════════════════════════════════════\n\n")
+
+cat("H₀: μ = 50 (desempenho ao acaso)\n")
+cat("H₁: μ > 50 (desempenho melhor que o acaso)\n")
+cat("α = 0.05 (unilateral à direita)\n\n")
+
+# Teste t unilateral
+teste_hipotese <- t.test(dados, mu = 50, alternative = "greater")
+
+t_calc <- (media - 50) / erro_padrao
+p_valor <- pt(t_calc, df = gl, lower.tail = FALSE)
+
+cat("RESULTADOS:\n")
+cat("  t calculado =", round(t_calc, 4), "\n")
+cat("  gl =", gl, "\n")
+cat("  p-valor =", format.pval(p_valor, digits = 4), "\n\n")
+
+cat("DECISÃO:\n")
+if(p_valor < 0.05) {
+  cat("  ✓ REJEITAR H₀ (p < 0.05)\n")
+  cat("  Conclusão: Há evidência estatística FORTE de que adultos jovens\n")
+  cat("             conseguem identificar altura pela voz melhor que o acaso.\n")
+} else {
+  cat("  ✗ NÃO REJEITAR H₀ (p ≥ 0.05)\n")
+  cat("  Conclusão: Não há evidência suficiente de que o desempenho\n")
+  cat("             seja melhor que o acaso.\n")
+}
+
+cat("\n✓ Análise concluída com sucesso!\n")
+```
+
+## **📊 RESUMO DOS RESULTADOS:**
+
+### 🎯 **Intervalo de Confiança 95%: μ ∈ \[60.61 ; 65.15\]**
+
+### ✅ **Conclusão:**
+
+Estamos **95% confiantes** de que adultos jovens nos EUA acertam entre **60.6% e 65.2%** das identificações de altura pela voz.
+
+Como todo o intervalo está **acima de 50%** (acaso), há [**evidência estatisticamente significativa**]{.underline} de que as pessoas realmente conseguem identificar altura pelo som da voz melhor do que simplesmente adivinhar.
+
+### 📈 **Interpretação Prática:**
+
+-   Taxa média de acerto: **62.9%**
+
+-   Melhoria sobre o acaso: **+12.9 pontos percentuais**
+
+-   Melhoria relativa: **+25.8%**
+
+### EXEMPLO 20.3: Satisfação de usuários do sistema
+
+Uma simulação de dados de um escore de satisfação com um sistema informático.
 
 ```{r exemplo-satisfacao}
 # Simulando dados de satisfação (escala 1-10)
@@ -1216,7 +1841,100 @@ if(p_sat < 0.05) {
 }
 ```
 
-### Cálculo de Tamanho Amostral para Teste t
+### Poder: cálculo de Tamanho Amostral para Teste t
+
+FÓRMULA BÁSICA PARA TAMANHO AMOSTRAL (TESTE t BILATERAL ou UNILATERAL)
+
+Fórmula geral:
+
+$$
+n = \left[ \frac{ (z_{\alpha} + z_{\beta}) \cdot \sigma }{\delta} \right] ^2
+$$
+
+Onde:
+
+n = tamanho da amostra necessário
+
+z_α = valor crítico da normal padrão para nível de significância α (pode ser uni ou bilateral)
+
+z_β = valor crítico da normal padrão para poder (1-β)
+
+σ = desvio-padrão populacional
+
+δ = diferença que desejamos detectar (efeito mínimo)
+
+A figura a seguir ilusta o **poder** (1-β) de um [**TScontraHo**]{.underline} capaz de ***detectar*** um ***efeito*** pretendido (δ).
+
+![Erro Tipo I (alpha = área vermelha) e Erro Tipo II (beta = área amarela): o poder = 1 - beta](fig/TesteHipotese_H0xH1_EstatisticaTesteForaDaRegiaoRejeicaoH0_ErroTipoII-Beta_DuasCaldas_AlphaPorDois.PNG){fig-align="center"}
+
+Para aumentar o poder na ilustração acima seria preciso, no planejamento da pesquisa, aumentar o tamanho da amostra n de modo a detectar o efeito desejado (δ = 1,75 por leitura gráfica).
+
+O link a seguir apresenta um excelente simulador para cálculo do tamanho da amostra considerando o Nível de Significância e o Poder para um TScontraHo.
+
+[Understanding Statistical Power and Significance Testing - an interactive visualization](https://rpsychologist.com/d3/nhst/?fbclid=PARlRTSAOSTIxleHRuA2FlbQIxMABzcnRjBmFwcF9pZA8xMjQwMjQ1NzQyODc0MTQAAae5N_46gPgkOrWArNAdJiLKh8i4yyB9tpr5EUGqI394zDfgq53Q-jbknjAA2w_aem_XvUo4abEaECg4a5lFNq-4g "Created by Kristoffer Magnusson")
+
+Created by [**Kristoffer Magnusson**](https://rpsychologist.com/)
+
+Relembrar que o **d de Cohen**, que **estima** o [***efeito***]{.underline} ***desejado*** δ, deve ser calulado de modo [***padronizado***]{.underline}, pela fórmula acima já vista e aqui repetida para melhor internalização e fixação:
+
+$$ d = \frac{\bar{X}_{Ha} - \bar{X}_{Ho} }{s} $$
+
+Essa **medida** proposta por **Jacob Cohen (1994)** quantifica a [***diferença***]{.underline}, o [***efeito***]{.underline} que se pretende ***capturar com uma amostragem aleatória***, entre ***duas médias*** em *termos de* seu ***desvio padrão combinado***.
+
+$$ s = \sqrt{ \frac{(n_1-1)s_1^2 + (n_2-1)s_2^2}{n_1+n_2-2} } $$
+
+A tabela a seguir apresenta um padrão de interpretação para classes de valores do Delta (𝚫) de Cohen [@poldrack_pensamento_est_2025 , p. 123, tab. 10.1].
+
+![](fig/d-Cohen-pldrck-10-1.png){fig-align="center"}
+
+O Código a seguir ilustra um exemplo prático a partir de uma AAS (n = 250) dos dados alturas (cm) de homens e de mulheres adultos do NHANES.
+
+```{r}
+# compute effect size for gender difference in NHANES
+set.seed(123456)
+NHANES_sample <-
+  NHANES_adult %>%
+  drop_na(Height) %>%
+  sample_n(250)
+
+hsum <-
+  NHANES_sample %>%
+  group_by(Gender) %>%
+  summarize(
+    meanHeight = mean(Height),
+    varHeight = var(Height),
+    n = n()
+  )
+
+
+#pooled SD: desvio padrão combinado de Cohen
+s_height_gender <- sqrt(
+  ((hsum$n[1] - 1) * hsum$varHeight[1] + (hsum$n[2] - 1) * hsum$varHeight[2]) /
+    (hsum$n[1] + hsum$n[2] - 2)
+)
+
+#cohen's d: tamanho do efeito padronizado d de Cohen
+d_height_gender <- (hsum$meanHeight[2] - hsum$meanHeight[1]) / s_height_gender
+
+ggplot(NHANES_sample,aes(x = Height, color = Gender)) +
+  geom_density(linewidth = 2.5) +
+  theme(legend.position = c(0.9, 0.85))
+
+cat("\n Média e variância dos dados de altura por sexo:", "\n")
+hsum
+cat("\n Desvio padrão combinado de Cohen:", s_height_gender, "\n")
+cat("\n Cohen's d: tamanho do efeito padronizado d de Cohen:", d_height_gender, "\n")
+```
+
+É um tamanho de efeito padronizado d de Cohen (d = 1,8) que pode ser considerado **grande**.
+
+Logo, não é preciso um grande tamanho de amostra para detectar o efeito da diferença de altura entre homens e mulheres.
+
+Mesmo porque a literatura reporta que essa distribuiçãoé Normal.
+
+O Código a seguir ***calcula um tamanho amostral*** para um teste-t de Student.
+
+Cenário: Detectar diferença de 0.5 pontos na satisfação do usuário de sistema informático.
 
 ```{r tamanho-amostral-t}
 # Função para calcular tamanho amostral para teste t
@@ -1237,7 +1955,7 @@ calcular_n_teste_t <- function(delta, sigma, alpha = 0.05, power = 0.8) {
 cat("CÁLCULO DE TAMANHO AMOSTRAL\n")
 cat("===========================\n\n")
 
-# Cenário: Detectar diferença de 0.5 pontos na satisfação
+# Cenário: Detectar diferença de 0.5 pontos na satisfação do usuário
 delta_desejado <- 0.5
 sigma_estimado <- desvio_sat
 
@@ -1255,6 +1973,8 @@ cat("Adequação:", ifelse(n_sat >= n_necessario, "ADEQUADO", "INSUFICIENTE"), "
 ## Exercícios de Aplicação {#sec-exercicios-cap20}
 
 ### Exercício 1: Tempo de Resposta de Sistema
+
+Dados simulados com tamanho da amostra n = 20.
 
 ```{r exercicio-1}
 cat("EXERCÍCIO 1: Tempo de Resposta de Sistema\n")
@@ -1279,7 +1999,21 @@ cat("c) Interprete os resultados\n\n")
 
 cat("SOLUÇÃO:\n")
 cat("n =", n_tr, ", x̄ =", round(media_tr, 1), ", s =", round(desvio_tr, 1), "\n")
+
+# Teste t bilateral contra Ho: mu = 130 ms
+t.test(tempo_resposta,
+       mu = 130,
+       alternative = "two.sided")
+
+# Teste t bilateral contra Ho: mu = 100 ms
+t.test(tempo_resposta,
+       mu = 100,
+       alternative = "two.sided")
 ```
+
+Amtes de confiar em um teste-t!
+
+[***Nunca***]{.underline} esquecer de ***verificar se as condições*** do teste foram ***atendidas***.
 
 ## Resumo do Capítulo {#sec-resumo-cap20}
 
@@ -1328,10 +2062,10 @@ $$t = \frac{\bar{x} - \mu_0}{s/\sqrt{n}}$$
 
 A inferência t permite análises estatísticas **realistas** em situações práticas onde:
 
-\- O desvio-padrão populacional é desconhecido
+\- O desvio-padrão populacional é desconhecido.
 
-\- Temos apenas uma amostra aleatória simples sem reposição dos dados: uma AAS~s~ (N \> 20 . n)
+\- Temos apenas ***uma amostra aleatória simples sem reposição*** dos dados: uma AAS~s~ (N \> 20 . n).
 
-\- Precisamos de conclusões confiáveis sobre a população amostrada
+\- Precisamos de [***conclusões confiáveis***]{.underline} sobre a população amostrada.
 
 Esta é a **base fundamental** da maioria das análises estatísticas aplicadas em pesquisa científica e tomada de decisões baseadas em dados.
