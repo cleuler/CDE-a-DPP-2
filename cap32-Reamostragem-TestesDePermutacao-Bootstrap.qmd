@@ -1,0 +1,818 @@
+# Reamostragem: Testes de Permutação e Bootstrap {#sec-reamostragem}
+
+## Introdução {#sec-intro-reamostragem}
+
+Os métodos de **reamostragem** são técnicas computacionalmente intensivas que permitem fazer inferências estatísticas quando os métodos tradicionais são inadequados ou suas suposições não são atendidas. Dois métodos principais são:
+
+-   **Testes de Permutação**: Para testar hipóteses
+-   **Bootstrap**: Para estimar distribuições amostrais e intervalos de confiança
+
+```{r}
+#| label: setup
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(knitr)
+library(boot)
+library(infer)
+set.seed(2025)
+```
+
+## Testes de Permutação {#sec-testes-permutacao}
+
+### Conceito Básico
+
+Um **teste de permutação** (ou teste de randomização) funciona da seguinte forma:
+
+1.  Calcule a estatística de teste nos dados observados
+2.  Reorganize (permute) os dados muitas vezes
+3.  Calcule a estatística para cada permutação
+4.  Compare a estatística observada com a distribuição das permutações
+
+### Exemplo Introdutório: Comparação de Dois Grupos
+
+```{r}
+#| label: exemplo-intro-permutacao
+
+# Dados: Pontuações de dois grupos
+grupo_A <- c(78, 82, 85, 79, 81, 83, 80, 84)
+grupo_B <- c(72, 75, 71, 73, 74, 76, 70, 77)
+
+# Combinar dados
+dados_grupos <- data.frame(
+  pontuacao = c(grupo_A, grupo_B),
+  grupo = rep(c("A", "B"), each = 8)
+)
+
+# Visualizar
+ggplot(dados_grupos, aes(x = grupo, y = pontuacao, fill = grupo)) +
+  geom_boxplot(alpha = 0.7) +
+  geom_jitter(width = 0.1, alpha = 0.5) +
+  labs(title = "Pontuações por Grupo",
+       x = "Grupo", y = "Pontuação") +
+  theme_minimal() +
+  scale_fill_brewer(palette = "Set2")
+```
+
+### Implementação Manual do Teste de Permutação
+
+```{r}
+#| label: permutacao-manual
+
+# Diferença observada nas médias
+diff_observada <- mean(grupo_A) - mean(grupo_B)
+cat("Diferença observada:", round(diff_observada, 2), "\n")
+
+# Teste de permutação
+n_permutacoes <- 10000
+todas_pontuacoes <- c(grupo_A, grupo_B)
+n_A <- length(grupo_A)
+n_total <- length(todas_pontuacoes)
+
+# Armazenar diferenças das permutações
+difs_permutadas <- numeric(n_permutacoes)
+
+for(i in 1:n_permutacoes) {
+  # Permutar os dados
+  indices_permutados <- sample(n_total)
+  pontuacoes_permutadas <- todas_pontuacoes[indices_permutados]
+  
+  # Dividir em dois grupos
+  novo_A <- pontuacoes_permutadas[1:n_A]
+  novo_B <- pontuacoes_permutadas[(n_A+1):n_total]
+  
+  # Calcular diferença
+  difs_permutadas[i] <- mean(novo_A) - mean(novo_B)
+}
+
+# Valor-p bilateral
+p_valor <- mean(abs(difs_permutadas) >= abs(diff_observada))
+cat("Valor-p (bilateral):", round(p_valor, 4), "\n")
+```
+
+### Visualização da Distribuição Nula
+
+```{r}
+#| label: fig-dist-permutacao
+#| fig-cap: "Distribuição das diferenças sob a hipótese nula"
+
+# Criar dataframe para visualização
+df_perm <- data.frame(diferenca = difs_permutadas)
+
+ggplot(df_perm, aes(x = diferenca)) +
+  geom_histogram(bins = 50, fill = "lightblue", color = "black", alpha = 0.7) +
+  geom_vline(xintercept = diff_observada, color = "red", 
+             linewidth = 1.5, linetype = "dashed") +
+  geom_vline(xintercept = -diff_observada, color = "red", 
+             linewidth = 1.5, linetype = "dashed") +
+  labs(title = "Distribuição de Permutação da Diferença de Médias",
+       subtitle = paste("Valor-p =", round(p_valor, 4)),
+       x = "Diferença de Médias",
+       y = "Frequência") +
+  theme_minimal()
+```
+
+## Exercício 32.21 {#sec-exercicio-32-21}
+
+### Enunciado
+
+**Exercício 32.21**: Um pesquisador deseja testar se há diferença no tempo de reação entre usuários de dois tipos diferentes de interfaces. Foram coletados os seguintes dados (tempo em milissegundos):
+
+-   **Interface A**: 245, 268, 252, 271, 259, 264, 255, 248
+-   **Interface B**: 289, 275, 292, 281, 286, 294, 278, 283
+
+Use um teste de permutação para verificar se há evidência de diferença significativa no tempo médio de reação entre as interfaces (use α = 0.05).
+
+### Solução
+
+```{r}
+#| label: ex-32-21-dados
+
+# Dados do exercício
+interface_A <- c(245, 268, 252, 271, 259, 264, 255, 248)
+interface_B <- c(289, 275, 292, 281, 286, 294, 278, 283)
+
+# Organizar dados
+dados_interfaces <- data.frame(
+  tempo = c(interface_A, interface_B),
+  interface = factor(rep(c("A", "B"), each = 8))
+)
+
+# Estatísticas descritivas
+cat("Interface A - Média:", round(mean(interface_A), 2), 
+    "DP:", round(sd(interface_A), 2), "\n")
+cat("Interface B - Média:", round(mean(interface_B), 2), 
+    "DP:", round(sd(interface_B), 2), "\n")
+```
+
+#### Visualização dos Dados
+
+```{r}
+#| label: fig-ex-32-21-boxplot
+#| fig-cap: "Tempo de reação por interface"
+
+ggplot(dados_interfaces, aes(x = interface, y = tempo, fill = interface)) +
+  geom_boxplot(alpha = 0.7) +
+  geom_jitter(width = 0.15, size = 2, alpha = 0.6) +
+  stat_summary(fun = mean, geom = "point", shape = 23, 
+               size = 3, fill = "red") +
+  labs(title = "Tempo de Reação por Interface",
+       x = "Interface", 
+       y = "Tempo de Reação (ms)",
+       caption = "Losango vermelho indica a média") +
+  theme_minimal() +
+  scale_fill_brewer(palette = "Pastel1")
+```
+
+#### Teste de Permutação
+
+```{r}
+#| label: ex-32-21-permutacao
+
+# Diferença observada
+diff_obs_ex21 <- mean(interface_A) - mean(interface_B)
+cat("Diferença observada (A - B):", round(diff_obs_ex21, 2), "ms\n\n")
+
+# Teste de permutação usando o pacote infer
+set.seed(32210)
+resultado_perm_ex21 <- dados_interfaces %>%
+  specify(tempo ~ interface) %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = 10000, type = "permute") %>%
+  calculate(stat = "diff in means", order = c("A", "B"))
+
+# Valor-p
+p_valor_ex21 <- resultado_perm_ex21 %>%
+  get_p_value(obs_stat = diff_obs_ex21, direction = "two-sided")
+
+cat("Valor-p:", p_valor_ex21$p_value, "\n")
+```
+
+#### Visualização da Distribuição de Permutação
+
+```{r}
+#| label: fig-ex-32-21-permutacao
+#| fig-cap: "Distribuição de permutação para diferença de médias (Exercício 32.21)"
+
+resultado_perm_ex21 %>%
+  visualize() +
+  shade_p_value(obs_stat = diff_obs_ex21, direction = "two-sided") +
+  labs(title = "Distribuição de Permutação - Exercício 32.21",
+       subtitle = paste("Diferença observada:", round(diff_obs_ex21, 2), 
+                       "ms | Valor-p:", round(p_valor_ex21$p_value, 4)),
+       x = "Diferença de Médias (A - B)",
+       y = "Contagem") +
+  theme_minimal()
+```
+
+#### Conclusão do Exercício 32.21
+
+```{r}
+#| label: ex-32-21-conclusao
+
+cat("CONCLUSÃO DO EXERCÍCIO 32.21\n")
+cat("============================\n\n")
+cat("Hipóteses:\n")
+cat("H₀: Não há diferença no tempo médio de reação entre as interfaces\n")
+cat("H₁: Há diferença no tempo médio de reação entre as interfaces\n\n")
+cat("Resultados:\n")
+cat("- Diferença observada:", round(diff_obs_ex21, 2), "ms\n")
+cat("- Valor-p:", round(p_valor_ex21$p_value, 4), "\n")
+cat("- Nível de significância: α = 0.05\n\n")
+
+if(p_valor_ex21$p_value < 0.05) {
+  cat("Decisão: Rejeitar H₀\n")
+  cat("Conclusão: Há evidência significativa de diferença no tempo de reação\n")
+  cat("entre as interfaces (p < 0.05). A Interface B apresenta tempo médio\n")
+  cat("significativamente maior que a Interface A.\n")
+} else {
+  cat("Decisão: Não rejeitar H₀\n")
+  cat("Conclusão: Não há evidência suficiente para afirmar que existe\n")
+  cat("diferença significativa no tempo de reação entre as interfaces.\n")
+}
+```
+
+## Bootstrap {#sec-bootstrap}
+
+### Conceito do Bootstrap
+
+O **Bootstrap** é um método de reamostragem com reposição usado para:
+
+-   Estimar a distribuição amostral de uma estatística
+-   Calcular erros padrão
+-   Construir intervalos de confiança
+
+### Procedimento Bootstrap
+
+1.  Tire uma amostra aleatória **com reposição** do tamanho original
+2.  Calcule a estatística de interesse
+3.  Repita os passos 1-2 muitas vezes (B vezes, tipicamente B ≥ 1000)
+4.  Use a distribuição das B estatísticas para fazer inferências
+
+### Exemplo: IC Bootstrap para a Média
+
+```{r}
+#| label: exemplo-bootstrap-media
+
+# Dados de exemplo
+dados_exemplo <- c(23, 25, 27, 24, 26, 28, 22, 25, 27, 24)
+
+# Estatística observada
+media_obs <- mean(dados_exemplo)
+cat("Média observada:", round(media_obs, 2), "\n")
+
+# Bootstrap
+n_boot <- 10000
+medias_boot <- numeric(n_boot)
+
+for(i in 1:n_boot) {
+  amostra_boot <- sample(dados_exemplo, replace = TRUE)
+  medias_boot[i] <- mean(amostra_boot)
+}
+
+# Intervalo de confiança (método percentil)
+ic_boot <- quantile(medias_boot, probs = c(0.025, 0.975))
+cat("\nIC 95% Bootstrap:", round(ic_boot[1], 2), "-", round(ic_boot[2], 2), "\n")
+
+# Erro padrão bootstrap
+ep_boot <- sd(medias_boot)
+cat("Erro Padrão Bootstrap:", round(ep_boot, 3), "\n")
+```
+
+## Exercício 32.24 {#sec-exercicio-32-24}
+
+### Enunciado
+
+**Exercício 32.24**: Um economista coletou dados sobre o salário médio (em mil reais) de uma amostra de 15 trabalhadores em determinada região:
+
+3.2, 3.8, 4.1, 3.5, 4.5, 3.9, 4.2, 3.7, 4.8, 3.6, 4.0, 3.4, 4.3, 3.9, 4.1
+
+a)  Use o método bootstrap para estimar o erro padrão da média salarial.
+b)  Construa um intervalo de confiança de 95% para a média salarial usando o método percentil do bootstrap.
+c)  Construa um histograma da distribuição bootstrap da média.
+
+### Solução
+
+```{r}
+#| label: ex-32-24-dados
+
+# Dados do exercício
+salarios <- c(3.2, 3.8, 4.1, 3.5, 4.5, 3.9, 4.2, 3.7, 
+              4.8, 3.6, 4.0, 3.4, 4.3, 3.9, 4.1)
+
+# Estatísticas descritivas
+cat("Estatísticas Descritivas dos Salários\n")
+cat("======================================\n")
+cat("n =", length(salarios), "\n")
+cat("Média =", round(mean(salarios), 3), "mil reais\n")
+cat("Mediana =", round(median(salarios), 3), "mil reais\n")
+cat("Desvio Padrão =", round(sd(salarios), 3), "mil reais\n")
+cat("Mínimo =", min(salarios), "mil reais\n")
+cat("Máximo =", max(salarios), "mil reais\n")
+```
+
+#### (a) Erro Padrão Bootstrap
+
+```{r}
+#| label: ex-32-24-parte-a
+
+# Bootstrap manual
+set.seed(32240)
+B <- 10000
+medias_boot_ex24 <- numeric(B)
+
+for(i in 1:B) {
+  amostra_boot <- sample(salarios, replace = TRUE)
+  medias_boot_ex24[i] <- mean(amostra_boot)
+}
+
+# Erro padrão bootstrap
+ep_boot_ex24 <- sd(medias_boot_ex24)
+
+cat("\n(a) ERRO PADRÃO BOOTSTRAP\n")
+cat("=========================\n")
+cat("Erro Padrão da Média (Bootstrap):", round(ep_boot_ex24, 4), "mil reais\n")
+
+# Comparar com erro padrão tradicional
+ep_tradicional <- sd(salarios) / sqrt(length(salarios))
+cat("Erro Padrão (Fórmula tradicional):", round(ep_tradicional, 4), "mil reais\n")
+```
+
+#### (b) Intervalo de Confiança Bootstrap
+
+```{r}
+#| label: ex-32-24-parte-b
+
+# Método Percentil
+ic_percentil <- quantile(medias_boot_ex24, probs = c(0.025, 0.975))
+
+# Método Normal Bootstrap
+media_boot <- mean(medias_boot_ex24)
+ic_normal <- media_boot + c(-1, 1) * qnorm(0.975) * ep_boot_ex24
+
+# Método BCa (Bias-Corrected and Accelerated) usando pacote boot
+boot_func <- function(data, indices) {
+  return(mean(data[indices]))
+}
+
+boot_result <- boot(salarios, boot_func, R = B)
+ic_bca <- boot.ci(boot_result, type = "bca")
+
+cat("\n(b) INTERVALOS DE CONFIANÇA 95%\n")
+cat("================================\n")
+cat("Método Percentil: [", round(ic_percentil[1], 3), ",", 
+    round(ic_percentil[2], 3), "] mil reais\n")
+cat("Método Normal:    [", round(ic_normal[1], 3), ",", 
+    round(ic_normal[2], 3), "] mil reais\n")
+cat("Método BCa:       [", round(ic_bca$bca[4], 3), ",", 
+    round(ic_bca$bca[5], 3), "] mil reais\n")
+```
+
+#### (c) Histograma da Distribuição Bootstrap
+
+```{r}
+#| label: fig-ex-32-24-histograma
+#| fig-cap: "Distribuição bootstrap da média salarial (Exercício 32.24)"
+
+# Criar dataframe
+df_boot_ex24 <- data.frame(media = medias_boot_ex24)
+
+# Visualização
+ggplot(df_boot_ex24, aes(x = media)) +
+  geom_histogram(bins = 50, fill = "steelblue", color = "white", alpha = 0.7) +
+  geom_vline(xintercept = mean(salarios), color = "red", 
+             linewidth = 1.5, linetype = "solid") +
+  geom_vline(xintercept = ic_percentil[1], color = "darkgreen", 
+             linewidth = 1, linetype = "dashed") +
+  geom_vline(xintercept = ic_percentil[2], color = "darkgreen", 
+             linewidth = 1, linetype = "dashed") +
+  labs(title = "Distribuição Bootstrap da Média Salarial",
+       subtitle = paste("B = 10.000 reamostragens | IC 95%: [",
+                       round(ic_percentil[1], 2), ",",
+                       round(ic_percentil[2], 2), "] mil reais"),
+       x = "Média Salarial (mil reais)",
+       y = "Frequência",
+       caption = "Linha vermelha: média observada | Linhas verdes: limites do IC 95%") +
+  theme_minimal() +
+  theme(plot.caption = element_text(hjust = 0))
+```
+
+#### Conclusão do Exercício 32.24
+
+```{r}
+#| label: ex-32-24-conclusao
+
+cat("\nCONCLUSÃO DO EXERCÍCIO 32.24\n")
+cat("=============================\n\n")
+cat("Resumo dos Resultados:\n")
+cat("- Média amostral:", round(mean(salarios), 3), "mil reais\n")
+cat("- Erro padrão bootstrap:", round(ep_boot_ex24, 4), "mil reais\n")
+cat("- IC 95% (percentil): [", round(ic_percentil[1], 3), ",", 
+    round(ic_percentil[2], 3), "] mil reais\n\n")
+cat("Interpretação:\n")
+cat("Com 95% de confiança, a média salarial verdadeira dos trabalhadores\n")
+cat("nesta região está entre", round(ic_percentil[1], 2), "e", 
+    round(ic_percentil[2], 2), "mil reais.\n")
+```
+
+## Exercício 32.26 {#sec-exercicio-32-26}
+
+### Enunciado
+
+**Exercício 32.26**: Uma pesquisadora está interessada em comparar a mediana de dois grupos. Os dados são:
+
+-   **Grupo 1** (tratamento novo): 15, 18, 22, 19, 25, 21, 17, 23, 20
+-   **Grupo 2** (tratamento padrão): 12, 14, 16, 13, 17, 15, 11, 16, 14
+
+a)  Calcule a diferença observada entre as medianas dos dois grupos.
+b)  Use um teste de permutação para avaliar se há diferença significativa entre as medianas (α = 0.05).
+c)  Construa intervalos de confiança bootstrap (95%) para a mediana de cada grupo separadamente.
+
+### Solução
+
+```{r}
+#| label: ex-32-26-dados
+
+# Dados do exercício
+grupo1 <- c(15, 18, 22, 19, 25, 21, 17, 23, 20)
+grupo2 <- c(12, 14, 16, 13, 17, 15, 11, 16, 14)
+
+# Organizar dados
+dados_ex26 <- data.frame(
+  valor = c(grupo1, grupo2),
+  grupo = factor(rep(c("Novo", "Padrão"), c(length(grupo1), length(grupo2))))
+)
+
+# Estatísticas descritivas
+cat("ESTATÍSTICAS DESCRITIVAS\n")
+cat("========================\n")
+cat("\nGrupo 1 (Tratamento Novo):\n")
+cat("  n =", length(grupo1), "\n")
+cat("  Mediana =", median(grupo1), "\n")
+cat("  Média =", round(mean(grupo1), 2), "\n")
+cat("  IQR =", IQR(grupo1), "\n")
+
+cat("\nGrupo 2 (Tratamento Padrão):\n")
+cat("  n =", length(grupo2), "\n")
+cat("  Mediana =", median(grupo2), "\n")
+cat("  Média =", round(mean(grupo2), 2), "\n")
+cat("  IQR =", IQR(grupo2), "\n")
+```
+
+#### Visualização dos Dados
+
+```{r}
+#| label: fig-ex-32-26-boxplot
+#| fig-cap: "Comparação dos grupos (Exercício 32.26)"
+
+ggplot(dados_ex26, aes(x = grupo, y = valor, fill = grupo)) +
+  geom_boxplot(alpha = 0.7, outlier.shape = NA) +
+  geom_jitter(width = 0.15, size = 3, alpha = 0.6) +
+  stat_summary(fun = median, geom = "point", shape = 23, 
+               size = 4, fill = "red", color = "darkred") +
+  labs(title = "Comparação dos Tratamentos",
+       x = "Tratamento", 
+       y = "Valor Observado",
+       caption = "Losango vermelho indica a mediana") +
+  theme_minimal() +
+  scale_fill_manual(values = c("#8DD3C7", "#FFFFB3")) +
+  theme(legend.position = "none")
+```
+
+#### (a) Diferença Observada entre Medianas
+
+```{r}
+#| label: ex-32-26-parte-a
+
+# Diferença observada
+diff_mediana_obs <- median(grupo1) - median(grupo2)
+
+cat("\n(a) DIFERENÇA OBSERVADA\n")
+cat("=======================\n")
+cat("Mediana Grupo 1:", median(grupo1), "\n")
+cat("Mediana Grupo 2:", median(grupo2), "\n")
+cat("Diferença (Grupo 1 - Grupo 2):", diff_mediana_obs, "\n")
+```
+
+#### (b) Teste de Permutação para Diferença de Medianas
+
+```{r}
+#| label: ex-32-26-parte-b
+
+# Teste de permutação manual para mediana
+set.seed(32260)
+n_perm_ex26 <- 10000
+todos_valores <- c(grupo1, grupo2)
+n1 <- length(grupo1)
+n_total_ex26 <- length(todos_valores)
+
+difs_mediana_perm <- numeric(n_perm_ex26)
+
+for(i in 1:n_perm_ex26) {
+  # Permutar
+  indices_perm <- sample(n_total_ex26)
+  valores_perm <- todos_valores[indices_perm]
+  
+  # Dividir em grupos
+  perm_g1 <- valores_perm[1:n1]
+  perm_g2 <- valores_perm[(n1+1):n_total_ex26]
+  
+  # Calcular diferença de medianas
+  difs_mediana_perm[i] <- median(perm_g1) - median(perm_g2)
+}
+
+# Valor-p bilateral
+p_valor_ex26 <- mean(abs(difs_mediana_perm) >= abs(diff_mediana_obs))
+
+cat("\n(b) TESTE DE PERMUTAÇÃO\n")
+cat("=======================\n")
+cat("H₀: Não há diferença entre as medianas dos grupos\n")
+cat("H₁: Há diferença entre as medianas dos grupos\n\n")
+cat("Diferença observada:", diff_mediana_obs, "\n")
+cat("Número de permutações:", format(n_perm_ex26, big.mark = "."), "\n")
+cat("Valor-p (bilateral):", round(p_valor_ex26, 4), "\n")
+cat("Nível de significância: α = 0.05\n\n")
+
+if(p_valor_ex26 < 0.05) {
+  cat("Decisão: Rejeitar H₀\n")
+  cat("Conclusão: Há evidência significativa de diferença entre as medianas.\n")
+} else {
+  cat("Decisão: Não rejeitar H₀\n")
+  cat("Conclusão: Não há evidência suficiente de diferença entre as medianas.\n")
+}
+```
+
+#### Visualização da Distribuição de Permutação
+
+```{r}
+#| label: fig-ex-32-26-permutacao
+#| fig-cap: "Distribuição de permutação da diferença de medianas (Exercício 32.26)"
+
+df_perm_ex26 <- data.frame(diferenca = difs_mediana_perm)
+
+ggplot(df_perm_ex26, aes(x = diferenca)) +
+  geom_histogram(bins = 40, fill = "lightcoral", color = "white", alpha = 0.7) +
+  geom_vline(xintercept = diff_mediana_obs, color = "darkred", 
+             linewidth = 1.5, linetype = "solid") +
+  geom_vline(xintercept = -diff_mediana_obs, color = "darkred", 
+             linewidth = 1.5, linetype = "solid") +
+  labs(title = "Distribuição de Permutação - Diferença de Medianas",
+       subtitle = paste("Diferença observada:", diff_mediana_obs, 
+                       "| Valor-p:", round(p_valor_ex26, 4)),
+       x = "Diferença de Medianas (Grupo 1 - Grupo 2)",
+       y = "Frequência") +
+  theme_minimal()
+```
+
+#### (c) Intervalos de Confiança Bootstrap para as Medianas
+
+```{r}
+#| label: ex-32-26-parte-c
+
+# Bootstrap para Grupo 1
+set.seed(32261)
+B_ex26 <- 10000
+medianas_boot_g1 <- numeric(B_ex26)
+medianas_boot_g2 <- numeric(B_ex26)
+
+for(i in 1:B_ex26) {
+  # Bootstrap Grupo 1
+  amostra_boot_g1 <- sample(grupo1, replace = TRUE)
+  medianas_boot_g1[i] <- median(amostra_boot_g1)
+  
+  # Bootstrap Grupo 2
+  amostra_boot_g2 <- sample(grupo2, replace = TRUE)
+  medianas_boot_g2[i] <- median(amostra_boot_g2)
+}
+
+# Intervalos de confiança
+ic_g1 <- quantile(medianas_boot_g1, probs = c(0.025, 0.975))
+ic_g2 <- quantile(medianas_boot_g2, probs = c(0.025, 0.975))
+
+cat("\n(c) INTERVALOS DE CONFIANÇA BOOTSTRAP 95%\n")
+cat("==========================================\n")
+cat("\nGrupo 1 (Tratamento Novo):\n")
+cat("  Mediana observada:", median(grupo1), "\n")
+cat("  IC 95%: [", ic_g1[1], ",", ic_g1[2], "]\n")
+
+cat("\nGrupo 2 (Tratamento Padrão):\n")
+cat("  Mediana observada:", median(grupo2), "\n")
+cat("  IC 95%: [", ic_g2[1], ",", ic_g2[2], "]\n")
+```
+
+#### Visualização das Distribuições Bootstrap
+
+```{r}
+#| label: fig-ex-32-26-bootstrap
+#| fig-cap: "Distribuições bootstrap das medianas (Exercício 32.26)"
+#| fig-width: 10
+#| fig-height: 5
+
+# Combinar dados para visualização
+df_boot_combined <- data.frame(
+  mediana = c(medianas_boot_g1, medianas_boot_g2),
+  grupo = rep(c("Tratamento Novo", "Tratamento Padrão"), each = B_ex26)
+)
+
+# ICs para anotação
+ic_data <- data.frame(
+  grupo = c("Tratamento Novo", "Tratamento Padrão"),
+  mediana_obs = c(median(grupo1), median(grupo2)),
+  ic_inf = c(ic_g1[1], ic_g2[1]),
+  ic_sup = c(ic_g1[2], ic_g2[2])
+)
+
+ggplot(df_boot_combined, aes(x = mediana, fill = grupo)) +
+  geom_histogram(bins = 30, alpha = 0.6, color = "white") +
+  geom_vline(data = ic_data, aes(xintercept = mediana_obs, color = grupo),
+             linewidth = 1.5, linetype = "solid") +
+  geom_vline(data = ic_data, aes(xintercept = ic_inf, color = grupo),
+             linewidth = 1, linetype = "dashed") +
+  geom_vline(data = ic_data, aes(xintercept = ic_sup, color = grupo),
+             linewidth = 1, linetype = "dashed") +
+  facet_wrap(~grupo, scales = "free_y") +
+  labs(title = "Distribuições Bootstrap das Medianas",
+       subtitle = "Linhas sólidas: medianas observadas | Linhas tracejadas: limites do IC 95%",
+       x = "Mediana",
+       y = "Frequência") +
+  theme_minimal() +
+  theme(legend.position = "none") +
+  scale_fill_manual(values = c("#8DD3C7", "#FFFFB3")) +
+  scale_color_manual(values = c("#8DD3C7", "#FFFFB3"))
+```
+
+#### Conclusão Geral do Exercício 32.26
+
+```{r}
+#| label: ex-32-26-conclusao-geral
+
+cat("\nCONCLUSÃO GERAL DO EXERCÍCIO 32.26\n")
+cat("===================================\n\n")
+
+cat("1. Diferença entre medianas:\n")
+cat("   - Diferença observada:", diff_mediana_obs, "\n")
+cat("   - Valor-p do teste de permutação:", round(p_valor_ex26, 4), "\n")
+if(p_valor_ex26 < 0.05) {
+  cat("   - Conclusão: Diferença SIGNIFICATIVA (p < 0.05)\n")
+} else {
+  cat("   - Conclusão: Diferença NÃO significativa (p ≥ 0.05)\n")
+}
+
+cat("\n2. Intervalos de Confiança (95%):\n")
+cat("   - Grupo 1 (Novo): [", ic_g1[1], ",", ic_g1[2], "]\n")
+cat("   - Grupo 2 (Padrão): [", ic_g2[1], ",", ic_g2[2], "]\n")
+
+cat("\n3. Interpretação:\n")
+if(p_valor_ex26 < 0.05) {
+  cat("   O tratamento novo apresenta mediana significativamente diferente\n")
+  cat("   do tratamento padrão. Os intervalos de confiança não se sobrepõem,\n")
+  cat("   reforçando a evidência de diferença entre os tratamentos.\n")
+} else {
+  cat("   Não há evidência estatística suficiente para afirmar que os\n")
+  cat("   tratamentos produzem resultados com medianas diferentes.\n")
+}
+```
+
+## Comparação: Testes de Permutação vs Bootstrap {#sec-comparacao}
+
+### Diferenças Principais
+
+```{r}
+#| label: tbl-comparacao
+#| tbl-cap: "Comparação entre Testes de Permutação e Bootstrap"
+
+comparacao <- data.frame(
+  Característica = c(
+    "Objetivo Principal",
+    "Reamostragem",
+    "Hipótese Nula",
+    "Uso Típico",
+    "O que produz"
+  ),
+  `Teste de Permutação` = c(
+    "Testar hipóteses",
+    "Sem reposição (permutação)",
+    "Necessária",
+    "Comparar grupos",
+    "Valor-p"
+  ),
+  Bootstrap = c(
+    "Estimar parâmetros",
+    "Com reposição",
+    "Não necessária",
+    "IC e erro padrão",
+    "Distribuição amostral"
+  ),
+  check.names = FALSE
+)
+
+kable(comparacao, align = c("l", "l", "l"))
+```
+
+## Vantagens e Limitações {#sec-vantagens-limitacoes}
+
+### Vantagens dos Métodos de Reamostragem
+
+1.  **Não requerem suposições de distribuição**: Não assumem normalidade
+2.  **Aplicáveis a estatísticas complexas**: Mediana, razão, correlação, etc.
+3.  **Amostras pequenas**: Funcionam com tamanhos amostrais pequenos
+4.  **Intuitivos**: Fáceis de entender conceitualmente
+
+### Limitações
+
+1.  **Computacionalmente intensivos**: Requerem muitas iterações
+2.  **Dependem da amostra original**: Se a amostra não é representativa, os resultados também não serão
+3.  **Não criam novos dados**: Apenas reorganizam os dados existentes
+
+## Boas Práticas {#sec-boas-praticas}
+
+### Número de Reamostragens
+
+```{r}
+#| label: boas-praticas
+
+cat("RECOMENDAÇÕES PARA NÚMERO DE REAMOSTRAGENS\n")
+cat("===========================================\n\n")
+
+cat("Testes de Permutação:\n")
+cat("  - Mínimo: 1.000 permutações\n")
+cat("  - Recomendado: 10.000 permutações\n")
+cat("  - Para publicação: ≥ 10.000 permutações\n\n")
+
+cat("Bootstrap:\n")
+cat("  - Mínimo: 1.000 reamostragens\n")
+cat("  - Recomendado: 5.000-10.000 reamostragens\n")
+cat("  - Para IC precisos: ≥ 10.000 reamostragens\n")
+```
+
+### Estabelecendo a Semente Aleatória
+
+Sempre use `set.seed()` para reprodutibilidade:
+
+```{r}
+#| label: reproducibilidade
+#| eval: false
+
+# Exemplo de reprodutibilidade
+set.seed(123)
+resultado1 <- sample(1:10, 5, replace = TRUE)
+
+set.seed(123)
+resultado2 <- sample(1:10, 5, replace = TRUE)
+
+identical(resultado1, resultado2)  # TRUE
+```
+
+## Resumo do Capítulo {#sec-resumo}
+
+### Conceitos-Chave
+
+1.  **Testes de Permutação**:
+    -   Permutam os dados sob H₀
+    -   Geram distribuição nula empiricamente
+    -   Calculam valor-p pela proporção de permutações tão ou mais extremas
+2.  **Bootstrap**:
+    -   Reamostra com reposição
+    -   Estima distribuição amostral
+    -   Constrói intervalos de confiança
+3.  **Aplicações**:
+    -   Quando suposições paramétricas não são atendidas
+    -   Para estatísticas sem fórmulas conhecidas
+    -   Amostras pequenas ou moderadas
+
+### Fluxograma de Decisão
+
+```{r}
+#| label: tbl-decisao
+#| tbl-cap: "Quando usar cada método"
+
+decisao <- data.frame(
+  Situação = c(
+    "Comparar dois grupos",
+    "Estimar IC para média",
+    "Estimar IC para mediana",
+    "Testar independência",
+    "Dados não-normais",
+    "Amostra pequena"
+  ),
+  `Método Sugerido` = c(
+    "Teste de Permutação",
+    "Bootstrap ou t-test",
+    "Bootstrap",
+    "Teste de Permutação",
+    "Bootstrap ou Permutação",
+    "Bootstrap (com cautela)"
+  ),
+  check.names = FALSE
+)
+
+kable(decisao, align = c("l", "l"))
+```
+
+## Referências {#sec-referencias-cap32}
+
+-   Efron, B., & Tibshirani, R. J. (1993). *An Introduction to the Bootstrap*. Chapman and Hall/CRC.
+-   Good, P. I. (2005). *Permutation, Parametric, and Bootstrap Tests of Hypotheses* (3rd ed.). Springer.
+-   Davison, A. C., & Hinkley, D. V. (1997). *Bootstrap Methods and Their Application*. Cambridge University Press.
+-   Manly, B. F. J. (2006). *Randomization, Bootstrap and Monte Carlo Methods in Biology* (3rd ed.). Chapman and Hall/CRC.

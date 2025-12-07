@@ -1,0 +1,2362 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Cleuler Barbosa das Neves">
+<title>18&nbsp; Introdução à Reamostragem – __Ciência de Dados e Estatística Aplicadas ao Direito e Políticas Públicas__</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 1em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./conclusao.html" rel="next">
+<link href="./cap21-comparar-duas-medias.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-70a47bd5681a7291082a5b9f83d58762.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script src="site_libs/kePrint-0.0.1/kePrint.js"></script><link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+</head>
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cap32-Reamostragem-TestesPermutacao-Bootstrap-v2.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Introdução à Reamostragem</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./"><strong>Ciência de Dados e Estatística Aplicadas ao Direito e Políticas Públicas</strong></a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><strong>Pretexto</strong></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AEID-cap18-Reproduzivel.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">AEID - Análise Exploratória e Inferencial de Dados</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap3-DistNorm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">AED - cap 3 - As Distribuições Normais</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap5-pldr-modelos-dados.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">AED - cap 5 pldr - Ajustando Modelos aos Dados</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Replicar-MPE-dados -correlacao.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">AED - Replicar dados MPE compras públicas</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap13-pldr-model-rel-contin.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">AID - cap 13 - Modelagem de Relações Contínuas</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap16-pldr-EstMultiv.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">AID - cap 16 - Estatística Multivariada</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap6-moore-tab-dupla-entrada.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">AED - cap 6 moore - Tabelas de Dupla Entrada</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./replicar-suco-uva-tab-graf.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">AED - suco uva - Tabelas e Gráficos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap16-moore-IC-o-basico.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">AEI - cap 16 moore - IC: o Básico</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap17-moore-TSHN-o-basico.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">AEI - cap 17 moore - TSH0</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap17-LO-testes-significancia-basico.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Testes de Significância: o Básico</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap17-TSHo-Oltramari.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Testes de Significância: Oltramari</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap18-LO-inferencia-na-pratica.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Inferência na Prática</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap20-InferenciaSobreUmaMediaPop.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Inferência sobre uma Média Populacional</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./teste-t-pareado.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Procedimentos t para Dados Emparelhados</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap21-comparar-duas-medias.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Comparação de Duas Médias</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap32-Reamostragem-TestesPermutacao-Bootstrap-v2.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Introdução à Reamostragem</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./conclusao.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Conclusão</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./apendiceA.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Apêndice A - EMENTA</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./apendiceB-quadroVar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Apêndice B - Quadro Var</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./referencias.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Referências</span></a>
+  </div>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Sumário</h2>
+   
+  <ul>
+<li><a href="#objetivos-de-aprendizagem" id="toc-objetivos-de-aprendizagem" class="nav-link active" data-scroll-target="#objetivos-de-aprendizagem"><span class="header-section-number">18.1</span> Objetivos de Aprendizagem</a></li>
+  <li>
+<a href="#reamostragem-testes-de-permuta%C3%A7%C3%A3o-e-bootstrap" id="toc-reamostragem-testes-de-permutação-e-bootstrap" class="nav-link" data-scroll-target="#reamostragem-testes-de-permuta%C3%A7%C3%A3o-e-bootstrap"><span class="header-section-number">18.2</span> Reamostragem: Testes de Permutação e Bootstrap</a>
+  <ul>
+<li>
+<a href="#m%C3%A9todos-de-reamostragem" id="toc-métodos-de-reamostragem" class="nav-link" data-scroll-target="#m%C3%A9todos-de-reamostragem"><span class="header-section-number">18.2.1</span> Métodos de Reamostragem</a>
+  <ul class="collapse">
+<li><a href="#testes-de-permuta%C3%A7%C3%A3o" id="toc-testes-de-permutação" class="nav-link" data-scroll-target="#testes-de-permuta%C3%A7%C3%A3o"><span class="header-section-number">18.2.1.1</span> Testes de Permutação</a></li>
+  <li><a href="#m%C3%A9todos-bootstrap" id="toc-métodos-bootstrap" class="nav-link" data-scroll-target="#m%C3%A9todos-bootstrap"><span class="header-section-number">18.2.1.2</span> Métodos Bootstrap</a></li>
+  </ul>
+</li>
+  </ul>
+</li>
+  <li>
+<a href="#aleatoriza%C3%A7%C3%A3o-em-experimentos" id="toc-aleatorização-em-experimentos" class="nav-link" data-scroll-target="#aleatoriza%C3%A7%C3%A3o-em-experimentos"><span class="header-section-number">19</span> Aleatorização em Experimentos</a>
+  <ul>
+<li><a href="#experimento-comparativo-aleatorizado---eca" id="toc-experimento-comparativo-aleatorizado---eca" class="nav-link" data-scroll-target="#experimento-comparativo-aleatorizado---eca"><span class="header-section-number">19.1</span> Experimento Comparativo Aleatorizado - ECA</a></li>
+  <li>
+<a href="#exemplo-32.1-um-planejamento-completamente-aleatorizado" id="toc-exemplo-32.1-um-planejamento-completamente-aleatorizado" class="nav-link" data-scroll-target="#exemplo-32.1-um-planejamento-completamente-aleatorizado"><span class="header-section-number">19.2</span> EXEMPLO 32.1: Um Planejamento Completamente Aleatorizado</a>
+  <ul class="collapse">
+<li><a href="#descri%C3%A7%C3%A3o-do-experimento" id="toc-descrição-do-experimento" class="nav-link" data-scroll-target="#descri%C3%A7%C3%A3o-do-experimento"><span class="header-section-number">19.2.1</span> Descrição do Experimento</a></li>
+  <li><a href="#todas-as-poss%C3%ADveis-associa%C3%A7%C3%B5es" id="toc-todas-as-possíveis-associações" class="nav-link" data-scroll-target="#todas-as-poss%C3%ADveis-associa%C3%A7%C3%B5es"><span class="header-section-number">19.2.2</span> Todas as Possíveis Associações</a></li>
+  <li><a href="#dados-observados" id="toc-dados-observados" class="nav-link" data-scroll-target="#dados-observados"><span class="header-section-number">19.2.3</span> Dados Observados</a></li>
+  <li><a href="#suposi%C3%A7%C3%A3o-fundamental" id="toc-suposição-fundamental" class="nav-link" data-scroll-target="#suposi%C3%A7%C3%A3o-fundamental"><span class="header-section-number">19.2.4</span> Suposição Fundamental</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#exemplo-32.2-distribui%C3%A7%C3%A3o-de-permuta%C3%A7%C3%A3o" id="toc-exemplo-32.2-distribuição-de-permutação" class="nav-link" data-scroll-target="#exemplo-32.2-distribui%C3%A7%C3%A3o-de-permuta%C3%A7%C3%A3o"><span class="header-section-number">19.3</span> EXEMPLO 32.2: Distribuição de Permutação</a>
+  <ul class="collapse">
+<li><a href="#c%C3%A1lculo-da-diferen%C3%A7a-nas-m%C3%A9dias" id="toc-cálculo-da-diferença-nas-médias" class="nav-link" data-scroll-target="#c%C3%A1lculo-da-diferen%C3%A7a-nas-m%C3%A9dias"><span class="header-section-number">19.3.1</span> Cálculo da Diferença nas Médias</a></li>
+  <li><a href="#distribui%C3%A7%C3%A3o-de-permuta%C3%A7%C3%A3o" id="toc-distribuição-de-permutação" class="nav-link" data-scroll-target="#distribui%C3%A7%C3%A3o-de-permuta%C3%A7%C3%A3o"><span class="header-section-number">19.3.2</span> Distribuição de Permutação</a></li>
+  <li><a href="#interpreta%C3%A7%C3%A3o" id="toc-interpretação" class="nav-link" data-scroll-target="#interpreta%C3%A7%C3%A3o"><span class="header-section-number">19.3.3</span> Interpretação</a></li>
+  </ul>
+</li>
+  </ul>
+</li>
+  <li>
+<a href="#testes-de-permuta%C3%A7%C3%A3o-1" id="toc-testes-de-permutação-1" class="nav-link" data-scroll-target="#testes-de-permuta%C3%A7%C3%A3o-1"><span class="header-section-number">20</span> Testes de Permutação</a>
+  <ul>
+<li><a href="#suposi%C3%A7%C3%B5es-para-um-teste-de-permuta%C3%A7%C3%A3o-simples" id="toc-suposições-para-um-teste-de-permutação-simples" class="nav-link" data-scroll-target="#suposi%C3%A7%C3%B5es-para-um-teste-de-permuta%C3%A7%C3%A3o-simples"><span class="header-section-number">20.1</span> Suposições para um Teste de Permutação Simples</a></li>
+  <li><a href="#procedimento-de-teste-de-permuta%C3%A7%C3%A3o-simples" id="toc-procedimento-de-teste-de-permutação-simples" class="nav-link" data-scroll-target="#procedimento-de-teste-de-permuta%C3%A7%C3%A3o-simples"><span class="header-section-number">20.2</span> Procedimento de Teste de Permutação Simples</a></li>
+  <li>
+<a href="#exemplo-32.3-teste-de-permuta%C3%A7%C3%A3o-para-dados-emparelhados" id="toc-exemplo-32.3-teste-de-permutação-para-dados-emparelhados" class="nav-link" data-scroll-target="#exemplo-32.3-teste-de-permuta%C3%A7%C3%A3o-para-dados-emparelhados"><span class="header-section-number">20.3</span> EXEMPLO 32.3: Teste de Permutação para Dados Emparelhados</a>
+  <ul class="collapse">
+<li><a href="#contexto-repelentes-de-insetos" id="toc-contexto-repelentes-de-insetos" class="nav-link" data-scroll-target="#contexto-repelentes-de-insetos"><span class="header-section-number">20.3.1</span> Contexto: Repelentes de Insetos</a></li>
+  <li><a href="#an%C3%A1lise-de-permuta%C3%A7%C3%A3o" id="toc-análise-de-permutação" class="nav-link" data-scroll-target="#an%C3%A1lise-de-permuta%C3%A7%C3%A3o"><span class="header-section-number">20.3.2</span> Análise de Permutação</a></li>
+  <li><a href="#distribui%C3%A7%C3%A3o-de-permuta%C3%A7%C3%A3o-1" id="toc-distribuição-de-permutação-1" class="nav-link" data-scroll-target="#distribui%C3%A7%C3%A3o-de-permuta%C3%A7%C3%A3o-1"><span class="header-section-number">20.3.3</span> Distribuição de Permutação</a></li>
+  <li><a href="#conclus%C3%A3o" id="toc-conclusão" class="nav-link" data-scroll-target="#conclus%C3%A3o"><span class="header-section-number">20.3.4</span> Conclusão</a></li>
+  </ul>
+</li>
+  </ul>
+</li>
+  <li>
+<a href="#testes-de-permuta%C3%A7%C3%A3o-com-programa" id="toc-testes-de-permutação-com-programa" class="nav-link" data-scroll-target="#testes-de-permuta%C3%A7%C3%A3o-com-programa"><span class="header-section-number">21</span> Testes de Permutação com Programa</a>
+  <ul>
+<li><a href="#exemplo-32.4-perda-de-peso-com-programa" id="toc-exemplo-32.4-perda-de-peso-com-programa" class="nav-link" data-scroll-target="#exemplo-32.4-perda-de-peso-com-programa"><span class="header-section-number">21.1</span> EXEMPLO 32.4: Perda de Peso com Programa</a></li>
+  <li>
+<a href="#exemplo-32.6-dor-compartilhada-e-v%C3%ADnculo" id="toc-exemplo-32.6-dor-compartilhada-e-vínculo" class="nav-link" data-scroll-target="#exemplo-32.6-dor-compartilhada-e-v%C3%ADnculo"><span class="header-section-number">21.2</span> EXEMPLO 32.6: Dor Compartilhada e Vínculo</a>
+  <ul class="collapse">
+<li><a href="#contexto-da-pesquisa" id="toc-contexto-da-pesquisa" class="nav-link" data-scroll-target="#contexto-da-pesquisa"><span class="header-section-number">21.2.1</span> Contexto da Pesquisa</a></li>
+  <li><a href="#resultados" id="toc-resultados" class="nav-link" data-scroll-target="#resultados"><span class="header-section-number">21.2.2</span> Resultados</a></li>
+  </ul>
+</li>
+  </ul>
+</li>
+  <li>
+<a href="#m%C3%A9todos-bootstrap-1" id="toc-métodos-bootstrap-1" class="nav-link" data-scroll-target="#m%C3%A9todos-bootstrap-1"><span class="header-section-number">22</span> Métodos Bootstrap</a>
+  <ul>
+<li>
+<a href="#conceitos-fundamentais" id="toc-conceitos-fundamentais" class="nav-link" data-scroll-target="#conceitos-fundamentais"><span class="header-section-number">22.1</span> Conceitos Fundamentais</a>
+  <ul class="collapse">
+<li><a href="#amostragem-com-reposi%C3%A7%C3%A3o" id="toc-amostragem-com-reposição" class="nav-link" data-scroll-target="#amostragem-com-reposi%C3%A7%C3%A3o"><span class="header-section-number">22.1.1</span> Amostragem com Reposição</a></li>
+  <li><a href="#amostras-bootstrap" id="toc-amostras-bootstrap" class="nav-link" data-scroll-target="#amostras-bootstrap"><span class="header-section-number">22.1.2</span> Amostras Bootstrap</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#exemplo-32.9-distribui%C3%A7%C3%A3o-bootstrap-da-m%C3%A9dia" id="toc-exemplo-32.9-distribuição-bootstrap-da-média" class="nav-link" data-scroll-target="#exemplo-32.9-distribui%C3%A7%C3%A3o-bootstrap-da-m%C3%A9dia"><span class="header-section-number">22.2</span> EXEMPLO 32.9: Distribuição Bootstrap da Média</a>
+  <ul class="collapse">
+<li><a href="#dados-tempos-de-viagem-na-carolina-do-norte" id="toc-dados-tempos-de-viagem-na-carolina-do-norte" class="nav-link" data-scroll-target="#dados-tempos-de-viagem-na-carolina-do-norte"><span class="header-section-number">22.2.1</span> Dados: Tempos de Viagem na Carolina do Norte</a></li>
+  <li><a href="#processo-bootstrap" id="toc-processo-bootstrap" class="nav-link" data-scroll-target="#processo-bootstrap"><span class="header-section-number">22.2.2</span> Processo Bootstrap</a></li>
+  <li><a href="#resultados-1" id="toc-resultados-1" class="nav-link" data-scroll-target="#resultados-1"><span class="header-section-number">22.2.3</span> Resultados</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#exemplo-32.10-bootstrap-para-raz%C3%A3o-de-m%C3%A9dias" id="toc-exemplo-32.10-bootstrap-para-razão-de-médias" class="nav-link" data-scroll-target="#exemplo-32.10-bootstrap-para-raz%C3%A3o-de-m%C3%A9dias"><span class="header-section-number">22.3</span> EXEMPLO 32.10: Bootstrap para Razão de Médias</a>
+  <ul class="collapse">
+<li><a href="#tempos-de-viagem-nova-york-vs-carolina-do-norte" id="toc-tempos-de-viagem-nova-york-vs-carolina-do-norte" class="nav-link" data-scroll-target="#tempos-de-viagem-nova-york-vs-carolina-do-norte"><span class="header-section-number">22.3.1</span> Tempos de Viagem: Nova York vs Carolina do Norte</a></li>
+  <li><a href="#resultados-2" id="toc-resultados-2" class="nav-link" data-scroll-target="#resultados-2"><span class="header-section-number">22.3.2</span> Resultados</a></li>
+  </ul>
+</li>
+  </ul>
+</li>
+  <li>
+<a href="#intervalos-de-confian%C3%A7a-bootstrap" id="toc-intervalos-de-confiança-bootstrap" class="nav-link" data-scroll-target="#intervalos-de-confian%C3%A7a-bootstrap"><span class="header-section-number">23</span> Intervalos de Confiança Bootstrap</a>
+  <ul>
+<li><a href="#intervalo-de-confian%C3%A7a-bootstrap-percent%C3%ADlico" id="toc-intervalo-de-confiança-bootstrap-percentílico" class="nav-link" data-scroll-target="#intervalo-de-confian%C3%A7a-bootstrap-percent%C3%ADlico"><span class="header-section-number">23.1</span> Intervalo de Confiança Bootstrap Percentílico</a></li>
+  <li><a href="#exemplo-32.11-ic-bootstrap---tempos-de-viagem-nc" id="toc-exemplo-32.11-ic-bootstrap---tempos-de-viagem-nc" class="nav-link" data-scroll-target="#exemplo-32.11-ic-bootstrap---tempos-de-viagem-nc"><span class="header-section-number">23.2</span> EXEMPLO 32.11: IC Bootstrap - Tempos de Viagem NC</a></li>
+  <li><a href="#exemplo-32.12-ic-bootstrap---raz%C3%A3o-de-m%C3%A9dias" id="toc-exemplo-32.12-ic-bootstrap---razão-de-médias" class="nav-link" data-scroll-target="#exemplo-32.12-ic-bootstrap---raz%C3%A3o-de-m%C3%A9dias"><span class="header-section-number">23.3</span> EXEMPLO 32.12: IC Bootstrap - Razão de Médias</a></li>
+  <li>
+<a href="#exemplo-32.13-bootstrap-para-m%C3%A9dia-e-mediana" id="toc-exemplo-32.13-bootstrap-para-média-e-mediana" class="nav-link" data-scroll-target="#exemplo-32.13-bootstrap-para-m%C3%A9dia-e-mediana"><span class="header-section-number">23.4</span> EXEMPLO 32.13: Bootstrap para Média e Mediana</a>
+  <ul class="collapse">
+<li><a href="#dados-produ%C3%A7%C3%A3o-de-%C3%B3leo-64-po%C3%A7os" id="toc-dados-produção-de-óleo-64-poços" class="nav-link" data-scroll-target="#dados-produ%C3%A7%C3%A3o-de-%C3%B3leo-64-po%C3%A7os"><span class="header-section-number">23.4.1</span> Dados: Produção de Óleo (64 poços)</a></li>
+  </ul>
+</li>
+  </ul>
+</li>
+  <li>
+<a href="#considera%C3%A7%C3%B5es-pr%C3%A1ticas" id="toc-considerações-práticas" class="nav-link" data-scroll-target="#considera%C3%A7%C3%B5es-pr%C3%A1ticas"><span class="header-section-number">24</span> Considerações Práticas</a>
+  <ul>
+<li><a href="#quando-usar-bootstrap" id="toc-quando-usar-bootstrap" class="nav-link" data-scroll-target="#quando-usar-bootstrap"><span class="header-section-number">24.1</span> Quando Usar Bootstrap</a></li>
+  <li><a href="#n%C3%BAmero-de-reamostras" id="toc-número-de-reamostras" class="nav-link" data-scroll-target="#n%C3%BAmero-de-reamostras"><span class="header-section-number">24.2</span> Número de Reamostras</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#exerc%C3%ADcios-aplicados" id="toc-exercícios-aplicados" class="nav-link" data-scroll-target="#exerc%C3%ADcios-aplicados"><span class="header-section-number">25</span> Exercícios Aplicados</a>
+  <ul>
+<li>
+<a href="#aplique-seu-conhecimento" id="toc-aplique-seu-conhecimento" class="nav-link" data-scroll-target="#aplique-seu-conhecimento"><span class="header-section-number">25.1</span> APLIQUE SEU CONHECIMENTO</a>
+  <ul class="collapse">
+<li><a href="#exerc%C3%ADcio-32.1-anota%C3%A7%C3%B5es-%C3%A0-m%C3%A3o-vs-laptop" id="toc-exercício-32.1-anotações-à-mão-vs-laptop" class="nav-link" data-scroll-target="#exerc%C3%ADcio-32.1-anota%C3%A7%C3%B5es-%C3%A0-m%C3%A3o-vs-laptop"><span class="header-section-number">25.1.1</span> Exercício 32.1: Anotações à Mão vs Laptop</a></li>
+  <li><a href="#exerc%C3%ADcio-32.2-crescimento-de-%C3%A1rvores-com-co%E2%82%82" id="toc-exercício-32.2-crescimento-de-árvores-com-co₂" class="nav-link" data-scroll-target="#exerc%C3%ADcio-32.2-crescimento-de-%C3%A1rvores-com-co%E2%82%82"><span class="header-section-number">25.1.2</span> Exercício 32.2: Crescimento de Árvores com CO₂</a></li>
+  <li><a href="#exerc%C3%ADcio-32.5-bootstrap---tempos-de-viagem-ny" id="toc-exercício-32.5-bootstrap---tempos-de-viagem-ny" class="nav-link" data-scroll-target="#exerc%C3%ADcio-32.5-bootstrap---tempos-de-viagem-ny"><span class="header-section-number">25.1.3</span> Exercício 32.5: Bootstrap - Tempos de Viagem NY</a></li>
+  <li><a href="#exerc%C3%ADcio-32.7-bootstrap---partindo-madeira" id="toc-exercício-32.7-bootstrap---partindo-madeira" class="nav-link" data-scroll-target="#exerc%C3%ADcio-32.7-bootstrap---partindo-madeira"><span class="header-section-number">25.1.4</span> Exercício 32.7: Bootstrap - Partindo Madeira</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#exerc%C3%ADcios-completos" id="toc-exercícios-completos" class="nav-link" data-scroll-target="#exerc%C3%ADcios-completos"><span class="header-section-number">25.2</span> EXERCÍCIOS COMPLETOS</a>
+  <ul class="collapse">
+<li><a href="#exerc%C3%ADcio-32.20-tecidos-que-n%C3%A3o-amarrotam" id="toc-exercício-32.20-tecidos-que-não-amarrotam" class="nav-link" data-scroll-target="#exerc%C3%ADcio-32.20-tecidos-que-n%C3%A3o-amarrotam"><span class="header-section-number">25.2.1</span> Exercício 32.20: Tecidos que Não Amarrotam</a></li>
+  <li><a href="#exerc%C3%ADcio-32.21-bons-odores-trazem-bons-neg%C3%B3cios" id="toc-exercício-32.21-bons-odores-trazem-bons-negócios" class="nav-link" data-scroll-target="#exerc%C3%ADcio-32.21-bons-odores-trazem-bons-neg%C3%B3cios"><span class="header-section-number">25.2.2</span> Exercício 32.21: Bons Odores Trazem Bons Negócios?</a></li>
+  <li><a href="#exerc%C3%ADcio-32.23-obesidade-na-adolesc%C3%AAncia" id="toc-exercício-32.23-obesidade-na-adolescência" class="nav-link" data-scroll-target="#exerc%C3%ADcio-32.23-obesidade-na-adolesc%C3%AAncia"><span class="header-section-number">25.2.3</span> Exercício 32.23: Obesidade na Adolescência</a></li>
+  <li><a href="#exerc%C3%ADcio-32.25-e.-coli-em-%C3%A1reas-de-banho" id="toc-exercício-32.25-e.-coli-em-áreas-de-banho" class="nav-link" data-scroll-target="#exerc%C3%ADcio-32.25-e.-coli-em-%C3%A1reas-de-banho"><span class="header-section-number">25.2.4</span> Exercício 32.25: E. coli em Áreas de Banho</a></li>
+  </ul>
+</li>
+  </ul>
+</li>
+  <li>
+<a href="#resumo-do-cap%C3%ADtulo" id="toc-resumo-do-capítulo" class="nav-link" data-scroll-target="#resumo-do-cap%C3%ADtulo"><span class="header-section-number">26</span> Resumo do Capítulo</a>
+  <ul>
+<li><a href="#testes-de-permuta%C3%A7%C3%A3o-2" id="toc-testes-de-permutação-2" class="nav-link" data-scroll-target="#testes-de-permuta%C3%A7%C3%A3o-2"><span class="header-section-number">26.1</span> Testes de Permutação</a></li>
+  <li><a href="#m%C3%A9todos-bootstrap-2" id="toc-métodos-bootstrap-2" class="nav-link" data-scroll-target="#m%C3%A9todos-bootstrap-2"><span class="header-section-number">26.2</span> Métodos Bootstrap</a></li>
+  <li><a href="#habilidades-desenvolvidas" id="toc-habilidades-desenvolvidas" class="nav-link" data-scroll-target="#habilidades-desenvolvidas"><span class="header-section-number">26.3</span> Habilidades Desenvolvidas</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#solu%C3%A7%C3%B5es-completas-dos-exerc%C3%ADcios-em-r" id="toc-soluções-completas-dos-exercícios-em-r" class="nav-link" data-scroll-target="#solu%C3%A7%C3%B5es-completas-dos-exerc%C3%ADcios-em-r"><span class="header-section-number">27</span> Soluções Completas dos Exercícios em R</a>
+  <ul>
+<li><a href="#exerc%C3%ADcio-32.1-anota%C3%A7%C3%B5es-%C3%A0-m%C3%A3o-vs-laptop---completo" id="toc-exercício-32.1-anotações-à-mão-vs-laptop---completo" class="nav-link" data-scroll-target="#exerc%C3%ADcio-32.1-anota%C3%A7%C3%B5es-%C3%A0-m%C3%A3o-vs-laptop---completo"><span class="header-section-number">27.1</span> Exercício 32.1: Anotações à Mão vs Laptop - COMPLETO</a></li>
+  <li><a href="#exerc%C3%ADcio-32.2-crescimento-mais-r%C3%A1pido-de-%C3%A1rvores-com-co%E2%82%82---completo" id="toc-exercício-32.2-crescimento-mais-rápido-de-árvores-com-co₂---completo" class="nav-link" data-scroll-target="#exerc%C3%ADcio-32.2-crescimento-mais-r%C3%A1pido-de-%C3%A1rvores-com-co%E2%82%82---completo"><span class="header-section-number">27.2</span> Exercício 32.2: Crescimento mais rápido de Árvores com CO₂ - COMPLETO</a></li>
+  <li><a href="#exerc%C3%ADcio-32.21-odores-em-restaurante---completo" id="toc-exercício-32.21-odores-em-restaurante---completo" class="nav-link" data-scroll-target="#exerc%C3%ADcio-32.21-odores-em-restaurante---completo"><span class="header-section-number">27.3</span> Exercício 32.21: Odores em Restaurante - COMPLETO</a></li>
+  <li><a href="#exerc%C3%ADcio-32.23-obesidade-na-adolesc%C3%AAncia---completo" id="toc-exercício-32.23-obesidade-na-adolescência---completo" class="nav-link" data-scroll-target="#exerc%C3%ADcio-32.23-obesidade-na-adolesc%C3%AAncia---completo"><span class="header-section-number">27.4</span> Exercício 32.23: Obesidade na Adolescência - COMPLETO</a></li>
+  <li><a href="#exerc%C3%ADcio-32.25-e.-coli-em-%C3%A1reas-de-banho---completo" id="toc-exercício-32.25-e.-coli-em-áreas-de-banho---completo" class="nav-link" data-scroll-target="#exerc%C3%ADcio-32.25-e.-coli-em-%C3%A1reas-de-banho---completo"><span class="header-section-number">27.5</span> Exercício 32.25: <em>E. coli</em> em áreas de banho - COMPLETO</a></li>
+  <li><a href="#scripts-adicionais" id="toc-scripts-adicionais" class="nav-link" data-scroll-target="#scripts-adicionais"><span class="header-section-number">27.6</span> Scripts Adicionais</a></li>
+  </ul>
+</li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title">
+<span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Introdução à Reamostragem</span>
+</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><section id="objetivos-de-aprendizagem" class="level2" data-number="18.1"><h2 data-number="18.1" class="anchored" data-anchor-id="objetivos-de-aprendizagem">
+<span class="header-section-number">18.1</span> Objetivos de Aprendizagem</h2>
+<p>Após leitura do capítulo, você será capaz de:</p>
+<ol type="1">
+<li><p><strong>Calcular</strong> a <strong>distribuição de permutação</strong> e o valor P associado para <strong>dados emparelhados ou não emparelhados</strong>, quando um <strong>número bem pequeno de sujeitos</strong> está associado a dois grupos de tratamento.</p></li>
+<li><p><strong>Usar programa</strong> para <strong>simular</strong> a distribuição de permutação para dados emparelhados ou não emparelhados, quando sujeitos estão associados a dois grupos de tratamento.</p></li>
+<li><p><strong>Usar programa</strong> para <strong>gerar muitas amostras bootstrap</strong> e usar a <strong>distribuição bootstrap</strong> para <strong>aproximar</strong> a <strong>distribuição amostral de uma estatística</strong>.</p></li>
+<li><p><strong>Calcular</strong> o <strong>intervalo de confiança bootstrap</strong> percentílico para o <strong>parâmetro</strong> correspondente a <strong>partir da distribuição bootstrap</strong> para uma estatística.</p></li>
+</ol></section><section id="reamostragem-testes-de-permutação-e-bootstrap" class="level2" data-number="18.2"><h2 data-number="18.2" class="anchored" data-anchor-id="reamostragem-testes-de-permutação-e-bootstrap">
+<span class="header-section-number">18.2</span> Reamostragem: Testes de Permutação e Bootstrap</h2>
+<p><u><strong>Distribuições amostrais</strong></u> fornecem uma importante ferramenta para a <strong>inferência estatística</strong>.</p>
+<p>Elas respondem à questão: <strong>“O que aconteceria em muitas amostras?”</strong></p>
+<p>Quando nossos dados são <u><strong>medidas quantitativas</strong></u> de <u><strong>uma única população</strong></u>, respondemos a essa pergunta <u><strong>supondo</strong></u>, primeiro, que nossos <strong>dados</strong> sejam <u><strong>umaamostra aleatória simples</strong></u> de uma <u><strong>população Normal</strong></u>.</p>
+<p>Como nossas <u><strong>inferências</strong></u> são sobre <u><strong>médias</strong></u>, elas se baseiam na <u><strong>distribuição amostral</strong></u> de <span class="math inline">\(\bar{x}\)</span>, e, para a construção dessa distribuição amostral, consideramos nossos dados como <strong><em>uma das muitas possíveis amostras que poderíamos ter obtido dessa população Normal</em></strong>.</p>
+<p>Sob esse conjunto de suposições, existem <u><strong><em>fórmulas simples</em></strong></u> para <u><strong>inferência</strong></u> com base na <strong>distribuição t</strong>.</p>
+<p>Essas inferências são úteis na prática porque são <u><strong>robustas</strong></u>, embora <u><strong><em>não possamos usar esses métodos para dados fortemente assimétricos</em></strong></u>, <u><strong><em>a menos que as amostras sejam grandes</em></strong></u>.</p>
+<p><u><strong><em>Fortes valores atípicos também</em></strong></u> podem afetar nossas conclusões.</p>
+<section id="métodos-de-reamostragem" class="level3" data-number="18.2.1"><h3 data-number="18.2.1" class="anchored" data-anchor-id="métodos-de-reamostragem">
+<span class="header-section-number">18.2.1</span> Métodos de Reamostragem</h3>
+<p>As técnicas deste capítulo nos permitem enfraquecer algumas dessas suposições.</p>
+<p>Os <strong>testes de permutação</strong> e o <strong>bootstrap</strong> são exemplos de <strong>métodos de reamostragem</strong>.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Reamostragem
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Na <strong>reamostragem</strong>, usamos as observações individuais em uma amostra para a <u><strong>construção</strong></u> da <u><strong>distribuição amostral</strong></u> relevante.</p>
+</div>
+</div>
+<p><u><strong>Sem outras suposições sobre as populações das quais os dados são extraídos</strong></u>, a construção dessas distribuições amostrais é específica para os dados amostrais observados e <u><strong><em>requer um programa para automatizar a computação exigida</em></strong></u> em todos os exemplos, exceto os menores.</p>
+<section id="testes-de-permutação" class="level4" data-number="18.2.1.1"><h4 data-number="18.2.1.1" class="anchored" data-anchor-id="testes-de-permutação">
+<span class="header-section-number">18.2.1.1</span> Testes de Permutação</h4>
+<p>Os <strong>testes de permutação</strong> são úteis para os experimentos planejados nos quais os tratamentos são associados aleatoriamente aos sujeitos.</p>
+<p>Eles usam a aleatorização no planejamento do experimento para a <u><strong><em>construção da distribuição amostral</em></strong></u>, e essas distribuições amostrais são <u><strong>válidas</strong></u>:</p>
+<ul>
+<li>
+<u><strong>Sem</strong></u> a <u><strong>suposição</strong></u> de <u><strong>distribuições Normais</strong></u>
+</li>
+<li>Para <u><strong>quaisquer tamanhos amostrais</strong></u>
+</li>
+</ul>
+<p>No entanto, <u><strong><em>não há mais fórmulas simples para a estatística de teste</em></strong></u>, e é necessário um programa, exceto em situações com tamanhos amostrais muito pequenos.</p>
+</section><section id="métodos-bootstrap" class="level4" data-number="18.2.1.2"><h4 data-number="18.2.1.2" class="anchored" data-anchor-id="métodos-bootstrap">
+<span class="header-section-number">18.2.1.2</span> Métodos Bootstrap</h4>
+<p>Os <strong>métodos bootstrap</strong> também nos <u><strong><em>permitem enfraquecer algumas das suposições tradicionais</em></strong></u>, e podemos fazer <u><strong>inferências válidas</strong></u> sobre a <strong>população</strong> da qual os <u><strong><em>dados são uma amostra aleatória</em></strong></u>, <u><strong><em>independentemente</em></strong></u> da <strong><em>forma</em></strong> da <u><strong><em>distribuição populacional</em></strong></u>.</p>
+<p>Além disso, o <u><strong><em>bootstrap</em></strong></u> é um <u><strong><em>método muito geral</em></strong></u> que nos permite fazer <u><strong>inferências válidas</strong></u> sobre <strong>parâmetros <u>diferentes</u> de médias</strong>, sem modificações na técnica básica do bootstrap.</p>
+</section></section></section><section id="aleatorização-em-experimentos" class="level1" data-number="19"><h1 data-number="19">
+<span class="header-section-number">19</span> Aleatorização em Experimentos</h1>
+<section id="experimento-comparativo-aleatorizado---eca" class="level2" data-number="19.1"><h2 data-number="19.1" class="anchored" data-anchor-id="experimento-comparativo-aleatorizado---eca">
+<span class="header-section-number">19.1</span> Experimento Comparativo Aleatorizado - ECA</h2>
+<p>Um experimento que usa tanto a comparação de dois ou mais tratamentos quanto a associação aleatória dos sujeitos aos tratamentos é chamado de <strong>experimento comparativo aleatorizado</strong>.</p>
+<div class="callout callout-style-simple callout-important">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><u><strong>Não fazemos quaisquer suposições</strong></u> sobre como os sujeitos foram selecionados para participar do experimento e apenas usamos a <u><strong>aleatorização</strong></u> <strong>na associação dos sujeitos aos tratamentos</strong>.</p>
+</div>
+</div>
+</div>
+<p>Embora <strong><em>não tenhamos feito quaisquer suposições</em></strong>, <strong><em>exceto</em></strong> a de <strong><em>associação aleatória dos sujeitos aos tratamentos</em></strong>, nossas <u><strong>inferências</strong></u> exigem <u><strong><em>uma suposição adicional</em></strong></u>:</p>
+<div class="callout callout-style-simple callout-warning">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Se não houver nenhuma diferença nos efeitos do novo tratamento e do placebo sobre a perda de peso</strong>, então o peso perdido por qualquer sujeito deve ser o mesmo, independentemente de o sujeito ter recebido o novo tratamento ou um placebo.</p>
+</div>
+</div>
+</div>
+<p>Enfatizamos que, se os efeitos do novo tratamento e do placebo sobre a perda de peso não diferissem, teríamos observado essas mesmas perdas de peso, independentemente de quem foi associado ao tratamento e quem foi associado ao placebo. Em particular, <u><strong>supomos</strong></u> que as <strong>distribuições das perdas de peso para os dois grupos sejam idênticas</strong>.</p>
+</section><section id="exemplo-32.1-um-planejamento-completamente-aleatorizado" class="level2" data-number="19.2"><h2 data-number="19.2" class="anchored" data-anchor-id="exemplo-32.1-um-planejamento-completamente-aleatorizado">
+<span class="header-section-number">19.2</span> EXEMPLO 32.1: Um Planejamento Completamente Aleatorizado</h2>
+<section id="descrição-do-experimento" class="level3" data-number="19.2.1"><h3 data-number="19.2.1" class="anchored" data-anchor-id="descrição-do-experimento">
+<span class="header-section-number">19.2.1</span> Descrição do Experimento</h3>
+<p>Suponha que você tenha: - <strong>Três homens</strong>: Ari, Luís e Troy - <strong>Três mulheres</strong>: Ana, Deb e Hui</p>
+<p><strong>Objetivo</strong>: Três dos seis sujeitos devem ser associados de maneira completamente aleatória a um novo tratamento experimental de perda de peso e três a um placebo.</p>
+</section><section id="todas-as-possíveis-associações" class="level3" data-number="19.2.2"><h3 data-number="19.2.2" class="anchored" data-anchor-id="todas-as-possíveis-associações">
+<span class="header-section-number">19.2.2</span> Todas as Possíveis Associações</h3>
+<p>Existem 20 maneiras possíveis de seleção de três desses sujeitos para o grupo de tratamento:</p>
+<p>Com um planejamento completamente aleatorizado, cada um desses 20 possíveis grupos de tratamento é igualmente provável; assim, cada um tem probabilidade de <strong>1/20</strong> ser o real grupo associado ao tratamento.</p>
+</section><section id="dados-observados" class="level3" data-number="19.2.3"><h3 data-number="19.2.3" class="anchored" data-anchor-id="dados-observados">
+<span class="header-section-number">19.2.3</span> Dados Observados</h3>
+<p>Eis as quantidades de perda de peso (em libras) para os sujeitos:</p>
+<table class="caption-top table">
+<thead><tr class="header">
+<th>Sujeito</th>
+<th>Ari</th>
+<th>Luis</th>
+<th>Troy</th>
+<th>Ana</th>
+<th>Deb</th>
+<th>Hui</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td>Perda de peso (libras)</td>
+<td>2</td>
+<td>15</td>
+<td>8</td>
+<td>1</td>
+<td>12</td>
+<td>9</td>
+</tr></tbody>
+</table>
+<div class="cell" data-layout-align="center">
+<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r exemplo-32-1-dados}</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Dados do Exemplo 32.1</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>sujeitos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Ari"</span>, <span class="st">"Luis"</span>, <span class="st">"Troy"</span>, <span class="st">"Ana"</span>, <span class="st">"Deb"</span>, <span class="st">"Hui"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>perda_peso <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">15</span>, <span class="dv">8</span>, <span class="dv">1</span>, <span class="dv">12</span>, <span class="dv">9</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>sexo <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"M"</span>, <span class="st">"M"</span>, <span class="st">"M"</span>, <span class="st">"F"</span>, <span class="st">"F"</span>, <span class="st">"F"</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>dados_perda <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">Sujeito =</span> sujeitos,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">Perda_Peso =</span> perda_peso,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">Sexo =</span> sexo</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(dados_perda, <span class="at">caption =</span> <span class="st">"Perda de peso (libras) por sujeito"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>))</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div class="cell-output-display">
+<table class="table table-striped table-hover caption-top table-sm small">
+<caption>Perda de peso (libras) por sujeito</caption>
+<thead><tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Sujeito</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Perda_Peso</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Sexo</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Ari</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: left;">M</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Luis</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: left;">M</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Troy</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: left;">M</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ana</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">F</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Deb</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: left;">F</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hui</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: left;">F</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section><section id="suposição-fundamental" class="level3" data-number="19.2.4"><h3 data-number="19.2.4" class="anchored" data-anchor-id="suposição-fundamental">
+<span class="header-section-number">19.2.4</span> Suposição Fundamental</h3>
+<p>Embora não tenhamos feito quaisquer suposições, exceto a de associação aleatória dos sujeitos aos tratamentos, nossas inferências exigem uma suposição adicional:</p>
+<div class="callout callout-style-simple callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Hipótese Nula
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Se não houver nenhuma diferença nos efeitos do novo tratamento e do placebo sobre a perda de peso</strong>, então o peso perdido por qualquer sujeito deve ser o mesmo, independentemente de o sujeito ter recebido o novo tratamento ou um placebo.</p>
+</div>
+</div>
+<p>Enfatizamos que, se os efeitos do novo tratamento e do placebo sobre a perda de peso não diferissem, teríamos observado essas mesmas perdas de peso, independentemente de quem foi associado ao tratamento e quem foi associado ao placebo. Em particular, supomos que as <strong>distribuições das perdas de peso para os dois grupos sejam idênticas</strong>.</p>
+</section></section><section id="exemplo-32.2-distribuição-de-permutação" class="level2" data-number="19.3"><h2 data-number="19.3" class="anchored" data-anchor-id="exemplo-32.2-distribuição-de-permutação">
+<span class="header-section-number">19.3</span> EXEMPLO 32.2: Distribuição de Permutação</h2>
+<p>Usaremos a <strong>perda média de peso</strong> dos que receberam o tratamento menos a perda média de peso dos que receberam o placebo para o teste da hipótese nula.</p>
+<section id="cálculo-da-diferença-nas-médias" class="level3" data-number="19.3.1"><h3 data-number="19.3.1" class="anchored" data-anchor-id="cálculo-da-diferença-nas-médias">
+<span class="header-section-number">19.3.1</span> Cálculo da Diferença nas Médias</h3>
+<p>Se não há diferença entre o novo tratamento e o placebo, a diferença observada nas médias é o resultado do “acaso da extração” – ou seja, quais três sujeitos foram, por acaso, associados ao grupo de tratamento.</p>
+<p><strong>Exemplo de cálculo:</strong></p>
+<p>Se Ari, Luís e Troy são associados ao grupo de tratamento:</p>
+<p>- Perda média tratamento: <span class="math inline">\((2 + 15 + 8)/3 = 8,33\)</span> libras</p>
+<p>- Perda média placebo (Ana, Deb, Hui): <span class="math inline">\((1 + 12 + 9)/3 = 7,33\)</span> libras<br>
+- <strong>Diferença</strong>: <span class="math inline">\(8,33 - 7,33 = 1,00\)</span> libra</p>
+</section><section id="distribuição-de-permutação" class="level3" data-number="19.3.2"><h3 data-number="19.3.2" class="anchored" data-anchor-id="distribuição-de-permutação">
+<span class="header-section-number">19.3.2</span> Distribuição de Permutação</h3>
+<p>Ordenando as diferenças nas perdas médias de peso da menor para a maior, com probabilidade <span class="math inline">\(1/20 = 0,05\)</span> para cada:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+</colgroup>
+<thead><tr class="header">
+<th>Perda de peso</th>
+<th>-8,33</th>
+<th>-7,67</th>
+<th>-5,67</th>
+<th>-3,67</th>
+<th>-3,00</th>
+<th>-1,67</th>
+<th>-1,00</th>
+<th>-0,33</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td>Probabilidade</td>
+<td>0,05</td>
+<td>0,05</td>
+<td>0,05</td>
+<td>0,10</td>
+<td>0,05</td>
+<td>0,05</td>
+<td>0,10</td>
+<td>0,05</td>
+</tr></tbody>
+</table>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 9%">
+</colgroup>
+<thead><tr class="header">
+<th>Perda de peso</th>
+<th>0,33</th>
+<th>1,00</th>
+<th>1,67</th>
+<th>3,00</th>
+<th>3,67</th>
+<th>5,67</th>
+<th>7,67</th>
+<th>8,33</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td>Probabilidade</td>
+<td>0,05</td>
+<td>0,10</td>
+<td>0,05</td>
+<td>0,05</td>
+<td>0,10</td>
+<td>0,05</td>
+<td>0,05</td>
+<td>0,05</td>
+</tr></tbody>
+</table>
+<div class="cell" data-layout-align="center">
+<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r exemplo-32-2-permutacao}</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcular todas as 20 permutações possíveis</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>perda_peso <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">15</span>, <span class="dv">8</span>, <span class="dv">1</span>, <span class="dv">12</span>, <span class="dv">9</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Gerar todas as combinações de 3 sujeitos para tratamento</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>todas_combinacoes <span class="ot">&lt;-</span> <span class="fu">combn</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">3</span>)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>n_permutacoes <span class="ot">&lt;-</span> <span class="fu">ncol</span>(todas_combinacoes)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcular diferença de médias para cada permutação</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>diferencas <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n_permutacoes)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n_permutacoes) {</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  tratamento_idx <span class="ot">&lt;-</span> todas_combinacoes[, i]</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  controle_idx <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, tratamento_idx)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  media_tratamento <span class="ot">&lt;-</span> <span class="fu">mean</span>(perda_peso[tratamento_idx])</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  media_controle <span class="ot">&lt;-</span> <span class="fu">mean</span>(perda_peso[controle_idx])</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  diferencas[i] <span class="ot">&lt;-</span> media_tratamento <span class="sc">-</span> media_controle</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar tabela de distribuição de permutação</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>dist_permutacao <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>  <span class="at">Diferenca =</span> <span class="fu">round</span>(diferencas, <span class="dv">2</span>)</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Diferenca) <span class="sc">%&gt;%</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Frequencia =</span> <span class="fu">n</span>(), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Probabilidade =</span> Frequencia <span class="sc">/</span> n_permutacoes) <span class="sc">%&gt;%</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Diferenca)</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(dist_permutacao, </span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>      <span class="at">caption =</span> <span class="st">"Distribuição de Permutação Completa"</span>,</span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>      <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Diferença nas Médias"</span>, <span class="st">"Frequência"</span>, <span class="st">"Probabilidade"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>))</span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Gráfico de pontos da distribuição</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="at">Diferenca =</span> diferencas), <span class="fu">aes</span>(<span class="at">x =</span> Diferenca)) <span class="sc">+</span></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_dotplot</span>(<span class="at">binwidth =</span> <span class="fl">0.5</span>, <span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fl">3.67</span>, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribuição de Permutação - Diferença nas Médias"</span>,</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Linha vermelha: diferença observada (Troy, Deb, Hui no tratamento)"</span>,</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Diferença nas perdas médias de peso (libras)"</span>,</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Densidade"</span></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcular valor P para diferença observada de 3.67</span></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a>diferenca_observada <span class="ot">&lt;-</span> <span class="fl">3.67</span></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>valor_p <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">abs</span>(diferencas) <span class="sc">&gt;=</span> <span class="fu">abs</span>(diferenca_observada))</span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Diferença observada:"</span>, diferenca_observada, <span class="st">"libras"</span>)</span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Valor P (bilateral):"</span>, valor_p)</span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div class="cell-output-display">
+<table class="table table-striped table-hover caption-top table-sm small">
+<caption>Distribuição de Permutação Completa</caption>
+<thead><tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">Diferença nas Médias</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Frequência</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Probabilidade</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">-8.33</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.05</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">-7.67</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.05</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">-5.67</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.05</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">-3.67</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">-3.00</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.05</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">-1.67</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.05</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">-1.00</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.10</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">-0.33</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.05</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">0.33</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.05</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1.00</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1.67</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.05</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">3.00</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.05</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">3.67</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.10</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">5.67</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.05</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">7.67</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.05</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">8.33</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.05</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Diferença observada: 3.67 libras
+Valor P (bilateral): 0.3</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="cap32-Reamostragem-TestesPermutacao-Bootstrap-v2_files/figure-html/exemplo-32-2-permutacao-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="interpretação" class="level3" data-number="19.3.3"><h3 data-number="19.3.3" class="anchored" data-anchor-id="interpretação">
+<span class="header-section-number">19.3.3</span> Interpretação</h3>
+<p>O que concluiríamos se Troy, Deb e Hui fossem destinados ao tratamento? A diferença seria 3,67 libras.</p>
+<p>A chance de observar uma diferença tão grande quanto, ou maior que 3,67, é <strong>0,25</strong> (valor P).</p>
+<div class="callout callout-style-simple callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Interpretação do Valor P
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong><em>Um efeito que tem 0,25 de probabilidade de ocorrer por acaso</em></strong> <u><strong>não é</strong></u> <strong>considerado estatisticamente significante</strong>.</p>
+<p>Os tamanhos amostrais são muito pequenos para que todos os dados, exceto os mais extremos, alcancem significância estatística.</p>
+</div>
+</div>
+</section></section></section><section id="testes-de-permutação-1" class="level1" data-number="20"><h1 data-number="20">
+<span class="header-section-number">20</span> Testes de Permutação</h1>
+<section id="suposições-para-um-teste-de-permutação-simples" class="level2" data-number="20.1"><h2 data-number="20.1" class="anchored" data-anchor-id="suposições-para-um-teste-de-permutação-simples">
+<span class="header-section-number">20.1</span> Suposições para um Teste de Permutação Simples</h2>
+<ol type="1">
+<li><p>Os <strong>tratamentos são associados às unidades experimentais</strong> com base em um <strong>planejamento aleatorizado</strong>. O método de aleatorização é importante quando avaliamos a significância do resultado.</p></li>
+<li><p>Testamos a <strong>hipótese nula de nenhuma diferença no efeito dos tratamentos</strong> sobre uma resposta.</p></li>
+<li><p>Se não há diferença nos efeitos dos tratamentos, então a <strong>resposta medida para uma unidade será a mesma</strong>, independentemente do tratamento recebido.</p></li>
+</ol></section><section id="procedimento-de-teste-de-permutação-simples" class="level2" data-number="20.2"><h2 data-number="20.2" class="anchored" data-anchor-id="procedimento-de-teste-de-permutação-simples">
+<span class="header-section-number">20.2</span> Procedimento de Teste de Permutação Simples</h2>
+<p>Para realizar testes de permutação da hipótese nula de nenhuma diferença nos efeitos dos tratamentos:</p>
+<ol type="1">
+<li><p><strong>Determine a probabilidade</strong> de todas as possíveis associações dos tratamentos às unidades experimentais.</p></li>
+<li><p>Para cada associação possível, <strong>calcule o valor da estatística</strong> sob a hipótese nula.</p></li>
+<li><p>A probabilidade de cada possível associação e o valor da estatística para aquela associação é a <strong>distribuição de permutação</strong> da estatística sob a hipótese nula.</p></li>
+<li><p>Essa distribuição de permutação <strong>determina o valor P</strong> dos dados, resultante da associação realmente obtida.</p></li>
+</ol></section><section id="exemplo-32.3-teste-de-permutação-para-dados-emparelhados" class="level2" data-number="20.3"><h2 data-number="20.3" class="anchored" data-anchor-id="exemplo-32.3-teste-de-permutação-para-dados-emparelhados">
+<span class="header-section-number">20.3</span> EXEMPLO 32.3: Teste de Permutação para Dados Emparelhados</h2>
+<section id="contexto-repelentes-de-insetos" class="level3" data-number="20.3.1"><h3 data-number="20.3.1" class="anchored" data-anchor-id="contexto-repelentes-de-insetos">
+<span class="header-section-number">20.3.1</span> Contexto: Repelentes de Insetos</h3>
+<p>Os voluntários deixam seus braços na gaiola por cinco minutos.</p>
+<p>Opracionalização do conceito de <u><strong>falha</strong></u>: considerase que o repelente <u><strong><em>falhou</em></strong></u> se um voluntário é picado duas ou mais vezes durante um período de cinco minutos, ou pelo menos uma vez nos períodos de cinco minutos durante duas sessões consecutivas de uma hora.</p>
+<p>A <strong>variável resposta</strong> é o <u><em>número</em></u> <em>de sessões de uma hora até que um repelente falhe</em>.</p>
+<p><strong>Pergunta de pesquisa</strong>: Qual repelente é mais eficaz: DEET (15%) ou óleo de eucalipto-limão?</p>
+<p><strong>Planejamento experimental:</strong></p>
+<p>- 4 voluntários (Erin, Raj, Todd e Wanda)</p>
+<p>- Cada voluntário recebe um repelente no braço esquerdo e outro no direito</p>
+<p>- Aleatorização determina qual braço recebe qual repelente</p>
+<p>- Resposta: número de horas até a falha do repelente</p>
+<p><strong>Dados coletados:</strong></p>
+<p>Os quatro voluntários são Erin, Raj, Todd e Wanda. Eis os números de horas até a falha para os dois repelentes.</p>
+<table class="caption-top table">
+<thead><tr class="header">
+<th>Sujeito</th>
+<th>Erin</th>
+<th>Raj</th>
+<th>Todd</th>
+<th>Wanda</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>DEET</td>
+<td>5</td>
+<td>7</td>
+<td>4</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td>Óleo de eucalipto-limão</td>
+<td>8</td>
+<td>7</td>
+<td>6</td>
+<td>7</td>
+</tr>
+<tr class="odd">
+<td>Diferença (DEET - Óleo)</td>
+<td>-3</td>
+<td>0</td>
+<td>-2</td>
+<td>-3</td>
+</tr>
+</tbody>
+</table>
+<div class="cell" data-layout-align="center">
+<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r exemplo-32-3-dados}</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Dados do Exemplo 32.3 - Repelentes de insetos</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>repelentes <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">Sujeito =</span> <span class="fu">c</span>(<span class="st">"Erin"</span>, <span class="st">"Raj"</span>, <span class="st">"Todd"</span>, <span class="st">"Wanda"</span>),</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">DEET =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">4</span>, <span class="dv">4</span>),</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">Oleo_Eucalipto =</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="dv">7</span>, <span class="dv">6</span>, <span class="dv">7</span>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Diferenca =</span> DEET <span class="sc">-</span> Oleo_Eucalipto)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(repelentes, </span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>      <span class="at">caption =</span> <span class="st">"Horas até falha do repelente por sujeito"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>))</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualização dos dados emparelhados</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>repelentes_long <span class="ot">&lt;-</span> repelentes <span class="sc">%&gt;%</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Sujeito, DEET, Oleo_Eucalipto) <span class="sc">%&gt;%</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(DEET, Oleo_Eucalipto), </span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"Repelente"</span>, </span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"Horas"</span>)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(repelentes_long, <span class="fu">aes</span>(<span class="at">x =</span> Repelente, <span class="at">y =</span> Horas, <span class="at">group =</span> Sujeito)) <span class="sc">+</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"gray60"</span>) <span class="sc">+</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> Repelente), <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"DEET"</span> <span class="ot">=</span> <span class="st">"darkblue"</span>, <span class="st">"Oleo_Eucalipto"</span> <span class="ot">=</span> <span class="st">"darkgreen"</span>)) <span class="sc">+</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Comparação de Repelentes - Dados Emparelhados"</span>,</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Linhas conectam medidas do mesmo sujeito"</span>,</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Repelente"</span>,</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Horas até falha"</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div class="cell-output-display">
+<table class="table table-striped table-hover caption-top table-sm small">
+<caption>Horas até falha do repelente por sujeito</caption>
+<thead><tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Sujeito</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">DEET</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Oleo_Eucalipto</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">Diferenca</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Erin</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">-3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Raj</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Todd</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">-2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Wanda</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">-3</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="cap32-Reamostragem-TestesPermutacao-Bootstrap-v2_files/figure-html/exemplo-32-3-dados-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="análise-de-permutação" class="level3" data-number="20.3.2"><h3 data-number="20.3.2" class="anchored" data-anchor-id="análise-de-permutação">
+<span class="header-section-number">20.3.2</span> Análise de Permutação</h3>
+<p>Este é um <strong>planejamento de dados emparelhados</strong>, com as duas observações para cada sujeito formando os pares.</p>
+<p><strong>Hipótese Nula</strong>: Se não houvesse diferença nos efeitos dos dois tratamentos, teríamos obtido as mesmas respostas independentemente de qual braço recebeu qual repelente.</p>
+<p>Para cada sujeito, há <strong>duas possíveis maneiras</strong> de associar os repelentes aos braços (esquerdo/direito). Com 4 sujeitos, temos <span class="math inline">\(2^4 = 16\)</span> possíveis associações.</p>
+</section><section id="distribuição-de-permutação-1" class="level3" data-number="20.3.3"><h3 data-number="20.3.3" class="anchored" data-anchor-id="distribuição-de-permutação-1">
+<span class="header-section-number">20.3.3</span> Distribuição de Permutação</h3>
+<p>Considerando as magnitudes das diferenças como números fixos (0, 2, 3, 3), com os sinais determinados pela aleatorização:</p>
+<table class="caption-top table">
+<thead><tr class="header">
+<th>Diferença média</th>
+<th>-2,0</th>
+<th>-1,0</th>
+<th>-0,5</th>
+<th>0,5</th>
+<th>1,0</th>
+<th>2,0</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td>Probabilidade</td>
+<td>0,125</td>
+<td>0,125</td>
+<td>0,250</td>
+<td>0,250</td>
+<td>0,125</td>
+<td>0,125</td>
+</tr></tbody>
+</table></section><section id="conclusão" class="level3" data-number="20.3.4"><h3 data-number="20.3.4" class="anchored" data-anchor-id="conclusão">
+<span class="header-section-number">20.3.4</span> Conclusão</h3>
+<p>A diferença média observada foi <strong>-2,0</strong>.</p>
+<p><strong>Valor P</strong> (bilateral): Probabilidade de obter valores tão extremos quanto ±2,0 = <span class="math inline">\(0,125 + 0,125 = 0,250\)</span></p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Interpretação
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Um valor P de 0,250 <strong>não é considerado estatisticamente significante</strong>. Não há evidência suficiente de diferença entre os dois repelentes.</p>
+<p>Note que com apenas 4 sujeitos, não é possível demonstrar significância estatística no nível de 0,1, mesmo com o resultado mais extremo possível.</p>
+</div>
+</div>
+</section></section></section><section id="testes-de-permutação-com-programa" class="level1" data-number="21"><h1 data-number="21">
+<span class="header-section-number">21</span> Testes de Permutação com Programa</h1>
+<p>Para amostras maiores, o número de permutações possíveis cresce rapidamente, tornando impraticável enumerar todas. Usamos <strong>simulação</strong> para aproximar a distribuição de permutação.</p>
+<section id="exemplo-32.4-perda-de-peso-com-programa" class="level2" data-number="21.1"><h2 data-number="21.1" class="anchored" data-anchor-id="exemplo-32.4-perda-de-peso-com-programa">
+<span class="header-section-number">21.1</span> EXEMPLO 32.4: Perda de Peso com Programa</h2>
+<p>Usando os mesmos dados do Exemplo 32.1, mas agora com <strong>10.000 permutações simuladas</strong>:</p>
+<ul>
+<li>A distribuição simulada concorda bem com a distribuição exata (20 permutações)</li>
+<li>Valor P empírico: <strong>0,2537</strong> (muito próximo do valor teórico de 0,25)</li>
+<li>Barras sombreadas incluem diferenças ≥ 3,67</li>
+</ul>
+<div class="callout callout-style-simple callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Número de Simulações
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>1.000 simulações</strong> geralmente são suficientes para a maioria dos propósitos. Se maior precisão for necessária, use mais simulações (e.g., 10.000).</p>
+<p><strong>100 simulações</strong> tendem a ser muito poucas, produzindo resultados imprecisos que variam consideravelmente entre simulações.</p>
+</div>
+</div>
+</section><section id="exemplo-32.6-dor-compartilhada-e-vínculo" class="level2" data-number="21.2"><h2 data-number="21.2" class="anchored" data-anchor-id="exemplo-32.6-dor-compartilhada-e-vínculo">
+<span class="header-section-number">21.2</span> EXEMPLO 32.6: Dor Compartilhada e Vínculo</h2>
+<section id="contexto-da-pesquisa" class="level3" data-number="21.2.1"><h3 data-number="21.2.1" class="anchored" data-anchor-id="contexto-da-pesquisa">
+<span class="header-section-number">21.2.1</span> Contexto da Pesquisa</h3>
+<p><strong>Pergunta</strong>: O compartilhamento de uma experiência dolorosa em pequenos grupos leva a maior vínculo entre os membros?</p>
+<p><strong>Participantes</strong>: 54 estudantes universitários em South Wales</p>
+<p><strong>Grupos</strong>:</p>
+<p>- <strong>Grupo com dor</strong> (n=27): Submergir mãos em água gelada; agachamento contra parede</p>
+<p>- <strong>Grupo sem dor</strong> (n=27): Água à temperatura ambiente; equilíbrio em um pé</p>
+<p><strong>Medida</strong>: Escore de vínculo (média de 7 afirmações em escala de 1-5)</p>
+</section><section id="resultados" class="level3" data-number="21.2.2"><h3 data-number="21.2.2" class="anchored" data-anchor-id="resultados">
+<span class="header-section-number">21.2.2</span> Resultados</h3>
+<p><strong>Comparação de médias</strong>:</p>
+<p>- Diferença observada: 0,577</p>
+<p>- Valor P (10.000 permutações): <strong>0,0231</strong></p>
+<p>- Teste t de duas amostras: p = 0,0240</p>
+<p><strong>Comparação de medianas</strong> (mais robusta):</p>
+<p>- Diferença observada: 0,86</p>
+<p>- Valor P: <strong>0,0108</strong></p>
+<div class="callout callout-style-simple callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Escolha da Estatística
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A mediana é preferível quando há valores atípicos. Neste caso, o grupo da dor tinha dois valores atípicos baixos, tornando a comparação de medianas mais apropriada.</p>
+</div>
+</div>
+</section></section></section><section id="métodos-bootstrap-1" class="level1" data-number="22"><h1 data-number="22">
+<span class="header-section-number">22</span> Métodos Bootstrap</h1>
+<section id="conceitos-fundamentais" class="level2" data-number="22.1"><h2 data-number="22.1" class="anchored" data-anchor-id="conceitos-fundamentais">
+<span class="header-section-number">22.1</span> Conceitos Fundamentais</h2>
+<section id="amostragem-com-reposição" class="level3" data-number="22.1.1"><h3 data-number="22.1.1" class="anchored" data-anchor-id="amostragem-com-reposição">
+<span class="header-section-number">22.1.1</span> Amostragem com Reposição</h3>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Definição
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Para a <strong>amostragem com reposição</strong> de <strong><em>uma população</em></strong>, depois que uma observação é selecionada, <strong>retorne-a para a população</strong> antes que a próxima observação seja extraída. Assim, a <u><strong><em>mesma observação pode ser selecionada múltiplas vezes</em></strong></u>.</p>
+</div>
+</div>
+</section><section id="amostras-bootstrap" class="level3" data-number="22.1.2"><h3 data-number="22.1.2" class="anchored" data-anchor-id="amostras-bootstrap">
+<span class="header-section-number">22.1.2</span> Amostras Bootstrap</h3>
+<p><strong>Amostras bootstrap</strong> são geradas pela amostragem com reposição a partir de uma amostra real observada. Consideramos a amostra original como representante da população.</p>
+</section></section><section id="exemplo-32.9-distribuição-bootstrap-da-média" class="level2" data-number="22.2"><h2 data-number="22.2" class="anchored" data-anchor-id="exemplo-32.9-distribuição-bootstrap-da-média">
+<span class="header-section-number">22.2</span> EXEMPLO 32.9: Distribuição Bootstrap da Média</h2>
+<section id="dados-tempos-de-viagem-na-carolina-do-norte" class="level3" data-number="22.2.1"><h3 data-number="22.2.1" class="anchored" data-anchor-id="dados-tempos-de-viagem-na-carolina-do-norte">
+<span class="header-section-number">22.2.1</span> Dados: Tempos de Viagem na Carolina do Norte</h3>
+<p>15 trabalhadores, tempos em minutos.</p>
+<p>Média original: <strong>25,33 minutos</strong>.</p>
+</section><section id="processo-bootstrap" class="level3" data-number="22.2.2"><h3 data-number="22.2.2" class="anchored" data-anchor-id="processo-bootstrap">
+<span class="header-section-number">22.2.2</span> Processo Bootstrap</h3>
+<ol type="1">
+<li>Gerar 1.000 amostras bootstrap (amostragem com reposição dos 15 tempos)</li>
+<li>Calcular a média de cada amostra bootstrap</li>
+<li>A distribuição dessas 1.000 médias é a <strong>distribuição bootstrap</strong>
+</li>
+</ol></section><section id="resultados-1" class="level3" data-number="22.2.3"><h3 data-number="22.2.3" class="anchored" data-anchor-id="resultados-1">
+<span class="header-section-number">22.2.3</span> Resultados</h3>
+<p><strong>Distribuição bootstrap</strong>:</p>
+<p>- Média: 25,55 minutos</p>
+<p>- Desvio-padrão (erro-padrão bootstrap): 4,22 minutos</p>
+<p>- Forma: <strong><em>Aproximadamente Normal</em></strong> com <strong><em>leve assimetria à direita</em></strong></p>
+<p><strong>Comparação com teoria</strong>:</p>
+<p>- Erro-padrão teórico: <span class="math inline">\(s/\sqrt{n} = 16,969/\sqrt{15} = 4,38\)</span></p>
+<p>- <u><strong>Muito próximo</strong></u> do <strong><em>erro-padrão bootstrap</em></strong>!</p>
+<div class="cell" data-layout-align="center">
+<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r exemplo-32-9-bootstrap-media}</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Exemplo 32.9: Bootstrap para média</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>tempos_nc <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">8</span>, <span class="dv">10</span>, <span class="dv">12</span>, <span class="dv">15</span>, <span class="dv">15</span>, <span class="dv">20</span>, <span class="dv">20</span>, <span class="dv">25</span>, <span class="dv">30</span>, <span class="dv">30</span>, <span class="dv">35</span>, <span class="dv">40</span>, <span class="dv">40</span>, <span class="dv">70</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Estatísticas da amostra original</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>media_original <span class="ot">&lt;-</span> <span class="fu">mean</span>(tempos_nc)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>ep_teorico <span class="ot">&lt;-</span> <span class="fu">sd</span>(tempos_nc) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">length</span>(tempos_nc))</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Média original:"</span>, media_original, <span class="st">"minutos"</span>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Erro-padrão teórico:"</span>, ep_teorico)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co"># 1000 amostras bootstrap</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>n_boot <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2025</span>)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>medias_boot <span class="ot">&lt;-</span> <span class="fu">replicate</span>(n_boot, {</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  amostra_boot <span class="ot">&lt;-</span> <span class="fu">sample</span>(tempos_nc, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(amostra_boot)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Estatísticas da distribuição bootstrap</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>media_boot <span class="ot">&lt;-</span> <span class="fu">mean</span>(medias_boot)</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>ep_boot <span class="ot">&lt;-</span> <span class="fu">sd</span>(medias_boot)</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n\n</span><span class="st">Distribuição Bootstrap:"</span>)</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Média das médias bootstrap:"</span>, media_boot)</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Erro-padrão bootstrap:"</span>, ep_boot)</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualização</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="at">Media =</span> medias_boot), <span class="fu">aes</span>(<span class="at">x =</span> Media)) <span class="sc">+</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..), <span class="at">bins =</span> <span class="dv">30</span>, </span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> media_original, </span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> dnorm, </span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>                <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> media_boot, <span class="at">sd =</span> ep_boot),</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>                <span class="at">color =</span> <span class="st">"darkblue"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribuição Bootstrap da Média - Tempos NC"</span>,</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="fu">paste</span>(<span class="st">"n = 1000 amostras bootstrap | Linha vermelha = média original"</span>),</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Média Bootstrap (minutos)"</span>,</span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Densidade"</span></span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a><span class="co"># IC Bootstrap percentílico 95%</span></span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>ic_boot <span class="ot">&lt;-</span> <span class="fu">quantile</span>(medias_boot, <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n\n</span><span class="st">IC Bootstrap 95%: ["</span>, ic_boot[<span class="dv">1</span>], <span class="st">";"</span>, ic_boot[<span class="dv">2</span>], <span class="st">"]"</span>)</span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a><span class="co"># Comparar com IC t</span></span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>ic_t <span class="ot">&lt;-</span> <span class="fu">t.test</span>(tempos_nc)<span class="sc">$</span>conf.int</span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">IC t 95%: ["</span>, ic_t[<span class="dv">1</span>], <span class="st">";"</span>, ic_t[<span class="dv">2</span>], <span class="st">"]"</span>)</span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>Média original: 25 minutos
+Erro-padrão teórico: 4.341384
+
+Distribuição Bootstrap:
+Média das médias bootstrap: 24.89407
+Erro-padrão bootstrap: 4.28068
+
+IC Bootstrap 95%: [ 17.06667 ; 33.66667 ]
+IC t 95%: [ 15.68866 ; 34.31134 ]</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="cap32-Reamostragem-TestesPermutacao-Bootstrap-v2_files/figure-html/exemplo-32-9-bootstrap-media-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+</section></section><section id="exemplo-32.10-bootstrap-para-razão-de-médias" class="level2" data-number="22.3"><h2 data-number="22.3" class="anchored" data-anchor-id="exemplo-32.10-bootstrap-para-razão-de-médias">
+<span class="header-section-number">22.3</span> EXEMPLO 32.10: Bootstrap para Razão de Médias</h2>
+<section id="tempos-de-viagem-nova-york-vs-carolina-do-norte" class="level3" data-number="22.3.1"><h3 data-number="22.3.1" class="anchored" data-anchor-id="tempos-de-viagem-nova-york-vs-carolina-do-norte">
+<span class="header-section-number">22.3.1</span> Tempos de Viagem: Nova York vs Carolina do Norte</h3>
+<p><strong>Objetivo</strong>: Estimar a razão das médias populacionais (NY/CN)</p>
+<p><strong>Processo</strong>:</p>
+<p>1. Reamostrar independentemente de cada estado</p>
+<p>2. Calcular a razão das médias bootstrap para cada par de reamostras</p>
+<p>3. Repetir 1.000 vezes</p>
+</section><section id="resultados-2" class="level3" data-number="22.3.2"><h3 data-number="22.3.2" class="anchored" data-anchor-id="resultados-2">
+<span class="header-section-number">22.3.2</span> Resultados</h3>
+<ul>
+<li>Razão estimada: <span class="math inline">\(\bar{x}_{NY}/\bar{x}_{CN} = 1,31\)</span>
+</li>
+<li>Média das razões bootstrap: 1,34</li>
+<li>Desvio-padrão: 0,30</li>
+<li>Forma: <strong>Assimétrica à direita</strong> (não Normal)</li>
+</ul>
+<div class="callout callout-style-simple callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Vantagem do Bootstrap
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>O método bootstrap funciona mesmo quando <u><strong><em>não temos fórmulas para a distribuição amostral</em></strong></u> (como no caso da razão de médias).</p>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r exemplo-32-10-bootstrap-razao}</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Exemplo 32.10: Bootstrap para razão de médias</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>tempos_ny <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">12</span>, <span class="dv">15</span>, <span class="dv">15</span>, <span class="dv">20</span>, <span class="dv">20</span>, <span class="dv">30</span>, </span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>               <span class="dv">30</span>, <span class="dv">35</span>, <span class="dv">35</span>, <span class="dv">40</span>, <span class="dv">45</span>, <span class="dv">50</span>, <span class="dv">50</span>, <span class="dv">60</span>, <span class="dv">65</span>, <span class="dv">75</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>tempos_nc <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">8</span>, <span class="dv">10</span>, <span class="dv">12</span>, <span class="dv">15</span>, <span class="dv">15</span>, <span class="dv">20</span>, <span class="dv">20</span>, <span class="dv">25</span>, <span class="dv">30</span>, <span class="dv">30</span>, <span class="dv">35</span>, <span class="dv">40</span>, <span class="dv">40</span>, <span class="dv">70</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Razão observada</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>razao_obs <span class="ot">&lt;-</span> <span class="fu">mean</span>(tempos_ny) <span class="sc">/</span> <span class="fu">mean</span>(tempos_nc)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Razão observada (NY/NC):"</span>, razao_obs)</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Bootstrap</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>n_boot <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2025</span>)</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>razoes_boot <span class="ot">&lt;-</span> <span class="fu">replicate</span>(n_boot, {</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  boot_ny <span class="ot">&lt;-</span> <span class="fu">sample</span>(tempos_ny, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>  boot_nc <span class="ot">&lt;-</span> <span class="fu">sample</span>(tempos_nc, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(boot_ny) <span class="sc">/</span> <span class="fu">mean</span>(boot_nc)</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Estatísticas</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n\n</span><span class="st">Distribuição Bootstrap da Razão:"</span>)</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Média das razões bootstrap:"</span>, <span class="fu">mean</span>(razoes_boot))</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">DP das razões bootstrap:"</span>, <span class="fu">sd</span>(razoes_boot))</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualização</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="at">Razao =</span> razoes_boot), <span class="fu">aes</span>(<span class="at">x =</span> Razao)) <span class="sc">+</span></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> ..density..), <span class="at">bins =</span> <span class="dv">30</span>, </span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>                 <span class="at">fill =</span> <span class="st">"coral"</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> razao_obs, </span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>             <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Distribuição Bootstrap da Razão de Médias (NY/NC)"</span>,</span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>    <span class="at">subtitle =</span> <span class="st">"Assimétrica à direita - não Normal"</span>,</span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Razão Bootstrap"</span>,</span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Densidade"</span></span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a><span class="co"># IC Bootstrap 95%</span></span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>ic_razao <span class="ot">&lt;-</span> <span class="fu">quantile</span>(razoes_boot, <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n\n</span><span class="st">IC Bootstrap 95%: ["</span>, ic_razao[<span class="dv">1</span>], <span class="st">";"</span>, ic_razao[<span class="dv">2</span>], <span class="st">"]"</span>)</span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Interpretação: Tempo NY está entre"</span>, <span class="fu">round</span>(ic_razao[<span class="dv">1</span>]<span class="sc">*</span><span class="dv">100</span>), </span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>    <span class="st">"% e"</span>, <span class="fu">round</span>(ic_razao[<span class="dv">2</span>]<span class="sc">*</span><span class="dv">100</span>), <span class="st">"% do tempo NC"</span>)</span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>Razão observada (NY/NC): 1.274
+
+Distribuição Bootstrap da Razão:
+Média das razões bootstrap: 1.327598
+DP das razões bootstrap: 0.288651
+
+IC Bootstrap 95%: [ 0.8390431 ; 1.957784 ]
+Interpretação: Tempo NY está entre 84 % e 196 % do tempo NC</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="cap32-Reamostragem-TestesPermutacao-Bootstrap-v2_files/figure-html/exemplo-32-10-bootstrap-razao-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+</section></section></section><section id="intervalos-de-confiança-bootstrap" class="level1" data-number="23"><h1 data-number="23">
+<span class="header-section-number">23</span> Intervalos de Confiança Bootstrap</h1>
+<section id="intervalo-de-confiança-bootstrap-percentílico" class="level2" data-number="23.1"><h2 data-number="23.1" class="anchored" data-anchor-id="intervalo-de-confiança-bootstrap-percentílico">
+<span class="header-section-number">23.1</span> Intervalo de Confiança Bootstrap Percentílico</h2>
+<div class="callout callout-style-simple callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Método Percentílico
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Para um intervalo de confiança de <strong>95%</strong>, use os percentis <strong>2,5</strong> e <strong>97,5</strong> da distribuição bootstrap como pontos extremos.</p>
+<p>Para um intervalo de <strong>90%</strong>, use os percentis <strong>5</strong> e <strong>95</strong>.</p>
+</div>
+</div>
+</section><section id="exemplo-32.11-ic-bootstrap---tempos-de-viagem-nc" class="level2" data-number="23.2"><h2 data-number="23.2" class="anchored" data-anchor-id="exemplo-32.11-ic-bootstrap---tempos-de-viagem-nc">
+<span class="header-section-number">23.2</span> EXEMPLO 32.11: IC Bootstrap - Tempos de Viagem NC</h2>
+<p><strong>Dados</strong>: 15 tempos de viagem, 1.000 amostras bootstrap</p>
+<p><strong>Intervalo de confiança de 95%</strong>: - Bootstrap: [18,18; 34,13] minutos - Teste t: [15,94; 34,73] minutos</p>
+<p><strong>Observação</strong>: O intervalo bootstrap <strong>não está centrado</strong> na média amostral devido à ligeira assimetria da distribuição.</p>
+</section><section id="exemplo-32.12-ic-bootstrap---razão-de-médias" class="level2" data-number="23.3"><h2 data-number="23.3" class="anchored" data-anchor-id="exemplo-32.12-ic-bootstrap---razão-de-médias">
+<span class="header-section-number">23.3</span> EXEMPLO 32.12: IC Bootstrap - Razão de Médias</h2>
+<p><strong>Razão NY/CN</strong>: 1,31</p>
+<p><strong>Intervalo de confiança de 95%</strong>: [0,86; 2,03]</p>
+<p><strong>Interpretação</strong>: O tempo médio de viagem em Nova York é entre 86% e 203% do tempo na Carolina do Norte (ou seja, mais que 85% e menos que o dobro).</p>
+</section><section id="exemplo-32.13-bootstrap-para-média-e-mediana" class="level2" data-number="23.4"><h2 data-number="23.4" class="anchored" data-anchor-id="exemplo-32.13-bootstrap-para-média-e-mediana">
+<span class="header-section-number">23.4</span> EXEMPLO 32.13: Bootstrap para Média e Mediana</h2>
+<section id="dados-produção-de-óleo-64-poços" class="level3" data-number="23.4.1"><h3 data-number="23.4.1" class="anchored" data-anchor-id="dados-produção-de-óleo-64-poços">
+<span class="header-section-number">23.4.1</span> Dados: Produção de Óleo (64 poços)</h3>
+<p><strong>Para a média</strong>:</p>
+<p>- Intervalo bootstrap 95%: [39,24; 58,26] milhares de barris</p>
+<p>- Intervalo t: [38,20; 58,30] milhares de barris</p>
+<p>- Boa concordância devido ao <strong><em>grande tamanho amostral</em></strong></p>
+<p><strong>Para a mediana</strong> (preferível devido à assimetria):</p>
+<p>- Intervalo bootstrap 95%: [32,70; 47,60] milhares de barris</p>
+<p>- Distribuição bootstrap menos regular (não Normal)</p>
+<div class="callout callout-style-simple callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Importante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Os intervalos para média e mediana são para <strong>parâmetros diferentes</strong> e não podem ser comparados diretamente.</p>
+</div>
+</div>
+</section></section></section><section id="considerações-práticas" class="level1" data-number="24"><h1 data-number="24">
+<span class="header-section-number">24</span> Considerações Práticas</h1>
+<section id="quando-usar-bootstrap" class="level2" data-number="24.1"><h2 data-number="24.1" class="anchored" data-anchor-id="quando-usar-bootstrap">
+<span class="header-section-number">24.1</span> Quando Usar Bootstrap</h2>
+<p><strong>Vantagens</strong>:</p>
+<p>- Não requer suposição de Normalidade</p>
+<p>- Funciona para diversos parâmetros (média, mediana, razão, etc.)</p>
+<p>- Apropriado para distribuições assimétricas</p>
+<p><strong>Limitações</strong>:</p>
+<p>1. Requer <strong>tamanho amostral moderado a grande</strong></p>
+<p>2. Funciona melhor para <strong>estatísticas suaves</strong> (média) do que para medianas em amostras pequenas</p>
+<p>3. Algumas estatísticas podem ter <strong>viés</strong> que requer correção</p>
+</section><section id="número-de-reamostras" class="level2" data-number="24.2"><h2 data-number="24.2" class="anchored" data-anchor-id="número-de-reamostras">
+<span class="header-section-number">24.2</span> Número de Reamostras</h2>
+<ul>
+<li>
+<strong>1.000 simulações</strong>: Geralmente suficiente</li>
+<li>
+<strong>10.000 simulações</strong>: Para maior precisão</li>
+<li>
+<strong>100 simulações</strong>: Muito poucas (resultados instáveis)</li>
+</ul></section></section><section id="exercícios-aplicados" class="level1" data-number="25"><h1 data-number="25">
+<span class="header-section-number">25</span> Exercícios Aplicados</h1>
+<section id="aplique-seu-conhecimento" class="level2" data-number="25.1"><h2 data-number="25.1" class="anchored" data-anchor-id="aplique-seu-conhecimento">
+<span class="header-section-number">25.1</span> APLIQUE SEU CONHECIMENTO</h2>
+<section id="exercício-32.1-anotações-à-mão-vs-laptop" class="level3" data-number="25.1.1"><h3 data-number="25.1.1" class="anchored" data-anchor-id="exercício-32.1-anotações-à-mão-vs-laptop">
+<span class="header-section-number">25.1.1</span> Exercício 32.1: Anotações à Mão vs Laptop</h3>
+<p><strong>Contexto</strong>: 6 voluntários estudam estatística</p>
+<p><strong>Dados</strong>: Pontos totais em exames (de 500 possíveis)</p>
+<table class="caption-top table">
+<thead><tr class="header">
+<th>Anotação à mão</th>
+<th>Laptop</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>Doug: 360</td>
+<td>Elly: 370</td>
+</tr>
+<tr class="even">
+<td>Oksana: 400</td>
+<td>Xinyi: 320</td>
+</tr>
+<tr class="odd">
+<td>Sebastian: 420</td>
+<td>Steve: 390</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tarefas</strong>: a) Liste todas as 15 possíveis associações dos 6 sujeitos aos dois grupos b) Calcule a distribuição de permutação c) Calcule o valor P (teste bilateral) d) É possível demonstrar significância no nível de 5%? e) Compare com o procedimento t de duas amostras</p>
+</section><section id="exercício-32.2-crescimento-de-árvores-com-co₂" class="level3" data-number="25.1.2"><h3 data-number="25.1.2" class="anchored" data-anchor-id="exercício-32.2-crescimento-de-árvores-com-co₂">
+<span class="header-section-number">25.1.2</span> Exercício 32.2: Crescimento de Árvores com CO₂</h3>
+<p><strong>Contexto</strong>: Efeito do CO₂ extra no crescimento de pinheiros</p>
+<p><strong>Dados</strong>: 3 pares de lotes florestais</p>
+<table class="caption-top table">
+<thead><tr class="header">
+<th>Par</th>
+<th>Controle</th>
+<th>Tratado</th>
+<th>Diferença</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td>9,752</td>
+<td>10,587</td>
+<td>0,835</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>7,263</td>
+<td>9,244</td>
+<td>1,981</td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td>5,742</td>
+<td>8,675</td>
+<td>2,933</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Tarefas</strong>: a) Por que é um planejamento de dados emparelhados? b) Estabeleça H₀ e Hₐ (unilateral) c) Construa a distribuição de permutação d) Calcule o valor P unilateral</p>
+</section><section id="exercício-32.5-bootstrap---tempos-de-viagem-ny" class="level3" data-number="25.1.3"><h3 data-number="25.1.3" class="anchored" data-anchor-id="exercício-32.5-bootstrap---tempos-de-viagem-ny">
+<span class="header-section-number">25.1.3</span> Exercício 32.5: Bootstrap - Tempos de Viagem NY</h3>
+<p><strong>Tarefa</strong>: Gere 1.000 amostras bootstrap dos tempos de viagem em Nova York</p>
+<ol type="a">
+<li>Quais são a média e o desvio-padrão das médias bootstrap?</li>
+<li>Faça um histograma da distribuição bootstrap</li>
+<li>Descreva a forma da distribuição</li>
+</ol></section><section id="exercício-32.7-bootstrap---partindo-madeira" class="level3" data-number="25.1.4"><h3 data-number="25.1.4" class="anchored" data-anchor-id="exercício-32.7-bootstrap---partindo-madeira">
+<span class="header-section-number">25.1.4</span> Exercício 32.7: Bootstrap - Partindo Madeira</h3>
+<p><strong>Dados</strong>: Carga necessária para partir abeto-de-douglas (20 observações)</p>
+<p><strong>Tarefas</strong>: a) Gere 1.000 amostras bootstrap b) Calcule média e desvio-padrão das médias bootstrap c) Faça histograma da distribuição bootstrap d) Descreva a forma</p>
+</section></section><section id="exercícios-completos" class="level2" data-number="25.2"><h2 data-number="25.2" class="anchored" data-anchor-id="exercícios-completos">
+<span class="header-section-number">25.2</span> EXERCÍCIOS COMPLETOS</h2>
+<section id="exercício-32.20-tecidos-que-não-amarrotam" class="level3" data-number="25.2.1"><h3 data-number="25.2.1" class="anchored" data-anchor-id="exercício-32.20-tecidos-que-não-amarrotam">
+<span class="header-section-number">25.2.1</span> Exercício 32.20: Tecidos que Não Amarrotam</h3>
+<p><strong>Contexto</strong>: Comparação de dois processos comerciais de prensa durável</p>
+<p><strong>Dados</strong> (libras de esforço para rasgar):</p>
+<table class="caption-top table">
+<thead><tr class="header">
+<th>Permafresh</th>
+<th>Hylite</th>
+</tr></thead>
+<tbody><tr class="odd">
+<td>29,9; 30,7; 30,0; 29,5; 27,6</td>
+<td>28,8; 23,9; 27,0; 22,1; 24,2</td>
+</tr></tbody>
+</table>
+<p><strong>Tarefa</strong>: Use teste de permutação (há valor atípico moderado no grupo Permafresh)</p>
+</section><section id="exercício-32.21-bons-odores-trazem-bons-negócios" class="level3" data-number="25.2.2"><h3 data-number="25.2.2" class="anchored" data-anchor-id="exercício-32.21-bons-odores-trazem-bons-negócios">
+<span class="header-section-number">25.2.2</span> Exercício 32.21: Bons Odores Trazem Bons Negócios?</h3>
+<p><strong>Contexto</strong>: Aromas de fundo em restaurante e gastos dos clientes</p>
+<p><strong>Dados</strong>: Quantias gastas em euros (30 clientes por grupo)</p>
+<p><strong>Pergunta</strong>: Há evidência significante de que o odor de lavanda encoraja clientes a gastarem mais?</p>
+<p><strong>Tarefa</strong>: Use teste de permutação para estimar o valor P apropriado</p>
+</section><section id="exercício-32.23-obesidade-na-adolescência" class="level3" data-number="25.2.3"><h3 data-number="25.2.3" class="anchored" data-anchor-id="exercício-32.23-obesidade-na-adolescência">
+<span class="header-section-number">25.2.3</span> Exercício 32.23: Obesidade na Adolescência</h3>
+<p><strong>Contexto</strong>: Banda gástrica laparoscópica vs intervenção no estilo de vida</p>
+<p><strong>Participantes</strong>: 50 adolescentes (IMC &gt; 35) - 25 banda gástrica - 25 programa de intervenção</p>
+<p><strong>Medida</strong>: Perda de peso em kg após 2 anos</p>
+<p><strong>Pergunta</strong>: A banda gástrica resulta em perda de peso significantemente maior?</p>
+<p><strong>Tarefa</strong>: Use teste de permutação para estimar o valor P</p>
+</section><section id="exercício-32.25-e.-coli-em-áreas-de-banho" class="level3" data-number="25.2.4"><h3 data-number="25.2.4" class="anchored" data-anchor-id="exercício-32.25-e.-coli-em-áreas-de-banho">
+<span class="header-section-number">25.2.4</span> Exercício 32.25: E. coli em Áreas de Banho</h3>
+<p><strong>Contexto</strong>: 24 praias no Lago Erie, Condado de Erie</p>
+<p><strong>Medida</strong>: Níveis de coliforme fecal (E. coli) por 100 ml de água</p>
+<p><strong>Nível inseguro</strong>: &gt; 400 bactérias por 100 ml</p>
+<p><strong>Tarefa</strong>: Construa intervalo de confiança bootstrap de 95% para o nível médio de coliformes fecais</p>
+</section></section></section><section id="resumo-do-capítulo" class="level1" data-number="26"><h1 data-number="26">
+<span class="header-section-number">26</span> Resumo do Capítulo</h1>
+<section id="testes-de-permutação-2" class="level2" data-number="26.1"><h2 data-number="26.1" class="anchored" data-anchor-id="testes-de-permutação-2">
+<span class="header-section-number">26.1</span> Testes de Permutação</h2>
+<p><strong>Conceitos-chave</strong>: - Baseados na <strong>aleatorização do experimento</strong> - Válidos sem suposição de Normalidade - Requerem hipótese nula de nenhum efeito de tratamento</p>
+<p><strong>Procedimento</strong>: 1. Enumerar (ou simular) todas as possíveis associações de tratamentos 2. Calcular a estatística para cada associação 3. Determinar o valor P pela distribuição de permutação</p>
+</section><section id="métodos-bootstrap-2" class="level2" data-number="26.2"><h2 data-number="26.2" class="anchored" data-anchor-id="métodos-bootstrap-2">
+<span class="header-section-number">26.2</span> Métodos Bootstrap</h2>
+<p><strong>Conceitos-chave</strong>: - <strong>Amostragem com reposição</strong> da amostra original - Aproximam a distribuição amostral de uma estatística - Funcionam para diversos parâmetros</p>
+<p><strong>Aplicações</strong>: - Erro-padrão bootstrap - Intervalos de confiança percentílicos - Não requerem fórmulas teóricas</p>
+</section><section id="habilidades-desenvolvidas" class="level2" data-number="26.3"><h2 data-number="26.3" class="anchored" data-anchor-id="habilidades-desenvolvidas">
+<span class="header-section-number">26.3</span> Habilidades Desenvolvidas</h2>
+<p>Após este capítulo, você deve ser capaz de:</p>
+<ol type="1">
+<li><label><input type="checkbox" checked="">Calcular distribuições de permutação para amostras pequenas</label></li>
+<li><label><input type="checkbox" checked="">Usar programas para simular distribuições de permutação</label></li>
+<li><label><input type="checkbox" checked="">Gerar amostras bootstrap</label></li>
+<li><label><input type="checkbox" checked="">Construir distribuições bootstrap</label></li>
+<li><label><input type="checkbox" checked="">Calcular erros-padrão bootstrap</label></li>
+<li><label><input type="checkbox" checked="">Construir intervalos de confiança bootstrap percentílicos</label></li>
+</ol>
+<hr></section></section><section id="soluções-completas-dos-exercícios-em-r" class="level1" data-number="27"><h1 data-number="27">
+<span class="header-section-number">27</span> Soluções Completas dos Exercícios em R</h1>
+<section id="exercício-32.1-anotações-à-mão-vs-laptop---completo" class="level2" data-number="27.1"><h2 data-number="27.1" class="anchored" data-anchor-id="exercício-32.1-anotações-à-mão-vs-laptop---completo">
+<span class="header-section-number">27.1</span> Exercício 32.1: Anotações à Mão vs Laptop - COMPLETO</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r exercicio-32-1-completo}</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Dados</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>todos_sujeitos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Doug"</span>, <span class="st">"Elly"</span>, <span class="st">"Oksana"</span>, <span class="st">"Sebastian"</span>, <span class="st">"Steve"</span>, <span class="st">"Xinyi"</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>todas_notas <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">360</span>, <span class="dv">370</span>, <span class="dv">400</span>, <span class="dv">420</span>, <span class="dv">320</span>, <span class="dv">390</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co"># (a) e (b): 15 combinações possíveis</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>combinacoes <span class="ot">&lt;-</span> <span class="fu">combn</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="dv">4</span>)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>n_comb <span class="ot">&lt;-</span> <span class="fu">ncol</span>(combinacoes)</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>diferencas_ex1 <span class="ot">&lt;-</span> <span class="fu">numeric</span>(n_comb)</span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n_comb) {</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  idx_mao <span class="ot">&lt;-</span> combinacoes[, i]</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  idx_laptop <span class="ot">&lt;-</span> <span class="fu">setdiff</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, idx_mao)</span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>  diferencas_ex1[i] <span class="ot">&lt;-</span> <span class="fu">mean</span>(todas_notas[idx_mao]) <span class="sc">-</span> <span class="fu">mean</span>(todas_notas[idx_laptop])</span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Distribuição</span></span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a>dist_perm_ex1 <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Diferenca =</span> <span class="fu">round</span>(diferencas_ex1, <span class="dv">2</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Diferenca) <span class="sc">%&gt;%</span></span>
+<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Frequencia =</span> <span class="fu">n</span>(), <span class="at">.groups =</span> <span class="st">"drop"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Probabilidade =</span> Frequencia <span class="sc">/</span> n_comb) <span class="sc">%&gt;%</span></span>
+<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Diferenca)</span>
+<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(dist_perm_ex1)</span>
+<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a><span class="co"># (c) Valor P</span></span>
+<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a>dif_obs <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">c</span>(<span class="dv">360</span>, <span class="dv">400</span>, <span class="dv">420</span>)) <span class="sc">-</span> <span class="fu">mean</span>(<span class="fu">c</span>(<span class="dv">370</span>, <span class="dv">320</span>, <span class="dv">390</span>))</span>
+<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>valor_p <span class="ot">&lt;-</span> <span class="fu">mean</span>(<span class="fu">abs</span>(diferencas_ex1) <span class="sc">&gt;=</span> <span class="fu">abs</span>(dif_obs))</span>
+<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Diferença observada:"</span>, dif_obs)</span>
+<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Valor P:"</span>, valor_p)</span>
+<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a><span class="co"># (d) Significância 5%</span></span>
+<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Significante a 5%?"</span>, <span class="fu">ifelse</span>(valor_p <span class="sc">&lt;</span> <span class="fl">0.05</span>, <span class="st">"SIM"</span>, <span class="st">"NÃO"</span>))</span>
+<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a><span class="co"># (e) Teste t</span></span>
+<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>teste_t <span class="ot">&lt;-</span> <span class="fu">t.test</span>(<span class="fu">c</span>(<span class="dv">360</span>, <span class="dv">400</span>, <span class="dv">420</span>), <span class="fu">c</span>(<span class="dv">370</span>, <span class="dv">320</span>, <span class="dv">390</span>))</span>
+<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n\n</span><span class="st">Teste t - Valor P:"</span>, teste_t<span class="sc">$</span>p.value)</span>
+<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 13 × 3
+   Diferenca Frequencia Probabilidade
+       &lt;dbl&gt;      &lt;int&gt;         &lt;dbl&gt;
+ 1     -50            1        0.0667
+ 2     -42.5          1        0.0667
+ 3     -27.5          2        0.133 
+ 4     -20            1        0.0667
+ 5     -12.5          1        0.0667
+ 6      -5            2        0.133 
+ 7       2.5          1        0.0667
+ 8      10            1        0.0667
+ 9      17.5          1        0.0667
+10      25            1        0.0667
+11      32.5          1        0.0667
+12      47.5          1        0.0667
+13      55            1        0.0667
+
+Diferença observada: 33.33333
+Valor P: 0.2666667
+Significante a 5%? NÃO
+
+Teste t - Valor P: 0.2905689</code></pre>
+</div>
+</div>
+</section><section id="exercício-32.2-crescimento-mais-rápido-de-árvores-com-co₂---completo" class="level2" data-number="27.2"><h2 data-number="27.2" class="anchored" data-anchor-id="exercício-32.2-crescimento-mais-rápido-de-árvores-com-co₂---completo">
+<span class="header-section-number">27.2</span> Exercício 32.2: Crescimento mais rápido de Árvores com CO₂ - COMPLETO</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r exercicio-32-2-completo}</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Dados emparelhados</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>controle <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">9.752</span>, <span class="fl">7.263</span>, <span class="fl">5.742</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>tratado <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">10.587</span>, <span class="fl">9.244</span>, <span class="fl">8.675</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>diferencas <span class="ot">&lt;-</span> tratado <span class="sc">-</span> controle</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"(a) Planejamento emparelhado: 3 pares de lotes florestais"</span>)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">(b) H0: μ_diferença = 0 vs Ha: μ_diferença &gt; 0 (unilateral)"</span>)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co"># (c) Todas as 8 permutações (2^3)</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>sinais_possiveis <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="fu">rep</span>(<span class="fu">list</span>(<span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>)), <span class="dv">3</span>))</span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>medias_perm <span class="ot">&lt;-</span> <span class="fu">apply</span>(sinais_possiveis, <span class="dv">1</span>, <span class="cf">function</span>(sinais) {</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(sinais <span class="sc">*</span> <span class="fu">abs</span>(diferencas))</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n\n</span><span class="st">(c) Distribuição amostral:"</span>)</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">table</span>(<span class="fu">round</span>(medias_perm, <span class="dv">3</span>)))</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="co"># (d) Valor P unilateral</span></span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>media_obs <span class="ot">&lt;-</span> <span class="fu">mean</span>(diferencas)</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>valor_p_co2 <span class="ot">&lt;-</span> <span class="fu">mean</span>(medias_perm <span class="sc">&gt;=</span> media_obs)</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n\n</span><span class="st">(d) Média observada:"</span>, media_obs)</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">    Valor P (unilateral):"</span>, valor_p_co2)</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">    Conclusão: CO₂ extra"</span>, </span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ifelse</span>(valor_p_co2 <span class="sc">&lt;</span> <span class="fl">0.05</span>, <span class="st">"aumenta SIGNIFICANTEMENTE"</span>, <span class="st">"não aumenta significantemente"</span>),</span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>    <span class="st">"o crescimento"</span>)</span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>(a) Planejamento emparelhado: 3 pares de lotes florestais
+(b) H0: μ_diferença = 0 vs Ha: μ_diferença &gt; 0 (unilateral)
+
+(c) Distribuição amostral:
+-1.916  -1.36 -0.596 -0.039  0.039  0.596   1.36  1.916 
+     1      1      1      1      1      1      1      1 
+
+
+(d) Média observada: 1.916333
+    Valor P (unilateral): 0.125
+    Conclusão: CO₂ extra não aumenta significantemente o crescimento</code></pre>
+</div>
+</div>
+</section><section id="exercício-32.21-odores-em-restaurante---completo" class="level2" data-number="27.3"><h2 data-number="27.3" class="anchored" data-anchor-id="exercício-32.21-odores-em-restaurante---completo">
+<span class="header-section-number">27.3</span> Exercício 32.21: Odores em Restaurante - COMPLETO</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r exercicio-32-21-completo}</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Dados (30 clientes por grupo)</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>sem_odor <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">15.9</span>, <span class="fl">18.5</span>, <span class="fl">15.9</span>, <span class="fl">18.5</span>, <span class="fl">18.5</span>, <span class="fl">21.9</span>, <span class="fl">15.9</span>, <span class="fl">15.9</span>, <span class="fl">15.9</span>, <span class="fl">15.9</span>,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>              <span class="fl">15.9</span>, <span class="fl">18.5</span>, <span class="fl">18.5</span>, <span class="fl">18.5</span>, <span class="fl">20.5</span>, <span class="fl">18.5</span>, <span class="fl">18.5</span>, <span class="fl">15.9</span>, <span class="fl">15.9</span>, <span class="fl">15.9</span>,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>              <span class="fl">18.5</span>, <span class="fl">18.5</span>, <span class="fl">15.9</span>, <span class="fl">18.5</span>, <span class="fl">15.9</span>, <span class="fl">18.5</span>, <span class="fl">15.9</span>, <span class="fl">25.5</span>, <span class="fl">12.9</span>, <span class="fl">15.9</span>)</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>lavanda <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">21.9</span>, <span class="fl">18.5</span>, <span class="fl">22.3</span>, <span class="fl">21.9</span>, <span class="fl">18.5</span>, <span class="fl">24.9</span>, <span class="fl">18.5</span>, <span class="fl">22.5</span>, <span class="fl">21.5</span>, <span class="fl">21.9</span>,</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>             <span class="fl">21.5</span>, <span class="fl">18.5</span>, <span class="fl">25.5</span>, <span class="fl">18.5</span>, <span class="fl">18.5</span>, <span class="fl">21.9</span>, <span class="fl">18.5</span>, <span class="fl">18.5</span>, <span class="fl">24.9</span>, <span class="fl">21.9</span>,</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>             <span class="fl">25.9</span>, <span class="fl">21.9</span>, <span class="fl">18.5</span>, <span class="fl">18.5</span>, <span class="fl">22.8</span>, <span class="fl">18.5</span>, <span class="fl">21.9</span>, <span class="fl">20.7</span>, <span class="fl">21.9</span>, <span class="fl">22.5</span>)</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Estatísticas descritivas</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Grupo Sem Odor - Média:"</span>, <span class="fu">mean</span>(sem_odor), <span class="st">"euros"</span>)</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Grupo Lavanda - Média:"</span>, <span class="fu">mean</span>(lavanda), <span class="st">"euros"</span>)</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Teste de permutação (10.000 simulações)</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2025</span>)</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>dados_todos <span class="ot">&lt;-</span> <span class="fu">c</span>(sem_odor, lavanda)</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>n_perm <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>dif_obs_odor <span class="ot">&lt;-</span> <span class="fu">mean</span>(lavanda) <span class="sc">-</span> <span class="fu">mean</span>(sem_odor)</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>diferencas_perm <span class="ot">&lt;-</span> <span class="fu">replicate</span>(n_perm, {</span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a>  indices_perm <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">60</span>)</span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(dados_todos[indices_perm[<span class="dv">1</span><span class="sc">:</span><span class="dv">30</span>]]) <span class="sc">-</span> <span class="fu">mean</span>(dados_todos[indices_perm[<span class="dv">31</span><span class="sc">:</span><span class="dv">60</span>]])</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a>valor_p_odor <span class="ot">&lt;-</span> <span class="fu">mean</span>(diferencas_perm <span class="sc">&gt;=</span> dif_obs_odor)</span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n\n</span><span class="st">Diferença observada (Lavanda - Sem Odor):"</span>, dif_obs_odor, <span class="st">"euros"</span>)</span>
+<span id="cb14-30"><a href="#cb14-30" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Valor P (unilateral):"</span>, valor_p_odor)</span>
+<span id="cb14-31"><a href="#cb14-31" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Conclusão:"</span>, </span>
+<span id="cb14-32"><a href="#cb14-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ifelse</span>(valor_p_odor <span class="sc">&lt;</span> <span class="fl">0.05</span>, </span>
+<span id="cb14-33"><a href="#cb14-33" aria-hidden="true" tabindex="-1"></a>           <span class="st">"Lavanda AUMENTA SIGNIFICANTEMENTE os gastos"</span>,</span>
+<span id="cb14-34"><a href="#cb14-34" aria-hidden="true" tabindex="-1"></a>           <span class="st">"Não há evidência significante de aumento nos gastos"</span>))</span>
+<span id="cb14-35"><a href="#cb14-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-36"><a href="#cb14-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Gráfico</span></span>
+<span id="cb14-37"><a href="#cb14-37" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="at">Dif =</span> diferencas_perm), <span class="fu">aes</span>(<span class="at">x =</span> Dif)) <span class="sc">+</span></span>
+<span id="cb14-38"><a href="#cb14-38" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">50</span>, <span class="at">fill =</span> <span class="st">"purple"</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb14-39"><a href="#cb14-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> dif_obs_odor, <span class="at">color =</span> <span class="st">"red"</span>, </span>
+<span id="cb14-40"><a href="#cb14-40" aria-hidden="true" tabindex="-1"></a>             <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb14-41"><a href="#cb14-41" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribuição de Permutação - Exercício 32.21"</span>,</span>
+<span id="cb14-42"><a href="#cb14-42" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="fu">paste</span>(<span class="st">"Valor P ="</span>, <span class="fu">round</span>(valor_p_odor, <span class="dv">4</span>)),</span>
+<span id="cb14-43"><a href="#cb14-43" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Diferença nas Médias (euros)"</span>) <span class="sc">+</span></span>
+<span id="cb14-44"><a href="#cb14-44" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb14-45"><a href="#cb14-45" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>Grupo Sem Odor - Média: 17.51333 euros
+Grupo Lavanda - Média: 21.12333 euros
+
+Diferença observada (Lavanda - Sem Odor): 3.61 euros
+Valor P (unilateral): 0
+Conclusão: Lavanda AUMENTA SIGNIFICANTEMENTE os gastos</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="cap32-Reamostragem-TestesPermutacao-Bootstrap-v2_files/figure-html/exercicio-32-21-completo-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="exercício-32.23-obesidade-na-adolescência---completo" class="level2" data-number="27.4"><h2 data-number="27.4" class="anchored" data-anchor-id="exercício-32.23-obesidade-na-adolescência---completo">
+<span class="header-section-number">27.4</span> Exercício 32.23: Obesidade na Adolescência - COMPLETO</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r exercicio-32-24-completo}</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Dados</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>banda_gastrica <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">35.6</span>, <span class="fl">81.4</span>, <span class="fl">57.6</span>, <span class="fl">32.8</span>, <span class="fl">31.0</span>, <span class="fl">37.6</span>, <span class="fl">36.5</span>, <span class="sc">-</span><span class="fl">5.4</span>, <span class="fl">27.9</span>, <span class="fl">49.0</span>,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>                    <span class="fl">64.8</span>, <span class="fl">39.0</span>, <span class="fl">43.0</span>, <span class="fl">33.9</span>, <span class="fl">29.7</span>, <span class="fl">20.2</span>, <span class="fl">15.2</span>, <span class="fl">41.7</span>, <span class="fl">53.4</span>, <span class="fl">13.4</span>,</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>                    <span class="fl">24.8</span>, <span class="fl">19.4</span>, <span class="fl">32.3</span>, <span class="fl">22.0</span>)</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>intervencao <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">6.0</span>, <span class="fl">2.0</span>, <span class="sc">-</span><span class="fl">3.0</span>, <span class="fl">20.6</span>, <span class="fl">11.6</span>, <span class="fl">15.5</span>, <span class="sc">-</span><span class="fl">17.0</span>, <span class="fl">1.4</span>, <span class="fl">4.0</span>, <span class="sc">-</span><span class="fl">4.6</span>,</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>                 <span class="fl">15.8</span>, <span class="fl">34.6</span>, <span class="fl">6.0</span>, <span class="sc">-</span><span class="fl">3.1</span>, <span class="sc">-</span><span class="fl">4.3</span>, <span class="sc">-</span><span class="fl">16.7</span>, <span class="sc">-</span><span class="fl">1.8</span>, <span class="sc">-</span><span class="fl">12.8</span>)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Estatísticas</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Banda Gástrica (n=24) - Média:"</span>, <span class="fu">mean</span>(banda_gastrica), <span class="st">"kg"</span>)</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Intervenção (n=18) - Média:"</span>, <span class="fu">mean</span>(intervencao), <span class="st">"kg"</span>)</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Boxplot comparativo</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>dados_obes <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">Grupo =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"Banda Gástrica"</span>, <span class="st">"Intervenção"</span>), <span class="fu">c</span>(<span class="dv">24</span>, <span class="dv">18</span>)),</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">Perda_Peso =</span> <span class="fu">c</span>(banda_gastrica, intervencao)</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dados_obes, <span class="fu">aes</span>(<span class="at">x =</span> Grupo, <span class="at">y =</span> Perda_Peso, <span class="at">fill =</span> Grupo)) <span class="sc">+</span></span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"lightblue"</span>, <span class="st">"lightgreen"</span>)) <span class="sc">+</span></span>
+<span id="cb16-23"><a href="#cb16-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Perda de Peso - Exercício 32.24"</span>,</span>
+<span id="cb16-24"><a href="#cb16-24" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Perda de Peso (kg)"</span>) <span class="sc">+</span></span>
+<span id="cb16-25"><a href="#cb16-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb16-26"><a href="#cb16-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span>
+<span id="cb16-27"><a href="#cb16-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-28"><a href="#cb16-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Teste de permutação</span></span>
+<span id="cb16-29"><a href="#cb16-29" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2025</span>)</span>
+<span id="cb16-30"><a href="#cb16-30" aria-hidden="true" tabindex="-1"></a>todos_pesos <span class="ot">&lt;-</span> <span class="fu">c</span>(banda_gastrica, intervencao)</span>
+<span id="cb16-31"><a href="#cb16-31" aria-hidden="true" tabindex="-1"></a>n_perm <span class="ot">&lt;-</span> <span class="dv">10000</span></span>
+<span id="cb16-32"><a href="#cb16-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-33"><a href="#cb16-33" aria-hidden="true" tabindex="-1"></a>dif_obs_obes <span class="ot">&lt;-</span> <span class="fu">mean</span>(banda_gastrica) <span class="sc">-</span> <span class="fu">mean</span>(intervencao)</span>
+<span id="cb16-34"><a href="#cb16-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-35"><a href="#cb16-35" aria-hidden="true" tabindex="-1"></a>diferencas_perm_obes <span class="ot">&lt;-</span> <span class="fu">replicate</span>(n_perm, {</span>
+<span id="cb16-36"><a href="#cb16-36" aria-hidden="true" tabindex="-1"></a>  indices <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">42</span>)</span>
+<span id="cb16-37"><a href="#cb16-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(todos_pesos[indices[<span class="dv">1</span><span class="sc">:</span><span class="dv">24</span>]]) <span class="sc">-</span> <span class="fu">mean</span>(todos_pesos[indices[<span class="dv">25</span><span class="sc">:</span><span class="dv">42</span>]])</span>
+<span id="cb16-38"><a href="#cb16-38" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb16-39"><a href="#cb16-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-40"><a href="#cb16-40" aria-hidden="true" tabindex="-1"></a>valor_p_obes <span class="ot">&lt;-</span> <span class="fu">mean</span>(diferencas_perm_obes <span class="sc">&gt;=</span> dif_obs_obes)</span>
+<span id="cb16-41"><a href="#cb16-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-42"><a href="#cb16-42" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n\n</span><span class="st">Diferença observada:"</span>, dif_obs_obes, <span class="st">"kg"</span>)</span>
+<span id="cb16-43"><a href="#cb16-43" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Valor P (unilateral):"</span>, valor_p_obes)</span>
+<span id="cb16-44"><a href="#cb16-44" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Conclusão:"</span>, </span>
+<span id="cb16-45"><a href="#cb16-45" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ifelse</span>(valor_p_obes <span class="sc">&lt;</span> <span class="fl">0.05</span>, </span>
+<span id="cb16-46"><a href="#cb16-46" aria-hidden="true" tabindex="-1"></a>           <span class="st">"Banda gástrica resulta em SIGNIFICANTEMENTE maior perda de peso"</span>,</span>
+<span id="cb16-47"><a href="#cb16-47" aria-hidden="true" tabindex="-1"></a>           <span class="st">"Não há diferença significante"</span>))</span>
+<span id="cb16-48"><a href="#cb16-48" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>Banda Gástrica (n=24) - Média: 34.86667 kg
+Intervenção (n=18) - Média: 3.011111 kg
+
+Diferença observada: 31.85556 kg
+Valor P (unilateral): 0
+Conclusão: Banda gástrica resulta em SIGNIFICANTEMENTE maior perda de peso</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="cap32-Reamostragem-TestesPermutacao-Bootstrap-v2_files/figure-html/exercicio-32-24-completo-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+</section><section id="exercício-32.25-e.-coli-em-áreas-de-banho---completo" class="level2" data-number="27.5"><h2 data-number="27.5" class="anchored" data-anchor-id="exercício-32.25-e.-coli-em-áreas-de-banho---completo">
+<span class="header-section-number">27.5</span> Exercício 32.25: <em>E. coli</em> em áreas de banho - COMPLETO</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r exercicio-32-26-completo}</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Dados (24 praias)</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>ecoli_niveis <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">18.7</span>, <span class="fl">579.4</span>, <span class="fl">1986.3</span>, <span class="fl">517.2</span>, <span class="fl">98.7</span>, <span class="fl">45.7</span>, <span class="fl">124.6</span>, <span class="fl">201.4</span>, </span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>                  <span class="fl">19.9</span>, <span class="fl">83.6</span>, <span class="fl">365.4</span>, <span class="fl">307.6</span>, <span class="fl">285.1</span>, <span class="fl">152.9</span>, <span class="fl">18.7</span>, <span class="fl">151.5</span>, </span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>                  <span class="fl">365.4</span>, <span class="fl">238.2</span>, <span class="fl">209.8</span>, <span class="fl">290.9</span>, <span class="fl">137.6</span>, <span class="fl">1046.2</span>, <span class="fl">127.4</span>, <span class="fl">224.7</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Estatísticas descritivas</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Estatísticas Descritivas - E. coli:"</span>)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Média:"</span>, <span class="fu">mean</span>(ecoli_niveis))</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Mediana:"</span>, <span class="fu">median</span>(ecoli_niveis))</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">DP:"</span>, <span class="fu">sd</span>(ecoli_niveis))</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Mín:"</span>, <span class="fu">min</span>(ecoli_niveis))</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">Máx:"</span>, <span class="fu">max</span>(ecoli_niveis))</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Histograma</span></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">data.frame</span>(<span class="at">Nivel =</span> ecoli_niveis), <span class="fu">aes</span>(<span class="at">x =</span> Nivel)) <span class="sc">+</span></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">15</span>, <span class="at">fill =</span> <span class="st">"brown"</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">400</span>, <span class="at">color =</span> <span class="st">"red"</span>, </span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>             <span class="at">linetype =</span> <span class="st">"dashed"</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">400</span>, <span class="at">y =</span> <span class="dv">5</span>, <span class="at">label =</span> <span class="st">"Nível inseguro (&gt;400)"</span>, </span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>           <span class="at">angle =</span> <span class="dv">90</span>, <span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Níveis de E. coli - Exercício 32.26"</span>,</span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"24 praias no Lago Erie"</span>,</span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Nível de E. coli (por 100 ml)"</span>,</span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Frequência"</span>) <span class="sc">+</span></span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a><span class="co"># Bootstrap IC 95%</span></span>
+<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2025</span>)</span>
+<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a>n_boot <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a>medias_boot_ecoli <span class="ot">&lt;-</span> <span class="fu">replicate</span>(n_boot, {</span>
+<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a>  amostra_boot <span class="ot">&lt;-</span> <span class="fu">sample</span>(ecoli_niveis, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(amostra_boot)</span>
+<span id="cb18-35"><a href="#cb18-35" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb18-36"><a href="#cb18-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-37"><a href="#cb18-37" aria-hidden="true" tabindex="-1"></a>ic_ecoli <span class="ot">&lt;-</span> <span class="fu">quantile</span>(medias_boot_ecoli, <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span>
+<span id="cb18-38"><a href="#cb18-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-39"><a href="#cb18-39" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n\n</span><span class="st">IC Bootstrap 95% para o nível médio de E. coli:"</span>)</span>
+<span id="cb18-40"><a href="#cb18-40" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">["</span>, <span class="fu">round</span>(ic_ecoli[<span class="dv">1</span>], <span class="dv">2</span>), <span class="st">";"</span>, <span class="fu">round</span>(ic_ecoli[<span class="dv">2</span>], <span class="dv">2</span>), <span class="st">"] por 100 ml"</span>)</span>
+<span id="cb18-41"><a href="#cb18-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-42"><a href="#cb18-42" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n\n</span><span class="st">Interpretação:"</span>)</span>
+<span id="cb18-43"><a href="#cb18-43" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">- Nível médio estimado entre"</span>, <span class="fu">round</span>(ic_ecoli[<span class="dv">1</span>]), <span class="st">"e"</span>, <span class="fu">round</span>(ic_ecoli[<span class="dv">2</span>]))</span>
+<span id="cb18-44"><a href="#cb18-44" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">- Nível inseguro: &gt; 400 bactérias por 100 ml"</span>)</span>
+<span id="cb18-45"><a href="#cb18-45" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">- O IC NÃO contém 400, mas alguns valores individuais excedem"</span>)</span>
+<span id="cb18-46"><a href="#cb18-46" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>Estatísticas Descritivas - E. coli:
+Média: 316.5375
+Mediana: 205.6
+DP: 420.9057
+Mín: 18.7
+Máx: 1986.3
+
+IC Bootstrap 95% para o nível médio de E. coli:
+[ 175.78 ; 491.59 ] por 100 ml
+
+Interpretação:
+- Nível médio estimado entre 176 e 492
+- Nível inseguro: &gt; 400 bactérias por 100 ml
+- O IC NÃO contém 400, mas alguns valores individuais excedem</code></pre>
+</div>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="cap32-Reamostragem-TestesPermutacao-Bootstrap-v2_files/figure-html/exercicio-32-26-completo-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+<hr>
+<p><strong>Referências</strong>: <span class="citation" data-cites="Moore2023">(<a href="referencias.html#ref-Moore2023" role="doc-biblioref">MOORE; NOTZ; FLIGNER, 2023</a> , cap. 32, p.&nbsp;e-217 - e-241)</span>.</p>
+</section><section id="scripts-adicionais" class="level2" data-number="27.6"><h2 data-number="27.6" class="anchored" data-anchor-id="scripts-adicionais">
+<span class="header-section-number">27.6</span> Scripts Adicionais</h2>
+<p>Todos os códigos R apresentados neste capítulo também estão disponíveis no arquivo <code>cap32-scripts-completos.R</code> para execução independente e experimentação.</p>
+
+
+<div id="refs" class="references csl-bib-body" data-entry-spacing="1" role="list" style="display: none">
+<div id="ref-Moore2023" class="csl-entry" role="listitem">
+MOORE, David S.; NOTZ, William I.; FLIGNER, Michael A. <strong><a href="https://www.grupogen.com.br/livro-a-estatistica-basica-e-sua-pratica-david-s-moore-william-i-notz-e-michael-a-fligner-editora-ltc-9788521638605">Estatística básica e sua prática</a></strong>. 9. ed. Rio de Janeiro: LTC, 2023.
+</div>
+</div>
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./cap21-comparar-duas-medias.html" class="pagination-link" aria-label="Comparação de Duas Médias">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Comparação de Duas Médias</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./conclusao.html" class="pagination-link" aria-label="Conclusão">
+        <span class="nav-page-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Conclusão</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Relatório escrito em <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+
+
+</body></html>

@@ -1,0 +1,501 @@
+# Duas Variáveis Categóricas: Teste Qui-Quadrado {#sec-duas-var-categ}
+
+## Introdução {#sec-intro-qui-quadrado}
+
+Quando trabalhamos com duas variáveis categóricas, frequentemente queremos saber se existe uma associação entre elas. Por exemplo:
+
+-   Existe relação entre sexo e preferência por determinado produto?
+-   Há associação entre nível de escolaridade e opinião sobre uma política pública?
+-   O tratamento aplicado está relacionado com o resultado obtido?
+
+O **teste qui-quadrado** (χ²) é uma das ferramentas estatísticas mais utilizadas para responder a essas questões.
+
+## Tabelas de Contingência {#sec-tabelas-contingencia}
+
+Antes de realizar o teste qui-quadrado, organizamos os dados em uma **tabela de contingência** (ou tabela cruzada), que mostra as frequências observadas para cada combinação de categorias das duas variáveis.
+
+### Exemplo 1: Preferência de Curso e Gênero
+
+```{r}
+#| label: tbl-exemplo-curso-genero
+#| tbl-cap: "Distribuição de estudantes por curso e gênero"
+
+library(tidyverse)
+library(knitr)
+
+# Criando dados de exemplo
+dados_curso <- data.frame(
+  Curso = c(rep("Direito", 120), rep("Economia", 80), rep("Administração", 100)),
+  Genero = c(rep("Feminino", 75), rep("Masculino", 45),
+             rep("Feminino", 35), rep("Masculino", 45),
+             rep("Feminino", 50), rep("Masculino", 50))
+)
+
+# Tabela de contingência
+tabela_cont <- table(dados_curso$Genero, dados_curso$Curso)
+kable(tabela_cont, caption = "Frequências Observadas")
+
+# Adicionar totais marginais
+tabela_com_totais <- addmargins(tabela_cont)
+kable(tabela_com_totais, caption = "Frequências Observadas com Totais")
+```
+
+### Proporções
+
+Também é útil examinar as proporções:
+
+```{r}
+#| label: tbl-proporcoes
+#| tbl-cap: "Proporções por linha e coluna"
+
+# Proporções por linha
+prop_linha <- prop.table(tabela_cont, margin = 1)
+kable(round(prop_linha, 3), caption = "Proporções por Linha (Gênero)")
+
+# Proporções por coluna
+prop_coluna <- prop.table(tabela_cont, margin = 2)
+kable(round(prop_coluna, 3), caption = "Proporções por Coluna (Curso)")
+```
+
+## O Teste Qui-Quadrado de Independência {#sec-teste-qui-quadrado}
+
+### Hipóteses
+
+-   **H₀** (Hipótese Nula): As duas variáveis são independentes (não há associação)
+-   **H₁** (Hipótese Alternativa): As duas variáveis são dependentes (há associação)
+
+### Estatística do Teste
+
+A estatística qui-quadrado é calculada como:
+
+$$
+\chi^2 = \sum_{i=1}^{r} \sum_{j=1}^{c} \frac{(O_{ij} - E_{ij})^2}{E_{ij}}
+$$
+
+Onde:
+
+-   $O_{ij}$ = frequência observada na célula (i,j)
+-   $E_{ij}$ = frequência esperada na célula (i,j)
+-   r = número de linhas
+-   c = número de colunas
+
+### Frequências Esperadas
+
+Sob a hipótese de independência, a frequência esperada para cada célula é:
+
+$$
+E_{ij} = \frac{(\text{Total da linha i}) \times (\text{Total da coluna j})}{\text{Total geral}}
+$$
+
+```{r}
+#| label: tbl-freq-esperadas
+#| tbl-cap: "Frequências esperadas sob H₀"
+
+# Calcular frequências esperadas
+teste_qui <- chisq.test(tabela_cont)
+freq_esperadas <- teste_qui$expected
+
+kable(round(freq_esperadas, 2), caption = "Frequências Esperadas")
+```
+
+### Realizando o Teste
+
+```{r}
+#| label: teste-qui-quadrado-exemplo1
+
+# Teste qui-quadrado
+resultado_teste <- chisq.test(tabela_cont)
+print(resultado_teste)
+
+# Componentes do teste
+cat("\nEstatística Qui-quadrado:", round(resultado_teste$statistic, 4), "\n")
+cat("Graus de liberdade:", resultado_teste$parameter, "\n")
+cat("Valor-p:", format(resultado_teste$p.value, scientific = FALSE), "\n")
+```
+
+### Graus de Liberdade
+
+Os graus de liberdade para o teste qui-quadrado são:
+
+$$
+gl = (r - 1) \times (c - 1)
+$$
+
+Onde r é o número de linhas e c é o número de colunas.
+
+### Interpretação
+
+Se o **valor-p \< α** (geralmente 0,05):
+
+\- Rejeitamos H₀
+
+\- Concluímos que [***há evidência***]{.underline} de [***associação***]{.underline} entre as [***duas variáveis categóricas***]{.underline},
+
+Se o **valor-p ≥ α**:
+
+\- Não rejeitamos H₀
+
+\- Não [***há evidência***]{.underline} suficiente de [***associação***]{.underline}.
+
+## Visualização {#sec-visualizacao}
+
+### Gráfico de Barras Agrupadas
+
+```{r}
+#| label: fig-barras-agrupadas
+#| fig-cap: "Distribuição de estudantes por curso e gênero"
+
+library(ggplot2)
+
+# Preparar dados para visualização
+dados_viz <- as.data.frame(tabela_cont)
+names(dados_viz) <- c("Genero", "Curso", "Frequencia")
+
+ggplot(dados_viz, aes(x = Curso, y = Frequencia, fill = Genero)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(title = "Distribuição de Estudantes por Curso e Gênero",
+       x = "Curso",
+       y = "Frequência",
+       fill = "Gênero") +
+  theme_minimal() +
+  scale_fill_brewer(palette = "Set2")
+```
+
+### Gráfico de Mosaico
+
+```{r}
+#| label: fig-mosaico
+#| fig-cap: "Gráfico de mosaico mostrando a relação entre curso e gênero"
+
+# Gráfico de mosaico
+mosaicplot(tabela_cont, 
+           main = "Gráfico de Mosaico: Curso vs Gênero",
+           color = c("#66C2A5", "#FC8D62"),
+           las = 1)
+```
+
+## Resíduos Padronizados {#sec-residuos}
+
+Os resíduos padronizados (ou resíduos de Pearson) ajudam a identificar quais células contribuem mais para o valor da estatística qui-quadrado:
+
+$$
+r_{ij} = \frac{O_{ij} - E_{ij}}{\sqrt{E_{ij}}}
+$$
+
+```{r}
+#| label: tbl-residuos
+#| tbl-cap: "Resíduos padronizados"
+
+residuos <- resultado_teste$residuals
+kable(round(residuos, 2), caption = "Resíduos Padronizados")
+
+# Interpretação: valores > 2 ou < -2 são considerados significativos
+```
+
+**Interpretação dos Resíduos:**
+
+-   Valores **\> +2**: Frequência observada muito maior que a esperada
+-   Valores **\< -2**: Frequência observada muito menor que a esperada
+-   Valores entre **-2 e +2**: Diferença não significativa
+
+## Exemplo 2: Tratamento e Resultado {#sec-exemplo-tratamento}
+
+```{r}
+#| label: exemplo-tratamento
+
+# Dados: Efeito de um tratamento
+tratamento_resultado <- matrix(
+  c(45, 15,   # Grupo Tratamento: Melhora, Não melhora
+    30, 30),  # Grupo Controle: Melhora, Não melhora
+  nrow = 2, byrow = TRUE,
+  dimnames = list(
+    Grupo = c("Tratamento", "Controle"),
+    Resultado = c("Melhora", "Não Melhora")
+  )
+)
+
+kable(tratamento_resultado, caption = "Resultados por Grupo")
+
+# Teste qui-quadrado
+teste_tratamento <- chisq.test(tratamento_resultado)
+print(teste_tratamento)
+```
+
+### Visualização dos Resultados
+
+```{r}
+#| label: fig-tratamento
+#| fig-cap: "Comparação de resultados entre grupos"
+
+# Converter para formato longo
+dados_trat <- as.data.frame(as.table(tratamento_resultado))
+names(dados_trat) <- c("Grupo", "Resultado", "Frequencia")
+
+ggplot(dados_trat, aes(x = Grupo, y = Frequencia, fill = Resultado)) +
+  geom_bar(stat = "identity", position = "fill") +
+  labs(title = "Proporção de Resultados por Grupo",
+       x = "Grupo",
+       y = "Proporção",
+       fill = "Resultado") +
+  scale_y_continuous(labels = scales::percent) +
+  theme_minimal() +
+  scale_fill_manual(values = c("#8DD3C7", "#FB8072"))
+```
+
+## Pressupostos do Teste Qui-Quadrado {#sec-pressupostos}
+
+Para que o teste qui-quadrado seja válido:
+
+1.  **Observações independentes**: Cada observação deve pertencer a apenas uma célula da tabela
+
+2.  **Frequências esperadas adequadas**:
+
+    -   Todas as frequências esperadas devem ser ≥ 1
+    -   Pelo menos 80% das frequências esperadas devem ser ≥ 5
+
+3.  **Amostra aleatória**: Os dados devem vir de uma amostra aleatória
+
+### Verificando os Pressupostos
+
+```{r}
+#| label: verificar-pressupostos
+
+# Verificar frequências esperadas
+cat("Frequências Esperadas:\n")
+print(round(teste_tratamento$expected, 2))
+
+# Verificar se alguma frequência esperada é < 5
+freq_baixas <- sum(teste_tratamento$expected < 5)
+cat("\nNúmero de células com frequência esperada < 5:", freq_baixas, "\n")
+
+if(freq_baixas > 0) {
+  cat("ATENÇÃO: Existem células com frequência esperada < 5\n")
+  cat("Considere usar o teste exato de Fisher\n")
+}
+```
+
+## Teste Exato de Fisher {#sec-fisher}
+
+Para tabelas 2×2 com frequências esperadas baixas, use o teste exato de Fisher:
+
+```{r}
+#| label: teste-fisher
+
+# Teste exato de Fisher (exemplo com dados pequenos)
+dados_pequenos <- matrix(
+  c(8, 2,
+    3, 7),
+  nrow = 2,
+  dimnames = list(
+    Grupo = c("A", "B"),
+    Resultado = c("Sucesso", "Falha")
+  )
+)
+
+kable(dados_pequenos, caption = "Exemplo com Frequências Baixas")
+
+# Teste de Fisher
+fisher.test(dados_pequenos)
+```
+
+## Medidas de Associação {#sec-medidas-associacao}
+
+### V de Cramér
+
+Para medir a força da associação (independente do tamanho da amostra):
+
+$$
+V = \sqrt{\frac{\chi^2}{n \times \min(r-1, c-1)}}
+$$
+
+```{r}
+#| label: cramer-v
+
+# Função para calcular V de Cramér
+cramer_v <- function(qui_quadrado_test) {
+  chi2 <- qui_quadrado_test$statistic
+  n <- sum(qui_quadrado_test$observed)
+  min_dim <- min(dim(qui_quadrado_test$observed)) - 1
+  
+  v <- sqrt(chi2 / (n * min_dim))
+  return(as.numeric(v))
+}
+
+v_cramér <- cramer_v(resultado_teste)
+cat("V de Cramér:", round(v_cramér, 3), "\n")
+
+# Interpretação
+cat("\nInterpretação do V de Cramér:\n")
+cat("0.00 - 0.10: Associação fraca\n")
+cat("0.10 - 0.30: Associação moderada\n")
+cat("0.30 - 1.00: Associação forte\n")
+```
+
+### Odds Ratio (para tabelas 2×2)
+
+```{r}
+#| label: odds-ratio
+
+# Calcular Odds Ratio para tabela 2x2
+if(all(dim(tratamento_resultado) == c(2, 2))) {
+  # Odds de melhora no grupo tratamento
+  odds_tratamento <- tratamento_resultado[1,1] / tratamento_resultado[1,2]
+  
+  # Odds de melhora no grupo controle
+  odds_controle <- tratamento_resultado[2,1] / tratamento_resultado[2,2]
+  
+  # Odds Ratio
+  or <- odds_tratamento / odds_controle
+  
+  cat("Odds Ratio:", round(or, 3), "\n")
+  cat("\nInterpretação:\n")
+  cat("OR = 1: Sem associação\n")
+  cat("OR > 1: Tratamento aumenta chances de melhora\n")
+  cat("OR < 1: Tratamento diminui chances de melhora\n")
+  
+  # Intervalo de confiança (usando método de Woolf)
+  log_or <- log(or)
+  se_log_or <- sqrt(sum(1/tratamento_resultado))
+  ic_inf <- exp(log_or - 1.96 * se_log_or)
+  ic_sup <- exp(log_or + 1.96 * se_log_or)
+  
+  cat("\nIC 95% para OR: [", round(ic_inf, 3), ",", round(ic_sup, 3), "]\n")
+}
+```
+
+## Exemplo 3: Tabela com Mais de Duas Categorias {#sec-exemplo-multiplo}
+
+```{r}
+#| label: exemplo-educacao-opiniao
+
+# Dados: Nível de educação e opinião sobre uma política
+educacao_opiniao <- matrix(
+  c(20, 30, 15,   # Fundamental
+    35, 40, 25,   # Médio
+    45, 30, 20),  # Superior
+  nrow = 3, byrow = TRUE,
+  dimnames = list(
+    Educacao = c("Fundamental", "Médio", "Superior"),
+    Opiniao = c("Favorável", "Neutro", "Contrário")
+  )
+)
+
+kable(educacao_opiniao, caption = "Educação vs Opinião")
+
+# Teste qui-quadrado
+teste_edu <- chisq.test(educacao_opiniao)
+print(teste_edu)
+
+# Resíduos padronizados
+cat("\nResíduos Padronizados:\n")
+print(round(teste_edu$residuals, 2))
+
+# V de Cramér
+v_edu <- cramer_v(teste_edu)
+cat("\nV de Cramér:", round(v_edu, 3), "\n")
+```
+
+### Visualização com Heatmap
+
+```{r}
+#| label: fig-heatmap-residuos
+#| fig-cap: "Mapa de calor dos resíduos padronizados"
+
+library(reshape2)
+
+# Preparar dados dos resíduos
+residuos_df <- melt(teste_edu$residuals)
+names(residuos_df) <- c("Educacao", "Opiniao", "Residuo")
+
+ggplot(residuos_df, aes(x = Opiniao, y = Educacao, fill = Residuo)) +
+  geom_tile(color = "white") +
+  geom_text(aes(label = round(Residuo, 2)), color = "black", size = 4) +
+  scale_fill_gradient2(low = "#2166AC", mid = "white", high = "#B2182B",
+                       midpoint = 0, name = "Resíduo\nPadronizado") +
+  labs(title = "Mapa de Calor dos Resíduos Padronizados",
+       x = "Opinião",
+       y = "Nível de Educação") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+## Relatando os Resultados {#sec-relatorio}
+
+Ao relatar os resultados de um teste qui-quadrado, inclua:
+
+1.  **Estatística qui-quadrado** e **graus de liberdade**
+2.  **Valor-p**
+3.  **Medida de associação** (V de Cramér, Odds Ratio)
+4.  **Interpretação substantiva**
+
+**Exemplo de redação:**
+
+> Foi realizado um teste qui-quadrado para avaliar a associação entre nível de educação e opinião sobre a política pública. Os resultados indicaram uma associação significativa entre as variáveis (χ² = `r round(teste_edu$statistic, 2)`, gl = `r teste_edu$parameter`, p `r ifelse(teste_edu$p.value < 0.001, "< 0.001", paste("=", round(teste_edu$p.value, 3)))`). A força da associação, medida pelo V de Cramér, foi de `r round(v_edu, 3)`, indicando uma associação `r ifelse(v_edu < 0.1, "fraca", ifelse(v_edu < 0.3, "moderada", "forte"))`. A análise dos resíduos padronizados revelou que...
+
+## Exercícios Práticos {#sec-exercicios}
+
+### Exercício 1
+
+Uma pesquisa foi realizada para avaliar se há relação entre o tipo de mídia preferido e a faixa etária:
+
+```{r}
+#| label: exercicio-1
+
+# Dados do exercício
+midia_idade <- matrix(
+  c(30, 45, 25,   # 18-30 anos
+    25, 35, 40,   # 31-50 anos
+    15, 20, 45),  # 51+ anos
+  nrow = 3, byrow = TRUE,
+  dimnames = list(
+    Idade = c("18-30", "31-50", "51+"),
+    Midia = c("Digital", "TV", "Impressa")
+  )
+)
+
+kable(midia_idade, caption = "Preferência de Mídia por Faixa Etária")
+
+# Realize o teste qui-quadrado
+teste_ex1 <- chisq.test(midia_idade)
+print(teste_ex1)
+
+# Calcule o V de Cramér
+v_ex1 <- cramer_v(teste_ex1)
+cat("\nV de Cramér:", round(v_ex1, 3))
+```
+
+**Questões:**
+
+1.  Há evidência de associação entre faixa etária e preferência de mídia?
+2.  Qual a força dessa associação?
+3.  Quais células contribuem mais para o qui-quadrado?
+
+## Resumo {#sec-resumo}
+
+**Quando usar o teste qui-quadrado:**
+
+-   Duas variáveis categóricas
+-   Observações independentes
+-   Frequências esperadas adequadas
+
+**Passos para análise:**
+
+1.  Criar tabela de contingência
+2.  Verificar pressupostos
+3.  Calcular estatística qui-quadrado
+4.  Comparar com distribuição qui-quadrado
+5.  Calcular medidas de associação
+6.  Examinar resíduos padronizados
+7.  Interpretar resultados
+
+**Alternativas:**
+
+-   Teste exato de Fisher (tabelas 2×2 com n pequeno)
+-   Teste G (Teste de Razão de Verossimilhança - TRV)
+-   Teste de McNemar (dados pareados)
+
+## Referências {#sec-referencias}
+
+-   Moore, D. S., Notz, W. I., & Fligner, M. A. (2023). *A Estatística Básica e Sua Prática* (9ª ed.)
+-   Agresti, A. (2018). *Categorical Data Analysis* (3rd ed.)
+-   Field, A., Miles, J., & Field, Z. (2012). *Discovering Statistics Using R.*

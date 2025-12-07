@@ -87,6 +87,7 @@ book:
     - cap20-InferenciaSobreUmaMediaPop.qmd
     - teste-t-pareado.qmd
     - cap21-comparar-duas-medias.qmd
+    - cap32-Reamostragem-TestesPermutacao-Bootstrap-v2.qmd
     - conclusao.qmd
     - apendiceA.qmd
     - apendiceB-quadroVar.qmd
