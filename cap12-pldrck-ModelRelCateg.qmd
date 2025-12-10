@@ -161,7 +161,7 @@ Ou seja, a probabilidade conjunta sob a hipótese nula de independência é simp
 
 ```{r}
 # Teste qui-quadrado para dados policiais
-teste_policia <- chisq.test(tabela_policia)
+teste_policia <- chisq.test(tabela_policia, correct = FALSE)
 print(teste_policia)
 
 cat("\n")
@@ -196,8 +196,8 @@ onde $i$ e $j$ são os índices para as linhas e colunas, respectivamente.
 #| label: tbl-std-residuals
 #| tbl-cap: "Resumo dos resíduos padronizados para dados de revista policial"
 
-# Calcular resíduos padronizados
-residuos_pad <- teste_policia$stdres
+# Calcular resíduos padronizados de Pearson
+residuos_pad <- teste_policia$residuals
 
 # Converter para data frame para visualização
 residuos_df <- as.data.frame(as.table(residuos_pad))
@@ -239,7 +239,7 @@ A razão de chances mostra que as chances de ser revistado são `r round(odds_ra
 
 ## Fator de Bayes {#sec-fator-bayes}
 
-Discutimos fatores de Bayes no capítulo anterior sobre estatística bayesiana - você pode se lembrar de que representa a razão da verossimilhança dos dados sob cada uma das duas hipóteses:
+Discutimos fatores de Bayes em capítulo anterior sobre estatística bayesiana - você pode se lembrar de que representa a ***razão da verossimilhança dos dados*** [**sob**]{.underline} ***cada uma das duas hipóteses***:
 
 $$
 K = \frac{P(dados|H_A)}{P(dados|H_0)} = \frac{P(H_A|dados) \times P(H_A)}{P(H_0|dados) \times P(H_0)}
@@ -253,7 +253,7 @@ Podemos calcular o fator de Bayes para os dados de revista policial usando nosso
 
 # Calcular fator de Bayes (requer pacote BayesFactor)
 if(require(BayesFactor)) {
-  bf_policia <- contingencyTableBF(tabela_policia, sampleType = "indepMulti")
+  bf_policia <- contingencyTableBF(tabela_policia, sampleType = "indepMulti", fixedMargin = "rows")
   print(bf_policia)
 } else {
   cat("Pacote BayesFactor não instalado.\n")
@@ -262,7 +262,7 @@ if(require(BayesFactor)) {
 }
 ```
 
-Isso mostra que a evidência a favor de uma relação entre raça do motorista e revistas policiais neste conjunto de dados é extremamente forte - um fator de Bayes muito grande é o mais próximo que podemos imaginar de infinito em estatística.
+Isso mostra que a evidência a favor de uma relação entre raça do motorista e revistas policiais neste conjunto de dados é [***extremamente forte***]{.underline} - um fator de Bayes muito grande é o mais próximo que podemos imaginar de infinito em estatística.
 
 ## Análise Categórica Além da Tabela 2×2 {#sec-alem-2x2}
 
@@ -294,7 +294,9 @@ print(teste_nhanes)
 
 Simplesmente olhando para esses dados, podemos dizer que é provável que haja uma relação entre as duas variáveis; notavelmente, enquanto o número total de pessoas com problemas de sono é muito menor do que aqueles sem, para pessoas que relatam estar deprimidas na maioria dos dias, o número com problemas de sono é maior do que aqueles sem.
 
-Este teste mostra que há uma forte relação entre depressão e problemas de sono. Também podemos calcular o fator de Bayes para quantificar a força da evidência a favor da hipótese alternativa:
+Este teste mostra que há uma ***significativa relação entre depressão e problemas de sono***.
+
+Também podemos ***calcular o fator de Bayes*** para ***quantificar*** a [**força da evidência**]{.underline} a favor da hipótese alternativa:
 
 ```{r}
 #| warning: false

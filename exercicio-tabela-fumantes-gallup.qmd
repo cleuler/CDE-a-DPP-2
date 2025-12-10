@@ -1,0 +1,267 @@
+# Tabela de Dupla Entrada: Pesquisa Gallup sobre Hábitos de Fumantes
+
+```{r}
+#| label: setup
+#| include: false
+
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+```
+
+## VERIFIQUE SUAS HABILIDADES
+
+Uma Pesquisa Gallup de 2017 perguntou a uma amostra de fumantes várias questões sobre seus hábitos de fumar e crenças sobre o tabagismo.[^1] Duas das questões na pesquisa eram: "Em geral, quão prejudicial para os adultos você considera o tabagismo passivo – muito prejudicial, pouco prejudicial, não muito prejudicial ou nem um pouco prejudicial?" e "Quantos maços de cigarros você fuma por dia?" A seguir, encontra-se uma tabela de dupla entrada dos resultados.
+
+[^1]: 12
+
+```{r}
+#| label: tbl-fumantes-gallup
+#| tbl-cap: "Relação entre percepção de prejuízo do tabagismo passivo e quantidade de cigarros fumados por dia"
+
+# Criar a matriz de dados
+dados_fumantes <- matrix(
+  c(797, 228, 63,
+    777, 446, 120,
+    263, 179, 69,
+    155, 139, 63),
+  nrow = 4,
+  byrow = TRUE
+)
+
+# Adicionar nomes às linhas e colunas
+rownames(dados_fumantes) <- c(
+  "Muito prejudicial",
+  "Pouco prejudicial",
+  "Não muito prejudicial",
+  "Nem um pouco prejudicial"
+)
+
+colnames(dados_fumantes) <- c(
+  "Menos de um maço",
+  "Um maço",
+  "Mais de um maço"
+)
+
+# Calcular totais
+totais_linha <- rowSums(dados_fumantes)
+totais_coluna <- colSums(dados_fumantes)
+total_geral <- sum(dados_fumantes)
+
+# Criar tabela completa com totais
+tabela_completa <- cbind(dados_fumantes, Total = totais_linha)
+tabela_completa <- rbind(tabela_completa, Total = c(totais_coluna, total_geral))
+
+# Exibir tabela formatada
+kable(tabela_completa,
+      align = "c",
+      caption = NULL) %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"),
+    full_width = FALSE,
+    position = "center"
+  ) %>%
+  add_header_above(c(" " = 1, "Cigarros por dia" = 3, " " = 1)) %>%
+  row_spec(0, bold = TRUE, background = "#f0f0f0") %>%
+  row_spec(5, bold = TRUE, background = "#e0e0e0") %>%
+  column_spec(1, bold = TRUE, background = "#f9f9f9") %>%
+  column_spec(5, bold = TRUE, background = "#f0f0f0")
+```
+
+## Questões
+
+### 25.20 O percentual de fumantes na amostra que fumam mais de um maço por dia é
+
+```{r}
+#| label: calculo-25-20
+
+# Total de fumantes que fumam mais de um maço por dia
+mais_um_maco <- sum(dados_fumantes[, "Mais de um maço"])
+
+# Total de fumantes na amostra
+total_fumantes <- total_geral
+
+# Percentual
+percentual_mais_um_maco <- (mais_um_maco / total_fumantes) * 100
+
+cat("Total de fumantes que fumam mais de um maço por dia:", mais_um_maco, "\n")
+cat("Total de fumantes na amostra:", total_fumantes, "\n")
+cat("Percentual:", round(percentual_mais_um_maco, 2), "%\n")
+```
+
+**Cálculo detalhado:**
+
+$$
+\text{Percentual} = \frac{\text{Total que fumam mais de um maço}}{\text{Total de fumantes}} \times 100
+$$
+
+$$
+\text{Percentual} = \frac{63 + 120 + 69 + 63}{`r total_geral`} \times 100 = \frac{`r mais_um_maco`}{`r total_geral`} \times 100 = `r round(percentual_mais_um_maco, 2)`\%
+$$
+
+**Alternativas:**
+
+(a) 32,98%\
+(b) 9,55%\
+    **(c) `r round(percentual_mais_um_maco, 2)`%** ✓
+
+**Resposta: (b) 9,55%**
+
+------------------------------------------------------------------------
+
+### 25.21 O percentual de todos os fumantes na amostra que consideram que o tabagismo passivo é muito prejudicial é
+
+```{r}
+#| label: calculo-25-21
+
+# Total de fumantes que consideram muito prejudicial
+muito_prejudicial <- sum(dados_fumantes["Muito prejudicial", ])
+
+# Percentual
+percentual_muito_prejudicial <- (muito_prejudicial / total_fumantes) * 100
+
+cat("Total de fumantes que consideram muito prejudicial:", muito_prejudicial, "\n")
+cat("Total de fumantes na amostra:", total_fumantes, "\n")
+cat("Percentual:", round(percentual_muito_prejudicial, 2), "%\n")
+```
+
+**Cálculo detalhado:**
+
+$$
+\text{Percentual} = \frac{\text{Total que consideram muito prejudicial}}{\text{Total de fumantes}} \times 100
+$$
+
+$$
+\text{Percentual} = \frac{797 + 228 + 63}{`r total_geral`} \times 100 = \frac{`r muito_prejudicial`}{`r total_geral`} \times 100 = `r round(percentual_muito_prejudicial, 2)`\%
+$$
+
+**Resposta: `r round(percentual_muito_prejudicial, 2)`%**
+
+------------------------------------------------------------------------
+
+## Análise Descritiva Adicional
+
+```{r}
+#| label: fig-analise-descritiva
+#| fig-cap: "Distribuição das percepções sobre tabagismo passivo por quantidade de cigarros fumados"
+#| fig-width: 10
+#| fig-height: 6
+
+# Converter para data frame para visualização
+df_fumantes <- as.data.frame(dados_fumantes) %>%
+  rownames_to_column("Percepcao") %>%
+  pivot_longer(
+    cols = -Percepcao,
+    names_to = "Cigarros_por_dia",
+    values_to = "Frequencia"
+  ) %>%
+  mutate(
+    Percepcao = factor(Percepcao, levels = c(
+      "Muito prejudicial",
+      "Pouco prejudicial",
+      "Não muito prejudicial",
+      "Nem um pouco prejudicial"
+    )),
+    Cigarros_por_dia = factor(Cigarros_por_dia, levels = c(
+      "Menos de um maço",
+      "Um maço",
+      "Mais de um maço"
+    ))
+  )
+
+# Gráfico de barras agrupadas
+ggplot(df_fumantes, aes(x = Cigarros_por_dia, y = Frequencia, fill = Percepcao)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  labs(
+    title = "Percepção sobre Tabagismo Passivo por Quantidade de Cigarros",
+    subtitle = "Pesquisa Gallup 2017",
+    x = "Cigarros fumados por dia",
+    y = "Número de fumantes",
+    fill = "Percepção sobre\ntabagismo passivo"
+  ) +
+  theme_minimal(base_size = 12) +
+  scale_fill_brewer(palette = "Set2") +
+  theme(
+    legend.position = "right",
+    plot.title = element_text(face = "bold", size = 14),
+    axis.text.x = element_text(angle = 0, hjust = 0.5)
+  )
+```
+
+```{r}
+#| label: tbl-percentuais
+#| tbl-cap: "Distribuição percentual por categoria"
+
+# Calcular percentuais por coluna
+percentuais_coluna <- prop.table(dados_fumantes, margin = 2) * 100
+
+# Calcular percentuais por linha
+percentuais_linha <- prop.table(dados_fumantes, margin = 1) * 100
+
+# Tabela de percentuais por coluna
+kable(
+  round(percentuais_coluna, 2),
+  align = "c",
+  caption = "Percentuais por quantidade de cigarros (percentual da coluna)"
+) %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"),
+    full_width = FALSE
+  ) %>%
+  add_header_above(c(" " = 1, "Cigarros por dia" = 3))
+```
+
+```{r}
+#| label: tbl-percentuais-linha
+#| tbl-cap: "Percentuais por percepção de prejuízo (percentual da linha)"
+
+kable(
+  round(percentuais_linha, 2),
+  align = "c"
+) %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"),
+    full_width = FALSE
+  ) %>%
+  add_header_above(c(" " = 1, "Cigarros por dia" = 3))
+```
+
+## Resumo Estatístico
+
+```{r}
+#| label: resumo-estatistico
+
+# Resumo das frequências
+cat("RESUMO GERAL\n")
+cat("============\n\n")
+
+cat("Total de fumantes na amostra:", total_geral, "\n\n")
+
+cat("Distribuição por quantidade de cigarros:\n")
+for (i in 1:length(totais_coluna)) {
+  cat(sprintf("  %s: %d (%.2f%%)\n", 
+              names(totais_coluna)[i], 
+              totais_coluna[i],
+              (totais_coluna[i]/total_geral)*100))
+}
+
+cat("\nDistribuição por percepção:\n")
+for (i in 1:length(totais_linha)) {
+  cat(sprintf("  %s: %d (%.2f%%)\n", 
+              names(totais_linha)[i], 
+              totais_linha[i],
+              (totais_linha[i]/total_geral)*100))
+}
+```
+
+## Interpretação
+
+A tabela de dupla entrada mostra a relação entre a percepção dos fumantes sobre os prejuízos do tabagismo passivo e a quantidade de cigarros que eles fumam diariamente. Alguns pontos importantes:
+
+1.  **Maioria fuma menos de um maço**: A maior parte dos fumantes (`r totais_coluna[1]` ou `r round((totais_coluna[1]/total_geral)*100, 1)`%) fuma menos de um maço por dia.
+
+2.  **Percepção predominante**: A percepção mais comum é que o tabagismo passivo é "muito prejudicial" (`r totais_linha[1]` fumantes ou `r round((totais_linha[1]/total_geral)*100, 1)`%) ou "pouco prejudicial" (`r totais_linha[2]` fumantes ou `r round((totais_linha[2]/total_geral)*100, 1)`%).
+
+3.  **Fumantes pesados**: Apenas `r round(percentual_mais_um_maco, 2)`% dos fumantes na amostra fumam mais de um maço por dia.
+
+4.  **Consistência**: Independentemente da quantidade fumada, a maioria dos fumantes reconhece que o tabagismo passivo é prejudicial, o que sugere conscientização sobre os riscos, mesmo entre fumantes.

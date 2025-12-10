@@ -1,0 +1,1404 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.25">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<meta name="author" content="Cleuler Barbosa das Neves">
+<title>19&nbsp; Modelando Relações Categóricas – __Ciência de Dados e Estatística Aplicadas ao Direito e Políticas Públicas__</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./exercicio-tabela-fumantes-gallup.html" rel="next">
+<link href="./cap25-DuasVarCategoricas-Teste-Qui-Quadrado.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-70a47bd5681a7291082a5b9f83d58762.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+</head>
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cap12-pldrck-ModelRelCateg.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Modelando Relações Categóricas</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./"><strong>Ciência de Dados e Estatística Aplicadas ao Direito e Políticas Públicas</strong></a> 
+        <div class="sidebar-tools-main">
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><strong>Pretexto</strong></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introdução</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./AEID-cap18-Reproduzivel.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">AEID - Análise Exploratória e Inferencial de Dados</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap3-DistNorm.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">AED - cap 3 - As Distribuições Normais</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap5-pldr-modelos-dados.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">AED - cap 5 pldr - Ajustando Modelos aos Dados</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./Replicar-MPE-dados -correlacao.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">AED - Replicar dados MPE compras públicas</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap13-pldr-model-rel-contin.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">AID - cap 13 - Modelagem de Relações Contínuas</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap16-pldr-EstMultiv.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">AID - cap 16 - Estatística Multivariada</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap6-moore-tab-dupla-entrada.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">AED - cap 6 moore - Tabelas de Dupla Entrada</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./replicar-suco-uva-tab-graf.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">AED - suco uva - Tabelas e Gráficos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap16-moore-IC-o-basico.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">AEI - cap 16 moore - IC: o Básico</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap17-moore-TSHN-o-basico.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">AEI - cap 17 moore - TSH0</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap17-LO-testes-significancia-basico.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Testes de Significância: o Básico</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap17-TSHo-Oltramari.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Testes de Significância: Oltramari</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap18-LO-inferencia-na-pratica.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Inferência na Prática</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap20-InferenciaSobreUmaMediaPop.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Inferência sobre uma Média Populacional</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./teste-t-pareado.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Procedimentos t para Dados Emparelhados</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap21-comparar-duas-medias.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Comparação de Duas Médias</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap25-DuasVarCategoricas-Teste-Qui-Quadrado.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Duas Variáveis Categóricas: Teste Qui-Quadrado</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap12-pldrck-ModelRelCateg.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Modelando Relações Categóricas</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./exercicio-tabela-fumantes-gallup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Tabela de Dupla Entrada: Pesquisa Gallup sobre Hábitos de Fumantes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap32-Reamostragem-TestesPermutacao-Bootstrap-v2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Introdução à Reamostragem</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap8-pldrck-Reamostragem-Simulacao.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Reamostragem e Simulação</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./conclusao.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Conclusão</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./apendiceA.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Apêndice A - EMENTA</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./apendiceB-quadroVar.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Apêndice B - Quadro Var</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./referencias.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Referências</span></a>
+  </div>
+</li>
+    </ul>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Sumário</h2>
+   
+  <ul>
+<li><a href="#sec-objetivos-aprendizagem" id="toc-sec-objetivos-aprendizagem" class="nav-link active" data-scroll-target="#sec-objetivos-aprendizagem"><span class="header-section-number">19.1</span> Objetivos de Aprendizagem</a></li>
+  <li><a href="#sec-exemplo-cores-balas" id="toc-sec-exemplo-cores-balas" class="nav-link" data-scroll-target="#sec-exemplo-cores-balas"><span class="header-section-number">19.2</span> Exemplo: Cores de Balas</a></li>
+  <li><a href="#sec-qui-quadrado-pearson" id="toc-sec-qui-quadrado-pearson" class="nav-link" data-scroll-target="#sec-qui-quadrado-pearson"><span class="header-section-number">19.3</span> Teste Qui-Quadrado de Pearson</a></li>
+  <li><a href="#sec-tabelas-contingencia" id="toc-sec-tabelas-contingencia" class="nav-link" data-scroll-target="#sec-tabelas-contingencia"><span class="header-section-number">19.4</span> Tabelas de Contingência e o Teste Bidirecional</a></li>
+  <li><a href="#sec-residuos-padronizados" id="toc-sec-residuos-padronizados" class="nav-link" data-scroll-target="#sec-residuos-padronizados"><span class="header-section-number">19.5</span> Resíduos Padronizados</a></li>
+  <li><a href="#sec-razoes-chances" id="toc-sec-razoes-chances" class="nav-link" data-scroll-target="#sec-razoes-chances"><span class="header-section-number">19.6</span> Razões de Chances (Odds Ratios)</a></li>
+  <li><a href="#sec-fator-bayes" id="toc-sec-fator-bayes" class="nav-link" data-scroll-target="#sec-fator-bayes"><span class="header-section-number">19.7</span> Fator de Bayes</a></li>
+  <li><a href="#sec-alem-2x2" id="toc-sec-alem-2x2" class="nav-link" data-scroll-target="#sec-alem-2x2"><span class="header-section-number">19.8</span> Análise Categórica Além da Tabela 2×2</a></li>
+  <li><a href="#sec-paradoxo-simpson" id="toc-sec-paradoxo-simpson" class="nav-link" data-scroll-target="#sec-paradoxo-simpson"><span class="header-section-number">19.9</span> Cuidado com o Paradoxo de Simpson</a></li>
+  <li><a href="#leituras-adicionais" id="toc-leituras-adicionais" class="nav-link" data-scroll-target="#leituras-adicionais"><span class="header-section-number">19.10</span> Leituras Adicionais</a></li>
+  </ul></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<h1 class="title"><span id="sec-model-rel-categ" class="quarto-section-identifier"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Modelando Relações Categóricas</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header><p>Até agora, discutimos os conceitos gerais de modelagem estatística e teste de hipóteses, e os aplicamos a algumas análises simples; agora vamos nos voltar para a questão de como modelar tipos particulares de relações em nossos dados. Neste capítulo, focaremos na modelagem de relações categóricas, com o que queremos dizer relações entre variáveis que são medidas qualitativamente. Esses dados geralmente são expressos em termos de contagens; ou seja, para cada valor da variável (ou combinação de valores de múltiplas variáveis), quantas observações assumem esse valor? Por exemplo, quando contamos quantas pessoas de cada curso estão em nossa turma, estamos ajustando um modelo categórico aos dados.</p>
+<section id="sec-objetivos-aprendizagem" class="level2" data-number="19.1"><h2 data-number="19.1" class="anchored" data-anchor-id="sec-objetivos-aprendizagem">
+<span class="header-section-number">19.1</span> Objetivos de Aprendizagem</h2>
+<ul>
+<li>Descrever o conceito de uma tabela de contingência para dados categóricos.</li>
+<li>Descrever o conceito do teste qui-quadrado para associação e calculá-lo para uma determinada tabela de contingência.</li>
+<li>Descrever o paradoxo de Simpson e por que ele é importante para a análise de dados categóricos.</li>
+</ul></section><section id="sec-exemplo-cores-balas" class="level2" data-number="19.2"><h2 data-number="19.2" class="anchored" data-anchor-id="sec-exemplo-cores-balas">
+<span class="header-section-number">19.2</span> Exemplo: Cores de Balas</h2>
+<p>Digamos que comprei um saco de 100 balas, que são rotuladas como tendo 1/3 de chocolates, 1/3 de alcaçuz e 1/3 de chicletes. Quando conto as balas no saco, obtemos os seguintes números: 30 chocolates, 33 alcaçuz e 37 chicletes. Como gosto muito mais de chocolate do que de alcaçuz ou chicletes, me sinto um pouco enganado e gostaria de saber se isso foi apenas um acidente aleatório. Para responder a essa pergunta, preciso saber: Qual é a probabilidade de que a contagem saia dessa forma se a verdadeira probabilidade de cada tipo de bala for a proporção média de 1/3 cada?</p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-candy-obs</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Contagens observadas de balas"</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Dados das balas</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>candy_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">tipo_bala =</span> <span class="fu">c</span>(<span class="st">"Chocolate"</span>, <span class="st">"Alcaçuz"</span>, <span class="st">"Chiclete"</span>),</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">contagem  =</span> <span class="fu">c</span>(<span class="dv">30</span>, <span class="dv">33</span>, <span class="dv">37</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(candy_data, <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Tipo de Bala"</span>, <span class="st">"Contagem"</span>))</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div id="tbl-candy-obs" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-candy-obs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tab.&nbsp;19.1 Contagens observadas de balas
+</figcaption><div aria-describedby="tbl-candy-obs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;">Tipo de Bala</th>
+<th style="text-align: right;">Contagem</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Chocolate</td>
+<td style="text-align: right;">30</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Alcaçuz</td>
+<td style="text-align: right;">33</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Chiclete</td>
+<td style="text-align: right;">37</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+</section><section id="sec-qui-quadrado-pearson" class="level2" data-number="19.3"><h2 data-number="19.3" class="anchored" data-anchor-id="sec-qui-quadrado-pearson">
+<span class="header-section-number">19.3</span> Teste Qui-Quadrado de Pearson</h2>
+<p>O teste qui-quadrado de Pearson nos fornece uma maneira de testar se um conjunto de contagens observadas difere de alguns valores esperados específicos que definem a hipótese nula:</p>
+<p><span class="math display">\[
+\chi^2 = \sum_{i} \frac{(observado_i - esperado_i)^2}{esperado_i}
+\]</span></p>
+<p>No caso do nosso exemplo das balas, a hipótese nula é que a proporção de cada tipo de bala é igual. Para calcular a estatística qui-quadrado, primeiro precisamos chegar às nossas contagens esperadas sob a hipótese nula: já que a nula é que elas são todas iguais, então isso é apenas a contagem total dividida pelas três categorias (conforme mostrado na <a href="#tbl-candy-chi2" class="quarto-xref">tab.&nbsp;<span>19.2</span></a>). Em seguida, pegamos a diferença entre cada contagem e sua expectativa sob a hipótese nula, as elevamos ao quadrado, dividimos pela expectativa nula e as somamos para obter a estatística qui-quadrado.</p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-candy-chi2</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Contagens observadas, expectativas sob a hipótese nula e diferenças ao quadrado nos dados das balas"</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Cálculo do qui-quadrado</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>n_total <span class="ot">&lt;-</span> <span class="fu">sum</span>(candy_data<span class="sc">$</span>contagem)</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>expectativa_nula <span class="ot">&lt;-</span> n_total <span class="sc">/</span> <span class="dv">3</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>candy_analysis <span class="ot">&lt;-</span> candy_data <span class="sc">|&gt;</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">expectativa_nula =</span> expectativa_nula,</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">diferenca        =</span> contagem <span class="sc">-</span> expectativa_nula,</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">diferenca_quadrada =</span> diferenca<span class="sc">^</span><span class="dv">2</span>,</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">x2 =</span> diferenca_quadrada <span class="sc">/</span> expectativa_nula</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(candy_analysis, </span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>      <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Tipo de Bala"</span>, <span class="st">"Contagem"</span>, <span class="st">"Expectativa Nula"</span>,</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>                    <span class="st">"Diferença"</span>, <span class="st">"Diferença²"</span>, <span class="st">"X²"</span>),</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>      <span class="at">digits =</span> <span class="dv">2</span>)</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Estatística qui-quadrado</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>chi2_stat <span class="ot">&lt;-</span> <span class="fu">sum</span>(candy_analysis<span class="sc">$</span>x2)</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">  X² Total = "</span>, chi2_stat)</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>
+
+  X² Total =  0.74</code></pre>
+</div>
+<div id="tbl-candy-chi2" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-candy-chi2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tab.&nbsp;19.2 Contagens observadas, expectativas sob a hipótese nula e diferenças ao quadrado nos dados das balas
+</figcaption><div aria-describedby="tbl-candy-chi2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;">Tipo de Bala</th>
+<th style="text-align: right;">Contagem</th>
+<th style="text-align: right;">Expectativa Nula</th>
+<th style="text-align: right;">Diferença</th>
+<th style="text-align: right;">Diferença²</th>
+<th style="text-align: right;">X²</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Chocolate</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">33.33</td>
+<td style="text-align: right;">-3.33</td>
+<td style="text-align: right;">11.11</td>
+<td style="text-align: right;">0.33</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Alcaçuz</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">33.33</td>
+<td style="text-align: right;">-0.33</td>
+<td style="text-align: right;">0.11</td>
+<td style="text-align: right;">0.00</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Chiclete</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">33.33</td>
+<td style="text-align: right;">3.67</td>
+<td style="text-align: right;">13.44</td>
+<td style="text-align: right;">0.40</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>A estatística qui-quadrado para esta análise resulta em 0.74, que por si só não é interpretável, pois depende do número de valores diferentes que foram somados.</p>
+<p>No entanto, podemos aproveitar o fato de que a estatística qui-quadrado é distribuída de acordo com uma distribuição específica sob a hipótese nula, que é conhecida como a <strong><em>distribuição qui-quadrado</em></strong>.</p>
+<p>Esta distribuição é definida como a <strong><em>soma dos quadrados de um conjunto de variáveis aleatórias normais padrão</em></strong>.</p>
+<p>Ela tem um número de <strong><em>graus de liberdade</em></strong> igual ao <em>número de variáveis sendo somadas</em>.</p>
+<p>A <strong><em>forma</em></strong> da distribuição depende do número de <em>graus de liberdade</em>.</p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-chi2-dist</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Exemplos da distribuição qui-quadrado para vários graus de liberdade"</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar dados para várias distribuições qui-quadrado</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">20</span>, <span class="at">by =</span> <span class="fl">0.1</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>df_values <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">8</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>chi2_data <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">x =</span> x, <span class="at">df =</span> df_values) <span class="sc">|&gt;</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">densidade =</span> <span class="fu">dchisq</span>(x, df),</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">df =</span> <span class="fu">factor</span>(df, <span class="at">labels =</span> <span class="fu">paste</span>(<span class="st">"df ="</span>, df_values)))</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(chi2_data, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> densidade, <span class="at">color =</span> df)) <span class="sc">+</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Valor qui-quadrado"</span>, </span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Densidade"</span>,</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>       <span class="at">color =</span> <span class="st">"Graus de</span><span class="sc">\n</span><span class="st">Liberdade"</span>) <span class="sc">+</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div class="cell-output-display">
+<div id="fig-chi2-dist" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-chi2-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="cap12-pldrck-ModelRelCateg_files/figure-html/fig-chi2-dist-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-chi2-dist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Fig.&nbsp;19.1 Exemplos da distribuição qui-quadrado para vários graus de liberdade
+</figcaption></figure>
+</div>
+</div>
+</div>
+<p>Para o exemplo das balas, podemos calcular a probabilidade do nosso valor qui-quadrado observado de 0.74 sob a hipótese nula de frequência igual em todas as balas.</p>
+<p>Usamos uma distribuição qui-quadrado com <strong><em>graus de liberdade</em></strong> igual a k - 1 (onde k = número de categorias) já que perdemos um grau de liberdade quando calculamos a média para gerar os valores esperados.</p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Teste qui-quadrado para as balas</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>gl <span class="ot">&lt;-</span> <span class="fu">length</span>(candy_data<span class="sc">$</span>tipo_bala) <span class="sc">-</span> <span class="dv">1</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>p_valor <span class="ot">&lt;-</span> <span class="fu">pchisq</span>(chi2_stat, <span class="at">df =</span> gl, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Estatística qui-quadrado:"</span>, <span class="fu">round</span>(chi2_stat, <span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Graus de liberdade:"</span>, gl, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Valor-p:"</span>, <span class="fu">round</span>(p_valor, <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Usando a função chisq.test</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>teste_chi2 <span class="ot">&lt;-</span> <span class="fu">chisq.test</span>(candy_data<span class="sc">$</span>contagem)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(teste_chi2)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>Estatística qui-quadrado: 0.74 
+Graus de liberdade: 2 
+Valor-p: 0.691 
+
+    Chi-squared test for given probabilities
+
+data:  candy_data$contagem
+X-squared = 0.74, df = 2, p-value = 0.6907</code></pre>
+</div>
+</div>
+<p>O valor-p resultante (P(Qui-quadrado) &gt; 0.74 = 0.691) mostra que as contagens observadas de balas não são particularmente surpreendentes com base nas proporções impressas no saco de balas, e não rejeitaríamos a hipótese nula de proporções iguais.</p>
+</section><section id="sec-tabelas-contingencia" class="level2" data-number="19.4"><h2 data-number="19.4" class="anchored" data-anchor-id="sec-tabelas-contingencia">
+<span class="header-section-number">19.4</span> Tabelas de Contingência e o Teste Bidirecional</h2>
+<p>Outra maneira de usar o teste qui-quadrado é perguntar se duas variáveis categóricas estão relacionadas entre si. Como um exemplo mais realista, tomemos a questão de se um motorista negro tem maior probabilidade de ser revistado quando é parado por um policial, em comparação com um motorista branco.</p>
+<p>O <em>Stanford Open Policing Project</em> (<a href="https://openpolicing.stanford.edu/" class="uri">https://openpolicing.stanford.edu/</a>) estudou isso e fornece dados que podemos usar para analisar a questão. Usaremos os dados do Estado de Connecticut, pois são relativamente pequenos e, portanto, mais fáceis de analisar.</p>
+<p>A maneira padrão de representar dados de uma análise categórica é através de uma <strong><em>tabela de contingência</em></strong>, que apresenta o número ou proporção de observações que se enquadram em cada combinação possível de valores para cada uma das variáveis.</p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-police-search</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Tabela de contingência para dados de revista policial"</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulando dados de revista policial (baseado no exemplo)</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>police_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">revistado =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"NÃO"</span>, <span class="dv">36244</span>), <span class="fu">rep</span>(<span class="st">"SIM"</span>, <span class="dv">1219</span>),</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>                <span class="fu">rep</span>(<span class="st">"NÃO"</span>, <span class="dv">239241</span>), <span class="fu">rep</span>(<span class="st">"SIM"</span>, <span class="dv">3108</span>)),</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">raca =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"Negro"</span>, <span class="dv">36244</span>), <span class="fu">rep</span>(<span class="st">"Negro"</span>, <span class="dv">1219</span>),</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>           <span class="fu">rep</span>(<span class="st">"Branco"</span>, <span class="dv">239241</span>), <span class="fu">rep</span>(<span class="st">"Branco"</span>, <span class="dv">3108</span>))</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar tabela de contingência</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>tabela_policia <span class="ot">&lt;-</span> <span class="fu">table</span>(police_data<span class="sc">$</span>revistado, police_data<span class="sc">$</span>raca)</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Mostrar contagens absolutas e relativas</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(tabela_policia, <span class="at">caption =</span> <span class="st">"Contagens absolutas"</span>)</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Proporções</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>prop_tabela <span class="ot">&lt;-</span> <span class="fu">prop.table</span>(tabela_policia)</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(<span class="fu">round</span>(prop_tabela, <span class="dv">4</span>), <span class="at">caption =</span> <span class="st">"Proporções relativas"</span>)</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div id="tbl-police-search" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-police-search-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tab.&nbsp;19.3 Tabela de contingência para dados de revista policial
+</figcaption><div aria-describedby="tbl-police-search-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<caption>Contagens absolutas</caption>
+<thead><tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">Branco</th>
+<th style="text-align: right;">Negro</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">NÃO</td>
+<td style="text-align: right;">239241</td>
+<td style="text-align: right;">36244</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SIM</td>
+<td style="text-align: right;">3108</td>
+<td style="text-align: right;">1219</td>
+</tr>
+</tbody>
+</table>
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<caption>Proporções relativas</caption>
+<thead><tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">Branco</th>
+<th style="text-align: right;">Negro</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">NÃO</td>
+<td style="text-align: right;">0.8550</td>
+<td style="text-align: right;">0.1295</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SIM</td>
+<td style="text-align: right;">0.0111</td>
+<td style="text-align: right;">0.0044</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>O teste qui-quadrado de Pearson nos permite testar se as frequências observadas são diferentes das frequências esperadas, então precisamos determinar quais frequências esperaríamos em cada célula se as revistas e a raça não estivessem relacionadas - o que podemos definir como sendo independentes. Lembre-se do capítulo sobre probabilidade que se X e Y são independentes, então:</p>
+<p><span class="math display">\[
+P(X \cap Y) = P(X) \times P(Y)
+\]</span></p>
+<p>Ou seja, a probabilidade conjunta sob a hipótese nula de independência é simplesmente o produto das probabilidades marginais de cada variável individual. As probabilidades marginais são simplesmente as probabilidades de cada evento ocorrer independentemente de outros eventos. Podemos calcular essas probabilidades marginais e então multiplicá-las para obter as proporções esperadas sob independência.</p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Teste qui-quadrado para dados policiais</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>teste_policia <span class="ot">&lt;-</span> <span class="fu">chisq.test</span>(tabela_policia, <span class="at">correct =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(teste_policia)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Estatística qui-quadrado:"</span>, <span class="fu">round</span>(teste_policia<span class="sc">$</span>statistic, <span class="dv">1</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Graus de liberdade:"</span>, teste_policia<span class="sc">$</span>parameter, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Valor-p:"</span>, <span class="fu">format</span>(teste_policia<span class="sc">$</span>p.value, <span class="at">scientific =</span> <span class="cn">TRUE</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's Chi-squared test
+
+data:  tabela_policia
+X-squared = 828.3, df = 1, p-value &lt; 2.2e-16
+
+
+Estatística qui-quadrado: 828.3 
+Graus de liberdade: 1 
+Valor-p: 3.795669e-182 </code></pre>
+</div>
+</div>
+<p>Calculamos a estatística qui-quadrado, que resulta em 828.3. Para calcular um valor-p, precisamos compará-lo com a distribuição qui-quadrado nula para determinar quão extremo é nosso valor qui-quadrado comparado à nossa expectativa sob a hipótese nula. Os graus de liberdade para esta distribuição são:</p>
+<p><span class="math display">\[
+gl = (n_{Linhas} - 1) \times (n_{Colunas} - 1)
+\]</span></p>
+<p>Assim, para uma tabela 2×2 como esta aqui, <span class="math inline">\(gl = (2-1) \times (2-1) = 1\)</span>.</p>
+<p>A intuição aqui é que calcular as frequências esperadas requer que usemos três valores: o número total de observações e a probabilidade marginal para cada uma das duas variáveis. Assim, uma vez que esses valores são calculados, há apenas um número que é livre para variar e, portanto, há um grau de liberdade.</p>
+<p>Isso mostra que os dados observados seriam altamente improváveis se não houvesse realmente nenhuma relação entre raça e revistas policiais, e assim devemos rejeitar a hipótese nula de independência.</p>
+</section><section id="sec-residuos-padronizados" class="level2" data-number="19.5"><h2 data-number="19.5" class="anchored" data-anchor-id="sec-residuos-padronizados">
+<span class="header-section-number">19.5</span> Resíduos Padronizados</h2>
+<p>Quando encontramos um efeito significativo com o teste qui-quadrado, isso nos diz que os dados são improváveis sob a hipótese nula, mas não nos diz como os dados diferem. Para obter uma visão mais profunda de como os dados diferem do que esperaríamos sob a hipótese nula, podemos examinar os resíduos do modelo, que refletem o desvio dos dados (ou seja, as frequências observadas) do modelo (ou seja, as frequências esperadas) em cada célula. Em vez de olhar para os resíduos brutos (que variam simplesmente dependendo do número de observações nos dados), é mais comum olhar para os resíduos padronizados (às vezes chamados de resíduos de Pearson), que são calculados como:</p>
+<p><span class="math display">\[
+residuo\_padronizado_{ij} = \frac{(observado_{ij} - esperado_{ij})}{\sqrt{esperado_{ij}}}
+\]</span></p>
+<p>onde <span class="math inline">\(i\)</span> e <span class="math inline">\(j\)</span> são os índices para as linhas e colunas, respectivamente.</p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-std-residuals</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Resumo dos resíduos padronizados para dados de revista policial"</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcular resíduos padronizados de Pearson</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>residuos_pad <span class="ot">&lt;-</span> teste_policia<span class="sc">$</span>residuals</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Converter para data frame para visualização</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>residuos_df <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(<span class="fu">as.table</span>(residuos_pad))</span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(residuos_df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Revistado"</span>, <span class="st">"Raça"</span>, <span class="st">"Resíduo_Padronizado"</span>)</span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(residuos_df, <span class="at">digits =</span> <span class="dv">1</span>)</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div id="tbl-std-residuals" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-std-residuals-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tab.&nbsp;19.4 Resumo dos resíduos padronizados para dados de revista policial
+</figcaption><div aria-describedby="tbl-std-residuals-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;">Revistado</th>
+<th style="text-align: left;">Raça</th>
+<th style="text-align: right;">Resíduo_Padronizado</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">NÃO</td>
+<td style="text-align: left;">Branco</td>
+<td style="text-align: right;">1.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SIM</td>
+<td style="text-align: left;">Branco</td>
+<td style="text-align: right;">-10.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NÃO</td>
+<td style="text-align: left;">Negro</td>
+<td style="text-align: right;">-3.3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SIM</td>
+<td style="text-align: left;">Negro</td>
+<td style="text-align: right;">26.6</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>Esses resíduos padronizados podem ser interpretados como escores Z - neste caso, vemos que o número de revistas para indivíduos negros é substancialmente maior do que o esperado com base na independência, e o número de revistas para indivíduos brancos é substancialmente menor do que o esperado. Isso nos fornece o contexto de que precisamos para interpretar o resultado qui-quadrado significativo.</p>
+</section><section id="sec-razoes-chances" class="level2" data-number="19.6"><h2 data-number="19.6" class="anchored" data-anchor-id="sec-razoes-chances">
+<span class="header-section-number">19.6</span> Razões de Chances (Odds Ratios)</h2>
+<p>Também podemos representar a probabilidade relativa de diferentes resultados na tabela de contingência usando a razão de chances que introduzimos anteriormente, a fim de entender melhor a magnitude do efeito. Primeiro, representamos as chances de ser revistado para cada raça, depois calculamos sua razão:</p>
+<p><span class="math display">\[
+odds_{revistado|negro} = \frac{P_{revistado \cap negro}}{P_{nao\_revistado \cap negro}} = \frac{1219}{36244} = 0.034
+\]</span></p>
+<p><span class="math display">\[
+odds_{revistado|branco} = \frac{P_{revistado \cap branco}}{P_{nao\_revistado \cap branco}} = \frac{3108}{239241} = 0.013
+\]</span></p>
+<p><span class="math display">\[
+odds\_ratio = \frac{odds_{revistado|negro}}{odds_{revistado|branco}} = \frac{0.034}{0.013} = 2.59
+\]</span></p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcular razão de chances (odds ratio)</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>odds_negro <span class="ot">&lt;-</span> tabela_policia[<span class="st">"SIM"</span>, <span class="st">"Negro"</span>] <span class="sc">/</span> tabela_policia[<span class="st">"NÃO"</span>, <span class="st">"Negro"</span>]</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>odds_branco <span class="ot">&lt;-</span> tabela_policia[<span class="st">"SIM"</span>, <span class="st">"Branco"</span>] <span class="sc">/</span> tabela_policia[<span class="st">"NÃO"</span>, <span class="st">"Branco"</span>]</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>odds_ratio <span class="ot">&lt;-</span> odds_negro <span class="sc">/</span> odds_branco</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Odds de revista (Negro):"</span>, <span class="fu">round</span>(odds_negro, <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Odds de revista (Branco):"</span>, <span class="fu">round</span>(odds_branco, <span class="dv">3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Odds Ratio:"</span>, <span class="fu">round</span>(odds_ratio, <span class="dv">2</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>Odds de revista (Negro): 0.034 
+Odds de revista (Branco): 0.013 
+Odds Ratio: 2.59 </code></pre>
+</div>
+</div>
+<p>A razão de chances mostra que as chances de ser revistado são 2.59 vezes maiores para motoristas negros versus brancos, com base neste conjunto de dados.</p>
+</section><section id="sec-fator-bayes" class="level2" data-number="19.7"><h2 data-number="19.7" class="anchored" data-anchor-id="sec-fator-bayes">
+<span class="header-section-number">19.7</span> Fator de Bayes</h2>
+<p>Discutimos fatores de Bayes em capítulo anterior sobre estatística bayesiana - você pode se lembrar de que representa a <strong><em>razão da verossimilhança dos dados</em></strong> <u><strong>sob</strong></u> <strong><em>cada uma das duas hipóteses</em></strong>:</p>
+<p><span class="math display">\[
+K = \frac{P(dados|H_A)}{P(dados|H_0)} = \frac{P(H_A|dados) \times P(H_A)}{P(H_0|dados) \times P(H_0)}
+\]</span></p>
+<p>Podemos calcular o fator de Bayes para os dados de revista policial usando nosso software estatístico:</p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Calcular fator de Bayes (requer pacote BayesFactor)</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">require</span>(BayesFactor)) {</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  bf_policia <span class="ot">&lt;-</span> <span class="fu">contingencyTableBF</span>(tabela_policia, <span class="at">sampleType =</span> <span class="st">"indepMulti"</span>, <span class="at">fixedMargin =</span> <span class="st">"rows"</span>)</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(bf_policia)</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Pacote BayesFactor não instalado.</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"O fator de Bayes é extremamente grande (&gt; 10^100),</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"indicando evidência muito forte a favor da hipótese alternativa.</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>Bayes factor analysis
+--------------
+[1] Non-indep. (a=1) : 1.753219e+142 ±0%
+
+Against denominator:
+  Null, independence, a = 1 
+---
+Bayes factor type: BFcontingencyTable, independent multinomial</code></pre>
+</div>
+</div>
+<p>Isso mostra que a evidência a favor de uma relação entre raça do motorista e revistas policiais neste conjunto de dados é <u><strong><em>extremamente forte</em></strong></u> - um fator de Bayes muito grande é o mais próximo que podemos imaginar de infinito em estatística.</p>
+</section><section id="sec-alem-2x2" class="level2" data-number="19.8"><h2 data-number="19.8" class="anchored" data-anchor-id="sec-alem-2x2">
+<span class="header-section-number">19.8</span> Análise Categórica Além da Tabela 2×2</h2>
+<p>A análise categórica também pode ser aplicada a tabelas de contingência onde há mais de duas categorias para cada variável.</p>
+<p>Por exemplo, vamos olhar para os dados NHANES e comparar a variável <em>Depressed</em> (Deprimido) que denota o “número autorrelatado de dias em que o participante se sentiu para baixo, deprimido ou sem esperança”. Esta variável é codificada como Nenhum, Vários ou Maioria. Vamos testar se esta variável está relacionada à variável <em>SleepTrouble</em> (Problema de Sono) que denota se o indivíduo relatou problemas de sono a um médico.</p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-nhanes-depression</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Relação entre depressão e problemas de sono no conjunto de dados NHANES"</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulando dados NHANES (baseado no exemplo)</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>nhanes_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">Deprimido =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"Nenhum"</span>, <span class="dv">2614</span>), <span class="fu">rep</span>(<span class="st">"Vários"</span>, <span class="dv">418</span>), <span class="fu">rep</span>(<span class="st">"Maioria"</span>, <span class="dv">138</span>),</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>                <span class="fu">rep</span>(<span class="st">"Nenhum"</span>, <span class="dv">676</span>), <span class="fu">rep</span>(<span class="st">"Vários"</span>, <span class="dv">249</span>), <span class="fu">rep</span>(<span class="st">"Maioria"</span>, <span class="dv">145</span>)),</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">ProblemasSono =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"Não"</span>, <span class="dv">2614</span>), <span class="fu">rep</span>(<span class="st">"Não"</span>, <span class="dv">418</span>), <span class="fu">rep</span>(<span class="st">"Não"</span>, <span class="dv">138</span>),</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>                    <span class="fu">rep</span>(<span class="st">"Sim"</span>, <span class="dv">676</span>), <span class="fu">rep</span>(<span class="st">"Sim"</span>, <span class="dv">249</span>), <span class="fu">rep</span>(<span class="st">"Sim"</span>, <span class="dv">145</span>))</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Criar tabela de contingência</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>tabela_nhanes <span class="ot">&lt;-</span> <span class="fu">table</span>(nhanes_data<span class="sc">$</span>Deprimido, nhanes_data<span class="sc">$</span>ProblemasSono)</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(tabela_nhanes)</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Teste qui-quadrado</span></span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>teste_nhanes <span class="ot">&lt;-</span> <span class="fu">chisq.test</span>(tabela_nhanes)</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(teste_nhanes)</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's Chi-squared test
+
+data:  tabela_nhanes
+X-squared = 191.46, df = 2, p-value &lt; 2.2e-16</code></pre>
+</div>
+<div id="tbl-nhanes-depression" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-nhanes-depression-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tab.&nbsp;19.5 Relação entre depressão e problemas de sono no conjunto de dados NHANES
+</figcaption><div aria-describedby="tbl-nhanes-depression-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead><tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">Não</th>
+<th style="text-align: right;">Sim</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Maioria</td>
+<td style="text-align: right;">138</td>
+<td style="text-align: right;">145</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Nenhum</td>
+<td style="text-align: right;">2614</td>
+<td style="text-align: right;">676</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Vários</td>
+<td style="text-align: right;">418</td>
+<td style="text-align: right;">249</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>Simplesmente olhando para esses dados, podemos dizer que é provável que haja uma relação entre as duas variáveis; notavelmente, enquanto o número total de pessoas com problemas de sono é muito menor do que aqueles sem, para pessoas que relatam estar deprimidas na maioria dos dias, o número com problemas de sono é maior do que aqueles sem.</p>
+<p>Este teste mostra que há uma <strong><em>significativa relação entre depressão e problemas de sono</em></strong>.</p>
+<p>Também podemos <strong><em>calcular o fator de Bayes</em></strong> para <strong><em>quantificar</em></strong> a <u><strong>força da evidência</strong></u> a favor da hipótese alternativa:</p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Fator de Bayes para dados NHANES</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="fu">require</span>(BayesFactor)) {</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>  bf_nhanes <span class="ot">&lt;-</span> <span class="fu">contingencyTableBF</span>(tabela_nhanes, <span class="at">sampleType =</span> <span class="st">"jointMulti"</span>)</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(bf_nhanes)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>} <span class="cf">else</span> {</span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"Pacote BayesFactor não instalado.</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"O fator de Bayes é extremamente grande,</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cat</span>(<span class="st">"mostrando evidência muito forte de relação entre depressão e problemas de sono.</span><span class="sc">\n</span><span class="st">"</span>)</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div class="cell-output cell-output-stdout">
+<pre><code>Bayes factor analysis
+--------------
+[1] Non-indep. (a=1) : 1.796345e+35 ±0%
+
+Against denominator:
+  Null, independence, a = 1 
+---
+Bayes factor type: BFcontingencyTable, joint multinomial</code></pre>
+</div>
+</div>
+<p>Aqui vemos que o fator de Bayes é muito grande, mostrando que a evidência a favor de uma relação entre depressão e problemas de sono é muito forte.</p>
+</section><section id="sec-paradoxo-simpson" class="level2" data-number="19.9"><h2 data-number="19.9" class="anchored" data-anchor-id="sec-paradoxo-simpson">
+<span class="header-section-number">19.9</span> Cuidado com o Paradoxo de Simpson</h2>
+<p>As tabelas de contingência apresentadas acima representam resumos de grandes números de observações, mas resumos às vezes podem ser enganosos. Vamos pegar um exemplo do beisebol. A tabela abaixo mostra os dados de rebatidas (acertos/rebatidas e média de rebatidas) para Derek Jeter e David Justice nos anos de 1995-1997:</p>
+<div class="cell">
+<details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-baseball</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Paradoxo de Simpson: Dados de rebatidas de beisebol"</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>baseball_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">Jogador =</span> <span class="fu">c</span>(<span class="st">"Derek Jeter"</span>, <span class="st">"David Justice"</span>),</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">1995</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"12/48 (.250)"</span>, <span class="st">"104/411 (.253)"</span>),</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">1996</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"183/582 (.314)"</span>, <span class="st">"45/140 (.321)"</span>),</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">1997</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"190/654 (.291)"</span>, <span class="st">"163/495 (.329)"</span>),</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  <span class="at">Combinado =</span> <span class="fu">c</span>(<span class="st">"385/1284 (.300)"</span>, <span class="st">"312/1046 (.298)"</span>)</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(baseball_data, </span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Jogador"</span>, <span class="st">"1995"</span>, <span class="st">"1996"</span>, <span class="st">"1997"</span>, <span class="st">"Combinado"</span>))</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</details><div id="tbl-baseball" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-baseball-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tab.&nbsp;19.6 Paradoxo de Simpson: Dados de rebatidas de beisebol
+</figcaption><div aria-describedby="tbl-baseball-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 21%">
+</colgroup>
+<thead><tr class="header">
+<th style="text-align: left;">Jogador</th>
+<th style="text-align: left;">1995</th>
+<th style="text-align: left;">1996</th>
+<th style="text-align: left;">1997</th>
+<th style="text-align: left;">Combinado</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Derek Jeter</td>
+<td style="text-align: left;">12/48 (.250)</td>
+<td style="text-align: left;">183/582 (.314)</td>
+<td style="text-align: left;">190/654 (.291)</td>
+<td style="text-align: left;">385/1284 (.300)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">David Justice</td>
+<td style="text-align: left;">104/411 (.253)</td>
+<td style="text-align: left;">45/140 (.321)</td>
+<td style="text-align: left;">163/495 (.329)</td>
+<td style="text-align: left;">312/1046 (.298)</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p>Se você olhar atentamente, verá que algo estranho está acontecendo: Em cada ano individual, Justice teve uma média de rebatidas maior que Jeter, mas quando combinamos os dados de todos os três anos, a média de Jeter é na verdade maior que a de Justice! Este é um exemplo de um fenômeno conhecido como paradoxo de Simpson, no qual um padrão que está presente em um conjunto de dados combinado pode não estar presente em nenhum dos subconjuntos dos dados.</p>
+<p>Isso ocorre quando há outra variável que pode estar mudando entre os diferentes subconjuntos - neste caso, o número de rebatidas varia entre os anos, com Justice rebatendo muito mais vezes em 1995 (quando as médias de rebatidas eram baixas). Referimo-nos a isso como uma variável oculta (lurking variable), e é sempre importante estar atento a tais variáveis sempre que se examinam dados categóricos.</p>
+</section><section id="leituras-adicionais" class="level2" data-number="19.10"><h2 data-number="19.10" class="anchored" data-anchor-id="leituras-adicionais">
+<span class="header-section-number">19.10</span> Leituras Adicionais</h2>
+<p><a href="https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2013.00513/full">Paradoxo de Simpson na ciência psicológica: um guia prático</a></p>
+
+
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./cap25-DuasVarCategoricas-Teste-Qui-Quadrado.html" class="pagination-link" aria-label="Duas Variáveis Categóricas: Teste Qui-Quadrado">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Duas Variáveis Categóricas: Teste Qui-Quadrado</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./exercicio-tabela-fumantes-gallup.html" class="pagination-link" aria-label="Tabela de Dupla Entrada: Pesquisa Gallup sobre Hábitos de Fumantes">
+        <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Tabela de Dupla Entrada: Pesquisa Gallup sobre Hábitos de Fumantes</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+      &nbsp;
+    </div>
+    <div class="nav-footer-right">
+<p>Relatório escrito em <a href="https://quarto.org/">Quarto</a>.</p>
+</div>
+  </div>
+</footer>
+
+
+</body></html>
