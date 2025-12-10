@@ -265,3 +265,121 @@ A tabela de dupla entrada mostra a relação entre a percepção dos fumantes so
 3.  **Fumantes pesados**: Apenas `r round(percentual_mais_um_maco, 2)`% dos fumantes na amostra fumam mais de um maço por dia.
 
 4.  **Consistência**: Independentemente da quantidade fumada, a maioria dos fumantes reconhece que o tabagismo passivo é prejudicial, o que sugere conscientização sobre os riscos, mesmo entre fumantes.
+
+## Teste quiquadrado: dados_fumantes
+
+```{r}
+# Teste Qui-Quadrado de Independência
+# ====================================
+
+# Realizar o teste qui-quadrado
+teste_qui <- chisq.test(dados_fumantes)
+
+# Exibir resultados completos
+print(teste_qui)
+
+# Exibir componentes individuais
+cat("\n=== RESULTADOS DO TESTE ===\n")
+cat("Estatística X² =", round(teste_qui$statistic, 3), "\n")
+cat("Graus de liberdade =", teste_qui$parameter, "\n")
+cat("Valor-p =", format.pval(teste_qui$p.value, digits = 4), "\n")
+
+# Valores esperados sob H0 (independência)
+cat("\n=== VALORES ESPERADOS ===\n")
+print(round(teste_qui$expected, 2))
+
+# Resíduos de Pearson
+cat("\n=== RESÍDUOS DE PEARSON ===\n")
+cat("(Observado - Esperado) / sqrt(Esperado)\n")
+print(round(teste_qui$residuals, 2))
+
+# Resíduos padronizados
+cat("\n=== RESÍDUOS PADRONIZADOS ===\n")
+cat("|r| >= 2: contribuição significativa\n")
+cat("|r| >= 3: contribuição muito significativa\n")
+print(round(teste_qui$stdres, 2))
+
+# Identificar células com contribuição significativa
+significativos <- which(abs(teste_qui$stdres) >= 2, arr.ind = TRUE)
+if(nrow(significativos) > 0) {
+  cat("\n=== CÉLULAS COM CONTRIBUIÇÃO SIGNIFICATIVA (|r| >= 2) ===\n")
+  for(i in 1:nrow(significativos)) {
+    linha <- significativos[i, 1]
+    coluna <- significativos[i, 2]
+    cat(sprintf("%s × %s: r = %.2f\n", 
+                rownames(dados_fumantes)[linha],
+                colnames(dados_fumantes)[coluna],
+                teste_qui$stdres[linha, coluna]))
+  }
+}
+
+# Conclusão estatística
+cat("\n=== CONCLUSÃO ===\n")
+if(teste_qui$p.value < 0.05) {
+  cat("Rejeitamos H0 (α = 0.05)\n")
+  cat("Há evidência de associação significativa entre as variáveis.\n")
+} else {
+  cat("Não rejeitamos H0 (α = 0.05)\n")
+  cat("Não há evidência suficiente de associação entre as variáveis.\n")
+}
+
+# Visualização dos resíduos (requer ggplot2 e tidyverse)
+if(require(ggplot2) && require(tidyr) && require(tibble)) {
+  
+  # Criar dataframe para heatmap
+  df_residuos <- as.data.frame(teste_qui$stdres) %>%
+    rownames_to_column("Percepcao") %>%
+    pivot_longer(cols = -Percepcao, 
+                 names_to = "Cigarros", 
+                 values_to = "Residuo")
+  
+  # Heatmap dos resíduos padronizados
+  p <- ggplot(df_residuos, aes(x = Cigarros, y = Percepcao, fill = Residuo)) +
+    geom_tile(color = "white", linewidth = 1) +
+    geom_text(aes(label = round(Residuo, 2)), 
+              color = ifelse(abs(df_residuos$Residuo) > 1.5, "white", "black"),
+              size = 5, fontface = "bold") +
+    scale_fill_gradient2(low = "#2166ac", mid = "white", high = "#b2182b",
+                         midpoint = 0, limits = c(-5, 5),
+                         name = "Resíduo\nPadronizado") +
+    labs(title = "Resíduos Padronizados do Teste Qui-Quadrado",
+         subtitle = sprintf("X² = %.2f, gl = %d, p %s", 
+                           teste_qui$statistic, 
+                           teste_qui$parameter,
+                           ifelse(teste_qui$p.value < 0.001, "< 0.001", 
+                                  paste("=", round(teste_qui$p.value, 4)))),
+         x = "Cigarros fumados por dia",
+         y = "Percepção sobre tabagismo passivo") +
+    theme_minimal(base_size = 12) +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1),
+          plot.title = element_text(face = "bold", size = 14),
+          plot.subtitle = element_text(size = 11),
+          legend.position = "right")
+  
+  print(p)
+}
+```
+
+**Principais componentes do teste:**
+
+-   **`teste_qui$statistic`**: Estatística X² calculada
+
+-   **`teste_qui$parameter`**: Graus de liberdade = (linhas-1) × (colunas-1)
+
+-   **`teste_qui$p.value`**: Valor-p do teste
+
+-   **`teste_qui$expected`**: Frequências esperadas sob independência
+
+-   **`teste_qui$residuals`**: Resíduos de Pearson
+
+-   **`teste_qui$stdres`**: Resíduos padronizados (mais úteis para interpretação)
+
+**Interpretação dos resíduos padronizados:**
+
+-   ∣r∣<2 : não significativo
+
+-   ∣r∣≥2 : contribuição significativa (α = 0.05)
+
+-   ∣r∣≥3 : contribuição muito significativa (α = 0.01)
+
+IA: Copilot, módulo Claude Sonnet 4.5.

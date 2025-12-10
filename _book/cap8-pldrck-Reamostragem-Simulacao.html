@@ -5,7 +5,7 @@
 <meta name="generator" content="quarto-1.8.25">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Cleuler Barbosa das Neves">
-<title>19&nbsp; Reamostragem e Simulação – __Ciência de Dados e Estatística Aplicadas ao Direito e Políticas Públicas__</title>
+<title>22&nbsp; Reamostragem e Simulação – __Ciência de Dados e Estatística Aplicadas ao Direito e Políticas Públicas__</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -154,7 +154,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cap8-pldrck-Reamostragem-Simulacao.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Reamostragem e Simulação</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cap8-pldrck-Reamostragem-Simulacao.html"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Reamostragem e Simulação</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -294,20 +294,38 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./cap25-DuasVarCategoricas-Teste-Qui-Quadrado.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Duas Variáveis Categóricas: Teste Qui-Quadrado</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cap12-pldrck-ModelRelCateg.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Modelando Relações Categóricas</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./exercicio-tabela-fumantes-gallup.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Tabela de Dupla Entrada: Pesquisa Gallup sobre Hábitos de Fumantes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./cap32-Reamostragem-TestesPermutacao-Bootstrap-v2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Introdução à Reamostragem</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Introdução à Reamostragem</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cap8-pldrck-Reamostragem-Simulacao.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Reamostragem e Simulação</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Reamostragem e Simulação</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./conclusao.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Conclusão</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Conclusão</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -336,23 +354,23 @@ window.Quarto = {
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Sumário</h2>
    
   <ul>
-<li><a href="#objetivos-de-aprendizagem" id="toc-objetivos-de-aprendizagem" class="nav-link active" data-scroll-target="#objetivos-de-aprendizagem"><span class="header-section-number">19.1</span> Objetivos de aprendizagem</a></li>
-  <li><a href="#simula%C3%A7%C3%A3o-de-monte-carlo" id="toc-simulação-de-monte-carlo" class="nav-link" data-scroll-target="#simula%C3%A7%C3%A3o-de-monte-carlo"><span class="header-section-number">19.2</span> Simulação de Monte Carlo</a></li>
-  <li><a href="#aleatoriedade-em-estat%C3%ADstica" id="toc-aleatoriedade-em-estatística" class="nav-link" data-scroll-target="#aleatoriedade-em-estat%C3%ADstica"><span class="header-section-number">19.3</span> Aleatoriedade em estatística</a></li>
-  <li><a href="#gera%C3%A7%C3%A3o-de-n%C3%BAmeros-aleat%C3%B3rios" id="toc-geração-de-números-aleatórios" class="nav-link" data-scroll-target="#gera%C3%A7%C3%A3o-de-n%C3%BAmeros-aleat%C3%B3rios"><span class="header-section-number">19.4</span> Geração de números aleatórios</a></li>
-  <li><a href="#usando-a-simula%C3%A7%C3%A3o-de-monte-carlo" id="toc-usando-a-simulação-de-monte-carlo" class="nav-link" data-scroll-target="#usando-a-simula%C3%A7%C3%A3o-de-monte-carlo"><span class="header-section-number">19.5</span> Usando a simulação de Monte Carlo</a></li>
+<li><a href="#objetivos-de-aprendizagem" id="toc-objetivos-de-aprendizagem" class="nav-link active" data-scroll-target="#objetivos-de-aprendizagem"><span class="header-section-number">22.1</span> Objetivos de aprendizagem</a></li>
+  <li><a href="#simula%C3%A7%C3%A3o-de-monte-carlo" id="toc-simulação-de-monte-carlo" class="nav-link" data-scroll-target="#simula%C3%A7%C3%A3o-de-monte-carlo"><span class="header-section-number">22.2</span> Simulação de Monte Carlo</a></li>
+  <li><a href="#aleatoriedade-em-estat%C3%ADstica" id="toc-aleatoriedade-em-estatística" class="nav-link" data-scroll-target="#aleatoriedade-em-estat%C3%ADstica"><span class="header-section-number">22.3</span> Aleatoriedade em estatística</a></li>
+  <li><a href="#gera%C3%A7%C3%A3o-de-n%C3%BAmeros-aleat%C3%B3rios" id="toc-geração-de-números-aleatórios" class="nav-link" data-scroll-target="#gera%C3%A7%C3%A3o-de-n%C3%BAmeros-aleat%C3%B3rios"><span class="header-section-number">22.4</span> Geração de números aleatórios</a></li>
+  <li><a href="#usando-a-simula%C3%A7%C3%A3o-de-monte-carlo" id="toc-usando-a-simulação-de-monte-carlo" class="nav-link" data-scroll-target="#usando-a-simula%C3%A7%C3%A3o-de-monte-carlo"><span class="header-section-number">22.5</span> Usando a simulação de Monte Carlo</a></li>
   <li>
-<a href="#usando-simula%C3%A7%C3%A3o-em-estat%C3%ADstica-o-m%C3%A9todo-bootstrap" id="toc-usando-simulação-em-estatística-o-método-bootstrap" class="nav-link" data-scroll-target="#usando-simula%C3%A7%C3%A3o-em-estat%C3%ADstica-o-m%C3%A9todo-bootstrap"><span class="header-section-number">19.6</span> Usando simulação em estatística: O Método <em>bootstrap</em></a>
+<a href="#usando-simula%C3%A7%C3%A3o-em-estat%C3%ADstica-o-m%C3%A9todo-bootstrap" id="toc-usando-simulação-em-estatística-o-método-bootstrap" class="nav-link" data-scroll-target="#usando-simula%C3%A7%C3%A3o-em-estat%C3%ADstica-o-m%C3%A9todo-bootstrap"><span class="header-section-number">22.6</span> Usando simulação em estatística: O Método <em>bootstrap</em></a>
   <ul>
-<li><a href="#calculando-o-bootstrap" id="toc-calculando-o-bootstrap" class="nav-link" data-scroll-target="#calculando-o-bootstrap"><span class="header-section-number">19.6.1</span> Calculando o <em>bootstrap</em></a></li>
+<li><a href="#calculando-o-bootstrap" id="toc-calculando-o-bootstrap" class="nav-link" data-scroll-target="#calculando-o-bootstrap"><span class="header-section-number">22.6.1</span> Calculando o <em>bootstrap</em></a></li>
   </ul>
 </li>
-  <li><a href="#leituras-sugeridas" id="toc-leituras-sugeridas" class="nav-link" data-scroll-target="#leituras-sugeridas"><span class="header-section-number">19.7</span> Leituras sugeridas</a></li>
+  <li><a href="#leituras-sugeridas" id="toc-leituras-sugeridas" class="nav-link" data-scroll-target="#leituras-sugeridas"><span class="header-section-number">22.7</span> Leituras sugeridas</a></li>
   </ul></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
-<h1 class="title"><span id="sec-resampling-simulation" class="quarto-section-identifier"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Reamostragem e Simulação</span></span></h1>
+<h1 class="title"><span id="sec-resampling-simulation" class="quarto-section-identifier"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Reamostragem e Simulação</span></span></h1>
 </div>
 
 
@@ -372,16 +390,16 @@ window.Quarto = {
 <p>“Se pudéssemos escolher entre ser um especialista em uma vasta coleção de livros sobre estatística analítica ou adquirir habilidades razoáveis para realizar simulações estatísticas de Monte Carlo, sem dúvida, escolheríamos a segunda opção.” (Press et al.&nbsp;1992, p.&nbsp;691).</p>
 </blockquote>
 <p>Neste capítulo, apresentaremos o conceito de simulação de Monte Carlo e discutiremos como ela pode ser usada para realizar análises estatísticas.</p>
-<section id="objetivos-de-aprendizagem" class="level2" data-number="19.1"><h2 data-number="19.1" class="anchored" data-anchor-id="objetivos-de-aprendizagem">
-<span class="header-section-number">19.1</span> Objetivos de aprendizagem</h2>
+<section id="objetivos-de-aprendizagem" class="level2" data-number="22.1"><h2 data-number="22.1" class="anchored" data-anchor-id="objetivos-de-aprendizagem">
+<span class="header-section-number">22.1</span> Objetivos de aprendizagem</h2>
 <p>Após a leitura deste capítulo, você deverá ser capaz de:</p>
 <ul>
 <li>⪧ Descrever o conceito de <strong>simulação</strong> de Monte Carlo.</li>
 <li>⪧ Descrever o significado de <strong>aleatoriedade</strong><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> em estatística.</li>
 <li>⪧ Descrever como <strong>números pseudoaleatórios</strong> são gerados.</li>
 <li>⪧ Descrever o conceito de <strong><em>bootstrap</em></strong>.</li>
-</ul></section><section id="simulação-de-monte-carlo" class="level2" data-number="19.2"><h2 data-number="19.2" class="anchored" data-anchor-id="simulação-de-monte-carlo">
-<span class="header-section-number">19.2</span> Simulação de Monte Carlo</h2>
+</ul></section><section id="simulação-de-monte-carlo" class="level2" data-number="22.2"><h2 data-number="22.2" class="anchored" data-anchor-id="simulação-de-monte-carlo">
+<span class="header-section-number">22.2</span> Simulação de Monte Carlo</h2>
 <p>O conceito de simulação de Monte Carlo foi idealizado pelos matemáticos Stan Ulam e Nicholas Metropolis, que trabalhavam no desenvolvimento de uma arma atômica para os EUA como parte do Projeto Manhattan.</p>
 <p>Eles precisavam calcular a distância média que um nêutron percorreria em uma substância antes de colidir com um núcleo atômico, mas não conseguiam calcular isso usando a matemática padrão. Ulam percebeu que esses cálculos poderiam ser simulados usando números aleatórios, como em um jogo de cassino. Em um jogo de cassino como a roleta, os números são gerados aleatoriamente; para estimar a probabilidade de um resultado específico, seria necessário jogar centenas de vezes. O tio de Ulam jogava no cassino de Monte Carlo, em Mônaco, que aparentemente deu origem ao nome dessa nova técnica.</p>
 <p>Existem quatro etapas para realizar uma simulação de Monte Carlo:</p>
@@ -392,16 +410,16 @@ window.Quarto = {
 <li>Combinar os resultados de várias repetições.</li>
 </ol>
 <p>Por exemplo, digamos que eu queira descobrir quanto tempo devo reservar para um teste em sala de aula. Vamos supor, por enquanto, que sabemos que a distribuição dos tempos de conclusão do teste é normal, com média de 5 minutos e desvio padrão de 1 minuto. Dado isso, qual deve ser a duração do teste para que todos os alunos consigam terminar a prova em 99% das vezes? Existem duas maneiras de resolver esse problema. A primeira é calcular a resposta usando uma teoria matemática conhecida como estatística de valores extremos. No entanto, isso envolve matemática complexa. Alternativamente, poderíamos usar a simulação de Monte Carlo. Para isso, precisamos gerar amostras aleatórias a partir de uma distribuição normal.</p>
-</section><section id="aleatoriedade-em-estatística" class="level2" data-number="19.3"><h2 data-number="19.3" class="anchored" data-anchor-id="aleatoriedade-em-estatística">
-<span class="header-section-number">19.3</span> Aleatoriedade em estatística</h2>
+</section><section id="aleatoriedade-em-estatística" class="level2" data-number="22.3"><h2 data-number="22.3" class="anchored" data-anchor-id="aleatoriedade-em-estatística">
+<span class="header-section-number">22.3</span> Aleatoriedade em estatística</h2>
 <p>O termo “aleatório” é frequentemente usado coloquialmente para se referir a coisas bizarras ou inesperadas, mas em estatística o termo tem um significado muito especial: um processo é aleatório se for imprevisível. Por exemplo, se eu lançar uma moeda honesta 10 vezes, o valor do resultado em um lançamento não me fornece nenhuma informação que me permita prever o resultado do próximo lançamento. É importante notar que o fato de algo ser imprevisível não significa necessariamente que não seja determinístico. Por exemplo, quando lançamos uma moeda, o resultado do lançamento é determinado pelas leis da física; se soubéssemos todas as condições com detalhes suficientes, deveríamos ser capazes de prever o resultado do lançamento. No entanto, muitos fatores se combinam para tornar o resultado do lançamento da moeda imprevisível na prática.</p>
 <p>Psicólogos demonstraram que os seres humanos, na verdade, têm uma noção bastante deficiente de aleatoriedade. Primeiro, tendemos a enxergar padrões onde eles não existem. Em casos extremos, isso leva ao fenômeno da pareidolia, no qual as pessoas percebem objetos familiares em padrões aleatórios (como enxergar uma nuvem como um rosto humano ou ver a Virgem Maria em uma torrada). Segundo, os humanos tendem a pensar em processos aleatórios como autocorretivos, o que nos leva a esperar que “vamos ganhar” depois de perder muitas rodadas em um jogo de azar, um fenômeno conhecido como “falácia do jogador”.</p>
-</section><section id="geração-de-números-aleatórios" class="level2" data-number="19.4"><h2 data-number="19.4" class="anchored" data-anchor-id="geração-de-números-aleatórios">
-<span class="header-section-number">19.4</span> Geração de números aleatórios</h2>
+</section><section id="geração-de-números-aleatórios" class="level2" data-number="22.4"><h2 data-number="22.4" class="anchored" data-anchor-id="geração-de-números-aleatórios">
+<span class="header-section-number">22.4</span> Geração de números aleatórios</h2>
 <p>Executar uma simulação de Monte Carlo exige que geremos números aleatórios. Gerar números verdadeiramente aleatórios (ou seja, números completamente imprevisíveis) só é possível por meio de processos físicos, como a desintegração de átomos ou o lançamento de dados, que são difíceis de obter e/ou muito lentos para serem úteis em simulações computacionais (embora possam ser obtidos do NIST Randomness Beacon).</p>
 <p>Em geral, em vez de números verdadeiramente aleatórios, usamos números pseudoaleatórios gerados por um algoritmo de computador; Esses números parecerão aleatórios no sentido de que são difíceis de prever, mas a série de números na verdade se repetirá em algum ponto. Por exemplo, o gerador de números aleatórios usado em R repetirá após <span class="math inline">\(2^{19937-1}\)</span> números. Isso é muito mais do que o número de segundos na história do universo, e geralmente consideramos isso adequado para a maioria dos propósitos em análises estatísticas.</p>
 <p>A maioria dos softwares estatísticos inclui funções para gerar números aleatórios para cada uma das principais distribuições de probabilidade, como a distribuição uniforme (todos os valores entre 0 e 1 igualmente), a distribuição normal e a distribuição binomial (por exemplo, rolar dados, cara ou coroa).</p>
-<p>A <a href="#fig-random-distributions" class="quarto-xref">fig.&nbsp;<span>19.1</span></a> mostra exemplos de números gerados a partir de funções de distribuição uniforme e normal.</p>
+<p>A <a href="#fig-random-distributions" class="quarto-xref">fig.&nbsp;<span>22.1</span></a> mostra exemplos de números gerados a partir de funções de distribuição uniforme e normal.</p>
 <div class="cell">
 <details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-random-distributions</span></span>
@@ -433,16 +451,16 @@ window.Quarto = {
 <img src="cap8-pldrck-Reamostragem-Simulacao_files/figure-html/fig-random-distributions-1.png" class="img-fluid figure-img" width="960">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-random-distributions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Fig.&nbsp;19.1 Exemplos de números aleatórios gerados a partir de uma distribuição uniforme (esquerda) ou normal (direita).
+Fig.&nbsp;22.1 Exemplos de números aleatórios gerados a partir de uma distribuição uniforme (esquerda) ou normal (direita).
 </figcaption></figure>
 </div>
 </div>
 </div>
 <p>Também é possível gerar números aleatórios para qualquer distribuição usando uma função quantil para a distribuição. Esta é a inversa da função de distribuição cumulativa; em vez de identificar as probabilidades cumulativas para um conjunto de valores, a função quantil identifica os valores para um conjunto de probabilidades cumulativas. Usando a função quantil, podemos gerar números aleatórios a partir de uma distribuição uniforme e, em seguida, mapeá-los para a distribuição de interesse por meio de sua função quantil.</p>
 <p>Por padrão, os geradores de números aleatórios em softwares estatísticos geram um conjunto diferente de números aleatórios a cada execução. No entanto, também é possível gerar exatamente o mesmo conjunto de números aleatórios, definindo o que é chamado de semente aleatória para um valor específico. Se você observar o código que gerou essas figuras, (disponível em <a href="https://press.princeton.edu/isbn/9780691218441," class="uri">https://press.princeton.edu/isbn/9780691218441,</a> clique em Resources), faremos isso em muitos dos exemplos deste curso, para garantir que os exemplos sejam reproduzíveis.</p>
-</section><section id="usando-a-simulação-de-monte-carlo" class="level2" data-number="19.5"><h2 data-number="19.5" class="anchored" data-anchor-id="usando-a-simulação-de-monte-carlo">
-<span class="header-section-number">19.5</span> Usando a simulação de Monte Carlo</h2>
-<p>Vamos voltar ao nosso exemplo de tempos de conclusão de provas. Digamos que eu aplique três provas e registre os tempos de conclusão de cada aluno em cada prova, que podem se parecer com as distribuições apresentadas na <a href="#fig-exam-times" class="quarto-xref">fig.&nbsp;<span>19.2</span></a>.</p>
+</section><section id="usando-a-simulação-de-monte-carlo" class="level2" data-number="22.5"><h2 data-number="22.5" class="anchored" data-anchor-id="usando-a-simulação-de-monte-carlo">
+<span class="header-section-number">22.5</span> Usando a simulação de Monte Carlo</h2>
+<p>Vamos voltar ao nosso exemplo de tempos de conclusão de provas. Digamos que eu aplique três provas e registre os tempos de conclusão de cada aluno em cada prova, que podem se parecer com as distribuições apresentadas na <a href="#fig-exam-times" class="quarto-xref">fig.&nbsp;<span>22.2</span></a>.</p>
 <div class="cell">
 <details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-exam-times</span></span>
@@ -466,12 +484,12 @@ Fig.&nbsp;19.1 Exemplos de números aleatórios gerados a partir de uma distribu
 <img src="cap8-pldrck-Reamostragem-Simulacao_files/figure-html/fig-exam-times-1.png" class="img-fluid figure-img" width="960">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-exam-times-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Fig.&nbsp;19.2 Distribuições simuladas de tempo de conclusão.
+Fig.&nbsp;22.2 Distribuições simuladas de tempo de conclusão.
 </figcaption></figure>
 </div>
 </div>
 </div>
-<p>O que realmente queremos saber para responder à nossa pergunta não é como é a distribuição dos tempos de conclusão, mas sim como é a distribuição do tempo máximo de conclusão para cada prova. Para isso, podemos simular o tempo de conclusão de uma prova, <u><strong><em>assumindo</em></strong></u> que os tempos de conclusão seguem uma distribuição normal, como mencionado anteriormente; para cada uma dessas provas simuladas, registramos o tempo máximo de conclusão. Repetimos essa simulação um grande número de vezes (5000 devem ser suficientes) e registramos a distribuição dos tempos máximos de conclusão, que é mostrada na <a href="#fig-max-times" class="quarto-xref">fig.&nbsp;<span>19.3</span></a>.</p>
+<p>O que realmente queremos saber para responder à nossa pergunta não é como é a distribuição dos tempos de conclusão, mas sim como é a distribuição do tempo máximo de conclusão para cada prova. Para isso, podemos simular o tempo de conclusão de uma prova, <u><strong><em>assumindo</em></strong></u> que os tempos de conclusão seguem uma distribuição normal, como mencionado anteriormente; para cada uma dessas provas simuladas, registramos o tempo máximo de conclusão. Repetimos essa simulação um grande número de vezes (5000 devem ser suficientes) e registramos a distribuição dos tempos máximos de conclusão, que é mostrada na <a href="#fig-max-times" class="quarto-xref">fig.&nbsp;<span>22.3</span></a>.</p>
 <div class="cell">
 <details class="code-fold"><summary>Code</summary><div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-max-times</span></span>
@@ -508,7 +526,7 @@ Fig.&nbsp;19.2 Distribuições simuladas de tempo de conclusão.
 <img src="cap8-pldrck-Reamostragem-Simulacao_files/figure-html/fig-max-times-1.png" class="img-fluid figure-img" width="768">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-max-times-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Fig.&nbsp;19.3 Distribuição dos tempos máximos de conclusão nas simulações.
+Fig.&nbsp;22.3 Distribuição dos tempos máximos de conclusão nas simulações.
 </figcaption></figure>
 </div>
 </div>
@@ -516,13 +534,13 @@ Fig.&nbsp;19.3 Distribuição dos tempos máximos de conclusão nas simulações
 <p>Isso mostra que o <u><strong>percentil 99</strong></u> da distribuição dos tempos de conclusão está em 8.74, o que significa que, se déssemos esse tempo para o teste, todos deveriam terminá-lo em 99% das vezes.</p>
 <p>É sempre importante lembrar que nossas <u><strong>suposições</strong></u> importam — <strong><em>se estiverem erradas</em></strong>, os <strong><em>resultados da simulação serão inúteis</em></strong>.</p>
 <p>Neste caso, <u><strong>assumimos</strong></u> que a <strong><em>distribuição dos tempos de conclusão seguia uma distribuição normal</em></strong> com uma média e um desvio padrão específicos; se essas suposições estiverem incorretas (e quase certamente estão, já que é raro que os tempos decorridos sigam uma distribuição normal), a verdadeira resposta pode ser muito diferente.</p>
-</section><section id="usando-simulação-em-estatística-o-método-bootstrap" class="level2" data-number="19.6"><h2 data-number="19.6" class="anchored" data-anchor-id="usando-simulação-em-estatística-o-método-bootstrap">
-<span class="header-section-number">19.6</span> Usando simulação em estatística: O Método <em>bootstrap</em>
+</section><section id="usando-simulação-em-estatística-o-método-bootstrap" class="level2" data-number="22.6"><h2 data-number="22.6" class="anchored" data-anchor-id="usando-simulação-em-estatística-o-método-bootstrap">
+<span class="header-section-number">22.6</span> Usando simulação em estatística: O Método <em>bootstrap</em>
 </h2>
 <p>Até agora, usamos simulação para <strong><em>comprovar</em></strong> princípios estatísticos, mas também podemos usá-la para responder a questões estatísticas reais. Nesta seção, apresentaremos um conceito conhecido como <u><strong><em>bootstrap</em></strong></u>, que nos permite usar simulação para <strong><em>quantificar nossa incerteza sobre estimativas estatísticas</em></strong>.</p>
 <p>Mais adiante, veremos outros exemplos de como a simulação pode ser usada para responder a questões estatísticas, especialmente <strong><em>quando</em></strong> os <strong><em>métodos estatísticos teóricos não estão disponíveis</em></strong> ou <strong><em>quando suas premissas são muito difíceis de atender</em></strong>.</p>
-<section id="calculando-o-bootstrap" class="level3" data-number="19.6.1"><h3 data-number="19.6.1" class="anchored" data-anchor-id="calculando-o-bootstrap">
-<span class="header-section-number">19.6.1</span> Calculando o <em>bootstrap</em>
+<section id="calculando-o-bootstrap" class="level3" data-number="22.6.1"><h3 data-number="22.6.1" class="anchored" data-anchor-id="calculando-o-bootstrap">
+<span class="header-section-number">22.6.1</span> Calculando o <em>bootstrap</em>
 </h3>
 <p>Em capítulo anterior, usamos nosso conhecimento da <u><strong><em>distribuição amostral da média</em></strong></u> para <strong><em>calcular</em></strong> o <u><strong><em>erro padrão da média</em></strong></u>.</p>
 <p>Mas e <u><strong><em>se não pudermos assumir</em></strong></u> que as <strong><em>estimativas seguem uma distribuição normal</em></strong>, ou <strong><em>se não conhecermos sua distribuição?</em></strong></p>
@@ -589,17 +607,17 @@ Fig.&nbsp;19.3 Distribuição dos tempos máximos de conclusão nas simulações
 <img src="cap8-pldrck-Reamostragem-Simulacao_files/figure-html/fig-bootstrap-example-1.png" class="img-fluid figure-img" width="768">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bootstrap-example-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Fig.&nbsp;19.4 Um exemplo de bootstrap para calcular o erro padrão da média da altura de adultos no conjunto de dados NHANES. O histograma mostra a distribuição das médias nas amostras de bootstrap, enquanto a linha vermelha mostra a distribuição normal com base na média e no desvio padrão da amostra.
+Fig.&nbsp;22.4 Um exemplo de bootstrap para calcular o erro padrão da média da altura de adultos no conjunto de dados NHANES. O histograma mostra a distribuição das médias nas amostras de bootstrap, enquanto a linha vermelha mostra a distribuição normal com base na média e no desvio padrão da amostra.
 </figcaption></figure>
 </div>
 </div>
 </div>
-<p>A <a href="#fig-bootstrap-example" class="quarto-xref">fig.&nbsp;<span>19.4</span></a> mostra que a distribuição das médias nas amostras de <em>bootstrap</em> é bastante próxima da estimativa teórica com base na suposição de normalidade.</p>
+<p>A <a href="#fig-bootstrap-example" class="quarto-xref">fig.&nbsp;<span>22.4</span></a> mostra que a distribuição das médias nas amostras de <em>bootstrap</em> é bastante próxima da estimativa teórica com base na suposição de normalidade.</p>
 <p>Normalmente, não empregaríamos o <em>bootstrap</em> para calcular intervalos de confiança para a média (já que geralmente podemos assumir que a distribuição normal é apropriada para a distribuição amostral da média, desde que nossa amostra seja grande o suficiente), mas este exemplo mostra como o método nos dá um resultado aproximadamente igual ao do método padrão baseado na distribuição normal.</p>
 <p>O <strong><em>bootstrap</em></strong> seria mais frequentemente usado para <u><strong><em>gerar erros padrão</em></strong></u> para <u><strong><em>estimativas de outras estatísticas</em></strong></u> onde sabemos ou <u><strong><em>suspeitamos que a distribuição normal não seja apropriada</em></strong></u>.</p>
 <p>Além disso, posteriormente, você verá como também <u><strong>podemos usar as amostras <em>bootstrap</em> para gerar estimativas da incerteza</strong></u> em nossa <u><strong><em>estatística amostral</em></strong></u>.</p>
-</section></section><section id="leituras-sugeridas" class="level2" data-number="19.7"><h2 data-number="19.7" class="anchored" data-anchor-id="leituras-sugeridas">
-<span class="header-section-number">19.7</span> Leituras sugeridas</h2>
+</section></section><section id="leituras-sugeridas" class="level2" data-number="22.7"><h2 data-number="22.7" class="anchored" data-anchor-id="leituras-sugeridas">
+<span class="header-section-number">22.7</span> Leituras sugeridas</h2>
 <p><em>Inferência Estatística na Era da Computação: Algoritmos, Evidências e Ciência de Dados</em>, de Bradley Efron e Trevor Hastie.</p>
 <p>Efron, Bradley; Hastie, Trevor. <a href="https://www.amazon.com.br/Computer-Age-Statistical-Inference-Algorithms/dp/1107149894"><em><strong>Computer Age Statistical Inference</strong>: Algorithms, Evidence, and Data Science</em></a>. ISBN 978-1107149892.</p>
 <p>Esse livro <span class="citation" data-cites="efron_computer_2016">(<a href="referencias.html#ref-efron_computer_2016" role="doc-biblioref">Efron; Hastie, 2016</a>)</span> detalha as muitas maneiras pelas quais os avanços computacionais viabilizaram novos métodos estatísticos, como o bootstrap.</p>
@@ -1015,12 +1033,12 @@ EFRON, Bradley; HASTIE, Trevor J. <strong>Computer age statistical inference: Al
   });
   </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
       <a href="./cap32-Reamostragem-TestesPermutacao-Bootstrap-v2.html" class="pagination-link" aria-label="Introdução à Reamostragem">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Introdução à Reamostragem</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Introdução à Reamostragem</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./conclusao.html" class="pagination-link" aria-label="Conclusão">
-        <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Conclusão</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Conclusão</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
