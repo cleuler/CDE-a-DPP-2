@@ -271,7 +271,7 @@ for(i in 1:length(niveis_conf)) {
   resultados_ic$Amplitude[i] <- round(ic_temp$conf.int[2] - ic_temp$conf.int[1], 3)
 }
 
-kable(resultados_ic, caption = "Intervalos de confiança para μ_d") %>%
+kable(resultados_ic, caption = "Intervalos de confiança para Média da Diferença") %>%
   kable_styling(bootstrap_options = c("striped", "hover"))
 ```
 

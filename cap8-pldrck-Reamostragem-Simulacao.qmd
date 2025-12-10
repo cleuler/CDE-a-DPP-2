@@ -37,11 +37,11 @@ Neste capítulo, apresentaremos o conceito de simulação de Monte Carlo e discu
 Após a leitura deste capítulo, você deverá ser capaz de:
 
 -   ⪧ Descrever o conceito de **simulação** de Monte Carlo.
--   ⪧ Descrever o significado de **aleatoriedade**[^cap8-pldrck-reamostragem-simulacao-1] em estatística.
+-   ⪧ Descrever o significado de **aleatoriedade**[^1] em estatística.
 -   ⪧ Descrever como **números pseudoaleatórios** são gerados.
 -   ⪧ Descrever o conceito de ***bootstrap***.
 
-[^cap8-pldrck-reamostragem-simulacao-1]: Aleatoriedade \[*randomness*\] é um conceito abrangente que descreve a natureza de eventos ou de fenômenos. Já randomização \[*randomization*\], que vimos no Capítulo 1, é uma técnica ou método usado especificamente para garantir a aleatoriedade em contexto de experimentos científicos ou estudos estatísticos. Ainda que relacionados, esses termos são usados em contextos distintos: a aleatoriedade é usada para descrever a característica geral de eventos que ocorrem de forma imprevisível ou sem um padrão intencional. A randomização é usada para descrever uma ação proposital em pesquisas com o intuito de, ao distribuir aleatoriamente os participantes pelos grupos de de tratamento ou de controle, minimizar viés e confusão. \[nota da tradutora\]
+[^1]: Aleatoriedade \[*randomness*\] é um conceito abrangente que descreve a natureza de eventos ou de fenômenos. Já randomização \[*randomization*\], que vimos no Capítulo 1, é uma técnica ou método usado especificamente para garantir a aleatoriedade em contexto de experimentos científicos ou estudos estatísticos. Ainda que relacionados, esses termos são usados em contextos distintos: a aleatoriedade é usada para descrever a característica geral de eventos que ocorrem de forma imprevisível ou sem um padrão intencional. A randomização é usada para descrever uma ação proposital em pesquisas com o intuito de, ao distribuir aleatoriamente os participantes pelos grupos de de tratamento ou de controle, minimizar viés e confusão. \[nota da tradutora\]
 
 ## Simulação de Monte Carlo
 

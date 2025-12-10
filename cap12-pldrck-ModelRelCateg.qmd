@@ -119,7 +119,7 @@ print(teste_chi2)
 
 O valor-p resultante (P(Qui-quadrado) \> `r round(chi2_stat, 2)` = `r round(p_valor, 3)`) mostra que as contagens observadas de balas não são particularmente surpreendentes com base nas proporções impressas no saco de balas, e não rejeitaríamos a hipótese nula de proporções iguais.
 
-## Tabelas de Contingência e o Teste Bidirecional {#sec-tabelas-contingencia}
+## Tabelas de Contingência e o Teste Bidirecional {#sec-tabelas-contingencia-teste-bidirecional}
 
 Outra maneira de usar o teste qui-quadrado é perguntar se duas variáveis categóricas estão relacionadas entre si. Como um exemplo mais realista, tomemos a questão de se um motorista negro tem maior probabilidade de ser revistado quando é parado por um policial, em comparação com um motorista branco.
 

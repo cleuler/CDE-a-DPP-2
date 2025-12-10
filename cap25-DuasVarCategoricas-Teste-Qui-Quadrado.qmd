@@ -470,7 +470,7 @@ cat("\nV de Cramér:", round(v_ex1, 3))
 2.  Qual a força dessa associação?
 3.  Quais células contribuem mais para o qui-quadrado?
 
-## Resumo {#sec-resumo}
+## Resumo {#sec-resumo-qui-quadrado}
 
 **Quando usar o teste qui-quadrado:**
 
