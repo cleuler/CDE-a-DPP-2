@@ -1,0 +1,1144 @@
+---
+title: "CDEaDPP 2025.2 - Trabalho Final"
+subtitle: "Ciência de Dados e Estatística aplicada a Direito e Políticas Públicas"
+author:
+  - name: Prof. Dr. Cleuler Barbosa das Neves
+    id: cbn
+    orcid: 0000-0001-8319-0257
+    email: cleuler@ufg.br
+    affiliation:
+      - name: Faculdade de Direito da UFG/PPGDP
+        city: Goiânia
+        state: GO
+        url: https://ppgdp.direito.ufg.br/p/19422-docentes
+date: today
+bibliography: references.bib
+csl: abnt-github.csl
+toc-title: "Sumário"
+biblio-title: "Referências"
+lof-title: "Lista de Figuras"
+lot-title: "Lista de Tabelas"
+cap-location: bottom
+tbl-cap-location: top
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    toc-title: "Sumário"
+    biblio-title: "Referências"
+    number-sections: true
+    code-fold: false
+    code-tools: true
+    theme: cosmo
+  pdf:
+    pdf-engine: xelatex
+    toc: true
+    number-sections: true
+    colorlinks: true
+    geometry:
+      - top=30mm
+      - left=30mm
+      - bottom=20mm
+      - right=20mm
+      - heightrounded
+    include-in-header:
+      text: |
+        \usepackage{fontspec}
+        \usepackage{polyglossia}
+        \setmainlanguage{portuguese}
+        \setmainfont{Liberation Serif}
+        \usepackage{grffile}
+        \usepackage{fvextra}
+        \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,commandchars=\\\{\}}
+        \DefineVerbatimEnvironment{OutputCode}{Verbatim}{breaklines,commandchars=\\\{\}}
+        \usepackage{fancyhdr}
+        \pagestyle{fancy}
+        \fancyhf{}
+        \fancyhead[LE]{\nouppercase{\rightmark\hfill\leftmark}}
+        \fancyhead[RO]{\nouppercase{\leftmark\hfill\rightmark}}
+        \fancyfoot[LE,RO]{\hfill\thepage\hfill}
+editor: visual
+---
+
+```{r}
+#| label: setup
+#| include: false
+
+# pacotes necessários para este exemplo
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+library(ggplot2)
+library(pwr)
+
+# Configurações gerais
+theme_set(theme_minimal(base_size = 12))
+options(digits = 4)
+set.seed(2025)
+```
+
+# Roteiro
+
+CDEaDPP 2025.2 - Ciência de Dados e Estatística aplicada a Direito e Políticas Públicas.
+
+Trabalho Final.
+
+Criar um arquivo `CDEaDPP-AtividadeFinal-SeuNome.qmd` no VS Code para resolver, com emprego da Linguagem R, as seguintes tarefas:
+
+1.  Conceber um quadro de variáveis para sua pesquisa. Que contenha pelo menos os seguintes tipos de variáveis:
+
+    a.  quantitativas, ex.: número de dias preso; idade em anos na data do fato etc.
+    b.  categóricas: tipo penal; tipo de ação etc.
+    c.  apresentar um dicionário de dados: nome da variável, finalidade, tipo, exemplo de observação esperada
+
+2.  Criar dados simulados para uma amostra aleatória com 100 observações ou usar dados de sua amostra piloto (aqueles que já coletaram dados de sua pesquisa): salvar esses dados em um arquivo na pasta denominada `out`.
+
+3.  Fazer uma Análise de Dados Exploratória (AED) univariada.
+
+    a.  Iniciar com uma análise de cada variável separadamente;
+    b.  Exibir gráficos adequados da sua distribuição de frequência.
+    c.  Interpretar esses gráficos. Exibir medidas estatísticas resumo para cada variável.
+    d.  Interpretar essas medidas.
+    e.  Procurar por padrões nessas distribuições e descrevê-los.
+    f.  Descrever também aqueles dados pontuais que fogem ao padrão (outliers).
+
+4.  Depois fazer uma Análise de Dados Exploratória (AED) bivariada.
+
+    a.  Fazer pelo menos uma análise que combine os seguintes tipos de variáveis aos pares:
+        -   Duas variáveis quantitativas: gráfico de dispersão, medidas resumo e modelo de reta de regressão. Interpretar os resultados.
+        -   Duas variáveis categóricas: tabela de dupla entrada, totais e proporções marginais, gráficos. Interpretar os resultados.
+        -   Uma variável quantitativa e uma categórica: gráficos box plot e violino lado a lado e medidas resumo. Interpretar os resultados.
+        -   Procurar por padrões nessas análise bivariadas e descrevê-los. Descrever também aqueles dados pontuais que fogem ao padrão (valores influentes).
+
+5.  Fazer uma reflexão sobre possíveis variáveis ocultas ou de confundimento na sua análise de dados.
+
+6.  Conceber pelo menos um Teste de Significância contra Hipótese Nula adequado para cada AED acima (itens 3 e 4).
+
+    a.  Formular adequadamente os pares de Hipótese Nula e Hipótese Alternativa.
+        -   Definir se será aplicado um teste uni ou bilateral.
+        -   Estabeler previamente o Nível de Significância.
+        -   Aplicar o teste planejado.
+        -   Interpretar os resultados do teste no contexto estatístico e no contexto do seu problema.
+
+7.  Calcular um tamanho adequado de amostra aleatória final para sua pesquisa.
+
+    a.  Considerando o Erro Tipo I de 5% e um Poder de pelo menos 85%.
+    b.  Considere também o tamanho do efeito (d de Cohen) que você pretende capturar na sua principal variável quantitativa.
+    c.  E também o tamanho do efeito nas proporções da sua principal variável categórica.
+    d.  Faça uma tabela com os possíveis tamanhos de amostra e os respectivos valores de poder e tamanho do efeito para permitir que você escolha seu tamanho definitivo da sua amostra probabilística final.
+
+8.  Elabore uma conclusão para esse Trabalho Final.
+
+9.  Sugestões para melhoria incremental da disciplina CDEaDPP.
+
+10. Inserir ao final todas as referências bibliográficas citadas na sua análise no formato ABNT.
+
+A seguir um modelo de como será a estrutura do trabalho final a ser apresentado.
+
+# Quadro de Variáveis da Pesquisa
+
+## Dicionário de Dados
+
+```{r}
+#| label: tbl-dicionario
+#| tbl-cap: "Dicionário de dados da pesquisa"
+
+# Criar dicionário de dados
+dicionario <- tibble(
+  Nome = c(
+    "id",
+    "dias_preso",
+    "idade_fato",
+    "tipo_penal",
+    "tipo_acao",
+    "reincidencia"
+  ),
+  Finalidade = c(
+    "Identificador único do caso",
+    "Número de dias em que o réu permaneceu preso",
+    "Idade do réu em anos completos na data do fato",
+    "Classificação do tipo penal imputado",
+    "Tipo de ação processual",
+    "Se houve reincidência criminal"
+  ),
+  Tipo = c(
+    "Identificador",
+    "Quantitativa contínua",
+    "Quantitativa discreta",
+    "Categórica nominal",
+    "Categórica nominal",
+    "Categórica binária"
+  ),
+  Exemplo = c(
+    "001, 002, 003...",
+    "15, 30, 120...",
+    "18, 25, 42...",
+    "Furto, Roubo, Tráfico...",
+    "Pública, Privada",
+    "Sim, Não"
+  )
+)
+
+# Exibir tabela formatada
+kable(dicionario, 
+      align = c("l", "l", "l", "l"),
+      booktabs = TRUE) %>%
+  kable_styling(
+    bootstrap_options = c("striped", "hover", "condensed"),
+    full_width = FALSE,
+    position = "left"
+  ) %>%
+  column_spec(1, bold = TRUE, width = "3cm") %>%
+  column_spec(2, width = "6cm") %>%
+  column_spec(3, width = "4cm") %>%
+  column_spec(4, width = "4cm")
+```
+
+### Descrição das Variáveis
+
+**Variáveis Quantitativas:**
+
+-   **dias_preso**: Número de dias que o réu permaneceu preso preventivamente ou após condenação
+-   **idade_fato**: Idade do réu em anos completos na data em que ocorreu o fato criminoso
+
+**Variáveis Categóricas:**
+
+-   **tipo_penal**: Classificação do crime (Furto, Roubo, Tráfico de Drogas, Homicídio, Outros)
+-   **tipo_acao**: Natureza da ação processual (Pública ou Privada)
+-   **reincidencia**: Indica se o réu é reincidente (Sim ou Não)
+
+# Dados Simulados
+
+```{r}
+#| label: criar-dados-simulados
+#| echo: true
+
+# ============================================================================
+# SIMULAÇÃO DE DADOS
+# ============================================================================
+
+# Definir o tamanho da amostra
+n <- 100
+
+# Criar dataframe com dados simulados
+dados <- tibble(
+  # Identificador único para cada observação (formato: 001, 002, ...)
+  id = sprintf("%03d", 1:n),
+  
+  # Variável quantitativa: dias preso (distribuição assimétrica)
+  # Usa distribuição exponencial (comum para tempos de espera)
+  # + ruído uniforme para maior variabilidade
+  dias_preso = round(rexp(n, rate = 1/60) + runif(n, 0, 10)),
+  
+  # Variável quantitativa: idade no fato (distribuição aproximadamente normal)
+  # Média de 32 anos, desvio padrão de 12 anos
+  idade_fato = round(rnorm(n, mean = 32, sd = 12)),
+  
+  # Variável categórica: tipo penal
+  # 5 categorias com probabilidades diferentes baseadas em dados realistas
+  tipo_penal = sample(
+    c("Furto", "Roubo", "Tráfico", "Homicídio", "Outros"),
+    n,
+    replace = TRUE,  # Permitir repetição
+    prob = c(0.25, 0.20, 0.30, 0.10, 0.15)  # Probabilidades por categoria
+  ),
+  
+  # Variável categórica: tipo de ação processual
+  # 90% ações públicas, 10% ações privadas
+  tipo_acao = sample(
+    c("Pública", "Privada"),
+    n,
+    replace = TRUE,
+    prob = c(0.90, 0.10)
+  ),
+  
+  # Variável categórica binária: reincidência
+  # 35% reincidentes, 65% não-reincidentes
+  reincidencia = sample(
+    c("Sim", "Não"),
+    n,
+    replace = TRUE,
+    prob = c(0.35, 0.65)
+  )
+) %>%
+  # Ajustar idades para valores realistas (mínimo 18, máximo 75 anos)
+  # pmax/pmin garantem que valores fiquem dentro dos limites
+  mutate(idade_fato = pmax(18, pmin(75, idade_fato)))
+
+# Visualizar primeiras observações
+head(dados, 10)
+```
+
+## Salvando os Dados
+
+```{r}
+#| label: salvar-dados
+#| echo: true
+
+# ============================================================================
+# SALVAR DADOS EM ARQUIVOS
+# ============================================================================
+
+# Verificar se o diretório "out" existe; se não, criar
+if (!dir.exists("out")) {
+  dir.create("out")
+}
+
+# Salvar dados em formato CSV (texto, universal)
+# Útil para importar em outros softwares (Excel, SPSS, etc.)
+write_csv(dados, "out/dados_pesquisa.csv")
+
+# Salvar dados em formato RDS (binário nativo do R)
+# Preserva tipos de dados e é mais eficiente para R
+saveRDS(dados, "out/dados_pesquisa.rds")
+
+# Confirmar salvamento
+cat("Dados salvos com sucesso em:\n")
+cat("  - out/dados_pesquisa.csv (formato texto)\n")
+cat("  - out/dados_pesquisa.rds (formato R nativo)\n")
+```
+
+# Análise Exploratória de Dados (AED) - Univariada
+
+## Análise da Variável: Dias Preso
+
+```{r}
+#| label: fig-dias-preso
+#| fig-cap: "Distribuição de frequência dos dias de prisão"
+#| fig-width: 10
+#| fig-height: 6
+
+# Criar gráficos
+
+# Histograma com curva de densidade suavizada
+p1 <- ggplot(dados, aes(x = dias_preso)) +
+  # Histograma de frequências
+  geom_histogram(aes(y = after_stat(density)), 
+                 bins = 30, 
+                 fill = "steelblue", 
+                 alpha = 0.7, 
+                 color = "white") +
+  # Curva de densidade suavizada (kernel density)
+  geom_density(aes(y = after_stat(density)),
+               color = "darkred", 
+               linewidth = 1.2,
+               alpha = 0.8) +
+  # Títulos e rótulos dos eixos
+  labs(title = "Histograma: Dias de Prisão",
+       subtitle = "Com curva de densidade suavizada",
+       x = "Dias preso",
+       y = "Densidade") +
+  theme_minimal()
+
+# Boxplot para visualizar quartis e outliers
+p2 <- ggplot(dados, aes(x = dias_preso)) +
+  # Boxplot mostra mediana, quartis e outliers
+  geom_boxplot(fill = "steelblue", alpha = 0.7) +
+  # Títulos e rótulos
+  labs(title = "Boxplot: Dias de Prisão",
+       x = "Dias preso") +
+  theme_minimal() +
+  # Remover eixo Y (não é relevante em boxplot horizontal único)
+  theme(axis.text.y = element_blank(),
+        axis.ticks.y = element_blank())
+
+# Carregar pacote patchwork para combinar gráficos
+library(patchwork)
+
+# Empilhar gráficos verticalmente (p1 sobre p2)
+p1 / p2
+```
+
+### Medidas Resumo: Dias Preso
+
+```{r}
+#| label: resumo-dias-preso
+
+# ============================================================================
+# ESTATÍSTICAS DESCRITIVAS: DIAS PRESO
+# ============================================================================
+
+resumo_dias <- dados %>%
+  summarise(
+    N = n(),                                     # Tamanho da amostra
+    Média = mean(dias_preso),                    # Tendência central
+    Mediana = median(dias_preso),                # Valor do meio (resistente a outliers)
+    `Desvio Padrão` = sd(dias_preso),            # Dispersão dos dados
+    Mínimo = min(dias_preso),                    # Menor valor observado
+    `Q1 (25%)` = quantile(dias_preso, 0.25),     # Primeiro quartil
+    `Q3 (75%)` = quantile(dias_preso, 0.75),     # Terceiro quartil
+    Máximo = max(dias_preso),                    # Maior valor observado
+    Assimetria = moments::skewness(dias_preso),  # Simetria da distribuição
+    Curtose = moments::kurtosis(dias_preso)      # Achatamento da distribuição
+  )
+
+# Transpor tabela (variáveis em linhas) e formatar
+kable(t(resumo_dias), 
+      col.names = "Valor",
+      digits = 2) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+**Interpretação:**
+
+\[Descrever os padrões observados na distribuição de dias preso, identificar *outliers*, se houver, comentar sobre assimetria e dispersão dos dados\]
+
+## Análise da Variável: Idade no Fato
+
+```{r}
+#| label: fig-idade-fato
+#| fig-cap: "Distribuição de frequência da idade no momento do fato"
+#| fig-width: 10
+#| fig-height: 6
+
+# Histograma da idade com curva de densidade
+p3 <- ggplot(dados, aes(x = idade_fato)) +
+  # Histograma (25 bins para boa resolução)
+  geom_histogram(bins = 25, fill = "darkgreen", alpha = 0.7, color = "white") +
+  # Curva de densidade escalada para frequências
+  # after_stat(density) * n converte densidade para escala de frequência
+  geom_density(aes(y = after_stat(density) * n), color = "red", linewidth = 1) +
+  # Títulos e rótulos
+  labs(title = "Histograma: Idade no Fato",
+       x = "Idade (anos)",
+       y = "Frequência") +
+  theme_minimal()
+
+# Boxplot da idade
+p4 <- ggplot(dados, aes(x = idade_fato)) +
+  # Boxplot mostra mediana, quartis e possíveis outliers
+  geom_boxplot(fill = "darkgreen", alpha = 0.7) +
+  labs(title = "Boxplot: Idade no Fato",
+       x = "Idade (anos)") +
+  theme_minimal() +
+  # Remover eixo Y desnecessário
+  theme(axis.text.y = element_blank(),
+        axis.ticks.y = element_blank())
+
+# Empilhar gráficos verticalmente
+p3 / p4
+```
+
+### Medidas Resumo: Idade no Fato
+
+```{r}
+#| label: resumo-idade
+
+# ============================================================================
+# ESTATÍSTICAS DESCRITIVAS: IDADE NO FATO
+# ============================================================================
+
+resumo_idade <- dados %>%
+  summarise(
+    N = n(),                                    # Tamanho da amostra
+    Média = mean(idade_fato),                   # Média aritmética
+    Mediana = median(idade_fato),               # Mediana (valor central)
+    `Desvio Padrão` = sd(idade_fato),          # Dispersão em torno da média
+    Mínimo = min(idade_fato),                   # Idade mínima
+    `Q1 (25%)` = quantile(idade_fato, 0.25),   # Primeiro quartil
+    `Q3 (75%)` = quantile(idade_fato, 0.75),   # Terceiro quartil
+    Máximo = max(idade_fato)                    # Idade máxima
+  )
+
+# Formatar e exibir tabela
+kable(t(resumo_idade), 
+      col.names = "Valor",
+      digits = 2) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+**Interpretação:**
+
+\[Descrever os padrões observados na distribuição de idade, comentar sobre normalidade, identificar outliers se houver\]
+
+## Análise da Variável: Tipo Penal
+
+```{r}
+#| label: fig-tipo-penal
+#| fig-cap: "Distribuição de frequência do tipo penal"
+#| fig-width: 8
+#| fig-height: 6
+
+# ============================================================================
+# ANÁLISE DE FREQUÊNCIAS: TIPO PENAL
+# ============================================================================
+
+# Criar tabela de frequências com percentuais
+freq_tipo <- dados %>%
+  count(tipo_penal) %>%                          # Contar observações por tipo
+  mutate(
+    Percentual = (n / sum(n)) * 100,             # Calcular percentual de cada tipo
+    `Percentual Acumulado` = cumsum(Percentual)  # Percentual acumulado
+  ) %>%
+  arrange(desc(n))                               # Ordenar do mais frequente ao menos
+
+# Gráfico de barras
+ggplot(freq_tipo, aes(x = reorder(tipo_penal, -n), y = n, fill = tipo_penal)) +
+  # Barras (geom_col para valores já calculados)
+  geom_col(alpha = 0.8, show.legend = FALSE) +
+  # Adicionar rótulos com frequência e percentual
+  geom_text(aes(label = paste0(n, "\n(", round(Percentual, 1), "%)")),
+            vjust = -0.5, size = 3.5) +
+  # Títulos e rótulos dos eixos
+  labs(title = "Distribuição por Tipo Penal",
+       x = "Tipo Penal",
+       y = "Frequência") +
+  # ajsutar escala no eixo y para não cortar contagem (%) na primeira coluna
+  scale_y_continuous(limits = c(0, 33) ) +
+  theme_minimal() +
+  # Inclinar rótulos do eixo X para melhor legibilidade
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+### Tabela de Frequências: Tipo Penal
+
+```{r}
+#| label: tbl-freq-tipo-penal
+#| tbl-cap: "Frequências do tipo penal"
+
+kable(freq_tipo, 
+      col.names = c("Tipo Penal", "Frequência", "Percentual (%)", "Acumulado (%)"),
+      digits = 2) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+**Interpretação:**
+
+\[Descrever os padrões observados na distribuição do tipo penal, identificar categorias mais e menos frequentes\]
+
+## Análise das Outras Variáveis Categóricas
+
+```{r}
+#| label: fig-categoricas
+#| fig-cap: "Distribuição das variáveis categóricas"
+#| fig-width: 10
+#| fig-height: 4
+
+# ============================================================================
+# ANÁLISE DE VARIÁVEIS CATEGÓRICAS BINÁRIAS
+# ============================================================================
+
+# Gráfico: Tipo de Ação (Pública vs Privada)
+p5 <- dados %>%
+  count(tipo_acao) %>%                           # Contar frequências
+  mutate(pct = (n / sum(n)) * 100) %>%           # Calcular percentuais
+  ggplot(aes(x = tipo_acao, y = n, fill = tipo_acao)) +
+  geom_col(alpha = 0.8, show.legend = FALSE) +   # Barras coloridas
+  # Rótulos com frequências acima das barras
+  geom_text(aes(label = n), vjust = -0.5, fontface = "bold") +
+  # Percentuais dentro das barras
+  geom_text(aes(label = paste0(round(pct, 1), "%")), 
+            vjust = 1.5, color = "white", fontface = "bold", size = 4.5) +
+  labs(title = "Tipo de Ação",
+       x = NULL, y = "Frequência") +
+  scale_y_continuous(limits = c(0, 95) ) +
+  theme_minimal()
+
+# Gráfico: Reincidência (Sim vs Não)
+p6 <- dados %>%
+  count(reincidencia) %>%                        # Contar frequências
+  mutate(pct = (n / sum(n)) * 100) %>%           # Calcular percentuais
+  ggplot(aes(x = reincidencia, y = n, fill = reincidencia)) +
+  geom_col(alpha = 0.8, show.legend = FALSE) +   # Barras coloridas
+  # Rótulos com frequências acima das barras
+  geom_text(aes(label = n), vjust = -0.5, fontface = "bold") +
+  # Percentuais dentro das barras
+  geom_text(aes(label = paste0(round(pct, 1), "%")), 
+            vjust = 1.5, color = "white", fontface = "bold", size = 4.5) +
+  labs(title = "Reincidência",
+       x = NULL, y = "Frequência") +
+  scale_y_continuous(limits = c(0, 65) ) +
+  theme_minimal()
+
+# Combinar gráficos lado a lado usando patchwork
+p5 + p6
+```
+
+**Interpretação:**
+
+\[Descrever os padrões observados nas variáveis tipo_acao e reincidencia\]
+
+# Análise Exploratória de Dados (AED) - Bivariada
+
+## Duas Variáveis Quantitativas: Dias Preso × Idade no Fato
+
+```{r}
+#| label: fig-scatter-dias-idade
+#| fig-cap: "Relação entre dias de prisão e idade no fato"
+#| fig-width: 8
+#| fig-height: 6
+
+# ============================================================================
+# GRÁFICO DE DISPERSÃO: IDADE × DIAS PRESO
+# ============================================================================
+
+ggplot(dados, aes(x = idade_fato, y = dias_preso)) +
+  # Pontos de dispersão (alpha para transparência em caso de sobreposição)
+  geom_point(alpha = 0.6, color = "steelblue", size = 3) +
+  # Reta de regressão linear com intervalo de confiança (95%)
+  # method = "lm" usa modelo linear, se = TRUE mostra IC
+  geom_smooth(method = "lm", se = TRUE, color = "red", linewidth = 1) +
+  # Títulos e rótulos
+  labs(title = "Relação entre Idade no Fato e Dias de Prisão",
+       x = "Idade no fato (anos)",
+       y = "Dias preso") +
+  theme_minimal()
+```
+
+### Modelo de Regressão Linear
+
+```{r}
+#| label: modelo-regressao
+
+# ============================================================================
+# MODELO DE REGRESSÃO LINEAR SIMPLES
+# ============================================================================
+
+# Ajustar modelo: dias_preso = β0 + β1 * idade_fato + ε
+modelo_lm <- lm(dias_preso ~ idade_fato, data = dados)
+
+# Exibir resumo completo do modelo
+# Inclui: coeficientes, R², estatística F, p-valores
+summary(modelo_lm)
+
+# Extrair coeficientes (intercepto e inclinação)
+coef_modelo <- coef(modelo_lm)
+```
+
+**Equação da reta:**
+
+$$\hat{y} = `r round(coef_modelo[1], 2)` + (`r round(coef_modelo[2], 2)`) \cdot x$$
+
+### Medidas de Correlação
+
+```{r}
+#| label: correlacao
+
+# ============================================================================
+# ANÁLISE DE CORRELAÇÃO
+# ============================================================================
+
+# Calcular correlação de Pearson (r)
+# Varia de -1 (correlação negativa perfeita) a +1 (positiva perfeita)
+cor_pearson <- cor(dados$idade_fato, dados$dias_preso)
+
+# Teste de significância da correlação
+# H0: ρ = 0 (não há correlação linear)
+# Ha: ρ ≠ 0 (existe correlação linear)
+teste_cor <- cor.test(dados$idade_fato, dados$dias_preso)
+
+# Exibir resultados
+cat("Correlação de Pearson:", round(cor_pearson, 4), "\n")
+cat("Valor-p:", format.pval(teste_cor$p.value), "\n")
+cat("IC 95%: [", round(teste_cor$conf.int[1], 4), ",", 
+    round(teste_cor$conf.int[2], 4), "]\n")
+```
+
+**Interpretação:**
+
+\[Interpretar a força e direção da correlação, significância estatística e a qualidade do ajuste do modelo linear\]
+
+## Duas Variáveis Categóricas: Tipo Penal × Reincidência
+
+```{r}
+#| label: tbl-contingencia
+#| tbl-cap: "Tabela de contingência: Tipo Penal × Reincidência"
+
+# ============================================================================
+# TABELA DE CONTINGÊNCIA: TIPO PENAL × REINCIDÊNCIA
+# ============================================================================
+
+# Criar tabela de contingência (frequências absolutas)
+# Linhas: tipo_penal, Colunas: reincidencia
+tabela_cont <- table(dados$tipo_penal, dados$reincidencia)
+
+# Adicionar totais marginais (linhas e colunas)
+# addmargins() adiciona linha e coluna "Sum"
+tabela_completa <- addmargins(tabela_cont)
+
+# Calcular percentuais do total geral
+tabela_prop <- prop.table(tabela_cont) * 100
+
+# Formatar e exibir tabela
+kable(tabela_completa, 
+      align = "c") %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
+  add_header_above(c(" " = 1, "Reincidência" = 2, " " = 1))
+```
+
+### Percentuais por Linha
+
+```{r}
+#| label: tbl-percentuais-linha
+
+# ============================================================================
+# PERCENTUAIS POR LINHA (DISTRIBUIÇÃO CONDICIONAL)
+# ============================================================================
+
+# Calcular percentuais por linha
+# margin = 1 significa que cada linha soma 100%
+# Mostra: "Para cada tipo penal, qual % é reincidente?"
+tabela_prop_linha <- prop.table(tabela_cont, margin = 1) * 100
+
+# Formatar e exibir
+kable(round(tabela_prop_linha, 2), 
+      align = "c",
+      caption = "Percentuais por tipo penal (linha)") %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
+  add_header_above(c(" " = 1, "Reincidência (%)" = 2))
+```
+
+### Gráfico de Barras Agrupadas
+
+```{r}
+#| label: fig-barras-agrupadas
+#| fig-cap: "Distribuição de reincidência por tipo penal"
+#| fig-width: 10
+#| fig-height: 6
+
+# ============================================================================
+# GRÁFICO DE BARRAS AGRUPADAS
+# ============================================================================
+
+dados %>%
+  # Contar combinações de tipo_penal e reincidencia
+  count(tipo_penal, reincidencia) %>%
+  # Calcular percentuais dentro de cada tipo_penal
+  group_by(tipo_penal) %>%
+  mutate(pct = (n / sum(n)) * 100) %>%
+  ungroup() %>%
+  ggplot(aes(x = tipo_penal, y = n, fill = reincidencia)) +
+  # Barras lado a lado (position = "dodge")
+  geom_col(position = "dodge", alpha = 0.8) +
+  # Adicionar rótulos de frequência acima das barras
+  geom_text(aes(label = n), 
+            position = position_dodge(width = 0.9),
+            vjust = -0.5, size = 3, fontface = "bold") +
+  # Adicionar rótulos de percentuais dentro das barras
+  geom_text(aes(label = paste0(round(pct, 1), "%")),
+            position = position_dodge(width = 0.9),
+            vjust = 1.5, size = 4, color = "white", fontface = "bold") +
+  # Títulos e legendas
+  labs(title = "Reincidência por Tipo Penal",
+       x = "Tipo Penal",
+       y = "Frequência",
+       fill = "Reincidência") +
+  theme_minimal() +
+  # Inclinar rótulos do eixo X
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+**Interpretação:**
+
+\[Descrever os padrões de associação entre tipo penal e reincidência\]
+
+## Uma Variável Quantitativa e Uma Categórica: Dias Preso × Reincidência
+
+```{r}
+#| label: fig-boxplot-dias-reincidencia
+#| fig-cap: "Comparação de dias de prisão por reincidência"
+#| fig-width: 10
+#| fig-height: 6
+
+# ============================================================================
+# COMPARAÇÃO DE GRUPOS: QUANTITATIVA × CATEGÓRICA
+# ============================================================================
+
+# Boxplot: comparar distribuições de dias preso por reincidência
+p7 <- ggplot(dados, aes(x = reincidencia, y = dias_preso, fill = reincidencia)) +
+  # Boxplot mostra mediana, quartis e outliers
+  geom_boxplot(alpha = 0.7, show.legend = FALSE) +
+  labs(title = "Boxplot: Dias de Prisão por Reincidência",
+       x = "Reincidência",
+       y = "Dias preso") +
+  theme_minimal()
+
+# Violin plot: mostra a distribuição completa (densidade)
+p8 <- ggplot(dados, aes(x = reincidencia, y = dias_preso, fill = reincidencia)) +
+  # Violin plot mostra a forma da distribuição
+  geom_violin(alpha = 0.7, show.legend = FALSE) +
+  # Sobrepor boxplot pequeno para mostrar quartis
+  geom_boxplot(width = 0.2, alpha = 0.5, show.legend = FALSE) +
+  labs(title = "Violin Plot: Dias de Prisão por Reincidência",
+       x = "Reincidência",
+       y = "Dias preso") +
+  theme_minimal()
+
+# Combinar gráficos lado a lado
+p7 + p8
+```
+
+### Medidas Resumo por Grupo
+
+```{r}
+#| label: tbl-resumo-grupo
+
+# ============================================================================
+# ESTATÍSTICAS DESCRITIVAS POR GRUPO
+# ============================================================================
+
+# Calcular medidas resumo separadamente para cada grupo (reincidência)
+resumo_grupos <- dados %>%
+  group_by(reincidencia) %>%                   # Agrupar por reincidência
+  summarise(
+    N = n(),                                   # Tamanho de cada grupo
+    Média = mean(dias_preso),                  # Média de cada grupo
+    Mediana = median(dias_preso),              # Mediana de cada grupo
+    `Desvio Padrão` = sd(dias_preso),          # Dispersão de cada grupo
+    Mínimo = min(dias_preso),                  # Valor mínimo
+    Máximo = max(dias_preso)                   # Valor máximo
+  )
+
+# Formatar e exibir tabela
+kable(resumo_grupos, digits = 2) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+**Interpretação:**
+
+\[Comparar as distribuições de dias de prisão entre reincidentes e não-reincidentes, identificar diferenças e valores influentes\]
+
+# Reflexão sobre Variáveis Ocultas ou de Confundimento
+
+**Possíveis variáveis de confundimento:**
+
+1.  **Condição Socioeconômica**: Pode influenciar tanto o tipo de crime quanto o tempo de prisão, além de afetar o acesso à defesa adequada.
+
+2.  **Região/Comarca**: Diferentes comarcas podem ter padrões distintos de aplicação de penas e concessão de liberdade.
+
+3.  **Qualidade da Defesa**: Réus com advogados particulares vs. defensoria pública podem ter resultados diferentes.
+
+4.  **Gravidade do Delito**: Dentro de cada tipo penal, há variações de gravidade que não foram capturadas.
+
+5.  **Antecedentes Criminais**: Além da reincidência binária, o número e tipo de antecedentes podem influenciar.
+
+6.  **Tempo até o Julgamento**: Pode afetar o tempo total de prisão independentemente da sentença.
+
+\[Adicionar mais reflexões específicas ao seu contexto de pesquisa\]
+
+# Testes de Significância contra Hipótese Nula
+
+Segundo [@bussabMorettin-2023estBas , p. 284] "\[...\] o objetivo da Inferência Estatística é produzir afirmações sobre dada característica da população, na qual estamos interessados, a partir de informações colhidas de uma parte dessa população. Essa característica na população pode ser representada por uma variável aleatória".
+
+A distribuição normal [@Moore2023 , p. 63] é "Uma classe particularmente importante de curvas de densidade \[...\]. Elas são chamadas de *curvas Normais*".
+
+## Teste 1: Normalidade da Distribuição de Dias Preso
+
+### Hipóteses
+
+-   $H_0$: A distribuição de dias preso segue uma distribuição normal
+-   $H_a$: A distribuição de dias preso não segue uma distribuição normal
+
+**Tipo de teste:** Bilateral\
+**Nível de significância:** $\alpha = 0.05$
+
+```{r}
+#| label: teste-normalidade
+
+# Teste de Shapiro-Wilk
+teste_shapiro <- shapiro.test(dados$dias_preso)
+
+cat("Teste de Shapiro-Wilk\n")
+cat("Estatística W:", round(teste_shapiro$statistic, 4), "\n")
+cat("Valor-p:", format.pval(teste_shapiro$p.value), "\n")
+cat("\nConclusão:")
+if(teste_shapiro$p.value < 0.05) {
+  cat(" Rejeita-se H0. Evidências de não-normalidade.\n")
+} else {
+  cat(" Não se rejeita H0. Dados consistentes com normalidade.\n")
+}
+```
+
+**Interpretação:**
+
+\[Interpretar o resultado no contexto estatístico e no contexto da pesquisa\]
+
+## Teste 2: Correlação entre Idade no Fato e Dias Preso
+
+### Hipóteses
+
+-   $H_0$: $\rho = 0$ (não há correlação linear entre idade no fato e dias preso)
+-   $H_a$: $\rho \neq 0$ (há correlação linear entre as variáveis)
+
+**Tipo de teste:** Bilateral\
+**Nível de significância:** $\alpha = 0.05$
+
+```{r}
+#| label: teste-correlacao
+
+# Teste de correlação (já realizado anteriormente)
+print(teste_cor)
+
+cat("\nConclusão:")
+if(teste_cor$p.value < 0.05) {
+  cat(" Rejeita-se H0. Há evidência de correlação significativa.\n")
+} else {
+  cat(" Não se rejeita H0. Não há evidência de correlação significativa.\n")
+}
+```
+
+**Interpretação:**
+
+\[Interpretar o resultado no contexto estatístico e no contexto da pesquisa\]
+
+## Teste 3: Independência entre Tipo Penal e Reincidência
+
+### Hipóteses
+
+-   $H_0$: Tipo penal e reincidência são independentes
+-   $H_a$: Existe associação entre tipo penal e reincidência
+
+**Tipo de teste:** Bilateral\
+**Nível de significância:** $\alpha = 0.05$
+
+```{r}
+#| label: teste-qui-quadrado
+
+# Teste qui-quadrado de independência
+teste_qui <- chisq.test(tabela_cont)
+
+cat("Teste Qui-Quadrado de Independência\n")
+cat("X² =", round(teste_qui$statistic, 4), "\n")
+cat("gl =", teste_qui$parameter, "\n")
+cat("Valor-p:", format.pval(teste_qui$p.value), "\n")
+
+cat("\nValores Esperados:\n")
+print(round(teste_qui$expected, 2))
+
+cat("\nResíduos Padronizados:\n")
+print(round(teste_qui$stdres, 2))
+
+cat("\nConclusão:")
+if(teste_qui$p.value < 0.05) {
+  cat(" Rejeita-se H0. Há evidência de associação significativa.\n")
+} else {
+  cat(" Não se rejeita H0. Não há evidência de associação significativa.\n")
+}
+```
+
+**Interpretação:**
+
+\[Interpretar o resultado no contexto estatístico e no contexto da pesquisa\]
+
+## Teste 4: Comparação de Médias - Dias Preso por Reincidência
+
+### Hipóteses
+
+-   $H_0$: $\mu_{\text{Sim}} = \mu_{\text{Não}}$ (médias iguais de dias preso para reincidentes e não-reincidentes)
+-   $H_a$: $\mu_{\text{Sim}} \neq \mu_{\text{Não}}$ (médias diferentes)
+
+**Tipo de teste:** Bilateral\
+**Nível de significância:** $\alpha = 0.05$
+
+```{r}
+#| label: teste-t
+
+# Teste t para duas amostras independentes
+teste_t <- t.test(dias_preso ~ reincidencia, data = dados)
+
+cat("Teste t de Student para Duas Amostras\n")
+cat("t =", round(teste_t$statistic, 4), "\n")
+cat("gl =", round(teste_t$parameter, 2), "\n")
+cat("Valor-p:", format.pval(teste_t$p.value), "\n")
+cat("IC 95% para diferença:", round(teste_t$conf.int[1], 2), "a", 
+    round(teste_t$conf.int[2], 2), "\n")
+
+cat("\nConclusão:")
+if(teste_t$p.value < 0.05) {
+  cat(" Rejeita-se H0. Há evidência de diferença significativa nas médias.\n")
+} else {
+  cat(" Não se rejeita H0. Não há evidência de diferença significativa nas médias.\n")
+}
+```
+
+**Interpretação:**
+
+\[Interpretar o resultado no contexto estatístico e no contexto da pesquisa\]
+
+# Cálculo do Tamanho da Amostra
+
+## Para Variável Quantitativa (`dias_preso`)
+
+Usando o teste t para duas médias independentes.
+
+```{r}
+#| label: calculo-amostra-quantitativa
+
+# Parâmetros
+alpha <- 0.05
+poder_desejado <- 0.85
+
+# Calcular tamanho do efeito observado (d de Cohen)
+media_sim <- mean(dados$dias_preso[dados$reincidencia == "Sim"])
+media_nao <- mean(dados$dias_preso[dados$reincidencia == "Não"])
+dp_pooled <- sqrt(((sum(dados$reincidencia == "Sim") - 1) * sd(dados$dias_preso[dados$reincidencia == "Sim"])^2 + 
+                    (sum(dados$reincidencia == "Não") - 1) * sd(dados$dias_preso[dados$reincidencia == "Não"])^2) /
+                   (nrow(dados) - 2))
+
+d_cohen <- abs(media_sim - media_nao) / dp_pooled
+
+cat("Tamanho do efeito observado (d de Cohen):", round(d_cohen, 3), "\n")
+
+# Calcular tamanho de amostra para diferentes tamanhos de efeito
+tamanhos_efeito <- c(0.2, 0.5, 0.8, d_cohen)
+poderes <- c(0.80, 0.85, 0.90, 0.95)
+
+resultados_quant <- expand.grid(
+  `Tamanho Efeito (d)` = tamanhos_efeito,
+  `Poder (1-β)` = poderes
+) %>%
+  rowwise() %>%
+  mutate(
+    `N por Grupo` = ceiling(pwr.t.test(
+      d = `Tamanho Efeito (d)`,
+      sig.level = alpha,
+      power = `Poder (1-β)`,
+      type = "two.sample"
+    )$n),
+    `N Total` = `N por Grupo` * 2
+  ) %>%
+  arrange(`Poder (1-β)`, `Tamanho Efeito (d)`)
+
+kable(resultados_quant, digits = 3) %>%
+  kable_styling(bootstrap_options = c("striped", "hover")) %>%
+  add_header_above(c(" " = 2, "Tamanho da Amostra" = 2))
+```
+
+## Para Variável Categórica: `reincidencia`
+
+Usando o teste qui-quadrado para proporções.
+
+```{r}
+#| label: calculo-amostra-categorica
+
+# Calcular tamanho do efeito observado (w de Cohen)
+# w = sqrt(sum((p_obs - p_esp)^2 / p_esp))
+
+prop_obs <- prop.table(table(dados$tipo_penal, dados$reincidencia))
+qui_obs <- chisq.test(table(dados$tipo_penal, dados$reincidencia))
+w_cohen <- sqrt(qui_obs$statistic / sum(table(dados$tipo_penal, dados$reincidencia)))
+
+cat("Tamanho do efeito observado (w de Cohen):", round(w_cohen, 3), "\n")
+
+# Calcular tamanho de amostra para diferentes tamanhos de efeito
+# w: 0.1 (pequeno), 0.3 (médio), 0.5 (grande)
+tamanhos_efeito_w <- c(0.1, 0.3, 0.5, as.numeric(w_cohen))
+
+resultados_cat <- expand.grid(
+  `Tamanho Efeito (w)` = tamanhos_efeito_w,
+  `Poder (1-β)` = poderes
+) %>%
+  rowwise() %>%
+  mutate(
+    `N Total` = ceiling(pwr.chisq.test(
+      w = `Tamanho Efeito (w)`,
+      N = NULL,
+      df = (5 - 1) * (2 - 1),  # (linhas - 1) * (colunas - 1)
+      sig.level = alpha,
+      power = `Poder (1-β)`
+    )$N)
+  ) %>%
+  arrange(`Poder (1-β)`, `Tamanho Efeito (w)`)
+
+kable(resultados_cat, digits = 3) %>%
+  kable_styling(bootstrap_options = c("striped", "hover"))
+```
+
+## Recomendação Final
+
+```{r}
+#| label: recomendacao-amostra
+
+# Considerar o maior N necessário entre os dois testes
+n_recomendado_quant <- resultados_quant %>%
+  filter(`Poder (1-β)` == 0.85, abs(`Tamanho Efeito (d)` - 0.5) < 0.01) %>%
+  pull(`N Total`)
+
+n_recomendado_cat <- resultados_cat %>%
+  filter(`Poder (1-β)` == 0.85, abs(`Tamanho Efeito (w)` - 0.3) < 0.01) %>%
+  pull(`N Total`)
+
+n_final <- max(n_recomendado_quant, n_recomendado_cat, na.rm = TRUE)
+
+cat("RECOMENDAÇÃO DE TAMANHO AMOSTRAL\n")
+cat("=================================\n\n")
+cat("Considerando:\n")
+cat("  - Erro Tipo I (α) = 5%\n")
+cat("  - Poder mínimo (1-β) = 85%\n")
+cat("  - Tamanho do efeito médio\n\n")
+cat("Tamanho de amostra recomendado:", n_final, "observações\n\n")
+cat("Para maior segurança, considerar adicionar 10-15% para compensar\n")
+cat("possíveis perdas e não-respostas.\n")
+cat("Tamanho final sugerido:", ceiling(n_final * 1.15), "observações\n")
+```
+
+# Conclusão
+
+\[Escrever conclusão abrangente que inclua:\]
+
+1.  Principais achados da análise exploratória univariada
+2.  Principais achados da análise exploratória bivariada
+3.  Resultados dos testes de hipótese realizados
+4.  Implicações dos resultados para a pesquisa
+5.  Limitações do estudo atual
+6.  Recomendações para a coleta de dados definitiva
+7.  Próximos passos na pesquisa
+
+# Sugestões para Melhoria da Disciplina CDEaDPP
+
+## Aspectos Positivos
+
+\[Listar aspectos que funcionaram bem\]
+
+## Sugestões de Melhoria
+
+\[Listar sugestões construtivas para melhorar a disciplina, como:\]
+
+1.  Conteúdo programático
+2.  Metodologia de ensino
+3.  Atividades práticas
+4.  Materiais didáticos
+5.  Avaliações
+6.  Recursos computacionais
+7.  Outras sugestões
+
+# Referências Bibliográficas {.unnumbered}
+
+BUSSAB, W. O.; MORETTIN, P. A. **Estatística básica**. 9. ed. São Paulo: Saraiva, 2017.
+
+COHEN, J. **Statistical power analysis for the behavioral sciences**. 2nd ed. Hillsdale: Lawrence Erlbaum Associates, 1988.
+
+FIELD, A.; MILES, J.; FIELD, Z. **Descobrindo a estatística usando R**. Porto Alegre: Bookman, 2012.
+
+MCCULLAGH, P; NELDER, J. A. **Generalized Linear Models**. 2nd ed. London: Chapman and Hall, 1989. Disponível em: <https://utstat.utoronto.ca/brunner/oldclass/2201s11/readings/glmbook.pdf>. Acesso em: 12 dez. 2025.
+
+MAGALHÃES, M. N.; LIMA, A. C. P. **Noções de probabilidade e estatística**. 7. ed. São Paulo: EDUSP, 2015.
+
+MOORE, D. S.; NOTZ, W. I.; FLIGNER, M. A. **A Estatística Básica e sua prática**. 9. ed. Rio de Janeiro: LTC, 2023.
+
+NAVARRO, D. J.; FOXCROFT, D. R. **Learning statistics with R: a tutorial for psychology students and other beginners**. Adelaide: University of Adelaide, 2019. Disponível em: <https://learningstatisticswithr.com/>. Acesso em: 12 dez. 2025.
+
+POLDRACK, R. A. **Statistical thinking for the 21st century**. 2022. Disponível em: <https://statsthinking21.github.io/statsthinking21-core-site/>. Acesso em: 12 dez. 2025.
+
+R CORE TEAM. **R: A language and environment for statistical computing**. Vienna: R Foundation for Statistical Computing, 2025. Disponível em: <https://www.R-project.org/>. Acesso em: 12 dez. 2025.
+
+SHAPIRO, S. S.; WILK, M. B. An analysis of variance test for normality (complete samples). **Biometrika**, v. 52, n. 3/4, p. 591-611, 1965. Disponível em: <https://www.math.utah.edu/~morris/Courses/ShapiroWilk.pdf>. Acesso em: 12 dez. 2025.
+
+STUDENT. The probable error of a mean. **Biometrika**, v. 6, n. 1, p. 1-25, 1908. Disponível em: <https://seismo.berkeley.edu/~kirchner/eps_120/Odds_n_ends/Students_original_paper.pdf>. Acesso em: 12 dez. 2025.
+
+TABACHNICK, B. G.; FIDELL, L. S. **Using multivariate statistics**. 7th ed. New York: Pearson, 2019.
+
+WICKHAM, H. et al. **Welcome to the tidyverse**. Journal of Open Source Software, v. 4, n. 43, p. 1686, 2019. DOI: [10.21105/joss.01686](https://joss.theoj.org/papers/10.21105/joss.01686).
+
+WICKHAM, H.; GROLEMUND, G. **R for data science: import, tidy, transform, visualize, and model data**. 2nd ed. Sebastopol: O'Reilly Media, 2023. Disponível em: <https://r4ds.hadley.nz/>. Acesso em: 12 dez. 2025.
+
+::: callout-note
+## Nota sobre as Referências
+
+1.  As referências acima incluem as principais obras e pacotes utilizados nesta análise. Adicione outras referências específicas citadas no seu trabalho, mantendo a formatação ABNT (NBR 6023:2018).
+2.  Este modelo foi gerado com auxílio da IA Copilot (modos *Agent* e *Ask*) para gerar este arquivo .qmd e todos os scripts em R comentados. Que foi detidamente revisado e alterado pelo prof. Cleuler, que inclui algumas citações no seu corpo, para gerar as referências a seguir.
+:::
+
+------------------------------------------------------------------------
+
+**Data de conclusão:** `r format(Sys.Date(), "%d/%m/%Y")`

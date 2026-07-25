@@ -1,0 +1,56 @@
+CDEaDPP 2025.2 - Ciência de Dados e Estatística aplicada a Direito e Políticas Públicas
+
+Trabalho Final.
+Criar um arquivo CDEaDPP-AtividadeFinal-SeuNome.qmd no VS Code para resolver com emprego da Linguagem R as seguintes tarefas:
+
+1. Conceber um quadro de variáveis para sua pesquisa.
+   Que contenha pelo menos os seguintes tipos de variáveis:
+   - quantitativas, ex.: número de dias preso; idade em anos na data do fato etc.
+   - categóricas: tipo penal; tipo de ação etc.
+   - apresentar um dicionário de dados: nome da variável, finalidade, tipo, exemplo de observação esperada
+
+2. Criar dados simulados para uma amostra aleatória com 100 observações
+   ou usar dados de sua amostra piloto (aqueles que já coletaram dados de sua pesquisa):
+   - salvar esses dados em um arquivo na pasta denominada: out
+
+3. Fazer uma Análise de Dados Exploratória (AED) univariada.
+   - Iniciar com uma análise de cada variável separadamente:
+     Exibir gráficos adequados da sua distribuição de frequência.
+     Interpretar esses gráficos.
+     Exibir medidas estatísticas resumo para cada variável.
+     Interpretar essas medidas.
+   - Procurar por padrões nessas distribuições e descrevê-los.
+     Descrever também aqueles dados pontuais que fogem ao padrão (outliers).
+
+4. Depois fazer uma Análise de Dados Exploratória (AED) bivariada.
+   - Fazer pelo menos uma análise que combine os seguintes tipos de variáveis aos pares:
+     - Duas variáveis quantitativas: gráfico de dispersão, medidas resumo e modelo de reta de regressão.
+       Interpretar os resultados.
+     - Duas variáveis categóricas: tabela de dupla entrada, totais e proporções marginais, gráficos.
+       Interpretar os resultados.
+     - Uma variável quantitativa e uma categórica: gráficos box plot e violino lado a lado e medidas resumo.
+       Interpretar os resultados.
+   - Procurar por padrões nessas análise bivariadas e descrevê-los.
+     Descrever também aqueles dados pontuais que fogem ao padrão (valores influentes).
+
+5. Fazer uma reflexão sobre possíveis variáveis ocultas ou de confundimento na sua análise de dados.
+
+6. Conceber pelo menos um Teste de Significância contra Hipótese Nula adequado para cada AED acima (itens 3 e 4).
+   - Formular adequadamente os pares de Hipótese Nula e Hipótese Alternativa.
+   - Definir se será aplicado um teste uni ou bilateral.
+   - Estabeler previamente o Nível de Significância.
+   - Aplicar o teste planejado.
+   - Interpretar os resultados do teste no contexto estatístico e no contexto do seu problema.
+
+7. Calcular um tamanho adequado de amostra aleatória final para sua pesquisa.
+   - Considerando o Erro Tipo I de 5% e um Poder de pelo menos 85%.
+   - Considere também o tamanho do efeito (d de Cohen) que você pretende capturar na sua principal variável quantitativa.
+   - E também o tamanho do efeito nas proporções da sua principal variável categórica.
+   - Faça uma tabela com os possíveis tamanhos de amostra e os respectivos valores de poder e tamanho do efeito
+     para permitir que você escolha seu tamanho definitivo da sua amostra probabilística final.
+
+8. Elabore uma conclusão para esse Trabalho Final.
+
+9. Sugestões para melhoria incremental da disciplina CDEaDPP.
+
+10. Inserir ao final todas as referências bibliográficas citadas na sua análise no formato ABNT.

@@ -375,7 +375,7 @@ A [**probabilidade**]{.underline}, calculada [**supondo**]{.underline} $H_0$ [**
 
 [**Valores P pequenos**]{.underline} **são [evidência]{.underline} contra** $H_0$, pois ***afirmam*** ***que o [resultado observado]{.underline} tem [ocorrência improvável]{.underline}*** [***se***]{.underline} $H_0$ for [***verdadeira***]{.underline}.
 
-[**Valores P grandes**]{.underline} **[nãofornecem evidência contra]{.underline}** $H_0$.
+[**Valores P grandes**]{.underline} [**nãofornecem evidência contra**]{.underline} $H_0$.
 :::
 
 Quão pequeno deve ser o valor P para ser evidência convincente contra $H_0$?
